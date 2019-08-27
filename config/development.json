@@ -1,0 +1,29 @@
+{
+    "environment": "development",
+    "host": "http://uchatdev.appskeeper.com",
+    "port": 2222,
+    "dbConfig": {
+        "dbUrl": "mongodb://localhost:27017/nook-APP"
+    },
+    "cryptoSecret": "d6F3Efeq",
+    "jwtSecret": "cgfhfj",
+    "color": [
+        "#FFFFFF",
+        "#C0C0C0",
+        "#808080",
+        "#000000",
+        "#FF0000",
+        "#800000",
+        "#FFFF00",
+        "#808000",
+        "#00FF00",
+        "#008000",
+        "#00FFFF",
+        "#008080",
+        "#0000FF",
+        "#000080",
+        "#FF00FF",
+        "#800080"
+    ],
+    "displayColors": true
+}

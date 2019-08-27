@@ -1,0 +1,30 @@
+{
+    "environment": "staging",
+    "host": "",
+    "port": 7314,
+    "dbConfig": {
+        "dbUrl": "mongodb://uchatstg_usr:`nookApp`@uchatdev.appskeeper.com:27200/uchatstg_db"
+    },
+    
+    "cryptoSecret": "d6F3Efeq",
+    "jwtSecret": "cgfhfj",
+    "color": [
+        "#FFFFFF",
+        "#C0C0C0",
+        "#808080",
+        "#000000",
+        "#FF0000",
+        "#800000",
+        "#FFFF00",
+        "#808000",
+        "#00FF00",
+        "#008000",
+        "#00FFFF",
+        "#008080",
+        "#0000FF",
+        "#000080",
+        "#FF00FF",
+        "#800080"
+    ],
+    "displayColors": true
+}
