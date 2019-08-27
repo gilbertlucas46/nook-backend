@@ -9,14 +9,14 @@ declare namespace UserRequest {
         firstName: string;
         lastName: string;
         phoneNumber?: string
-        // type: Array<string>
+        type?: string
         // roleType:{
 
         title?: string
         license?: string;
         taxnumber?: string;
         faxNumber?: string;
-        fullMobileNumber?: string;
+        fullPhoneNumber?: string;
         language?: string;
         companyName?: string;
         address?: string;
@@ -34,17 +34,16 @@ declare namespace UserRequest {
         password: string
         firstName: string;
         lastName: string;
-        phoneNumber?: string,
+        phoneNumber: string,
         countryCode?: string
+        type?: string
     }
 
 
 
-    export interface login {
+    export interface login1 {
         email: string;
         password: string;
-        deviceId; string;
-        deviceToken: string
     }
     export interface Session {
         userId?: string,
@@ -57,6 +56,9 @@ declare namespace UserRequest {
         appVersion?: string,
         createdAt?: Date,
         updatedAt?: Date,
-        loginStatus: Boolean
     }
+
+
+    export interface Login extends Session, login1 { }
+
 }

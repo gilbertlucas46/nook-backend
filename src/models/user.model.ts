@@ -9,12 +9,12 @@ export interface IUser extends Document {
     firstName: string;
     lastName: string;
     phoneNumber: string
-    // type: Array<string>
-    title?: string
+    type: string;
+    title?: string;
     license?: string;
-    taxnumber?: string;
+    taxNumber?: string;
     faxNumber?: string;
-    fullMobileNumber?: string;
+    fullPhoneNumber?: string;
     language?: string;
     companyName?: string;
     address?: string;
@@ -38,7 +38,7 @@ const userSchema = new Schema({
     license: { type: String },
     taxnumber: { type: String },
     faxNumber: { type: String },
-    fullMobileNumber: { type: String },
+    fullPhoneNumber: { type: String },
     language: { type: String },
     companyName: { type: String },
     address: {
@@ -48,8 +48,6 @@ const userSchema = new Schema({
     profilePicUrl: { type: String },
     isEmailVerified: { type: Boolean },
     isPhoneVerified: { type: Boolean },
-    createdAt: { type: Date },
-    updatedAt: { type: Date },
     countryCode: { type: String },
     // roleType: { type: String, enum: [] },
     status: {
@@ -60,5 +58,19 @@ const userSchema = new Schema({
         ],
         default: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
     },
-});
+    createdAt: { type: Number },
+    updatedAt: { type: Number },
+    type: {
+        type: String,
+        enum: [
+            CONSTANT.DATABASE.USER_TYPE.AGENT,
+            CONSTANT.DATABASE.USER_TYPE.OWNER,
+            CONSTANT.DATABASE.USER_TYPE.TEANANT
+        ],
+        default: CONSTANT.DATABASE.USER_TYPE.TEANANT
+
+    }
+})
+
+
 export let User = mongoose.model<IUser>("User", userSchema);

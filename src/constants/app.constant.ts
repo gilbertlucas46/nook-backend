@@ -16,12 +16,14 @@ export let DATABASE = {
     REPORT_DESCRIPTION_2: " and submit this report for review ro the Toki Team",
     USER_TYPE: {
         AGENT: "AGENT",
-        // MERCHANT: "MERCHANT",
         OWNER: "OWNER",
+<<<<<<< HEAD
+        TEANANT: "TEANANT", //  normal user/ buyer
+
+=======
         USER: "USER", //  normal user/ buyer
-
+>>>>>>> property model added
     },
-
     TOKEN_TYPE: {
         USER: "USER",
     },
@@ -39,8 +41,6 @@ export let DATABASE = {
         EN: 'en',
         MN: 'mn'
     },
-
-
     STATUS: {
         USER: {
             ACTIVE: "ACTIVE",
@@ -109,7 +109,26 @@ export let DATABASE = {
     DEEPLINK_REDIRECT_URL: {
         APP: "/v1/deeplink?url=",
     },
-
+    PROPERTY_LABEL: {
+        NONE: "None",
+        FORECLOSURE: "Foreclosure",
+        OFFICE: "Office",
+        PARKING: "Parking",
+        PRE_SELLING: "Pre-Selling",
+        READY_FOR_OCCUPANCY: "Ready For Occupancy",
+        RENT_TO_OWN: "Rent To Own",
+        RETAIL: "Retail",
+        SERVICED_OFFICE: "Serviced Office",
+        WAREHOUSE: "Warehouse"
+    },
+    PROPERTY_TYPE: {
+        NONE: "None",
+        "APPARTMENT/CONDO": "Appartment/Condo",
+        COMMERCIAL: "commercial",
+        HOUSE_LOT: "House & Lot",
+        LAND: "Land",
+        ROOM: "Room",
+    }
 
 };
 

@@ -38,10 +38,10 @@ export let plugin = {
             allowMultipleHeaders: true,
             accessTokenName: 'accessToken',
             validate: async (request, token, h) => {
-                let checkApiKeyFunction = await apiKeyFunction(request.headers.api_key)
-                if (!checkApiKeyFunction) {
-                    return ({ isValid: false, credentials: { token: token, userData: {} } })
-                } else {
+                // let checkApiKeyFunction = await apiKeyFunction(request.headers.api_key)
+                // if (!checkApiKeyFunction) {
+                //     return ({ isValid: false, credentials: { token: token, userData: {} } })
+                // } else {
                     let tokenData = await verifyToken(token, 'USER');
                     console.log("USER     ", token)
                     if (!tokenData || !tokenData['userData']) {
@@ -55,7 +55,7 @@ export let plugin = {
                             return ({ isValid: true, credentials: { token: token, userData: tokenData['userData'] } })
                         }
                     }
-                }
+                // }
             }
         });
 

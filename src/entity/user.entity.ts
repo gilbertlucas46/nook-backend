@@ -42,15 +42,16 @@ export class UserClass extends BaseEntity {
                 id: userData._id,
                 deviceId: payload.deviceId,
                 deviceToken: payload.deviceToken,
-                tokenType: CONSTANT.DATABASE.USER_TYPE.USER,
+                tokenType: userData.type,
                 timestamp: new Date().getTime(),
                 session: userData.session
             }
             let mergeData = { ...tokenData, ...sessionValid }
+            console.log('mergeDatamergeDatamergeDatamergeData', mergeData);
 
             let accessToken: any = await TokenManager.setToken(mergeData);
-            return accessToken["accessToken"];
 
+            return accessToken["accessToken"];
 
         } catch (error) {
             return Promise.reject(error)
