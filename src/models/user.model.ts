@@ -28,7 +28,7 @@ export interface IUser extends Document {
 }
 
 const userSchema = new Schema({
-    userName: { type: String, index: true },
+    userName: { type: String, index: true, unique: true },
     email: { type: String, trim: true, index: true, unique: true },
     password: { type: String, trim: true },
     firstName: { type: String, index: true },
@@ -68,9 +68,7 @@ const userSchema = new Schema({
             CONSTANT.DATABASE.USER_TYPE.TEANANT
         ],
         default: CONSTANT.DATABASE.USER_TYPE.TEANANT
-
     }
 })
-
 
 export let User = mongoose.model<IUser>("User", userSchema);
