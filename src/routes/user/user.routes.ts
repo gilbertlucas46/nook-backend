@@ -99,9 +99,7 @@ export let userRoute = [
                 let payload: string = request.auth.credentials.token;
                 console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
                 let registerResponse = await UserService.verifyToken(payload);
-
                 console.log('registerResponseregisterResponse', registerResponse);
-
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
             }
             catch (error) {

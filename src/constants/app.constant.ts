@@ -21,6 +21,7 @@ export let DATABASE = {
 
     },
 
+
     TOKEN_TYPE: {
         USER: "USER",
     },
@@ -125,13 +126,16 @@ export let STATUS_MSG = {
                 message: 'Request has allready been sent to the admin for approval.',
                 type: 'REQUEST_ALLREDY_SENT'
             },
+            USER_NAME_ALREDY_TAKEN: {
+                statusCode: 400,
+                message: 'User Name already Taken Provide Another',
+                type: '',
+            },
             NOT_VERIFIED: {
                 statusCode: 400,
                 message: 'You are not verified first verify.',
                 type: ''
             },
-
-
             CANNOT_PERFORM_UPDATE_OPERATION: {
                 statusCode: 400,
                 message: 'Cannot perform update operation.',
