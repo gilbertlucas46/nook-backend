@@ -1,0 +1,30 @@
+{
+    "environment": "production",
+    "host": "http://202.70.46.213",
+    "port": 7314,
+    "dbConfig": {
+        "dbUrl": "mongodb://uchatstg_usr:98HQuCd3PMgGgEG2@db-node1:27017,db-node2:27017,db-node3:27017/uchatstg_db?replicaSet=rs0&readPreference=secondaryPreferred"
+    },
+  
+    "cryptoSecret": "d6F3Efeq",
+    "jwtSecret": "cgfhfj",
+    "color": [
+        "#FFFFFF",
+        "#C0C0C0",
+        "#808080",
+        "#000000",
+        "#FF0000",
+        "#800000",
+        "#FFFF00",
+        "#808000",
+        "#00FF00",
+        "#008000",
+        "#00FFFF",
+        "#008080",
+        "#0000FF",
+        "#000080",
+        "#FF00FF",
+        "#800080"
+    ],
+    "displayColors": true
+}

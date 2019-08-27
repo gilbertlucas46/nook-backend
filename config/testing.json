@@ -1,0 +1,28 @@
+{
+    "environment": "testing",
+    "host": "http://uchatqa.appskeeper.com",
+    "port": 7315,
+    "dbConfig": {
+        "dbUrl": "mongodb://uchatqa_usr:`nookApp`@uchatqa.appskeeper.com:27200/uchatqa_db"
+    },
+   
+    "color": [
+        "#FFFFFF",
+        "#C0C0C0",
+        "#808080",
+        "#000000",
+        "#FF0000",
+        "#800000",
+        "#FFFF00",
+        "#808000",
+        "#00FF00",
+        "#008000",
+        "#00FFFF",
+        "#008080",
+        "#0000FF",
+        "#000080",
+        "#FF00FF",
+        "#800080"
+    ],
+    "displayColors": true
+}
