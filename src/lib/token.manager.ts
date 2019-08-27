@@ -6,6 +6,8 @@ import * as Jwt from 'jsonwebtoken';
 const cert = config.get('jwtSecret')
 
 export let setToken = async function (tokenData: any) {
+    console.log('tokenDatatokenDatatokenDatatokenData', tokenData);
+
     if (!tokenData.id || !tokenData.tokenType) {
         return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR)
     } else {
@@ -46,7 +48,6 @@ export let verifyToken = async function (token, tokenType) {
                     userData['userData'] = checkUserExist
                     return userData
                 }
-               
             }
         } else {
             return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)

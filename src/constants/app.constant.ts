@@ -1,7 +1,6 @@
 'use strict';
 import * as config from 'config'
 
-
 export let swaggerDefaultResponseMessages = [
     { code: 200, message: 'OK' },
     { code: 400, message: 'Bad Request' },
@@ -18,7 +17,7 @@ export let DATABASE = {
         AGENT: "AGENT",
         // MERCHANT: "MERCHANT",
         OWNER: "OWNER",
-        USER: "USER", //  normal user/ buyer
+        TEANANT: "TEANANT", //  normal user/ buyer
 
     },
 

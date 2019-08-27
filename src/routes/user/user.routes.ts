@@ -2,6 +2,7 @@
 import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant'
+// import { merchantValidatorInstance } from '../../validator/merchantValidator'
 import { UserService } from '../../controllers'
 
 
@@ -37,8 +38,10 @@ export let userRoute = [
                     type: Joi.string().valid([
                         Constant.DATABASE.USER_TYPE.AGENT,
                         Constant.DATABASE.USER_TYPE.OWNER,
-                        Constant.DATABASE.USER_TYPE.USER
-                    ])
+                        Constant.DATABASE.USER_TYPE.TEANANT
+                    ]),
+                    // required: true,
+                    default: Constant.DATABASE.USER_TYPE.TEANANT
                 },
                 failAction: UniversalFunctions.failActionFunction
             },
@@ -55,19 +58,20 @@ export let userRoute = [
         path: '/v1/user/login',
         handler: async (request, h) => {
             try {
-                let payload: UserRequest.login = request.payload;
+                let payload = request.payload;
                 console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
                 let registerResponse = await UserService.login(payload);
+
                 console.log('registerResponseregisterResponse', registerResponse);
 
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS, registerResponse))
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
             }
             catch (error) {
                 return (UniversalFunctions.sendError(error))
             }
         },
         options: {
-            description: 'Register to applications',
+            description: 'login to applications',
             tags: ['api', 'anonymous', 'user', 'register'],
             // auth: "BasicAuth"
             validate: {
@@ -86,5 +90,49 @@ export let userRoute = [
                 }
             }
         }
+    },
+    {
+        method: 'POST',
+        path: '/v1/user/verify-Token',
+        handler: async (request, h) => {
+            try {
+                let payload: string = request.auth.credentials.token;
+                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
+                let registerResponse = await UserService.verifyToken(payload);
+
+                console.log('registerResponseregisterResponse', registerResponse);
+
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'Register to applications',
+            tags: ['api', 'anonymous', 'user', 'register'],
+            auth: "UserAuth",
+            validate: {
+                payload: {
+                    email: Joi.string().min(1).max(20).trim().required(),
+                    password: Joi.string().min(1).max(20).trim().required(),
+                    deviceId: Joi.string(),
+                    deviceToken: Joi.string()
+                },
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    // payloadType: 'form',
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
     }
+
+
+
+
+
+
 ]
