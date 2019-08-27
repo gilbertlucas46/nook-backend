@@ -65,9 +65,9 @@ const userSchema = new Schema({
         enum: [
             CONSTANT.DATABASE.USER_TYPE.AGENT,
             CONSTANT.DATABASE.USER_TYPE.OWNER,
-            CONSTANT.DATABASE.USER_TYPE.TEANANT
+            CONSTANT.DATABASE.USER_TYPE.TENANT
         ],
-        default: CONSTANT.DATABASE.USER_TYPE.TEANANT
+        default: CONSTANT.DATABASE.USER_TYPE.TENANT
 
     }
 })

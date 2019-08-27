@@ -37,10 +37,10 @@ export let userRoute = [
                     type: Joi.string().valid([
                         Constant.DATABASE.USER_TYPE.AGENT,
                         Constant.DATABASE.USER_TYPE.OWNER,
-                        Constant.DATABASE.USER_TYPE.TEANANT
+                        Constant.DATABASE.USER_TYPE.TENANT
                     ]),
                     // required: true,
-                    default: Constant.DATABASE.USER_TYPE.TEANANT
+                    default: Constant.DATABASE.USER_TYPE.TENANT
                 },
                 failAction: UniversalFunctions.failActionFunction
             },
@@ -128,13 +128,4 @@ export let userRoute = [
             }
         }
     }
-<<<<<<< HEAD
-
-
-
-
-
-
-=======
->>>>>>> property model added
 ]

@@ -17,12 +17,7 @@ export let DATABASE = {
     USER_TYPE: {
         AGENT: "AGENT",
         OWNER: "OWNER",
-<<<<<<< HEAD
-        TEANANT: "TEANANT", //  normal user/ buyer
-
-=======
-        USER: "USER", //  normal user/ buyer
->>>>>>> property model added
+        TENANT: "TENANT", //  normal user/ buyer
     },
     TOKEN_TYPE: {
         USER: "USER",
