@@ -3,11 +3,7 @@ import * as Constant from '../constants';
 
 
 export interface ISession extends Document {
-<<<<<<< HEAD
     userId?: string,
-=======
-    userId: string
->>>>>>> property model added
     validAttempt: boolean,
     ipAddress: string,
     deviceId: string,

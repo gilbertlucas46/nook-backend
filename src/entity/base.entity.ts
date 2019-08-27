@@ -11,8 +11,7 @@ export class BaseEntity {
     }
 
     async createOneEntity(saveData: Object) {
-        try {    console.log('=======================>>>>>>>>>>>>',this.modelName,saveData);        
-             console.log('=============================>>>>>>>>>>>>>>>>',this.modelName);
+        try {
             let data = await this.DAOManager.saveData(this.modelName, saveData)
             return data
         } catch (error) {
