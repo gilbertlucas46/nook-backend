@@ -19,7 +19,6 @@ export class UserController {
             let checkMail = {
                 email: payload.email
             }
-
             let UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']) //UserRequest.UserData = await userClass.getOneEntity(criteria, {})        
             if (UserCheck && UserCheck._id) {
                 //  if (UserCheck.)
@@ -33,10 +32,11 @@ export class UserController {
                     phoneNumber: payload.phoneNumber,
                     firstName: payload.firstName,
                     lastName: payload.lastName,
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                    fullMobileNumber: payload.countryCode + payload.phoneNumber,
-                    isEmailVerified: true
+                    createdAt: new Date().getTime(),
+                    updatedAt: new Date().getTime(),
+                    fullPhoneNumber: payload.countryCode + payload.phoneNumber,
+                    isEmailVerified: true,
+                    type: payload.type
                 }
                 let User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData) //UserRequest.UserData = await userClass.getOneEntity(criteria, {})        
                 console.log('UserUserUserUserUserUser', User);
@@ -52,7 +52,7 @@ export class UserController {
         }
     }
 
-    async login(payload: UserRequest.login) {
+    async login(payload: UserRequest.Login) {
         try {
             let checkEmail = {
                 email: payload.email
@@ -62,15 +62,17 @@ export class UserController {
             console.log('userDatauserDatauserData', userData);
 
             if (userData && userData._id) {
+
                 if (userData.isEmailVerified) {
+
                     if (!(await utils.deCryptData(payload.password, userData.password))) {
                         return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD
                     } else {
+
                         let accessToken = await ENTITY.UserE.createToken(payload, userData);
-                        // await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
-                        // let formatedData = await utils.formatUserData(userData);
-                        // return { formatedData: formatedData, accessToken: accessToken };
-                        return Constant.STATUS_MSG.SUCCESS.S200.LOGIN
+                        await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
+                        let formatedData = await utils.formatUserData(userData);
+                        return { formatedData: formatedData, accessToken: accessToken };
                     }
                 } else {
                     return Constant.STATUS_MSG.ERROR.E400.NOT_VERIFIED
@@ -83,7 +85,14 @@ export class UserController {
             return Promise.reject(error)
         }
     }
+    async verifyToken(a) {
+        try {
 
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
 }
 
 export let UserService = new UserController();
