@@ -4,6 +4,7 @@ import * as UniversalFunctions from '../../utils'
 import * as Constant from '../../constants/app.constant'
 import * as ENTITY from '../../entity'
 import * as utils from "../../utils/index";
+import { userRoute } from '../../routes/user/user.routes';
 
 export class UserController {
     constructor() { }
@@ -13,31 +14,41 @@ export class UserController {
             let checkMail = {
                 email: payload.email
             }
-            let UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']) //UserRequest.UserData = await userClass.getOneEntity(criteria, {})        
-            if (UserCheck && UserCheck._id) {
-                //  if (UserCheck.)
-                return Constant.STATUS_MSG.ERROR.ALREADY_EXIST
-            } else {
-                let makePassword = await utils.cryptData(payload.password);
-                let userData = {
-                    userName: payload.userName,
-                    email: payload.email,
-                    password: makePassword,
-                    phoneNumber: payload.phoneNumber,
-                    firstName: payload.firstName,
-                    lastName: payload.lastName,
-                    createdAt: new Date().getTime(),
-                    updatedAt: new Date().getTime(),
-                    fullPhoneNumber: payload.countryCode + payload.phoneNumber,
-                    isEmailVerified: true,
-                    type: payload.type
-                }
-                let User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData) //UserRequest.UserData = await userClass.getOneEntity(criteria, {})        
-                let userResponse = UniversalFunctions.formatUserData(User);
-                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse)
+            let checkUserName = {
+                userName: payload.userName
             }
-            // let userResponse = UniversalFunctions.formatUserData(createMerchant)
-            // return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse)
+            let userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id'])
+            if (userNameCheck && userNameCheck._id) {
+                return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN
+            } else {
+                let UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']) //UserRequest.UserData = await userClass.getOneEntity(criteria, {})        
+                if (UserCheck && UserCheck._id) {
+                    return Constant.STATUS_MSG.ERROR.ALREADY_EXIST
+                } else {
+                    let makePassword = await utils.cryptData(payload.password);
+                    let userData = {
+                        userName: payload.userName,
+                        email: payload.email,
+                        password: makePassword,
+                        phoneNumber: payload.phoneNumber,
+                        firstName: payload.firstName,
+                        lastName: payload.lastName,
+                        createdAt: new Date().getTime(),
+                        updatedAt: new Date().getTime(),
+                        fullPhoneNumber: payload.countryCode + payload.phoneNumber,
+                        isEmailVerified: true,
+                        type: payload.type
+                    }
+                    let User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData) //UserRequest.UserData = await userClass.getOneEntity(criteria, {})        
+                    console.log('UserUserUserUserUserUser', User);
+
+                    let userResponse = UniversalFunctions.formatUserData(User);
+                    return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse)
+                }
+                // let userResponse = UniversalFunctions.formatUserData(createMerchant)
+                // return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse)
+
+            }
 
         } catch (error) {
             return Promise.reject(error)
@@ -63,21 +74,6 @@ export class UserController {
             } else {
                 return Constant.STATUS_MSG.ERROR.E400.NOT_VERIFIED
             }
-        } catch (error) {
-            return Promise.reject(error)
-        }
-    }
-    async verifyToken(a) {
-        try {
-
-
-        } catch (error) {
-            return Promise.reject(error)
-        }
-    }
-    async addProperty(payload, userData) {
-        try {
-
         } catch (error) {
             return Promise.reject(error)
         }
