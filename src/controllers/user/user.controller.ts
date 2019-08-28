@@ -62,6 +62,7 @@ export class UserController {
             }
             let password = payload.password;
             let userData = await ENTITY.UserE.getOneEntity(checkEmail, {});
+            console.log('userDatauserDatauserData', userData);
 
             if (userData && userData._id) {
 
@@ -81,6 +82,21 @@ export class UserController {
             } else {
                 return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL
             }
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    async portpertyDetail(payload: PropertyRequest.PropertyDetail) {
+        try {
+            let criteria = {
+                _id: payload._id
+            }
+            let getDetail = await ENTITY.PropertyE.getOneEntity(criteria, {});
+            if (!getDetail || getDetail == null) {
+                return Constant.STATUS_MSG.ERROR.E400.CUSTOM_DEFAULT
+            }
+            return getDetail;
 
         } catch (error) {
             return Promise.reject(error)

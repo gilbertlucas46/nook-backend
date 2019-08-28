@@ -12,6 +12,8 @@ export class PropertyController {
             let criteria = {
                 _id: payload.propertyId
             }
+            console.log('userDataaa', userData);
+
             payload['updatedAt'] = new Date().getTime()
 
             if (payload.propertyId) {
@@ -23,7 +25,7 @@ export class PropertyController {
             payload['property_added_by'] = {};
             payload['property_added_by']['userId'] = userData._id;
             payload['property_added_by']['phoneNumber'] = userData.phoneNumber;
-            payload['property_added_by']['imageUrl'] = userData
+            payload['property_added_by']['imageUrl'] = userData.profilePicUrl
             payload['property_added_by']['userName'] = userData.userName
             let propertyData = await ENTITY.PropertyE.createOneEntity(payload);
             return propertyData;
