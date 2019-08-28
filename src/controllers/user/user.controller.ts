@@ -62,12 +62,10 @@ export class UserController {
             }
             let password = payload.password;
             let userData = await ENTITY.UserE.getOneEntity(checkEmail, {});
-            console.log('userDatauserDatauserData', userData);
 
             if (userData && userData._id) {
 
                 if (userData.isEmailVerified) {
-
                     if (!(await utils.deCryptData(payload.password, userData.password))) {
                         return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD
                     } else {

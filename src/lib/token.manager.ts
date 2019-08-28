@@ -6,8 +6,6 @@ import * as ENTITY from '../entity'
 const cert = config.get('jwtSecret')
 
 export let setToken = async function (tokenData: any) {
-    console.log('tokenDatatokenDatatokenDatatokenData', tokenData);
-
     if (!tokenData.id || !tokenData.tokenType) {
         return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR)
     } else {
@@ -15,7 +13,6 @@ export let setToken = async function (tokenData: any) {
             let tokenToSend = await Jwt.sign(tokenData, cert, { algorithm: 'HS256' });
             return { accessToken: tokenToSend }
         } catch (error) {
-            console.log("Token Manger, error in setToken", error)
             return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR)
         }
     }

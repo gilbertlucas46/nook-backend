@@ -8,7 +8,6 @@ import * as randomstring from 'randomstring';
 
 export let sendError = function (data) {
     if (typeof data === 'object' && data.hasOwnProperty('statusCode') && (data.hasOwnProperty('message') || data.hasOwnProperty('customMessage'))) {
-        console.log('attaching resposnetype', data.type)
         let errorToSend
         if (data.hasOwnProperty('message')) {
             let error = new Error(data.message);
@@ -130,7 +129,6 @@ export let generateRandomString = function (digits: number) {
 };
 
 export let failActionFunction = async function (request, h, err) {
-    console.log("err", err)
     let customErrorMessage = ""
     if (err.name === "ValidationError") {
         customErrorMessage = err.details[0].message

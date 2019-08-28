@@ -46,8 +46,6 @@ export class UserClass extends BaseEntity {
                 session: userData.session
             }
             let mergeData = { ...tokenData, ...sessionValid }
-            console.log('mergeDatamergeDatamergeDatamergeData', mergeData);
-
             let accessToken: any = await TokenManager.setToken(mergeData);
 
             return accessToken["accessToken"];

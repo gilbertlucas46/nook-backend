@@ -17,7 +17,6 @@ export let plugin = {
             allowMultipleHeaders: true,
             accessTokenName: 'accessToken',
             validate: async (request, token, h) => {
-                console.log("ADMIN      ", token)
                 let tokenData = await verifyToken(token, 'ADMIN')
                 if (!tokenData || !tokenData['userData']) {
                     return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED))
@@ -64,7 +63,6 @@ export let plugin = {
             allowMultipleHeaders: true,
             accessTokenName: 'accessToken',
             validate: async (request, token, h) => {
-                console.log("GUEST      ", token)
                 let tokenData = await verifyToken(token, 'GUEST')
                 if (!tokenData || !tokenData['userData']) {
                     return ({ isValid: true, credentials: { token: token, userData: {} } })
@@ -96,17 +94,14 @@ export let plugin = {
 
 
 let apiKeyFunction = async function (api_key) {
-    // console.log("apiKey.........", api_key)
     return (api_key === "1234") ? true : false
 }
 
 let basicAuthFunction = async function (access_token) {
-    // console.log("access_token.........", access_token)
 
     const credentials = Buffer.from(access_token, 'base64').toString('ascii');
     const [username, password] = credentials.split(':');
 
-    // console.log("credentials.........", credentials)
     if (username !== password) {
         return false;
     }
