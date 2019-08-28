@@ -10,7 +10,7 @@ export let plugin = {
     register: async function (server) {
         const swaggerOptions = {
             info: {
-                title: 'UCHAT API 1.0',
+                title: 'NOOK_APP API 1.0',
                 version: 'v1',
             },
             'securityDefinitions': {

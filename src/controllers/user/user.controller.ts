@@ -23,7 +23,7 @@ export class UserController {
             } else {
                 let UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']) //UserRequest.UserData = await userClass.getOneEntity(criteria, {})        
                 if (UserCheck && UserCheck._id) {
-                     return Constant.STATUS_MSG.ERROR.ALREADY_EXIST
+                    return Constant.STATUS_MSG.ERROR.ALREADY_EXIST
                 } else {
                     let makePassword = await utils.cryptData(payload.password);
                     let userData = {
@@ -83,21 +83,6 @@ export class UserController {
             } else {
                 return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL
             }
-
-        } catch (error) {
-            return Promise.reject(error)
-        }
-    }
-    async verifyToken(a) {
-        try {
-
-
-        } catch (error) {
-            return Promise.reject(error)
-        }
-    }
-    async addProperty(payload, userData) {
-        try {
 
         } catch (error) {
             return Promise.reject(error)

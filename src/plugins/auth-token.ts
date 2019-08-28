@@ -42,7 +42,7 @@ export let plugin = {
                 // if (!checkApiKeyFunction) {
                 //     return ({ isValid: false, credentials: { token: token, userData: {} } })
                 // } else {
-                let tokenData = await verifyToken(token, 'TENANT');
+                let tokenData = await verifyToken(token, 'USER',request);
                 console.log("TENANT     ", token)
                 if (!tokenData || !tokenData['userData']) {
                     return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.TOKEN_ALREADY_EXPIRED))

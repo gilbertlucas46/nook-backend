@@ -24,6 +24,12 @@ export let DATABASE = {
         TENANT: "TENANT",
         USER: "USER"
     },
+    PROPERTY_STATUS: {
+        VERIFIED: "VERIFIED",
+        REJECTED: "REJECTED",
+        BLOCKED: "BLOCKED",
+        PENDING: "PENDING"
+    },
     DEVICE_TYPES: {
         IOS: 'IOS',
         ANDROID: 'ANDROID',
