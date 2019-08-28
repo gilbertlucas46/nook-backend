@@ -12,10 +12,7 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload: UserRequest.Register = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
                 let registerResponse = await UserService.register(payload);
-                console.log('registerResponseregisterResponse', registerResponse);
-
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS, registerResponse))
             }
             catch (error) {
@@ -57,11 +54,7 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
                 let registerResponse = await UserService.login(payload);
-
-                console.log('registerResponseregisterResponse', registerResponse);
-
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
             }
             catch (error) {
@@ -89,5 +82,4 @@ export let userRoute = [
             }
         }
     },
-
 ]

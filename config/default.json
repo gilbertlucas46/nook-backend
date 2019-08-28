@@ -1,9 +1,11 @@
 {
     "environment": "development",
-    "host": "http://uchatdev.appskeeper.com",
-    "port": 2222,
+    "host": "http://nookdev.appskeeper.com/",
+    "port": 7361,
     "dbConfig": {
-        "dbUrl": "mongodb://localhost:27017/nook-App"
+        "dbPwd": "Iidjsi@#1!",
+        "dbUser": "nook_devusr",
+        "dbUrl": "mongodb://@appskeeper.com:2798/nook_devdb"
     },
     "cryptoSecret": "d6F3Efeq",
     "jwtSecret": "cgfhfj",
