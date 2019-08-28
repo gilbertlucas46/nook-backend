@@ -1,11 +1,12 @@
 {
     "environment": "staging",
-    "host": "",
-    "port": 7314,
+    "host": "http:// nookstg.appskeeper.com/",
+    "port": 7363,
     "dbConfig": {
-        "dbUrl": "mongodb://uchatstg_usr:`nookApp`@uchatdev.appskeeper.com:27200/uchatstg_db"
+        "dbPwd" : "Iidjsi@#1!",
+        "dbUser": "nook_devusr",
+        "dbUrl": "mongodb://@appskeeper.com:2798/nook_devdb"
     },
-    
     "cryptoSecret": "d6F3Efeq",
     "jwtSecret": "cgfhfj",
     "color": [

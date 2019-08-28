@@ -1,11 +1,12 @@
 {
     "environment": "production",
-    "host": "http://202.70.46.213",
+    "host": "http://appskeeper.com",
     "port": 7314,
     "dbConfig": {
+        "dbPwd": "Iidjsi@#1!",
+        "dbUser": "nook_devusr",
         "dbUrl": "mongodb://uchatstg_usr:98HQuCd3PMgGgEG2@db-node1:27017,db-node2:27017,db-node3:27017/uchatstg_db?replicaSet=rs0&readPreference=secondaryPreferred"
     },
-  
     "cryptoSecret": "d6F3Efeq",
     "jwtSecret": "cgfhfj",
     "color": [
