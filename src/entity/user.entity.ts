@@ -13,7 +13,6 @@ export class UserClass extends BaseEntity {
 
     async createMerchant(userData: UserRequest.Register) {
         try {
-            console.log('insdie merchantclasss============================..................', userData);
             let dataToInsert = {
                 name: userData.userName,
                 email: userData.email,

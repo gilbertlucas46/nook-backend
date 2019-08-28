@@ -14,7 +14,6 @@ export class DAOManager {
             console.log('inside save data function');
             
             let ModelName = Models[model]
-            console.log("Model>>>>>>>>>>>>>>",ModelName)
             data.createdDate = new Date().getTime()
             return await new ModelName(data).save();
         }

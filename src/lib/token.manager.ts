@@ -2,7 +2,7 @@
 import * as config from 'config'
 import * as Constant from '../constants'
 import * as Jwt from 'jsonwebtoken';
-// import * as ENTITY from '../entity'
+import * as ENTITY from '../entity'
 const cert = config.get('jwtSecret')
 
 export let setToken = async function (tokenData: any) {
@@ -28,10 +28,10 @@ export let verifyToken = async function (token, tokenType) {
 
         if (tokenType == result['tokenType']) {
             switch (result['tokenType']) {
-                case Constant.DATABASE.TOKEN_TYPE.USER: {
+                case Constant.DATABASE.TOKEN_TYPE.TENANT: {
                     let userData = {};
                     let userCriteria = { _id: result['id'] }
-                    let checkUserExist   // = await ENTITY.UserC.getOneEntity(userCriteria, {})
+                    let checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {})
                     if (!checkUserExist)
                         return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
 
@@ -40,7 +40,7 @@ export let verifyToken = async function (token, tokenType) {
                         deviceId: result['deviceId'],
                         loginStatus: true
                     };
-                    let checkValidSession   // = await ENTITY.SessionC.getOneEntity(sessionCriteria, {})
+                    let checkValidSession = await ENTITY.SessionE.getOneEntity(sessionCriteria, {})
                     if (!checkValidSession)
                         return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
                     userData['id'] = checkUserExist['_id'];
