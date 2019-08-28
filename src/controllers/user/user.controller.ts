@@ -1,16 +1,10 @@
 
 import * as config from 'config';
 import * as UniversalFunctions from '../../utils'
-// import { SMSmanager } from '../../Lib';
 import * as Constant from '../../constants/app.constant'
 import * as ENTITY from '../../entity'
-// const MerchantC = new MerchantClass();
 import * as utils from "../../utils/index";
 
-// import { SessionClass } from './../../Entity/Session'
-// const sessionClass = new SessionClass()
-
-// import { PasswordC } from '../entity/'
 export class UserController {
     constructor() { }
 
@@ -78,7 +72,7 @@ export class UserController {
                     return Constant.STATUS_MSG.ERROR.E400.NOT_VERIFIED
                 }
             } else {
-                return Constant.STATUS_MSG.ERROR.E400.INVALID_ID
+                return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL
             }
 
         } catch (error) {
@@ -88,6 +82,13 @@ export class UserController {
     async verifyToken(a) {
         try {
 
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    async addProperty(payload, userData) {
+        try {
 
         } catch (error) {
             return Promise.reject(error)

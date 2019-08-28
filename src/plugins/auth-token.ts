@@ -17,7 +17,7 @@ export let plugin = {
             allowMultipleHeaders: true,
             accessTokenName: 'accessToken',
             validate: async (request, token, h) => {
-                console.log("ADMIN      ",token)
+                console.log("ADMIN      ", token)
                 let tokenData = await verifyToken(token, 'ADMIN')
                 if (!tokenData || !tokenData['userData']) {
                     return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED))
@@ -42,19 +42,19 @@ export let plugin = {
                 // if (!checkApiKeyFunction) {
                 //     return ({ isValid: false, credentials: { token: token, userData: {} } })
                 // } else {
-                    let tokenData = await verifyToken(token, 'USER');
-                    console.log("USER     ", token)
-                    if (!tokenData || !tokenData['userData']) {
-                        return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.TOKEN_ALREADY_EXPIRED))
+                let tokenData = await verifyToken(token, 'TENANT');
+                console.log("TENANT     ", token)
+                if (!tokenData || !tokenData['userData']) {
+                    return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.TOKEN_ALREADY_EXPIRED))
+                } else {
+                    if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.BLOCKED) {
+                        return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED));
+                    } else if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.DELETED) {
+                        return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED));
                     } else {
-                        if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.BLOCKED) {
-                            return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401 .ADMIN_BLOCKED));
-                        } else if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.DELETED) {
-                            return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED));
-                        } else {
-                            return ({ isValid: true, credentials: { token: token, userData: tokenData['userData'] } })
-                        }
+                        return ({ isValid: true, credentials: { token: token, userData: tokenData['userData'] } })
                     }
+                }
                 // }
             }
         });
@@ -64,7 +64,7 @@ export let plugin = {
             allowMultipleHeaders: true,
             accessTokenName: 'accessToken',
             validate: async (request, token, h) => {
-                console.log("GUEST      ",token)
+                console.log("GUEST      ", token)
                 let tokenData = await verifyToken(token, 'GUEST')
                 if (!tokenData || !tokenData['userData']) {
                     return ({ isValid: true, credentials: { token: token, userData: {} } })
