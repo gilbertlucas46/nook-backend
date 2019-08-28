@@ -72,6 +72,10 @@ declare namespace PropertyRequest {
         },
         propertyImages: string[]
     }
+
+    export interface PropertyDetail {
+        _id: string
+    }
 }
 
 

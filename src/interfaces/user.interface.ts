@@ -37,6 +37,8 @@ declare namespace UserRequest {
         phoneNumber: string,
         countryCode?: string
         type?: string
+        profilePicUrl?: string
+
     }
 
 

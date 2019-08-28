@@ -8,7 +8,7 @@ import { PropertyService } from '../../controllers'
 export let propertyRoute = [
     {
         method: 'POST',
-        path: '/v1/user/add-property',
+        path: '/v1/user/property',
         handler: async (request, h) => {
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
