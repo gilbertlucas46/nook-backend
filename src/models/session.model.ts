@@ -41,5 +41,4 @@ const sessionSchema = new Schema({
 
 sessionSchema.index({ userId: 1, loginStatus: 1 })
 
-
 export let Session = model<ISession>('Session', sessionSchema)
