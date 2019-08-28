@@ -36,7 +36,6 @@ export class SessionClass extends BaseEntity {
             if (sessionData.deviceToken)
                 sessionInfo.deviceToken = sessionData.deviceToken;
             let session = await this.DAOManager.saveData(this.modelName, sessionInfo);
-            console.log('sessionsessionsessionsession', session);
 
             if (session && session._id) return session;
         } catch (error) {
