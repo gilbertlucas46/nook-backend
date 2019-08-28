@@ -2,8 +2,8 @@ import { Schema, Document, model } from 'mongoose'
 import * as Constant from '../constants';
 
 export interface IProperty extends Document {
-    createdAt: number;
-    updatedAt: number;
+    createdAt?: number;
+    updatedAt?: number;
     property_features: {
         storeys_2: boolean;
         security_24hr: boolean;
@@ -70,7 +70,7 @@ export interface IProperty extends Document {
         price_label: string; // monthly
     },
     property_added_by: {
-        userId: string;
+        userId?: string;
         userName: string;
         contactNo: string;
         imageUrl: string
@@ -79,7 +79,7 @@ export interface IProperty extends Document {
 };
 
 const propertySchema = new Schema({
-    _id: { type: Schema.Types.ObjectId, required: true, auto: true, },
+    _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     createdAt: { type: Number, default: new Date().getTime() },
     updatedAt: { type: Number, default: new Date().getTime() },
@@ -129,7 +129,7 @@ const propertySchema = new Schema({
         buildYear: { type: Number },
     },
     property_address: {
-        address: { type: String },
+        address: { type: String, required: true },
         region: { type: String },
         city: { type: String },
         Barangay: { type: String },
@@ -158,7 +158,16 @@ const propertySchema = new Schema({
                 Constant.DATABASE.PROPERTY_TYPE.ROOM,
             ], index: true
         },
-        status: { type: String },
+        status: {
+            type: String,
+            enum: [
+                Constant.DATABASE.PROPERTY_STATUS.BLOCKED,
+                Constant.DATABASE.PROPERTY_STATUS.REJECTED,
+                Constant.DATABASE.PROPERTY_STATUS.VERIFIED,
+                Constant.DATABASE.PROPERTY_STATUS.PENDING
+            ],
+            default: Constant.DATABASE.PROPERTY_STATUS.PENDING
+        },
         label: {
             type: String,
             enum: [
@@ -180,12 +189,13 @@ const propertySchema = new Schema({
     },
 
     property_added_by: {
-        userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+         userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
         userName: { type: String },
-        contactNo: { type: String },
+        phoneNumber: { type: String },
         imageUrl: { type: String },
     },
     propertyImages: { type: [String] },
 });
+
 
 export let Property = model<IProperty>('Property', propertySchema)
