@@ -28,10 +28,7 @@ export class SessionClass extends BaseEntity {
                 columnName = 'userId';
                 sessionInfo[columnName] = userData._id;
             }
-            // else if (type == 'merchant') {
-            //     columnName = 'merchantId';
-            //     sessionInfo[columnName] = userData._id;
-            // }
+
 
             if (sessionData.deviceToken)
                 sessionInfo.deviceToken = sessionData.deviceToken;

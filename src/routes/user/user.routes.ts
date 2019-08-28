@@ -35,9 +35,8 @@ export let userRoute = [
                         Constant.DATABASE.USER_TYPE.AGENT,
                         Constant.DATABASE.USER_TYPE.OWNER,
                         Constant.DATABASE.USER_TYPE.TENANT
-                    ]),
+                    ])
                     // required: true,
-                    default: Constant.DATABASE.USER_TYPE.TENANT
                 },
                 failAction: UniversalFunctions.failActionFunction
             },

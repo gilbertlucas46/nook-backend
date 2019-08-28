@@ -24,6 +24,12 @@ export let DATABASE = {
         TENANT: "TENANT",
         USER: "USER"
     },
+    PROPERTY_STATUS: {
+        VERIFIED: "VERIFIED",
+        REJECTED: "REJECTED",
+        BLOCKED: "BLOCKED",
+        PENDING: "PENDING"
+    },
     DEVICE_TYPES: {
         IOS: 'IOS',
         ANDROID: 'ANDROID',
@@ -141,6 +147,11 @@ export let STATUS_MSG = {
                 statusCode: 400,
                 message: 'Request has allready been sent to the admin for approval.',
                 type: 'REQUEST_ALLREDY_SENT'
+            },
+            USER_NAME_ALREDY_TAKEN: {
+                statusCode: 400,
+                message: 'User Name already Taken Provide Another',
+                type: '',
             },
             NOT_VERIFIED: {
                 statusCode: 400,

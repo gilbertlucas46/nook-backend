@@ -18,35 +18,39 @@ export let setToken = async function (tokenData: any) {
     }
 };
 
-export let verifyToken = async function (token, tokenType) {
+export let verifyToken = async function (token, tokenType, request?: any) {
     try {
         let result = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
-      
-        if (tokenType == result['tokenType']) {
-            switch (result['tokenType']) {
-                case Constant.DATABASE.TOKEN_TYPE.TENANT: {
-                    let userData = {};
-                    let userCriteria = { _id: result['id'] }
-                    let checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {})
-                    if (!checkUserExist)
-                        return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
+        console.log("Token Manger ", result)
 
-                    let sessionCriteria = {
-                        userId: result['id'],
-                        deviceId: result['deviceId'],
-                        loginStatus: true
-                    };
-                    let checkValidSession = await ENTITY.SessionE.getOneEntity(sessionCriteria, {})
-                    if (!checkValidSession)
-                        return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
-                    userData['id'] = checkUserExist['_id'];
-                    userData['type'] = tokenType;
-                    userData['userData'] = checkUserExist
-                    return userData
-                }
+        if (result['tokenType'] != undefined) {
+            // switch (result['tokenType']) {
+            // case Constant.DATABASE.TOKEN_TYPE.TENANT: {
+            if (result['tokenType'] == 'TENANT' || "AGENT" || "OWNER") {
+
+                let userData = {};
+                let userCriteria = { _id: result['id'] }
+                let checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {})
+                if (!checkUserExist)
+                    return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
+
+                let sessionCriteria = {
+                    userId: result['id'],
+                    deviceId: result['deviceId'],
+                    loginStatus: true
+                };
+                let checkValidSession = await ENTITY.SessionE.getOneEntity(sessionCriteria, {})
+                if (!checkValidSession)
+                    return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
+                userData['id'] = checkUserExist['_id'];
+                userData['type'] = tokenType;
+                userData['userData'] = checkUserExist
+                return userData
+                // }
+                // }
+            } else {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
             }
-        } else {
-            return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
         }
 
     } catch (error) {
