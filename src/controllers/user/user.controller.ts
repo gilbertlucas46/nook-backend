@@ -49,28 +49,20 @@ export class UserController {
             let checkEmail = {
                 email: payload.email
             }
-            let password = payload.password;
             let userData = await ENTITY.UserE.getOneEntity(checkEmail, {});
-
-            if (userData && userData._id) {
-
-                if (userData.isEmailVerified) {
-                    if (!(await utils.deCryptData(payload.password, userData.password))) {
-                        return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD
-                    } else {
-
-                        let accessToken = await ENTITY.UserE.createToken(payload, userData);
-                        await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
-                        let formatedData = await utils.formatUserData(userData);
-                        return { formatedData: formatedData, accessToken: accessToken };
-                    }
+            if (!userData) return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL
+            if (userData.isEmailVerified) {
+                if (!(await utils.deCryptData(payload.password, userData.password))) {
+                    return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD
                 } else {
-                    return Constant.STATUS_MSG.ERROR.E400.NOT_VERIFIED
+                    let accessToken = await ENTITY.UserE.createToken(payload, userData);
+                    await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
+                    let formatedData = await utils.formatUserData(userData);
+                    return { formatedData: formatedData, accessToken: accessToken };
                 }
             } else {
-                return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL
+                return Constant.STATUS_MSG.ERROR.E400.NOT_VERIFIED
             }
-
         } catch (error) {
             return Promise.reject(error)
         }
