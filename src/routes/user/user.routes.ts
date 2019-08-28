@@ -107,8 +107,35 @@ export let userRoute = [
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
             },
+        }
+    },
+
+    {
+        method: 'PATCH',
+        path: '/v1/user/forgetPassword',
+        handler: async (request, h) => {
+            try {
+                let payload = request.payload;
+                let responseData = await UserService.register(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS, responseData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'Forget Password',
+            tags: ['api', 'anonymous', 'user', 'register'],
+            // auth: "BasicAuth"
+            validate: {
+                payload: {
+                    email: Joi.string().email({ minDomainSegments: 2 })
+                },
+                failAction: UniversalFunctions.failActionFunction
+            },
             plugins: {
                 'hapi-swagger': {
+                    // payloadType: 'form',
                     responseMessages: Constant.swaggerDefaultResponseMessages
                 }
             }

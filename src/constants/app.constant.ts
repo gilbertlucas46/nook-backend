@@ -462,7 +462,6 @@ export let STATUS_MSG = {
 }
 
 
-
 export let SERVER = {
     DOMAIN_NAME: 'http://localhost:7313/',
     IOS_URL: "uchat://",
