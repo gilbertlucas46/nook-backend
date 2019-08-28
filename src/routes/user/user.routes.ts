@@ -2,7 +2,6 @@
 import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant'
-// import { merchantValidatorInstance } from '../../validator/merchantValidator'
 import { UserService } from '../../controllers'
 
 
@@ -13,10 +12,7 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload: UserRequest.Register = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
                 let registerResponse = await UserService.register(payload);
-                console.log('registerResponseregisterResponse', registerResponse);
-
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS, registerResponse))
             }
             catch (error) {
@@ -59,11 +55,7 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
                 let registerResponse = await UserService.login(payload);
-
-                console.log('registerResponseregisterResponse', registerResponse);
-
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
             }
             catch (error) {
@@ -97,11 +89,7 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload: string = request.auth.credentials.token;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
                 let registerResponse = await UserService.verifyToken(payload);
-
-                console.log('registerResponseregisterResponse', registerResponse);
-
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
             }
             catch (error) {
@@ -136,9 +124,7 @@ export let userRoute = [
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload: string = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
                 let registerResponse = await UserService.addProperty(payload, userData);
-                console.log('registerResponseregisterResponse', registerResponse);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
             }
             catch (error) {
@@ -228,5 +214,4 @@ export let userRoute = [
             }
         }
     }
- 
 ]

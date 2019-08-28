@@ -10,8 +10,6 @@ import * as config from 'config'
 
 let env = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'default';
 
-console.log("env", env);
-
 const server = Hsrc.server({
   port: config.get('port'),
   routes: { cors: true },
@@ -25,22 +23,19 @@ const init = async () => {
         method: 'GET',
         path: '/{path*}',
         options: {
-        handler: {
-          directory: {
-            path: process.cwd() + '/uploads/',
-            listing: false,
+          handler: {
+            directory: {
+              path: process.cwd() + '/uploads/',
+              listing: false,
+            }
           }
         }
-      }
-    })
+      })
     server.route(Routes);
 
-
-    server.log("info", "Plugins Loaded");
     await server.start();
     let db = new Bootstrap.Bootstrap();
     await db.bootstrap(server);
-
     console.log("Server running at:", config.get('port'));
   } catch (err) {
     console.log("Error while loading plugins : " + err);
