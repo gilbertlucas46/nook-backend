@@ -10,17 +10,14 @@ import * as config from 'config'
 
 let env = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'default';
 
+let originArray = ['http://localhost:4200', 'http://localhost:4201', 'http://localhost','https://nookdevang.appskeeper.com','http://nookdevang.appskeeper.com'];
+
 const server = Hsrc.server({
   port: config.get('port'),
-  // routes: { cors: true },
   routes: {
     cors: {
-      origin: ['*'], // an array of origins or 'ignore'
-      headers: ['Authorization'], // an array of strings - 'Access-Control-Allow-Headers' 
-      exposedHeaders: ['Accept'], // an array of exposed headers - 'Access-Control-Expose-Headers',
-      additionalExposedHeaders: ['Accept'], // an array of additional exposed headers
-      maxAge: 60,
-      credentials: true // boolean - 'Access-Control-Allow-Credentials'
+      origin: originArray,
+      additionalHeaders: ['Accept', 'Access-Control-Allow-Origin', 'x-requested-with', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'authorization', 'Content-Type', 'If-None-Match', 'platform']
     }
   }
 });
