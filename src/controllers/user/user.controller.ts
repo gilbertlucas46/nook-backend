@@ -104,9 +104,9 @@ export class UserController {
         }
     }
 
-    async updateProfile(payload: UserRequest.ProfileUpdate, userData) {
+    async updateProfile(payload: UserRequest.ProfileUpdate,) {
         try {
-            console.log('userDatauserData', userData);
+            // console.log('userDatauserData', userData);
             let criteria = {
                 _id: payload._id
             }
