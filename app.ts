@@ -14,13 +14,12 @@ let originArray = ['http://localhost:4200', 'http://localhost:4201', 'http://loc
 
 const server = Hsrc.server({
   port: config.get('port'),
-  routes: { cors: { origin: originArray, headers: ['Accept', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'Content-Type', 'If-None-Match', 'access_token', 'platform'] } }
-  // routes: {
-  //   cors: {
-  //     origin: originArray,
-  //     additionalHeaders: ['Accept', 'Access-Control-Allow-Origin', 'x-requested-with', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'authorization', 'Content-Type', 'If-None-Match', 'platform']
-  //   }
-  // }
+  address : '10.10.8.68',
+  routes: {
+    cors: {
+      origin: ['*'],
+      additionalHeaders: ['Accept', 'Access-Control-Allow-Origin', 'x-requested-with', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'authorization', 'Content-Type', 'If-None-Match', 'platform']}
+    }
 });
 
 const init = async () => {
