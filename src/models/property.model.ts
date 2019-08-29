@@ -161,12 +161,10 @@ const propertySchema = new Schema({
         status: {
             type: String,
             enum: [
-                Constant.DATABASE.PROPERTY_STATUS.BLOCKED,
-                Constant.DATABASE.PROPERTY_STATUS.REJECTED,
-                Constant.DATABASE.PROPERTY_STATUS.VERIFIED,
-                Constant.DATABASE.PROPERTY_STATUS.PENDING
-            ],
-            default: Constant.DATABASE.PROPERTY_STATUS.PENDING
+                Constant.DATABASE.PROPERTY_TYPE_STATUS.FOR_RENT,
+                Constant.DATABASE.PROPERTY_TYPE_STATUS.FOR_SALE,
+                Constant.DATABASE.PROPERTY_TYPE_STATUS.NONE,
+            ], index: true
         },
         label: {
             type: String,
@@ -189,11 +187,22 @@ const propertySchema = new Schema({
     },
 
     property_added_by: {
-         userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+        userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
         userName: { type: String },
         phoneNumber: { type: String },
         imageUrl: { type: String },
     },
+    status: {
+        type: String,
+        enum: [
+            Constant.DATABASE.PROPERTY_STATUS.BLOCKED,
+            Constant.DATABASE.PROPERTY_STATUS.REJECTED,
+            Constant.DATABASE.PROPERTY_STATUS.VERIFIED,
+            Constant.DATABASE.PROPERTY_STATUS.PENDING
+        ],
+        default: Constant.DATABASE.PROPERTY_STATUS.PENDING
+    },
+
     propertyImages: { type: [String] },
 });
 

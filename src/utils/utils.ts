@@ -106,6 +106,7 @@ export let formatUserData = function (userObj: Object) {
 
     delete userObj['isLogin']
     delete userObj['lastActivityTime']
+    delete userObj['password']
     return userObj
 }
 
