@@ -143,7 +143,7 @@ export let userRoute = [
         }
     },
     {
-        method: 'PUT',
+        method: 'PATCH',
         path: '/v1/user/profile',
         handler: async (request, h) => {
             try {
