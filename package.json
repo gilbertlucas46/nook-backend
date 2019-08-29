@@ -1,13 +1,15 @@
 {
-  "name": "uchat",
+  "name": "Nook",
   "version": "v1.0.0",
-  "description": "Uchat Admin",
+  "description": "Nook-APP",
   "main": "index.js",
   "author": "shubham Maheshwari",
   "license": "ISC",
   "scripts": {
     "tsc": "tsc -w",
-    "start": "tsc && node build/app.js"
+    "start": "tsc && node build/app.js",
+    "build": "tsc",
+    "dev": "./node_modules/nodemon/bin/nodemon.js -e ts  --exec \"npm run start\""
   },
   "dependencies": {
     "boom": "^7.3.0",
