@@ -14,7 +14,6 @@ let originArray = ['http://localhost:4200', 'http://localhost:4201', 'http://loc
 
 const server = Hsrc.server({
   port: config.get('port'),
-  address : '10.10.8.68',
   routes: {
     cors: {
       origin: ['*'],
