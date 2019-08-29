@@ -30,6 +30,11 @@ export let DATABASE = {
         BLOCKED: "BLOCKED",
         PENDING: "PENDING"
     },
+    PROPERTY_TYPE_STATUS: {
+        NONE: "None",
+        FOR_RENT: "for Rent",
+        FOR_SALE: "For Sale"
+    },
     DEVICE_TYPES: {
         IOS: 'IOS',
         ANDROID: 'ANDROID',

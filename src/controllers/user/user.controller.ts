@@ -27,7 +27,7 @@ export class UserController {
                     return Constant.STATUS_MSG.ERROR.ALREADY_EXIST
                 } else {
                     let isProfileComplete: boolean
-                     
+
                     let makePassword = await utils.cryptData(payload.password);
                     let userData = {
                         userName: payload.userName,
@@ -104,12 +104,11 @@ export class UserController {
         }
     }
 
-    async updateProfile(payload: UserRequest.ProfileUpdate, userData) {
+    async updateProfile(payload: UserRequest.ProfileUpdate,) {
         try {
-            console.log('userDatauserData', userData);
-
+            // console.log('userDatauserData', userData);
             let criteria = {
-                _id: userData._id
+                _id: payload._id
             }
             let isProfileComplete: boolean
             if (payload.firstName && payload.lastName && payload.type) {

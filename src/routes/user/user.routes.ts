@@ -14,7 +14,7 @@ export let userRoute = [
             try {
                 let payload: UserRequest.Register = request.payload;
                 let registerResponse = await UserService.register(payload);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS, registerResponse))
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse))
             }
             catch (error) {
                 return (UniversalFunctions.sendError(error))
@@ -27,7 +27,7 @@ export let userRoute = [
             validate: {
                 payload: {
                     userName: Joi.string().min(1).max(20).trim().required(),
-                    email: Joi.string().min(1).max(50).trim().required(),
+                    email: Joi.string().email({ minDomainSegments: 2 }),
                     password: Joi.string().min(6).max(14).trim().required(),
                     // firstName: Joi.string().min(5).max(20).trim().optional(),
                     // lastName: Joi.string().min(5).max(20).trim().optional(),
@@ -68,8 +68,8 @@ export let userRoute = [
             // auth: "BasicAuth"
             validate: {
                 payload: {
-                    email: Joi.string().min(1).max(20).trim().required(),
-                    password: Joi.string().min(1).max(20).trim().required(),
+                    email: Joi.string(),
+                    password: Joi.string().min(6).max(14).trim().required(),
                     deviceId: Joi.string(),
                     deviceToken: Joi.string()
                 },
@@ -143,13 +143,13 @@ export let userRoute = [
         }
     },
     {
-        method: 'PUT',
+        method: 'PATCH',
         path: '/v1/user/profile',
         handler: async (request, h) => {
             try {
-                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                // let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload: UserRequest.ProfileUpdate = request.payload;
-                let responseData = await UserService.updateProfile(payload,userData);
+                let responseData = await UserService.updateProfile(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData))
             }
             catch (error) {
@@ -159,13 +159,13 @@ export let userRoute = [
         options: {
             description: 'update user Profile',
             tags: ['api', 'anonymous', 'user', 'update'],
-            auth: "UserAuth",
+            // auth: "UserAuth",
             validate: {
                 payload: {
-                    // _id: Joi.string(),
+                    _id: Joi.string().min(24).max(24).required(),
                     firstName: Joi.string().min(1).max(20).trim().required(),
                     lastName: Joi.string().min(1).max(20).trim().required(),
-                    phoneNumber: Joi.string().min(1).max(20).trim().required(),
+                    phoneNumber: Joi.string().min(8).max(14).trim().required(),
                     type: Joi.string().valid([
                         Constant.DATABASE.USER_TYPE.AGENT,
                         Constant.DATABASE.USER_TYPE.OWNER,
@@ -182,7 +182,7 @@ export let userRoute = [
                     aboutMe: Joi.string(),
                     profilePicUrl: Joi.string(),
                 },
-                headers: UniversalFunctions.authorizationHeaderObj,
+                // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
             },
             plugins: {

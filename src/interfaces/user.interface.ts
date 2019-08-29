@@ -63,6 +63,7 @@ declare namespace UserRequest {
 
 
     export interface ProfileUpdate {
+        _id?: string,
         firstName: string,
         lastName: string,
         phoneNumber: string,
