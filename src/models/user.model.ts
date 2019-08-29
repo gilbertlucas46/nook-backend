@@ -22,6 +22,7 @@ export interface IUser extends Document {
     profilePicUrl?: string;
     isEmailVerified?: boolean;
     isPhoneVerified?: boolean;
+    isProfileComplete: boolean;
     // roleType:{
     //     type:Array ,
     // }
@@ -31,10 +32,10 @@ const userSchema = new Schema({
     userName: { type: String, index: true, unique: true },
     email: { type: String, trim: true, index: true, unique: true },
     password: { type: String, trim: true },
-    firstName: { type: String, index: true },
+    firstName: { type: String, },
     lastName: { type: String, },
-    phone: { type: String, },
-    title: { type: String },
+    phoneNumber: { type: String, },
+    // title: { type: String },
     license: { type: String },
     taxnumber: { type: String },
     faxNumber: { type: String },
@@ -68,8 +69,8 @@ const userSchema = new Schema({
             CONSTANT.DATABASE.USER_TYPE.TENANT
         ],
         default: CONSTANT.DATABASE.USER_TYPE.TENANT
-
-    }
+    },
+    isProfileComplete: { type: Boolean, default: false }
 })
 
 export let User = mongoose.model<IUser>("User", userSchema);

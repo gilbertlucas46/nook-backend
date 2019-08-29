@@ -7,7 +7,7 @@ import * as ENTITY from '../../entity'
 export class PropertyController {
     constructor() { }
 
-    async addProperty(payload: PropertyRequest.PropertyData, userData: UserRequest.Register) {
+    async addProperty(payload: PropertyRequest.PropertyData, userData: UserRequest.userData) {
         try {
             let criteria = {
                 _id: payload.propertyId

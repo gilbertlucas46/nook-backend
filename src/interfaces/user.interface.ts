@@ -24,7 +24,8 @@ declare namespace UserRequest {
         profilePicUrl?: string;
         isEmailVerified?: boolean;
         isPhoneVerified?: boolean;
-        session?: boolean
+        session?: boolean;
+        isProfileComplete: boolean;
     }
 
     export interface Register {
@@ -32,13 +33,13 @@ declare namespace UserRequest {
         userName: String;
         email: string;
         password: string
-        firstName: string;
-        lastName: string;
-        phoneNumber: string,
-        countryCode?: string
-        type?: string
-        profilePicUrl?: string
-
+        // firstName: string;
+        // lastName: string;
+        // phoneNumber: string,
+        // countryCode?: string
+        // type?: string
+        // profilePicUrl?: string
+        // isProfileComplete: boolean
     }
 
 
@@ -58,6 +59,26 @@ declare namespace UserRequest {
         appVersion?: string,
         createdAt?: Date,
         updatedAt?: Date,
+    }
+
+
+    export interface ProfileUpdate {
+        firstName: string,
+        lastName: string,
+        phoneNumber: string,
+        type: string,
+        title: string,
+        license: string,
+        taxnumber: string,
+        faxNumber: string,
+        fullPhoneNumber: string,
+        language: string,
+        companyName: string,
+        address: string,
+        aboutMe: string,
+        profilePicUrl: string,
+        isProfileComplete: boolean
+
     }
 
 
