@@ -112,16 +112,16 @@ export class DAOManager {
         }
     };
 
-    // async aggregateData(model: ModelNames, aggregateArray, options) {
-    //     try {
-    //         let ModelName = Models[model]
-    //         let aggregation = ModelName.aggregate(aggregateArray);
-    //         if (options) { aggregation.options = options; }
-    //         return await aggregation.exec();
-    //     } catch (error) {
-    //         return Promise.reject(error)
-    //     }
-    // };
+    async aggregateData(model: ModelNames, aggregateArray, options) {
+        try {
+            let ModelName = Models[model]
+            let aggregation = ModelName.aggregate(aggregateArray);
+          //  if (options) { aggregation.options = options; }
+            return await aggregation.exec();
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    };
 
     async insert(model: ModelNames, data, options = {}) {
         try {

@@ -131,8 +131,12 @@ export let DATABASE = {
         HOUSE_LOT: "House & Lot",
         LAND: "Land",
         ROOM: "Room",
+    },
+    PROPERTY_SEARCH_STATUS:{
+        FOR_RENT: 'FOR RENT',
+        FOR_SALE : 'FOR SALE',
+        ANY : 'Any'
     }
-
 };
 
 export let STATUS_MSG = {
@@ -486,6 +490,7 @@ export let SERVER = {
     GIF_THUMB_WIDTH: 100,
     GIFTHUMB_HEIGHT: 100,
     CHUNK_SIZE: 100,
+    LIMIT :10
 }
 
 export let EMAIL_SUB: {
