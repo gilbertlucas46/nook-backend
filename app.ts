@@ -16,7 +16,7 @@ const server = Hsrc.server({
   port: config.get('port'),
   routes: {
     cors: {
-      origin: ['*'],
+      origin: originArray,
       additionalHeaders: ['Accept', 'Access-Control-Allow-Origin', 'x-requested-with', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'authorization', 'Content-Type', 'If-None-Match', 'platform']}
     }
 });

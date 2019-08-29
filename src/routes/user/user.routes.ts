@@ -14,7 +14,7 @@ export let userRoute = [
             try {
                 let payload: UserRequest.Register = request.payload;
                 let registerResponse = await UserService.register(payload);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS, registerResponse))
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse))
             }
             catch (error) {
                 return (UniversalFunctions.sendError(error))
@@ -68,7 +68,7 @@ export let userRoute = [
             // auth: "BasicAuth"
             validate: {
                 payload: {
-                    email: Joi.string().email({ minDomainSegments: 2 }),
+                    email: Joi.string(),
                     password: Joi.string().min(6).max(14).trim().required(),
                     deviceId: Joi.string(),
                     deviceToken: Joi.string()
