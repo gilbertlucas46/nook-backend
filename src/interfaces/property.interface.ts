@@ -76,6 +76,22 @@ declare namespace PropertyRequest {
     export interface PropertyDetail {
         _id: string
     }
+
+    export interface SearchProperty {
+        page?: number;
+        limit?: number;
+        searchTerm?: string;
+        sortBy?: string;
+        sortType ?: number;
+        fromDate ?: string;
+        toDate ?:string ;
+        propertyId ?: string;
+        status ?: string;
+        type ?: string ;
+        label ?: string;
+        maxPrice ?: number;
+        minPrice ?: number;
+    }
 }
 
 
