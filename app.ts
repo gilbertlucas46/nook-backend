@@ -10,16 +10,17 @@ import * as config from 'config'
 
 let env = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'default';
 
-let originArray = ['http://localhost:4200', 'http://localhost:4201', 'http://localhost','https://nookdevang.appskeeper.com','http://nookdevang.appskeeper.com'];
+let originArray = ['http://localhost:4200', 'http://localhost:4201', 'http://localhost', 'https://nookdevang.appskeeper.com', 'http://nookdevang.appskeeper.com'];
 
 const server = Hsrc.server({
   port: config.get('port'),
-  routes: {
-    cors: {
-      origin: originArray,
-      additionalHeaders: ['Accept', 'Access-Control-Allow-Origin', 'x-requested-with', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'authorization', 'Content-Type', 'If-None-Match', 'platform']
-    }
-  }
+  routes: { cors: { origin: ['*'], headers: ['Accept', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'Content-Type', 'If-None-Match', 'access_token', 'platform'] } }
+  // routes: {
+  //   cors: {
+  //     origin: originArray,
+  //     additionalHeaders: ['Accept', 'Access-Control-Allow-Origin', 'x-requested-with', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'authorization', 'Content-Type', 'If-None-Match', 'platform']
+  //   }
+  // }
 });
 
 const init = async () => {
