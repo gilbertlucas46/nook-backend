@@ -12,7 +12,17 @@ let env = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'default';
 
 const server = Hsrc.server({
   port: config.get('port'),
-  routes: { cors: true },
+  // routes: { cors: true },
+  routes: {
+    cors: {
+      origin: ['*'], // an array of origins or 'ignore'
+      headers: ['Authorization'], // an array of strings - 'Access-Control-Allow-Headers' 
+      exposedHeaders: ['Accept'], // an array of exposed headers - 'Access-Control-Expose-Headers',
+      additionalExposedHeaders: ['Accept'], // an array of additional exposed headers
+      maxAge: 60,
+      credentials: true // boolean - 'Access-Control-Allow-Credentials'
+    }
+  }
 });
 
 const init = async () => {
