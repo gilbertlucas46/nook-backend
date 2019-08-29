@@ -147,9 +147,9 @@ export let userRoute = [
         path: '/v1/user/profile',
         handler: async (request, h) => {
             try {
-                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                // let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload: UserRequest.ProfileUpdate = request.payload;
-                let responseData = await UserService.updateProfile(payload, userData);
+                let responseData = await UserService.updateProfile(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData))
             }
             catch (error) {
