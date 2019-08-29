@@ -42,12 +42,14 @@ declare namespace PropertyRequest {
         }
         property_details: {
             floor_area?: string;
-            floor_area_unit?: string;
-            land_area?: number;
+            // floor_area_unit?: string;
+            // land_area?: number;
             land_area_unit?: string;
+            lot_area: string;
             bedrooms?: number;
             bathrooms?: number;
-            Garages?: number;
+            garages?: number;
+            garage_size: string;
             buildYear?: number;
         }
         property_address: {
