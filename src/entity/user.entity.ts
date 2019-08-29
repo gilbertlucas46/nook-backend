@@ -11,7 +11,7 @@ export class UserClass extends BaseEntity {
         super('User')
     }
 
-    async createMerchant(userData: UserRequest.Register) {
+    async createUser(userData: UserRequest.userData) {
         try {
             let dataToInsert = {
                 name: userData.userName,
