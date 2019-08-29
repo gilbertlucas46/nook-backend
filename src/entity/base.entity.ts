@@ -96,15 +96,15 @@ export class BaseEntity {
         }
     }
 
-    // async aggregate(pipeline, option?) {
-    //     try {
-    //         if (option == undefined)
-    //             option = { lean: true }
-    //         let data = await this.DAOManager.aggregateData(this.modelName, pipeline, option)
-    //         return data
-    //     } catch (error) {
-    //         console.log("Error in Base Entity updateMultiple ", this.modelName, error)
-    //         return Promise.reject(error)
-    //     }
-    // }
+    async aggregate(pipeline, option?) {
+        try {
+            if (option == undefined)
+                option = { lean: true }
+            let data = await this.DAOManager.aggregateData(this.modelName, pipeline, option)
+            return data
+        } catch (error) {
+            console.log("Error in Base Entity updateMultiple ", this.modelName, error)
+            return Promise.reject(error)
+        }
+    }
 }

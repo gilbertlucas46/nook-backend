@@ -135,4 +135,32 @@ export let propertyRoute = [
             }
         }
     },
+    {
+        method: 'GET',
+        path: '/v1/user/propertyList',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let propertyList = await PropertyService.searchProperties({});
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'GET properties',
+            tags: ['api', 'anonymous', 'user', 'update'],
+            auth: "UserAuth",
+            validate: {
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    }
 ]

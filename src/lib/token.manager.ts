@@ -30,10 +30,9 @@ export let verifyToken = async function (token, tokenType, request?: any) {
 
                 let userData = {};
                 let userCriteria = { _id: result['id'] }
-                let checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {})
+                let checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {});
                 if (!checkUserExist)
-                    return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
-
+                    return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
                 let sessionCriteria = {
                     userId: result['id'],
                     deviceId: result['deviceId'],
