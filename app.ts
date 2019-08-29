@@ -14,7 +14,7 @@ let originArray = ['http://localhost:4200', 'http://localhost:4201', 'http://loc
 
 const server = Hsrc.server({
   port: config.get('port'),
-  routes: { cors: { origin: ['*'], headers: ['Accept', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'Content-Type', 'If-None-Match', 'access_token', 'platform'] } }
+  routes: { cors: { origin: originArray, headers: ['Accept', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'Content-Type', 'If-None-Match', 'access_token', 'platform'] } }
   // routes: {
   //   cors: {
   //     origin: originArray,
