@@ -41,12 +41,14 @@ export interface IProperty extends Document {
     }
     property_details: {
         floor_area: string;
-        floor_area_unit: string;
-        land_area: number;
-        land_area_unit: string;
+        // floor_area_unit: string;
+        // land_area: number;
+        lot_area: string;
+        // land_area_unit: string;
         bedrooms: number;
         bathrooms: number;
-        Garages: number;
+        garages: number;
+        garage_size: string;
         buildYear: number;
     }
     property_address: {
@@ -120,12 +122,14 @@ const propertySchema = new Schema({
     },
     property_details: {
         floor_area: { type: String },
-        floor_area_unit: { type: String },
-        land_area: { type: Number },
-        land_area_unit: { type: String },
+        // floor_area_unit: { type: String },
+        // land_area: { type: Number },
+        lot_area: { type: String },
+        // land_area_unit: { type: String },
         bedrooms: { type: Number },
         bathrooms: { type: Number },
-        Garages: { type: Number },
+        garages: { type: Number },
+        garage_size: { type: String },
         buildYear: { type: Number },
     },
     property_address: {

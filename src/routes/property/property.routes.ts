@@ -39,11 +39,13 @@ export let propertyRoute = [
                     property_details: {
                         floor_area: Joi.string().min(1).max(20).trim(),
                         floor_area_unit: Joi.string().min(1).max(20).trim(),
-                        land_area: Joi.number(),
-                        land_area_unit: Joi.string().min(1).max(20).trim(),
+                        // land_area: Joi.number(),
+                        // land_area_unit: Joi.string().min(1).max(20).trim(),
+                        lot_area: Joi.string().valid(["m2", "sqm"]),
                         bedrooms: Joi.number(),
                         bathrooms: Joi.number(),
-                        Garages: Joi.number(),
+                        garages: Joi.number(),
+                        garage_size: Joi.string().valid(["m2", "sqm"]),
                         buildYear: Joi.number()
                     },
                     property_address: {
