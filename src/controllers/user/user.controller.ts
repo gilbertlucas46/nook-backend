@@ -5,6 +5,7 @@ import * as Constant from '../../constants/app.constant'
 import * as ENTITY from '../../entity'
 import * as utils from "../../utils/index";
 import { userRoute } from '../../routes/user/user.routes';
+import { PromiseProvider } from 'mongoose';
 
 export class UserController {
     constructor() { }
@@ -25,19 +26,17 @@ export class UserController {
                 if (UserCheck && UserCheck._id) {
                     return Constant.STATUS_MSG.ERROR.ALREADY_EXIST
                 } else {
+                    let isProfileComplete: boolean
+                     
                     let makePassword = await utils.cryptData(payload.password);
                     let userData = {
                         userName: payload.userName,
                         email: payload.email,
                         password: makePassword,
-                        phoneNumber: payload.phoneNumber,
-                        firstName: payload.firstName,
-                        lastName: payload.lastName,
                         createdAt: new Date().getTime(),
                         updatedAt: new Date().getTime(),
-                        fullPhoneNumber: payload.countryCode + payload.phoneNumber,
                         isEmailVerified: true,
-                        type: payload.type
+                        isProfileComplete: false
                     }
                     let User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData) //UserRequest.UserData = await userClass.getOneEntity(criteria, {})        
                     console.log('UserUserUserUserUserUser', User);
@@ -45,10 +44,10 @@ export class UserController {
                     let userResponse = UniversalFunctions.formatUserData(User);
                     return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse)
                 }
-                // let userResponse = UniversalFunctions.formatUserData(createMerchant)
-                // return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse)
-
             }
+            // let userResponse = UniversalFunctions.formatUserData(createMerchant)
+            // return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse)
+
 
         } catch (error) {
             return Promise.reject(error)
@@ -60,7 +59,9 @@ export class UserController {
             let checkEmail = {
                 email: payload.email
             }
-            let userData = await ENTITY.UserE.getOneEntity(checkEmail, {});
+            let checkData = { $or: [{ email: payload.email }, { userName: payload.email }] };
+
+            let userData = await ENTITY.UserE.getOneEntity(checkData, {});
             console.log('userDatauserDatauserData', userData);
 
             if (userData && userData._id) {
@@ -69,7 +70,6 @@ export class UserController {
                     if (!(await utils.deCryptData(payload.password, userData.password))) {
                         return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD
                     } else {
-
                         let accessToken = await ENTITY.UserE.createToken(payload, userData);
                         await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
                         let formatedData = await utils.formatUserData(userData);
@@ -82,7 +82,7 @@ export class UserController {
                     return { formatedData: formatedData, accessToken: accessToken };
                 }
             } else {
-                return Constant.STATUS_MSG.ERROR.E400.NOT_VERIFIED
+                return Constant.STATUS_MSG.ERROR.E400.INVALID_LOGIN
             }
         } catch (error) {
             return Promise.reject(error)
@@ -98,6 +98,27 @@ export class UserController {
                 return Constant.STATUS_MSG.ERROR.E400.CUSTOM_DEFAULT
             }
             return getDetail;
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    async updateProfile(payload: UserRequest.ProfileUpdate, userData) {
+        try {
+            console.log('userDatauserData', userData);
+
+            let criteria = {
+                _id: userData._id
+            }
+            let isProfileComplete: boolean
+            if (payload.firstName && payload.lastName && payload.type) {
+                payload.isProfileComplete = true;
+            } else {
+                isProfileComplete = false;
+            }
+            let updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload)
+            return updateUser
 
         } catch (error) {
             return Promise.reject(error)

@@ -3,6 +3,7 @@ import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant'
 import { UserService } from '../../controllers'
+import { join } from 'path';
 
 
 export let userRoute = [
@@ -26,16 +27,16 @@ export let userRoute = [
             validate: {
                 payload: {
                     userName: Joi.string().min(1).max(20).trim().required(),
-                    email: Joi.string().min(1).max(20).trim().required(),
-                    password: Joi.string().min(1).max(20).trim().required(),
-                    firstName: Joi.string().min(1).max(20).trim().required(),
-                    lastName: Joi.string().min(1).max(20).trim().required(),
-                    phoneNumber: Joi.string().min(1).max(20).trim().required(),
-                    type: Joi.string().valid([
-                        Constant.DATABASE.USER_TYPE.AGENT,
-                        Constant.DATABASE.USER_TYPE.OWNER,
-                        Constant.DATABASE.USER_TYPE.TENANT
-                    ])
+                    email: Joi.string().min(1).max(50).trim().required(),
+                    password: Joi.string().min(6).max(14).trim().required(),
+                    // firstName: Joi.string().min(5).max(20).trim().optional(),
+                    // lastName: Joi.string().min(5).max(20).trim().optional(),
+                    // phoneNumber: Joi.string().min(8).max(12).trim().optional(),
+                    // type: Joi.string().valid([
+                    //     Constant.DATABASE.USER_TYPE.AGENT,
+                    //     Constant.DATABASE.USER_TYPE.OWNER,
+                    //     Constant.DATABASE.USER_TYPE.TENANT
+                    // ]).optional(),
                     // required: true,
                 },
                 failAction: UniversalFunctions.failActionFunction
@@ -136,6 +137,56 @@ export let userRoute = [
             plugins: {
                 'hapi-swagger': {
                     // payloadType: 'form',
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
+    {
+        method: 'PUT',
+        path: '/v1/user/profile',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let payload: UserRequest.ProfileUpdate = request.payload;
+                let responseData = await UserService.updateProfile(payload,userData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'update user Profile',
+            tags: ['api', 'anonymous', 'user', 'update'],
+            auth: "UserAuth",
+            validate: {
+                payload: {
+                    // _id: Joi.string(),
+                    firstName: Joi.string().min(1).max(20).trim().required(),
+                    lastName: Joi.string().min(1).max(20).trim().required(),
+                    phoneNumber: Joi.string().min(1).max(20).trim().required(),
+                    type: Joi.string().valid([
+                        Constant.DATABASE.USER_TYPE.AGENT,
+                        Constant.DATABASE.USER_TYPE.OWNER,
+                        Constant.DATABASE.USER_TYPE.TENANT
+                    ]),
+                    title: Joi.string(),
+                    license: Joi.string(),
+                    taxnumber: Joi.string(),
+                    faxNumber: Joi.string(),
+                    fullPhoneNumber: Joi.string(),
+                    language: Joi.string(),
+                    companyName: Joi.string(),
+                    address: Joi.string(),
+                    aboutMe: Joi.string(),
+                    profilePicUrl: Joi.string(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
                     responseMessages: Constant.swaggerDefaultResponseMessages
                 }
             }
