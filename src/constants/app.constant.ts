@@ -157,6 +157,11 @@ export let STATUS_MSG = {
                 message: 'Request has allready been sent to the admin for approval.',
                 type: 'REQUEST_ALLREDY_SENT'
             },
+            INVALID_CURRENT_PASSWORD: {
+                statusCode: 400,
+                message: 'Your Current Password did not match with new Password',
+                type: 'CHANGE_PASSWORD'
+            },
             USER_NAME_ALREDY_TAKEN: {
                 statusCode: 400,
                 message: 'User Name already Taken Provide Another',
@@ -172,6 +177,7 @@ export let STATUS_MSG = {
                 message: 'Email is not exist',
                 type: ''
             },
+
 
             CANNOT_PERFORM_UPDATE_OPERATION: {
                 statusCode: 400,

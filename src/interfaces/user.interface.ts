@@ -95,4 +95,8 @@ declare namespace UserRequest {
         email: string
     }
 
+    export interface ChangePassword {
+        oldPassword: string,
+        newPassword: string
+    }
 }
