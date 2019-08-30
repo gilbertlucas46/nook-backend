@@ -509,8 +509,8 @@ export let SERVER = {
     GIFTHUMB_HEIGHT: 100,
     CHUNK_SIZE: 100,
     LIMIT: 10,
-    OTP_EXPIRATION_TIME: 60
-
+    OTP_EXPIRATION_TIME: 60,
+    MAX_LIMIT :1000
 }
 
 export let EMAIL_SUB: {
