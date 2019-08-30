@@ -37,28 +37,27 @@ export let propertyRoute = [
                 payload: {
                     propertyId: Joi.string().min(24).max(24).optional(),
                     property_details: {
-                        floor_area: Joi.string().min(1).max(20).trim(),
-                        floor_area_unit: Joi.string().min(1).max(20).trim(),
+                        floor_area: Joi.number(),
+                        // floor_area_unit: Joi.string().min(1).max(20).trim(),
                         // land_area: Joi.number(),
                         // land_area_unit: Joi.string().min(1).max(20).trim(),
-                        lot_area: Joi.string().valid(["m2", "sqm"]),
+                        // lot_area: Joi.string().valid(["m2", "sqm"]),
+                        lot_area: Joi.number(),
                         bedrooms: Joi.number(),
                         bathrooms: Joi.number(),
                         garages: Joi.number(),
-                        garage_size: Joi.string().valid(["m2", "sqm"]),
+                        garage_size: Joi.number(),
                         buildYear: Joi.number()
                     },
                     property_address: {
                         address: Joi.string().min(1).max(20).trim().required(),
                         region: Joi.string().min(1).max(20).trim().required(),
                         city: Joi.string().min(1).max(20).trim().required(),
-                        Barangay: Joi.string().min(1).max(20).trim(),
+                        barangay: Joi.string().min(1).max(20).trim(),
                         location: {
-                            type: Joi.array().required(),  // need to change
-                            coordinates: Joi.number()
+                            coordinates: Joi.array()
                         }
                     },
-
                     property_basic_details: {
                         title: Joi.string().min(1).max(20).trim().required(),
                         description: Joi.string().min(1).max(20).trim().required(),
@@ -70,7 +69,6 @@ export let propertyRoute = [
                             Constant.DATABASE.PROPERTY_TYPE.LAND,
                             Constant.DATABASE.PROPERTY_TYPE.ROOM,
                         ]),
-                        //  Joi.string().min(1).max(20).trim().required(),
                         status: Joi.string().min(1).max(20).trim().required(),
                         label: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_LABEL.NONE,
