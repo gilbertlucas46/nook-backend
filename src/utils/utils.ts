@@ -5,6 +5,7 @@ import * as Boom from 'boom'
 import * as CONSTANT from '../constants'
 import * as crypto from 'crypto'
 import * as randomstring from 'randomstring';
+import { isArray } from 'util';
 
 export let sendError = function (data) {
     if (typeof data === 'object' && data.hasOwnProperty('statusCode') && (data.hasOwnProperty('message') || data.hasOwnProperty('customMessage'))) {
@@ -141,3 +142,28 @@ export let failActionFunction = async function (request, h, err) {
     customErrorMessage = customErrorMessage.replace(']', '')
     return Boom.badRequest(customErrorMessage)
 }
+
+// export let consolelog = function (identifier: string, value: any, status: boolean) {
+//     try {
+//         if (isArray(value)) {
+//             value.forEach((obj, i) => {
+//                 if (status) {
+//                     console.info(displayColors ? "\x1b[31m%s\x1b[0m" : "%s", "<--------------" + identifier + "--------------" + i + "-------------->", obj);
+//                 } else {
+//                     console.error(displayColors ? "\x1b[31m%s\x1b[0m" : "%s", "<--------------" + identifier + "--------------" + i + "-------------->", obj);
+//                 }
+//             });
+//             return;
+//         } else {
+//             if (status) {
+//                 console.info(displayColors ? "\x1b[31m%s\x1b[0m" : "%s", "<--------------" + identifier + "-------------->", value);
+//             } else {
+//                 console.error(displayColors ? "\x1b[31m%s\x1b[0m" : "%s", "<--------------" + identifier + "-------------->", value);
+//             }
+//             return;
+//         }
+//     } catch (error) {
+//         console.log("error in consolelog", error);
+//         return;
+//     }
+// };

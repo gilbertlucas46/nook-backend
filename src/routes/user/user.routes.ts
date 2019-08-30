@@ -36,7 +36,7 @@ export let userRoute = [
                     //     Constant.DATABASE.USER_TYPE.AGENT,
                     //     Constant.DATABASE.USER_TYPE.OWNER,
                     //     Constant.DATABASE.USER_TYPE.TENANT
-                    // ]).optional(),
+                    // ])
                     // required: true,
                 },
                 failAction: UniversalFunctions.failActionFunction
@@ -55,6 +55,8 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload = request.payload;
+                console.log('payloadpayloadpayload', payload);
+
                 let registerResponse = await UserService.login(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
             }
@@ -112,31 +114,34 @@ export let userRoute = [
     },
 
     {
-        method: 'PATCH',
-        path: '/v1/user/forgetPassword',
+        method: "POST",
+        path: "/v1/admin/forget-password",
         handler: async (request, h) => {
             try {
-                let payload = request.payload;
-                let responseData = await UserService.register(payload);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS, responseData))
-            }
-            catch (error) {
-                return (UniversalFunctions.sendError(error))
+                // let payload: AdminRequest.ForgerPassword = request.payload;
+                // console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
+
+                // let forgetPasswordResponse = await UserService.forgetPassword(payload);
+                // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
+                // return UniversalFunctions.sendLocalizedSuccessResponse(request, result);
+            } catch (error) {
+                let result = await UniversalFunctions.sendError(error);
+                // return UniversalFunctions.sendLocalizedErrorResponse(request, result);
             }
         },
         options: {
-            description: 'Forget Password',
-            tags: ['api', 'anonymous', 'user', 'register'],
-            // auth: "BasicAuth"
+            description: "forget-password to Admin",
+            tags: ["api", "anonymous", "merchant", "forget-password"],
+            auth: "UserAuth",
             validate: {
                 payload: {
-                    email: Joi.string().email({ minDomainSegments: 2 })
+                    email: Joi.string().email().lowercase().trim().required(),
                 },
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
             },
             plugins: {
-                'hapi-swagger': {
-                    // payloadType: 'form',
+                "hapi-swagger": {
                     responseMessages: Constant.swaggerDefaultResponseMessages
                 }
             }
@@ -192,6 +197,35 @@ export let userRoute = [
             }
         }
     },
+    {
+        method: 'GET',
+        path: '/v1/user/profile',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                console.log('userData', userData);
 
-
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'Get user Profile',
+            tags: ['api', 'anonymous', 'user', 'Detail'],
+            auth: "UserAuth",
+            validate: {
+                query: {
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
 ]

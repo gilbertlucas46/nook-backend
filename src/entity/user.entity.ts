@@ -3,6 +3,7 @@ import { BaseEntity } from './base.entity'
 import * as config from 'config'
 import * as moment from "moment";
 import * as UniversalFunctions from './../utils'
+import * as utils from '../utils'
 // import { TokenManager } from './../Lib';
 import * as CONSTANT from '../constants/app.constant'
 import * as TokenManager from '../lib'
@@ -37,7 +38,18 @@ export class UserClass extends BaseEntity {
                     session: userData.session
                 }
             }
-            let tokenData = {
+            let tokenData;
+            // if (!userData.type) {
+            //     tokenData = {
+            //         id: userData._id,
+            //         deviceId: payload.deviceId,
+            //         deviceToken: payload.deviceToken,
+            //         tokenType: "TENANT",
+            //         timestamp: new Date().getTime(),
+            //         session: userData.session
+            //     }
+            // } else {
+            tokenData = {
                 id: userData._id,
                 deviceId: payload.deviceId,
                 deviceToken: payload.deviceToken,
@@ -45,6 +57,8 @@ export class UserClass extends BaseEntity {
                 timestamp: new Date().getTime(),
                 session: userData.session
             }
+            // }
+
             let mergeData = { ...tokenData, ...sessionValid }
             let accessToken: any = await TokenManager.setToken(mergeData);
 
@@ -54,6 +68,26 @@ export class UserClass extends BaseEntity {
             return Promise.reject(error)
         }
     }
+    async createPasswordResetToken(AdminData) {
+        try {
+            // let createRandom = await utils.generateRandomString(6) ;
+            let createRandom = await utils.generateOtp();
+            // let token = await jwt.sign(AdminData.email, cert);
+            // let token = await utils.cryptData(AdminData.email);
+            let expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
+            let criteriaForUpdatePswd = { where: { _id: AdminData._id } };
+            let dataToUpdateForPswd = {
+                passwordResetToken: createRandom,
+                passwordResetTokenExpirationTime: expirationTime
+            };
+            await this.DAOManager.findAndUpdate(this.modelName, dataToUpdateForPswd, criteriaForUpdatePswd);
+            return createRandom;
+        } catch (error) {
+            // utils.consolelog('createPasswordResetToken', error, false);
+            return Promise.reject(error);
+        }
+    }
+
 }
 
 

@@ -58,7 +58,7 @@ export class DAOManager {
         }
     };
 
-    async findAndUpdate(model: ModelNames, conditions, update, options) {
+    async findAndUpdate(model: ModelNames, conditions, update, options?) {
         try {
             let ModelName = Models[model]
             return await ModelName.findOneAndUpdate(conditions, update, options);

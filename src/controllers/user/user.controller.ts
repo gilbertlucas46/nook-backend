@@ -71,6 +71,8 @@ export class UserController {
                         return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD
                     } else {
                         let accessToken = await ENTITY.UserE.createToken(payload, userData);
+                        console.log('accessTokenaccessTokenaccessToken', accessToken);
+
                         await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
                         let formatedData = await utils.formatUserData(userData);
                         return { formatedData: formatedData, accessToken: accessToken };
@@ -104,7 +106,7 @@ export class UserController {
         }
     }
 
-    async updateProfile(payload: UserRequest.ProfileUpdate,) {
+    async updateProfile(payload: UserRequest.ProfileUpdate, ) {
         try {
             // console.log('userDatauserData', userData);
             let criteria = {
@@ -123,6 +125,38 @@ export class UserController {
             return Promise.reject(error)
         }
     }
+
+    async forgetPassword(payload: UserRequest.ForgerPassword) {
+        try {
+            let criteria = {
+                email: payload.email
+            };
+            let passwordResetToken: number;
+            // if (payload.type == Constant.DATABASE.TYPE.ENTITY.ADMIN || payload.type == Constant.DATABASE.TYPE.ENTITY.SUBADMIN) {
+            //     let adminData = await ENTITY.AdminE.pgGetOneEntity(criteria, ["email", "_id"]);
+            //     if (!adminData) {
+            //         return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL;
+            //     } else {
+            //         passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
+            //     }
+            // }
+
+            let merchantData = await ENTITY.UserE.getOneEntity(criteria, ["email", "_id"]);
+            if (!merchantData) {
+                return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL;
+            } else {
+                passwordResetToken = await ENTITY.UserE.createPasswordResetToken(merchantData);
+            }
+
+            // let mail = new MailManager(payload.email, Constant.DATABASE.EMAIL_SUBJECT.VERIFY_EMAIL, passwordResetToken);
+            // await mail.sendMail(false);
+            return {}
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 }
 
 export let UserService = new UserController();
