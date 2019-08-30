@@ -32,7 +32,7 @@ export let DATABASE = {
     },
     PROPERTY_TYPE_STATUS: {
         NONE: "None",
-        FOR_RENT: "for Rent",
+        FOR_RENT: "For Rent",
         FOR_SALE: "For Sale"
     },
     DEVICE_TYPES: {
@@ -132,15 +132,15 @@ export let DATABASE = {
     PROPERTY_TYPE: {
         NONE: "None",
         "APPARTMENT/CONDO": "Appartment/Condo",
-        COMMERCIAL: "commercial",
+        COMMERCIAL: "Commercial",
         HOUSE_LOT: "House & Lot",
         LAND: "Land",
         ROOM: "Room",
     },
     PROPERTY_SEARCH_STATUS: {
-        FOR_RENT: 'FOR RENT',
-        FOR_SALE: 'FOR SALE',
-        ANY: 'Any'
+        FOR_RENT: 'For Rent',
+        FOR_SALE: 'For Sale',
+        NONE: 'None'
     }
 };
 
