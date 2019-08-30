@@ -85,4 +85,10 @@ declare namespace UserRequest {
 
     export interface Login extends Session, login1 { }
 
+    export interface ForgerPassword {
+        email: string;
+        type? : string
+    }
+
+
 }
