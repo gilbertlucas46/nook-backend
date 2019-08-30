@@ -185,12 +185,35 @@ export class UserController {
         } catch (error) {
             return Promise.reject(error)
         }
-
-
     }
+
+    async changePassword(payload: UserRequest.ChangePassword, userData: UserRequest.userData) {
+        try {
+            let criteria = {
+                _id: userData._id
+            }
+            let password = await ENTITY.UserE.getOneEntity(criteria, ['password'])
+            if (!(await utils.deCryptData(payload.newPassword, password.password)))
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD)
+            else {
+                let updatePswd = {
+                    password: await utils.cryptData(payload.newPassword),
+                    updatedAt: new Date().getTime()
+                }
+                let updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd)
+
+                if (!updatePassword) {
+                    return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR)
+                } else {
+                    return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT
+                }
+            }
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
 }
-
-
 // let checkOtp = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetToken']);
 // console.log('checkOtpcheckOtpcheckOtp', checkOtp);
 // if (checkOtp) {

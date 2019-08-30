@@ -115,7 +115,7 @@ export let userRoute = [
 
     {
         method: "POST",
-        path: "/v1/user/forget-password",
+        path: "/v1/user/forgetPassword",
         handler: async (request, h) => {
             try {
                 let payload: UserRequest.ForgetPassword = request.payload;
@@ -258,5 +258,40 @@ export let userRoute = [
             }
         }
     },
+
+    {
+        method: 'POST',
+        path: '/v1/user/change-password',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let payload: UserRequest.ChangePassword = request.query;
+                let responseData = await UserService.changePassword(payload, userData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'Get user Profile',
+            tags: ['api', 'anonymous', 'user', 'Detail'],
+            auth: "UserAuth",
+            validate: {
+                query: {
+                    oldPassword: Joi.string().min(6).max(14),
+                    newPassword: Joi.string().min(6).max(14)
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
+
 
 ]
