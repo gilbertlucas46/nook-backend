@@ -50,10 +50,10 @@ export let propertyRoute = [
                         buildYear: Joi.number()
                     },
                     property_address: {
-                        address: Joi.string().min(1).max(20).trim().required(),
-                        region: Joi.string().min(1).max(20).trim().required(),
-                        city: Joi.string().min(1).max(20).trim().required(),
-                        barangay: Joi.string().min(1).max(20).trim(),
+                        address: Joi.string().min(1).max(100).trim().required(),
+                        region: Joi.string().min(1).max(50).trim().required(),
+                        city: Joi.string().min(1).max(50).trim().required(),
+                        barangay: Joi.string().min(1).max(100).trim(),
                         location: {
                             coordinates: Joi.array()
                         }
