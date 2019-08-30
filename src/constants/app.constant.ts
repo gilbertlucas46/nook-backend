@@ -132,7 +132,7 @@ export let DATABASE = {
     PROPERTY_TYPE: {
         NONE: "None",
         "APPARTMENT/CONDO": "Appartment/Condo",
-        COMMERCIAL: "commercial",
+        COMMERCIAL: "Commercial",
         HOUSE_LOT: "House & Lot",
         LAND: "Land",
         ROOM: "Room",
