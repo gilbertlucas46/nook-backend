@@ -129,8 +129,8 @@ export let userRoute = [
             }
         },
         options: {
-            description: "forget-password to Admin",
-            tags: ["api", "anonymous", "merchant", "forget-password"],
+            description: "forget-password to user",
+            tags: ["api", "anonymous", "user", "forget-password"],
             // auth: "UserAuth",
             validate: {
                 payload: {
