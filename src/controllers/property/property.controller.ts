@@ -40,7 +40,6 @@ export class PropertyController {
     async searchProperties(payload: PropertyRequest.SearchProperty) {
         try {
             let { page, limit, searchTerm, sortBy, sortType, fromDate, toDate, propertyId, status, type, label, maxPrice, minPrice } = payload;
-
             if (!limit) limit = Constant.SERVER.LIMIT;
             else limit = limit;
             if (!page) page = 1;
@@ -112,6 +111,7 @@ export class PropertyController {
                     $sort: sortingType
                 },
             ];
+         // let propertyData  =  UniversalFunctions.paginate('properties',pipeLine,limit,page)
             let propertyData = await ENTITY.PropertyE.aggregate(pipeLine);
             return propertyData;
 

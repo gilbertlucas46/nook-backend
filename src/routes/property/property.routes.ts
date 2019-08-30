@@ -59,8 +59,8 @@ export let propertyRoute = [
                         }
                     },
                     property_basic_details: {
-                        title: Joi.string().min(1).max(20).trim().required(),
-                        description: Joi.string().min(1).max(20).trim().required(),
+                        title: Joi.string().min(1).max(100).trim().required(),
+                        description: Joi.string().min(1).max(1000).trim().required(),
                         type: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_TYPE.NONE,
                             Constant.DATABASE.PROPERTY_TYPE["APPARTMENT/CONDO"],
@@ -83,8 +83,8 @@ export let propertyRoute = [
                             Constant.DATABASE.PROPERTY_LABEL.WAREHOUSE,
                         ]),
                         sale_rent_price: Joi.number(),
-                        price_currency: Joi.string().min(1).max(20).trim().required(),
-                        price_label: Joi.string().min(1).max(20).trim().required(), // monthly
+                        price_currency: Joi.string().min(1).max(20).trim(),
+                        price_label: Joi.string().min(1).max(20).trim(), // monthly
                     },
                     property_features: {
                         storeys_2: Joi.boolean().valid([true, false]),
@@ -138,7 +138,7 @@ export let propertyRoute = [
         path: '/v1/user/propertyList',
         handler: async (request, h) => {
             try {
-                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                //let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let propertyList = await PropertyService.searchProperties({});
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList))
             }
@@ -149,9 +149,9 @@ export let propertyRoute = [
         options: {
             description: 'GET properties',
             tags: ['api', 'anonymous', 'user', 'update'],
-            auth: "UserAuth",
+          //  auth: "UserAuth",
             validate: {
-                headers: UniversalFunctions.authorizationHeaderObj,
+              //  headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
             },
             plugins: {
