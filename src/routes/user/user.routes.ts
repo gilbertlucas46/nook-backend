@@ -102,12 +102,12 @@ export let userRoute = [
         options: {
             description: 'get detail of property ',
             tags: ['api', 'anonymous', 'user', 'register'],
-            auth: "UserAuth",
+            //  auth: "UserAuth",
             validate: {
                 params: {
                     _id: Joi.string().min(24).max(24).required()
                 },
-                headers: UniversalFunctions.authorizationHeaderObj,
+                // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
             },
         }
