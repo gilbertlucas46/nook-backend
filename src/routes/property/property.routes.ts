@@ -59,7 +59,7 @@ export let propertyRoute = [
                         }
                     },
                     property_basic_details: {
-                        title: Joi.string().min(1).max(100).trim().required(),
+                        title: Joi.string().min(1).max(200).trim().required(),
                         description: Joi.string().min(1).max(1000).trim().required(),
                         type: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_TYPE.NONE,
@@ -84,7 +84,7 @@ export let propertyRoute = [
                         ]),
                         sale_rent_price: Joi.number(),
                         price_currency: Joi.string().min(1).max(20).trim(),
-                        price_label: Joi.string().min(1).max(20).trim(), // monthly
+                        price_label: Joi.string().trim(), // monthly
                     },
                     property_features: {
                         storeys_2: Joi.boolean().valid([true, false]),
