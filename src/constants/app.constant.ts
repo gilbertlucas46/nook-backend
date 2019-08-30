@@ -495,7 +495,8 @@ export let SERVER = {
     GIF_THUMB_WIDTH: 100,
     GIFTHUMB_HEIGHT: 100,
     CHUNK_SIZE: 100,
-    LIMIT :10
+    LIMIT :10,
+    MAX_LIMIT : 100000,
 }
 
 export let EMAIL_SUB: {
