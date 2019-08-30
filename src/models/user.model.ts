@@ -23,6 +23,8 @@ export interface IUser extends Document {
     isEmailVerified?: boolean;
     isPhoneVerified?: boolean;
     isProfileComplete: boolean;
+    passwordResetToken?: string;
+    passwordResetTokenExpirationTime?: Date;
     // roleType:{
     //     type:Array ,
     // }
@@ -35,7 +37,7 @@ const userSchema = new Schema({
     firstName: { type: String, },
     lastName: { type: String, },
     phoneNumber: { type: String, },
-    // title: { type: String },
+    title: { type: String },
     license: { type: String },
     taxnumber: { type: String },
     faxNumber: { type: String },
@@ -70,7 +72,10 @@ const userSchema = new Schema({
         ],
         default: CONSTANT.DATABASE.USER_TYPE.TENANT
     },
-    isProfileComplete: { type: Boolean, default: false }
+    isProfileComplete: { type: Boolean, default: false },
+    passwordResetToken: { type: String },
+    passwordResetTokenExpirationTime: { type: Date }
+
 })
 
 export let User = mongoose.model<IUser>("User", userSchema);

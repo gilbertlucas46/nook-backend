@@ -22,7 +22,7 @@ export let DATABASE = {
         AGENT: "AGENT",
         OWNER: "OWNER",
         TENANT: "TENANT",
-        USER: "USER"
+        // USER: "USER"
     },
     PROPERTY_STATUS: {
         VERIFIED: "VERIFIED",
@@ -189,6 +189,11 @@ export let STATUS_MSG = {
                 type: 'INVALID_LOGIN',
                 message: 'Invalid login credentials'
             },
+            PROPERTY_NOT_REGISTERED: {
+                statusCode: 400,
+                type: 'PROPERTY_NOT_REGISTERED',
+                message: 'PROPERTY does not exist.'
+            },
             USER_NOT_REGISTERED: {
                 statusCode: 400,
                 type: 'USER_NOT_REGISTERED',
@@ -264,6 +269,11 @@ export let STATUS_MSG = {
                 statusCode: 401,
                 message: 'Link is no more valid.',
                 type: 'INVALID_LINK'
+            },
+            EMAIL_FORGET_PWD_LINK: {
+                statusCode: 401,
+                message: 'Link has been expired',
+                type: 'EXPIRE_LINK'
             },
             INVALID_SESSION_REQUEST: {
                 statusCode: 401,
@@ -354,6 +364,11 @@ export let STATUS_MSG = {
                 statusCode: 200,
                 message: 'Phone number successfully verified.',
                 type: 'PHONE_VERIFIED'
+            },
+            EMAIL_VERIFIED: {
+                statusCode: 200,
+                message: 'EMAIL  successfully verified.',
+                type: 'EMAIL_VERIFIED'
             },
             FORGET_PASSWORD: {
                 statusCode: 200,
@@ -484,7 +499,7 @@ export let SERVER = {
         SHARE_CONTENT_LINK: config.get("host") + DATABASE.DEEPLINK_REDIRECT_URL.APP + "http://uchat.com" + "/" + DATABASE.ACTION.DEEPLINK.APP + "&ios=" + "uchat://" + DATABASE.ACTION.DEEPLINK.APP
     },
     TEMPLATE_PATH: process.cwd() + '/views/',
-    BY_PASS_OTP: 1212,
+    BY_PASS_OTP: "1212",
     LISTNG_LIMIT: 10,
     SYNC_LIMIT: undefined,
     CONTACT_SYNC_LIMIT: 2000,
@@ -493,7 +508,9 @@ export let SERVER = {
     GIF_THUMB_WIDTH: 100,
     GIFTHUMB_HEIGHT: 100,
     CHUNK_SIZE: 100,
-    LIMIT: 10
+    LIMIT: 10,
+    OTP_EXPIRATION_TIME: 60
+
 }
 
 export let EMAIL_SUB: {

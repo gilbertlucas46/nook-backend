@@ -4,7 +4,7 @@ import * as Constant from '../constants'
 import * as Jwt from 'jsonwebtoken';
 import * as ENTITY from '../entity'
 const cert = config.get('jwtSecret')
-
+import * as UniversalFunctions from '../utils'
 export let setToken = async function (tokenData: any) {
     if (!tokenData.id || !tokenData.tokenType) {
         return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR)
@@ -48,9 +48,17 @@ export let verifyToken = async function (token, tokenType, request?: any) {
                 // }
                 // }
             } else {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
+                return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN
             }
         }
+        else {
+            const result = await UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
+            return Promise.reject(result);
+
+            // const result = await UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
+            // return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
+        }
+
 
     } catch (error) {
         return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)

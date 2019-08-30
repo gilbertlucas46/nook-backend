@@ -95,12 +95,16 @@ export class UserController {
             let criteria = {
                 _id: payload._id
             }
+            if (payload._id.length < 24 && payload._id.length > 24) {
+                return Constant.STATUS_MSG.ERROR.E400.INVALID_ID
+            }
             let getDetail = await ENTITY.PropertyE.getOneEntity(criteria, {});
-            if (!getDetail || getDetail == null) {
-                return Constant.STATUS_MSG.ERROR.E400.CUSTOM_DEFAULT
+
+            console.log('getDetailgetDetail', getDetail);
+            if (getDetail == null) {
+                return Constant.STATUS_MSG.ERROR.E400.PROPERTY_NOT_REGISTERED
             }
             return getDetail;
-
         } catch (error) {
             return Promise.reject(error)
         }
@@ -126,37 +130,73 @@ export class UserController {
         }
     }
 
-    async forgetPassword(payload: UserRequest.ForgerPassword) {
+    async forgetPassword(payload: UserRequest.ForgetPassword) {
         try {
             let criteria = {
                 email: payload.email
             };
             let passwordResetToken: number;
-            // if (payload.type == Constant.DATABASE.TYPE.ENTITY.ADMIN || payload.type == Constant.DATABASE.TYPE.ENTITY.SUBADMIN) {
-            //     let adminData = await ENTITY.AdminE.pgGetOneEntity(criteria, ["email", "_id"]);
-            //     if (!adminData) {
-            //         return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL;
-            //     } else {
-            //         passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
-            //     }
-            // }
 
-            let merchantData = await ENTITY.UserE.getOneEntity(criteria, ["email", "_id"]);
-            if (!merchantData) {
+
+            let userData = await ENTITY.UserE.getOneEntity(criteria, ["email", "_id"]);
+            console.log('userDatauserData', userData);
+
+            if (!userData) {
                 return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL;
             } else {
-                passwordResetToken = await ENTITY.UserE.createPasswordResetToken(merchantData);
+                passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
+                // let mail = new MailManager(payload.email, Constant.DATABASE.EMAIL_SUBJECT.VERIFY_EMAIL, passwordResetToken);
+                // await mail.sendMail(false);
+                return passwordResetToken;
             }
-
-            // let mail = new MailManager(payload.email, Constant.DATABASE.EMAIL_SUBJECT.VERIFY_EMAIL, passwordResetToken);
-            // await mail.sendMail(false);
-            return {}
         }
         catch (error) {
             return Promise.reject(error);
         }
     }
 
+    async verifyOtp(payload: UserRequest.VerifyOtp) {
+        try {
+            let criteria = {
+                email: payload.email
+            }
+            let userAttribute = ['email', 'name', 'passwordResetTokenExpirationTime', 'passwordResetToken']
+
+            let checkAdmin: any = await ENTITY.UserE.getOneEntity(criteria, [userAttribute])
+            console.log('checkAdmincheckAdmin>>>>>>>?????????????', checkAdmin);
+
+            var today: any = new Date();
+            var diffMs = (today - checkAdmin.passwordResetTokenExpirationTime); // milliseconds between now & Christmas
+            // var diffDays = Math.floor(diffMs / 86400000); // days
+            // var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+            var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+            console.log('diffMinsdiffMinsdiffMinsdiffMinsdiffMinsdiffMins', diffMins);
+
+            if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) {
+                return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
+            }
+            // remove the sessions  
+            else if (payload.otp == Constant.SERVER.BY_PASS_OTP) {
+                return Constant.STATUS_MSG.SUCCESS.S200.EMAIL_VERIFIED
+            }
+            else {
+                return Constant.STATUS_MSG.ERROR.E400.INVALID_OTP
+            }
+        } catch (error) {
+            return Promise.reject(error)
+        }
+
+
+    }
 }
+
+
+// let checkOtp = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetToken']);
+// console.log('checkOtpcheckOtpcheckOtp', checkOtp);
+// if (checkOtp) {
+
+
+
+// }
 
 export let UserService = new UserController();

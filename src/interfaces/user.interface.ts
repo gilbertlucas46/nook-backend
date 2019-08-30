@@ -12,6 +12,7 @@ declare namespace UserRequest {
         type?: string
         // roleType:{
 
+        // no use keys will be removed further at the time of registeration
         title?: string
         license?: string;
         taxnumber?: string;
@@ -85,10 +86,13 @@ declare namespace UserRequest {
 
     export interface Login extends Session, login1 { }
 
-    export interface ForgerPassword {
+    export interface ForgetPassword {
         email: string;
-        type? : string
     }
 
+    export interface VerifyOtp {
+        otp: string,
+        email: string
+    }
 
 }
