@@ -137,10 +137,10 @@ export let DATABASE = {
         LAND: "Land",
         ROOM: "Room",
     },
-    PROPERTY_SEARCH_STATUS:{
+    PROPERTY_SEARCH_STATUS: {
         FOR_RENT: 'FOR RENT',
-        FOR_SALE : 'FOR SALE',
-        ANY : 'Any'
+        FOR_SALE: 'FOR SALE',
+        ANY: 'Any'
     }
 };
 
@@ -340,13 +340,11 @@ export let STATUS_MSG = {
 
     SUCCESS: {
         S200: {
-
             REQUEST_SENT_FOR_ADDING_MEMBER: {
                 statusCode: 200,
                 type: 'REQUEST_SENT_FOR_ADDING_MEMBER',
                 message: 'Your request for joining group has been sent.'
             },
-
             INVITED_SUCCESSFULLY: {
                 statusCode: 200,
                 message: 'Contacts invited successfully',
