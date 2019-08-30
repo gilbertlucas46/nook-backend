@@ -68,19 +68,19 @@ export class UserClass extends BaseEntity {
             return Promise.reject(error)
         }
     }
-    async createPasswordResetToken(AdminData) {
+    async createPasswordResetToken(userData) {
         try {
             // let createRandom = await utils.generateRandomString(6) ;
             let createRandom = await utils.generateOtp();
             // let token = await jwt.sign(AdminData.email, cert);
             // let token = await utils.cryptData(AdminData.email);
             let expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
-            let criteriaForUpdatePswd = { where: { _id: AdminData._id } };
+            let criteriaForUpdatePswd = { _id: userData._id }
             let dataToUpdateForPswd = {
                 passwordResetToken: createRandom,
                 passwordResetTokenExpirationTime: expirationTime
             };
-            await this.DAOManager.findAndUpdate(this.modelName, dataToUpdateForPswd, criteriaForUpdatePswd);
+            await this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
             return createRandom;
         } catch (error) {
             // utils.consolelog('createPasswordResetToken', error, false);

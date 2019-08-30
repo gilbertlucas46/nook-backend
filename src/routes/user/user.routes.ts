@@ -70,7 +70,7 @@ export let userRoute = [
             // auth: "BasicAuth"
             validate: {
                 payload: {
-                    email: Joi.string(),
+                    email: Joi.string().min(4).max(100),
                     password: Joi.string().min(6).max(14).trim().required(),
                     deviceId: Joi.string(),
                     deviceToken: Joi.string()
@@ -105,7 +105,7 @@ export let userRoute = [
             auth: "UserAuth",
             validate: {
                 params: {
-                    _id: Joi.string().min(24).max(24).required()
+                    _id: Joi.string()
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
@@ -115,29 +115,27 @@ export let userRoute = [
 
     {
         method: "POST",
-        path: "/v1/admin/forget-password",
+        path: "/v1/user/forget-password",
         handler: async (request, h) => {
             try {
-                // let payload: AdminRequest.ForgerPassword = request.payload;
-                // console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
+                let payload: UserRequest.ForgetPassword = request.payload;
+                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
 
-                // let forgetPasswordResponse = await UserService.forgetPassword(payload);
-                // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
-                // return UniversalFunctions.sendLocalizedSuccessResponse(request, result);
+                let forgetPasswordResponse = await UserService.forgetPassword(payload);
+                let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}))
             } catch (error) {
                 let result = await UniversalFunctions.sendError(error);
-                // return UniversalFunctions.sendLocalizedErrorResponse(request, result);
             }
         },
         options: {
             description: "forget-password to Admin",
             tags: ["api", "anonymous", "merchant", "forget-password"],
-            auth: "UserAuth",
+            // auth: "UserAuth",
             validate: {
                 payload: {
                     email: Joi.string().email().lowercase().trim().required(),
                 },
-                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
             },
             plugins: {
@@ -228,4 +226,37 @@ export let userRoute = [
             }
         }
     },
+    {
+        method: 'POST',
+        path: '/v1/user/verifyOtp',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let payload = request.query;
+                let responseData = await UserService.verifyOtp(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'Get user Profile',
+            tags: ['api', 'anonymous', 'user', 'Detail'],
+            // auth: "UserAuth",
+            validate: {
+                query: {
+                    otp: Joi.string().min(4).max(4),
+                    email: Joi.string().email({ minDomainSegments: 2 }),
+                },
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
+
 ]
