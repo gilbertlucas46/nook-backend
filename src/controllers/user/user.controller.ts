@@ -6,6 +6,8 @@ import * as ENTITY from '../../entity'
 import * as utils from "../../utils/index";
 import { userRoute } from '../../routes/user/user.routes';
 import { PromiseProvider } from 'mongoose';
+import * as Jwt from 'jsonwebtoken';
+const cert = config.get('jwtSecret')
 
 export class UserController {
     constructor() { }
@@ -24,7 +26,7 @@ export class UserController {
             } else {
                 let UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']) //UserRequest.UserData = await userClass.getOneEntity(criteria, {})        
                 if (UserCheck && UserCheck._id) {
-                    return Constant.STATUS_MSG.ERROR.ALREADY_EXIST
+                    return Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN
                 } else {
                     let isProfileComplete: boolean
 
@@ -137,14 +139,13 @@ export class UserController {
             };
             let passwordResetToken: number;
 
-
             let userData = await ENTITY.UserE.getOneEntity(criteria, ["email", "_id"]);
             console.log('userDatauserData', userData);
 
             if (!userData) {
                 return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL;
             } else {
-                passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
+                let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
                 // let mail = new MailManager(payload.email, Constant.DATABASE.EMAIL_SUBJECT.VERIFY_EMAIL, passwordResetToken);
                 // await mail.sendMail(false);
                 return passwordResetToken;
@@ -155,48 +156,109 @@ export class UserController {
         }
     }
 
-    async verifyOtp(payload: UserRequest.VerifyOtp) {
+    // async verifyOtp(payload: UserRequest.VerifyOtp) {
+    //     try {
+    //         let criteria = {
+    //             email: payload.email
+    //         }
+    //         let userAttribute = ['email', 'name', 'passwordResetTokenExpirationTime', 'passwordResetToken']
+
+    //         let checkAdmin: any = await ENTITY.UserE.getOneEntity(criteria, [userAttribute])
+    //         console.log('checkAdmincheckAdmin>>>>>>>?????????????', checkAdmin);
+
+    //         var today: any = new Date();
+    //         var diffMs = (today - checkAdmin.passwordResetTokenExpirationTime); // milliseconds between now & Christmas
+    //         // var diffDays = Math.floor(diffMs / 86400000); // days
+    //         // var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+    //         var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+    //         console.log('diffMinsdiffMinsdiffMinsdiffMinsdiffMinsdiffMins', diffMins);
+
+    //         if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) {
+    //             return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
+    //         }
+    //         // remove the sessions  
+    //         else if (payload.otp == Constant.SERVER.BY_PASS_OTP) {
+    //             return Constant.STATUS_MSG.SUCCESS.S200.EMAIL_VERIFIED
+    //         }
+    //         else {
+    //             return Constant.STATUS_MSG.ERROR.E400.INVALID_OTP
+    //         }
+    //     } catch (error) {
+    //         return Promise.reject(error)
+    //     }
+    // }
+
+    async changePassword(payload: UserRequest.ChangePassword, userData: UserRequest.userData) {
         try {
             let criteria = {
-                email: payload.email
+                _id: userData._id
             }
-            let userAttribute = ['email', 'name', 'passwordResetTokenExpirationTime', 'passwordResetToken']
-
-            let checkAdmin: any = await ENTITY.UserE.getOneEntity(criteria, [userAttribute])
-            console.log('checkAdmincheckAdmin>>>>>>>?????????????', checkAdmin);
-
-            var today: any = new Date();
-            var diffMs = (today - checkAdmin.passwordResetTokenExpirationTime); // milliseconds between now & Christmas
-            // var diffDays = Math.floor(diffMs / 86400000); // days
-            // var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-            var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-            console.log('diffMinsdiffMinsdiffMinsdiffMinsdiffMinsdiffMins', diffMins);
-
-            if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) {
-                return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
-            }
-            // remove the sessions  
-            else if (payload.otp == Constant.SERVER.BY_PASS_OTP) {
-                return Constant.STATUS_MSG.SUCCESS.S200.EMAIL_VERIFIED
-            }
+            let password = await ENTITY.UserE.getOneEntity(criteria, ['password'])
+            if (!(await utils.deCryptData(payload.newPassword, password.password)))
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD)
             else {
-                return Constant.STATUS_MSG.ERROR.E400.INVALID_OTP
+                let updatePswd = {
+                    password: await utils.cryptData(payload.newPassword),
+                    updatedAt: new Date().getTime()
+                }
+                let updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd)
+
+                if (!updatePassword) {
+                    return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR)
+                } else {
+                    return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT
+                }
             }
         } catch (error) {
             return Promise.reject(error)
         }
+    }
 
+    async verifyLink(payload) {
+        try {
+            console.log('payloadpayload', payload);
+            let result = await Jwt.verify(payload['link'], cert, { algorithms: ['HS256'] });
 
+            console.log('resultresultresult', result);
+            if (result == undefined) {
+                return "something went wrong"
+            }
+            let userData = await ENTITY.UserE.getOneEntity(result.email, {})
+            if (!userData) {
+                return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR
+            } else {
+                let criteria = { email: result }
+                let userAttribute = ['email', 'name', 'passwordResetTokenExpirationTime', 'passwordResetToken']
+
+                let checkAdmin: any = await ENTITY.UserE.getOneEntity(criteria, [userAttribute])
+
+                var today: any = new Date();
+                var diffMs = (today - checkAdmin.passwordResetTokenExpirationTime); // milliseconds between now & Christmas
+                // var diffDays = Math.floor(diffMs / 86400000); // days
+                // var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+                var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+                console.log('diffMinsdiffMinsdiffMinsdiffMinsdiffMinsdiffMins', diffMins);
+
+                if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) {
+                    return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
+                } else {
+                    return Constant.STATUS_MSG.SUCCESS.S200.EMAIL_VERIFIED
+
+                }
+                // remove the sessions  
+                // else if (payload.otp == Constant.SERVER.BY_PASS_OTP) {
+                return Constant.STATUS_MSG.SUCCESS.S200.EMAIL_VERIFIED
+
+                // }
+                // else {
+                // return Constant.STATUS_MSG.ERROR.E400.INVALID_OTP
+                // }
+            }
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
     }
 }
-
-
-// let checkOtp = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetToken']);
-// console.log('checkOtpcheckOtpcheckOtp', checkOtp);
-// if (checkOtp) {
-
-
-
-// }
 
 export let UserService = new UserController();
