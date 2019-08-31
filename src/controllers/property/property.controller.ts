@@ -92,24 +92,21 @@ export class PropertyController {
                 }
             }
 
-            // if (propertyId) {
-            //     matchObject['$match']['_id'] = new ObjectId(propertyId)
-            // }
-
-            // if (propertyType && propertyType !== 'all') {
-            //     if (!matchObject['$match'].hasOwnProperty('property_basic_details')) matchObject['$match']['property_basic_details'] = {}
-            //     matchObject['$match']['property_basic_details']['status'] = propertyType;
-            // }
-
-            if (type && type !== 'all') {
-                if (!matchObject['$match'].hasOwnProperty('property_basic_details')) matchObject['$match']['property_basic_details'] = {}
-                matchObject['$match']['property_basic_details']['type'] = type
+            if (propertyId) {
+                matchObject['$match']['_id'] = new ObjectId(propertyId)
             }
 
-            if (label && label !== 'all') {
-                if (!matchObject['$match'].hasOwnProperty('property_basic_details')) matchObject['$match']['property_basic_details'] = {}
+            if (propertyType && propertyType !== 3) {
+                matchObject['$match']['property_basic_details.status'] = propertyType;
+            }
+
+            if (type && type !== 'all') {
+                matchObject['$match']['property_basic_details.type'] = type;
+            }
+
+            if (label && label[0] !== 'all') {
                 for (let i = 0; i < label.length; i++) {
-                    matchObject['$match']['property_basic_details']['label'] = label
+                    matchObject['$match']['property_basic_details.label'] = label;
                 }
             }
 
