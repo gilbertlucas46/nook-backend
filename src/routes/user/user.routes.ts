@@ -181,17 +181,17 @@ export let userRoute = [
                         Constant.DATABASE.USER_TYPE.OWNER,
                         Constant.DATABASE.USER_TYPE.TENANT
                     ]),
-                    title: Joi.string(),
-                    license: Joi.string(),
-                    taxnumber: Joi.string(),
-                    faxNumber: Joi.string(),
-                    fullPhoneNumber: Joi.string(),
-                    language: Joi.string(),
-                    companyName: Joi.string(),
-                    address: Joi.string(),
-                    aboutMe: Joi.string(),
-                    profilePicUrl: Joi.string(),
-                    backGroundImageUrl: Joi.string()
+                    title: Joi.string().allow(""),
+                    license: Joi.string().allow(""),
+                    taxnumber: Joi.string().allow(""),
+                    faxNumber: Joi.string().allow(""),
+                    fullPhoneNumber: Joi.string().allow(""),
+                    language: Joi.string().allow(""),
+                    companyName: Joi.string().allow(""),
+                    address: Joi.string().allow(""),
+                    aboutMe: Joi.string().allow(""),
+                    profilePicUrl: Joi.string().allow(""),
+                    backGroundImageUrl: Joi.string().allow("")
                 },
                 // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
