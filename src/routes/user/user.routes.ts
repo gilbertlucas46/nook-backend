@@ -265,7 +265,6 @@ export let userRoute = [
     //         }
     //     }
     // },
-
     {
         method: 'GET',
         path: '/v1/user/verifyLink/{link}',
@@ -275,6 +274,7 @@ export let userRoute = [
                 let payload = request.params;
                 let responseData = await UserService.verifyLink(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+                // return Response.redirect("https://nookdevang.appskeeper.com/for-sale")
             }
             catch (error) {
                 return (UniversalFunctions.sendError(error))
@@ -299,7 +299,6 @@ export let userRoute = [
             }
         }
     },
-
     {
         method: 'POST',
         path: '/v1/user/change-password',
