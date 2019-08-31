@@ -193,8 +193,13 @@ export class UserController {
             let criteria = {
                 _id: userData._id
             }
+            let password1 = await utils.cryptData(payload.newPassword)
+
             let password = await ENTITY.UserE.getOneEntity(criteria, ['password'])
-            if (!(await utils.deCryptData(payload.newPassword, password.password)))
+
+            console.log('passwordpassword', password, password1);
+
+            if (!(await utils.deCryptData(payload.oldPassword, password.password)))
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD)
             else {
                 let updatePswd = {
@@ -228,22 +233,26 @@ export class UserController {
                 return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR
             } else {
                 let criteria = { email: result }
-                let userAttribute = ['email', 'name', 'passwordResetTokenExpirationTime', 'passwordResetToken']
+                let userAttribute = ['passwordResetTokenExpirationTime', 'passwordResetToken']
 
-                let checkAdmin: any = await ENTITY.UserE.getOneEntity(criteria, [userAttribute])
+                let userExirationTime: any = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken'])
+                console.log('userExirationTimeuserExirationTimeuserExirationTime', userExirationTime);
 
                 var today: any = new Date();
-                var diffMs = (today - checkAdmin.passwordResetTokenExpirationTime); // milliseconds between now & Christmas
-                // var diffDays = Math.floor(diffMs / 86400000); // days
-                // var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+                console.log('todaytodaytoday', today);
+
+                var diffMs = (today - userExirationTime.passwordResetTokenExpirationTime); // milliseconds between now & Christmas
+                console.log('diffMsdiffMsdiffMs', diffMs);
+
+                var diffDays = Math.floor(diffMs / 86400000); // days
+                var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
                 var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-                console.log('diffMinsdiffMinsdiffMinsdiffMinsdiffMinsdiffMins', diffMins);
+                console.log('diffMinsdiffMinsdiffMinsdiffMinsdiffMinsdiffMins', typeof diffMins, diffMins);
 
                 if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) {
                     return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
                 } else {
-                    return Constant.STATUS_MSG.SUCCESS.S200.EMAIL_VERIFIED
-
+                    return {}
                 }
                 // remove the sessions  
                 // else if (payload.otp == Constant.SERVER.BY_PASS_OTP) {
