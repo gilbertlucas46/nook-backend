@@ -157,9 +157,19 @@ export let STATUS_MSG = {
                 message: 'Request has allready been sent to the admin for approval.',
                 type: 'REQUEST_ALLREDY_SENT'
             },
+            INVALID_CURRENT_PASSWORD: {
+                statusCode: 400,
+                message: 'Your Current Password did not match with new Password',
+                type: 'CHANGE_PASSWORD'
+            },
             USER_NAME_ALREDY_TAKEN: {
                 statusCode: 400,
-                message: 'User Name already Taken Provide Another',
+                message: 'This username is already taken',
+                type: '',
+            },
+            EMAIL_ALREADY_TAKEN: {
+                statusCode: 400,
+                message: 'Email Address is already taken by other user',
                 type: '',
             },
             NOT_VERIFIED: {
@@ -172,6 +182,7 @@ export let STATUS_MSG = {
                 message: 'Email is not exist',
                 type: ''
             },
+
 
             CANNOT_PERFORM_UPDATE_OPERATION: {
                 statusCode: 400,
@@ -510,7 +521,7 @@ export let SERVER = {
     CHUNK_SIZE: 100,
     LIMIT: 10,
     OTP_EXPIRATION_TIME: 60,
-    MAX_LIMIT :1000
+    MAX_LIMIT: 1000
 }
 
 export let EMAIL_SUB: {
