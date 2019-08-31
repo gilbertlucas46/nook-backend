@@ -39,7 +39,7 @@ export class PropertyController {
 
     async searchProperties(payload: PropertyRequest.SearchProperty) {
         try {
-            let { page, limit, searchTerm, sortBy, sortType, fromDate, toDate, propertyId, status, type, label, maxPrice, minPrice } = payload;
+            let { page, limit, searchTerm, sortBy, sortType, propertyId, propertyType, type, label, maxPrice, minPrice } = payload;
             if (!limit) limit = Constant.SERVER.LIMIT;
             else limit = limit;
             if (!page) page = 1;
@@ -55,9 +55,10 @@ export class PropertyController {
                 searchCriteria = {
                     $match: {
                         $or: [
-                            { 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { 'property_basic_details.description': new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { 'property_basic_details.type': new RegExp('.*' + searchTerm + '.*', 'i') },
+                            { 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
+                            { 'property_address.region': new RegExp('.*' + searchTerm + '.*', 'i') },
+                            { 'property_address.city': new RegExp('.*' + searchTerm + '.*', 'i') },
+                            { 'property_address.barangay': new RegExp('.*' + searchTerm + '.*', 'i') },
                         ]
                     }
                 }
@@ -91,16 +92,25 @@ export class PropertyController {
                 }
             }
 
-            if (propertyId) {
-                matchObject['$match']['_id'] = new ObjectId(propertyId)
-            }
+            // if (propertyId) {
+            //     matchObject['$match']['_id'] = new ObjectId(propertyId)
+            // }
 
-            if (type) {
+            // if (propertyType && propertyType !== 'all') {
+            //     if (!matchObject['$match'].hasOwnProperty('property_basic_details')) matchObject['$match']['property_basic_details'] = {}
+            //     matchObject['$match']['property_basic_details']['status'] = propertyType;
+            // }
+
+            if (type && type !== 'all') {
+                if (!matchObject['$match'].hasOwnProperty('property_basic_details')) matchObject['$match']['property_basic_details'] = {}
                 matchObject['$match']['property_basic_details']['type'] = type
             }
 
-            if (label) {
-                matchObject['$match']['property_basic_details']['type'] = label
+            if (label && label !== 'all') {
+                if (!matchObject['$match'].hasOwnProperty('property_basic_details')) matchObject['$match']['property_basic_details'] = {}
+                for (let i = 0; i < label.length; i++) {
+                    matchObject['$match']['property_basic_details']['label'] = label
+                }
             }
 
             // creating the pipeline for mongodb
@@ -111,7 +121,7 @@ export class PropertyController {
                     $sort: sortingType
                 },
             ];
-         // let propertyData  =  UniversalFunctions.paginate('properties',pipeLine,limit,page)
+
             let propertyData = await ENTITY.PropertyE.aggregate(pipeLine);
             return propertyData;
 
