@@ -84,16 +84,16 @@ declare namespace PropertyRequest {
         limit?: number;
         searchTerm?: string;
         sortBy?: string;
-        sortType ?: number;
-        fromDate ?: string;
-        toDate ?:string ;
-        propertyId ?: string;
-        status ?: string;
-        type ?: string ;
-        label ?: string;
-        maxPrice ?: number;
-        minPrice ?: number;
-        propertyType ?:string;
+        sortType?: number;
+        fromDate?: string;
+        toDate?: string;
+        propertyId?: string;
+        status?: string;
+        type?: string;
+        label?: [string];
+        maxPrice?: number;
+        minPrice?: number;
+        propertyType?: number;
     }
 }
 

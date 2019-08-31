@@ -13,16 +13,12 @@ export let propertyRoute = [
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload: PropertyRequest.PropertyData = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`)
-
                 if (payload.propertyId) {
                     let registerResponse = await PropertyService.addProperty(payload, userData);
                     return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, registerResponse))
-
                 } else {
                     let registerResponse = await PropertyService.addProperty(payload, userData);
                     return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse))
-
                 }
             }
             catch (error) {
@@ -138,8 +134,6 @@ export let propertyRoute = [
         path: '/v1/user/propertyList',
         handler: async (request, h) => {
             try {
-                //let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                console.log("request --------------", request.query);
                 let propertyList = await PropertyService.searchProperties(request.query);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList))
             }
@@ -153,12 +147,11 @@ export let propertyRoute = [
             //  auth: "UserAuth",
             validate: {
                 query: {
-                    page: Joi.number(),
-                    limit: Joi.number(),
+                    // page: Joi.number(),
+                    // limit: Joi.number(),
                     searchTerm: Joi.string(),
-                    status: Joi.string(),
                     type: Joi.string(),
-                    label: Joi.string(),
+                    label: Joi.array(),
                     maxPrice: Joi.number(),
                     minPrice: Joi.number(),
                     propertyType: Joi.number()
