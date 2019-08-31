@@ -131,7 +131,7 @@ export let DATABASE = {
     },
     PROPERTY_TYPE: {
         NONE: "None",
-        "APPARTMENT/CONDO": "Appartment/Condo",
+        "APPARTMENT/CONDO": "Apartment/Condo",
         COMMERCIAL: "Commercial",
         HOUSE_LOT: "House & Lot",
         LAND: "Land",
