@@ -268,6 +268,29 @@ export class UserController {
             return Promise.reject(error)
         }
     }
+    async resetPassword(payload, userData) {
+        try {
+            let criteria = {
+                _id: userData._id
+            }
+            let updatePswd = {
+                password: await utils.cryptData(payload.newPassword),
+                updatedAt: new Date().getTime()
+            }
+            let updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd)
+
+            if (!updatePassword) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR)
+            } else {
+                return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT
+            }
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
 }
+
+
 
 export let UserService = new UserController();
