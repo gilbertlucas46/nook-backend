@@ -7,6 +7,9 @@ import * as utils from '../utils'
 // import { TokenManager } from './../Lib';
 import * as CONSTANT from '../constants/app.constant'
 import * as TokenManager from '../lib'
+import * as Jwt from 'jsonwebtoken'
+const cert = config.get('jwtSecret')
+
 export class UserClass extends BaseEntity {
     constructor() {
         super('User')
@@ -70,23 +73,30 @@ export class UserClass extends BaseEntity {
     }
     async createPasswordResetToken(userData) {
         try {
-            // let createRandom = await utils.generateRandomString(6) ;
-            let createRandom = await utils.generateOtp();
-            // let token = await jwt.sign(AdminData.email, cert);
-            // let token = await utils.cryptData(AdminData.email);
+            console.log('userData', userData);
+            // console.log('userData', typeof userData._id.t);
+            // let userId = userData._id;
+
+            let tokenToSend = await Jwt.sign(userData.email, cert, { algorithm: 'HS256' });
             let expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
+
             let criteriaForUpdatePswd = { _id: userData._id }
             let dataToUpdateForPswd = {
-                passwordResetToken: createRandom,
+                passwordResetToken: tokenToSend,
                 passwordResetTokenExpirationTime: expirationTime
             };
             await this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
-            return createRandom;
+            return tokenToSend;
         } catch (error) {
             // utils.consolelog('createPasswordResetToken', error, false);
             return Promise.reject(error);
         }
     }
+
+    // let passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(merchantData);
+    // let url = config.get("host.node.host") + ":" + config.get("host.node.port") + "/v1/merchant/anonymous/reset-password/" + passwordResetToken;
+    // return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, { resetToken: url });
+
 
 }
 

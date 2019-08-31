@@ -4,8 +4,8 @@ import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant'
 import { UserService } from '../../controllers'
 import { join } from 'path';
-
-
+import * as config from "config";
+import * as utils from '../../utils'
 export let userRoute = [
     {
         method: 'POST',
@@ -122,15 +122,22 @@ export let userRoute = [
                 console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
 
                 let forgetPasswordResponse = await UserService.forgetPassword(payload);
-                let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}))
+                console.log('forgetPasswordResponseforgetPasswordResponseforgetPasswordResponse', forgetPasswordResponse);
+
+                // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
+
+                let url = config.get("host.node") + ":" + config.get("host.port") + "/v1/user/verifyLink/" + forgetPasswordResponse
+
+                return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, { resetToken: url });
+                // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, result))
             } catch (error) {
                 let result = await UniversalFunctions.sendError(error);
+                return error
             }
         },
         options: {
             description: "forget-password to user",
-            tags: ["api", "anonymous", "user", "forget-password"],
+            tags: ["api", "anonymous", "user", "forget-password", "link"],
             // auth: "UserAuth",
             validate: {
                 payload: {
@@ -184,6 +191,7 @@ export let userRoute = [
                     address: Joi.string(),
                     aboutMe: Joi.string(),
                     profilePicUrl: Joi.string(),
+                    backGroundImageUrl: Joi.string()
                 },
                 // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
@@ -202,7 +210,6 @@ export let userRoute = [
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 console.log('userData', userData);
-
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userData))
             }
             catch (error) {
@@ -226,14 +233,47 @@ export let userRoute = [
             }
         }
     },
+    // {
+    //     method: 'POST',
+    //     path: '/v1/user/verifyOtp',
+    //     handler: async (request, h) => {
+    //         try {
+    //             let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+    //             let payload = request.query;
+    //             // let responseData = await UserService.verifyOtp(payload);
+    //             // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+    //         }
+    //         catch (error) {
+    //             return (UniversalFunctions.sendError(error))
+    //         }
+    //     },
+    //     options: {
+    //         description: 'Get user Profile',
+    //         tags: ['api', 'anonymous', 'user', 'Detail'],
+    //         // auth: "UserAuth",
+    //         validate: {
+    //             query: {
+    //                 otp: Joi.string().min(4).max(4),
+    //                 email: Joi.string().email({ minDomainSegments: 2 }),
+    //             },
+    //             failAction: UniversalFunctions.failActionFunction
+    //         },
+    //         plugins: {
+    //             'hapi-swagger': {
+    //                 responseMessages: Constant.swaggerDefaultResponseMessages
+    //             }
+    //         }
+    //     }
+    // },
+
     {
-        method: 'POST',
-        path: '/v1/user/verifyOtp',
+        method: 'GET',
+        path: '/v1/user/verifyLink/{link}',
         handler: async (request, h) => {
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                let payload = request.query;
-                let responseData = await UserService.verifyOtp(payload);
+                let payload = request.params;
+                let responseData = await UserService.verifyLink(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
@@ -245,9 +285,10 @@ export let userRoute = [
             tags: ['api', 'anonymous', 'user', 'Detail'],
             // auth: "UserAuth",
             validate: {
-                query: {
-                    otp: Joi.string().min(4).max(4),
-                    email: Joi.string().email({ minDomainSegments: 2 }),
+                params: {
+                    // otp: Joi.string().min(4).max(4),
+                    // email: Joi.string().email({ minDomainSegments: 2 }),
+                    link: Joi.string()
                 },
                 failAction: UniversalFunctions.failActionFunction
             },

@@ -27,6 +27,7 @@ declare namespace UserRequest {
         isPhoneVerified?: boolean;
         session?: boolean;
         isProfileComplete: boolean;
+        backGroundImageUrl?: string
     }
 
     export interface Register {
@@ -79,7 +80,8 @@ declare namespace UserRequest {
         address: string,
         aboutMe: string,
         profilePicUrl: string,
-        isProfileComplete: boolean
+        isProfileComplete: boolean,
+        backGroundImageUrl: string
 
     }
 
