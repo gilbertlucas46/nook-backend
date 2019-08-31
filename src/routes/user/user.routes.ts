@@ -305,7 +305,7 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                let payload: UserRequest.ChangePassword = request.query;
+                let payload: UserRequest.ChangePassword = request.payload;
                 let responseData = await UserService.changePassword(payload, userData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
@@ -318,11 +318,43 @@ export let userRoute = [
             tags: ['api', 'anonymous', 'user', 'Detail'],
             auth: "UserAuth",
             validate: {
-                query: {
+                payload: {
                     oldPassword: Joi.string().min(6).max(14),
                     newPassword: Joi.string().min(6).max(14)
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
+
+    {
+        method: 'POST',
+        path: '/v1/user/reset-password',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let payload: UserRequest.ChangePassword = request.query;
+                let responseData = await UserService.resetPassword(payload, userData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'Get user Profile',
+            tags: ['api', 'anonymous', 'user', 'reset'],
+            validate: {
+                query: {
+                    password: Joi.string().min(6).max(14),
+
+                },
                 failAction: UniversalFunctions.failActionFunction
             },
             plugins: {
