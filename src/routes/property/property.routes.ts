@@ -69,7 +69,7 @@ export let propertyRoute = [
                             Constant.DATABASE.PROPERTY_TYPE.LAND,
                             Constant.DATABASE.PROPERTY_TYPE.ROOM,
                         ]),
-                        status: Joi.string().min(1).max(20).trim().required(),
+                        status: Joi.number(),
                         label: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_LABEL.NONE,
                             Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,
@@ -139,7 +139,8 @@ export let propertyRoute = [
         handler: async (request, h) => {
             try {
                 //let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                let propertyList = await PropertyService.searchProperties({});
+                console.log("request --------------", request.query);
+                let propertyList = await PropertyService.searchProperties(request.query);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList))
             }
             catch (error) {
@@ -149,9 +150,19 @@ export let propertyRoute = [
         options: {
             description: 'GET properties',
             tags: ['api', 'anonymous', 'user', 'update'],
-          //  auth: "UserAuth",
+            //  auth: "UserAuth",
             validate: {
-              //  headers: UniversalFunctions.authorizationHeaderObj,
+                query: {
+                    page: Joi.number(),
+                    limit: Joi.number(),
+                    searchTerm: Joi.string(),
+                    status: Joi.string(),
+                    type: Joi.string(),
+                    label: Joi.string(),
+                    maxPrice: Joi.number(),
+                    minPrice: Joi.number(),
+                    propertyType: Joi.number()
+                },
                 failAction: UniversalFunctions.failActionFunction
             },
             plugins: {

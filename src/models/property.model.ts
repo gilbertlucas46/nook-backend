@@ -65,7 +65,7 @@ export interface IProperty extends Document {
         title: string;
         description: string;
         type: string;
-        status: string;
+        status: number;
         label: string;
         sale_rent_price: number;
         price_currency: string;
@@ -163,12 +163,7 @@ const propertySchema = new Schema({
             ], index: true
         },
         status: {
-            type: String,
-            enum: [
-                Constant.DATABASE.PROPERTY_TYPE_STATUS.FOR_RENT,
-                Constant.DATABASE.PROPERTY_TYPE_STATUS.FOR_SALE,
-                Constant.DATABASE.PROPERTY_TYPE_STATUS.NONE,
-            ], index: true
+            type: Number,
         },
         label: {
             type: String,
