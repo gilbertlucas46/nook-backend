@@ -66,7 +66,7 @@ declare namespace PropertyRequest {
             title?: string;
             description?: string;
             type?: string;
-            status?: string;
+            status?: number;
             label?: string;
             sale_rent_price: number;
             price_currency?: string;
@@ -93,6 +93,7 @@ declare namespace PropertyRequest {
         label ?: string;
         maxPrice ?: number;
         minPrice ?: number;
+        propertyType ?:string;
     }
 }
 
