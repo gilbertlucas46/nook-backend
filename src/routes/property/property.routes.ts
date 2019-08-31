@@ -69,7 +69,7 @@ export let propertyRoute = [
                             Constant.DATABASE.PROPERTY_TYPE.LAND,
                             Constant.DATABASE.PROPERTY_TYPE.ROOM,
                         ]),
-                        status: Joi.string().min(1).max(20).trim().required(),
+                        status: Joi.number(),
                         label: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_LABEL.NONE,
                             Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,
