@@ -112,7 +112,6 @@ export let userRoute = [
             },
         }
     },
-
     {
         method: "POST",
         path: "/v1/user/forgetPassword",
@@ -123,12 +122,13 @@ export let userRoute = [
 
                 let forgetPasswordResponse = await UserService.forgetPassword(payload);
                 console.log('forgetPasswordResponseforgetPasswordResponseforgetPasswordResponse', forgetPasswordResponse);
-
                 // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
+                //+ ":" + config.get("host.port") +
+                let url = config.get("host.node") + "/v1/user/verifyLink/" + forgetPasswordResponse
+                // let url = "localhost:7361" + "/v1/user/verifyLink/" + forgetPasswordResponse
+                console.log('urlurlurl', url);
 
-                let url = config.get("host.node") + ":" + config.get("host.port") + "/v1/user/verifyLink/" + forgetPasswordResponse
-
-                return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, { resetToken: url });
+                return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, {});
                 // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, result))
             } catch (error) {
                 let result = await UniversalFunctions.sendError(error);
@@ -181,17 +181,17 @@ export let userRoute = [
                         Constant.DATABASE.USER_TYPE.OWNER,
                         Constant.DATABASE.USER_TYPE.TENANT
                     ]),
-                    title: Joi.string().allow(""),
-                    license: Joi.string().allow(""),
-                    taxnumber: Joi.string().allow(""),
-                    faxNumber: Joi.string().allow(""),
-                    fullPhoneNumber: Joi.string().allow(""),
-                    language: Joi.string().allow(""),
-                    companyName: Joi.string().allow(""),
-                    address: Joi.string().allow(""),
-                    aboutMe: Joi.string().allow(""),
-                    profilePicUrl: Joi.string().allow(""),
-                    backGroundImageUrl: Joi.string().allow("")
+                    title: Joi.string().allow("null").default(""),
+                    license: Joi.string().allow("null").default(""),
+                    taxnumber: Joi.string().allow("null").default(""),
+                    faxNumber: Joi.string().allow("null").default(""),
+                    fullPhoneNumber: Joi.string().allow("null").default(""),
+                    language: Joi.string().allow("null").default(""),
+                    companyName: Joi.string().allow("null").default(""),
+                    address: Joi.string().allow("null").default(""),
+                    aboutMe: Joi.string().allow("null").default(""),
+                    profilePicUrl: Joi.string().allow("null").default(""),
+                    backGroundImageUrl: Joi.string().allow("null").default("")
                 },
                 // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
@@ -273,11 +273,15 @@ export let userRoute = [
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload = request.params;
                 let responseData = await UserService.verifyLink(payload);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
-                // return Response.redirect("https://nookdevang.appskeeper.com/for-sale")
+                // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+                console.log('???????????????????????????????/', config.get("BASE_URL") + payload.link);
+                return h.redirect(config.get("BASE_URL") + `link`)
             }
             catch (error) {
-                return (UniversalFunctions.sendError(error))
+                console.log('errorerrorerrorerrorerror', error);
+
+                return h.redirect("https://www.w3schools.com/howto/howto_js_password_validation.asp")
+                // return (UniversalFunctions.sendError(error))
             }
         },
         options: {

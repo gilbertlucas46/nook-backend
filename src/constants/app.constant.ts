@@ -497,18 +497,12 @@ export let STATUS_MSG = {
 
 export let SERVER = {
     DOMAIN_NAME: 'http://localhost:7313/',
-    IOS_URL: "uchat://",
-    ANDROID_URL: "http://uchat.com",
-    ANDROID_PACKAGE_NAME: "com.uchat",
     APP_URL: config.get("host"),
     LINKS: {
         TERMS_COND: '',
         PRIVACY: config.get("host") + "/privacy_policy/",
     },
-    SHARE_CONTENT: {
-        SHARE_CONTENT_MESSAGE: "Thank you for your interest in downloading Toki! We're constantly working on improving the way you can hangout with your closest friends :)",
-        SHARE_CONTENT_LINK: config.get("host") + DATABASE.DEEPLINK_REDIRECT_URL.APP + "http://uchat.com" + "/" + DATABASE.ACTION.DEEPLINK.APP + "&ios=" + "uchat://" + DATABASE.ACTION.DEEPLINK.APP
-    },
+
     TEMPLATE_PATH: process.cwd() + '/views/',
     BY_PASS_OTP: "1212",
     LISTNG_LIMIT: 10,
@@ -520,7 +514,7 @@ export let SERVER = {
     GIFTHUMB_HEIGHT: 100,
     CHUNK_SIZE: 100,
     LIMIT: 10,
-    OTP_EXPIRATION_TIME: 60,
+    OTP_EXPIRATION_TIME: 15,
     MAX_LIMIT: 1000
 }
 
