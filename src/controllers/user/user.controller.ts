@@ -133,7 +133,7 @@ export class UserController {
 
 
                 // await mail.sendMail();
-                
+
                 return passwordResetToken;
             }
         }
@@ -208,36 +208,3 @@ export class UserController {
 }
 
 export let UserService = new UserController();
-
-
-  // async verifyOtp(payload: UserRequest.VerifyOtp) {
-    //     try {
-    //         let criteria = {
-    //             email: payload.email
-    //         }
-    //         let userAttribute = ['email', 'name', 'passwordResetTokenExpirationTime', 'passwordResetToken']
-
-    //         let checkAdmin: any = await ENTITY.UserE.getOneEntity(criteria, [userAttribute])
-    //         console.log('checkAdmincheckAdmin>>>>>>>?????????????', checkAdmin);
-
-    //         var today: any = new Date();
-    //         var diffMs = (today - checkAdmin.passwordResetTokenExpirationTime); // milliseconds between now & Christmas
-    //         // var diffDays = Math.floor(diffMs / 86400000); // days
-    //         // var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-    //         var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-    //         console.log('diffMinsdiffMinsdiffMinsdiffMinsdiffMinsdiffMins', diffMins);
-
-    //         if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) {
-    //             return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
-    //         }
-    //         // remove the sessions  
-    //         else if (payload.otp == Constant.SERVER.BY_PASS_OTP) {
-    //             return Constant.STATUS_MSG.SUCCESS.S200.EMAIL_VERIFIED
-    //         }
-    //         else {
-    //             return Constant.STATUS_MSG.ERROR.E400.INVALID_OTP
-    //         }
-    //     } catch (error) {
-    //         return Promise.reject(error)
-    //     }
-    // }
