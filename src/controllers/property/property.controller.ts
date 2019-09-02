@@ -4,6 +4,7 @@ import * as UniversalFunctions from '../../utils'
 import * as Constant from '../../constants/app.constant'
 import * as ENTITY from '../../entity';
 import { mongo } from 'mongoose';
+import * as paginate from '../../utils/paginate.util'
 const { ObjectId } = mongo;
 
 export class PropertyController {
@@ -119,7 +120,8 @@ export class PropertyController {
                 },
             ];
 
-            let propertyData = await ENTITY.PropertyE.aggregate(pipeLine);
+
+            let propertyData = await ENTITY.PropertyE.PropertyList(pipeLine);
             return propertyData;
 
         } catch (err) {
