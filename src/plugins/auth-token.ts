@@ -5,7 +5,6 @@ import { verifyToken } from '../lib';
 import * as  UniversalFunctions from '../utils';
 import * as Constant from '../constants';
 
-
 //Register Authorization Plugin
 export let plugin = {
     name: "auth-token-plugin",
@@ -41,8 +40,7 @@ export let plugin = {
                 // if (!checkApiKeyFunction) {
                 //     return ({ isValid: false, credentials: { token: token, userData: {} } })
                 // } else {
-                let tokenData = await verifyToken(token, 'USER',request);
-                console.log("TENANT     ", token)
+                let tokenData = await verifyToken(token, 'USER', request);
                 if (!tokenData || !tokenData['userData']) {
                     return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.TOKEN_ALREADY_EXPIRED))
                 } else {
@@ -92,18 +90,13 @@ export let plugin = {
     }
 };
 
-
 let apiKeyFunction = async function (api_key) {
     return (api_key === "1234") ? true : false
 }
 
 let basicAuthFunction = async function (access_token) {
-
     const credentials = Buffer.from(access_token, 'base64').toString('ascii');
     const [username, password] = credentials.split(':');
-
-    if (username !== password) {
-        return false;
-    }
+    if (username !== password) return false;
     return true
 }
