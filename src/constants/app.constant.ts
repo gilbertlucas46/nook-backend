@@ -505,25 +505,18 @@ export let STATUS_MSG = {
 
 export let SERVER = {
     DOMAIN_NAME: 'http://localhost:7313/',
-<<<<<<< HEAD
-=======
     IOS_URL: "nook://",
     ANDROID_URL: "http://nook.com",
     ANDROID_PACKAGE_NAME: "com.nook.com",
->>>>>>> 5983a7a8782168ec0ede4ec8e7a7150ff8477fbf
     APP_URL: config.get("host"),
     LINKS: {
         TERMS_COND: '',
         PRIVACY: config.get("host") + "/privacy_policy/",
     },
-<<<<<<< HEAD
-
-=======
     SHARE_CONTENT: {
         SHARE_CONTENT_MESSAGE: "Thank you for your interest in downloading Toki! We're constantly working on improving the way you can hangout with your closest friends :)",
         SHARE_CONTENT_LINK: config.get("host") + DATABASE.DEEPLINK_REDIRECT_URL.APP + "http://nook.com" + "/" + DATABASE.ACTION.DEEPLINK.APP + "&ios=" + "nook://" + DATABASE.ACTION.DEEPLINK.APP
     },
->>>>>>> 5983a7a8782168ec0ede4ec8e7a7150ff8477fbf
     TEMPLATE_PATH: process.cwd() + '/views/',
     BY_PASS_OTP: "1212",
     LISTNG_LIMIT: 10,
