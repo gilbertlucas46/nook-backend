@@ -1,5 +1,6 @@
 import * as Services from '../databases/dao';
 import * as mongoose from "mongoose";
+import { SERVER } from '../constants';
 
 export class BaseEntity {
     public ObjectId = mongoose.Types.ObjectId;
@@ -32,6 +33,8 @@ export class BaseEntity {
     async getOneEntity(criteria: Object, projection: Object) {
         try {
             let data = await this.DAOManager.findOne(this.modelName, criteria, projection, { lean: true })
+            console.log('datadatadatadata', data);
+
             return data
         } catch (error) {
             console.log("Error in Base Entity getOneEntity ", this.modelName, error)
@@ -106,4 +109,51 @@ export class BaseEntity {
             return Promise.reject(error)
         }
     }
+
+
+    async  paginate(Model: any, pipeline?: Array<Object>, limit?: number, page?: number) {
+        try {
+            console.log('ModelModelModel',Model);
+            
+            if (limit) {
+                limit = Math.abs(limit);
+                // If limit exceeds max limit
+                if (limit > SERVER.MAX_LIMIT) limit = SERVER.MAX_LIMIT;
+            } else limit = SERVER.LIMIT;
+
+            if (page && (page !== 0)) page = Math.abs(page);
+            else page = 1;
+
+            const skip = (limit * (page - 1));
+            const result = await Model.aggregate(this.queryBuilder(pipeline, skip, limit, page)).exec();
+            const theTotal = result[0]['metadata'] && result[0]['metadata'][0] ? result[0]['metadata'][0]['total'] : 0;
+            const thePage = result[0]['metadata'] && result[0]['metadata'][0] ? result[0]['metadata'][0]['page'] : page;
+            let pageToSend = -1;
+            if (theTotal > (thePage * limit)) pageToSend = thePage + 1;
+
+            return {
+                data: result[0]['data'],
+                total: theTotal,
+                page: pageToSend,
+                limit,
+            };
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    async queryBuilder(pipeline: Array<Object>, skip: number, limit: number, page: number) {
+        const q = pipeline || [];
+
+        q.push({
+            $facet: {
+                data: [
+                    { $skip: skip },
+                    { $limit: limit },
+                ],
+                metadata: [{ $count: 'total' }, { $addFields: { page } }],
+            },
+        });
+        return q;
+    };
 }

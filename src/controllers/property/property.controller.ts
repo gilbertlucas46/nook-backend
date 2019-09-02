@@ -116,11 +116,16 @@ export class PropertyController {
                 },
             ];
 
-
             let propertyData = await ENTITY.PropertyE.PropertyList(pipeLine);
+
+            // let propertyData = await ENTITY.PropertyE.paginate(pipeLine);
+            console.log('propertyDatapropertyData', propertyData);
+
             return propertyData;
 
         } catch (err) {
+            console.log('errerrerrerrerrerrerr', err);
+
             return Promise.reject(err);
         }
     }
