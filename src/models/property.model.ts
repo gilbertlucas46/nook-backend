@@ -140,7 +140,8 @@ const propertySchema = new Schema({
         location: {
             type: {
                 enum: ['Point'],
-                required: true
+                required: true,
+                default: 'Point'
             },
             coordinates: {
                 type: [Number],
@@ -203,6 +204,11 @@ const propertySchema = new Schema({
     },
 
     propertyImages: { type: [String] },
+});
+
+/* Create 2dsphere index */
+propertySchema.index({
+    'property_address.location': '2dsphere'
 });
 
 
