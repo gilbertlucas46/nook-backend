@@ -183,9 +183,18 @@ const propertySchema = new Schema({
         },
         sale_rent_price: { type: Number },
         price_currency: { type: String },
-        price_label: { type: String }, // monthly
+        price_label: {
+            type: String,
+            enum: [
+                Constant.DATABASE.PRICE_LABEL.DAILY,
+                Constant.DATABASE.PRICE_LABEL.WEEKLY,
+                Constant.DATABASE.PRICE_LABEL.MONTHLY,
+                Constant.DATABASE.PRICE_LABEL.QUATERLY,
+                Constant.DATABASE.PRICE_LABEL.HALFYEARLY,
+                Constant.DATABASE.PRICE_LABEL.YEARLY,
+            ], index: true
+        },
     },
-
     property_added_by: {
         userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
         userName: { type: String },

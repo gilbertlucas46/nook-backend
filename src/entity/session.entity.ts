@@ -23,20 +23,15 @@ export class SessionClass extends BaseEntity {
                 updatedAt: new Date().getTime(),
                 deviceToken: sessionData.deviceToken,
             };
-
             if (type == 'user') {
                 columnName = 'userId';
                 sessionInfo[columnName] = userData._id;
             }
-
-
-            if (sessionData.deviceToken)
-                sessionInfo.deviceToken = sessionData.deviceToken;
+            if (sessionData.deviceToken) sessionInfo.deviceToken = sessionData.deviceToken;
             let session = await this.DAOManager.saveData(this.modelName, sessionInfo);
 
             if (session && session._id) return session;
         } catch (error) {
-            console.log("-------------createSession-----error------------------", error);
             return Promise.reject(error);
         }
     }

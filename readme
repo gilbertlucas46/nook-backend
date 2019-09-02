@@ -1,82 +1,15 @@
-step 1 : npm install git+ssh://github.com/obopay/node-communication-client.git
+step 1 : npm install
 
-
-----------------------------------Uchat development server details---------------------------------
-ssh uchatdev_usr@uchatdev.appskeeper.com
-URL-- uchatdev.appskeeper.com
-username-- uchatdev_usr
-password-- j669gZK8DFr7ejcn
-nodeport-- 7313
+----------------------------------Nook development server details---------------------------------
+ssh-- ssh nook_devusr@nookdev.appskeeper.com
+URL-- nookdev.appskeeper.com 
+username-- nook_devusr
+password-- JdsDjdj@!12!@
+nodeport-- 7361
 
 Mongo development server deatails--
-Host-- uchatdev.appskeeper.com
-db-- uchatdev_db
-user-- uchatdev_usr
-passwd-- bN9XMhccGvS9WwSh
-mongoport-- 27200
-
-
-----------------------------------uchat staging server details-----------------------------------
-ssh uchatstg_usr@uchatstg.appskeeper.com
-Url-- uchatstg.appskeeper.com
-username-- uchatstg_usr
-password-- NJUFN9Vh95TRs9u6
-nodeport-- 7314
-
-mongo staging server details--
-Host-- uchatstg.appskeeper.com
-db-- uchatstg_db
-user-- uchatstg_usr
-passwd-- 98HQuCd3PMgGgEG2
-mongo port-- 27200
-
-
-----------------------------------uchat testing server details----------------------------------
-ssh uchatqa_usr@uchatqa.appskeeper.com
-URL-- uchatqa.appskeeper.com
-username-- uchatqa_usr
-password-- EUgqX6MZZrBzmF2V
-nodeport- 7315
-
-mongo testing server details--
-host-- uchatqa.appskeeper.com
-db-- uchatqa_db
-user-- uchatqa_usr
-passwd-- Xm2qJfrLsnsVN3y9
-mongo port-- 27200
-
-
-
-----------------------------------uchat WSO2 server details----------------------------------
-MongoDB - 
-IP - 13.125.5.206
-Port - 37071
-User - unitel-chatdbusr
-Pass - Mt3RQLR4gbg9vnHH
-DB - unitel-chat
-
-ssh unitel-usr@13.125.5.206
-SSH Details - 
-IP - 13.125.5.206
-user - unitel-usr
-pass - UsbuxP9UPMERB8V8
-Node Port - 3002
-
-Publisher - https://13.125.134.188:9443/publisher
-Store - https://13.125.134.188:9443/store
-Admin console - https://13.125.134.188:9443/admin
-Carbon console - https://13.125.134.188:9443/carbon
-Username - admin || Password - admin
-
-
-
-
-----------------------------------server credentials----------------------------------
-1. Anyconnect :
-202.70.46.10
-appinventiv
-3W87wOaYGA
-
-2. uchatPre : 
-User: Appinventiv
-Pass: ?3%LFYX7k!
+Host-- appskeeper.com
+db-- nook_devdb
+user-- nook_devusr
+passwd-- Iidjsi@#1!
+mongoport-- 2798

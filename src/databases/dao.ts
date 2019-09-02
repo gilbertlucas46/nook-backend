@@ -8,11 +8,7 @@ export class DAOManager {
 
     }
     async saveData(model: ModelNames, data) {
-        try { 
-            console.log('data',data,model);
-            
-            console.log('inside save data function');
-            
+        try {
             let ModelName = Models[model]
             data.createdDate = new Date().getTime()
             return await new ModelName(data).save();
@@ -39,7 +35,7 @@ export class DAOManager {
             return Promise.reject(error)
         }
     };
-    
+
     async findOne(model: ModelNames, query, projection, options) {
         try {
             let ModelName = Models[model]
@@ -116,7 +112,7 @@ export class DAOManager {
         try {
             let ModelName = Models[model]
             let aggregation = ModelName.aggregate(aggregateArray);
-          //  if (options) { aggregation.options = options; }
+            //  if (options) { aggregation.options = options; }
             return await aggregation.exec();
         } catch (error) {
             return Promise.reject(error)

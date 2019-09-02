@@ -2,7 +2,6 @@ import * as config from 'config';
 import {Database} from '../databases';
 const displayColors = config.get('displayColors');
 
-
 export  class Bootstrap
 {
     private dataBaseService = new Database();
@@ -15,5 +14,4 @@ export  class Bootstrap
         }
         return;
     }
-
 }
