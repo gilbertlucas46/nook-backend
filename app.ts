@@ -1,4 +1,3 @@
-//"mongodb://uchatdev_usr:bN9XMhccGvS9WwSh@uchatdev.appskeeper.com:27200/uchatdev_db"
 
 "use strict";
 //Internal Dependencies

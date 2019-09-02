@@ -1,10 +1,11 @@
 'use strict';
-import * as config from 'config'
+import * as config from 'config';
 import * as Constant from '../constants'
 import * as Jwt from 'jsonwebtoken';
-import * as ENTITY from '../entity'
-const cert = config.get('jwtSecret')
-import * as UniversalFunctions from '../utils'
+import * as ENTITY from '../entity';
+const cert = config.get('jwtSecret');
+import * as UniversalFunctions from '../utils';
+
 export let setToken = async function (tokenData: any) {
     if (!tokenData.id || !tokenData.tokenType) {
         return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR)
@@ -21,13 +22,8 @@ export let setToken = async function (tokenData: any) {
 export let verifyToken = async function (token, tokenType, request?: any) {
     try {
         let result = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
-        console.log("Token Manger ", result)
-
         if (result['tokenType'] != undefined) {
-            // switch (result['tokenType']) {
-            // case Constant.DATABASE.TOKEN_TYPE.TENANT: {
             if (result['tokenType'] == 'TENANT' || "AGENT" || "OWNER") {
-
                 let userData = {};
                 let userCriteria = { _id: result['id'] }
                 let checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {});
@@ -45,8 +41,6 @@ export let verifyToken = async function (token, tokenType, request?: any) {
                 userData['type'] = tokenType;
                 userData['userData'] = checkUserExist
                 return userData
-                // }
-                // }
             } else {
                 return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN
             }
@@ -54,12 +48,7 @@ export let verifyToken = async function (token, tokenType, request?: any) {
         else {
             const result = await UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
             return Promise.reject(result);
-
-            // const result = await UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
-            // return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
         }
-
-
     } catch (error) {
         return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
     }

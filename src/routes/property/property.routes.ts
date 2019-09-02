@@ -4,7 +4,6 @@ import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant'
 import { PropertyService } from '../../controllers'
 
-
 export let propertyRoute = [
     {
         method: 'POST',
@@ -34,10 +33,6 @@ export let propertyRoute = [
                     propertyId: Joi.string().min(24).max(24).optional(),
                     property_details: {
                         floor_area: Joi.number(),
-                        // floor_area_unit: Joi.string().min(1).max(20).trim(),
-                        // land_area: Joi.number(),
-                        // land_area_unit: Joi.string().min(1).max(20).trim(),
-                        // lot_area: Joi.string().valid(["m2", "sqm"]),
                         lot_area: Joi.number(),
                         bedrooms: Joi.number(),
                         bathrooms: Joi.number(),
@@ -136,6 +131,42 @@ export let propertyRoute = [
             try {
                 let propertyList = await PropertyService.searchProperties(request.query);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'GET properties',
+            tags: ['api', 'anonymous', 'user', 'update'],
+            //  auth: "UserAuth",
+            validate: {
+                query: {
+                    // page: Joi.number(),
+                    // limit: Joi.number(),
+                    searchTerm: Joi.string(),
+                    type: Joi.string(),
+                    label: Joi.array(),
+                    maxPrice: Joi.number(),
+                    minPrice: Joi.number(),
+                    propertyType: Joi.number()
+                },
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/v1/search/nearbyProperties',
+        handler: async (request, h) => {
+            try {
+                let data = await PropertyService.nearbyProperties(request.query);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data))
             }
             catch (error) {
                 return (UniversalFunctions.sendError(error))
