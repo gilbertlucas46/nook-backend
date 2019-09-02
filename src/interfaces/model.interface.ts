@@ -1,3 +1,3 @@
 declare type ModelNames =
-   'User' 
-   // 'Property'
+   'User'
+//  'Property'

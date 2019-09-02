@@ -119,18 +119,18 @@ export class UserController {
             let criteria = {
                 email: payload.email
             };
-            let userData = await ENTITY.UserE.getOneEntity(criteria, ["email", "_id"]);
-            if (!userData) {
-                return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL;
+            // let userData = await ENTITY.UserE.getOneEntity(criteria, ["email", "_id"]);
+            let userData = await ENTITY.UserE.getData(criteria, ["email", "_id"])
+            console.log('userDatauserData', userData);
+
+            if (userData == null) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
             } else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
-
                 // let url = config.get("host.node") + "/v1/user/verifyLink/"+passwordResetToken
                 let url = "http://localhost:7361" + "/v1/user/verifyLink/" + passwordResetToken
                 console.log('urlurlurlurlurlurlurl', url);
-
                 // let mail = new MailManager(payload.email, "forGet password", url + passwordResetToken);
-
 
                 // await mail.sendMail();
 
@@ -167,11 +167,11 @@ export class UserController {
     async verifyLink(payload) {
         try {
             let result = await Jwt.verify(payload['link'], cert, { algorithms: ['HS256'] });
-            if (result == undefined) return "something went wrong"
+            if (result == undefined) return "something went wrong" // error [age will be open]
 
             let userData = await ENTITY.UserE.getOneEntity(result.email, {})
             if (!userData) {
-                return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR
+                return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR // error page will be open here
             } else {
                 let criteria = { email: result }
                 let userAttribute = ['passwordResetTokenExpirationTime', 'passwordResetToken']
@@ -191,7 +191,7 @@ export class UserController {
     async resetPassword(payload, userData) {
         try {
             let criteria = {
-                _id: userData._id
+                email: userData._email
             }
             let updatePswd = {
                 password: await utils.cryptData(payload.newPassword),
@@ -201,6 +201,21 @@ export class UserController {
             if (!updatePassword) return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR);
             else return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT;
 
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    async verifyLinkForResetPwd(payload) {
+        try {
+            let result = await Jwt.verify(payload['link'], cert, { algorithms: ['HS256'] });
+            if (result == undefined) return "something went wrong" // error [age will be open]
+
+            let userData = await ENTITY.UserE.getOneEntity(result.email, {})
+            if (userData)
+                return this.resetPassword(payload, userData)
+            else
+                return Promise.reject() //  this html page will be rendered
+            // return userData
         } catch (error) {
             return Promise.reject(error)
         }

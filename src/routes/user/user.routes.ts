@@ -79,6 +79,7 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload: PropertyRequest.PropertyDetail = request.params;
+                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let propertyDetail = await UserService.portpertyDetail(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail))
             }
@@ -107,9 +108,8 @@ export let userRoute = [
                 console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let forgetPasswordResponse = await UserService.forgetPassword(payload);
                 // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
-                let url = config.get("host.node") + ":" + config.get("host.port") + "/v1/user/verifyLink/" + forgetPasswordResponse
-                return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, { resetToken: url });
-
+                let url = config.get("host") + ":" + config.get("port") + "/v1/user/verifyLink/" + forgetPasswordResponse
+                return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, {});
             } catch (error) {
                 let result = await UniversalFunctions.sendError(error);
                 return error
@@ -139,6 +139,7 @@ export let userRoute = [
             try {
                 // let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload: UserRequest.ProfileUpdate = request.payload;
+                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let responseData = await UserService.updateProfile(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData))
             }
@@ -221,12 +222,11 @@ export let userRoute = [
                 let payload = request.params;
                 let responseData = await UserService.verifyLink(payload);
                 // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
-                console.log('???????????????????????????????/', config.get("BASE_URL") + payload.link);
-                return h.redirect(config.get("BASE_URL") + `link`)
+                console.log('config.get("BASE_URL") + `link`)', config.get("BASE_URL") + payload.link);
+
+                return h.redirect(config.get("BASE_URL") + payload.link)
             }
             catch (error) {
-                console.log('errorerrorerrorerrorerror', error);
-
                 return h.redirect("https://www.w3schools.com/howto/howto_js_password_validation.asp")
                 // return (UniversalFunctions.sendError(error))
             }
@@ -254,6 +254,7 @@ export let userRoute = [
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload: UserRequest.ChangePassword = request.payload;
+                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let responseData = await UserService.changePassword(payload, userData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
@@ -286,9 +287,10 @@ export let userRoute = [
         path: '/v1/user/reset-password',
         handler: async (request, h) => {
             try {
-                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                let payload: UserRequest.ChangePassword = request.query;
-                let responseData = await UserService.resetPassword(payload, userData);
+                let payload = request.query;
+                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
+                let responseData = await UserService.verifyLinkForResetPwd(payload);
+                // let responseData = await UserService.resetPassword(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
@@ -300,8 +302,8 @@ export let userRoute = [
             tags: ['api', 'anonymous', 'user', 'reset'],
             validate: {
                 query: {
+                    link: Joi.string(),
                     password: Joi.string().min(6).max(14),
-
                 },
                 failAction: UniversalFunctions.failActionFunction
             },

@@ -1,7 +1,8 @@
 'use strict';
 import * as Models from '../models';
 import * as mongoose from "mongoose";
-
+import { SERVER } from '../constants';
+import { Property } from '../models'
 export class DAOManager {
     public ObjectId = mongoose.Types.ObjectId;
     constructor() {
@@ -36,7 +37,7 @@ export class DAOManager {
         }
     };
 
-    async findOne(model: ModelNames, query, projection, options) {
+    async findOne(model: ModelNames, query, projection, options?) {
         try {
             let ModelName = Models[model]
             return await ModelName.findOne(query, projection, options).exec();
@@ -173,5 +174,55 @@ export class DAOManager {
         } catch (error) {
             return Promise.reject(error)
         }
+    };
+
+
+    async  paginate(model: ModelNames, pipeline?: Array<Object>, limit?: number, page?: number) {
+        try {
+           // console.log('ModelModelModel', Model);
+            let ModelName = Models[model];
+            if (limit) {
+                limit = Math.abs(limit);
+                // If limit exceeds max limit
+                if (limit > SERVER.MAX_LIMIT) limit = SERVER.MAX_LIMIT;
+            } else limit = SERVER.LIMIT;
+
+            if (page && (page !== 0)) page = Math.abs(page);
+            else page = 1;
+
+            const skip = (limit * (page - 1));
+            let queryData = await this.queryBuilder(pipeline, skip, limit, page);
+            console.log('queryDataqueryDataqueryData', queryData);
+
+            const result = await ModelName.aggregate(queryData).exec();
+            const theTotal = result[0]['metadata'] && result[0]['metadata'][0] ? result[0]['metadata'][0]['total'] : 0;
+            const thePage = result[0]['metadata'] && result[0]['metadata'][0] ? result[0]['metadata'][0]['page'] : page;
+            let pageToSend = -1;
+            if (theTotal > (thePage * limit)) pageToSend = thePage + 1;
+
+            return {
+                data: result[0]['data'],
+                total: theTotal,
+                page: pageToSend,
+                limit,
+            };
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    async queryBuilder(pipeline: Array<Object>, skip: number, limit: number, page: number) {
+        const q = pipeline || [];
+
+        q.push({
+            $facet: {
+                data: [
+                    { $skip: skip },
+                    { $limit: limit },
+                ],
+                metadata: [{ $count: 'total' }, { $addFields: { page } }],
+            },
+        });
+        return q;
     };
 };
