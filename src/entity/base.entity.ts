@@ -1,6 +1,5 @@
 import * as Services from '../databases/dao';
 import * as mongoose from "mongoose";
-import * as Constant from '../constants'
 
 export class BaseEntity {
     public ObjectId = mongoose.Types.ObjectId;

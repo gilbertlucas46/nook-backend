@@ -3,9 +3,9 @@ import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant'
 import { UserService } from '../../controllers'
-import { join } from 'path';
 import * as config from "config";
-import * as utils from '../../utils'
+import * as utils from '../../utils';
+
 export let userRoute = [
     {
         method: 'POST',
@@ -29,21 +29,11 @@ export let userRoute = [
                     userName: Joi.string().min(1).max(20).trim().required(),
                     email: Joi.string().email({ minDomainSegments: 2 }),
                     password: Joi.string().min(6).max(14).trim().required(),
-                    // firstName: Joi.string().min(5).max(20).trim().optional(),
-                    // lastName: Joi.string().min(5).max(20).trim().optional(),
-                    // phoneNumber: Joi.string().min(8).max(12).trim().optional(),
-                    // type: Joi.string().valid([
-                    //     Constant.DATABASE.USER_TYPE.AGENT,
-                    //     Constant.DATABASE.USER_TYPE.OWNER,
-                    //     Constant.DATABASE.USER_TYPE.TENANT
-                    // ])
-                    // required: true,
                 },
                 failAction: UniversalFunctions.failActionFunction
             },
             plugins: {
                 'hapi-swagger': {
-                    // payloadType: 'form',
                     responseMessages: Constant.swaggerDefaultResponseMessages
                 }
             }
@@ -55,8 +45,6 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload = request.payload;
-                console.log('payloadpayloadpayload', payload);
-
                 let registerResponse = await UserService.login(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
             }
@@ -79,7 +67,6 @@ export let userRoute = [
             },
             plugins: {
                 'hapi-swagger': {
-                    // payloadType: 'form',
                     responseMessages: Constant.swaggerDefaultResponseMessages
                 }
             }
@@ -107,7 +94,6 @@ export let userRoute = [
                 params: {
                     _id: Joi.string()
                 },
-                // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
             },
         }
@@ -120,16 +106,11 @@ export let userRoute = [
             try {
                 let payload: UserRequest.ForgetPassword = request.payload;
                 console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
-
                 let forgetPasswordResponse = await UserService.forgetPassword(payload);
-                console.log('forgetPasswordResponseforgetPasswordResponseforgetPasswordResponse', forgetPasswordResponse);
-
                 // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
-
                 let url = config.get("host.node") + ":" + config.get("host.port") + "/v1/user/verifyLink/" + forgetPasswordResponse
-
                 return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, { resetToken: url });
-                // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, result))
+
             } catch (error) {
                 let result = await UniversalFunctions.sendError(error);
                 return error
@@ -209,7 +190,6 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                console.log('userData', userData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userData))
             }
             catch (error) {
@@ -233,38 +213,6 @@ export let userRoute = [
             }
         }
     },
-    // {
-    //     method: 'POST',
-    //     path: '/v1/user/verifyOtp',
-    //     handler: async (request, h) => {
-    //         try {
-    //             let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-    //             let payload = request.query;
-    //             // let responseData = await UserService.verifyOtp(payload);
-    //             // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
-    //         }
-    //         catch (error) {
-    //             return (UniversalFunctions.sendError(error))
-    //         }
-    //     },
-    //     options: {
-    //         description: 'Get user Profile',
-    //         tags: ['api', 'anonymous', 'user', 'Detail'],
-    //         // auth: "UserAuth",
-    //         validate: {
-    //             query: {
-    //                 otp: Joi.string().min(4).max(4),
-    //                 email: Joi.string().email({ minDomainSegments: 2 }),
-    //             },
-    //             failAction: UniversalFunctions.failActionFunction
-    //         },
-    //         plugins: {
-    //             'hapi-swagger': {
-    //                 responseMessages: Constant.swaggerDefaultResponseMessages
-    //             }
-    //         }
-    //     }
-    // },
     {
         method: 'GET',
         path: '/v1/user/verifyLink/{link}',
@@ -283,11 +231,8 @@ export let userRoute = [
         options: {
             description: 'Get user Profile',
             tags: ['api', 'anonymous', 'user', 'Detail'],
-            // auth: "UserAuth",
             validate: {
                 params: {
-                    // otp: Joi.string().min(4).max(4),
-                    // email: Joi.string().email({ minDomainSegments: 2 }),
                     link: Joi.string()
                 },
                 failAction: UniversalFunctions.failActionFunction

@@ -5,7 +5,6 @@ import * as Boom from 'boom'
 import * as CONSTANT from '../constants'
 import * as crypto from 'crypto'
 import * as randomstring from 'randomstring';
-import { isArray } from 'util';
 
 export let sendError = function (data) {
     if (typeof data === 'object' && data.hasOwnProperty('statusCode') && (data.hasOwnProperty('message') || data.hasOwnProperty('customMessage'))) {
@@ -71,7 +70,7 @@ export let authorizationHeaderObj = Joi.object({
 export let cryptData = async function (stringToCrypt: string) {
     let hmac = crypto.createHmac('sha256', config.get('cryptoSecret'));
     let crypted = hmac.update(stringToCrypt).digest('hex');
-    return crypted
+    return crypted;
 }
 
 export let deCryptData = async function (stringToCheck: string, dbString: string) {

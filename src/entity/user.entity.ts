@@ -1,11 +1,6 @@
 'use strict';
 import { BaseEntity } from './base.entity'
 import * as config from 'config'
-import * as moment from "moment";
-import * as UniversalFunctions from './../utils'
-import * as utils from '../utils'
-// import { TokenManager } from './../Lib';
-import * as CONSTANT from '../constants/app.constant'
 import * as TokenManager from '../lib'
 import * as Jwt from 'jsonwebtoken'
 const cert = config.get('jwtSecret')
@@ -64,7 +59,6 @@ export class UserClass extends BaseEntity {
 
             let mergeData = { ...tokenData, ...sessionValid }
             let accessToken: any = await TokenManager.setToken(mergeData);
-
             return accessToken["accessToken"];
 
         } catch (error) {
@@ -73,10 +67,6 @@ export class UserClass extends BaseEntity {
     }
     async createPasswordResetToken(userData) {
         try {
-            console.log('userData', userData);
-            // console.log('userData', typeof userData._id.t);
-            // let userId = userData._id;
-
             let tokenToSend = await Jwt.sign(userData.email, cert, { algorithm: 'HS256' });
             let expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 
@@ -88,16 +78,9 @@ export class UserClass extends BaseEntity {
             await this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
             return tokenToSend;
         } catch (error) {
-            // utils.consolelog('createPasswordResetToken', error, false);
             return Promise.reject(error);
         }
     }
-
-    // let passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(merchantData);
-    // let url = config.get("host.node.host") + ":" + config.get("host.node.port") + "/v1/merchant/anonymous/reset-password/" + passwordResetToken;
-    // return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, { resetToken: url });
-
-
 }
 
 
