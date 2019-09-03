@@ -121,16 +121,14 @@ export class UserController {
             };
             // let userData = await ENTITY.UserE.getOneEntity(criteria, ["email", "_id"]);
             let userData = await ENTITY.UserE.getData(criteria, ["email", "_id"])
-            console.log('userDatauserData', userData);
-
+ 
             if (userData == null) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
             } else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
                 // let url = config.get("host.node") + "/v1/user/verifyLink/"+passwordResetToken
                 let url = "http://localhost:7361" + "/v1/user/verifyLink/" + passwordResetToken
-                console.log('urlurlurlurlurlurlurl', url);
-                // let mail = new MailManager(payload.email, "forGet password", url + passwordResetToken);
+                 // let mail = new MailManager(payload.email, "forGet password", url + passwordResetToken);
 
                 // await mail.sendMail();
 
