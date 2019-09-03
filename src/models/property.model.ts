@@ -139,14 +139,16 @@ const propertySchema = new Schema({
         barangay: { type: String },
         location: {
             type: {
-                enum: ['Point'],
+                type: String,
+                // enum: ['Point'],
+                default: 'Point',
                 required: true,
-                // default: 'Point'
             },
             coordinates: {
                 type: [Number],
                 required: true
             }
+
         }
     },
     property_basic_details: {
