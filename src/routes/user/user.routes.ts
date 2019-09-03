@@ -108,7 +108,7 @@ export let userRoute = [
                 console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let forgetPasswordResponse = await UserService.forgetPassword(payload);
                 // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
-                let url = config.get("host") + ":" + config.get("port") + "/v1/user/verifyLink/" + forgetPasswordResponse
+                // let url = config.get("host1") + ":" + config.get("port") + "/v1/user/verifyLink/" + forgetPasswordResponse
                 return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, {});
             } catch (error) {
                 let result = await UniversalFunctions.sendError(error);
@@ -218,8 +218,12 @@ export let userRoute = [
         path: '/v1/user/verifyLink/{link}',
         handler: async (request, h) => {
             try {
-                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                // let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                console.log('>>>>>>>>>>>>>>>>>>>>');
+                
                 let payload = request.params;
+                console.log('payloadpayload',payload);
+                
                 let responseData = await UserService.verifyLink(payload);
                 // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
                 console.log('config.get("BASE_URL") + `link`)', config.get("BASE_URL") + payload.link);
