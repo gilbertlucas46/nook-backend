@@ -126,14 +126,17 @@ export class UserController {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
             } else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
+                console.log('passwordResetTokenpasswordResetToken', passwordResetToken);
+
                 let url = config.get("host") + "/v1/user/verifyLink/" + passwordResetToken
                 // let url = "http://localhost:7361" + "/v1/user/verifyLink/" + passwordResetToken
+                // console.log('urlurlurlurlurlurlurlurl', url);
 
                 let mail = new MailManager(payload.email, "forGet password", url);
 
                 await mail.sendMail();
 
-                return passwordResetToken;
+                return {};
             }
         }
         catch (error) {
