@@ -314,6 +314,36 @@ export let userRoute = [
             }
         }
     },
-
+    {
+        method: 'POST',
+        path: '/v1/user/send-mail',
+        handler: async (request, h) => {
+            try {
+                let payload = request.query;
+                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
+                let responseData = await UserService.sendMail(payload);
+                // let responseData = await UserService.resetPassword(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'Get user Profile',
+            tags: ['api', 'anonymous', 'user', 'reset'],
+            validate: {
+                query: {
+                    email: Joi.string()
+                },
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
 
 ]

@@ -5,27 +5,28 @@ import * as utils from '../utils'
 
 export class MailManager {
 
-    private senderEmail: string = config.get('smtp.from')
+    private senderEmail: string = config.get('MAIL_FROM_ADDRESS')
     constructor(private receiverEmail: string, private subject: string, private content: any) {
     }
     async sendMail() {
         try {
             let transporter = nodemailer.createTransport({
-                host: config.get('MAIL_HOST'),
-                port: config.get('MAIL_PORT'),
+                host: "smtp.gmail.com", //config.get('MAIL_HOST'),
+                port: 465,//config.get('MAIL_PORT'),
+                // bcc: config.get('smtp.bccMail')
                 secure: true, // upgrade later with STARTTLS
                 auth: {
-                    user: config.get('MAIL_USERNAME'),
-                    pass: config.get('MAIL_PASSWORD')
+                    user: "do-not-reply@appinventiv.com", //config.get('MAIL_USERNAME'),
+                    pass: "Active!@#123" //config.get('MAIL_PASSWORD')
                 },
-                // debug: true,
-                // logger: true
-
+                debug: true,
+                logger: true
             });
+
             let senderEmail = this.senderEmail
             let mailOptions = {
-                from: config.get('MAIL_FROM_ADDRESS'),// sender email
-                to: "shubham.maheshwari@appinventiv.com", // list of receivers
+                from: senderEmail,// sender email
+                to: this.receiverEmail, // list of receivers
                 subject: this.subject, // Subject line
                 text: this.content, // plain text body
                 html: `<b>your OTP is  ${this.content}</b>`, // html body,              
