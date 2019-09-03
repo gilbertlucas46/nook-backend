@@ -84,9 +84,7 @@ export class UserClass extends BaseEntity {
     async getData(criteria, ProjectData) {
         try {
             let data = await this.DAOManager.findOne(this.modelName, criteria, ProjectData)
-            console.log('datadatadatadatadata', data); return data
-
-
+            return data
         } catch (error) {
             Promise.reject(error)
         }
