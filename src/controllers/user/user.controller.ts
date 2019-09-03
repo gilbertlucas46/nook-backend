@@ -6,7 +6,7 @@ import * as ENTITY from '../../entity'
 import * as utils from "../../utils/index";
 import * as Jwt from 'jsonwebtoken';
 const cert = config.get('jwtSecret');
-import { MailManager } from '../../lib'
+import { MailManager } from '../../lib/mail.manager'
 export class UserController {
     constructor() { }
 
