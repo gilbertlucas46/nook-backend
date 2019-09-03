@@ -126,11 +126,12 @@ export class UserController {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
             } else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
-                // let url = config.get("host.node") + "/v1/user/verifyLink/"+passwordResetToken
-                let url = "http://localhost:7361" + "/v1/user/verifyLink/" + passwordResetToken
-                // let mail = new MailManager(payload.email, "forGet password", url + passwordResetToken);
+                let url = config.get("host") + "/v1/user/verifyLink/" + passwordResetToken
+                // let url = "http://localhost:7361" + "/v1/user/verifyLink/" + passwordResetToken
 
-                // await mail.sendMail();
+                let mail = new MailManager(payload.email, "forGet password", url);
+
+                await mail.sendMail();
 
                 return passwordResetToken;
             }
@@ -164,8 +165,10 @@ export class UserController {
 
     async verifyLink(payload) {
         try {
-            let result = await Jwt.verify(payload['link'], cert, { algorithms: ['HS256'] });
-            if (result == undefined) return "something went wrong" // error [age will be open]
+            let result = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+
+            if (result == undefined)
+                return Promise.reject()//"something went wrong" // error [age will be open]
 
             let userData = await ENTITY.UserE.getOneEntity(result.email, {})
             if (!userData) {
