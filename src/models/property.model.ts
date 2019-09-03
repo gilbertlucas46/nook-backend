@@ -141,7 +141,7 @@ const propertySchema = new Schema({
             type: {
                 enum: ['Point'],
                 required: true,
-                default: 'Point'
+                // default: 'Point'
             },
             coordinates: {
                 type: [Number],
