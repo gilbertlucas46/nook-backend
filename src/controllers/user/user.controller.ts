@@ -101,12 +101,19 @@ export class UserController {
             let criteria = {
                 _id: payload._id
             }
+            console.log('>>>>>>>>>>>>>>>>>LLLLLLLLLLLLLLLLLLLLLLLLLLLLL', payload);
+
             let isProfileComplete: boolean;
+
+
             if (payload.firstName && payload.lastName && payload.type) {
                 payload.isProfileComplete = true;
             } else isProfileComplete = false;
 
-            let updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload)
+
+            let updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
+            console.log('updateUserupdateUser', updateUser);
+
             return updateUser
 
         } catch (error) {
@@ -130,11 +137,11 @@ export class UserController {
 
                 let url = config.get("host") + "/v1/user/verifyLink/" + passwordResetToken
                 // let url = "http://localhost:7361" + "/v1/user/verifyLink/" + passwordResetToken
-                // console.log('urlurlurlurlurlurlurlurl', url);
+                console.log('urlurlurlurlurlurlurlurl', url);
 
                 let mail = new MailManager(payload.email, "forGet password", url);
 
-                await mail.sendMail();
+                mail.sendMail();
 
                 return {};
             }
