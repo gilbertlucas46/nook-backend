@@ -6,7 +6,7 @@ import * as ENTITY from '../../entity'
 import * as utils from "../../utils/index";
 import * as Jwt from 'jsonwebtoken';
 const cert = config.get('jwtSecret');
-
+import { MailManager } from '../../lib'
 export class UserController {
     constructor() { }
 
@@ -121,14 +121,14 @@ export class UserController {
             };
             // let userData = await ENTITY.UserE.getOneEntity(criteria, ["email", "_id"]);
             let userData = await ENTITY.UserE.getData(criteria, ["email", "_id"])
- 
+
             if (userData == null) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
             } else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
                 // let url = config.get("host.node") + "/v1/user/verifyLink/"+passwordResetToken
                 let url = "http://localhost:7361" + "/v1/user/verifyLink/" + passwordResetToken
-                 // let mail = new MailManager(payload.email, "forGet password", url + passwordResetToken);
+                // let mail = new MailManager(payload.email, "forGet password", url + passwordResetToken);
 
                 // await mail.sendMail();
 
@@ -215,6 +215,20 @@ export class UserController {
                 return Promise.reject() //  this html page will be rendered
             // return userData
         } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    async sendMail(payload) {
+        try {
+            console.log('payloafdffffffffff', payload.email);
+
+            let mail = new MailManager(payload.email, "forGet password", 'passwordResetToken');
+
+            await mail.sendMail()
+
+        } catch (error) {
+            console.log('rroeeeee', error);
+
             return Promise.reject(error)
         }
     }
