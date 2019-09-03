@@ -54,7 +54,7 @@ export let propertyRoute = [
                     },
                     property_basic_details: {
                         title: Joi.string().min(1).max(200).trim().required(),
-                        description: Joi.string().min(1).max(1000).trim().required(),
+                        description: Joi.string().min(1).max(10000).trim().required(),
                         type: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_TYPE.NONE,
                             Constant.DATABASE.PROPERTY_TYPE["APPARTMENT/CONDO"],
