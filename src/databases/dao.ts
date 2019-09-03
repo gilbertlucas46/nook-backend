@@ -179,7 +179,6 @@ export class DAOManager {
 
     async  paginate(model: ModelNames, pipeline?: Array<Object>, limit?: number, page?: number) {
         try {
-           // console.log('ModelModelModel', Model);
             let ModelName = Models[model];
             if (limit) {
                 limit = Math.abs(limit);
@@ -192,8 +191,6 @@ export class DAOManager {
 
             const skip = (limit * (page - 1));
             let queryData = await this.queryBuilder(pipeline, skip, limit, page);
-            console.log('queryDataqueryDataqueryData', queryData);
-
             const result = await ModelName.aggregate(queryData).exec();
             const theTotal = result[0]['metadata'] && result[0]['metadata'][0] ? result[0]['metadata'][0]['total'] : 0;
             const thePage = result[0]['metadata'] && result[0]['metadata'][0] ? result[0]['metadata'][0]['page'] : page;

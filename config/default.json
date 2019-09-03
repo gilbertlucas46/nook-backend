@@ -9,7 +9,6 @@
     },
     "cryptoSecret": "d6F3Efeq",
     "jwtSecret": "cgfhfj",
-
     "color": [
         "#FFFFFF",
         "#C0C0C0",
@@ -28,5 +27,12 @@
         "#FF00FF",
         "#800080"
     ],
-    "displayColors": true
+    "displayColors": true,
+    "mailDriver": "smtp",
+    "mailHost": "smtp.gmail.com",
+    "mailPort": 465,
+    "mailUserName": "do-not-reply@appinventiv.com",
+    "mailPassword": "Active!@#123",
+    "mailEncryption": "tls",
+    "mailFromAddress": "do-not-reply@appinventiv.com"
 }

@@ -220,15 +220,9 @@ export class UserController {
     }
     async sendMail(payload) {
         try {
-            console.log('payloafdffffffffff', payload.email);
-
             let mail = new MailManager(payload.email, "forGet password", 'passwordResetToken');
-
             await mail.sendMail()
-
         } catch (error) {
-            console.log('rroeeeee', error);
-
             return Promise.reject(error)
         }
     }

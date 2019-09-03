@@ -1,8 +1,6 @@
 'use strict';
 import * as nodemailer from 'nodemailer';
-import * as config from 'config'
-import * as utils from '../utils'
-
+import * as config from 'config';
 export class MailManager {
 
     private senderEmail: string = config.get('MAIL_FROM_ADDRESS')
@@ -11,13 +9,13 @@ export class MailManager {
     async sendMail() {
         try {
             let transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com", //config.get('MAIL_HOST'),
-                port: 465,//config.get('MAIL_PORT'),
+                host: config.get('mailHost'),
+                port: config.get('mailPort'),
                 // bcc: config.get('smtp.bccMail')
-                secure: true, // upgrade later with STARTTLS
+                secure: true, // upgrade later with START TLS
                 auth: {
-                    user: "do-not-reply@appinventiv.com", //config.get('MAIL_USERNAME'),
-                    pass: "Active!@#123" //config.get('MAIL_PASSWORD')
+                    user: config.get('mailUserName'),
+                    pass: config.get('mailPassword')
                 },
                 debug: true,
                 logger: true
@@ -33,12 +31,9 @@ export class MailManager {
                 // bcc: config.get('smtp.bccMail')
             };
             let mailResponse = await transporter.sendMail(mailOptions);
-            console.log('mailResponsemailResponse', mailResponse);
-
         } catch (error) {
             // utils.consolelog('MailManager', error, false)
-            console.log('errorerrorerrorerror', error);
-
+            console.log('Error in ', error);
         };
         return {}
     }
