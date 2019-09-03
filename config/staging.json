@@ -3,7 +3,7 @@
     "host": "http:// nookstg.appskeeper.com/",
     "port": 7363,
     "dbConfig": {
-        "dbPwd" : "Iidjsi@#1!",
+        "dbPwd": "Iidjsi@#1!",
         "dbUser": "nook_devusr",
         "dbUrl": "mongodb://@appskeeper.com:2798/nook_devdb"
     },
@@ -27,5 +27,12 @@
         "#FF00FF",
         "#800080"
     ],
-    "displayColors": true
+    "displayColors": true,
+    "mailDriver": "smtp",
+    "mailHost": "smtp.gmail.com",
+    "mailPort": 465,
+    "mailUserName": "do-not-reply@appinventiv.com",
+    "mailPassword": "Active!@#123",
+    "mailEncryption": "tls",
+    "mailFromAddress": "do-not-reply@appinventiv.com"
 }

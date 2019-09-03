@@ -13,32 +13,30 @@ export class BaseEntity {
     async createOneEntity(saveData: Object) {
         try {
             let data = await this.DAOManager.saveData(this.modelName, saveData)
-            return data
+            return data;
         } catch (error) {
             console.log("Error in Base Entity createOneEntity  ", this.modelName, error)
-            return Promise.reject(error)
+            return Promise.reject(error);
         }
     }
 
     async createMulti(saveData: any) {
         try {
             let data = await this.DAOManager.insertMany(this.modelName, saveData, {})
-            return data
+            return data;
         } catch (error) {
             console.log("Error in Base Entity createOneEntity  ", this.modelName, error)
-            return Promise.reject(error)
+            return Promise.reject(error);
         }
     }
 
     async getOneEntity(criteria: Object, projection: Object) {
         try {
             let data = await this.DAOManager.findOne(this.modelName, criteria, projection, { lean: true })
-            console.log('datadatadatadata', data);
-
-            return data
+            return data;
         } catch (error) {
             console.log("Error in Base Entity getOneEntity ", this.modelName, error)
-            return Promise.reject(error)
+            return Promise.reject(error);
         }
 
     }
@@ -48,10 +46,10 @@ export class BaseEntity {
             if (option == undefined)
                 option = { new: true, lean: true }
             let data = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate, option)
-            return data
+            return data;
         } catch (error) {
             console.log("Error in Base Entity updateOneEntity ", this.modelName, error)
-            return Promise.reject(error)
+            return Promise.reject(error);
         }
 
     }
@@ -59,10 +57,10 @@ export class BaseEntity {
     async getById(_id: string, projection: Object) {
         try {
             let data = await this.DAOManager.findOne(this.modelName, { _id: _id }, projection, { lean: true })
-            return data
+            return data;
         } catch (error) {
             console.log("Error in Base Entity getById ", this.modelName, error)
-            return Promise.reject(error)
+            return Promise.reject(error);
         }
     }
 
@@ -113,8 +111,8 @@ export class BaseEntity {
 
     async  paginate(Model: any, pipeline?: Array<Object>, limit?: number, page?: number) {
         try {
-            console.log('ModelModelModel',Model);
-            
+            console.log('ModelModelModel', Model);
+
             if (limit) {
                 limit = Math.abs(limit);
                 // If limit exceeds max limit
@@ -144,7 +142,6 @@ export class BaseEntity {
 
     async queryBuilder(pipeline: Array<Object>, skip: number, limit: number, page: number) {
         const q = pipeline || [];
-
         q.push({
             $facet: {
                 data: [
