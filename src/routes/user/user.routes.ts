@@ -162,17 +162,17 @@ export let userRoute = [
                         Constant.DATABASE.USER_TYPE.OWNER,
                         Constant.DATABASE.USER_TYPE.TENANT
                     ]),
-                    title: Joi.string().allow("null").default(""),
-                    license: Joi.string().allow("null").default(""),
-                    taxnumber: Joi.string().allow("null").default(""),
-                    faxNumber: Joi.string().allow("null").default(""),
-                    fullPhoneNumber: Joi.string().allow("null").default(""),
-                    language: Joi.string().allow("null").default(""),
-                    companyName: Joi.string().allow("null").default(""),
-                    address: Joi.string().allow("null").default(""),
-                    aboutMe: Joi.string().allow("null").default(""),
-                    profilePicUrl: Joi.string().allow("null").default(""),
-                    backGroundImageUrl: Joi.string().allow("null").default("")
+                    title: Joi.string().allow("").default(""),
+                    license: Joi.string().allow("").default(""),
+                    taxnumber: Joi.string().allow("").default(""),
+                    faxNumber: Joi.string().allow("").default(""),
+                    fullPhoneNumber: Joi.string().allow("").default(""),
+                    language: Joi.string().allow("").default(""),
+                    companyName: Joi.string().allow("").default(""),
+                    address: Joi.string().allow("").default(""),
+                    aboutMe: Joi.string().allow("").default(""),
+                    profilePicUrl: Joi.string().allow("l").default(""),
+                    backGroundImageUrl: Joi.string().allow("").default("")
                 },
                 // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
@@ -220,10 +220,10 @@ export let userRoute = [
             try {
                 // let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 console.log('>>>>>>>>>>>>>>>>>>>>');
-                
+
                 let payload = request.params;
-                console.log('payloadpayload',payload);
-                
+                console.log('payloadpayload', payload);
+
                 let responseData = await UserService.verifyLink(payload);
                 // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
                 console.log('config.get("BASE_URL") + `link`)', config.get("BASE_URL") + payload.link);
