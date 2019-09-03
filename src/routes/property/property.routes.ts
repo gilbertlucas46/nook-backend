@@ -46,7 +46,10 @@ export let propertyRoute = [
                         city: Joi.string().min(1).max(50).trim().required(),
                         barangay: Joi.string().min(1).max(100).trim(),
                         location: {
-                            coordinates: Joi.array()
+                            coordinates: Joi.array().ordered([
+                                Joi.number().min(-180).max(180).required(),
+                                Joi.number().min(-90).max(90).required()
+                            ]),
                         }
                     },
                     property_basic_details: {
@@ -75,7 +78,14 @@ export let propertyRoute = [
                         ]),
                         sale_rent_price: Joi.number(),
                         price_currency: Joi.string().min(1).max(20).trim(),
-                        price_label: Joi.string().trim(), // monthly
+                        price_label: Joi.string().valid([
+                            Constant.DATABASE.PRICE_LABEL.DAILY,
+                            Constant.DATABASE.PRICE_LABEL.WEEKLY,
+                            Constant.DATABASE.PRICE_LABEL.MONTHLY,
+                            Constant.DATABASE.PRICE_LABEL.QUATERLY,
+                            Constant.DATABASE.PRICE_LABEL.HALFYEARLY,
+                            Constant.DATABASE.PRICE_LABEL.YEARLY,
+                        ]),
                     },
                     property_features: {
                         storeys_2: Joi.boolean().valid([true, false]),
