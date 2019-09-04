@@ -65,7 +65,7 @@ export class UserClass extends BaseEntity {
     }
     async createPasswordResetToken(userData) {
         try {
-            let tokenToSend = await Jwt.sign(userData.email, cert, { algorithm: 'HS256', expiresIn: Constants.SERVER.TOKEN_EXPIRATION_TIME });
+            let tokenToSend = await Jwt.sign(userData.email, cert, { algorithm: 'HS256' });
             let expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 
             let criteriaForUpdatePswd = { _id: userData._id }

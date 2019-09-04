@@ -15,6 +15,15 @@ export class PropertyClass extends BaseEntity {
             return Promise.reject(error)
         }
     }
+    async ProprtyByStatus(query) {
+        try {
+            let data = await this.DAOManager.paginate(this.modelName, query)
+            return data
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
 }
 
 
