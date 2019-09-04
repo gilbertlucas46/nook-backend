@@ -259,14 +259,18 @@ export class PropertyController {
     }
     async userPropertyByStatus(payload, userData) {
         try {
- 
             let criteria = {
-                userId: userData._id,
-                Property_status: payload.propertyType
+                $match: {
+                    userId: userData._id,
+                    Property_status: payload.propertyType
+                },
+                
             }
+            const pipeLine = [
+                criteria,
 
-            let data = await ENTITY.PropertyE.ProprtyByStatus(criteria)
-            console.log('datadatadatadata', data);
+            ];
+            let data = await ENTITY.PropertyE.ProprtyByStatus(pipeLine)
             return data
         }
 
