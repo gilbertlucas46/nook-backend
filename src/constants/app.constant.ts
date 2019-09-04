@@ -25,15 +25,57 @@ export let DATABASE = {
         // USER: "USER"
     },
     PROPERTY_STATUS: {
-        VERIFIED: "VERIFIED",
-        REJECTED: "REJECTED",
-        BLOCKED: "BLOCKED",
-        PENDING: "PENDING"
+        PENDING: "Pending",
+        DRAFT: "Draft",
+        ACTIVE: "Active",
+        SOLD: "Sold",
+        RENTED: "Rented",
+        EXPIRED: "Expired",
+        FEATURED: "Featured"
+    },
+    ACTIONS_PERFORMED_BY_ADMIN: {
+        PENDING: "Pending",
+        APPROVED: "Approved",
+        REJECTED: "Rejected",
+        BLOCKED: "Blocked",
     },
     PROPERTY_TYPE_STATUS: {
         NONE: "None",
         FOR_RENT: "For Rent",
         FOR_SALE: "For Sale"
+    },
+    PROPERTY_LABEL: {
+        NONE: "None",
+        FORECLOSURE: "Foreclosure",
+        OFFICE: "Office",
+        PARKING: "Parking",
+        PRE_SELLING: "Pre-Selling",
+        READY_FOR_OCCUPANCY: "Ready For Occupancy",
+        RENT_TO_OWN: "Rent To Own",
+        RETAIL: "Retail",
+        SERVICED_OFFICE: "Serviced Office",
+        WAREHOUSE: "Warehouse"
+    },
+    PROPERTY_TYPE: {
+        NONE: "None",
+        "APPARTMENT/CONDO": "Apartment/Condo",
+        COMMERCIAL: "Commercial",
+        HOUSE_LOT: "House & Lot",
+        LAND: "Land",
+        ROOM: "Room",
+    },
+    PROPERTY_SEARCH_STATUS: {
+        FOR_RENT: 'For Rent',
+        FOR_SALE: 'For Sale',
+        NONE: 'None'
+    },
+    PRICE_LABEL: {
+        DAILY: 'daily',
+        WEEKLY: 'weekly',
+        MONTHLY: 'monthly',
+        QUATERLY: 'quaterly',
+        HALFYEARLY: 'half yearly',
+        YEARLY: 'yearly'
     },
     DEVICE_TYPES: {
         IOS: 'IOS',
@@ -117,39 +159,7 @@ export let DATABASE = {
     DEEPLINK_REDIRECT_URL: {
         APP: "/v1/deeplink?url=",
     },
-    PROPERTY_LABEL: {
-        NONE: "None",
-        FORECLOSURE: "Foreclosure",
-        OFFICE: "Office",
-        PARKING: "Parking",
-        PRE_SELLING: "Pre-Selling",
-        READY_FOR_OCCUPANCY: "Ready For Occupancy",
-        RENT_TO_OWN: "Rent To Own",
-        RETAIL: "Retail",
-        SERVICED_OFFICE: "Serviced Office",
-        WAREHOUSE: "Warehouse"
-    },
-    PROPERTY_TYPE: {
-        NONE: "None",
-        "APPARTMENT/CONDO": "Apartment/Condo",
-        COMMERCIAL: "Commercial",
-        HOUSE_LOT: "House & Lot",
-        LAND: "Land",
-        ROOM: "Room",
-    },
-    PROPERTY_SEARCH_STATUS: {
-        FOR_RENT: 'For Rent',
-        FOR_SALE: 'For Sale',
-        NONE: 'None'
-    },
-    PRICE_LABEL: {
-        DAILY: 'daily',
-        WEEKLY: 'weekly',
-        MONTHLY: 'monthly',
-        QUATERLY: 'quaterly',
-        HALFYEARLY: 'half yearly',
-        YEARLY: 'yearly'
-    }
+
 };
 
 export let STATUS_MSG = {
