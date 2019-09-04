@@ -94,6 +94,10 @@ declare namespace PropertyRequest {
         maxPrice?: number;
         minPrice?: number;
         propertyType?: number;
+        bedrooms?: number;
+        bathrooms?: number;
+        minArea?: number;
+        maxArea?: number;
     }
 
     export interface nearByProperty {
@@ -111,8 +115,10 @@ declare namespace PropertyRequest {
         maxPrice?: number;
         minPrice?: number;
         propertyType?: number;
-        pickUplocation :[number];
+        pickUplocation?: [number];
+        bedrooms?: number;
+        bathrooms?: number;
+        minArea?: number;
+        maxArea?: number;
     }
 }
-
-
