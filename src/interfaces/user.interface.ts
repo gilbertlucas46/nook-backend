@@ -85,5 +85,8 @@ declare namespace UserRequest {
     export interface ChangePassword {
         oldPassword: string;
         newPassword: string;
+    } 
+    export interface PropertyStatus {
+        
     }
 }
