@@ -66,8 +66,6 @@ export let userRoute = [
                 payload: {
                     email: Joi.string().min(4).max(100),
                     password: Joi.string().min(6).max(14).trim().required(),
-                    deviceId: Joi.string(),
-                    deviceToken: Joi.string()
                 },
                 failAction: UniversalFunctions.failActionFunction
             },

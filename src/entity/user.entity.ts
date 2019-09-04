@@ -49,8 +49,6 @@ export class UserClass extends BaseEntity {
             // } else {
             tokenData = {
                 id: userData._id,
-                deviceId: payload.deviceId,
-                deviceToken: payload.deviceToken,
                 tokenType: userData.type,
                 timestamp: new Date().getTime(),
                 session: userData.session
