@@ -224,14 +224,12 @@ export class UserController {
     async verifyLinkForResetPwd(payload) {
         try {
             let result = await Jwt.verify(payload['link'], cert, { algorithms: ['HS256'], });
+            if (!result) return Promise.reject();
 
-            if (result == undefined) return Promise.reject() // error [age will be open]
+            let userData = await ENTITY.UserE.getOneEntity(result.email, {});
+            if (userData) return this.resetPassword(payload, userData);
+            else return Promise.reject();
 
-            let userData = await ENTITY.UserE.getOneEntity(result.email, {})
-            if (userData)
-                return this.resetPassword(payload, userData)
-            else
-                return Promise.reject() //  this html page will be rendered
         } catch (error) {
             return Promise.reject(error)
         }

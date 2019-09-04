@@ -203,17 +203,29 @@ const propertySchema = new Schema({
         phoneNumber: { type: String },
         imageUrl: { type: String },
     },
-    status: {
+    Property_status: {
         type: String,
         enum: [
-            Constant.DATABASE.PROPERTY_STATUS.BLOCKED,
-            Constant.DATABASE.PROPERTY_STATUS.REJECTED,
-            Constant.DATABASE.PROPERTY_STATUS.VERIFIED,
-            Constant.DATABASE.PROPERTY_STATUS.PENDING
+            Constant.DATABASE.PROPERTY_STATUS.PENDING,
+            Constant.DATABASE.PROPERTY_STATUS.DRAFT,
+            Constant.DATABASE.PROPERTY_STATUS.ACTIVE,
+            Constant.DATABASE.PROPERTY_STATUS.SOLD,
+            Constant.DATABASE.PROPERTY_STATUS.RENTED,
+            Constant.DATABASE.PROPERTY_STATUS.EXPIRED,
+            Constant.DATABASE.PROPERTY_STATUS.FEATURED,
         ],
         default: Constant.DATABASE.PROPERTY_STATUS.PENDING
     },
-
+    actions_performed_by_admin: {
+        type: String,
+        enum: [
+            Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.PENDING,
+            Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.APPROVED,
+            Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.REJECTED,
+            Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.BLOCKED,
+        ],
+        default: Constant.DATABASE.PROPERTY_STATUS.PENDING
+    },
     propertyImages: { type: [String] },
 });
 
