@@ -31,7 +31,6 @@ export let verifyToken = async function (token, tokenType, request?: any) {
                     return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
                 let sessionCriteria = {
                     userId: result['id'],
-                    deviceId: result['deviceId'],
                     loginStatus: true
                 };
                 let checkValidSession = await ENTITY.SessionE.getOneEntity(sessionCriteria, {})

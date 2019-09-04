@@ -246,7 +246,12 @@ export let propertyRoute = [
             validate: {
                 query: {
                     type: Joi.string().valid([
-
+                        Constant.DATABASE.PROPERTY_STATUS.ACTIVE,
+                        Constant.DATABASE.PROPERTY_STATUS.DRAFT,
+                        Constant.DATABASE.PROPERTY_STATUS.EXPIRED,
+                        Constant.DATABASE.PROPERTY_STATUS.FEATURED,
+                        Constant.DATABASE.PROPERTY_STATUS.PENDING,
+                        Constant.DATABASE.PROPERTY_STATUS.SOLD,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,

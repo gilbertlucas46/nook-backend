@@ -4,7 +4,7 @@ import * as config from 'config'
 import * as TokenManager from '../lib'
 import * as Jwt from 'jsonwebtoken'
 const cert = config.get('jwtSecret')
-
+import * as Constants from '../constants'
 export class UserClass extends BaseEntity {
     constructor() {
         super('User')
@@ -49,8 +49,6 @@ export class UserClass extends BaseEntity {
             // } else {
             tokenData = {
                 id: userData._id,
-                deviceId: payload.deviceId,
-                deviceToken: payload.deviceToken,
                 tokenType: userData.type,
                 timestamp: new Date().getTime(),
                 session: userData.session
@@ -67,7 +65,7 @@ export class UserClass extends BaseEntity {
     }
     async createPasswordResetToken(userData) {
         try {
-            let tokenToSend = await Jwt.sign(userData.email, cert, { algorithm: 'HS256' });
+            let tokenToSend = await Jwt.sign(userData.email, cert, { algorithm: 'HS256', expiresIn: Constants.SERVER.TOKEN_EXPIRATION_TIME });
             let expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 
             let criteriaForUpdatePswd = { _id: userData._id }

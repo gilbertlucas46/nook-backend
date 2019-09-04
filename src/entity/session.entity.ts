@@ -13,21 +13,19 @@ export class SessionClass extends BaseEntity {
             let sessionInfo = {
                 _id: mongoose.Types.ObjectId().toString(),
                 userId: userData._id,
-                deviceId: sessionData.deviceId,
-                deviceType: sessionData.deviceType,
                 validAttempt: accessToken ? true : false,
-                ipAddress: sessionData.ipAddress,
+                // ipAddress: sessionData.ipAddress,
                 source: sessionData.source,
                 loginStatus: true,
                 createdAt: new Date().getTime(),
                 updatedAt: new Date().getTime(),
-                deviceToken: sessionData.deviceToken,
+                // deviceToken: sessionData.deviceToken,
             };
             if (type == 'user') {
                 columnName = 'userId';
                 sessionInfo[columnName] = userData._id;
             }
-            if (sessionData.deviceToken) sessionInfo.deviceToken = sessionData.deviceToken;
+            // if (sessionData.deviceToken) sessionInfo.deviceToken = sessionData.deviceToken;
             let session = await this.DAOManager.saveData(this.modelName, sessionInfo);
 
             if (session && session._id) return session;

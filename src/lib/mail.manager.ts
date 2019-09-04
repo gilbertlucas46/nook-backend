@@ -16,26 +16,31 @@ export class MailManager {
                 // bcc: config.get('smtp.bccMail')
                 secure: true, // upgrade later with STARTTLS
                 auth: {
-                    user: "do-not-reply@appinventiv.com", //config.get('MAIL_USERNAME'),
-                    pass: "Active!@#123" //config.get('MAIL_PASSWORD')
+                    user: "mailtestingappinventiv@gmail.com",
+                    // ", //config.get('MAIL_USERNAME'),
+                    pass: "12345Appinventiv" //config.get('MAIL_PASSWORD')
                 },
-                // debug: true,
-                // logger: true
+                debug: true,
+                logger: true
             });
 
             // let senderEmail = this.senderEmail
             let mailOptions = {
-                from: "do-not-reply@appinventiv.com",// sender email
+                from: "mailtestingappinventiv@gmail.com",// sender email
                 to: this.receiverEmail, // list of receivers
                 subject: this.subject, // Subject line
                 text: this.content, // plain text body
-                html: `<button> ${this.content}</button>`, // html body,              
+                html: `<b>${this.content}</b>` // html body
                 // bcc: config.get('smtp.bccMail')
             };
             let mailResponse = await transporter.sendMail(mailOptions);
+            console.log('mailResponse', mailResponse);
+
 
         } catch (error) {
             // utils.consolelog('MailManager', error, false)
+            console.log('errorrr', error);
+
         };
         return {}
     }
