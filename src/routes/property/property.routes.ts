@@ -215,5 +215,50 @@ export let propertyRoute = [
                 }
             }
         }
+    },
+
+    /**
+   * @description : active property of user by status
+   */
+    {
+        method: 'GET',
+        path: '/v1/user/status/property',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let payload = request.query;
+                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
+                let data = await PropertyService.userPropertyByStatus(payload, userData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'GET properties by status',
+            tags: ['api', 'anonymous', 'user', 'Property'],
+            auth: "UserAuth",
+            validate: {
+                query: {
+                    type: Joi.string().valid([
+                        Constant.DATABASE.USER_PROPERTY_STATUS.ACTIVE,
+                        Constant.DATABASE.USER_PROPERTY_STATUS.DRAFT,
+                        Constant.DATABASE.USER_PROPERTY_STATUS.EXPIRED,
+                        Constant.DATABASE.USER_PROPERTY_STATUS.FEATURED,
+                        Constant.DATABASE.USER_PROPERTY_STATUS.PENDING,
+                        Constant.DATABASE.USER_PROPERTY_STATUS.SOLD,
+
+                    ]),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
     }
 ]

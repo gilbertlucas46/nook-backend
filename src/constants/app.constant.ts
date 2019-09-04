@@ -159,7 +159,6 @@ export let DATABASE = {
     DEEPLINK_REDIRECT_URL: {
         APP: "/v1/deeplink?url=",
     },
-
 };
 
 export let STATUS_MSG = {
