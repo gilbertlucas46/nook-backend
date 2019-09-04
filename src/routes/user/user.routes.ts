@@ -244,11 +244,11 @@ export let userRoute = [
                 let payload = request.params;
                 let responseData = await UserService.verifyLink(payload);
                 // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
-                // console.log('config.get("BASE_URL") + `link`)', config.get("BASE_URL") + payload.link);
-                return h.redirect(config.get("BASE_URL") + payload.link)
+                // console.log('config.get("baseUrl") + `link`)', config.get("baseUrl") + payload.link);
+                return h.redirect(config.get("baseUrl") + payload.link)
             }
             catch (error) {
-                return h.redirect(config.get("BASE_URL"))
+                return h.redirect(config.get("homePage"))
                 // return (UniversalFunctions.sendError(error))
             }
         },
