@@ -43,9 +43,7 @@ declare namespace UserRequest {
         userId?: string;
         validAttempt?: boolean;
         ipAddress: string;
-        deviceId: string;
-        deviceToken: string;
-        deviceType: string;
+        deviceToken?: string;
         source: string;
         appVersion?: string;
         createdAt?: Date;
@@ -85,8 +83,8 @@ declare namespace UserRequest {
     export interface ChangePassword {
         oldPassword: string;
         newPassword: string;
-    } 
+    }
     export interface PropertyStatus {
-        
+
     }
 }
