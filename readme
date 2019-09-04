@@ -7,9 +7,25 @@ username-- nook_devusr
 password-- JdsDjdj@!12!@
 nodeport-- 7361
 
-Mongo development server deatails--
+Mongo development server details--
 Host-- appskeeper.com
 db-- nook_devdb
 user-- nook_devusr
 passwd-- Iidjsi@#1!
+mongoport-- 2798
+
+
+
+----------------------------------Nook testing server details---------------------------------
+ssh-- ssh nook_qausr@nookqa.appskeeper.com
+URL-- nookqa.appskeeper.com
+username-- nook_qausr
+password-- EdfnmfdE#@!21
+nodeport-- 7362
+
+Mongo testing server details--
+Host-- appskeeper.com
+db-- nook_qadb
+user-- nook_qausr
+passwd-- Oimi@#$!12
 mongoport-- 2798
