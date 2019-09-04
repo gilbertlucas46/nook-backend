@@ -149,6 +149,15 @@ export let DATABASE = {
         QUATERLY: 'quaterly',
         HALFYEARLY: 'half yearly',
         YEARLY: 'yearly'
+    },
+    USER_PROPERTY_STATUS: {
+        ACTIVE: "Active",
+        PENDING: "Pending",
+        SOLD: "Sold/Rented",
+        EXPIRED: "Expired",
+        DRAFT: "Draft",
+        FEATURED: "Featured"
+
     }
 };
 
