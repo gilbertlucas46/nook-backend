@@ -126,7 +126,7 @@ export class PropertyController {
 
     async nearbyProperties(payload: PropertyRequest.nearByProperty) {
         try {
-            let { page, limit, searchTerm, sortBy, sortType, propertyId, propertyType, type, label, maxPrice, minPrice } = payload;
+            let { page, limit, searchTerm, sortBy, sortType, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea } = payload;
             if (!limit) limit = Constant.SERVER.LIMIT;
             else limit = limit;
             if (!page) page = 1;
@@ -180,7 +180,7 @@ export class PropertyController {
             }
 
             if (propertyId) {
-                matchObject['$match']['_id'] = new ObjectId(propertyId)
+                matchObject['$match']['propertyId'] = new ObjectId(propertyId)
             }
 
             if (propertyType && propertyType !== 3) {
@@ -197,6 +197,30 @@ export class PropertyController {
                 }
             }
 
+            if (bedrooms) {
+                matchObject['$match']['property_details.bedrooms'] = bedrooms;
+            }
+
+            if (bathrooms) {
+                matchObject['$match']['property_details.bathrooms'] = bathrooms;
+            }
+
+            if (minArea) {
+                matchObject['$match']['property_details.floor_area'] = { $gt: minArea };
+            }
+
+            if (maxArea) {
+                matchObject['$match']['property_details.floor_area'] = { $lt: maxArea };
+            }
+
+            if (minPrice) {
+                matchObject['$match']['property_basic_details.sale_rent_price'] = { $gt: minPrice };;
+            }
+
+            if (maxPrice) {
+                matchObject['$match']['property_basic_details.sale_rent_price'] = { $lt: maxPrice };
+            }
+
             // creating the pipeline for mongodb
             const pipeLine = [
                 matchObject,
@@ -206,25 +230,27 @@ export class PropertyController {
                 },
             ];
 
-            let propertyData = await ENTITY.PropertyE.aggregate([
-                {
-                    '$geoNear': {
-                        near: { type: "Point", "coordinates": [28.535517, 77.391029] },
-                        maxDistance: 100000,
-                        query: pipeLine,
-                        distanceField: "calculatedDistance",
-                        spherical: true
-                    }
-                },
-                {
-                    $project: {
-                        _id: 1,
-                        property_basic_details: 1,
-                        createdAt: 1,
-                        property_address: 1
-                    }
-                }
-            ]);
+            // let propertyData = await ENTITY.PropertyE.aggregate([
+            //     {
+            //         '$geoNear': {
+            //             near: { type: "Point", "coordinates": [28.535517, 77.391029] },
+            //             maxDistance: 100000,
+            //             query: pipeLine,
+            //             distanceField: "calculatedDistance",
+            //             spherical: true
+            //         }
+            //     },
+            //     {
+            //         $project: {
+            //             _id: 1,
+            //             property_basic_details: 1,
+            //             createdAt: 1,
+            //             property_address: 1
+            //         }
+            //     }
+            // ]);
+
+            let propertyData = await ENTITY.PropertyE.PropertyList(pipeLine);
             return propertyData;
 
         } catch (err) {
@@ -235,12 +261,12 @@ export class PropertyController {
         try {
 
 
-            
-        }catch (error) {
-                return Promise.reject(error)
-            }
+
+        } catch (error) {
+            return Promise.reject(error)
         }
-    
+    }
+
 
 }
 

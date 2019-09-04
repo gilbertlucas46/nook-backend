@@ -159,8 +159,8 @@ export let propertyRoute = [
             //  auth: "UserAuth",
             validate: {
                 query: {
-                    // page: Joi.number(),
-                    // limit: Joi.number(),
+                    page: Joi.number(),
+                    limit: Joi.number(),
                     searchTerm: Joi.string(),
                     type: Joi.string(),
                     label: Joi.array(),
@@ -198,14 +198,18 @@ export let propertyRoute = [
             //  auth: "UserAuth",
             validate: {
                 query: {
-                    // page: Joi.number(),
-                    // limit: Joi.number(),
+                    page: Joi.number(),
+                    limit: Joi.number(),
                     searchTerm: Joi.string(),
                     type: Joi.string(),
                     label: Joi.array(),
                     maxPrice: Joi.number(),
                     minPrice: Joi.number(),
-                    propertyType: Joi.number()
+                    propertyType: Joi.number(),
+                    bedrooms: Joi.number(),
+                    bathrooms: Joi.number(),
+                    minArea: Joi.number(),
+                    maxArea: Joi.number(),
                 },
                 failAction: UniversalFunctions.failActionFunction
             },
@@ -242,12 +246,6 @@ export let propertyRoute = [
             validate: {
                 query: {
                     type: Joi.string().valid([
-                        Constant.DATABASE.USER_PROPERTY_STATUS.ACTIVE,
-                        Constant.DATABASE.USER_PROPERTY_STATUS.DRAFT,
-                        Constant.DATABASE.USER_PROPERTY_STATUS.EXPIRED,
-                        Constant.DATABASE.USER_PROPERTY_STATUS.FEATURED,
-                        Constant.DATABASE.USER_PROPERTY_STATUS.PENDING,
-                        Constant.DATABASE.USER_PROPERTY_STATUS.SOLD,
 
                     ]),
                 },

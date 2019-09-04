@@ -1,4 +1,5 @@
-import { Schema, Document, model } from 'mongoose'
+import { Schema, Document, model } from 'mongoose';
+import * as shortid from 'shortid';
 import * as Constant from '../constants';
 
 export interface IProperty extends Document {
@@ -85,6 +86,7 @@ const propertySchema = new Schema({
     userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     createdAt: { type: Number, default: new Date().getTime() },
     updatedAt: { type: Number, default: new Date().getTime() },
+    propertyId: { type: String, default: shortid.generate },
     property_features: {
         storeys_2: { type: Boolean, default: false },
         security_24hr: { type: Boolean, default: false },
@@ -121,15 +123,15 @@ const propertySchema = new Schema({
         wiFi: { type: Boolean, default: false }
     },
     property_details: {
-        floor_area: { type: String },
+        floor_area: { type: Number },
         // floor_area_unit: { type: String },
         // land_area: { type: Number },
-        lot_area: { type: String },
+        lot_area: { type: Number },
         // land_area_unit: { type: String },
         bedrooms: { type: Number },
         bathrooms: { type: Number },
         garages: { type: Number },
-        garage_size: { type: String },
+        garage_size: { type: Number },
         buildYear: { type: Number },
     },
     property_address: {
@@ -214,7 +216,7 @@ const propertySchema = new Schema({
             Constant.DATABASE.PROPERTY_STATUS.EXPIRED,
             Constant.DATABASE.PROPERTY_STATUS.FEATURED,
         ],
-        default: Constant.DATABASE.PROPERTY_STATUS.PENDING
+        default: Constant.DATABASE.PROPERTY_STATUS.ACTIVE // TODO change it to be pending after admin panel
     },
     actions_performed_by_admin: {
         type: String,
@@ -224,7 +226,7 @@ const propertySchema = new Schema({
             Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.REJECTED,
             Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.BLOCKED,
         ],
-        default: Constant.DATABASE.PROPERTY_STATUS.PENDING
+        default: Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.APPROVED // TODO change it to be pending after admin panel
     },
     propertyImages: { type: [String] },
 });
@@ -233,6 +235,5 @@ const propertySchema = new Schema({
 propertySchema.index({
     'property_address.location': '2dsphere'
 });
-
 
 export let Property = model<IProperty>('Property', propertySchema)
