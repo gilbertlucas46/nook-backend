@@ -2,6 +2,7 @@
     "environment": "development",
     "port": 7361,
     "baseUrl": "https://nookdevang.appskeeper.com?reset=",
+    "invalidUrl": "https://nookdevang.appskeeper.com?error=",
     "homePage": "https://nookdevang.appskeeper.com",
     "host": "http://nookdev.appskeeper.com",
     "host1": "http://appskeeper.com:7361",
@@ -30,12 +31,14 @@
         "#FF00FF",
         "#800080"
     ],
-    "displayColors": true,
-    "mailDriver": "smtp",
-    "mailHost": "smtp.gmail.com",
-    "mailPort": 465,
-    "mailUserName": "do-not-reply@appinventiv.com",
-    "mailPassword": "Active!@#123",
-    "mailEncryption": "tls",
-    "mailFromAddress": "do-not-reply@appinventiv.com"
+    "smtp": {
+        "displayColors": true,
+        "mailDriver": "smtp",
+        "mailHost": "smtp.gmail.com",
+        "mailPort": 465,
+        "mailUserName": "mailtestingappinventiv@gmail.com",
+        "mailPassword": "12345Appinventiv",
+        "mailEncryption": "tls",
+        "mailFromAddress": "mailtestingappinventiv@gmail.com"
+    }
 }
