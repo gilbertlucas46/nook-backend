@@ -220,7 +220,6 @@ export let propertyRoute = [
             }
         }
     },
-
     /**
    * @description : active property of user by status
    */

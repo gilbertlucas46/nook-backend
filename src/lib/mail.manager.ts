@@ -11,22 +11,23 @@ export class MailManager {
     async sendMail() {
         try {
             let transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com", //config.get('MAIL_HOST'),
-                port: 465,//config.get('MAIL_PORT'),
+
+                host: config.get('smtp.mailHost'),// "smtp.gmail.com",
+                port: config.get('smtp.mailPort'),
                 // bcc: config.get('smtp.bccMail')
                 secure: true, // upgrade later with STARTTLS
                 auth: {
-                    user: "mailtestingappinventiv@gmail.com",
+                    user: config.get('smtp.mailUserName'),
                     // ", //config.get('MAIL_USERNAME'),
-                    pass: "12345Appinventiv" //config.get('MAIL_PASSWORD')
+                    pass: config.get('smtp.mailPassword') //"12345Appinventiv" //
                 },
-                debug: true,
+                // debug: true,
                 logger: true
             });
 
             // let senderEmail = this.senderEmail
             let mailOptions = {
-                from: "mailtestingappinventiv@gmail.com",// sender email
+                from: config.get('smtp.mailHost'),// sender email
                 to: this.receiverEmail, // list of receivers
                 subject: this.subject, // Subject line
                 text: this.content, // plain text body
@@ -34,13 +35,10 @@ export class MailManager {
                 // bcc: config.get('smtp.bccMail')
             };
             let mailResponse = await transporter.sendMail(mailOptions);
-            console.log('mailResponse', mailResponse);
 
 
         } catch (error) {
-            // utils.consolelog('MailManager', error, false)
-            console.log('errorrr', error);
-
+            utils.consolelog('MailManager', error, false)
         };
         return {}
     }

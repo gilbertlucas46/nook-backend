@@ -17,8 +17,6 @@ export class PropertyClass extends BaseEntity {
     }
     async ProprtyByStatus(query) {
         try {
-            console.log('queryquery', query);
-
             let data = await this.DAOManager.paginate(this.modelName, query)
             return data
 
