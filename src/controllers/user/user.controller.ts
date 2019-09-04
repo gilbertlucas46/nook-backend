@@ -180,7 +180,7 @@ export class UserController {
                 let userExirationTime: any = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken'])
 
                 let today: any = new Date();
-                let diffMs = (today - userExirationTime.passwordResetTokenExpirationTime); 
+                let diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
                 let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
                 if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
@@ -205,7 +205,7 @@ export class UserController {
                 passwordResetToken: null
             }
             let today: any = new Date();
-            let diffMs = (today - userData.passwordResetTokenExpirationTime);  
+            let diffMs = (today - userData.passwordResetTokenExpirationTime);
             let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
             if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) return Promise.reject()//Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
@@ -232,7 +232,7 @@ export class UserController {
             else
                 return Promise.reject() //  this html page will be rendered
         } catch (error) {
-            return Promise.reject()
+            return Promise.reject(error)
         }
     }
     async sendMail(payload) {
