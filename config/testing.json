@@ -1,6 +1,6 @@
 {
     "environment": "testing",
-    "host": "http://nookqa.appskeeper.com/",
+    "host": "https://nookqa.appskeeper.com/",
     "port": 7362,
     "dbConfig": {
         "dbPwd": "Oimi@#$!12",
