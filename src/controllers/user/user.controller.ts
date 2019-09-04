@@ -124,8 +124,9 @@ export class UserController {
             };
             // let userData = await ENTITY.UserE.getOneEntity(criteria, ["email", "_id"]);
             let userData = await ENTITY.UserE.getData(criteria, ["email", "_id"])
+            console.log('userDatauserData', userData);
 
-            if (userData == null) {
+            if (!userData) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
             } else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
@@ -138,6 +139,8 @@ export class UserController {
             }
         }
         catch (error) {
+            console.log('erororooror', error);
+
             return Promise.reject(error);
         }
     }
@@ -169,7 +172,7 @@ export class UserController {
             let result = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
             console.log('resultresultresult', result);
 
-            if (result == undefined)
+            if (!result)
                 return Promise.reject()//"something went wrong" // error [age will be open]
 
             let userData = await ENTITY.UserE.getOneEntity(result.email, {})
@@ -184,7 +187,9 @@ export class UserController {
                 let diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
                 let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
-                if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
+                if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME)
+                    Promise.reject()
+                // return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
                 else return {};
             }
         } catch (error) {
