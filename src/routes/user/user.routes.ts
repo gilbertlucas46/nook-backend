@@ -7,6 +7,9 @@ import * as config from "config";
 import * as utils from '../../utils';
 
 export let userRoute = [
+    /**
+     * @description: register user based on unique mail and userName
+     */
     {
         method: 'POST',
         path: '/v1/user/register',
@@ -39,6 +42,9 @@ export let userRoute = [
             }
         }
     },
+    /**
+     * @description:Login via mail and userName
+     */
     {
         method: 'POST',
         path: '/v1/user/login',
@@ -72,7 +78,9 @@ export let userRoute = [
             }
         }
     },
-
+    /**
+     * @description:get user's property via id
+     */
     {
         method: 'GET',
         path: '/v1/user/property/{_id}',
@@ -99,6 +107,10 @@ export let userRoute = [
             },
         }
     },
+    /**
+     * 
+     * @description: forget passsword to send the link over mail 
+     */
     {
         method: "POST",
         path: "/v1/user/forgetPassword",
@@ -132,6 +144,9 @@ export let userRoute = [
             }
         }
     },
+    /**
+     * @description : update the user Profile
+     */
     {
         method: 'PATCH',
         path: '/v1/user/profile',
@@ -184,6 +199,9 @@ export let userRoute = [
             }
         }
     },
+    /**
+     * @description :user profile detail via token 
+     */
     {
         method: 'GET',
         path: '/v1/user/profile',
@@ -213,21 +231,20 @@ export let userRoute = [
             }
         }
     },
+    /**
+     * @description : user verifLink for the reset-password
+     */
     {
         method: 'GET',
         path: '/v1/user/verifyLink/{link}',
         handler: async (request, h) => {
             try {
                 // let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                console.log('>>>>>>>>>>>>>>>>>>>>');
 
                 let payload = request.params;
-                console.log('payloadpayload', payload);
-
                 let responseData = await UserService.verifyLink(payload);
                 // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
-                console.log('config.get("BASE_URL") + `link`)', config.get("BASE_URL") + payload.link);
-
+                // console.log('config.get("BASE_URL") + `link`)', config.get("BASE_URL") + payload.link);
                 return h.redirect(config.get("BASE_URL") + payload.link)
             }
             catch (error) {
@@ -251,6 +268,9 @@ export let userRoute = [
             }
         }
     },
+    /**
+     * @description: user chamge passsword 
+     */
     {
         method: 'POST',
         path: '/v1/user/change-password',
@@ -285,7 +305,9 @@ export let userRoute = [
             }
         }
     },
-
+    /**
+     * @description : reset-password send the verify token adnd the password in the query
+     */
     {
         method: 'POST',
         path: '/v1/user/reset-password',
@@ -298,7 +320,8 @@ export let userRoute = [
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
-                return (UniversalFunctions.sendError(error))
+                return h.redirect("https://www.w3schools.com/howto/howto_js_password_validation.asp")
+                // return (UniversalFunctions.sendError(error))
             }
         },
         options: {
@@ -330,7 +353,10 @@ export let userRoute = [
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
-                return (UniversalFunctions.sendError(error))
+                let result = await UniversalFunctions.sendError(error);
+                console.log('resultresult', result);
+                return error
+                // return (UniversalFunctions.sendError(error))
             }
         },
         options: {

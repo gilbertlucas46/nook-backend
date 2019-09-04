@@ -5,7 +5,11 @@ import * as Constant from '../../constants/app.constant'
 import { PropertyService } from '../../controllers'
 
 export let propertyRoute = [
+    /**
+     * @description: user add property
+     */
     {
+
         method: 'POST',
         path: '/v1/user/property',
         handler: async (request, h) => {
@@ -134,6 +138,9 @@ export let propertyRoute = [
             }
         }
     },
+    /**
+     * @description :Property List
+     */
     {
         method: 'GET',
         path: '/v1/user/propertyList',
@@ -170,6 +177,9 @@ export let propertyRoute = [
             }
         }
     },
+    /**
+     * @description : near by peoperty listing based on the radius
+     */
     {
         method: 'GET',
         path: '/v1/search/nearbyProperties',
