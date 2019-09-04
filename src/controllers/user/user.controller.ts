@@ -101,11 +101,7 @@ export class UserController {
             let criteria = {
                 _id: payload._id
             }
-            console.log('>>>>>>>>>>>>>>>>>LLLLLLLLLLLLLLLLLLLLLLLLLLLLL', payload);
-
             let isProfileComplete: boolean;
-
-
             if (payload.firstName && payload.lastName && payload.type) {
                 payload.isProfileComplete = true;
             } else isProfileComplete = false;
@@ -133,16 +129,11 @@ export class UserController {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
             } else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
-                console.log('passwordResetTokenpasswordResetToken', passwordResetToken);
 
                 let url = config.get("host") + "/v1/user/verifyLink/" + passwordResetToken
                 // let url = "http://localhost:7361" + "/v1/user/verifyLink/" + passwordResetToken
-                console.log('urlurlurlurlurlurlurlurl', url);
-
                 let mail = new MailManager(payload.email, "forGet password", url);
-
                 mail.sendMail();
-
                 return {};
             }
         }
@@ -189,7 +180,7 @@ export class UserController {
                 let userExirationTime: any = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken'])
 
                 let today: any = new Date();
-                let diffMs = (today - userExirationTime.passwordResetTokenExpirationTime); // milliseconds between now & Christmas
+                let diffMs = (today - userExirationTime.passwordResetTokenExpirationTime); 
                 let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
                 if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) return Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
@@ -201,34 +192,47 @@ export class UserController {
     }
     async resetPassword(payload, userData) {
         try {
+            let checlAlreadyUsedToken = await ENTITY.UserE.getOneEntity({ _id: userData._id }, ['passwordResetTokenExpirationTime', 'passwordResetToken'])
+            if (checlAlreadyUsedToken.passwordResetTokenExpirationTime == null && checlAlreadyUsedToken.passwordResetToken == null)
+                return Promise.reject() // send the error page that the already change the pssword
             let criteria = {
                 email: userData._email
             }
             let updatePswd = {
-                password: await utils.cryptData(payload.newPassword),
-                updatedAt: new Date().getTime()
+                password: await utils.cryptData(payload.password),
+                updatedAt: new Date().getTime(),
+                passwordResetTokenExpirationTime: null,
+                passwordResetToken: null
             }
-            let updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd)
-            if (!updatePassword) return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR);
-            else return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT;
+            let today: any = new Date();
+            let diffMs = (today - userData.passwordResetTokenExpirationTime);  
+            let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
+            if (diffMins > Constant.SERVER.OTP_EXPIRATION_TIME) return Promise.reject()//Constant.STATUS_MSG.ERROR.E401.EMAIL_FORGET_PWD_LINK
+            else {
+                let updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd)
+                if (!updatePassword) return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR);
+                else return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT;
+
+            }
         } catch (error) {
             return Promise.reject(error)
         }
     }
+
     async verifyLinkForResetPwd(payload) {
         try {
-            let result = await Jwt.verify(payload['link'], cert, { algorithms: ['HS256'] });
-            if (result == undefined) return "something went wrong" // error [age will be open]
+            let result = await Jwt.verify(payload['link'], cert, { algorithms: ['HS256'], });
+
+            if (result == undefined) return Promise.reject() // error [age will be open]
 
             let userData = await ENTITY.UserE.getOneEntity(result.email, {})
             if (userData)
                 return this.resetPassword(payload, userData)
             else
                 return Promise.reject() //  this html page will be rendered
-            // return userData
         } catch (error) {
-            return Promise.reject(error)
+            return Promise.reject()
         }
     }
     async sendMail(payload) {
