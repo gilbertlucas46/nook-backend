@@ -259,15 +259,11 @@ export class PropertyController {
     }
     async userPropertyByStatus(payload, userData) {
         try {
-
-
-
+            // let data = await ENTITY.PropertyE
         } catch (error) {
             return Promise.reject(error)
         }
     }
-
-
 }
 
 export let PropertyService = new PropertyController();

@@ -167,6 +167,7 @@ export class UserController {
     async verifyLink(payload) {
         try {
             let result = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+            console.log('resultresultresult', result);
 
             if (result == undefined)
                 return Promise.reject()//"something went wrong" // error [age will be open]
