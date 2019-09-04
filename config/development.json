@@ -4,8 +4,7 @@
     "baseUrl": "https://nookdevang.appskeeper.com?reset=",
     "invalidUrl": "https://nookdevang.appskeeper.com?error=",
     "homePage": "https://nookdevang.appskeeper.com",
-    "host": "http://nookdev.appskeeper.com",
-    "host1": "http://appskeeper.com:7361",
+    "host": "https://nookdev.appskeeper.com",
     "dbConfig": {
         "dbPwd": "Iidjsi@#1!",
         "dbUser": "nook_devusr",
