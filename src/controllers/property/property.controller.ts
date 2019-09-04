@@ -231,6 +231,17 @@ export class PropertyController {
             return Promise.reject(err);
         }
     }
+    async userPropertyByStatus(payload, userData) {
+        try {
+
+
+            
+        }catch (error) {
+                return Promise.reject(error)
+            }
+        }
+    
+
 }
 
 export let PropertyService = new PropertyController();
