@@ -233,7 +233,7 @@ export let propertyRoute = [
                 let payload = request.query;
                 console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let data = await PropertyService.userPropertyByStatus(payload, userData);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data))
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data))
             }
             catch (error) {
                 return (UniversalFunctions.sendError(error))

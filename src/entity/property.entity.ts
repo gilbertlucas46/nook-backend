@@ -20,7 +20,6 @@ export class PropertyClass extends BaseEntity {
             console.log('queryquery', query);
 
             let data = await this.DAOManager.paginate(this.modelName, query)
-            console.log('ataaaa>>>>>>>>>>', data);
             return data
 
         } catch (error) {
