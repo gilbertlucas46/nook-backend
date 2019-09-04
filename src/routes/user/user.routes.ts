@@ -248,7 +248,7 @@ export let userRoute = [
                 return h.redirect(config.get("BASE_URL") + payload.link)
             }
             catch (error) {
-                return h.redirect("https://www.w3schools.com/howto/howto_js_password_validation.asp")
+                return h.redirect(config.get("BASE_URL"))
                 // return (UniversalFunctions.sendError(error))
             }
         },
@@ -320,8 +320,9 @@ export let userRoute = [
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
-                return h.redirect("https://www.w3schools.com/howto/howto_js_password_validation.asp")
-                // return (UniversalFunctions.sendError(error))
+                // return h.redirect(config.get("HOME_PAGE"))
+
+                return (UniversalFunctions.sendError(error))
             }
         },
         options: {
