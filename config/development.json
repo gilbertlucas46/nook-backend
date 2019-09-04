@@ -1,7 +1,8 @@
 {
     "environment": "development",
     "port": 7361,
-    "BASE_URL": "https://nookdevang.appskeeper.com?reset=",
+    "baseUrl": "https://nookdevang.appskeeper.com?reset=",
+    "homePage": "https://nookdevang.appskeeper.com",
     "host": "http://nookdev.appskeeper.com",
     "host1": "http://appskeeper.com:7361",
     "dbConfig": {
