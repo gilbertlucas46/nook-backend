@@ -163,6 +163,13 @@ export let DATABASE = {
 
 export let STATUS_MSG = {
     ERROR: {
+        redirect: {
+            Time_Expired: "Time Expired",
+            Already_Changed: "Already Changed",
+            Oops_Time_Expired: "Oops Time Expired",
+            invalid_Url: "invalid Url"
+        },
+
         ALREADY_EXIST: {
             statusCode: 400,
             type: 'ALREADY_EXIST',
@@ -538,7 +545,7 @@ export let SERVER = {
     CHUNK_SIZE: 100,
     LIMIT: 10,
     OTP_EXPIRATION_TIME: 15,
-    TOKEN_EXPIRATION_TIME: 900,
+    // TOKEN_EXPIRATION_TIME: 900,
     MAX_LIMIT: 1000
 }
 

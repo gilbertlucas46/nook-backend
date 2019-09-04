@@ -264,12 +264,8 @@ export class PropertyController {
                     userId: userData._id,
                     Property_status: payload.propertyType
                 },
-                
             }
-            const pipeLine = [
-                criteria,
-
-            ];
+            const pipeLine = [criteria]
             let data = await ENTITY.PropertyE.ProprtyByStatus(pipeLine)
             return data
         }

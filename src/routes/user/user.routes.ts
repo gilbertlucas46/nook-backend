@@ -239,17 +239,19 @@ export let userRoute = [
         path: '/v1/user/verifyLink/{link}',
         handler: async (request, h) => {
             try {
-                // let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-
                 let payload = request.params;
                 let responseData = await UserService.verifyLink(payload);
                 // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
                 // console.log('config.get("baseUrl") + `link`)', config.get("baseUrl") + payload.link);
                 return h.redirect(config.get("baseUrl") + payload.link)
-            }
-            catch (error) {
-                return h.redirect(config.get("homePage"))
-                // return (UniversalFunctions.sendError(error))
+            } catch (error) {
+                if (error.JsonWebTokenError) {
+                    return h.redirect(config.get("invalidUrl") + "invalid url")
+                } else if (error == 'LinkExpired') {
+                    return h.redirect(config.get("invalidUrl") + "LinkExpired")
+                } else {
+                    return h.redirect(config.get("invalidUrl") + "Something went wrong")
+                }
             }
         },
         options: {
@@ -313,23 +315,32 @@ export let userRoute = [
         path: '/v1/user/reset-password',
         handler: async (request, h) => {
             try {
-                let payload = request.query;
+                let payload = request.payload;
                 console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let responseData = await UserService.verifyLinkForResetPwd(payload);
                 // let responseData = await UserService.resetPassword(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
-                // return h.redirect(config.get("HOME_PAGE"))
-
-                return (UniversalFunctions.sendError(error))
+                if (error.JsonWebTokenError) {
+                    return h.redirect(config.get("invalidUrl") + "invalid url")
+                } else if (error === 'Already_Changed') {
+                    return h.redirect(config.get("invalidUrl") + "Already_Changed")
+                } else if (error === 'Time_Expired') {
+                    return h.redirect(config.get("invalidUrl") + "Oops Time_Expired")
+                } else {
+                    return h.redirect(config.get("invalidUrl") + "Something went wrong")
+                }
             }
+            // return h.redirect(config.get("HOME_PAGE"))
+            // return (UniversalFunctions.sendError(error))
+
         },
         options: {
             description: 'Get user Profile',
             tags: ['api', 'anonymous', 'user', 'reset'],
             validate: {
-                query: {
+                payload: {
                     link: Joi.string(),
                     password: Joi.string().min(6).max(14),
                 },
