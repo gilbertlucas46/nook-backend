@@ -168,7 +168,7 @@ export let userRoute = [
                     _id: Joi.string().min(24).max(24).required(),
                     firstName: Joi.string().min(1).max(20).trim(),
                     lastName: Joi.string().min(1).max(20).trim(),
-                    phoneNumber: Joi.string().min(8).max(14).trim(),
+                    phoneNumber: Joi.string().min(7).max(15).trim(),
                     type: Joi.string().valid([
                         Constant.DATABASE.USER_TYPE.AGENT,
                         Constant.DATABASE.USER_TYPE.OWNER,
