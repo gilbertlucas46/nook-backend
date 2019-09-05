@@ -27,8 +27,8 @@ export let verifyToken = async function (token, tokenType, request?: any) {
                 let userData = {};
                 let userCriteria = { _id: result['id'] }
                 let checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {});
-                if (!checkUserExist)
-                    return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
+                 if (!checkUserExist)
+                    return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN
                 let sessionCriteria = {
                     userId: result['id'],
                     loginStatus: true
@@ -49,6 +49,7 @@ export let verifyToken = async function (token, tokenType, request?: any) {
             return Promise.reject(result);
         }
     } catch (error) {
+        UniversalFunctions.consolelog('error', error, true)
         return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
     }
 };
