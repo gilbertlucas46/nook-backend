@@ -9,7 +9,6 @@ export let propertyRoute = [
      * @description: user add property
      */
     {
-
         method: 'POST',
         path: '/v1/user/property',
         handler: async (request, h) => {
