@@ -15,7 +15,6 @@ passwd-- Iidjsi@#1!
 mongoport-- 2798
 
 
-
 ----------------------------------Nook testing server details---------------------------------
 ssh-- ssh nook_qausr@nookqa.appskeeper.com
 URL-- nookqa.appskeeper.com
@@ -29,3 +28,22 @@ db-- nook_qadb
 user-- nook_qausr
 passwd-- Oimi@#$!12
 mongoport-- 2798
+
+
+----------------------------------Nook staging server details---------------------------------
+ssh-- ssh nook_stgusr@nookstg.appskeeper.com
+URL-- nookstg.appskeeper.com
+username-- nook_stgusr
+password-- WdopIos!$#@1
+nodeport-- 7363
+
+Mongo staging server details--
+Host-- appskeeper.com
+db-- nook_stgdb
+user-- nook_stgusr
+passwd-- Pw#ii@!#21
+mongoport-- 2798
+
+
+
+
