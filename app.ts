@@ -9,7 +9,7 @@ import * as config from 'config'
 
 let env = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'default';
 
-let originArray = ['http://localhost:4200', 'http://localhost:4201', 'http://localhost', 'https://nookdevang.appskeeper.com', 'http://nookdevang.appskeeper.com', 'https://nookqaang.appskeeper.com', 'http://nookqaang.appskeeper.com'];
+let originArray = ['http://localhost:4200', 'http://localhost:4201', 'http://localhost', 'https://nookdevang.appskeeper.com', 'http://nookdevang.appskeeper.com', 'https://nookqaang.appskeeper.com', 'http://nookqaang.appskeeper.com', 'https://nookstgang.appskeeper.com', 'http://nookstgang.appskeeper.com'];
 
 const server = Hsrc.server({
   port: config.get('port'),
