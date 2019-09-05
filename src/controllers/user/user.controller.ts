@@ -13,10 +13,10 @@ export class UserController {
     async register(payload: UserRequest.Register) {
         try {
             let checkMail = {
-                email: payload.email
+                email: payload.email.trim().toLowerCase()
             }
             let checkUserName = {
-                userName: payload.userName
+                userName: payload.userName.trim().toLowerCase()
             }
             let userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id'])
             if (userNameCheck && userNameCheck._id) {
@@ -28,8 +28,8 @@ export class UserController {
                 } else {
                     let makePassword = await utils.cryptData(payload.password);
                     let userData = {
-                        userName: payload.userName,
-                        email: payload.email,
+                        userName: payload.userName.trim().toLowerCase(),
+                        email: payload.email.trim().toLowerCase(),
                         password: makePassword,
                         createdAt: new Date().getTime(),
                         updatedAt: new Date().getTime(),
@@ -49,10 +49,14 @@ export class UserController {
 
     async login(payload: UserRequest.Login) {
         try {
-            let checkEmail = {
-                email: payload.email
+            let unique = payload.email;
+            // check if entered value is email or username
+            let checkEmailOrUserName = (unique) => {
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(unique).toLowerCase());
             }
-            let checkData = { $or: [{ email: payload.email }, { userName: payload.email }] };
+            if (checkEmailOrUserName(unique) === true) unique = unique.trim().toLowerCase();
+            let checkData = { $or: [{ email: unique }, { userName: payload.email.trim().toLowerCase() }] };
             let userData = await ENTITY.UserE.getOneEntity(checkData, {});
             if (userData && userData._id) {
 
@@ -87,9 +91,7 @@ export class UserController {
                 return Constant.STATUS_MSG.ERROR.E400.INVALID_ID
             }
             let getDetail = await ENTITY.PropertyE.getOneEntity(criteria, {});
-            if (getDetail == null) {
-                return Constant.STATUS_MSG.ERROR.E400.PROPERTY_NOT_REGISTERED
-            }
+            if (!getDetail) return Constant.STATUS_MSG.ERROR.E400.PROPERTY_NOT_REGISTERED;
             return getDetail;
         } catch (error) {
             return Promise.reject(error)
@@ -106,9 +108,8 @@ export class UserController {
                 payload.isProfileComplete = true;
             } else isProfileComplete = false;
 
-
             let updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
-            return updateUser
+            return updateUser;
 
         } catch (error) {
             return Promise.reject(error)
@@ -118,14 +119,11 @@ export class UserController {
     async forgetPassword(payload: UserRequest.ForgetPassword) {
         try {
             let criteria = {
-                email: payload.email
+                email: payload.email.trim().toLowerCase()
             };
             let userData = await ENTITY.UserE.getData(criteria, ["email", "_id"])
-            console.log('userDatauserData', userData);
-
-            if (!userData) {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
-            } else {
+            if (!userData) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
+            else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
                 let url = config.get("host") + "/v1/user/verifyLink/" + passwordResetToken
                 // let url = "http://localhost:7361" + "/v1/user/verifyLink/" + passwordResetToken
@@ -146,8 +144,7 @@ export class UserController {
                 _id: userData._id
             }
             let password = await ENTITY.UserE.getOneEntity(criteria, ['password']);
-            if (!(await utils.deCryptData(payload.oldPassword, password.password)))
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD)
+            if (!(await utils.deCryptData(payload.oldPassword, password.password))) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD)
             else {
                 let updatePswd = {
                     password: await utils.cryptData(payload.newPassword),
@@ -165,11 +162,9 @@ export class UserController {
     async verifyLink(payload) {
         try {
             let result = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
-
             let userData = await ENTITY.UserE.getOneEntity(result.email, {})
-            if (!userData) {
-                return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR // error page will be open here
-            } else {
+            if (!userData) return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR // error page will be open here
+            else {
                 let criteria = { email: result }
                 let userAttribute = ['passwordResetTokenExpirationTime', 'passwordResetToken']
                 let userExirationTime: any = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken'])
@@ -177,7 +172,6 @@ export class UserController {
                 let today: any = new Date();
                 let diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
                 let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-                console.log('diffMinsdiffMinsdiffMins', diffMins);
                 if (diffMins > 0) return Promise.reject('LinkExpired')
                 else return {} // success
             }
@@ -186,11 +180,10 @@ export class UserController {
             return Promise.reject(error)
         }
     }
-   
+
     async verifyLinkForResetPwd(payload) {
         try {
             let result = await Jwt.verify(payload['link'], cert, { algorithms: ['HS256'], });
-            utils.consolelog('resultJwt', result, true)
             if (!result) return Promise.reject();
             let checkAlreadyUsedToken: any = await ENTITY.UserE.getOneEntity({ email: result }, ['passwordResetTokenExpirationTime', 'passwordResetToken'])
             if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null)
@@ -218,7 +211,8 @@ export class UserController {
     }
     async sendMail(payload) {
         try {
-            let mail = new MailManager(payload.email, "forGet password", 'passwordResetToken');
+            let email = payload.email.trim().toLowerCase();
+            let mail = new MailManager(email, "forGet password", 'passwordResetToken');
             await mail.sendMail()
         } catch (error) {
             return Promise.reject(error)

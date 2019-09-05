@@ -9,7 +9,6 @@ export let propertyRoute = [
      * @description: user add property
      */
     {
-
         method: 'POST',
         path: '/v1/user/property',
         handler: async (request, h) => {
@@ -230,7 +229,6 @@ export let propertyRoute = [
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload = request.query;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let data = await PropertyService.userPropertyByStatus(payload, userData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data))
             }

@@ -4,8 +4,7 @@
     "baseUrl": "https://nookqaang.appskeeper.com?reset=",
     "invalidUrl": "https://nookqaang.appskeeper.com?error=",
     "homePage": "https://nookqaang.appskeeper.com",
-    "host": "nookqa.appskeeper.com",
-    "host1": "http://appskeeper.com:7362",
+    "host": "https://nookqa.appskeeper.com",
     "dbConfig": {
         "dbPwd": "Oimi@#$!12",
         "dbUser": "nook_qausr",
