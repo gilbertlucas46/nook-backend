@@ -29,7 +29,7 @@ export let userRoute = [
             // auth: "BasicAuth"
             validate: {
                 payload: {
-                    userName: Joi.string().min(1).max(20).trim().required(),
+                    userName: Joi.string().min(4).max(100).trim().required(),
                     email: Joi.string().email({ minDomainSegments: 2 }),
                     password: Joi.string().min(6).max(14).trim().required(),
                 },
@@ -87,7 +87,6 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload: PropertyRequest.PropertyDetail = request.params;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let propertyDetail = await UserService.portpertyDetail(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail))
             }
@@ -117,7 +116,6 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload: UserRequest.ForgetPassword = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let forgetPasswordResponse = await UserService.forgetPassword(payload);
                 // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
                 // let url = config.get("host1") + ":" + config.get("port") + "/v1/user/verifyLink/" + forgetPasswordResponse
@@ -154,7 +152,6 @@ export let userRoute = [
             try {
                 // let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload: UserRequest.ProfileUpdate = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let responseData = await UserService.updateProfile(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData))
             }
@@ -280,7 +277,6 @@ export let userRoute = [
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload: UserRequest.ChangePassword = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let responseData = await UserService.changePassword(payload, userData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
@@ -316,7 +312,6 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload = request.payload;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let responseData = await UserService.verifyLinkForResetPwd(payload);
                 // let responseData = await UserService.resetPassword(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
@@ -359,16 +354,12 @@ export let userRoute = [
         handler: async (request, h) => {
             try {
                 let payload = request.query;
-                console.log(`This request is on ${request.path} with parameters ${JSON.stringify(payload)}`);
                 let responseData = await UserService.sendMail(payload);
                 // let responseData = await UserService.resetPassword(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
-                let result = await UniversalFunctions.sendError(error);
-                console.log('resultresult', result);
-                return error
-                // return (UniversalFunctions.sendError(error))
+                return UniversalFunctions.sendError(error);
             }
         },
         options: {
