@@ -23,7 +23,6 @@ export class UserClass extends BaseEntity {
             let user: UserRequest.Register = await this.createOneEntity(dataToInsert)
             return user
         } catch (error) {
-            console.error('User Entity createUser', error)
             return Promise.reject(error)
         }
     }

@@ -41,22 +41,22 @@ declare namespace PropertyRequest {
             wiFi?: boolean;
         }
         property_details: {
-            floor_area?: string;
+            floor_area?: number;
             // floor_area_unit?: string;
             // land_area?: number;
             land_area_unit?: string;
-            lot_area: string;
+            lot_area?: number;
             bedrooms?: number;
             bathrooms?: number;
             garages?: number;
-            garage_size: string;
+            garage_size?: number;
             buildYear?: number;
         }
         property_address: {
             address: string;
             region?: string;
             city?: string;
-            Barangay?: string;
+            barangay?: string;
             location?: {
                 type?: string;
                 coordinates?: [number];
