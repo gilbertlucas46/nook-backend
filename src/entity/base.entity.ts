@@ -111,8 +111,6 @@ export class BaseEntity {
 
     async  paginate(Model: any, pipeline?: Array<Object>, limit?: number, page?: number) {
         try {
-            console.log('ModelModelModel', Model);
-
             if (limit) {
                 limit = Math.abs(limit);
                 // If limit exceeds max limit
