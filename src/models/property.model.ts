@@ -42,10 +42,11 @@ export interface IProperty extends Document {
     }
     property_details: {
         floor_area: number;
-        // floor_area_unit: string;
+        floor_area_unit: string;
         // land_area: number;
-        lot_area: number;
         // land_area_unit: string;
+        lot_area: number;
+        lot_area_unit: string;
         bedrooms: number;
         bathrooms: number;
         garages: number;
@@ -76,9 +77,9 @@ export interface IProperty extends Document {
         userId?: string;
         userName: string;
         contactNo: string;
-        imageUrl: string
+        imageUrl: string;
     }
-    propertyImages: string[]
+    propertyImages: string[];
 };
 
 const propertySchema = new Schema({
@@ -124,10 +125,11 @@ const propertySchema = new Schema({
     },
     property_details: {
         floor_area: { type: Number },
-        // floor_area_unit: { type: String },
-        // land_area: { type: Number },
-        lot_area: { type: Number },
+        floor_area_unit: { type: String, default: 'm2' },
+        //land_area: { type: Number },
         // land_area_unit: { type: String },
+        lot_area: { type: Number },
+        lot_area_unit: { type: String, default: 'm2' },
         bedrooms: { type: Number },
         bathrooms: { type: Number },
         garages: { type: Number },
@@ -186,7 +188,7 @@ const propertySchema = new Schema({
             ], index: true
         },
         sale_rent_price: { type: Number },
-        price_currency: { type: String },
+        price_currency: { type: String, default: 'Php' },
         price_label: {
             type: String,
             enum: [
