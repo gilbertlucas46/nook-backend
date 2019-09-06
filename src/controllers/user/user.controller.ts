@@ -121,7 +121,8 @@ export class UserController {
             let criteria = {
                 email: payload.email.trim().toLowerCase()
             };
-            let userData = await ENTITY.UserE.getData(criteria, ["email", "_id"])
+            let userData = await ENTITY.UserE.getData(criteria, ["email", "_id"]);
+            console.log("userData --------------------------", userData);
             if (!userData) return Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL;
             else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
