@@ -119,7 +119,7 @@ export let userRoute = [
                 let forgetPasswordResponse = await UserService.forgetPassword(payload);
                 // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
                 // let url = config.get("host1") + ":" + config.get("port") + "/v1/user/verifyLink/" + forgetPasswordResponse
-                return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, {});
+                return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.FORGET_PASSWORD_EMAIL, {});
             } catch (error) {
                 let result = await UniversalFunctions.sendError(error);
                 return error
