@@ -465,6 +465,11 @@ export let STATUS_MSG = {
                 message: 'Created Successfully',
                 type: 'CREATED'
             },
+            FORGET_PASSWORD_EMAIL: {
+                statusCode: 209,
+                message: 'Reset password link sent to email.',
+                type: 'FORGET_PASSWORD_EMAIL'
+            },
         },
         S209: {
             FORGET_PASSWORD_EMAIL: {
