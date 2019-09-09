@@ -100,7 +100,7 @@ export let userRoute = [
             //  auth: "UserAuth",
             validate: {
                 params: {
-                    _id: Joi.string()
+                    _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                 },
                 failAction: UniversalFunctions.failActionFunction
             },
@@ -165,7 +165,7 @@ export let userRoute = [
             // auth: "UserAuth",
             validate: {
                 payload: {
-                    _id: Joi.string().min(24).max(24).required(),
+                    _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     firstName: Joi.string().min(1).max(20).trim(),
                     lastName: Joi.string().min(1).max(20).trim(),
                     phoneNumber: Joi.string().min(7).max(15).trim(),
