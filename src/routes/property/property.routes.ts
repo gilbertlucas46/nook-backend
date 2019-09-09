@@ -260,5 +260,141 @@ export let propertyRoute = [
                 }
             }
         }
+    },
+    /**
+     *@description : 
+     */
+    {
+        method: 'POST',
+        path: '/v1/user/save-as-draft',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let payload: PropertyRequest.PropertyData = request.payload;
+                if (payload.propertyId) {
+                    let registerResponse = await PropertyService.saveAsDraft(payload, userData);
+                    return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, registerResponse))
+                } else {
+                    let registerResponse = await PropertyService.saveAsDraft(payload, userData);
+                    return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PROPERTY_ADDED, registerResponse))
+                }
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'propert save into draft',
+            tags: ['api', 'anonymous', 'property', 'draft'],
+            auth: "UserAuth",
+            validate: {
+                payload: {
+                    propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // in the case of update the draft property
+                    property_details: {
+                        floor_area: Joi.number(),
+                        lot_area: Joi.number(),
+                        bedrooms: Joi.number(),
+                        bathrooms: Joi.number(),
+                        garages: Joi.number(),
+                        garage_size: Joi.number(),
+                        buildYear: Joi.number()
+                    },
+                    property_address: {
+                        address: Joi.string().min(1).max(300).trim().required(),
+                        region: Joi.string().min(1).max(100).trim().required(),
+                        city: Joi.string().min(1).max(100).trim().required(),
+                        barangay: Joi.string().min(1).max(100).trim(),
+                        location: {
+                            coordinates: Joi.array().ordered([
+                                Joi.number().min(-180).max(180).required(),
+                                Joi.number().min(-90).max(90).required()
+                            ]),
+                        }
+                    },
+                    property_basic_details: {
+                        title: Joi.string().min(1).max(200).trim().required(),
+                        description: Joi.string().min(1).max(10000).trim().required(),
+                        type: Joi.string().valid([
+                            Constant.DATABASE.PROPERTY_TYPE.NONE,
+                            Constant.DATABASE.PROPERTY_TYPE["APPARTMENT/CONDO"],
+                            Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+                            Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+                            Constant.DATABASE.PROPERTY_TYPE.LAND,
+                            Constant.DATABASE.PROPERTY_TYPE.ROOM,
+                        ]),
+                        status: Joi.number().required(),  // for the rent or the sale
+                        label: Joi.string().valid([
+                            Constant.DATABASE.PROPERTY_LABEL.NONE,
+                            Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,
+                            Constant.DATABASE.PROPERTY_LABEL.OFFICE,
+                            Constant.DATABASE.PROPERTY_LABEL.PARKING,
+                            Constant.DATABASE.PROPERTY_LABEL.PRE_SELLING,
+                            Constant.DATABASE.PROPERTY_LABEL.READY_FOR_OCCUPANCY,
+                            Constant.DATABASE.PROPERTY_LABEL.RENT_TO_OWN,
+                            Constant.DATABASE.PROPERTY_LABEL.RETAIL,
+                            Constant.DATABASE.PROPERTY_LABEL.SERVICED_OFFICE,
+                            Constant.DATABASE.PROPERTY_LABEL.WAREHOUSE,
+                        ]),
+                        sale_rent_price: Joi.number(),
+                        price_currency: Joi.string().min(1).max(20).trim(),
+                        price_label: Joi.string().valid([
+                            Constant.DATABASE.PRICE_LABEL.DAILY,
+                            Constant.DATABASE.PRICE_LABEL.WEEKLY,
+                            Constant.DATABASE.PRICE_LABEL.MONTHLY,
+                            Constant.DATABASE.PRICE_LABEL.QUATERLY,
+                            Constant.DATABASE.PRICE_LABEL.HALFYEARLY,
+                            Constant.DATABASE.PRICE_LABEL.YEARLY,
+                        ]),
+                    },
+                    property_features: {
+                        storeys_2: Joi.boolean().valid([true, false]),
+                        security_24hr: Joi.boolean().valid([true, false]),
+                        air_conditioning: Joi.boolean().valid([true, false]),
+                        balcony: Joi.boolean().valid([true, false]),
+                        basketball_court: Joi.boolean().valid([true, false]),
+                        business_center: Joi.boolean().valid([true, false]),
+                        carpark: Joi.boolean().valid([true, false]),
+                        CCTV_monitoring: Joi.boolean().valid([true, false]),
+                        child_playground: Joi.boolean().valid([true, false]),
+                        clothes_dryer: Joi.boolean().valid([true, false]),
+                        club_house: Joi.boolean().valid([true, false]),
+                        day_care: Joi.boolean().valid([true, false]),
+                        den: Joi.boolean().valid([true, false]),
+                        fully_furnished: Joi.boolean().valid([true, false]),
+                        function_Room: Joi.boolean().valid([true, false]),
+                        garden: Joi.boolean().valid([true, false]),
+                        gym: Joi.boolean().valid([true, false]),
+                        laundry: Joi.boolean().valid([true, false]),
+                        loft: Joi.boolean().valid([true, false]),
+                        maids_room: Joi.boolean().valid([true, false]),
+                        microwave: Joi.boolean().valid([true, false]),
+                        parking: Joi.boolean().valid([true, false]),
+                        pet_friendly: Joi.boolean().valid([true, false]),
+                        refrigerator: Joi.boolean().valid([true, false]),
+                        semi_furnished: Joi.boolean().valid([true, false]),
+                        sky_deck: Joi.boolean().valid([true, false]),
+                        spa: Joi.boolean().valid([true, false]),
+                        swimming_pool: Joi.boolean().valid([true, false]),
+                        tennis_court: Joi.boolean().valid([true, false]),
+                        TV_cable: Joi.boolean().valid([true, false]),
+                        unfurnished: Joi.boolean().valid([true, false]),
+                        washing_machine: Joi.boolean().valid([true, false]),
+                        wiFi: Joi.boolean().valid([true, false]),
+                    },
+                    propertyImages: Joi.array(),
+                    // saveAs: Joi.string().valid([
+                    //     Constant.DATABASE.PROPERTY_SAVE_AS.DRAFT,
+                    //     Constant.DATABASE.PROPERTY_SAVE_AS.Complete,
+                    // ]).required,
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
     }
 ]

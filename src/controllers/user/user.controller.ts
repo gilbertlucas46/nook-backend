@@ -282,8 +282,12 @@ export class UserController {
 
             ]
             let data = await ENTITY.UserE.aggregate(pipeline);
-            // let isFeaturedProfile = userData.isFeaturedProfile;
-            return data
+            console.log('datadatadatadatadatadata', data);
+
+            return {
+                ...data[0],
+                isFeaturedProfile: userData.isFeaturedProfile
+            };
         } catch (error) {
             return Promise.reject(error)
         }

@@ -56,6 +56,10 @@ export let DATABASE = {
         SERVICED_OFFICE: "Serviced Office",
         WAREHOUSE: "Warehouse"
     },
+    // PROPERTY_SAVE_AS: {
+    //     DRAFT: "Draft",
+    //     Complete: "Complete"
+    // },
     PROPERTY_TYPE: {
         NONE: "None",
         "APPARTMENT/CONDO": "Apartment/Condo",

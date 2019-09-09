@@ -72,7 +72,8 @@ declare namespace PropertyRequest {
             price_currency?: string;
             price_label?: string; // monthly
         },
-        propertyImages: string[]
+        propertyImages: string[];
+        property_status?: string // in the case of draft
     }
 
     export interface PropertyDetail {
