@@ -171,6 +171,7 @@ const propertySchema = new Schema({
         },
         status: {
             type: Number,
+            required: true
         },
         label: {
             type: String,
