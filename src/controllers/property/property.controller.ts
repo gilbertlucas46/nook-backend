@@ -259,6 +259,18 @@ export class PropertyController {
     }
     async userPropertyByStatus(payload, userData) {
         try {
+            if (payload.propertyType == Constant.DATABASE.PROPERTY_STATUS.SOLDRENTED) {
+                let criteria = {
+                    $match: {
+                        userId: userData._id,
+                        $or: [{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD },
+                        { Property_status: Constant.DATABASE.PROPERTY_STATUS.RENTED }]
+                    },
+                }
+                const pipeLine = [criteria]
+                let data = await ENTITY.PropertyE.ProprtyByStatus(pipeLine)
+                return data
+            }
             let criteria = {
                 $match: {
                     userId: userData._id,
@@ -286,7 +298,7 @@ export class PropertyController {
                 return updateData;
             }
             payload['updatedAt'] = new Date().getTime()
-            payload.property_status = Constant.DATABASE.PROPERTY_STATUS.DRAFT
+            payload.Property_status = Constant.DATABASE.PROPERTY_STATUS.DRAFT
             let userId = userData._id;
             payload['userId'] = userId;
             payload['property_added_by'] = {};
@@ -295,7 +307,6 @@ export class PropertyController {
             payload['property_added_by']['imageUrl'] = userData.profilePicUrl
             payload['property_added_by']['userName'] = userData.userName
             let propertyData = await ENTITY.PropertyE.createOneEntity(payload);
-            console.log('propertyData', propertyData);
 
             return propertyData;
 
