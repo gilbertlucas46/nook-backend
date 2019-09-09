@@ -458,6 +458,11 @@ export let STATUS_MSG = {
                 message: 'Success',
                 type: 'DEFAULT'
             },
+            FORGET_PASSWORD_EMAIL: {
+                statusCode: 200,
+                message: 'Reset password link sent to email.',
+                type: 'FORGET_PASSWORD_EMAIL'
+            },
         },
         S201: {
             CREATED: {
@@ -472,57 +477,52 @@ export let STATUS_MSG = {
             },
         },
 
-        S209: {
-            FORGET_PASSWORD_EMAIL: {
-                statusCode: 209,
-                message: 'Reset password link sent to email.',
-                type: 'FORGET_PASSWORD_EMAIL'
-            },
-        },
-        S210: {
-            FORGET_PASSWORD_PHONE_NUMBER: {
-                statusCode: 210,
-                message: 'Reset otp sent to registered phone number.',
-                type: 'FORGET_PASSWORD_PHONE_NUMBER'
-            }
-        },
-        S304: {
-            GROUP_ALLREADY_EXISTS: {
-                statusCode: 304,
-                type: 'GROUP_ALLREADY_EXISTS',
-                message: 'Similar unused group exists.'
-            },
 
-            REQUEST_SENT_FOR_ADDING_MEMBER_BY_OTHER: {
-                statusCode: 304,
-                type: 'REQUEST_SENT_FOR_ADDING_MEMBER_BY_OTHER',
-                message: 'Your request for adding the members has been sent to the admin.'
-            },
-
-            ALLREADY_FRIENDS: {
-                statusCode: 304,
-                message: 'You are allready friend with this user',
-                type: 'ALLREADY_FRIENDS'
-            },
-            REQUEST_EXISTS: {
-                statusCode: 304,
-                message: 'Friend request already Exists',
-                type: 'REQUEST_EXISTS'
-            },
-            NO_SUCH_REQUEST: {
-                statusCode: 304,
-                message: 'No such request exists.',
-                type: 'NO_SUCH_REQUEST'
-            },
-            SOME_MEMBER_IS_BLOCKED_FROM_GROUP: {
-                statusCode: 304,
-                message: 'Some of the member you want to add has already blocked this group.',
-                type: 'SOME_MEMBER_IS_BLOCKED_FROM_GROUP'
-            },
-
+    },
+    S210: {
+        FORGET_PASSWORD_PHONE_NUMBER: {
+            statusCode: 210,
+            message: 'Reset otp sent to registered phone number.',
+            type: 'FORGET_PASSWORD_PHONE_NUMBER'
         }
     },
+    S304: {
+        GROUP_ALLREADY_EXISTS: {
+            statusCode: 304,
+            type: 'GROUP_ALLREADY_EXISTS',
+            message: 'Similar unused group exists.'
+        },
+
+        REQUEST_SENT_FOR_ADDING_MEMBER_BY_OTHER: {
+            statusCode: 304,
+            type: 'REQUEST_SENT_FOR_ADDING_MEMBER_BY_OTHER',
+            message: 'Your request for adding the members has been sent to the admin.'
+        },
+
+        ALLREADY_FRIENDS: {
+            statusCode: 304,
+            message: 'You are allready friend with this user',
+            type: 'ALLREADY_FRIENDS'
+        },
+        REQUEST_EXISTS: {
+            statusCode: 304,
+            message: 'Friend request already Exists',
+            type: 'REQUEST_EXISTS'
+        },
+        NO_SUCH_REQUEST: {
+            statusCode: 304,
+            message: 'No such request exists.',
+            type: 'NO_SUCH_REQUEST'
+        },
+        SOME_MEMBER_IS_BLOCKED_FROM_GROUP: {
+            statusCode: 304,
+            message: 'Some of the member you want to add has already blocked this group.',
+            type: 'SOME_MEMBER_IS_BLOCKED_FROM_GROUP'
+        },
+
+    }
 }
+
 
 
 export let SERVER = {

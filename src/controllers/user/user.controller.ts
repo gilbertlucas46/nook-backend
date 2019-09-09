@@ -123,8 +123,10 @@ export class UserController {
             let criteria = {
                 email: payload.email.trim().toLowerCase()
             };
-            let userData = await ENTITY.UserE.getData(criteria, ["email", "_id"])
-            if (!userData) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
+            let userData = await ENTITY.UserE.getData(criteria, ["email", "_id"]);
+            if (!userData) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
+            }
             else {
                 let passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
                 let url = config.get("host") + "/v1/user/verifyLink/" + passwordResetToken
@@ -265,21 +267,16 @@ export class UserController {
                 {
                     "$project": {
                         "Active": {
-                            //         "$arrayElemAt": ["$Active", 0] 
-                            //           $cond: { if: {$size:["$Active"]}, then: {$arrayElemAt: ["$Active.Total",0]}, else:NumberInt(0)}         
                             $cond: { if: { $size: "$Active" }, then: { $arrayElemAt: ["$Active.Total", 0] }, else: 0 }
                         },
 
                         "Featured": {
-                            //         "$arrayElemAt": ["$Featured.Total", 0] },
                             $cond: { if: { $size: ["$Featured"] }, then: { $arrayElemAt: ["$Featured.Total", 0] }, else: 0 }
                         },
                         "soldPropertyLast30Days": {
-                            //         $cond: { if: { $isArray: "$Total" }, then: { $size: "$Total" }, else: 0} 
                             $cond: { if: { $size: ["$soldPropertyLast30Days"] }, then: { $arrayElemAt: ["$soldPropertyLast30Days.Total", 0] }, else: 0 }
                         },
                         "rentedPropertyLast30Days": {
-                            //    { "$arrayElemAt": ["$rentedPropertyLast30Days.rentPropertyLast30Days", 0] }
                             $cond: { if: { $size: ["$rentedPropertyLast30Days"] }, then: { $arrayElemAt: ["$rentedPropertyLast30Days.Total", 0] }, else: 0 }
                         }
                     }
@@ -287,6 +284,7 @@ export class UserController {
 
             ]
             let data = await ENTITY.UserE.aggregate(pipeline);
+            // let isFeaturedProfile = userData.isFeaturedProfile;
             return data
         } catch (error) {
             return Promise.reject(error)
