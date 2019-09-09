@@ -33,8 +33,6 @@ export class UserController {
                         userName: payload.userName.trim().toLowerCase(),
                         email: payload.email.trim().toLowerCase(),
                         password: makePassword,
-                        createdAt: new Date().getTime(),
-                        updatedAt: new Date().getTime(),
                         isEmailVerified: true,
                         isProfileComplete: false
                     }
