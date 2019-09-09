@@ -231,19 +231,19 @@ export class UserController {
                         "Active": [
                             {
                                 "$match": {
-                                    $and: [{ "Property_status": "Active" }, { "userId": userData._id }]
+                                    $and: [{ "Property_status": Constant.DATABASE.PROPERTY_USER_DASHBOARD.ACTIVE }, { "userId": userData._id }]
                                 }
                             },
                             { "$count": "Total" }
                         ],
                         "Featured": [
-                            { "$match": { $and: [{ "Property_status": "Featured" }, { "userId": userData._id }] } },
+                            { "$match": { $and: [{ "Property_status": Constant.DATABASE.PROPERTY_USER_DASHBOARD.FEATURED }, { "userId": userData._id }] } },
                             { "$count": "Total" },
                         ],
                         "soldPropertyLast30Days": [
                             {
                                 "$match": {
-                                    $and: [{ "Property_status": "Sold" }, { "userId": userData._id },
+                                    $and: [{ "Property_status": Constant.DATABASE.PROPERTY_USER_DASHBOARD.SOLD }, { "userId": userData._id },
                                     { "property_sold_time": { $gte: new Date().getTime() - (15 * 24 * 60 * 60 * 1000) } }
                                     ]
                                 }
@@ -253,7 +253,7 @@ export class UserController {
                         "rentedPropertyLast30Days": [
                             {
                                 "$match": {
-                                    $and: [{ "Property_status": "Rent" }, { "userId": userData._id },
+                                    $and: [{ "Property_status": Constant.DATABASE.PROPERTY_USER_DASHBOARD.RENTED }, { "userId": userData._id },
                                     { "property_rent_time": { $gte: new Date().getTime() - (15 * 24 * 60 * 60 * 1000) } }
                                     ]
                                 }
@@ -286,7 +286,7 @@ export class UserController {
 
             return {
                 ...data[0],
-                isFeaturedProfile: userData.isFeaturedProfile
+                isFeaturedProfile: !!userData.isFeaturedProfile
             };
         } catch (error) {
             return Promise.reject(error)

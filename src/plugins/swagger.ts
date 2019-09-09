@@ -13,7 +13,7 @@ export let plugin = {
                 title: 'NOOK_APP API 1.0',
                 version: 'v1',
             },
-            "schemes": ["https"],
+            "schemes": ["http","https"],
             'securityDefinitions': {
                 'api_key': {
                     'type': 'apiKey',

@@ -248,7 +248,7 @@ export let propertyRoute = [
                         Constant.DATABASE.PROPERTY_STATUS.EXPIRED,
                         Constant.DATABASE.PROPERTY_STATUS.FEATURED,
                         Constant.DATABASE.PROPERTY_STATUS.PENDING,
-                        Constant.DATABASE.PROPERTY_STATUS.SOLD,
+                        Constant.DATABASE.PROPERTY_STATUS.SOLDRENTED,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -322,7 +322,7 @@ export let propertyRoute = [
                             Constant.DATABASE.PROPERTY_TYPE.LAND,
                             Constant.DATABASE.PROPERTY_TYPE.ROOM,
                         ]),
-                        status: Joi.number().required(),  // for the rent or the sale
+                        status: Joi.number().required(),  // for the rent or the sale // 0 or
                         label: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_LABEL.NONE,
                             Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,

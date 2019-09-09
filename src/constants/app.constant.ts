@@ -31,7 +31,14 @@ export let DATABASE = {
         SOLD: "Sold",
         RENTED: "Rented",
         EXPIRED: "Expired",
-        FEATURED: "Featured"
+        FEATURED: "Featured",
+        SOLDRENTED: "Sold-rented"
+    },
+    PROPERTY_USER_DASHBOARD: {
+        FEATURED: "FEATURED",
+        ACTIVE: "Active",
+        SOLD: "Sold",
+        RENTED: "Rented",
     },
     ACTIONS_PERFORMED_BY_ADMIN: {
         PENDING: "Pending",
