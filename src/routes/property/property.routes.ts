@@ -33,7 +33,7 @@ export let propertyRoute = [
             auth: "UserAuth",
             validate: {
                 payload: {
-                    propertyId: Joi.string().min(24).max(24).optional(),
+                    propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     property_details: {
                         floor_area: Joi.number(),
                         lot_area: Joi.number(),
