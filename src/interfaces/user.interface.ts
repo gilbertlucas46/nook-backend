@@ -26,6 +26,7 @@ declare namespace UserRequest {
         session?: boolean;
         isProfileComplete: boolean;
         backGroundImageUrl?: string
+        isFeaturedProfile: boolean
     }
 
     export interface Register {

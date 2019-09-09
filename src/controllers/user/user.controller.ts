@@ -6,7 +6,9 @@ import * as ENTITY from '../../entity'
 import * as utils from "../../utils/index";
 import * as Jwt from 'jsonwebtoken';
 const cert = config.get('jwtSecret');
+// var NumberInt = require('mongoose-int32');
 import { MailManager } from '../../lib/mail.manager'
+import { ObjectId } from 'mongodb';
 export class UserController {
     constructor() { }
 
@@ -204,6 +206,7 @@ export class UserController {
                 if (!updatePassword) return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR);
                 else return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT;
             }
+
         } catch (error) {
             utils.consolelog('error', error, true)
             return Promise.reject(error)
@@ -214,6 +217,77 @@ export class UserController {
             let email = payload.email.trim().toLowerCase();
             let mail = new MailManager(email, "forGet password", 'passwordResetToken');
             await mail.sendMail()
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    async dashboard(userData: UserRequest.userData) {
+        try {
+            let query;
+            let pipeline = [
+                {
+                    "$facet": {
+                        "Active": [
+                            {
+                                "$match": {
+                                    $and: [{ "Property_status": "Active" }, { "userId": userData._id }]
+                                }
+                            },
+                            { "$count": "Total" }
+                        ],
+                        "Featured": [
+                            { "$match": { $and: [{ "Property_status": "Featured" }, { "userId": userData._id }] } },
+                            { "$count": "Total" },
+                        ],
+                        "soldPropertyLast30Days": [
+                            {
+                                "$match": {
+                                    $and: [{ "Property_status": "Sold" }, { "userId": userData._id },
+                                    { "property_sold_time": { $gte: new Date().getTime() - (15 * 24 * 60 * 60 * 1000) } }
+                                    ]
+                                }
+                            },
+                            { "$count": "Total" },
+                        ],
+                        "rentedPropertyLast30Days": [
+                            {
+                                "$match": {
+                                    $and: [{ "Property_status": "Rent" }, { "userId": userData._id },
+                                    { "property_rent_time": { $gte: new Date().getTime() - (15 * 24 * 60 * 60 * 1000) } }
+                                    ]
+                                }
+                            },
+                            { "$count": "rentPropertyLast30Days" },
+                        ]
+                    }
+                },
+                {
+                    "$project": {
+                        "Active": {
+                            //         "$arrayElemAt": ["$Active", 0] 
+                            //           $cond: { if: {$size:["$Active"]}, then: {$arrayElemAt: ["$Active.Total",0]}, else:NumberInt(0)}         
+                            $cond: { if: { $size: "$Active" }, then: { $arrayElemAt: ["$Active.Total", 0] }, else: 0 }
+                        },
+
+                        "Featured": {
+                            //         "$arrayElemAt": ["$Featured.Total", 0] },
+                            $cond: { if: { $size: ["$Featured"] }, then: { $arrayElemAt: ["$Featured.Total", 0] }, else: 0 }
+                        },
+                        "soldPropertyLast30Days": {
+                            //         $cond: { if: { $isArray: "$Total" }, then: { $size: "$Total" }, else: 0} 
+                            $cond: { if: { $size: ["$soldPropertyLast30Days"] }, then: { $arrayElemAt: ["$soldPropertyLast30Days.Total", 0] }, else: 0 }
+                        },
+                        "rentedPropertyLast30Days": {
+                            //    { "$arrayElemAt": ["$rentedPropertyLast30Days.rentPropertyLast30Days", 0] }
+                            $cond: { if: { $size: ["$rentedPropertyLast30Days"] }, then: { $arrayElemAt: ["$rentedPropertyLast30Days.Total", 0] }, else: 0 }
+                        }
+                    }
+                }
+
+            ]
+            let data = await ENTITY.UserE.aggregate(pipeline);
+            return data
         } catch (error) {
             return Promise.reject(error)
         }

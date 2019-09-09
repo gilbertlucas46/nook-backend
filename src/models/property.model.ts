@@ -218,6 +218,10 @@ const propertySchema = new Schema({
         ],
         default: Constant.DATABASE.PROPERTY_STATUS.ACTIVE // TODO change it to be pending after admin panel
     },
+    property_rent_time: { type: Number },
+    property_sold_time: { type: Number },
+    property_approved_time: { type: Number },
+    proprty_expired_time: { type: Number },
     actions_performed_by_admin: {
         type: String,
         enum: [
