@@ -20,7 +20,7 @@ export let propertyRoute = [
                     return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, registerResponse))
                 } else {
                     let registerResponse = await PropertyService.addProperty(payload, userData);
-                    return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse))
+                    return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PROPERTY_ADDED, registerResponse))
                 }
             }
             catch (error) {

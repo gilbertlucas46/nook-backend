@@ -26,6 +26,7 @@ export interface IUser extends Document {
     passwordResetToken?: string;
     passwordResetTokenExpirationTime?: Date;
     backGroundImageUrl: string
+    isFeaturedProfile: boolean
     // roleType:{
     //     type:Array ,
     // }
@@ -76,7 +77,8 @@ const userSchema = new Schema({
     },
     isProfileComplete: { type: Boolean, default: false },
     passwordResetToken: { type: String },
-    passwordResetTokenExpirationTime: { type: Date }
+    passwordResetTokenExpirationTime: { type: Date },
+    isFeaturedProfile: { type: Boolean, default: false }
 
 })
 

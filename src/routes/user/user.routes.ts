@@ -119,7 +119,7 @@ export let userRoute = [
                 let forgetPasswordResponse = await UserService.forgetPassword(payload);
                 // let result = UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, forgetPasswordResponse);
                 // let url = config.get("host1") + ":" + config.get("port") + "/v1/user/verifyLink/" + forgetPasswordResponse
-                return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S209.FORGET_PASSWORD_EMAIL, {});
+                return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.FORGET_PASSWORD_EMAIL, {});
             } catch (error) {
                 let result = await UniversalFunctions.sendError(error);
                 return error
@@ -378,5 +378,37 @@ export let userRoute = [
             }
         }
     },
+    {
+        method: 'GET',
+        path: '/v1/user/dashboard',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                console.log('userData', userData);
 
+                let responseData = await UserService.dashboard(userData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+            }
+            catch (error) {
+                return UniversalFunctions.sendError(error);
+            }
+        },
+        options: {
+            description: 'Get user dashboard data',
+            tags: ['api', 'anonymous', 'user', 'reset'],
+            auth: "UserAuth",
+            validate: {
+                query: {
+                    // email: Joi.string()
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
 ]

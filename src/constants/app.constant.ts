@@ -465,7 +465,13 @@ export let STATUS_MSG = {
                 message: 'Created Successfully',
                 type: 'CREATED'
             },
+            PROPERTY_ADDED: {
+                statusCode: 201,
+                message: 'Property Added Successfully',
+                type: 'CREATED'
+            },
         },
+
         S209: {
             FORGET_PASSWORD_EMAIL: {
                 statusCode: 209,
