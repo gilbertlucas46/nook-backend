@@ -164,7 +164,7 @@ export let consolelog = function (identifier: string, value: any, status: boolea
             return;
         }
     } catch (error) {
-        console.log("error in consolelog", error);
+        console.log("Error in logging console", error);
         return;
     }
 };

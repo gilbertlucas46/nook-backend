@@ -14,6 +14,8 @@ user-- nook_devusr
 passwd-- Iidjsi@#1!
 mongoport-- 2798
 
+swaggerUrl : https://nookdev.appskeeper.com/documentation#!/
+
 
 ----------------------------------Nook testing server details---------------------------------
 ssh-- ssh nook_qausr@nookqa.appskeeper.com
@@ -29,6 +31,8 @@ user-- nook_qausr
 passwd-- Oimi@#$!12
 mongoport-- 2798
 
+swaggerUrl : https://nookqa.appskeeper.com/documentation#!/
+
 
 ----------------------------------Nook staging server details---------------------------------
 ssh-- ssh nook_stgusr@nookstg.appskeeper.com
@@ -43,6 +47,8 @@ db-- nook_stgdb
 user-- nook_stgusr
 passwd-- Pw#ii@!#21
 mongoport-- 2798
+
+swaggerUrl : https://nookstg.appskeeper.com/documentation#!/
 
 
 
