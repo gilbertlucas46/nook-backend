@@ -322,7 +322,7 @@ export let propertyRoute = [
                             Constant.DATABASE.PROPERTY_TYPE.LAND,
                             Constant.DATABASE.PROPERTY_TYPE.ROOM,
                         ]),
-                        status: Joi.number().required(),  // for the rent or the sale // 0 or
+                        status: Joi.number().required(),  // for the rent or the sale // 1 and 2
                         label: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_LABEL.NONE,
                             Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,

@@ -243,8 +243,8 @@ export class UserController {
                         "soldPropertyLast30Days": [
                             {
                                 "$match": {
-                                    $and: [{ "Property_status": Constant.DATABASE.PROPERTY_USER_DASHBOARD.SOLD }, { "userId": userData._id },
-                                    { "property_sold_time": { $gte: new Date().getTime() - (15 * 24 * 60 * 60 * 1000) } }
+                                    $and: [{ "property_basic_details.status": 2 }, { "userId": userData._id },
+                                    { "property_sold_time": { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } }
                                     ]
                                 }
                             },
@@ -253,8 +253,8 @@ export class UserController {
                         "rentedPropertyLast30Days": [
                             {
                                 "$match": {
-                                    $and: [{ "Property_status": Constant.DATABASE.PROPERTY_USER_DASHBOARD.RENTED }, { "userId": userData._id },
-                                    { "property_rent_time": { $gte: new Date().getTime() - (15 * 24 * 60 * 60 * 1000) } }
+                                    $and: [{ "property_basic_details.status": 1 }, { "userId": userData._id },
+                                    { "property_rent_time": { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } }
                                     ]
                                 }
                             },
@@ -279,11 +279,8 @@ export class UserController {
                         }
                     }
                 }
-
             ]
             let data = await ENTITY.UserE.aggregate(pipeline);
-            console.log('datadatadatadatadatadata', data);
-
             return {
                 ...data[0],
                 isFeaturedProfile: !!userData.isFeaturedProfile
@@ -295,3 +292,4 @@ export class UserController {
 }
 
 export let UserService = new UserController();
+

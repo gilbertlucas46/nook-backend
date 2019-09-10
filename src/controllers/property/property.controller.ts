@@ -263,8 +263,8 @@ export class PropertyController {
                 let criteria = {
                     $match: {
                         userId: userData._id,
-                        $or: [{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD },
-                        { Property_status: Constant.DATABASE.PROPERTY_STATUS.RENTED }]
+                        $or: [{ "property_basic_details.status": 1 },
+                        { "property_basic_details.status": 2 }]
                     },
                 }
                 const pipeLine = [criteria]
