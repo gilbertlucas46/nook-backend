@@ -122,4 +122,10 @@ declare namespace PropertyRequest {
         minArea?: number;
         maxArea?: number;
     }
+
+    export interface UPDATE_PROPERTY_ACTION {
+        propertyId: string
+        property_status: string
+    }
+
 }

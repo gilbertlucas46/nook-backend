@@ -28,8 +28,8 @@ export let DATABASE = {
         PENDING: "pending",
         DRAFT: "draft",
         ACTIVE: "active",
-        // SOLD: "sold",
-        // RENTED: "Rented",
+        SOLD: "sold",
+        RENTED: "Rented",
         EXPIRED: "expired",
         FEATURED: "featured",
         SOLDRENTED: "sold-rented"
