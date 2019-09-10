@@ -9,7 +9,6 @@ export let swaggerDefaultResponseMessages = [
     { code: 500, message: 'Internal Server Error' }
 ];
 
-
 export let DATABASE = {
     USER_TYPE: {
         ADMIN: {
@@ -60,13 +59,18 @@ export let DATABASE = {
             STRING: 'ACTIVE',
             DISPLAY_NAME: 'Active',
         },
-        SOLD_RENTED: {
+        DECLINED: {
             NUMBER: 4,
+            STRING: 'DECLINED',
+            DISPLAY_NAME: 'Declined',
+        },
+        SOLD_RENTED: {
+            NUMBER: 5,
             STRING: 'SOLD/RENTED',
             DISPLAY_NAME: 'Sold/Rented',
         },
         EXPIRED: {
-            NUMBER: 5,
+            NUMBER: 6,
             STRING: 'EXPIRED',
             DISPLAY_NAME: 'Expired',
         }
