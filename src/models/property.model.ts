@@ -257,6 +257,8 @@ const propertySchema = new Schema({
             enum: [
                 Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
                 Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+                Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+                Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
                 Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
                 Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
             ],
@@ -267,6 +269,8 @@ const propertySchema = new Schema({
             enum: [
                 Constant.DATABASE.PROPERTY_STATUS.DRAFT.STRING,
                 Constant.DATABASE.PROPERTY_STATUS.PENDING.STRING,
+                Constant.DATABASE.PROPERTY_STATUS.ACTIVE.STRING,
+                Constant.DATABASE.PROPERTY_STATUS.DECLINED.STRING,
                 Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.STRING,
                 Constant.DATABASE.PROPERTY_STATUS.EXPIRED.STRING,
             ],
@@ -277,6 +281,8 @@ const propertySchema = new Schema({
             enum: [
                 Constant.DATABASE.PROPERTY_STATUS.DRAFT.STRING,
                 Constant.DATABASE.PROPERTY_STATUS.PENDING.STRING,
+                Constant.DATABASE.PROPERTY_STATUS.ACTIVE.STRING,
+                Constant.DATABASE.PROPERTY_STATUS.DECLINED.STRING,
                 Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.STRING,
                 Constant.DATABASE.PROPERTY_STATUS.EXPIRED.STRING,
             ],
@@ -358,7 +364,7 @@ const propertySchema = new Schema({
                     type: Number,
                     enum: [
                         Constant.DATABASE.USER_TYPE.AGENT.NUMBER,
-                        Constant.DATABASE.USER_TYPE.AGENT.NUMBER,
+                        Constant.DATABASE.USER_TYPE.ADMIN.NUMBER,
                         Constant.DATABASE.USER_TYPE.OWNER.NUMBER,
                         Constant.DATABASE.USER_TYPE.TENANT.NUMBER,
                         Constant.DATABASE.USER_TYPE.EMPLOYEE.NUMBER,
@@ -368,7 +374,7 @@ const propertySchema = new Schema({
                     type: String,
                     enum: [
                         Constant.DATABASE.USER_TYPE.AGENT.STRING,
-                        Constant.DATABASE.USER_TYPE.AGENT.STRING,
+                        Constant.DATABASE.USER_TYPE.ADMIN.STRING,
                         Constant.DATABASE.USER_TYPE.OWNER.STRING,
                         Constant.DATABASE.USER_TYPE.TENANT.STRING,
                         Constant.DATABASE.USER_TYPE.EMPLOYEE.STRING,
