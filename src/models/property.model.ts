@@ -170,6 +170,14 @@ const propertySchema = new Schema({
             ], index: true
         },
         status: {
+            // {
+            // label: 'For Rent',
+            // value: 1
+            // },
+            // {
+            // label: 'For Sale',
+            // value: 2
+            // }
             type: Number,
             required: true
         },
@@ -214,8 +222,8 @@ const propertySchema = new Schema({
             Constant.DATABASE.PROPERTY_STATUS.PENDING,
             Constant.DATABASE.PROPERTY_STATUS.DRAFT,
             Constant.DATABASE.PROPERTY_STATUS.ACTIVE,
-            Constant.DATABASE.PROPERTY_STATUS.SOLD,
-            Constant.DATABASE.PROPERTY_STATUS.RENTED,
+            // Constant.DATABASE.PROPERTY_STATUS.SOLD,
+            // Constant.DATABASE.PROPERTY_STATUS.RENTED,
             Constant.DATABASE.PROPERTY_STATUS.EXPIRED,
             Constant.DATABASE.PROPERTY_STATUS.FEATURED,
         ],

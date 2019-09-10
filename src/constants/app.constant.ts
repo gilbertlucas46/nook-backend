@@ -25,14 +25,14 @@ export let DATABASE = {
         // USER: "USER"
     },
     PROPERTY_STATUS: {
-        PENDING: "Pending",
-        DRAFT: "Draft",
-        ACTIVE: "Active",
-        SOLD: "Sold",
-        RENTED: "Rented",
-        EXPIRED: "Expired",
-        FEATURED: "Featured",
-        SOLDRENTED: "Sold-rented"
+        PENDING: "pending",
+        DRAFT: "draft",
+        ACTIVE: "active",
+        // SOLD: "sold",
+        // RENTED: "Rented",
+        EXPIRED: "expired",
+        FEATURED: "featured",
+        SOLDRENTED: "sold-rented"
     },
     PROPERTY_USER_DASHBOARD: {
         FEATURED: "FEATURED",
