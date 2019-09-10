@@ -70,11 +70,12 @@ const userSchema = new Schema({
     type: {
         type: String,
         enum: [
-            CONSTANT.DATABASE.USER_TYPE.AGENT,
-            CONSTANT.DATABASE.USER_TYPE.OWNER,
-            CONSTANT.DATABASE.USER_TYPE.TENANT
+            CONSTANT.DATABASE.USER_TYPE.AGENT.STRING,
+            CONSTANT.DATABASE.USER_TYPE.OWNER.STRING,
+            CONSTANT.DATABASE.USER_TYPE.TENANT.STRING,
+            CONSTANT.DATABASE.USER_TYPE.GUEST.STRING
         ],
-        default: CONSTANT.DATABASE.USER_TYPE.TENANT
+        default: CONSTANT.DATABASE.USER_TYPE.TENANT.STRING
     },
     isProfileComplete: { type: Boolean, default: false },
     passwordResetToken: { type: String },
