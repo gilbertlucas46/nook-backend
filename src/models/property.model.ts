@@ -2,6 +2,20 @@ import { Schema, Document, model } from 'mongoose';
 import * as shortid from 'shortid';
 import * as Constant from '../constants';
 
+export interface IPropertyActions extends Document {
+    actionNumber?: number;
+    actionString?: string;
+    actionDisplayName?: string;
+    actionPerformedBy?: IActionPerformedBy;
+}
+
+export interface IActionPerformedBy extends Document {
+    userId: string;
+    userTypeNumber: number;
+    userTypeString: string;
+    actionTime: Date;
+}
+
 export interface IProperty extends Document {
     createdAt?: number;
     updatedAt?: number;
@@ -58,7 +72,7 @@ export interface IProperty extends Document {
         region: string;
         city: string;
         barangay: string;
-        location: {
+        location?: {
             type: string;
             coordinates: [number];
         }
@@ -67,7 +81,9 @@ export interface IProperty extends Document {
         title: string;
         description: string;
         type: string;
-        status: number;
+        property_for_number: number;
+        property_for_string: string;
+        property_for_displayName: string;
         label: string;
         sale_rent_price: number;
         price_currency: string;
@@ -78,8 +94,19 @@ export interface IProperty extends Document {
         userName: string;
         contactNo: string;
         imageUrl: string;
+    },
+    actions_performed_by_admin: {
+        number: number;
+        string: string;
+        displayName: string;
     }
     propertyImages: string[];
+    isFeatured: boolean;
+    Property_status: {
+        number: number;
+        string: string;
+        displayName: string;
+    }
 };
 
 const propertySchema = new Schema({
@@ -125,8 +152,8 @@ const propertySchema = new Schema({
     },
     property_details: {
         floor_area: { type: Number },
-        floor_area_unit: { type: String, default: 'm2' },
-        //land_area: { type: Number },
+        // floor_area_unit: { type: String, default: 'm2' },
+        // land_area: { type: Number },
         // land_area_unit: { type: String },
         lot_area: { type: Number },
         lot_area_unit: { type: String, default: 'm2' },
@@ -141,19 +168,18 @@ const propertySchema = new Schema({
         region: { type: String },
         city: { type: String },
         barangay: { type: String },
-        location: {
-            type: {
-                type: String,
-                // enum: ['Point'],
-                default: 'Point',
-                required: true,
-            },
-            coordinates: {
-                type: [Number],
-                required: true
-            }
-
-        }
+        // location: {
+        //     type: {
+        //         type: String,
+        //         // enum: ['Point'],
+        //         default: 'Point',
+        //         // required: true,
+        //     },
+        //     coordinates: {
+        //         type: [Number],
+        //         // required: true
+        //     }
+        // }
     },
     property_basic_details: {
         title: { type: String },
@@ -169,17 +195,26 @@ const propertySchema = new Schema({
                 Constant.DATABASE.PROPERTY_TYPE.ROOM,
             ], index: true
         },
-        status: {
-            // {
-            // label: 'For Rent',
-            // value: 1
-            // },
-            // {
-            // label: 'For Sale',
-            // value: 2
-            // }
+        property_for_number: {
             type: Number,
-            required: true
+            enum: [
+                Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+                Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER
+            ],
+        },
+        property_for_string: {
+            type: String,
+            enum: [
+                Constant.DATABASE.PROPERTY_FOR.RENT.TYPE,
+                Constant.DATABASE.PROPERTY_FOR.SALE.TYPE
+            ],
+        },
+        property_for_displayName: {
+            type: String,
+            enum: [
+                Constant.DATABASE.PROPERTY_FOR.RENT.DISPLAY_NAME,
+                Constant.DATABASE.PROPERTY_FOR.SALE.DISPLAY_NAME
+            ],
         },
         label: {
             type: String,
@@ -216,33 +251,145 @@ const propertySchema = new Schema({
         phoneNumber: { type: String },
         imageUrl: { type: String },
     },
-    Property_status: {
-        type: String,
-        enum: [
-            Constant.DATABASE.PROPERTY_STATUS.PENDING,
-            Constant.DATABASE.PROPERTY_STATUS.DRAFT,
-            Constant.DATABASE.PROPERTY_STATUS.ACTIVE,
-            Constant.DATABASE.PROPERTY_STATUS.SOLD,
-            Constant.DATABASE.PROPERTY_STATUS.RENTED,
-            Constant.DATABASE.PROPERTY_STATUS.EXPIRED,
-            Constant.DATABASE.PROPERTY_STATUS.FEATURED,
-        ],
-        default: Constant.DATABASE.PROPERTY_STATUS.ACTIVE // TODO change it to be pending after admin panel
+    property_status: {
+        number: {
+            type: Number,
+            enum: [
+                Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
+                Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+                Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+                Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
+                Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+                Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
+            ],
+            default: Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER
+        },
+        status: {
+            type: String,
+            enum: [
+                Constant.DATABASE.PROPERTY_STATUS.DRAFT.TYPE,
+                Constant.DATABASE.PROPERTY_STATUS.PENDING.TYPE,
+                Constant.DATABASE.PROPERTY_STATUS.ACTIVE.TYPE,
+                Constant.DATABASE.PROPERTY_STATUS.DECLINED.TYPE,
+                Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
+                Constant.DATABASE.PROPERTY_STATUS.EXPIRED.TYPE,
+            ],
+            default: Constant.DATABASE.PROPERTY_STATUS.PENDING.TYPE
+        },
+        displayName: {
+            type: String,
+            enum: [
+                Constant.DATABASE.PROPERTY_STATUS.DRAFT.DISPLAY_NAME,
+                Constant.DATABASE.PROPERTY_STATUS.PENDING.DISPLAY_NAME,
+                Constant.DATABASE.PROPERTY_STATUS.ACTIVE.DISPLAY_NAME,
+                Constant.DATABASE.PROPERTY_STATUS.DECLINED.DISPLAY_NAME,
+                Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME,
+                Constant.DATABASE.PROPERTY_STATUS.EXPIRED.DISPLAY_NAME,
+            ],
+            default: Constant.DATABASE.PROPERTY_STATUS.PENDING.DISPLAY_NAME
+        }
     },
     property_rent_time: { type: Number },
     property_sold_time: { type: Number },
     property_approved_time: { type: Number },
     proprty_expired_time: { type: Number },
     actions_performed_by_admin: {
-        type: String,
-        enum: [
-            Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.PENDING,
-            Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.APPROVED,
-            Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.REJECTED,
-            Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.BLOCKED,
-        ],
-        default: Constant.DATABASE.ACTIONS_PERFORMED_BY_ADMIN.APPROVED // TODO change it to be pending after admin panel
+        number: {
+            type: Number,
+            enum: [
+                Constant.DATABASE.ACTIONS_PERFORMED_BY_NOOK.APPROVED.NUMBER,
+                Constant.DATABASE.ACTIONS_PERFORMED_BY_NOOK.REJECTED.NUMBER,
+                Constant.DATABASE.ACTIONS_PERFORMED_BY_NOOK.BLOCKED.NUMBER,
+            ],
+        },
+        status: {
+            type: String,
+            enum: [
+                Constant.DATABASE.ACTIONS_PERFORMED_BY_NOOK.APPROVED.TYPE,
+                Constant.DATABASE.ACTIONS_PERFORMED_BY_NOOK.REJECTED.TYPE,
+                Constant.DATABASE.ACTIONS_PERFORMED_BY_NOOK.BLOCKED.TYPE,
+            ],
+        },
+        displayName: {
+            type: String,
+            enum: [
+                Constant.DATABASE.ACTIONS_PERFORMED_BY_NOOK.APPROVED.DISPLAY_NAME,
+                Constant.DATABASE.ACTIONS_PERFORMED_BY_NOOK.REJECTED.DISPLAY_NAME,
+                Constant.DATABASE.ACTIONS_PERFORMED_BY_NOOK.BLOCKED.DISPLAY_NAME,
+            ],
+        }
     },
+    isFeatured: { type: Boolean, default: false },
+    propertyActions: [
+        {
+            actionNumber: {
+                type: Number,
+                enum: [
+                    Constant.DATABASE.PROPERTY_ACTIONS.DRAFT.NUMBER,
+                    Constant.DATABASE.PROPERTY_ACTIONS.PENDING.NUMBER,
+
+                    Constant.DATABASE.PROPERTY_ACTIONS.POSTED.NUMBER,
+                    Constant.DATABASE.PROPERTY_ACTIONS.APPROVED.NUMBER,
+                    Constant.DATABASE.PROPERTY_ACTIONS.REJECTED.NUMBER,
+                    Constant.DATABASE.PROPERTY_ACTIONS.BLOCKED.NUMBER,
+                    Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.NUMBER,
+                    Constant.DATABASE.PROPERTY_ACTIONS.EXPIRED.NUMBER
+                ],
+            },
+            actionString: {
+                type: String,
+                enum: [
+                    Constant.DATABASE.PROPERTY_ACTIONS.DRAFT.TYPE,
+                    Constant.DATABASE.PROPERTY_ACTIONS.PENDING.TYPE,
+                    Constant.DATABASE.PROPERTY_ACTIONS.POSTED.TYPE,
+                    Constant.DATABASE.PROPERTY_ACTIONS.APPROVED.TYPE,
+                    Constant.DATABASE.PROPERTY_ACTIONS.REJECTED.TYPE,
+                    Constant.DATABASE.PROPERTY_ACTIONS.BLOCKED.TYPE,
+                    Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE,
+                    Constant.DATABASE.PROPERTY_ACTIONS.EXPIRED.TYPE
+                ],
+            },
+            actionDisplayName: {
+                type: String,
+                enum: [
+                    Constant.DATABASE.PROPERTY_ACTIONS.DRAFT.DISPLAY_NAME,
+                    Constant.DATABASE.PROPERTY_ACTIONS.PENDING.DISPLAY_NAME,
+                    Constant.DATABASE.PROPERTY_ACTIONS.POSTED.DISPLAY_NAME,
+                    Constant.DATABASE.PROPERTY_ACTIONS.APPROVED.DISPLAY_NAME,
+                    Constant.DATABASE.PROPERTY_ACTIONS.REJECTED.DISPLAY_NAME,
+                    Constant.DATABASE.PROPERTY_ACTIONS.BLOCKED.DISPLAY_NAME,
+                    Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.DISPLAY_NAME,
+                    Constant.DATABASE.PROPERTY_ACTIONS.EXPIRED.DISPLAY_NAME
+                ],
+            },
+            actionPerformedBy: {
+                userId: { type: Schema.Types.ObjectId },
+                userTypeNumber: {
+                    type: Number,
+                    enum: [
+                        Constant.DATABASE.USER_TYPE.AGENT.NUMBER,
+                        Constant.DATABASE.USER_TYPE.ADMIN.NUMBER,
+                        Constant.DATABASE.USER_TYPE.OWNER.NUMBER,
+                        Constant.DATABASE.USER_TYPE.TENANT.NUMBER,
+                        Constant.DATABASE.USER_TYPE.EMPLOYEE.NUMBER,
+                    ],
+                },
+                userTypeString: {
+                    type: String,
+                    enum: [
+                        Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+                        Constant.DATABASE.USER_TYPE.ADMIN.TYPE,
+                        Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+                        Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+                        Constant.DATABASE.USER_TYPE.EMPLOYEE.TYPE,
+                    ],
+                },
+                actionTime: { type: Number },
+                message: { type: String }
+
+            },
+        },
+    ],
     propertyImages: { type: [String] },
 });
 

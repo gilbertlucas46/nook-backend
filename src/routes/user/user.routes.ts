@@ -170,9 +170,9 @@ export let userRoute = [
                     lastName: Joi.string().min(1).max(20).trim(),
                     phoneNumber: Joi.string().min(7).max(15).trim(),
                     type: Joi.string().valid([
-                        Constant.DATABASE.USER_TYPE.AGENT,
-                        Constant.DATABASE.USER_TYPE.OWNER,
-                        Constant.DATABASE.USER_TYPE.TENANT
+                        Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+                        Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+                        Constant.DATABASE.USER_TYPE.TENANT.TYPE
                     ]),
                     title: Joi.string().allow(""),
                     license: Joi.string().allow(""),

@@ -41,91 +41,87 @@ declare namespace PropertyRequest {
             wiFi?: boolean;
         }
         property_details: {
-            floor_area?: number;
-            // floor_area_unit?: string;
-            // land_area?: number;
-            land_area_unit?: string;
-            lot_area?: number;
-            bedrooms?: number;
-            bathrooms?: number;
-            garages?: number;
-            garage_size?: number;
-            buildYear?: number;
-        }
-        property_address: {
-            address: string;
-            region?: string;
-            city?: string;
-            barangay?: string;
-            location?: {
-                type?: string;
-                coordinates?: [number];
-            }
-        }
-        property_basic_details: {
-            title?: string;
-            description?: string;
-            type?: string;
-            status?: number;
-            label?: string;
-            sale_rent_price: number;
-            price_currency?: string;
-            price_label?: string; // monthly
+            floor_area?: number,
+            lot_area?: number,
+            bedrooms?: number,
+            bathrooms?: number,
+            garages?: number,
+            garage_size?: number,
+            buildYear?: number
         },
-        propertyImages: string[];
-        Property_status?: string // in the case of draft
+        property_address: {
+            address: string,
+            region: string,
+            city: string,
+            barangay: string,
+            location: any
+        },
+        property_basic_details: {
+            title?: string
+            description?: string
+            type: string
+            property_for_number?: number
+            // property_for_type: Joi.string(),
+            label?: string
+            sale_rent_price: number,
+            price_currency: string,
+            price_label: string
+        },
+        isFeatured: boolean,
+        propertyImages: Array<string>
     }
 
-    export interface PropertyDetail {
-        _id: string
-    }
 
-    export interface SearchProperty {
-        page?: number;
-        limit?: number;
-        searchTerm?: string;
-        sortBy?: string;
-        sortType?: number;
-        fromDate?: string;
-        toDate?: string;
-        propertyId?: string;
-        status?: string;
-        type?: string;
-        label?: [string];
-        maxPrice?: number;
-        minPrice?: number;
-        propertyType?: number;
-        bedrooms?: number;
-        bathrooms?: number;
-        minArea?: number;
-        maxArea?: number;
-    }
+export interface PropertyDetail {
+    _id: string
+}
 
-    export interface nearByProperty {
-        page?: number;
-        limit?: number;
-        searchTerm?: string;
-        sortBy?: string;
-        sortType?: number;
-        fromDate?: string;
-        toDate?: string;
-        propertyId?: string;
-        status?: string;
-        type?: string;
-        label?: [string];
-        maxPrice?: number;
-        minPrice?: number;
-        propertyType?: number;
-        pickUplocation?: [number];
-        bedrooms?: number;
-        bathrooms?: number;
-        minArea?: number;
-        maxArea?: number;
-    }
+export interface SearchProperty {
+    page?: number;
+    limit?: number;
+    searchTerm?: string;
+    sortBy?: string;
+    sortType?: number;
+    fromDate?: string;
+    toDate?: string;
+    propertyId?: string;
+    status?: string;
+    type?: string;
+    label?: [string];
+    maxPrice?: number;
+    minPrice?: number;
+    propertyType?: number;
+    bedrooms?: number;
+    bathrooms?: number;
+    minArea?: number;
+    maxArea?: number;
+}
 
-    export interface UPDATE_PROPERTY_ACTION {
-        propertyId: string
-        property_status: string
-    }
+export interface nearByProperty {
+    page?: number;
+    limit?: number;
+    searchTerm?: string;
+    sortBy?: string;
+    sortType?: number;
+    fromDate?: string;
+    toDate?: string;
+    propertyId?: string;
+    status?: string;
+    type?: string;
+    label?: [string];
+    maxPrice?: number;
+    minPrice?: number;
+    propertyType?: number;
+    pickUplocation?: [number];
+    bedrooms?: number;
+    bathrooms?: number;
+    minArea?: number;
+    maxArea?: number;
+}
+
+export interface UPDATE_PROPERTY_ACTION {
+    propertyId: string
+    property_status: string
+}
 
 }

@@ -4,6 +4,11 @@ import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant'
 import { PropertyService } from '../../controllers'
 
+const getTypeAndDisplayName = (actionNumber) => {
+    let data = {};
+
+}
+
 export let propertyRoute = [
     /**
      * @description: user add property
@@ -34,6 +39,41 @@ export let propertyRoute = [
             validate: {
                 payload: {
                     propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+                    property_features: {
+                        storeys_2: Joi.boolean().default(false),
+                        security_24hr: Joi.boolean().default(false),
+                        air_conditioning: Joi.boolean().default(false),
+                        balcony: Joi.boolean().default(false),
+                        basketball_court: Joi.boolean().default(false),
+                        business_center: Joi.boolean().default(false),
+                        carpark: Joi.boolean().default(false),
+                        CCTV_monitoring: Joi.boolean().default(false),
+                        child_playground: Joi.boolean().default(false),
+                        clothes_dryer: Joi.boolean().default(false),
+                        club_house: Joi.boolean().default(false),
+                        day_care: Joi.boolean().default(false),
+                        den: Joi.boolean().default(false),
+                        fully_furnished: Joi.boolean().default(false),
+                        function_Room: Joi.boolean().default(false),
+                        garden: Joi.boolean().default(false),
+                        gym: Joi.boolean().default(false),
+                        laundry: Joi.boolean().default(false),
+                        loft: Joi.boolean().default(false),
+                        maids_room: Joi.boolean().default(false),
+                        microwave: Joi.boolean().default(false),
+                        parking: Joi.boolean().default(false),
+                        pet_friendly: Joi.boolean().default(false),
+                        refrigerator: Joi.boolean().default(false),
+                        semi_furnished: Joi.boolean().default(false),
+                        sky_deck: Joi.boolean().default(false),
+                        spa: Joi.boolean().default(false),
+                        swimming_pool: Joi.boolean().default(false),
+                        tennis_court: Joi.boolean().default(false),
+                        TV_cable: Joi.boolean().default(false),
+                        unfurnished: Joi.boolean().default(false),
+                        washing_machine: Joi.boolean().default(false),
+                        wiFi: Joi.boolean().default(false),
+                    },
                     property_details: {
                         floor_area: Joi.number(),
                         lot_area: Joi.number(),
@@ -48,12 +88,12 @@ export let propertyRoute = [
                         region: Joi.string().min(1).max(100).trim().required(),
                         city: Joi.string().min(1).max(100).trim().required(),
                         barangay: Joi.string().min(1).max(100).trim(),
-                        location: {
-                            coordinates: Joi.array().ordered([
-                                Joi.number().min(-180).max(180).required(),
-                                Joi.number().min(-90).max(90).required()
-                            ]),
-                        }
+                        // location: {
+                        //     coordinates: Joi.array().ordered([
+                        //         Joi.number().min(-180).max(180).required(),
+                        //         Joi.number().min(-90).max(90).required()
+                        //     ]),
+                        // }
                     },
                     property_basic_details: {
                         title: Joi.string().min(1).max(200).trim().required(),
@@ -66,7 +106,10 @@ export let propertyRoute = [
                             Constant.DATABASE.PROPERTY_TYPE.LAND,
                             Constant.DATABASE.PROPERTY_TYPE.ROOM,
                         ]),
-                        status: Joi.number(),
+                        property_for_number: Joi.number().valid([
+                            Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+                            Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER
+                        ]),
                         label: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_LABEL.NONE,
                             Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,
@@ -90,41 +133,7 @@ export let propertyRoute = [
                             Constant.DATABASE.PRICE_LABEL.YEARLY,
                         ]),
                     },
-                    property_features: {
-                        storeys_2: Joi.boolean().valid([true, false]),
-                        security_24hr: Joi.boolean().valid([true, false]),
-                        air_conditioning: Joi.boolean().valid([true, false]),
-                        balcony: Joi.boolean().valid([true, false]),
-                        basketball_court: Joi.boolean().valid([true, false]),
-                        business_center: Joi.boolean().valid([true, false]),
-                        carpark: Joi.boolean().valid([true, false]),
-                        CCTV_monitoring: Joi.boolean().valid([true, false]),
-                        child_playground: Joi.boolean().valid([true, false]),
-                        clothes_dryer: Joi.boolean().valid([true, false]),
-                        club_house: Joi.boolean().valid([true, false]),
-                        day_care: Joi.boolean().valid([true, false]),
-                        den: Joi.boolean().valid([true, false]),
-                        fully_furnished: Joi.boolean().valid([true, false]),
-                        function_Room: Joi.boolean().valid([true, false]),
-                        garden: Joi.boolean().valid([true, false]),
-                        gym: Joi.boolean().valid([true, false]),
-                        laundry: Joi.boolean().valid([true, false]),
-                        loft: Joi.boolean().valid([true, false]),
-                        maids_room: Joi.boolean().valid([true, false]),
-                        microwave: Joi.boolean().valid([true, false]),
-                        parking: Joi.boolean().valid([true, false]),
-                        pet_friendly: Joi.boolean().valid([true, false]),
-                        refrigerator: Joi.boolean().valid([true, false]),
-                        semi_furnished: Joi.boolean().valid([true, false]),
-                        sky_deck: Joi.boolean().valid([true, false]),
-                        spa: Joi.boolean().valid([true, false]),
-                        swimming_pool: Joi.boolean().valid([true, false]),
-                        tennis_court: Joi.boolean().valid([true, false]),
-                        TV_cable: Joi.boolean().valid([true, false]),
-                        unfurnished: Joi.boolean().valid([true, false]),
-                        washing_machine: Joi.boolean().valid([true, false]),
-                        wiFi: Joi.boolean().valid([true, false]),
-                    },
+                    isFeatured: Joi.boolean().default(false),
                     propertyImages: Joi.array().required()
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -242,13 +251,13 @@ export let propertyRoute = [
             auth: "UserAuth",
             validate: {
                 query: {
-                    propertyType: Joi.string().valid([
-                        Constant.DATABASE.PROPERTY_STATUS.ACTIVE,
-                        Constant.DATABASE.PROPERTY_STATUS.DRAFT,
-                        Constant.DATABASE.PROPERTY_STATUS.EXPIRED,
-                        Constant.DATABASE.PROPERTY_STATUS.FEATURED,
-                        Constant.DATABASE.PROPERTY_STATUS.PENDING,
-                        Constant.DATABASE.PROPERTY_STATUS.SOLDRENTED,
+                    propertyType: Joi.number().valid([
+                        Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+                        Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
+                        Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
+                        // Constant.DATABASE.PROPERTY_STATUS.FEATURED,
+                        Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+                        Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -289,7 +298,42 @@ export let propertyRoute = [
             auth: "UserAuth",
             validate: {
                 payload: {
-                    propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // in the case of update the draft property
+                    // propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+                    property_features: {
+                        storeys_2: Joi.boolean().default(false),
+                        security_24hr: Joi.boolean().default(false),
+                        air_conditioning: Joi.boolean().default(false),
+                        balcony: Joi.boolean().default(false),
+                        basketball_court: Joi.boolean().default(false),
+                        business_center: Joi.boolean().default(false),
+                        carpark: Joi.boolean().default(false),
+                        CCTV_monitoring: Joi.boolean().default(false),
+                        child_playground: Joi.boolean().default(false),
+                        clothes_dryer: Joi.boolean().default(false),
+                        club_house: Joi.boolean().default(false),
+                        day_care: Joi.boolean().default(false),
+                        den: Joi.boolean().default(false),
+                        fully_furnished: Joi.boolean().default(false),
+                        function_Room: Joi.boolean().default(false),
+                        garden: Joi.boolean().default(false),
+                        gym: Joi.boolean().default(false),
+                        laundry: Joi.boolean().default(false),
+                        loft: Joi.boolean().default(false),
+                        maids_room: Joi.boolean().default(false),
+                        microwave: Joi.boolean().default(false),
+                        parking: Joi.boolean().default(false),
+                        pet_friendly: Joi.boolean().default(false),
+                        refrigerator: Joi.boolean().default(false),
+                        semi_furnished: Joi.boolean().default(false),
+                        sky_deck: Joi.boolean().default(false),
+                        spa: Joi.boolean().default(false),
+                        swimming_pool: Joi.boolean().default(false),
+                        tennis_court: Joi.boolean().default(false),
+                        TV_cable: Joi.boolean().default(false),
+                        unfurnished: Joi.boolean().default(false),
+                        washing_machine: Joi.boolean().default(false),
+                        wiFi: Joi.boolean().default(false),
+                    },
                     property_details: {
                         floor_area: Joi.number(),
                         lot_area: Joi.number(),
@@ -304,16 +348,16 @@ export let propertyRoute = [
                         region: Joi.string().min(1).max(100).trim().required(),
                         city: Joi.string().min(1).max(100).trim().required(),
                         barangay: Joi.string().min(1).max(100).trim(),
-                        location: {
-                            coordinates: Joi.array().ordered([
-                                Joi.number().min(-180).max(180).required(),
-                                Joi.number().min(-90).max(90).required()
-                            ]),
-                        }
+                        // location: {
+                        //     coordinates: Joi.array().ordered([
+                        //         Joi.number().min(-180).max(180).required(),
+                        //         Joi.number().min(-90).max(90).required()
+                        //     ]),
+                        // }
                     },
                     property_basic_details: {
-                        title: Joi.string().min(1).max(200).trim().required(),
-                        description: Joi.string().min(1).max(10000).trim().required(),
+                        title: Joi.string().min(1).max(200).trim(),
+                        description: Joi.string().min(1).max(10000).trim(),
                         type: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_TYPE.NONE,
                             Constant.DATABASE.PROPERTY_TYPE["APPARTMENT/CONDO"],
@@ -322,7 +366,11 @@ export let propertyRoute = [
                             Constant.DATABASE.PROPERTY_TYPE.LAND,
                             Constant.DATABASE.PROPERTY_TYPE.ROOM,
                         ]),
-                        status: Joi.number().required(),  // for the rent or the sale // 1 and 2
+                        property_for_number: Joi.number().valid([
+                            Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+                            Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER
+                        ]),
+                        // property_for_type: Joi.string(),
                         label: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_LABEL.NONE,
                             Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,
@@ -346,46 +394,8 @@ export let propertyRoute = [
                             Constant.DATABASE.PRICE_LABEL.YEARLY,
                         ]),
                     },
-                    property_features: {
-                        storeys_2: Joi.boolean().valid([true, false]),
-                        security_24hr: Joi.boolean().valid([true, false]),
-                        air_conditioning: Joi.boolean().valid([true, false]),
-                        balcony: Joi.boolean().valid([true, false]),
-                        basketball_court: Joi.boolean().valid([true, false]),
-                        business_center: Joi.boolean().valid([true, false]),
-                        carpark: Joi.boolean().valid([true, false]),
-                        CCTV_monitoring: Joi.boolean().valid([true, false]),
-                        child_playground: Joi.boolean().valid([true, false]),
-                        clothes_dryer: Joi.boolean().valid([true, false]),
-                        club_house: Joi.boolean().valid([true, false]),
-                        day_care: Joi.boolean().valid([true, false]),
-                        den: Joi.boolean().valid([true, false]),
-                        fully_furnished: Joi.boolean().valid([true, false]),
-                        function_Room: Joi.boolean().valid([true, false]),
-                        garden: Joi.boolean().valid([true, false]),
-                        gym: Joi.boolean().valid([true, false]),
-                        laundry: Joi.boolean().valid([true, false]),
-                        loft: Joi.boolean().valid([true, false]),
-                        maids_room: Joi.boolean().valid([true, false]),
-                        microwave: Joi.boolean().valid([true, false]),
-                        parking: Joi.boolean().valid([true, false]),
-                        pet_friendly: Joi.boolean().valid([true, false]),
-                        refrigerator: Joi.boolean().valid([true, false]),
-                        semi_furnished: Joi.boolean().valid([true, false]),
-                        sky_deck: Joi.boolean().valid([true, false]),
-                        spa: Joi.boolean().valid([true, false]),
-                        swimming_pool: Joi.boolean().valid([true, false]),
-                        tennis_court: Joi.boolean().valid([true, false]),
-                        TV_cable: Joi.boolean().valid([true, false]),
-                        unfurnished: Joi.boolean().valid([true, false]),
-                        washing_machine: Joi.boolean().valid([true, false]),
-                        wiFi: Joi.boolean().valid([true, false]),
-                    },
-                    propertyImages: Joi.array(),
-                    // saveAs: Joi.string().valid([
-                    //     Constant.DATABASE.PROPERTY_SAVE_AS.DRAFT,
-                    //     Constant.DATABASE.PROPERTY_SAVE_AS.Complete,
-                    // ]).required,
+                    isFeatured: Joi.boolean().default(false),
+                    propertyImages: Joi.array().required()
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
@@ -396,5 +406,50 @@ export let propertyRoute = [
                 }
             }
         }
-    }
+    },
+
+    /**
+      * @description : active property of user by status
+      */
+    {
+        method: 'PATCH',
+        path: '/v1/user/status/property',
+        handler: async (request, h) => {
+            try {
+                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let payload = request.payload;
+                console.log('payloadpayload', payload);
+
+                let data = await PropertyService.updatePropertyStatus(payload, userData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'GET properties by status',
+            tags: ['api', 'anonymous', 'user', 'Property'],
+            auth: "UserAuth",
+            validate: {
+                payload: {
+                    propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    property_status:
+                        Joi.number().valid([
+                            Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+                        ]),
+
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
+
+
 ]
