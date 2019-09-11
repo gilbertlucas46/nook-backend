@@ -2,7 +2,6 @@
 import * as Models from '../models';
 import * as mongoose from "mongoose";
 import { SERVER } from '../constants';
-import { Property } from '../models'
 export class DAOManager {
     public ObjectId = mongoose.Types.ObjectId;
     constructor() {

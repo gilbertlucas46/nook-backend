@@ -6,7 +6,6 @@ export class SessionClass extends BaseEntity {
     constructor() {
         super("Session");
     }
-
     async createSession(sessionData: UserRequest.Session, userData, accessToken: string, type: string) {
         try {
             let columnName: string;

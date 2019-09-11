@@ -19,7 +19,7 @@ export class AdminController {
             if (email) email = email.trim().toLowerCase();
             // used to fetch the admin details from the database
             let checkData = { email };
-            let adminData = await ENTITY.UserE.getOneEntity(checkData, ['password', '_id', 'email']);
+            let adminData = await ENTITY.AdminE.getOneEntity(checkData, ['password', '_id', 'email']);
             // check email
             if (!adminData) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
             if (!(await utils.deCryptData(payload.password, adminData.password))) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD);
@@ -91,14 +91,14 @@ export class AdminController {
             let criteria = {
                 _id: adminData._id
             }
-            let password = await ENTITY.UserE.getOneEntity(criteria, ['password']);
+            let password = await ENTITY.AdminE.getOneEntity(criteria, ['password']);
             if (!(await utils.deCryptData(payload.oldPassword, password.password))) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD)
             else {
                 let updatePswd = {
                     password: await utils.cryptData(payload.newPassword),
                     updatedAt: new Date().getTime()
                 }
-                let updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd)
+                let updatePassword = await ENTITY.AdminE.updateOneEntity(criteria, updatePswd)
                 if (!updatePassword) return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR)
                 else return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT
             }
