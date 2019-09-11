@@ -43,9 +43,8 @@ export class PropertyController {
             let searchCriteria = {};
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-
             const matchObject = { $match: {} };
-
+            
             if (searchTerm) {
                 // for filtration
                 searchCriteria = {
