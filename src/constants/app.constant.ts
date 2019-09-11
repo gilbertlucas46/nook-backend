@@ -9,48 +9,148 @@ export let swaggerDefaultResponseMessages = [
     { code: 500, message: 'Internal Server Error' }
 ];
 
-
 export let DATABASE = {
-    REPORT_DESCRIPTION_1: "We regret that the content was ",
-    REPORT_DESCRIPTION_2: " and submit this report for review ro the Toki Team",
     USER_TYPE: {
-        AGENT: "AGENT",
-        OWNER: "OWNER",
-        TENANT: "TENANT", //  normal user/ buyer
+        ADMIN: {
+            NUMBER: 0,
+            TYPE: 'ADMIN',
+            DISPLAY_NAME: 'Admin',
+        },
+        AGENT: {
+            NUMBER: 1,
+            TYPE: 'AGENT',
+            DISPLAY_NAME: 'Agent',
+        },
+        TENANT: {
+            NUMBER: 3,
+            TYPE: 'TENANT',
+            DISPLAY_NAME: 'Tenant',
+        },
+        OWNER: {
+            NUMBER: 4,
+            TYPE: 'OWNER',
+            DISPLAY_NAME: 'Owner',
+        },
+        EMPLOYEE: {
+            NUMBER: 5,
+            TYPE: 'EMPLOYEE',
+            DISPLAY_NAME: 'Employee',
+        },
+        GUEST: {
+            NUMBER: 6,
+            TYPE: 'GUEST',
+            DISPLAY_NAME: 'Guest',
+        }
     },
-    TOKEN_TYPE: {
-        AGENT: "AGENT",
-        OWNER: "OWNER",
-        TENANT: "TENANT",
-        // USER: "USER"
-    },
+
     PROPERTY_STATUS: {
-        PENDING: "pending",
-        DRAFT: "draft",
-        ACTIVE: "active",
-        SOLD: "sold",
-        RENTED: "Rented",
-        EXPIRED: "expired",
-        FEATURED: "featured",
-        SOLDRENTED: "sold-rented"
+        DRAFT: {
+            NUMBER: 1,
+            TYPE: 'DRAFT',
+            DISPLAY_NAME: 'Draft',
+        },
+        PENDING: {
+            NUMBER: 2,
+            TYPE: 'PENDING',
+            DISPLAY_NAME: 'Pending',
+        },
+        ACTIVE: {
+            NUMBER: 3,
+            TYPE: 'ACTIVE',
+            DISPLAY_NAME: 'Active',
+        },
+        DECLINED: {
+            NUMBER: 4,
+            TYPE: 'DECLINED',
+            DISPLAY_NAME: 'Declined',
+        },
+        SOLD_RENTED: {
+            NUMBER: 5,
+            TYPE: 'SOLD/RENTED',
+            DISPLAY_NAME: 'Sold/Rented',
+        },
+        EXPIRED: {
+            NUMBER: 6,
+            TYPE: 'EXPIRED',
+            DISPLAY_NAME: 'Expired',
+        }
     },
-    PROPERTY_USER_DASHBOARD: {
-        FEATURED: "FEATURED",
-        ACTIVE: "Active",
-        SOLD: "Sold",
-        RENTED: "Rented",
+
+    PROPERTY_FOR: {
+        RENT: {
+            NUMBER: 1,
+            TYPE: 'RENT',
+            DISPLAY_NAME: 'For Rent',
+        },
+        SALE: {
+            NUMBER: 2,
+            TYPE: 'SALE',
+            DISPLAY_NAME: 'For Sale',
+        }
     },
-    ACTIONS_PERFORMED_BY_ADMIN: {
-        PENDING: "Pending",
-        APPROVED: "Approved",
-        REJECTED: "Rejected",
-        BLOCKED: "Blocked",
+
+    ACTIONS_PERFORMED_BY_NOOK: {
+        APPROVED: {
+            NUMBER: 1,
+            TYPE: 'APPROVED',
+            DISPLAY_NAME: 'Approved',
+        },
+        REJECTED: {
+            NUMBER: 2,
+            TYPE: 'REJECTED',
+            DISPLAY_NAME: 'Rejected',
+        },
+        BLOCKED: {
+            NUMBER: 3,
+            TYPE: 'BLOCKED',
+            DISPLAY_NAME: 'Blocked',
+        },
     },
-    PROPERTY_TYPE_STATUS: {
-        NONE: "None",
-        FOR_RENT: "For Rent",
-        FOR_SALE: "For Sale"
+
+    PROPERTY_ACTIONS: {
+        DRAFT: {
+            NUMBER: 1,
+            TYPE: 'DRAFT',
+            DISPLAY_NAME: 'Draft',
+        },
+        POSTED: {
+            NUMBER: 2,
+            TYPE: 'POSTED',
+            DISPLAY_NAME: 'Posted',
+        },
+        APPROVED: {
+            NUMBER: 3,
+            TYPE: 'APPROVED',
+            DISPLAY_NAME: 'Approved',
+        },
+        REJECTED: {
+            NUMBER: 4,
+            TYPE: 'REJECTED',
+            DISPLAY_NAME: 'Rejected',
+        },
+        BLOCKED: {
+            NUMBER: 5,
+            TYPE: 'BLOCKED',
+            DISPLAY_NAME: 'Blocked',
+        },
+        SOLD_RENTED: {
+            NUMBER: 6,
+            TYPE: 'SOLD/RENTED',
+            DISPLAY_NAME: 'Sold/Rented',
+        },
+        EXPIRED: {
+            NUMBER: 7,
+            TYPE: 'EXPIRED',
+            DISPLAY_NAME: 'Expired',
+        },
+        PENDING: {
+            NUMBER: 2,
+            TYPE: 'PENDING',
+            DISPLAY_NAME: "Pending"
+        },
+
     },
+
     PROPERTY_LABEL: {
         NONE: "None",
         FORECLOSURE: "Foreclosure",
@@ -63,10 +163,6 @@ export let DATABASE = {
         SERVICED_OFFICE: "Serviced Office",
         WAREHOUSE: "Warehouse"
     },
-    // PROPERTY_SAVE_AS: {
-    //     DRAFT: "Draft",
-    //     Complete: "Complete"
-    // },
     PROPERTY_TYPE: {
         NONE: "None",
         "APPARTMENT/CONDO": "Apartment/Condo",
@@ -75,11 +171,7 @@ export let DATABASE = {
         LAND: "Land",
         ROOM: "Room",
     },
-    PROPERTY_SEARCH_STATUS: {
-        FOR_RENT: 'For Rent',
-        FOR_SALE: 'For Sale',
-        NONE: 'None'
-    },
+
     PRICE_LABEL: {
         DAILY: 'daily',
         WEEKLY: 'weekly',
@@ -88,27 +180,30 @@ export let DATABASE = {
         HALFYEARLY: 'half yearly',
         YEARLY: 'yearly'
     },
+
     DEVICE_TYPES: {
         IOS: 'IOS',
         ANDROID: 'ANDROID',
         WEB: 'WEB'
     },
+
     GENDER: {
         MALE: 'MALE',
         FEMALE: 'FEMALE',
         OTHER: 'OTHER'
     },
+
     LANGUAGE: {
         EN: 'en',
         MN: 'mn'
     },
+
     STATUS: {
         USER: {
             ACTIVE: "ACTIVE",
             BLOCKED: "BLOCKED",
             DELETED: "DELETED"
         },
-
         MESSAGE: {
             DELIVERED: "DELIVERED",
             SEEN: "SEEN",
