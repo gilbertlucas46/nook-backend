@@ -2,7 +2,6 @@
 import * as Constant from '../../constants/app.constant'
 import * as ENTITY from '../../entity';
 import { mongo } from 'mongoose';
-import * as paginate from '../../utils/paginate.util'
 const { ObjectId } = mongo;
 
 export class PropertyController {
@@ -89,17 +88,9 @@ export class PropertyController {
                 }
             }
 
-            if (propertyId) {
-                matchObject['$match']['_id'] = new ObjectId(propertyId)
-            }
-
-            if (propertyType && propertyType !== 3) {
-                matchObject['$match']['property_basic_details.status'] = propertyType;
-            }
-
-            if (type && type !== 'all') {
-                matchObject['$match']['property_basic_details.type'] = type;
-            }
+            if (propertyId) matchObject['$match']['_id'] = new ObjectId(propertyId);
+            if (propertyType && propertyType !== 3) matchObject['$match']['property_basic_details.status'] = propertyType;
+            if (type && type !== 'all') matchObject['$match']['property_basic_details.type'] = type;
 
             if (label && label[0] !== 'all') {
                 for (let i = 0; i < label.length; i++) {
@@ -111,9 +102,7 @@ export class PropertyController {
             const pipeLine = [
                 matchObject,
                 searchCriteria,
-                {
-                    $sort: sortingType
-                },
+                { $sort: sortingType },
             ];
 
             let propertyData = await ENTITY.PropertyE.PropertyList(pipeLine);
@@ -134,7 +123,6 @@ export class PropertyController {
             let searchCriteria = {};
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-
             const matchObject = { $match: {} };
 
             if (searchTerm) {
@@ -179,47 +167,22 @@ export class PropertyController {
                 }
             }
 
-            if (propertyId) {
-                matchObject['$match']['propertyId'] = new ObjectId(propertyId)
-            }
-
-            if (propertyType && propertyType !== 3) {
-                matchObject['$match']['property_basic_details.status'] = propertyType;
-            }
-
-            if (type && type !== 'all') {
-                matchObject['$match']['property_basic_details.type'] = type;
-            }
-
             if (label && label[0] !== 'all') {
                 for (let i = 0; i < label.length; i++) {
                     matchObject['$match']['property_basic_details.label'] = label;
                 }
             }
 
-            if (bedrooms) {
-                matchObject['$match']['property_details.bedrooms'] = bedrooms;
-            }
+            if (bedrooms) matchObject['$match']['property_details.bedrooms'] = bedrooms;
+            if (bathrooms) matchObject['$match']['property_details.bathrooms'] = bathrooms;
+            if (minArea) matchObject['$match']['property_details.floor_area'] = { $gt: minArea };
+            if (maxArea) matchObject['$match']['property_details.floor_area'] = { $lt: maxArea };
+            if (minPrice) matchObject['$match']['property_basic_details.sale_rent_price'] = { $gt: minPrice };
+            if (maxPrice) matchObject['$match']['property_basic_details.sale_rent_price'] = { $lt: maxPrice };
+            if (propertyId) matchObject['$match']['propertyId'] = new ObjectId(propertyId);
+            if (propertyType && propertyType !== 3) matchObject['$match']['property_basic_details.status'] = propertyType;
+            if (type && type !== 'all') matchObject['$match']['property_basic_details.type'] = type;
 
-            if (bathrooms) {
-                matchObject['$match']['property_details.bathrooms'] = bathrooms;
-            }
-
-            if (minArea) {
-                matchObject['$match']['property_details.floor_area'] = { $gt: minArea };
-            }
-
-            if (maxArea) {
-                matchObject['$match']['property_details.floor_area'] = { $lt: maxArea };
-            }
-
-            if (minPrice) {
-                matchObject['$match']['property_basic_details.sale_rent_price'] = { $gt: minPrice };;
-            }
-
-            if (maxPrice) {
-                matchObject['$match']['property_basic_details.sale_rent_price'] = { $lt: maxPrice };
-            }
 
             // creating the pipeline for mongodb
             const pipeLine = [
@@ -259,12 +222,12 @@ export class PropertyController {
     }
     async userPropertyByStatus(payload, userData) {
         try {
-            if (payload.propertyType == Constant.DATABASE.PROPERTY_STATUS.SOLDRENTED) {
+            if (payload.propertyType == Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
                 let criteria = {
                     $match: {
                         userId: userData._id,
-                        $or: [{ "property_basic_details.status": 1 },
-                        { "property_basic_details.status": 2 }]
+                        $or: [{ "property_basic_details.property_for_number": Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER },
+                        { "property_basic_details.property_for_number": Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER }]
                     },
                 }
                 const pipeLine = [criteria]
@@ -290,15 +253,15 @@ export class PropertyController {
     async saveAsDraft(payload: PropertyRequest.PropertyData, userData: UserRequest.userData) {
         try {
             if (payload.propertyId) {
-                let criteria = {
-                    _id: payload.propertyId
-                }
+                let criteria = { _id: payload.propertyId }
                 let updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
-                console.log('updateDataupdateData', updateData);
                 return updateData;
             }
-            payload['updatedAt'] = new Date().getTime()
-            payload.Property_status = Constant.DATABASE.PROPERTY_STATUS.DRAFT
+            payload['updatedAt'] = new Date().getTime();
+            payload['Property_status']['number'] = Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER;
+            payload['Property_status']['status'] = Constant.DATABASE.PROPERTY_STATUS.DRAFT.STRING;
+            payload['Property_status']['displayName'] = Constant.DATABASE.PROPERTY_STATUS.DRAFT.DISPLAY_NAME;
+
             let userId = userData._id;
             payload['userId'] = userId;
             payload['property_added_by'] = {};
@@ -307,16 +270,10 @@ export class PropertyController {
             payload['property_added_by']['imageUrl'] = userData.profilePicUrl
             payload['property_added_by']['userName'] = userData.userName
             let propertyData = await ENTITY.PropertyE.createOneEntity(payload);
-
             return propertyData;
-
         } catch (error) {
             return Promise.reject(error)
         }
     }
 }
-
-
-
-
 export let PropertyService = new PropertyController();

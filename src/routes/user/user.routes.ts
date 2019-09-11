@@ -111,7 +111,7 @@ export let userRoute = [
      * @description: forget passsword to send the link over mail 
      */
     {
-        method: "POST",
+        method: "PATCH",
         path: "/v1/user/forgetPassword",
         handler: async (request, h) => {
             try {
@@ -268,10 +268,10 @@ export let userRoute = [
         }
     },
     /**
-     * @description: user chamge passsword 
+     * @description: user change passsword 
      */
     {
-        method: 'POST',
+        method: 'PATCH',
         path: '/v1/user/change-password',
         handler: async (request, h) => {
             try {
@@ -307,7 +307,7 @@ export let userRoute = [
      * @description : reset-password send the verify token adnd the password in the query
      */
     {
-        method: 'POST',
+        method: 'PATCH',
         path: '/v1/user/reset-password',
         handler: async (request, h) => {
             try {
@@ -338,36 +338,6 @@ export let userRoute = [
                 payload: {
                     link: Joi.string(),
                     password: Joi.string().min(6).max(14),
-                },
-                failAction: UniversalFunctions.failActionFunction
-            },
-            plugins: {
-                'hapi-swagger': {
-                    responseMessages: Constant.swaggerDefaultResponseMessages
-                }
-            }
-        }
-    },
-    {
-        method: 'POST',
-        path: '/v1/user/send-mail',
-        handler: async (request, h) => {
-            try {
-                let payload = request.query;
-                let responseData = await UserService.sendMail(payload);
-                // let responseData = await UserService.resetPassword(payload);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
-            }
-            catch (error) {
-                return UniversalFunctions.sendError(error);
-            }
-        },
-        options: {
-            description: 'Get user Profile',
-            tags: ['api', 'anonymous', 'user', 'reset'],
-            validate: {
-                query: {
-                    email: Joi.string()
                 },
                 failAction: UniversalFunctions.failActionFunction
             },
