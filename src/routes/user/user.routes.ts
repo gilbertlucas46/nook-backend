@@ -356,8 +356,8 @@ export let userRoute = [
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 console.log('userData', userData);
 
-                // let responseData = await UserService.dashboard(userData);
-                // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+                let responseData = await UserService.dashboard(userData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
                 return UniversalFunctions.sendError(error);
