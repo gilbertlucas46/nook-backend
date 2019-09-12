@@ -10,7 +10,7 @@ import { MailManager } from '../../lib/mail.manager';
  * @description this controller contains actions for admin's account related activities
  */
 
-export class AdminController {
+export class AdminProfileController {
     constructor() { }
 
     async login(payload: AdminRequest.login) {
@@ -50,11 +50,10 @@ export class AdminController {
         }
     }
 
-    async editProfile(payload: AdminRequest.ProfileUpdate) {
+    async editProfile(payload: AdminRequest.ProfileUpdate, adminData) {
         try {
-
             let criteria = {
-                _id: payload._id
+                _id: adminData._id
             }
             let updateAdmin = await ENTITY.AdminE.updateOneEntity(criteria, payload);
             return updateAdmin;
@@ -159,5 +158,5 @@ export class AdminController {
     }
 }
 
-export let AdminProfile = new AdminController();
+export let AdminProfileService = new AdminProfileController();
 

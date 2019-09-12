@@ -2,7 +2,7 @@
 import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant'
-import { AdminProfile } from '../../controllers'
+import { AdminProfileService, AdminService } from '../../controllers'
 import * as config from "config";
 import * as utils from '../../utils';
 
@@ -16,7 +16,7 @@ export let adminProfileRoute = [
         handler: async (request, h) => {
             try {
                 let payload = request.payload;
-                let registerResponse = await AdminProfile.login(payload);
+                let registerResponse = await AdminProfileService.login(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
             }
             catch (error) {
@@ -52,7 +52,7 @@ export let adminProfileRoute = [
         handler: async (request, h) => {
             try {
                 let payload: UserRequest.ForgetPassword = request.payload;
-                await AdminProfile.forgetPassword(payload);
+                await AdminProfileService.forgetPassword(payload);
                 return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.FORGET_PASSWORD_EMAIL, {});
             } catch (error) {
                 return await UniversalFunctions.sendError(error);
@@ -83,9 +83,9 @@ export let adminProfileRoute = [
         path: '/v1/admin/profile',
         handler: async (request, h) => {
             try {
-                // let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 let payload: UserRequest.ProfileUpdate = request.payload;
-                let responseData = await AdminProfile.editProfile(payload);
+                let responseData = await AdminProfileService.editProfile(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData))
             }
             catch (error) {
@@ -98,11 +98,12 @@ export let adminProfileRoute = [
             auth: "AdminAuth",
             validate: {
                 payload: {
-                    _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    // _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     firstName: Joi.string().min(1).max(20).trim(),
-                    lastName: Joi.string().min(1).max(20).trim(),
-                    phoneNumber: Joi.string().min(7).max(15).trim(),
+                    // lastName: Joi.string().min(1).max(20).trim(),
+                    // phoneNumber: Joi.string().min(7).max(15).trim(),
                     profilePicUrl: Joi.string().allow(""),
+                    email: Joi.string().email({ minDomainSegments: 2 }),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
@@ -155,7 +156,7 @@ export let adminProfileRoute = [
         handler: async (request, h) => {
             try {
                 let payload = request.params;
-                await AdminProfile.verifyLink(payload);
+                await AdminProfileService.verifyLink(payload);
                 return h.redirect(config.get("baseUrl") + payload.link)
             } catch (error) {
                 if (error.JsonWebTokenError) {
@@ -193,7 +194,7 @@ export let adminProfileRoute = [
             try {
                 let adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 let payload: AdminRequest.ChangePassword = request.payload;
-                let responseData = await AdminProfile.changePassword(payload, adminData);
+                let responseData = await AdminProfileService.changePassword(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
@@ -228,7 +229,7 @@ export let adminProfileRoute = [
         handler: async (request, h) => {
             try {
                 let payload = request.payload;
-                let responseData = await AdminProfile.verifyLinkForResetPwd(payload);
+                let responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
@@ -260,4 +261,81 @@ export let adminProfileRoute = [
             }
         }
     },
+    {
+        method: 'GET',
+        path: '/v1/admin/property',
+        handler: async (request, h) => {
+            try {
+                let adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
+                let payload: AdminRequest.PropertyList = request.query;
+                utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true)
+                let responseData = await AdminService.getPropertyByStatus(payload, adminData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'Get admin Profile',
+            tags: ['api', 'anonymous', 'admin', 'Detail'],
+            auth: "AdminAuth",
+            validate: {
+                query: {
+                    propertyStatus: Joi.number().valid([
+                        Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+                        Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+                    ]),
+                    page: Joi.number(),
+                    limit: Joi.number(),
+                    // searchTerm: Joi.string(),),
+                    // propertyType: Joi.number()
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
+
+    {
+        method: 'GET',
+        path: '/v1/admin/property/{propertyId}',
+        handler: async (request, h) => {
+            try {
+                // let adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
+                let payload: AdminRequest.PropertyDetail = request.params;
+                utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true)
+                let responseData = await AdminService.getPropertyById(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'Get admin Profile',
+            tags: ['api', 'anonymous', 'admin', 'Detail'],
+            auth: "AdminAuth",
+            validate: {
+                params: {
+                    propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
+
+
+
 ]
