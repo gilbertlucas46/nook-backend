@@ -64,7 +64,16 @@ declare namespace AdminRequest {
     }
 
     export interface TokenPayload {
-        adminId:string;
-        sessionId : string;
+        adminId: string;
+        sessionId: string;
+    }
+    export interface PropertyDetail {
+        propertyId: string
+    }
+
+    export interface PropertyList {
+        propertyStatus: string;
+        page?: number;
+        limit?: number;
     }
 }
