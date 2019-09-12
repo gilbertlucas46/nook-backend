@@ -259,6 +259,14 @@ export let propertyRoute = [
                         Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
                         Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
                     ]),
+                    page: Joi.number(),
+                    limit: Joi.number(),
+                    searchTerm: Joi.string(),
+                    type: Joi.string(),
+                    label: Joi.array(),
+                    maxPrice: Joi.number(),
+                    minPrice: Joi.number(),
+                    // propertyType: Joi.number()
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
@@ -370,7 +378,6 @@ export let propertyRoute = [
                             Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
                             Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER
                         ]),
-                        // property_for_type: Joi.string(),
                         label: Joi.string().valid([
                             Constant.DATABASE.PROPERTY_LABEL.NONE,
                             Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,

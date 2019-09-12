@@ -1,7 +1,7 @@
 'use strict';
 
 import * as AuthBearer from 'hapi-auth-bearer-token';
-import { verifyToken } from '../lib';
+import { verifyToken, verifyAdminToken } from '../lib';
 import * as  UniversalFunctions from '../utils';
 import * as Constant from '../constants';
 
@@ -16,17 +16,11 @@ export let plugin = {
             allowMultipleHeaders: true,
             accessTokenName: 'accessToken',
             validate: async (request, token, h) => {
-                let tokenData = await verifyToken(token, 'ADMIN')
+                let tokenData = await verifyAdminToken(token, 'ADMIN')
                 if (!tokenData || !tokenData['userData']) {
                     return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED))
                 } else {
-                    if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.BLOCKED) {
-                        return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED));
-                    } else if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.DELETED) {
-                        return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED));
-                    } else {
-                        return ({ isValid: true, credentials: { token: token, userData: tokenData['userData'] } })
-                    }
+                    return ({ isValid: true, credentials: { token: token, adminData: tokenData['adminData'] } })
                 }
             }
         });

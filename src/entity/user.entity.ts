@@ -4,7 +4,6 @@ import * as config from 'config'
 import * as TokenManager from '../lib'
 import * as Jwt from 'jsonwebtoken'
 const cert = config.get('jwtSecret')
-import * as Constants from '../constants'
 export class UserClass extends BaseEntity {
     constructor() {
         super('User')

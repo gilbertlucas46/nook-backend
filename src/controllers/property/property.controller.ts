@@ -2,8 +2,6 @@
 import * as Constant from '../../constants/app.constant'
 import * as ENTITY from '../../entity';
 import { mongo } from 'mongoose';
-import * as paginate from '../../utils/paginate.util'
-import { join } from 'path';
 const { ObjectId } = mongo;
 import * as utils from '../../utils'
 
@@ -33,10 +31,7 @@ export class PropertyController {
             payload['property_basic_details']['property_for_string'] = result.TYPE
             payload['property_basic_details']['property_for_displayName'] = result.DISPLAY_NAME
             property_action = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.PENDING.NUMBER)
-
-            // payload['property_status']['number'] = property_status.NUMBER
-            // payload['property_status']['status'] = property_status.STATUS;
-            // payload['property_status']['displayName'] = property_status.DISPLAY_NAME;
+           
 
             let userId = userData._id;
             payload['userId'] = userId;
@@ -55,7 +50,6 @@ export class PropertyController {
                     //    userTypeNumber:userData.userTypeNumber,
                     userTypeString: userData.type,
                     actionTime: new Date().getTime(),
-                    // message: "gdschjgdshcdscj"
                 }
             }];
 
@@ -83,7 +77,6 @@ export class PropertyController {
             let searchCriteria = {};
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-
             const matchObject = { $match: {} };
 
             if (searchTerm) {
@@ -128,17 +121,9 @@ export class PropertyController {
                 }
             }
 
-            if (propertyId) {
-                matchObject['$match']['_id'] = new ObjectId(propertyId)
-            }
-
-            if (propertyType && propertyType !== 3) {
-                matchObject['$match']['property_basic_details.status'] = propertyType;
-            }
-
-            if (type && type !== 'all') {
-                matchObject['$match']['property_basic_details.type'] = type;
-            }
+            if (propertyId) matchObject['$match']['_id'] = new ObjectId(propertyId);
+            if (propertyType && propertyType !== 3) matchObject['$match']['property_basic_details.status'] = propertyType;
+            if (type && type !== 'all') matchObject['$match']['property_basic_details.type'] = type;
 
             if (label && label[0] !== 'all') {
                 for (let i = 0; i < label.length; i++) {
@@ -150,9 +135,7 @@ export class PropertyController {
             const pipeLine = [
                 matchObject,
                 searchCriteria,
-                {
-                    $sort: sortingType
-                },
+                { $sort: sortingType },
             ];
 
             let propertyData = await ENTITY.PropertyE.PropertyList(pipeLine);
@@ -174,7 +157,6 @@ export class PropertyController {
             let searchCriteria = {};
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-
             const matchObject = { $match: {} };
 
             if (searchTerm) {
@@ -219,47 +201,22 @@ export class PropertyController {
                 }
             }
 
-            if (propertyId) {
-                matchObject['$match']['propertyId'] = new ObjectId(propertyId)
-            }
-
-            if (propertyType && propertyType !== 3) {
-                matchObject['$match']['property_basic_details.status'] = propertyType;
-            }
-
-            if (type && type !== 'all') {
-                matchObject['$match']['property_basic_details.type'] = type;
-            }
-
             if (label && label[0] !== 'all') {
                 for (let i = 0; i < label.length; i++) {
                     matchObject['$match']['property_basic_details.label'] = label;
                 }
             }
 
-            if (bedrooms) {
-                matchObject['$match']['property_details.bedrooms'] = bedrooms;
-            }
+            if (bedrooms) matchObject['$match']['property_details.bedrooms'] = bedrooms;
+            if (bathrooms) matchObject['$match']['property_details.bathrooms'] = bathrooms;
+            if (minArea) matchObject['$match']['property_details.floor_area'] = { $gt: minArea };
+            if (maxArea) matchObject['$match']['property_details.floor_area'] = { $lt: maxArea };
+            if (minPrice) matchObject['$match']['property_basic_details.sale_rent_price'] = { $gt: minPrice };
+            if (maxPrice) matchObject['$match']['property_basic_details.sale_rent_price'] = { $lt: maxPrice };
+            if (propertyId) matchObject['$match']['propertyId'] = new ObjectId(propertyId);
+            if (propertyType && propertyType !== 3) matchObject['$match']['property_basic_details.status'] = propertyType;
+            if (type && type !== 'all') matchObject['$match']['property_basic_details.type'] = type;
 
-            if (bathrooms) {
-                matchObject['$match']['property_details.bathrooms'] = bathrooms;
-            }
-
-            if (minArea) {
-                matchObject['$match']['property_details.floor_area'] = { $gt: minArea };
-            }
-
-            if (maxArea) {
-                matchObject['$match']['property_details.floor_area'] = { $lt: maxArea };
-            }
-
-            if (minPrice) {
-                matchObject['$match']['property_basic_details.sale_rent_price'] = { $gt: minPrice };;
-            }
-
-            if (maxPrice) {
-                matchObject['$match']['property_basic_details.sale_rent_price'] = { $lt: maxPrice };
-            }
 
             // creating the pipeline for mongodb
             const pipeLine = [
@@ -332,10 +289,6 @@ export class PropertyController {
                 property_for_string: result.TYPE,
                 property_for_displayName: result.DISPLAY_NAME
             }
-
-            // if (payload['property_status']['number']) {
-            //     property_status =  this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DRAFT)
-            // }
             property_action = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.DRAFT.NUMBER)
 
             payload['property_status'] = {
@@ -360,14 +313,11 @@ export class PropertyController {
                     //  userTypeNumber:userData.userTypeNumber,
                     userTypeString: userData.type,
                     actionTime: new Date().getTime(),
-                    // message: "gdschjgdshcdscj"
                 }
             }];
 
             let propertyData = await ENTITY.PropertyE.createOneEntity(payload);
-
             return propertyData;
-
         } catch (error) {
             utils.consolelog('error', error, true)
             return Promise.reject(error)
@@ -382,16 +332,10 @@ export class PropertyController {
                 _id: payload.propertyId
             }
             data_to_set['$set'] = {
-                payload: {
-                    property_status: {
-                        number: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-                        status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
-                        displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME
-                        // "payload.property_status.number": Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-                        // "payload.property_status.status": Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
-                        // "payload.property_status.displayName": Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME
-
-                    }
+                property_status: {
+                    number: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+                    status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
+                    displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME
                 }
             }
             data_to_set['$push'] = {
@@ -416,8 +360,4 @@ export class PropertyController {
     }
 
 }
-
-
-
-
 export let PropertyService = new PropertyController();
