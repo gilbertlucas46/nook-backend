@@ -122,7 +122,7 @@ export class PropertyController {
             }
 
             if (propertyId) matchObject['$match']['_id'] = new ObjectId(propertyId);
-            if (propertyType && propertyType !== 3) matchObject['$match']['property_basic_details.status'] = propertyType;
+            if (propertyType && propertyType !== 3) matchObject['$match']['property_basic_details.property_for_number'] = propertyType;
             if (type && type !== 'all') matchObject['$match']['property_basic_details.type'] = type;
 
             if (label && label[0] !== 'all') {
@@ -257,43 +257,43 @@ export class PropertyController {
     }
     async userPropertyByStatus(payload, userData) {
         try {
-            let { page, limit, searchTerm, sortBy, sortType, propertyId, propertyType, type, label, maxPrice, minPrice } = payload;
-            if (!limit) limit = Constant.SERVER.LIMIT;
-            else limit = limit;
-            if (!page) page = 1;
-            else page = page;
-            let searchCriteria = {};
-            let sortingType = {};
-            sortType = !sortType ? -1 : sortType;
-            const matchObject = { $match: {} };
+            // let { page, limit, searchTerm, sortBy, sortType, propertyId, propertyType, type, label, maxPrice, minPrice } = payload;
+            // if (!limit) limit = Constant.SERVER.LIMIT;
+            // else limit = limit;
+            // if (!page) page = 1;
+            // else page = page;
+            // let searchCriteria = {};
+            // let sortingType = {};
+            // sortType = !sortType ? -1 : sortType;
+            // const matchObject = { $match: {} };
 
-            if (sortBy) {
-                switch (sortBy) {
-                    case 'price':
-                        sortBy = 'price';
-                        sortingType = {
-                            sale_rent_price: sortType
-                        }
-                        break;
-                    case 'date':
-                        sortBy = 'date';
-                        sortingType = {
-                            createdAt: sortType
-                        }
-                        break;
-                    default:
-                        sortBy = 'isFeatured';
-                        sortingType = {
-                            isFeatured: true
-                        }
-                        break;
-                }
-            } else {
-                sortBy = 'isFeatured';
-                sortingType = {
-                    isFeatured: true
-                }
-            }
+            // if (sortBy) {
+            //     switch (sortBy) {
+            //         case 'price':
+            //             sortBy = 'price';
+            //             sortingType = {
+            //                 sale_rent_price: sortType
+            //             }
+            //             break;
+            //         case 'date':
+            //             sortBy = 'date';
+            //             sortingType = {
+            //                 createdAt: sortType
+            //             }
+            //             break;
+            //         default:
+            //             sortBy = 'isFeatured';
+            //             sortingType = {
+            //                 isFeatured: true
+            //             }
+            //             break;
+            //     }
+            // } else {
+            //     sortBy = 'isFeatured';
+            //     sortingType = {
+            //         isFeatured: true
+            //     }
+            // }
 
             let criteria = {
                 $match: {
@@ -301,8 +301,15 @@ export class PropertyController {
                     "property_status.number": payload.propertyType,
                 },
             }
-            const pipeLine = [criteria]
+            const pipeLine = [
+                criteria,
+                // {
+                //     $sort: sortingType
+                // },
+            ]
             let data = await ENTITY.PropertyE.ProprtyByStatus(pipeLine);
+            console.log('datadatadatadatadata', data);
+
             return data
         }
         catch (error) {

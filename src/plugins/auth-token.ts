@@ -17,7 +17,8 @@ export let plugin = {
             accessTokenName: 'accessToken',
             validate: async (request, token, h) => {
                 let tokenData = await verifyAdminToken(token, 'ADMIN')
-                if (!tokenData || !tokenData['userData']) {
+
+                if (!tokenData || !tokenData['adminData']) {
                     return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED))
                 } else {
                     return ({ isValid: true, credentials: { token: token, adminData: tokenData['adminData'] } })

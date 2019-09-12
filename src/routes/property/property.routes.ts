@@ -420,11 +420,14 @@ export let propertyRoute = [
       */
     {
         method: 'PATCH',
-        path: '/v1/user/status/property',
+        path: '/v1/properties/{propertyId}/status',
         handler: async (request, h) => {
             try {
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                let payload = request.payload;
+                let payload = {
+                    propertyId: request.params.propertyId,
+                    status: request.payload.property_status
+                };
                 console.log('payloadpayload', payload);
 
                 let data = await PropertyService.updatePropertyStatus(payload, userData);
@@ -439,11 +442,14 @@ export let propertyRoute = [
             tags: ['api', 'anonymous', 'user', 'Property'],
             auth: "UserAuth",
             validate: {
-                payload: {
+                params: {
                     propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                },
+                payload: {
                     property_status:
                         Joi.number().valid([
                             Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+                            // Constant.DATABASE.PROPERTY_STATUS
                         ]),
 
                 },

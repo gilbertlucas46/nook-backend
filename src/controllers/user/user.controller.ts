@@ -212,74 +212,74 @@ export class UserController {
         }
     }
 
-    // async dashboard(userData: UserRequest.userData) {
-    //     try {
-    //         let query;
-    //         let pipeline = [
-    //             {
-    //                 "$facet": {
-    //                     "Active": [
-    //                         {
-    //                             "$match": {
-    //                                 $and: [{ "Property_status.number": Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER }, { "userId": userData._id }]
-    //                             }
-    //                         },
-    //                         { "$count": "Total" }
-    //                     ],
-    //                     "Featured": [
-    //                         { "$match": { $and: [{ "isFeatured": true }, { "userId": userData._id }] } },
-    //                         { "$count": "Total" },
-    //                     ],
-    //                     "soldPropertyLast30Days": [
-    //                         {
-    //                             "$match": {
-    //                                 $and: [{ "Property_status": Constant.DATABASE.PROPERTY_USER_DASHBOARD.SOLD }, { "userId": userData._id },
-    //                                 { "property_sold_time": { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } }
-    //                                 ]
-    //                             }
-    //                         },
-    //                         { "$count": "Total" },
-    //                     ],
-    //                     "rentedPropertyLast30Days": [
-    //                         {
-    //                             "$match": {
-    //                                 $and: [{ "Property_status": Constant.DATABASE.PROPERTY_USER_DASHBOARD.RENTED }, { "userId": userData._id },
-    //                                 { "property_rent_time": { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } }
-    //                                 ]
-    //                             }
-    //                         },
-    //                         { "$count": "rentPropertyLast30Days" },
-    //                     ]
-    //                 }
-    //             },
-    //             {
-    //                 "$project": {
-    //                     "Active": {
-    //                         $cond: { if: { $size: "$Active" }, then: { $arrayElemAt: ["$Active.Total", 0] }, else: 0 }
-    //                     },
+    async dashboard(userData: UserRequest.userData) {
+        try {
+            let query;
+            let pipeline = [
+                {
+                    "$facet": {
+                        "Active": [
+                            {
+                                "$match": {
+                                    $and: [{ "Property_status.number": Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER }, { "userId": userData._id }]
+                                }
+                            },
+                            { "$count": "Total" }
+                        ],
+                        "Featured": [
+                            { "$match": { $and: [{ "isFeatured": true }, { "userId": userData._id },] } },
+                            { "$count": "Total" },
+                        ],
+                        "soldPropertyLast30Days": [
+                            {
+                                "$match": {
+                                    $and: [{ "Property_status": Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED }, { "property_basic_details.property_for_number": Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER }, { "userId": userData._id },
+                                    { "property_sold_time": { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } }
+                                    ]
+                                }
+                            },
+                            { "$count": "Total" },
+                        ],
+                        "rentedPropertyLast30Days": [
+                            {
+                                "$match": {
+                                    $and: [{ "Property_status": Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED }, { "property_basic_details.property_for_number": Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER }, { "userId": userData._id },
+                                    { "property_rent_time": { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } }
+                                    ]
+                                }
+                            },
+                            { "$count": "rentPropertyLast30Days" },
+                        ]
+                    }
+                },
+                {
+                    "$project": {
+                        "Active": {
+                            $cond: { if: { $size: "$Active" }, then: { $arrayElemAt: ["$Active.Total", 0] }, else: 0 }
+                        },
 
-    //                     "Featured": {
-    //                         $cond: { if: { $size: ["$Featured"] }, then: { $arrayElemAt: ["$Featured.Total", 0] }, else: 0 }
-    //                     },
-    //                     "soldPropertyLast30Days": {
-    //                         $cond: { if: { $size: ["$soldPropertyLast30Days"] }, then: { $arrayElemAt: ["$soldPropertyLast30Days.Total", 0] }, else: 0 }
-    //                     },
-    //                     "rentedPropertyLast30Days": {
-    //                         $cond: { if: { $size: ["$rentedPropertyLast30Days"] }, then: { $arrayElemAt: ["$rentedPropertyLast30Days.Total", 0] }, else: 0 }
-    //                     }
-    //                 }
-    //             }
+                        "Featured": {
+                            $cond: { if: { $size: ["$Featured"] }, then: { $arrayElemAt: ["$Featured.Total", 0] }, else: 0 }
+                        },
+                        "soldPropertyLast30Days": {
+                            $cond: { if: { $size: ["$soldPropertyLast30Days"] }, then: { $arrayElemAt: ["$soldPropertyLast30Days.Total", 0] }, else: 0 }
+                        },
+                        "rentedPropertyLast30Days": {
+                            $cond: { if: { $size: ["$rentedPropertyLast30Days"] }, then: { $arrayElemAt: ["$rentedPropertyLast30Days.Total", 0] }, else: 0 }
+                        }
+                    }
+                }
 
-    //         ]
-    //         let data = await ENTITY.UserE.aggregate(pipeline);
-    //         return {
-    //             ...data[0],
-    //             isFeaturedProfile: !!userData.isFeaturedProfile
-    //         };
-    //     } catch (error) {
-    //         return Promise.reject(error)
-    //     }
-    // }
+            ]
+            let data = await ENTITY.UserE.aggregate(pipeline);
+            return {
+                ...data[0],
+                isFeaturedProfile: !!userData.isFeaturedProfile
+            };
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
 }
 
 export let UserService = new UserController();

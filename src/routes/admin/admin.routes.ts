@@ -95,7 +95,7 @@ export let adminProfileRoute = [
         options: {
             description: 'update admin Profile',
             tags: ['api', 'anonymous', 'admin', 'update'],
-            // auth: "AdminAuth",
+            auth: "AdminAuth",
             validate: {
                 payload: {
                     _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
@@ -104,7 +104,7 @@ export let adminProfileRoute = [
                     phoneNumber: Joi.string().min(7).max(15).trim(),
                     profilePicUrl: Joi.string().allow(""),
                 },
-                // headers: UniversalFunctions.authorizationHeaderObj,
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
             },
             plugins: {
@@ -122,8 +122,8 @@ export let adminProfileRoute = [
         path: '/v1/admin/profile',
         handler: async (request, h) => {
             try {
-                let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userData))
+                let adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, adminData))
             }
             catch (error) {
                 return (UniversalFunctions.sendError(error))
@@ -191,7 +191,7 @@ export let adminProfileRoute = [
         path: '/v1/admin/change-password',
         handler: async (request, h) => {
             try {
-                let adminData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                let adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 let payload: AdminRequest.ChangePassword = request.payload;
                 let responseData = await AdminProfile.changePassword(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
@@ -203,7 +203,7 @@ export let adminProfileRoute = [
         options: {
             description: 'Get admin Profile',
             tags: ['api', 'anonymous', 'admin', 'Detail'],
-            // auth: "AdminAuth",
+            auth: "AdminAuth",
             validate: {
                 payload: {
                     oldPassword: Joi.string().min(6).max(14),
