@@ -57,21 +57,23 @@ export let verifyToken = async function (token, tokenType, request?: any) {
 export let verifyAdminToken = async function (token, tokenType, request?: any) {
     try {
         let result = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
+
         if (!result) return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN
         let adminData = {};
-        let criteria = { _id: result['id'] }
+        let criteria = { _id: result['_id'] }
         let checkAdminExist = await ENTITY.AdminE.getOneEntity(criteria, {});
+
         if (!checkAdminExist) return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN
         let sessionCriteria = {
-            adminId: result['id'],
+            adminId: result['_id'],
             isLogin: true
         };
         let checkValidSession = await ENTITY.AdminSessionE.getOneEntity(sessionCriteria, {})
         if (!checkValidSession) return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
         adminData['id'] = checkAdminExist['_id'];
-        adminData['userData'] = checkAdminExist
+        adminData['adminData'] = checkAdminExist
         return adminData;
-        
+
     } catch (error) {
         return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN)
     }
