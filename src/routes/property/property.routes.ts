@@ -88,12 +88,12 @@ export let propertyRoute = [
                         region: Joi.string().min(1).max(100).trim().required(),
                         city: Joi.string().min(1).max(100).trim().required(),
                         barangay: Joi.string().min(1).max(100).trim(),
-                        // location: {
-                        //     coordinates: Joi.array().ordered([
-                        //         Joi.number().min(-180).max(180).required(),
-                        //         Joi.number().min(-90).max(90).required()
-                        //     ]),
-                        // }
+                        location: {
+                            coordinates: Joi.array().ordered([
+                                Joi.number().min(-180).max(180).required(),
+                                Joi.number().min(-90).max(90).required()
+                            ]),
+                        }
                     },
                     property_basic_details: {
                         title: Joi.string().min(1).max(200).trim().required(),
@@ -261,7 +261,7 @@ export let propertyRoute = [
                     ]),
                     page: Joi.number(),
                     limit: Joi.number(),
-                    searchTerm: Joi.string(),
+                    // searchTerm: Joi.string(),
                     type: Joi.string(),
                     label: Joi.array(),
                     maxPrice: Joi.number(),
