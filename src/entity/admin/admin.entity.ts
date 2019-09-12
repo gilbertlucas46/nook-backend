@@ -18,6 +18,7 @@ export class AdminClass extends BaseEntity {
                 firstName: adminData.firstName,
                 lastName: adminData.lastName,
                 phoneNumber: adminData.phoneNumber,
+
             }
             let admin: UserRequest.Register = await this.createOneEntity(dataToInsert)
             return admin;
@@ -30,7 +31,8 @@ export class AdminClass extends BaseEntity {
         let to_save = {
             name: 'Base Admin',
             email: 'base_admin@yopmail.com',
-            password: await utils.cryptData('123456')
+            password: await utils.cryptData('123456'),
+            profilePicUrl: ''
         }
         let criteria = {
             email: 'base_admin@yopmail.com'

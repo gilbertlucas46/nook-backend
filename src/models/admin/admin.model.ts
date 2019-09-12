@@ -43,7 +43,7 @@ export const AdminSchema = new Schema(
         fpotpExpiryTime: { type: Date },
         isLogin: { type: Boolean, default: true },
         isDeleted: { type: Boolean, default: false },
-        profilePicUrl: { type: String },
+        profilePicUrl: { type: String, default: '' },
         backGroundImageUrl: { type: String },
         isEmailVerified: { type: Boolean },
         isPhoneVerified: { type: Boolean },
