@@ -168,18 +168,18 @@ const propertySchema = new Schema({
         region: { type: String },
         city: { type: String },
         barangay: { type: String },
-        // location: {
-        //     type: {
-        //         type: String,
-        //         // enum: ['Point'],
-        //         default: 'Point',
-        //         // required: true,
-        //     },
-        //     coordinates: {
-        //         type: [Number],
-        //         // required: true
-        //     }
-        // }
+        location: {
+            type: {
+                type: String,
+                // enum: ['Point'],
+                default: 'Point',
+                required: true,
+            },
+            coordinates: {
+                type: [Number],
+                required: true
+            }
+        }
     },
     property_basic_details: {
         title: { type: String },

@@ -31,7 +31,7 @@ export class PropertyController {
             payload['property_basic_details']['property_for_string'] = result.TYPE
             payload['property_basic_details']['property_for_displayName'] = result.DISPLAY_NAME
             property_action = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.PENDING.NUMBER)
-           
+
 
             let userId = userData._id;
             payload['userId'] = userId;
@@ -257,6 +257,44 @@ export class PropertyController {
     }
     async userPropertyByStatus(payload, userData) {
         try {
+            let { page, limit, searchTerm, sortBy, sortType, propertyId, propertyType, type, label, maxPrice, minPrice } = payload;
+            if (!limit) limit = Constant.SERVER.LIMIT;
+            else limit = limit;
+            if (!page) page = 1;
+            else page = page;
+            let searchCriteria = {};
+            let sortingType = {};
+            sortType = !sortType ? -1 : sortType;
+            const matchObject = { $match: {} };
+
+            if (sortBy) {
+                switch (sortBy) {
+                    case 'price':
+                        sortBy = 'price';
+                        sortingType = {
+                            sale_rent_price: sortType
+                        }
+                        break;
+                    case 'date':
+                        sortBy = 'date';
+                        sortingType = {
+                            createdAt: sortType
+                        }
+                        break;
+                    default:
+                        sortBy = 'isFeatured';
+                        sortingType = {
+                            isFeatured: true
+                        }
+                        break;
+                }
+            } else {
+                sortBy = 'isFeatured';
+                sortingType = {
+                    isFeatured: true
+                }
+            }
+
             let criteria = {
                 $match: {
                     userId: userData._id,
