@@ -75,5 +75,12 @@ declare namespace AdminRequest {
         propertyStatus: string;
         page?: number;
         limit?: number;
+        sortBy: string;
+        sortType: number;
+    }
+
+    export interface UpdatePropertyStatus {
+        status: number,
+        propertyId: string
     }
 }

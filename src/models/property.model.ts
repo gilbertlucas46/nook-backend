@@ -346,7 +346,10 @@ const propertySchema = new Schema({
                     Constant.DATABASE.PROPERTY_ACTIONS.REJECTED.TYPE,
                     Constant.DATABASE.PROPERTY_ACTIONS.BLOCKED.TYPE,
                     Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE,
-                    Constant.DATABASE.PROPERTY_ACTIONS.EXPIRED.TYPE
+                    Constant.DATABASE.PROPERTY_ACTIONS.EXPIRED.TYPE,
+
+
+
                 ],
             },
             actionDisplayName: {

@@ -72,56 +72,65 @@ declare namespace PropertyRequest {
     }
 
 
-export interface PropertyDetail {
-    _id: string
-}
+    export interface PropertyDetail {
+        _id: string
+    }
 
-export interface SearchProperty {
-    page?: number;
-    limit?: number;
-    searchTerm?: string;
-    sortBy?: string;
-    sortType?: number;
-    fromDate?: string;
-    toDate?: string;
-    propertyId?: string;
-    status?: string;
-    type?: string;
-    label?: [string];
-    maxPrice?: number;
-    minPrice?: number;
-    propertyType?: number;
-    bedrooms?: number;
-    bathrooms?: number;
-    minArea?: number;
-    maxArea?: number;
-}
+    export interface SearchProperty {
+        page?: number;
+        limit?: number;
+        searchTerm?: string;
+        sortBy?: string;
+        sortType?: number;
+        fromDate?: string;
+        toDate?: string;
+        propertyId?: string;
+        status?: string;
+        type?: string;
+        label?: [string];
+        maxPrice?: number;
+        minPrice?: number;
+        propertyType?: number;
+        bedrooms?: number;
+        bathrooms?: number;
+        minArea?: number;
+        maxArea?: number;
+    }
 
-export interface nearByProperty {
-    page?: number;
-    limit?: number;
-    searchTerm?: string;
-    sortBy?: string;
-    sortType?: number;
-    fromDate?: string;
-    toDate?: string;
-    propertyId?: string;
-    status?: string;
-    type?: string;
-    label?: [string];
-    maxPrice?: number;
-    minPrice?: number;
-    propertyType?: number;
-    pickUplocation?: [number];
-    bedrooms?: number;
-    bathrooms?: number;
-    minArea?: number;
-    maxArea?: number;
-}
+    export interface nearByProperty {
+        page?: number;
+        limit?: number;
+        searchTerm?: string;
+        sortBy?: string;
+        sortType?: number;
+        fromDate?: string;
+        toDate?: string;
+        propertyId?: string;
+        status?: string;
+        type?: string;
+        label?: [string];
+        maxPrice?: number;
+        minPrice?: number;
+        propertyType?: number;
+        pickUplocation?: [number];
+        bedrooms?: number;
+        bathrooms?: number;
+        minArea?: number;
+        maxArea?: number;
+    }
 
-export interface UPDATE_PROPERTY_ACTION {
-    propertyId: string
-    property_status: string
-}
+    export interface UpdatePropertyByAction {
+        propertyId: string
+        status?: string,
+        upgradeToFeature?: boolean
+    }
 
+    export interface PropertyByStatus {
+        propertyType: string
+        page?: number,
+        limit?: number,
+        sortType?: number,
+        sortBy?: string,
+
+    }
 }

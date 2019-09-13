@@ -261,6 +261,7 @@ export let adminProfileRoute = [
             }
         }
     },
+
     {
         method: 'GET',
         path: '/v1/admin/property',
@@ -269,7 +270,7 @@ export let adminProfileRoute = [
                 let adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 let payload: AdminRequest.PropertyList = request.query;
                 utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true)
-                let responseData = await AdminService.getPropertyByStatus(payload, adminData);
+                let responseData = await AdminService.getProperty(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
             }
             catch (error) {
@@ -277,17 +278,19 @@ export let adminProfileRoute = [
             }
         },
         options: {
-            description: 'Get admin Profile',
+            description: 'Get admin properties',
             tags: ['api', 'anonymous', 'admin', 'Detail'],
             auth: "AdminAuth",
             validate: {
                 query: {
-                    propertyStatus: Joi.number().valid([
-                        Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-                        Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
-                    ]),
                     page: Joi.number(),
                     limit: Joi.number(),
+                    sortBy: Joi.number().valid([
+                        // propertyStatus: Joi.number().valid([
+                        Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+                        Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,                        // ]),
+                    ]),
+                    sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE)
                     // searchTerm: Joi.string(),),
                     // propertyType: Joi.number()
                 },
@@ -318,7 +321,7 @@ export let adminProfileRoute = [
             }
         },
         options: {
-            description: 'Get admin Profile',
+            description: 'admin Property detail',
             tags: ['api', 'anonymous', 'admin', 'Detail'],
             auth: "AdminAuth",
             validate: {
@@ -336,6 +339,49 @@ export let adminProfileRoute = [
         }
     },
 
+    {
+        method: 'PATCH',
+        path: '/v1/admin/property/{propertyId}',
+        handler: async (request, h) => {
+            try {
+                let adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
+                let payload: AdminRequest.UpdatePropertyStatus = {
+                    status: request.payload.status,
+                    propertyId: request.params.propertyId
+                }
 
+                utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true)
+                let responseData = await AdminService.updatePropertyStatus(payload, adminData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
+            }
+            catch (error) {
+                return (UniversalFunctions.sendError(error))
+            }
+        },
+        options: {
+            description: 'admin Property detail',
+            tags: ['api', 'anonymous', 'admin', 'Detail'],
+            auth: "AdminAuth",
+            validate: {
+                params: {
+                    propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                },
+                payload: {
+                    status: Joi.number().valid([
+                        Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+                        Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
+                        // Constant.DATABASE.PROPERTY_STATUS.,
+                    ])
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages
+                }
+            }
+        }
+    },
 
 ]

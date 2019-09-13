@@ -257,57 +257,60 @@ export class PropertyController {
     }
     async userPropertyByStatus(payload, userData) {
         try {
-            // let { page, limit, searchTerm, sortBy, sortType, propertyId, propertyType, type, label, maxPrice, minPrice } = payload;
-            // if (!limit) limit = Constant.SERVER.LIMIT;
-            // else limit = limit;
-            // if (!page) page = 1;
-            // else page = page;
-            // let searchCriteria = {};
-            // let sortingType = {};
-            // sortType = !sortType ? -1 : sortType;
-            // const matchObject = { $match: {} };
 
-            // if (sortBy) {
-            //     switch (sortBy) {
-            //         case 'price':
-            //             sortBy = 'price';
-            //             sortingType = {
-            //                 sale_rent_price: sortType
-            //             }
-            //             break;
-            //         case 'date':
-            //             sortBy = 'date';
-            //             sortingType = {
-            //                 createdAt: sortType
-            //             }
-            //             break;
-            //         default:
-            //             sortBy = 'isFeatured';
-            //             sortingType = {
-            //                 isFeatured: true
-            //             }
-            //             break;
-            //     }
-            // } else {
-            //     sortBy = 'isFeatured';
-            //     sortingType = {
-            //         isFeatured: true
-            //     }
-            // }
+            let { page, limit, searchTerm, sortBy, sortType, propertyId, propertyType, type, label, maxPrice, minPrice } = payload;
+            if (!limit) limit = Constant.SERVER.LIMIT;
+            else limit = limit;
+            if (!page) page = 1;
+            else page = page;
+            let searchCriteria = {};
+            let sortingType = {};
+            sortType = !sortType ? -1 : sortType;
+            const matchObject = { $match: {} };
 
+            if (sortBy) {
+                switch (sortBy) {
+                    case 'price':
+                        sortBy = 'price';
+                        sortingType = {
+                            "property_basic_details.sale_rent_price": sortType
+                        }
+                        break;
+                    case 'date':
+                        sortBy = 'date';
+                        sortingType = {
+                            createdAt: sortType
+                        }
+                        break;
+                    default:
+                        sortBy = 'isFeatured';
+                        sortingType = {
+                            isFeatured: sortType
+                        }
+                        break;
+                }
+            } else {
+                sortBy = 'isFeatured';
+                sortingType = {
+                    isFeatured: sortType,
+                    // createdAt:sortType
+                }
+            }
             let criteria = {
                 $match: {
                     userId: userData._id,
-                    "property_status.number": payload.propertyType,
-                },
+                    "property_status.number": sortBy,
+                }
             }
-            const pipeLine = [
+
+            let pipeline = [
                 criteria,
-                // {
-                //     $sort: sortingType
-                // },
+                {
+                    $sort: sortingType
+                }
             ]
-            let data = await ENTITY.PropertyE.ProprtyByStatus(pipeLine);
+
+            let data = await ENTITY.PropertyE.ProprtyByStatus(pipeline);
             console.log('datadatadatadatadata', data);
 
             return data
@@ -328,12 +331,13 @@ export class PropertyController {
             }
             if (payload['property_basic_details']['property_for_number']) {
                 result = await this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload['property_basic_details']['property_for_number'])
+                // property_status
+                payload['property_basic_details'] = {
+                    property_for_string: result.TYPE,
+                    property_for_displayName: result.DISPLAY_NAME
+                }
             }
-            // property_status
-            payload['property_basic_details'] = {
-                property_for_string: result.TYPE,
-                property_for_displayName: result.DISPLAY_NAME
-            }
+
             property_action = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.DRAFT.NUMBER)
 
             payload['property_status'] = {
@@ -370,31 +374,53 @@ export class PropertyController {
     }
 
 
-    async updatePropertyStatus(payload, userData) {
+    async updatePropertyStatus(payload: PropertyRequest.UpdatePropertyByAction, userData) {
         try {
             let data_to_set = {};
             let criteria = {
+                userId: userData._id,
                 _id: payload.propertyId
             }
-            data_to_set['$set'] = {
-                property_status: {
-                    number: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-                    status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
-                    displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME
+            if (payload.status) {
+                data_to_set['$set'] = {
+                    property_status: {
+                        number: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+                        status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
+                        displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME
+                    }
+                }
+                data_to_set['$push'] = {
+                    propertyActions: {
+                        actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.NUMBER,
+                        actionString: Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE,
+                        actionPerformedBy: {
+                            userId: userData._id,
+                            userTypeNumber: "",
+                            userTypeString: userData.TYPE
+                        },
+                        actionTime: new Date().getTime()
+                    }
+                }
+            } else if (payload.upgradeToFeature) {
+                data_to_set['$set'] = {
+                    isFeatured: payload.upgradeToFeature
+                }
+                data_to_set['$push'] = {
+                    propertyActions: {
+                        actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
+                        actionString: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
+                        displayName: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.DISPLAY_NAME,
+                        actionPerformedBy: {
+                            userId: userData._id,
+                            userTypeNumber: "",
+                            userTypeString: userData.TYPE
+                        },
+                        actionTime: new Date().getTime()
+                    }
                 }
             }
-            data_to_set['$push'] = {
-                propertyActions: {
-                    actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.NUMBER,
-                    actionString: Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE,
-                    actionPerformedBy: {
-                        userId: userData._id,
-                        userTypeNumber: "",
-                        userTypeString: userData.TYPE
-                    },
-                    actionTime: new Date().getTime()
-                }
-            }
+
+
             let update = await ENTITY.PropertyE.updateOneEntity(criteria, data_to_set, { new: true });
             return update
         }

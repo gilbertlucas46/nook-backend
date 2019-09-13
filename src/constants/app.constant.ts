@@ -9,6 +9,12 @@ export let swaggerDefaultResponseMessages = [
     { code: 500, message: 'Internal Server Error' }
 ];
 
+
+export const ENUM = {
+    SORT_TYPE: [1, -1]
+};
+
+
 export let DATABASE = {
     USER_TYPE: {
         ADMIN: {
@@ -148,6 +154,11 @@ export let DATABASE = {
             TYPE: 'PENDING',
             DISPLAY_NAME: "Pending"
         },
+        ISFEATURED: {
+            NUMBER: 8,
+            TYPE: 'ISFEATURED',
+            DISPLAY_NAME: 'IsFEATURED'
+        }
 
     },
 
