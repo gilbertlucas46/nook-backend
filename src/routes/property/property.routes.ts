@@ -3,6 +3,7 @@ import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant'
 import { PropertyService } from '../../controllers'
+import { validateLocation } from '../../utils';
 
 const getTypeAndDisplayName = (actionNumber) => {
     let data = {};
@@ -261,12 +262,11 @@ export let propertyRoute = [
                     ]),
                     page: Joi.number(),
                     limit: Joi.number(),
-                    // searchTerm: Joi.string(),
-                    type: Joi.string(),
-                    label: Joi.array(),
-                    maxPrice: Joi.number(),
-                    minPrice: Joi.number(),
-                    // propertyType: Joi.number()
+                    sortType: Joi.number().valid([
+                        Constant.ENUM.SORT_TYPE
+                    ]),
+                    sortBy: Joi.string().valid(['price', 'date']),
+
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
@@ -356,12 +356,12 @@ export let propertyRoute = [
                         region: Joi.string().min(1).max(100).trim().required(),
                         city: Joi.string().min(1).max(100).trim().required(),
                         barangay: Joi.string().min(1).max(100).trim(),
-                        // location: {
-                        //     coordinates: Joi.array().ordered([
-                        //         Joi.number().min(-180).max(180).required(),
-                        //         Joi.number().min(-90).max(90).required()
-                        //     ]),
-                        // }
+                        location: {
+                            coordinates: Joi.array().ordered([
+                                Joi.number().min(-180).max(180).required(),
+                                Joi.number().min(-90).max(90).required()
+                            ]),
+                        }
                     },
                     property_basic_details: {
                         title: Joi.string().min(1).max(200).trim(),
@@ -402,7 +402,7 @@ export let propertyRoute = [
                         ]),
                     },
                     isFeatured: Joi.boolean().default(false),
-                    propertyImages: Joi.array().required()
+                    propertyImages: Joi.array()
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
@@ -426,9 +426,9 @@ export let propertyRoute = [
                 let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 let payload = {
                     propertyId: request.params.propertyId,
-                    status: request.payload.property_status
+                    status: request.payload.property_status,
+                    upgradeToFeature: request.payload.upgradeToFeature
                 };
-                console.log('payloadpayload', payload);
 
                 let data = await PropertyService.updatePropertyStatus(payload, userData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data))
@@ -450,8 +450,9 @@ export let propertyRoute = [
                         Joi.number().valid([
                             Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
                             // Constant.DATABASE.PROPERTY_STATUS
-                        ]),
 
+                        ]),
+                    upgradeToFeature: Joi.boolean()
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction
