@@ -34,7 +34,7 @@ export class AdminController {
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             // const matchObject = { $match: {} };
-
+            let criteria: Object = {}
 
             if (sortBy) {
                 switch (sortBy) {
@@ -57,7 +57,8 @@ export class AdminController {
                         }
                         break;
                 }
-            } else {
+            }
+            else {
                 sortBy = 'createdAt';
                 sortingType = {
                     createdAt: sortType
@@ -65,10 +66,20 @@ export class AdminController {
             }
 
             // Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER
-            let criteria = {
-                $match: {
-                    "property_status.number": sortBy,
-                },
+            if (sortBy == 'createdAt') {
+                criteria = {
+                    $match: {
+                        $or: [{ "property_status.number": Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+                        { "property_status.number": Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER }]
+                    },
+                }
+            } else {
+                criteria = {
+                    $match: {
+                        'property_status.number': sortBy
+                    },
+                }
+                // }
             }
 
             const pipeLine = [
@@ -77,6 +88,7 @@ export class AdminController {
                     $sort: sortingType
                 },
             ]
+
             let data = await ENTITY.PropertyE.ProprtyByStatus(pipeLine);
             // console.log('datadatadatadatadata', data);
 
