@@ -1,2 +1,2 @@
-export * from './utils'
-export * from './paginate.util'
+export * from './utils';
+export * from './paginate.util';
