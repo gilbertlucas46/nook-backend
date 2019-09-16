@@ -33,7 +33,7 @@ class CityEntity extends BaseEntity {
 				},
 			},
 			{
-				$sort : {
+				$sort: {
 					_id: 1,
 				},
 			},

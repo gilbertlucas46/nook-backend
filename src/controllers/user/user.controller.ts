@@ -41,7 +41,6 @@ export class UserController {
 					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
 				}
 			}
-
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -82,7 +81,7 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-	async portpertyDetail(payload: PropertyRequest.PropertyDetail) {
+	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
 			const criteria = {
 				_id: payload._id,
@@ -108,7 +107,6 @@ export class UserController {
 			} else {
 				payload.isProfileComplete = false;
 			}
-
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 			return updateUser;
 
@@ -128,7 +126,6 @@ export class UserController {
 			} else {
 				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
 				const url = config.get('host') + '/v1/user/verifyLink/' + passwordResetToken;
-				// let url = 'http://localhost:7361' + '/v1/user/verifyLink/' + passwordResetToken
 				const mail = new MailManager(payload.email, 'forGet password', url);
 				mail.sendMail();
 				return {};
@@ -166,7 +163,6 @@ export class UserController {
 				const criteria = { email: result };
 				// let userAttribute = ['passwordResetTokenExpirationTime', 'passwordResetToken']
 				const userExirationTime: any = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
-
 				const today: any = new Date();
 				const diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
 				const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
@@ -186,7 +182,6 @@ export class UserController {
 			if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null) {
 				return Promise.reject('Already_Changed');
 			} // send the error page that the already change the pssword in case of already changes fromthe browser
-
 			const updatePswd = {
 				password: await utils.cryptData(payload.password),
 				updatedAt: new Date().getTime(),
@@ -196,11 +191,12 @@ export class UserController {
 			const today: any = new Date();
 			const diffMs = (today - checkAlreadyUsedToken.passwordResetTokenExpirationTime);
 			const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes in negative minus
-			if (diffMins > 0) { return Promise.reject('Time_Expired'); } else {
+			if (diffMins > 0) {
+				return Promise.reject('Time_Expired');
+			} else {
 				const updatePassword = await ENTITY.UserE.updateOneEntity({ email: result }, updatePswd);
 				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); } else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
 			}
-
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -209,7 +205,6 @@ export class UserController {
 
 	async dashboard(userData: UserRequest.UserData) {
 		try {
-			// let query;
 			const pipeline = [
 				{
 					$facet: {
@@ -263,7 +258,6 @@ export class UserController {
 						},
 					},
 				},
-
 			];
 			const data = await ENTITY.UserE.aggregate(pipeline);
 			return {

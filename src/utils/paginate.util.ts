@@ -4,7 +4,6 @@ export const paginate = async (Model: any, pipeline?: object[], limit?: number, 
 	try {
 		if (limit) {
 			limit = Math.abs(limit);
-			// If limit exceeds max limit
 			if (limit > SERVER.MAX_LIMIT) {
 				limit = SERVER.MAX_LIMIT;
 			}

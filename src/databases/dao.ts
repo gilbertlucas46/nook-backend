@@ -128,7 +128,6 @@ export class DAOManager {
 		try {
 			const ModelName = Models[model];
 			const aggregation = ModelName.aggregate(aggregateArray);
-			//  if (options) { aggregation.options = options; }
 			return await aggregation.exec();
 		} catch (error) {
 			return Promise.reject(error);
@@ -196,7 +195,6 @@ export class DAOManager {
 			const ModelName = Models[model];
 			if (limit) {
 				limit = Math.abs(limit);
-				// If limit exceeds max limit
 				if (limit > SERVER.MAX_LIMIT) { limit = SERVER.MAX_LIMIT; }
 			} else { limit = SERVER.LIMIT; }
 

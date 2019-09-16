@@ -6,7 +6,6 @@ import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 const { ObjectId } = mongo;
-
 export class PropertyController {
 
 	getTypeAndDisplayName(findObj, num: number) {
@@ -128,7 +127,6 @@ export class PropertyController {
 					matchObject.$match['property_basic_details.label'] = item;
 				});
 			}
-
 			// creating the pipeline for mongodb
 			const pipeLine = [
 				matchObject,
@@ -302,7 +300,7 @@ export class PropertyController {
 				},
 			];
 
-			const data = await ENTITY.PropertyE.ProprtyByStatus(pipeline);
+			const data = await ENTITY.PropertyE.PropertyByStatus(pipeline);
 			return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -316,7 +314,6 @@ export class PropertyController {
 			let propertyAction;
 			if (payload.property_basic_details.property_for_number) {
 				result = await this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload.property_basic_details.property_for_number);
-				// property_status
 				payload.property_basic_details = {
 					property_for_string: result.TYPE,
 					property_for_displayName: result.DISPLAY_NAME,
@@ -324,7 +321,6 @@ export class PropertyController {
 			}
 
 			propertyAction = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.DRAFT.NUMBER);
-
 			payload.property_status = {
 				number: Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
 				status: Constant.DATABASE.PROPERTY_STATUS.DRAFT.TYPE,
@@ -403,7 +399,6 @@ export class PropertyController {
 					},
 				};
 			}
-
 			const update = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true });
 			return update;
 		} catch (error) {
@@ -411,6 +406,5 @@ export class PropertyController {
 			return Promise.reject(error);
 		}
 	}
-
 }
 export let PropertyService = new PropertyController();

@@ -1,4 +1,3 @@
-// export { Admin,IAdmin } from './admin.model';
 export { User, IUser } from './user.model';
 export { Session } from './session.model';
 export { Property, IProperty } from './property.model';
