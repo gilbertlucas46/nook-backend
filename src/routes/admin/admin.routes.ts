@@ -5,6 +5,8 @@ import * as Constant from '../../constants/app.constant';
 import { AdminProfileService, AdminService } from '../../controllers';
 import * as config from 'config';
 import * as utils from '../../utils';
+import { UserRequest } from '@src/interfaces/user.interface';
+import { AdminRequest } from '@src/interfaces/admin.interface';
 
 export let adminProfileRoute: ServerRoute[] = [
 	/**

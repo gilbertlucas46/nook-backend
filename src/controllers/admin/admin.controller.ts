@@ -2,6 +2,7 @@ import * as config from 'config';
 import * as Constant from '../../constants/app.constant';
 import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
+import { AdminRequest } from '@src/interfaces/admin.interface';
 const cert = config.get('jwtSecret');
 /**
  * @author

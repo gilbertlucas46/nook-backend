@@ -3,6 +3,8 @@ import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import { mongo } from 'mongoose';
 import * as utils from '@src/utils';
+import { UserRequest } from '@src/interfaces/user.interface';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 const { ObjectId } = mongo;
 
 export class PropertyController {

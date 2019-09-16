@@ -3,6 +3,8 @@ import * as config from 'config';
 import * as TokenManager from '../lib';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
+import { UserRequest } from '@src/interfaces/user.interface';
+
 export class UserClass extends BaseEntity {
 	constructor() {
 		super('User');

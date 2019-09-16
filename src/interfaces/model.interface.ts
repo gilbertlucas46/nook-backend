@@ -1,1 +1,1 @@
-declare type ModelNames = 'User' | 'Property' | 'Admin' | 'Session' | 'AdminSession' | 'Region' | 'City';
+export type ModelNames = 'User' | 'Property' | 'Admin' | 'Session' | 'AdminSession' | 'Region' | 'City';

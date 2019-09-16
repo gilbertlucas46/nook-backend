@@ -1,4 +1,4 @@
-declare namespace UserRequest {
+export namespace UserRequest {
 	export interface UserData {
 		_id?: string;
 		userName: string;

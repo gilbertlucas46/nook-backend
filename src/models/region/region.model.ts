@@ -30,11 +30,9 @@ const regionSchema = new Schema({
 	images: [String],
 	createdAt: {
 		type: Date,
-		default: true,
 	},
 	updatedAt: {
 		type: Date,
-		default: true,
 	},
 }, {
 	collection: 'regions',

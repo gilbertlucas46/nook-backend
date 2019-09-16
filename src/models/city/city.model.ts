@@ -31,11 +31,9 @@ const citySchema = new Schema({
 	images: [Number],
 	createdAt: {
 		type: Date,
-		default: true,
 	},
 	updatedAt: {
 		type: Date,
-		default: true,
 	},
 }, {
 	collection: 'cities',

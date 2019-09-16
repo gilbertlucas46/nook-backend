@@ -5,6 +5,7 @@ import * as utils from '../../utils/index';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import { MailManager } from '../../lib/mail.manager';
+import { AdminRequest } from '@src/interfaces/admin.interface';
 /**
  * @author
  * @description this controller contains actions for admin's account related activities
