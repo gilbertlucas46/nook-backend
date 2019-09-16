@@ -1,7 +1,7 @@
 import * as Services from '../databases/dao';
 import * as mongoose from 'mongoose';
 import { SERVER } from '../constants';
-
+import { ModelNames } from '@src/interfaces/model.interface';
 export class BaseEntity {
 	objectId = mongoose.Types.ObjectId;
 	DAOManager = new Services.DAOManager();

@@ -3,6 +3,7 @@ import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant';
 import { PropertyService } from '../../controllers';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 // import { validateLocation } from '../../utils';
 
 // const getTypeAndDisplayName = (actionNumber) => {

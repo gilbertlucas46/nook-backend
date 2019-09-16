@@ -1,5 +1,6 @@
 import { BaseEntity } from '../base.entity';
 import * as mongoose from 'mongoose';
+import { AdminRequest } from '@src/interfaces/admin.interface';
 
 export class AdminSessionClass extends BaseEntity {
 	constructor() {

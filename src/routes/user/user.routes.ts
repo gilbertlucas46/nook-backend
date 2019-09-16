@@ -5,6 +5,8 @@ import * as Constant from '../../constants/app.constant';
 import { UserService } from '../../controllers';
 import * as config from 'config';
 import * as utils from '../../utils';
+import { UserRequest } from '@src/interfaces/user.interface';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export let userRoute: ServerRoute[] = [
 	/**
@@ -17,7 +19,7 @@ export let userRoute: ServerRoute[] = [
 			try {
 				const payload: UserRequest.Register = request.payload as any;
 				const registerResponse = await UserService.register(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse))
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
@@ -51,7 +53,7 @@ export let userRoute: ServerRoute[] = [
 			try {
 				const payload: UserRequest.Login = request.payload as any;
 				const registerResponse = await UserService.login(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse))
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
@@ -86,7 +88,7 @@ export let userRoute: ServerRoute[] = [
 			try {
 				const payload: PropertyRequest.PropertyDetail = request.params as any;
 				const propertyDetail = await UserService.portpertyDetail(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail))
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
@@ -105,7 +107,7 @@ export let userRoute: ServerRoute[] = [
 	},
 	/**
 	 *
-	 * @description: forget passsword to send the link over mail 
+	 * @description: forget passsword to send the link over mail
 	 */
 	{
 		method: 'PATCH',
@@ -148,7 +150,7 @@ export let userRoute: ServerRoute[] = [
 				// let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
 				const payload: UserRequest.ProfileUpdate = request.payload as any;
 				const responseData = await UserService.updateProfile(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData))
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
@@ -261,7 +263,7 @@ export let userRoute: ServerRoute[] = [
 		},
 	},
 	/**
-	 * @description: user change passsword 
+	 * @description: user change passsword
 	 */
 	{
 		method: 'PATCH',
@@ -335,9 +337,9 @@ export let userRoute: ServerRoute[] = [
 			plugins: {
 				'hapi-swagger': {
 					responseMessages: Constant.swaggerDefaultResponseMessages,
-				}
-			}
-		}
+				},
+			},
+		},
 	},
 	{
 		method: 'GET',
@@ -345,8 +347,6 @@ export let userRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				console.log('userData', userData);
-
 				const responseData = await UserService.dashboard(userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {

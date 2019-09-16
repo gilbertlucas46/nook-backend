@@ -1,4 +1,4 @@
-declare namespace AdminRequest {
+export namespace AdminRequest {
 	export interface AdminData {
 		_id: string;
 		name: string;

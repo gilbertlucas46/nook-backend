@@ -2,6 +2,7 @@
 import * as Models from '../models';
 import { Types, Model, Document } from 'mongoose';
 import { SERVER } from '../constants';
+import { ModelNames } from '@src/interfaces/model.interface';
 
 export class DAOManager {
 	ObjectId = Types.ObjectId;

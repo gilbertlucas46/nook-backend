@@ -7,6 +7,8 @@ import * as utils from '../../utils/index';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import { MailManager } from '../../lib/mail.manager';
+import { UserRequest } from '@src/interfaces/user.interface';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export class UserController {
 
@@ -96,7 +98,7 @@ export class UserController {
 		}
 	}
 
-	async updateProfile(payload: UserRequest.ProfileUpdate ) {
+	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
 			const criteria = {
 				_id: payload._id,
@@ -250,7 +252,6 @@ export class UserController {
 						Active: {
 							$cond: { if: { $size: '$Active' }, then: { $arrayElemAt: ['$Active.Total', 0] }, else: 0 },
 						},
-
 						Featured: {
 							$cond: { if: { $size: ['$Featured'] }, then: { $arrayElemAt: ['$Featured.Total', 0] }, else: 0 },
 						},
