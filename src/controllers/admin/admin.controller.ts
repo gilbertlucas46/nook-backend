@@ -256,7 +256,7 @@ export class AdminController {
 			if (!getPropertyData) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
 			}
-			return getPropertyData;
+			return getPropertyData[0];
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
