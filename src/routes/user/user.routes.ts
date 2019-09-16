@@ -87,7 +87,7 @@ export let userRoute: ServerRoute[] = [
 		async handler(request, h) {
 			try {
 				const payload: PropertyRequest.PropertyDetail = request.params as any;
-				const propertyDetail = await UserService.portpertyDetail(payload);
+				const propertyDetail = await UserService.propertyDetail(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -234,7 +234,6 @@ export let userRoute: ServerRoute[] = [
 				const payload = request.params;
 				await UserService.verifyLink(payload);
 				// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData))
-				// console.log('config.get('baseUrl') + `link`)', config.get('baseUrl') + payload.link);
 				return h.redirect(config.get('baseUrl') + payload.link);
 			} catch (error) {
 				if (error.JsonWebTokenError) {
@@ -320,9 +319,6 @@ export let userRoute: ServerRoute[] = [
 					return h.redirect(config.get('invalidUrl') + 'Something went wrong');
 				}
 			}
-			// return h.redirect(config.get('HOME_PAGE'))
-			// return (UniversalFunctions.sendError(error))
-
 		},
 		options: {
 			description: 'Get user Profile',

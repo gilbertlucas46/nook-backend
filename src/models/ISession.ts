@@ -1,5 +1,4 @@
 import { Document } from 'mongoose';
-// import * as Constant from '../constants';
 export interface ISession extends Document {
 	userId?: string;
 	validAttempt: boolean;

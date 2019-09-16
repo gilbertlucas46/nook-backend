@@ -4,12 +4,6 @@ import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant';
 import { PropertyService } from '../../controllers';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-// import { validateLocation } from '../../utils';
-
-// const getTypeAndDisplayName = (actionNumber) => {
-// 	let data = {};
-
-// };
 
 export let propertyRoute: ServerRoute[] = [
 	/**
@@ -253,7 +247,6 @@ export let propertyRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
-						// Constant.DATABASE.PROPERTY_STATUS.FEATURED,
 						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 					]),
@@ -444,8 +437,6 @@ export let propertyRoute: ServerRoute[] = [
 					property_status:
 						Joi.number().valid([
 							Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-							// Constant.DATABASE.PROPERTY_STATUS
-
 						]),
 					upgradeToFeature: Joi.boolean(),
 				},

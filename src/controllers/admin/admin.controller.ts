@@ -17,15 +17,12 @@ export class AdminController {
 		const result = data.filter((x: any) => {
 			return x.NUMBER === num;
 		});
-		console.log('resultresultresult', result[0]);
-
 		return result[0];
 	}
 
 	async getProperty(payload, adminData) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
-
 			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			let sortingType = {};
@@ -73,19 +70,13 @@ export class AdminController {
 						'property_status.number': sortBy,
 					},
 				};
-				// }
 			}
 
 			const pipeLine = [
 				criteria,
-				{
-					$sort: sortingType,
-				},
+				{ $sort: sortingType },
 			];
-
-			const data = await ENTITY.PropertyE.ProprtyByStatus(pipeLine);
-			// console.log('datadatadatadatadata', data);
-
+			const data = await ENTITY.PropertyE.PropertyByStatus(pipeLine);
 			return data;
 
 		} catch (error) {
@@ -139,25 +130,24 @@ export class AdminController {
 				};
 			}
 
-			// if (payload.status == Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
-			// dataToSet['$set'] = {
-			//         property_status: {
-			//             number: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-			//             status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
-			//             displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME
-			//         }
-			//     }
-			// }
-
-			// else {
-			// if (payload.status == Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER) {
-			//     dataToSet['$set'] = {
-			//         property_status: {
-			//             number: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-			//             status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
-			//             displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME
-			//         }
-			//     }
+			// if (payload.status === Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
+			// 	dataToSet.$set = {
+			// 		property_status: {
+			// 			number: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+			// 			status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
+			// 			displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME,
+			// 		},
+			// 	};
+			// } else {
+			// 	if (payload.status === Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER) {
+			// 		dataToSet.$set = {
+			// 			property_status: {
+			// 				number: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+			// 				status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
+			// 				displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME,
+			// 			},
+			// 		};
+			// 	}
 			// }
 
 			dataToSet.$push = {
@@ -172,7 +162,6 @@ export class AdminController {
 					actionTime: new Date().getTime(),
 				},
 			};
-
 			const updateStatus = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet);
 			return updateStatus;
 

@@ -71,7 +71,7 @@ export let plugin = {
 					return ({ isValid: false, credentials: { token, userData: {} } });
 
 				} else {
-					// validate user and pswd here
+					// validate user and pwd here
 					const checkFunction = await basicAuthFunction(token);
 					if (!checkFunction) {
 						return ({ isValid: false, credentials: { token, userData: {} } });

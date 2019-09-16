@@ -103,7 +103,7 @@ export let generateOtp = async () => {
 	return otp;
 };
 
-export let formatUserData = (userObj: {[key: string]: any}) => {
+export let formatUserData = (userObj: { [key: string]: any }) => {
 	if (userObj.emailVerify) {
 		userObj.emailVerify = userObj.emailVerify.status;
 	}

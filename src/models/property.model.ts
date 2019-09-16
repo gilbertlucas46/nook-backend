@@ -165,13 +165,12 @@ const propertySchema = new Schema({
 	},
 	property_address: {
 		address: { type: String, required: true },
-		region: { type: String },
-		city: { type: String },
+		region: { type: Schema.Types.ObjectId, ref: 'Region' }, // Refer to region schema
+		city: { type: Schema.Types.ObjectId, ref: 'City' },     // Refer to city schema
 		barangay: { type: String },
 		location: {
 			type: {
 				type: String,
-				// enum: ['Point'],
 				default: 'Point',
 				required: true,
 			},

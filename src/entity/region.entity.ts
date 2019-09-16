@@ -3,7 +3,6 @@ import { RegionDocument, IRegion } from '@src/models/region';
 import { REGIONS } from '@src/constants/region.constants';
 import { ICity } from '@src/models/city';
 import { cityEntity } from './cities.entity';
-// import { Location } from '@src/interfaces/region.interface';
 
 class RegionEntity extends BaseEntity {
 	constructor() {
@@ -30,11 +29,9 @@ class RegionEntity extends BaseEntity {
 		return !await this.DAOManager.count(this.modelName, {});
 	}
 	async bootstrap() {
-		// this.store();
 		if (await this.isEmpty()) {
 			const regionsData: IRegion[] = REGIONS.map(({cities, ...data}) => data);
 			const regionDocs: RegionDocument[] = await this.store(regionsData);
-			// console.log('Region Documents =>>>', regionDocs);
 			const citiesData: ICity[] = regionDocs.map<ICity[]>((doc: RegionDocument, index: number) => {
 				return REGIONS[index].cities.map((city) => {
 					return {
