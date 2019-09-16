@@ -16,7 +16,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.saveData(this.modelName, saveData);
 			return data;
 		} catch (error) {
-			consolelog(`Error in Base Entity createOneEntity method + ${this.modelName}`, error, true);
+			consolelog(`Error in Base Entity createOneEntity method ${this.modelName}`, error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -26,7 +26,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.insertMany(this.modelName, saveData, {});
 			return data;
 		} catch (error) {
-			consolelog(`Error in Base Entity in MultipleEntity method + ${this.modelName}`, error, true);
+			consolelog(`Error in Base Entity in MultipleEntity method ${this.modelName}`, error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -36,7 +36,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.findOne(this.modelName, criteria, projection, { lean: true });
 			return data;
 		} catch (error) {
-			consolelog(`Error in Base Entity in getOneEntity method+ ${this.modelName}`, error, true);
+			consolelog(`Error in Base Entity in getOneEntity method ${this.modelName}`, error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -49,7 +49,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate, option);
 			return data;
 		} catch (error) {
-			consolelog(`Error in Base Entity in updateOneEntity  method + ${this.modelName}`, error, true);
+			consolelog(`Error in Base Entity in updateOneEntity method ${this.modelName}`, error, true);
 			return Promise.reject(error);
 		}
 
@@ -60,7 +60,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.findOne(this.modelName, { _id: id }, projection, { lean: true });
 			return data;
 		} catch (error) {
-			consolelog(`Error in Base Entity in  getById method + ${this.modelName}`, error, true);
+			consolelog(`Error in Base Entity in  getById method ${this.modelName}`, error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -70,7 +70,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.getData(this.modelName, criteria, projection, { lean: true });
 			return data;
 		} catch (error) {
-			consolelog(`Error in Base Entity in getMultiple method + ${this.modelName}`, error, true);
+			consolelog(`Error in Base Entity in getMultiple method ${this.modelName}`, error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -80,7 +80,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.distinct(this.modelName, key, criteria);
 			return data;
 		} catch (error) {
-			consolelog(`Error in Base Entity in getDistinct method + ${this.modelName}`, error, true);
+			consolelog(`Error in Base Entity in getDistinct method ${this.modelName}`, error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -93,7 +93,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.updateMany(this.modelName, criteria, projection, option);
 			return data;
 		} catch (error) {
-			consolelog(`Error in Base Entity in updateMultiple method + ${this.modelName}`, error, true);
+			consolelog(`Error in Base Entity in updateMultiple method ${this.modelName}`, error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -106,7 +106,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.aggregateData(this.modelName, pipeline, option);
 			return data;
 		} catch (error) {
-			consolelog(`Error in Base Entity in aggregate method + ${this.modelName}`, error, true);
+			consolelog(`Error in Base Entity in aggregate method ${this.modelName}`, error, true);
 			return Promise.reject(error);
 		}
 	}

@@ -9,6 +9,7 @@ const cert: any = config.get('jwtSecret');
 import { MailManager } from '../../lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import { Schema, model , Types} from 'mongoose';
 
 export class UserController {
 
@@ -83,13 +84,93 @@ export class UserController {
 	}
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
-			const criteria = {
-				_id: payload._id,
-			};
-			if (payload._id.length < 24 && payload._id.length > 24) {
-				return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
-			}
-			const getDetail = await ENTITY.PropertyE.getOneEntity(criteria, {});
+			const pipeline = [
+				{
+					$match: {
+						_id: Types.ObjectId(payload._id),
+					},
+				},
+				{
+					$lookup: {
+						from: 'regions',
+						let: { regionId: '$property_address.region' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$regionId'],
+									},
+								},
+							},
+							{
+								$project: {
+									fullName: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'regionData',
+					},
+				},
+				{
+					$lookup: {
+						from: 'cities',
+						let: { cityId: '$property_address.city' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$cityId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'cityData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$regionData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$unwind: {
+						path: '$cityData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$project: {
+						'property_features': 1,
+						'updatedAt': 1,
+						'createdAt': 1,
+						'property_details': 1,
+						'property_address.region': '$regionData.fullName',
+						'property_address.regionId': '$regionData._id',
+						'property_address.city': '$cityData.name',
+						'property_address.cityId': '$cityData._id',
+						'property_address.address': '$property_address.address',
+						'property_address.barangay': '$property_address.barangay',
+						'property_address.location': '$property_address.location',
+						'propertyId': '$_id',
+						'propertyShortId': '$propertyId',
+						'property_basic_details': 1,
+						'property_added_by': 1,
+						'propertyImages': 1,
+						'isFeatured': 1,
+						'property_status': 1,
+					},
+				},
+			];
+
+			const getDetail = await ENTITY.PropertyE.aggregate(pipeline, {});
 			if (!getDetail) { return Constant.STATUS_MSG.ERROR.E400.PROPERTY_NOT_REGISTERED; }
 			return getDetail;
 		} catch (error) {
