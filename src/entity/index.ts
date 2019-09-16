@@ -1,5 +1,7 @@
-export { UserE } from '../entity/user.entity'
-export { SessionE } from '../entity/session.entity'
-export { PropertyE } from '../entity/property.entity'
-export { AdminE } from './admin/admin.entity'
-export { AdminSessionE } from './admin/adminSession.entity'
+export { UserE } from '../entity/user.entity';
+export { SessionE } from '../entity/session.entity';
+export { PropertyE } from '../entity/property.entity';
+export { AdminE } from './admin/admin.entity';
+export { AdminSessionE } from './admin/adminSession.entity';
+export * from './region.entity';
+export * from './cities.entity';
