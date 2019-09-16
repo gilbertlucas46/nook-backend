@@ -4,6 +4,8 @@ import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 const cert = config.get('jwtSecret');
+import { Types } from 'mongoose';
+
 /**
  * @author
  * @description this controller contains actions for admin's account related activities
@@ -74,6 +76,84 @@ export class AdminController {
 
 			const pipeLine = [
 				criteria,
+				{
+					$lookup: {
+						from: 'regions',
+						let: { regionId: '$property_address.region' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$regionId'],
+									},
+								},
+							},
+							{
+								$project: {
+									fullName: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'regionData',
+					},
+				},
+				{
+					$lookup: {
+						from: 'cities',
+						let: { cityId: '$property_address.city' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$cityId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'cityData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$regionData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$unwind: {
+						path: '$cityData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$project: {
+						'property_features': 1,
+						'updatedAt': 1,
+						'createdAt': 1,
+						'property_details': 1,
+						'property_address.region': '$regionData.fullName',
+						'property_address.regionId': '$regionData._id',
+						'property_address.city': '$cityData.name',
+						'property_address.cityId': '$cityData._id',
+						'property_address.address': '$property_address.address',
+						'property_address.barangay': '$property_address.barangay',
+						'property_address.location': '$property_address.location',
+						'propertyId': '$_id',
+						'propertyShortId': '$propertyId',
+						'property_basic_details': 1,
+						'property_added_by': 1,
+						'propertyImages': 1,
+						'isFeatured': 1,
+						'property_status': 1,
+					},
+				},
 				{ $sort: sortingType },
 			];
 			const data = await ENTITY.PropertyE.PropertyByStatus(pipeLine);
@@ -87,10 +167,92 @@ export class AdminController {
 
 	async getPropertyById(payload: AdminRequest.PropertyDetail) {
 		try {
-			const criteria = {
-				_id: payload.propertyId,
-			};
-			const getPropertyData = await ENTITY.PropertyE.getOneEntity(criteria, {});
+			const criteria = [
+				{
+					$match: {
+						_id: Types.ObjectId(payload.propertyId),
+					},
+				},
+				{
+					$lookup: {
+						from: 'regions',
+						let: { regionId: '$property_address.region' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$regionId'],
+									},
+								},
+							},
+							{
+								$project: {
+									fullName: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'regionData',
+					},
+				},
+				{
+					$lookup: {
+						from: 'cities',
+						let: { cityId: '$property_address.city' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$cityId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'cityData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$regionData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$unwind: {
+						path: '$cityData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$project: {
+						'property_features': 1,
+						'updatedAt': 1,
+						'createdAt': 1,
+						'property_details': 1,
+						'property_address.region': '$regionData.fullName',
+						'property_address.regionId': '$regionData._id',
+						'property_address.city': '$cityData.name',
+						'property_address.cityId': '$cityData._id',
+						'property_address.address': '$property_address.address',
+						'property_address.barangay': '$property_address.barangay',
+						'property_address.location': '$property_address.location',
+						'propertyId': '$_id',
+						'propertyShortId': '$propertyId',
+						'property_basic_details': 1,
+						'property_added_by': 1,
+						'propertyImages': 1,
+						'isFeatured': 1,
+						'property_status': 1,
+					},
+				},
+			];
+			const getPropertyData = await ENTITY.PropertyE.aggregate(criteria, {});
 			if (!getPropertyData) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
 			}

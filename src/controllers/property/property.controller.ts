@@ -45,7 +45,7 @@ export class PropertyController {
 				actionDisplayName: propertyAction.DISPLAY_NAME,
 				actionPerformedBy: {
 					userId: userData._id,
-					//    userTypeNumber:userData.userTypeNumber,
+					// userTypeNumber:userData.userTypeNumber,
 					userTypeString: userData.type,
 					actionTime: new Date().getTime(),
 				},
@@ -131,9 +131,86 @@ export class PropertyController {
 			const pipeLine = [
 				matchObject,
 				searchCriteria,
+				{
+					$lookup: {
+						from: 'regions',
+						let: { regionId: '$property_address.region' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$regionId'],
+									},
+								},
+							},
+							{
+								$project: {
+									fullName: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'regionData',
+					},
+				},
+				{
+					$lookup: {
+						from: 'cities',
+						let: { cityId: '$property_address.city' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$cityId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'cityData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$regionData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$unwind: {
+						path: '$cityData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$project: {
+						'property_features': 1,
+						'updatedAt': 1,
+						'createdAt': 1,
+						'property_details': 1,
+						'property_address.region': '$regionData.fullName',
+						'property_address.regionId': '$regionData._id',
+						'property_address.city': '$cityData.name',
+						'property_address.cityId': '$cityData._id',
+						'property_address.address': '$property_address.address',
+						'property_address.barangay': '$property_address.barangay',
+						'property_address.location': '$property_address.location',
+						'propertyId': '$_id',
+						'propertyShortId': '$propertyId',
+						'property_basic_details': 1,
+						'property_added_by': 1,
+						'propertyImages': 1,
+						'isFeatured': 1,
+						'property_status': 1,
+					},
+				},
 				{ $sort: sortingType },
 			];
-
 			const propertyData = await ENTITY.PropertyE.PropertyList(pipeLine);
 			return propertyData;
 
@@ -209,13 +286,91 @@ export class PropertyController {
 			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
 			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
 			if (propertyId) { matchObject.$match.propertyId = new ObjectId(propertyId); }
-			if (propertyType && propertyType !== 3) { matchObject.$match['property_basic_details.status'] = propertyType; }
+			if (propertyType && propertyType !== 3) { matchObject.$match['property_basic_details.property_for_number'] = propertyType; }
 			if (type && type !== 'all') { matchObject.$match['property_basic_details.type'] = type; }
 
 			// creating the pipeline for mongodb
 			const pipeLine = [
 				matchObject,
 				searchCriteria,
+				{
+					$lookup: {
+						from: 'regions',
+						let: { regionId: '$property_address.region' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$regionId'],
+									},
+								},
+							},
+							{
+								$project: {
+									fullName: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'regionData',
+					},
+				},
+				{
+					$lookup: {
+						from: 'cities',
+						let: { cityId: '$property_address.city' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$cityId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'cityData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$regionData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$unwind: {
+						path: '$cityData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$project: {
+						'property_features': 1,
+						'updatedAt': 1,
+						'createdAt': 1,
+						'property_details': 1,
+						'property_address.region': '$regionData.fullName',
+						'property_address.regionId': '$regionData._id',
+						'property_address.city': '$cityData.name',
+						'property_address.cityId': '$cityData._id',
+						'property_address.address': '$property_address.address',
+						'property_address.barangay': '$property_address.barangay',
+						'property_address.location': '$property_address.location',
+						'propertyId': '$_id',
+						'propertyShortId': '$propertyId',
+						'property_basic_details': 1,
+						'property_added_by': 1,
+						'propertyImages': 1,
+						'isFeatured': 1,
+						'property_status': 1,
+					},
+				},
 				{
 					$sort: sortingType,
 				},
@@ -283,7 +438,6 @@ export class PropertyController {
 				sortBy = 'isFeatured';
 				sortingType = {
 					isFeatured: sortType,
-					// createdAt:sortType
 				};
 			}
 			const criteria = {
@@ -296,8 +450,84 @@ export class PropertyController {
 			const pipeline = [
 				criteria,
 				{
-					$sort: sortingType,
+					$lookup: {
+						from: 'regions',
+						let: { regionId: '$property_address.region' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$regionId'],
+									},
+								},
+							},
+							{
+								$project: {
+									fullName: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'regionData',
+					},
 				},
+				{
+					$lookup: {
+						from: 'cities',
+						let: { cityId: '$property_address.city' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$cityId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'cityData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$regionData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$unwind: {
+						path: '$cityData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$project: {
+						'property_features': 1,
+						'updatedAt': 1,
+						'createdAt': 1,
+						'property_details': 1,
+						'property_address.region': '$regionData.fullName',
+						'property_address.regionId': '$regionData._id',
+						'property_address.city': '$cityData.name',
+						'property_address.cityId': '$cityData._id',
+						'property_address.address': '$property_address.address',
+						'property_address.barangay': '$property_address.barangay',
+						'property_address.location': '$property_address.location',
+						'propertyId': '$_id',
+						'propertyShortId': '$propertyId',
+						'property_basic_details': 1,
+						'property_added_by': 1,
+						'propertyImages': 1,
+						'isFeatured': 1,
+						'property_status': 1,
+					},
+				},
+				{ $sort: sortingType },
 			];
 
 			const data = await ENTITY.PropertyE.PropertyByStatus(pipeline);

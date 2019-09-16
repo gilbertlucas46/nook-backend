@@ -102,7 +102,7 @@ export interface IProperty extends Document {
 	};
 	propertyImages: string[];
 	isFeatured: boolean;
-	Property_status: {
+	property_status: {
 		number: number;
 		string: string;
 		displayName: string;

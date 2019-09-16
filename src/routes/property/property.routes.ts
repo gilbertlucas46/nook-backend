@@ -1,4 +1,4 @@
-import { ServerRoute } from 'hapi';
+import { ServerRoute, Request, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants/app.constant';
@@ -12,7 +12,7 @@ export let propertyRoute: ServerRoute[] = [
 	{
 		method: 'POST',
 		path: '/v1/user/property',
-		handler: async (request, h) => {
+		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: PropertyRequest.PropertyData = request.payload as any;
@@ -80,8 +80,8 @@ export let propertyRoute: ServerRoute[] = [
 					},
 					property_address: {
 						address: Joi.string().min(1).max(300).trim().required(),
-						region: Joi.string().min(1).max(100).trim().required(),
-						city: Joi.string().min(1).max(100).trim().required(),
+						region: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+						city: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 						barangay: Joi.string().min(1).max(100).trim(),
 						location: {
 							coordinates: Joi.array().ordered([
@@ -147,7 +147,7 @@ export let propertyRoute: ServerRoute[] = [
 	{
 		method: 'GET',
 		path: '/v1/user/propertyList',
-		handler: async (request, h) => {
+		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const propertyList = await PropertyService.searchProperties(request.query);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList));
@@ -185,7 +185,7 @@ export let propertyRoute: ServerRoute[] = [
 	{
 		method: 'GET',
 		path: '/v1/search/nearbyProperties',
-		handler: async (request, h) => {
+		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const data = await PropertyService.nearbyProperties(request.query);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
@@ -227,7 +227,7 @@ export let propertyRoute: ServerRoute[] = [
 	{
 		method: 'GET',
 		path: '/v1/user/status/property',
-		handler: async (request, h) => {
+		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload = request.query;
@@ -256,7 +256,6 @@ export let propertyRoute: ServerRoute[] = [
 						Constant.ENUM.SORT_TYPE,
 					]),
 					sortBy: Joi.string().valid(['price', 'date']),
-
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -274,7 +273,7 @@ export let propertyRoute: ServerRoute[] = [
 	{
 		method: 'POST',
 		path: '/v1/user/save-as-draft',
-		handler: async (request, h) => {
+		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: PropertyRequest.PropertyData = request.payload as any;
@@ -410,7 +409,7 @@ export let propertyRoute: ServerRoute[] = [
 	{
 		method: 'PATCH',
 		path: '/v1/properties/{propertyId}/status',
-		handler: async (request, h) => {
+		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload = {
