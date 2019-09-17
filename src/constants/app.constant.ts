@@ -203,6 +203,23 @@ export let DATABASE = {
         FEMALE: 'FEMALE',
         OTHER: 'OTHER'
     },
+    ENQUIRY_STATUS: {
+        PENDING: "PENDING",
+        RESOLVED: "RESOLVED"
+    },
+
+    ENQUIRY_TYPE: {
+        GUEST: {
+            NUMBER: 1,
+            TYPE: 'REGISTERED',
+            DISPLAY_NAME: 'Registered'
+        },
+        REGISTERED_USER: {
+            NUMBER: 2,
+            TYPE: 'NOT_REGISTERED',
+            DISPLAY_NAME: 'Not Registered'
+        }
+    },
 
     LANGUAGE: {
         EN: 'en',
@@ -592,6 +609,12 @@ export let STATUS_MSG = {
                 message: 'Property Added Successfully',
                 type: 'CREATED'
             },
+            ENQUIRY_SUBMITTED: {
+                statusCode: 201,
+                message: 'Success',
+                type: 'ENQUIRY_CREATED'
+            }
+
         },
 
 

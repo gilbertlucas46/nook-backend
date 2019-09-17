@@ -6,7 +6,7 @@ import { AdminProfileService, AdminService } from '../../controllers'
 import * as config from "config";
 import * as utils from '../../utils';
 
-export let adminProfileRoute = [
+export let adminRoutes = [
     /**
      * @description:Login via mail
      */
