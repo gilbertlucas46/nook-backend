@@ -267,7 +267,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: AdminRequest.PropertyList = request.query as any;
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
-				const responseData = await AdminService.getProperty(payload, adminData);
+				const responseData = await AdminService.getProperty(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));

@@ -383,6 +383,11 @@ export let STATUS_MSG = {
 				message: 'Invalid Id Provided ',
 				type: 'INVALID_ID',
 			},
+			INVALID_PROPERTY_STATUS: {
+				statusCode: 400,
+				message: 'Invalid Property Status ',
+				type: 'INVALID_PROPERTY_STATUS',
+			},
 			APP_ERROR: {
 				statusCode: 400,
 				message: 'Application Error',

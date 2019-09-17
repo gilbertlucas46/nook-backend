@@ -11,8 +11,7 @@ export interface IPropertyActions extends Document {
 
 export interface IActionPerformedBy extends Document {
 	userId: string;
-	userTypeNumber: number;
-	userTypeString: string;
+	userType: string;
 	actionTime: Date;
 }
 
@@ -363,17 +362,7 @@ const propertySchema = new Schema({
 			},
 			actionPerformedBy: {
 				userId: { type: Schema.Types.ObjectId },
-				userTypeNumber: {
-					type: Number,
-					enum: [
-						Constant.DATABASE.USER_TYPE.AGENT.NUMBER,
-						Constant.DATABASE.USER_TYPE.ADMIN.NUMBER,
-						Constant.DATABASE.USER_TYPE.OWNER.NUMBER,
-						Constant.DATABASE.USER_TYPE.TENANT.NUMBER,
-						Constant.DATABASE.USER_TYPE.EMPLOYEE.NUMBER,
-					],
-				},
-				userTypeString: {
+				userType: {
 					type: String,
 					enum: [
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
@@ -397,4 +386,4 @@ propertySchema.index({
 	'property_address.location': '2dsphere',
 });
 
-export let Property = model<IProperty>('Property', propertySchema);
+export let Property = model<IProperty>('properties', propertySchema);

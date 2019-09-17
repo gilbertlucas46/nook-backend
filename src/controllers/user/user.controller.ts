@@ -1,26 +1,22 @@
 
 import * as config from 'config';
-import * as UniversalFunctions from '../../utils';
-import * as Constant from '../../constants/app.constant';
-import * as ENTITY from '../../entity';
-import * as utils from '../../utils/index';
+import * as UniversalFunctions from '@src/utils';
+import * as Constant from '@src/constants/app.constant';
+import * as ENTITY from '@src/entity';
+import * as utils from '@src/utils/index';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
-import { MailManager } from '../../lib/mail.manager';
+import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-import { Schema, model , Types} from 'mongoose';
+import { Types } from 'mongoose';
 
 export class UserController {
 
 	async register(payload: UserRequest.Register) {
 		try {
-			const checkMail = {
-				email: payload.email.trim().toLowerCase(),
-			};
-			const checkUserName = {
-				userName: payload.userName.trim().toLowerCase(),
-			};
+			const checkMail = { email: payload.email.trim().toLowerCase() };
+			const checkUserName = { userName: payload.userName.trim().toLowerCase() };
 			const userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
 			if (userNameCheck && userNameCheck._id) {
 				return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
@@ -84,95 +80,9 @@ export class UserController {
 	}
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
-			const pipeline = [
-				{
-					$match: {
-						_id: Types.ObjectId(payload._id),
-					},
-				},
-				{
-					$lookup: {
-						from: 'regions',
-						let: { regionId: '$property_address.region' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$_id', '$$regionId'],
-									},
-								},
-							},
-							{
-								$project: {
-									fullName: 1,
-									_id: 1,
-								},
-							},
-						],
-						as: 'regionData',
-					},
-				},
-				{
-					$lookup: {
-						from: 'cities',
-						let: { cityId: '$property_address.city' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$_id', '$$cityId'],
-									},
-								},
-							},
-							{
-								$project: {
-									name: 1,
-									_id: 1,
-								},
-							},
-						],
-						as: 'cityData',
-					},
-				},
-				{
-					$unwind: {
-						path: '$regionData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
-				{
-					$unwind: {
-						path: '$cityData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
-				{
-					$project: {
-						'property_features': 1,
-						'updatedAt': 1,
-						'createdAt': 1,
-						'property_details': 1,
-						'property_address.region': '$regionData.fullName',
-						'property_address.regionId': '$regionData._id',
-						'property_address.city': '$cityData.name',
-						'property_address.cityId': '$cityData._id',
-						'property_address.address': '$property_address.address',
-						'property_address.barangay': '$property_address.barangay',
-						'property_address.location': '$property_address.location',
-						'propertyId': '$_id',
-						'propertyShortId': '$propertyId',
-						'property_basic_details': 1,
-						'property_added_by': 1,
-						'propertyImages': 1,
-						'isFeatured': 1,
-						'property_status': 1,
-					},
-				},
-			];
-
-			const getDetail = await ENTITY.PropertyE.aggregate(pipeline, {});
-			if (!getDetail) { return Constant.STATUS_MSG.ERROR.E400.PROPERTY_NOT_REGISTERED; }
-			return getDetail;
+			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
+			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID) }
+			return getPropertyData;
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -180,9 +90,7 @@ export class UserController {
 
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
-			const criteria = {
-				_id: payload._id,
-			};
+			const criteria = {_id: payload._id };
 			if (payload.firstName && payload.lastName && payload.type) {
 				payload.isProfileComplete = true;
 			} else {
@@ -190,7 +98,6 @@ export class UserController {
 			}
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 			return updateUser;
-
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -340,7 +247,7 @@ export class UserController {
 					},
 				},
 			];
-			const data = await ENTITY.UserE.aggregate(pipeline);
+			const data = await ENTITY.UserE.aggregate({ pipeline });
 			return {
 				...data[0],
 				isFeaturedProfile: !!userData.isFeaturedProfile,
