@@ -5,11 +5,10 @@ export namespace EnquiryRequest {
 		phoneNumber: string;
 		email: string;
 		message?: string;
-		userId: string;
+		userId?: string;
 		propertyId: string;
 		type: string;
-		// propertOwner_id?: string
-		// enquiryBy?: string
+		propertOwner_id?: string;
 	}
 
 	export interface GetEnquiry {
