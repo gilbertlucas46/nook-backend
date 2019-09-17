@@ -188,7 +188,22 @@ export let DATABASE = {
 		HALFYEARLY: 'half yearly',
 		YEARLY: 'yearly',
 	},
-
+	ENQUIRY_TYPE: {
+		GUEST: {
+			NUMBER: 1,
+			TYPE: 'GUEST',
+			DISPLAY_NAME: 'GUEST',
+		},
+		REGISTERED_USER: {
+			NUMBER: 2,
+			TYPE: 'REGISTERED_USER',
+			DISPLAY_NAME: 'Registered_User',
+		},
+	},
+	ENQUIRY_STATUS: {
+		PENDING: 'PENDING',
+		RESOLVED: 'RESOLVED',
+	},
 	DEVICE_TYPES: {
 		IOS: 'IOS',
 		ANDROID: 'ANDROID',
@@ -590,6 +605,11 @@ export let STATUS_MSG = {
 			PROPERTY_ADDED: {
 				statusCode: 201,
 				message: 'Property Added Successfully',
+				type: 'CREATED',
+			},
+			ENQUIRY_SUBMITTED: {
+				statusCode: 201,
+				message: 'Enquiry Submitted',
 				type: 'CREATED',
 			},
 		},

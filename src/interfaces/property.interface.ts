@@ -1,5 +1,4 @@
 export namespace PropertyRequest {
-
 	export interface PropertyData {
 		propertyId?: string;    // in the case of update
 		createdAt?: number;
