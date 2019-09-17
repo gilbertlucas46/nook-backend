@@ -9,7 +9,6 @@ const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-import { Types } from 'mongoose';
 
 export class UserController {
 
@@ -90,7 +89,7 @@ export class UserController {
 
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
-			const criteria = {_id: payload._id };
+			const criteria = { _id: payload._id };
 			if (payload.firstName && payload.lastName && payload.type) {
 				payload.isProfileComplete = true;
 			} else {
@@ -199,20 +198,32 @@ export class UserController {
 						Active: [
 							{
 								$match: {
-									$and: [{ 'Property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER }, { userId: userData._id }],
+									$and: [
+										{ 'Property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+										{ userId: userData._id }],
 								},
 							},
 							{ $count: 'Total' },
 						],
 						Featured: [
-							{ $match: { $and: [{ isFeatured: true }, { userId: userData._id }] } },
+							{
+								$match: {
+									$and: [
+										{ isFeatured: true },
+										{ userId: userData._id },
+									],
+								},
+							},
 							{ $count: 'Total' },
 						],
 						soldPropertyLast30Days: [
 							{
 								$match: {
-									$and: [{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED }, { 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER }, { userId: userData._id },
-									{ property_sold_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+									$and: [
+										{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED },
+										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER },
+										{ userId: userData._id },
+										{ property_sold_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
 									],
 								},
 							},
@@ -221,8 +232,11 @@ export class UserController {
 						rentedPropertyLast30Days: [
 							{
 								$match: {
-									$and: [{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED }, { 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER }, { userId: userData._id },
-									{ property_rent_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+									$and: [
+										{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED },
+										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER },
+										{ userId: userData._id },
+										{ property_rent_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
 									],
 								},
 							},
@@ -247,7 +261,7 @@ export class UserController {
 					},
 				},
 			];
-			const data = await ENTITY.UserE.aggregate({ pipeline });
+			const data = await ENTITY.UserE.aggregate(pipeline);
 			return {
 				...data[0],
 				isFeaturedProfile: !!userData.isFeaturedProfile,
