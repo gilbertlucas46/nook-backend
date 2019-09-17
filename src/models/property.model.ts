@@ -111,6 +111,7 @@ export interface IProperty extends Document {
 
 const propertySchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
+    propertyName: { type: String }, // added for the enquiry
     userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     createdAt: { type: Number, default: new Date().getTime() },
     updatedAt: { type: Number, default: new Date().getTime() },

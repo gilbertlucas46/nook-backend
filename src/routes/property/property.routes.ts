@@ -156,7 +156,7 @@ export let propertyRoute = [
         handler: async (request, h) => {
             try {
                 let propertyList = await PropertyService.searchProperties(request.query);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList))
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyList))
             }
             catch (error) {
                 return (UniversalFunctions.sendError(error))
