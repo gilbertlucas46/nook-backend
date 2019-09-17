@@ -1,25 +1,22 @@
-declare namespace EnquiryRequest {
+export namespace EnquiryRequest {
 
-    export interface createEnquiry {
+	export interface CreateEnquiry {
+		name: string;
+		phoneNumber: string;
+		email: string;
+		message?: string;
+		userId: string;
+		propertyId: string;
+		type: string;
+		// propertOwner_id?: string
+		// enquiryBy?: string
+	}
 
-        name: string;
-        phoneNumber: string
-        email: string;
-        message?: string
-        userId: string;
-        propertyId: string,
-        type: string
-        // propertOwner_id?: string
-        // enquiryBy?: string
-    }
-
-    export interface getEnquiry {
-        userId: string
-    }
-    
-    export interface getInquiryById{
-        enquiryId:string
-    }
-
+	export interface GetEnquiry {
+		userId: string;
+	}
+	export interface GetInquiryById {
+		enquiryId: string;
+	}
 
 }
