@@ -48,7 +48,6 @@ export class AdminProfileController {
 			};
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode']);
 			return adminData;
-
 		} catch (err) {
 			return Promise.reject(err);
 		}
@@ -61,7 +60,6 @@ export class AdminProfileController {
 			};
 			const updateAdmin = await ENTITY.AdminE.updateOneEntity(criteria, payload);
 			return updateAdmin;
-
 		} catch (err) {
 			return Promise.reject(err);
 		}

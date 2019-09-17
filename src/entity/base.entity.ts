@@ -98,7 +98,7 @@ export class BaseEntity {
 		}
 	}
 
-	async aggregate(pipeline, option?) {
+	async aggregate(pipeline , option?) {
 		try {
 			if (!option) {
 				option = { lean: true };

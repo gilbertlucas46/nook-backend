@@ -66,7 +66,6 @@ const userSchema = new Schema({
 	},
 	createdAt: { type: Number, default: new Date().getTime() },
 	updatedAt: { type: Number, default: new Date().getTime() },
-
 	type: {
 		type: String,
 		enum: [
@@ -81,7 +80,6 @@ const userSchema = new Schema({
 	passwordResetToken: { type: String },
 	passwordResetTokenExpirationTime: { type: Date },
 	isFeaturedProfile: { type: Boolean, default: false },
-
 });
 
 export let User = mongoose.model<IUser>('User', userSchema);

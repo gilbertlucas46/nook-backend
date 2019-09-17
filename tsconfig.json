@@ -13,7 +13,7 @@
     "sourceMap": false,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es6",
-    //   "strict": true,
+    // "strict": true,
     "lib": [
       "es2018",
       "es2017"
