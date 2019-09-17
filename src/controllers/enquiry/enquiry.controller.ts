@@ -1,7 +1,6 @@
 import * as Constant from '../../constants/app.constant';
 import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
-import { User } from '../../models';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
 
 /**
@@ -58,31 +57,18 @@ export class EnquiryController {
 
     async createEnquiry(payload: EnquiryRequest.CreateEnquiry) {
         try {
-            let createGuestUser;
-            const email = {
+            const propertyOwner = { _id: payload.propertyId };
+            const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['property_added_by.userId', '_id']);
+            const dataToSave = {
                 email: payload.email,
+                userType: Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
+                name: payload.name,
+                phoneNumber: payload.phoneNumber,
+                propertyId: payload.propertyId,
+                propertyOwnerId: propertyOnwerId.property_added_by.userId,
             };
-            const propertyOwner = {
-                _id: payload.propertyId,
-            };
-            const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['userId', '_id']);
-            const checkMail = await ENTITY.UserE.getOneEntity(email, ['email', 'id_']);
-
-            if (!checkMail || checkMail) {
-                const dataToSave = {
-                    email: payload.email,
-                    type: !checkMail ? Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER : Constant.DATABASE.ENQUIRY_TYPE.REGISTERED_USER.NUMBER,
-                    name: payload.name,
-                    phoneNumber: payload.phoneNumber,
-                    userName: payload.name,
-                    propertyId: payload.propertyId,
-                    userId: propertyOnwerId ? propertyOnwerId['userId'] : null,
-                };
-                // let createGuestUser = await ENTITY.UserE.updateOneEntity(email, dataToSave, { upsert: true })
-                createGuestUser = await ENTITY.EnquiryE.createOneEntity(dataToSave);
-                return createGuestUser;
-            }
-            // return enquiryData
+            const enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
+            return enquiryData;
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -165,13 +151,13 @@ export class EnquiryController {
             const pipeLine = [
                 {
                     $lookup: {
-                        from: 'Property',
-                        let: { userId: '$userData._id' },
+                        from: 'properties',
+                        let: { pid: '$propertyId' },
                         pipeline: [
                             {
                                 $match: {
                                     $expr: {
-                                        $eq: ['$userId', '$$userId'],
+                                        $eq: ['$_id', '$$pid'],
                                     },
                                 },
                             },
@@ -182,12 +168,12 @@ export class EnquiryController {
                                 },
                             },
                         ],
-                        as: 'enquiryData',
+                        as: 'propertyData',
                     },
                 },
                 {
                     $unwind: {
-                        path: '$enquiryData',
+                        path: '$propertyData',
                         preserveNullAndEmptyArrays: true,
                     },
                 },
@@ -199,17 +185,14 @@ export class EnquiryController {
                         message: 1,
                         userId: 1,
                         propertyId: 1,
-                        title: '$property_basic_details.title',
+                        propertyOwnerId: 1,
+                        userType: 1,
+                        title: '$propertyData.property_basic_details.title',
                     },
                 },
-                // {
-                //     $sort: sortingType,
-                // },
             ];
 
             const propertyData = await ENTITY.EnquiryE.enquiryList(pipeLine);
-            // const propertyData = await ENTITY.EnquiryE.enquiryList1(pipeLine);
-
             return propertyData;
 
         } catch (error) {
