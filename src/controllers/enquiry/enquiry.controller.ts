@@ -1,7 +1,8 @@
 import * as Constant from '../../constants/app.constant';
 import * as ENTITY from '../../entity';
-import * as utils from "../../utils/index";
-import { User } from '../../models'
+import * as utils from '../../utils/index';
+import { User } from '../../models';
+import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
 
 /**
  * @author
@@ -10,7 +11,6 @@ import { User } from '../../models'
 
 export class EnquiryController {
     constructor() { }
-
     // async createEnquiry(payload: EnquiryRequest.createEnquiry) {
     //     try {
     //         let createGuestUser;
@@ -44,7 +44,7 @@ export class EnquiryController {
     //             return createEnquiry
     //         }
     //         else {
-    //             // check the [previoi=us data of the user 
+    //             // check the [previoi=us data of the user
     //             payload.userId = checkMail._id;
     //             let createEnquiry = await ENTITY.EnquiryE.createOneEntity(payload)
     //             return createEnquiry
@@ -56,38 +56,36 @@ export class EnquiryController {
     //     }
     // }
 
-    async createEnquiry(payload: EnquiryRequest.createEnquiry) {
+    async createEnquiry(payload: EnquiryRequest.CreateEnquiry) {
         try {
             let createGuestUser;
-            // lets check the user if already created or then ask him to login otherwise create the token for that .
-            let email = {
-                email: payload.email
-            }
-            let propertyOwner = {
-                _id: payload.propertyId
-            }
-            let propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['userId', '_id'])
-            let checkMail = await ENTITY.UserE.getOneEntity(email, ['email', 'id_'])
+            const email = {
+                email: payload.email,
+            };
+            const propertyOwner = {
+                _id: payload.propertyId,
+            };
+            const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['userId', '_id']);
+            const checkMail = await ENTITY.UserE.getOneEntity(email, ['email', 'id_']);
 
             if (!checkMail || checkMail) {
-                let dataToSave = {
+                const dataToSave = {
                     email: payload.email,
                     type: !checkMail ? Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER : Constant.DATABASE.ENQUIRY_TYPE.REGISTERED_USER.NUMBER,
                     name: payload.name,
                     phoneNumber: payload.phoneNumber,
                     userName: payload.name,
                     propertyId: payload.propertyId,
-                    propertyOwnerId: propertyOnwerId ? propertyOnwerId['userId'] : null
-                }
+                    userId: propertyOnwerId ? propertyOnwerId['userId'] : null,
+                };
                 // let createGuestUser = await ENTITY.UserE.updateOneEntity(email, dataToSave, { upsert: true })
                 createGuestUser = await ENTITY.EnquiryE.createOneEntity(dataToSave);
-                console.log('createGuestUser', createGuestUser);
                 return createGuestUser;
             }
             // return enquiryData
         } catch (error) {
-            utils.consolelog('error', error, true)
-            return Promise.reject(error)
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
         }
     }
 
@@ -103,25 +101,83 @@ export class EnquiryController {
     //     }
     // }
 
+    // async getEnquiryList(userData) {
+    //     try {
+    //         // let pipeline = [];
+    //         const pipeLine = [
+    //             {
+    //                 $lookup: {
+    //                     from: 'User',
+    //                     let: { user_Id: '$userData._id' },
+    //                     pipeline: [
+    //                         {
+    //                             $match: {
+    //                                 $expr: {
+    //                                     $eq: ['$userId', '$$user_Id'],
+    //                                 },
+    //                             },
+    //                         },
+    //                         {
+    //                             $project: {
+    //                                 // fullName: 1,
+    //                                 _id: 1,
+    //                             },
+    //                         },
+    //                     ],
+    //                     as: 'enquiryData',
+    //                 },
+    //             },
+    //             {
+    //                 $unwind: {
+    //                     path: '$enquiryData',
+    //                     preserveNullAndEmptyArrays: true,
+    //                 },
+    //             },
+    //             {
+    //                 $project: {
+    //                     updatedAt: 1,
+    //                     createdAt: 1,
+    //                     enquiry_status: 1,
+    //                     message: 1,
+    //                     userId: 1,
+    //                     propertyId: 1,
+    //                     //     'property_address.region': '$regionData.fullName',
+    //                     //     'property_address.regionId': '$regionData._id',
+    //                 },
+    //             },
+    //             // {
+    //             //     $sort: sortingType,
+    //             // },
+    //         ];
+
+    //         const propertyData = await ENTITY.EnquiryE.enquiryList(pipeLine);
+
+    //         return propertyData;
+
+    //     } catch (error) {
+    //         utils.consolelog('error', error, true);
+    //         return Promise.reject(error);
+    //     }
+    // }
+
     async getEnquiryList(userData) {
         try {
-            // let pipeline = [];
             const pipeLine = [
                 {
                     $lookup: {
-                        from: 'User',
-                        let: { user_Id: '$userData._id' },
+                        from: 'Property',
+                        let: { userId: '$userData._id' },
                         pipeline: [
                             {
                                 $match: {
                                     $expr: {
-                                        $eq: ['$userId', '$$user_Id'],
+                                        $eq: ['$userId', '$$userId'],
                                     },
                                 },
                             },
                             {
                                 $project: {
-                                    // fullName: 1,
+                                    property_basic_details: 1,
                                     _id: 1,
                                 },
                             },
@@ -137,14 +193,13 @@ export class EnquiryController {
                 },
                 {
                     $project: {
-                        'updatedAt': 1,
-                        'createdAt': 1,
-                        "enquiry_status": 1,
-                        "message": 1,
-                        "userId": 1,
-                        "propertyId": 1
-                        //     'property_address.region': '$regionData.fullName',
-                        //     'property_address.regionId': '$regionData._id',
+                        updatedAt: 1,
+                        createdAt: 1,
+                        enquiry_status: 1,
+                        message: 1,
+                        userId: 1,
+                        propertyId: 1,
+                        title: '$property_basic_details.title',
                     },
                 },
                 // {
@@ -152,33 +207,30 @@ export class EnquiryController {
                 // },
             ];
 
-
-
             const propertyData = await ENTITY.EnquiryE.enquiryList(pipeLine);
+            // const propertyData = await ENTITY.EnquiryE.enquiryList1(pipeLine);
 
             return propertyData;
 
-
         } catch (error) {
-            utils.consolelog('error', error, true)
-            return Promise.reject(error)
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
         }
     }
-    async getEnquiryById(payload: EnquiryRequest.getInquiryById) {
+
+    async getEnquiryById(payload: EnquiryRequest.GetInquiryById) {
         try {
-            let criteria={
-                _id:payload.enquiryId
-            }
-            let getData = await ENTITY.EnquiryE.getOneEntity(criteria, {})
-            console.log('getData', getData);
+            const criteria = {
+                _id: payload.enquiryId,
+            };
+            const getData = await ENTITY.EnquiryE.getOneEntity(criteria, {});
             return getData;
 
         } catch (error) {
-            utils.consolelog('error', error, true)
-            return Promise.reject(error)
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
         }
     }
 }
 
 export let EnquiryService = new EnquiryController();
-
