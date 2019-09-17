@@ -5,3 +5,4 @@ export { Admin } from './admin/admin.model';
 export { AdminSession } from './admin/adminSession.model';
 export { Region } from './region';
 export { City } from './city';
+export { Enquiry } from './enquiry.model';
