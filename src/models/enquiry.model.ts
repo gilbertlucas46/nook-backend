@@ -19,7 +19,7 @@ const enquirySchena = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
     propertyId: { type: Schema.Types.ObjectId, required: true, ref: 'Property' },
     email: { type: String },
-    propertyOwnerId: { type: String },
+    propertyOwnerId: { type: Schema.Types.ObjectId, required: true },
     name: { type: String, required: true },
     userType: {
         type: Number,

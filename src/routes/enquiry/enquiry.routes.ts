@@ -22,7 +22,7 @@ export let enquiryRoutes = [
 		options: {
 			description: 'create Enquiry application',
 			tags: ['api', 'anonymous', 'user', 'Enquiry'],
-			auth: 'BasicAuth',
+			// auth: 'BasicAuth',
 			validate: {
 				payload: {
 					name: Joi.string().required(),
@@ -31,7 +31,7 @@ export let enquiryRoutes = [
 					message: Joi.string().required(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
-				headers: UniversalFunctions.authorizationHeaderObj,
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {

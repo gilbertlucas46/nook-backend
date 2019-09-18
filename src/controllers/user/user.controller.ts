@@ -80,7 +80,7 @@ export class UserController {
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
 			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID) }
+			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
 			return getPropertyData;
 		} catch (error) {
 			return Promise.reject(error);
