@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 import { Schema, Document } from 'mongoose';
 import * as CONSTANT from '../constants/app.constant';
-
 export interface IUser extends Document {
 	userName: string;
 	email: string;

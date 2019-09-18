@@ -1,6 +1,6 @@
-import * as Constant from '../../constants/app.constant';
-import * as ENTITY from '../../entity';
-import * as utils from '../../utils/index';
+import * as Constant from '@src/constants/app.constant';
+import * as ENTITY from '@src/entity';
+import * as utils from '@src/utils/index';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
 
 /**

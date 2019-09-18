@@ -1,5 +1,4 @@
 import { BaseEntity } from './base.entity';
-import { Types } from 'mongoose';
 import * as Constant from '@src/constants/app.constant';
 
 export class UserPropertyClass extends BaseEntity {

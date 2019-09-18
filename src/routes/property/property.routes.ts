@@ -1,8 +1,8 @@
 import { ServerRoute, Request, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
-import * as UniversalFunctions from '../../utils';
-import * as Constant from '../../constants/app.constant';
-import { PropertyService } from '../../controllers';
+import * as UniversalFunctions from '@src/utils';
+import * as Constant from '@src/constants/app.constant';
+import { PropertyService } from '@src/controllers';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export let propertyRoute: ServerRoute[] = [

@@ -2,9 +2,7 @@ import * as nodemailer from 'nodemailer';
 import * as config from 'config';
 import * as utils from '../utils';
 import Mail = require('nodemailer/lib/mailer');
-
 export class MailManager {
-
 	// private senderEmail: string = config.get('MAIL_FROM_ADDRESS')
 	constructor(private receiverEmail: string, private subject: string, private content: any) {
 	}

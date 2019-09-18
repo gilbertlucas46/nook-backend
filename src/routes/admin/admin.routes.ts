@@ -1,10 +1,10 @@
 import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
-import * as UniversalFunctions from '../../utils';
-import * as Constant from '../../constants/app.constant';
+import * as UniversalFunctions from '@src/utils';
+import * as Constant from '@src/constants/app.constant';
 import { AdminProfileService, AdminService } from '../../controllers';
 import * as config from 'config';
-import * as utils from '../../utils';
+import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 
@@ -284,7 +284,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					sortBy: Joi.number().valid([
 						// propertyStatus: Joi.number().valid([
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,                        // ]),
+						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 					]),
 					sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
 					// searchTerm: Joi.string(),),
