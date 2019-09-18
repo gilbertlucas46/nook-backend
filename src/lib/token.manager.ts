@@ -5,7 +5,7 @@ import * as Jwt from 'jsonwebtoken';
 import * as ENTITY from '../entity';
 import * as UniversalFunctions from '../utils';
 const cert: any = config.get('jwtSecret');
-
+import * as utils from '../utils';
 export let setToken = async (tokenData: any) => {
 	if (!tokenData.id || !tokenData.tokenType) {
 		return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
@@ -22,7 +22,8 @@ export let setToken = async (tokenData: any) => {
 export let verifyToken = async (token, tokenType, request?: any) => {
 	try {
 		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
-		if (!result.tokenType) {
+		utils.consolelog('resultToken', result, true)
+		if (result.tokenType) {
 			if (result.tokenType === 'TENANT' || 'AGENT' || 'OWNER') {
 				const userData: any = {};
 				const userCriteria = { _id: result.id };
