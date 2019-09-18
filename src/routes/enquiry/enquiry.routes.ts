@@ -85,8 +85,8 @@ export let enquiryRoutes = [
 		handler: async (request, h) => {
 			try {
 				const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-				// let payload: EnquiryRequest.getEnquiry = request.payload;
-				const registerResponse = await EnquiryService.getEnquiryList(userData);
+				const payload: EnquiryRequest.GetEnquiry = request.query;
+				const registerResponse = await EnquiryService.getEnquiryList(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -97,9 +97,10 @@ export let enquiryRoutes = [
 			tags: ['api', 'anonymous', 'user', 'Enquiry'],
 			auth: 'UserAuth',
 			validate: {
-				// params: {
-				//     userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
-				// },
+				query: {
+					fromDate: Joi.number(),
+					toDate: Joi.number(),
+				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},

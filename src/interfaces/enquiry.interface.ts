@@ -12,7 +12,8 @@ export namespace EnquiryRequest {
 	}
 
 	export interface GetEnquiry {
-		userId: string;
+		fromDate: number;
+		toDate: number;
 	}
 	export interface GetInquiryById {
 		enquiryId: string;
