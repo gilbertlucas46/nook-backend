@@ -10,6 +10,7 @@ export class UserPropertyClass extends BaseEntity {
 	async getUserPropertyList(payload, userData) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
+			const propertyType = payload.propertyType;
 			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			let sortingType = {};
@@ -36,16 +37,21 @@ export class UserPropertyClass extends BaseEntity {
 						};
 						break;
 				}
-			} else {
+			} else if (propertyType === Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
 				sortBy = 'isFeatured';
 				sortingType = {
 					isFeatured: sortType,
+				};
+			} else {
+				sortBy = 'createdAt';
+				sortingType = {
+					createdAt: sortType,
 				};
 			}
 			const criteria = {
 				$match: {
 					'userId': userData._id,
-					'property_status.number': sortBy,
+					'property_status.number': propertyType,
 				},
 			};
 
