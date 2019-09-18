@@ -22,7 +22,7 @@ export let setToken = async (tokenData: any) => {
 export let verifyToken = async (token, tokenType, request?: any) => {
 	try {
 		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
-		utils.consolelog('resultToken', result, true)
+		utils.consolelog('resultToken', result, true);
 		if (result.tokenType) {
 			if (result.tokenType === 'TENANT' || 'AGENT' || 'OWNER') {
 				const userData: any = {};
