@@ -1,10 +1,10 @@
 import { ServerRoute, Request } from 'hapi';
 import * as Joi from 'joi';
-import * as UniversalFunctions from '../../utils';
-import * as Constant from '../../constants/app.constant';
-import { UserService } from '../../controllers';
+import * as UniversalFunctions from '@src/utils';
+import * as Constant from '@src/constants/app.constant';
+import { UserService } from '@src/controllers';
 import * as config from 'config';
-import * as utils from '../../utils';
+import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 
