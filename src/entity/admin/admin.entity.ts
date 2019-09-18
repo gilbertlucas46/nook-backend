@@ -2,7 +2,7 @@ import { BaseEntity } from '../base.entity';
 import * as config from 'config';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
-import * as utils from '../../utils';
+import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 

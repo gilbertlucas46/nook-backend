@@ -4,7 +4,6 @@ import * as Constant from '../constants';
 import * as Jwt from 'jsonwebtoken';
 import * as ENTITY from '../entity';
 import * as UniversalFunctions from '../utils';
-
 const cert: any = config.get('jwtSecret');
 
 export let setToken = async (tokenData: any) => {
@@ -23,7 +22,7 @@ export let setToken = async (tokenData: any) => {
 export let verifyToken = async (token, tokenType, request?: any) => {
 	try {
 		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
-		if (result.tokenType !== undefined) {
+		if (!result.tokenType) {
 			if (result.tokenType === 'TENANT' || 'AGENT' || 'OWNER') {
 				const userData: any = {};
 				const userCriteria = { _id: result.id };
@@ -47,8 +46,7 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 				return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN;
 			}
 		} else {
-			const result = await UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
-			return Promise.reject(result);
+			return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 		}
 	} catch (error) {
 		UniversalFunctions.consolelog('error', error, true);

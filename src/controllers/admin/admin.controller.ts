@@ -1,9 +1,7 @@
-import * as config from 'config';
 import * as Constant from '../../constants/app.constant';
 import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-const cert = config.get('jwtSecret');
 import { Types } from 'mongoose';
 
 /**
@@ -46,7 +44,7 @@ export class AdminController {
 
 	async updatePropertyStatus(payload: AdminRequest.UpdatePropertyStatus, adminData) {
 		try {
-			const criteria = { _id: Types.ObjectId(payload.propertyId)};
+			const criteria = { _id: Types.ObjectId(payload.propertyId) };
 			let result: any;
 			const dataToSet: any = {};
 
@@ -55,7 +53,7 @@ export class AdminController {
 			} else if (payload.status === Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER) {
 				result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER);
 			} else {
-				  return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
 			}
 
 			dataToSet.$set = {
