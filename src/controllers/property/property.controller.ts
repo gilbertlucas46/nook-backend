@@ -30,6 +30,10 @@ export class PropertyController {
 			propertyAction = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.PENDING.NUMBER);
 			payload.property_address.location['type'] = 'Point';
 
+			payload.property_status['number'] = Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER;
+			payload.property_status['status'] = Constant.DATABASE.PROPERTY_STATUS.PENDING.TYPE;
+			payload.property_status['displayName'] = Constant.DATABASE.PROPERTY_STATUS.PENDING.DISPLAY_NAME;
+
 			const userId = userData._id;
 			payload.userId = userId;
 			payload.property_added_by = {
