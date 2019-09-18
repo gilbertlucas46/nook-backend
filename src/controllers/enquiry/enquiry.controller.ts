@@ -2,6 +2,7 @@ import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
+import { ObjectId } from 'mongodb';
 
 /**
  * @author
@@ -14,6 +15,7 @@ export class EnquiryController {
         try {
             const propertyOwner = { _id: payload.propertyId };
             const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['property_added_by.userId', '_id']);
+
             const dataToSave = {
                 email: payload.email,
                 userType: Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
@@ -23,6 +25,7 @@ export class EnquiryController {
                 propertyId: payload.propertyId,
                 propertyOwnerId: propertyOnwerId.property_added_by.userId,
             };
+
             const enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
             return enquiryData;
         } catch (error) {
@@ -81,6 +84,7 @@ export class EnquiryController {
                             {
                                 $project: {
                                     property_basic_details: 1,
+                                    propertyId: 1,
                                     _id: 1,
                                 },
                             },
@@ -100,7 +104,7 @@ export class EnquiryController {
                         createdAt: 1,
                         enquiry_status: 1,
                         userId: 1,
-                        propertyId: 1,
+                        propertyId: '$propertyData.propertyId',
                         propertyOwnerId: 1,
                         userType: 1,
                         name: 1,
