@@ -30,6 +30,7 @@ export class PropertyController {
 			propertyAction = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.PENDING.NUMBER);
 			payload.property_address.location['type'] = 'Point';
 
+			payload.property_status = {};
 			payload.property_status['number'] = Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER;
 			payload.property_status['status'] = Constant.DATABASE.PROPERTY_STATUS.PENDING.TYPE;
 			payload.property_status['displayName'] = Constant.DATABASE.PROPERTY_STATUS.PENDING.DISPLAY_NAME;
@@ -42,7 +43,7 @@ export class PropertyController {
 				imageUrl: userData.profilePicUrl,
 				userName: userData.userName,
 			};
-			payload.property_status = Constant.DATABASE.PROPERTY_STATUS.PENDING;
+
 			payload.propertyActions = [{
 				actionString: propertyAction.TYPE,
 				actionDisplayName: propertyAction.DISPLAY_NAME,
