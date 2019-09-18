@@ -1,10 +1,10 @@
 import * as config from 'config';
-import * as Constant from '../../constants/app.constant';
-import * as ENTITY from '../../entity';
-import * as utils from '../../utils/index';
+import * as Constant from '@src/constants/app.constant';
+import * as ENTITY from '@src/entity';
+import * as utils from '@src/utils/index';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
-import { MailManager } from '../../lib/mail.manager';
+import { MailManager } from '@src/lib/mail.manager';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 /**
  * @author

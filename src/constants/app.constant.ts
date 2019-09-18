@@ -156,7 +156,6 @@ export let DATABASE = {
 			TYPE: 'ISFEATURED',
 			DISPLAY_NAME: 'IsFEATURED',
 		},
-
 	},
 
 	PROPERTY_LABEL: {
@@ -171,6 +170,7 @@ export let DATABASE = {
 		SERVICED_OFFICE: 'Serviced Office',
 		WAREHOUSE: 'Warehouse',
 	},
+
 	PROPERTY_TYPE: {
 		'NONE': 'None',
 		'APPARTMENT/CONDO': 'Apartment/Condo',
@@ -188,6 +188,7 @@ export let DATABASE = {
 		HALFYEARLY: 'half yearly',
 		YEARLY: 'yearly',
 	},
+
 	ENQUIRY_TYPE: {
 		GUEST: {
 			NUMBER: 1,
@@ -200,6 +201,7 @@ export let DATABASE = {
 			DISPLAY_NAME: 'Registered_User',
 		},
 	},
+
 	ENQUIRY_STATUS: {
 		PENDING: 'PENDING',
 		RESOLVED: 'RESOLVED',
@@ -298,7 +300,6 @@ export let STATUS_MSG = {
 			Oops_Time_Expired: 'Oops Time Expired',
 			invalid_Url: 'invalid Url',
 		},
-
 		ALREADY_EXIST: {
 			statusCode: 400,
 			type: 'ALREADY_EXIST',
@@ -654,7 +655,6 @@ export let STATUS_MSG = {
 			message: 'Some of the member you want to add has already blocked this group.',
 			type: 'SOME_MEMBER_IS_BLOCKED_FROM_GROUP',
 		},
-
 	},
 };
 

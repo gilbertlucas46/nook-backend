@@ -1,5 +1,5 @@
 import { Database } from '../databases';
-import { AdminE, regionEntity } from './../entity';
+import { AdminE, regionEntity } from '@src/entity';
 export class Bootstrap {
 	private dataBaseService = new Database();
 	async bootstrap() {

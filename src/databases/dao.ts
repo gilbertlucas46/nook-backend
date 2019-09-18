@@ -1,7 +1,7 @@
 'use strict';
-import * as Models from '../models';
+import * as Models from '@src/models';
 import { Types, Model, Document } from 'mongoose';
-import { SERVER } from '../constants';
+import { SERVER } from '@src/constants';
 import { ModelNames } from '@src/interfaces/model.interface';
 
 export class DAOManager {

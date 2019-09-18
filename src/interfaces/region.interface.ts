@@ -1,5 +1,4 @@
 import { Types } from 'mongoose';
-
 export namespace Location {
 	export interface ILocationPoint {
 		type: 'Point' | 'Sphere';

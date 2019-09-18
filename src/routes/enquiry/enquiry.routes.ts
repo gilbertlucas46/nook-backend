@@ -1,8 +1,8 @@
 'use strict';
 import * as Joi from 'joi';
-import * as UniversalFunctions from '../../utils';
-import * as Constant from '../../constants/app.constant';
-import { EnquiryService } from '../../controllers';
+import * as UniversalFunctions from '@src/utils';
+import * as Constant from '@src/constants/app.constant';
+import { EnquiryService } from '@src/controllers';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
 
 export let enquiryRoutes = [
