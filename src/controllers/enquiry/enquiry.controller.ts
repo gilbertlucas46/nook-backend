@@ -108,6 +108,8 @@ export class EnquiryController {
                         propertyOwnerId: 1,
                         userType: 1,
                         name: 1,
+                        email: 1,
+                        phoneNumber: 1,
                         message: 1,
                         title: '$propertyData.property_basic_details.title',
                     },
