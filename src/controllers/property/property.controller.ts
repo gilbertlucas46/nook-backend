@@ -28,6 +28,7 @@ export class PropertyController {
 			payload.property_basic_details.property_for_string = result.TYPE;
 			payload.property_basic_details.property_for_displayName = result.DISPLAY_NAME;
 			propertyAction = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.PENDING.NUMBER);
+			payload.property_address.location['type'] = 'Point';
 
 			const userId = userData._id;
 			payload.userId = userId;
