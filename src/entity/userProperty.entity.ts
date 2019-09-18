@@ -1,6 +1,6 @@
 import { BaseEntity } from './base.entity';
 import * as Constant from '@src/constants/app.constant';
-
+import { ObjectId } from 'mongodb';
 export class UserPropertyClass extends BaseEntity {
 	constructor() {
 		super('Property');
@@ -14,7 +14,10 @@ export class UserPropertyClass extends BaseEntity {
 			if (!page) { page = 1; } else { page = page; }
 			let sortingType = {};
 			sortType = !sortType ? -1 : sortType;
-
+			let criteria;
+			sortingType = {
+				createdAt: sortType,
+			};
 			if (sortBy) {
 				switch (sortBy) {
 					case 'price':
@@ -29,31 +32,69 @@ export class UserPropertyClass extends BaseEntity {
 							createdAt: sortType,
 						};
 						break;
-					default:
+					case 'isFeatured':
 						sortBy = 'isFeatured';
 						sortingType = {
-							isFeatured: sortType,
+							createdAt: sortType,
 						};
+					default:
+						// sortBy = 'isFeatured';
+						// sortingType = {
+						// 	isFeatured: sortType,
+						// };
 						break;
 				}
-			} else if (propertyType === Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
-				sortBy = 'isFeatured';
-				sortingType = {
-					isFeatured: sortType,
-				};
-			} else {
-				sortBy = 'createdAt';
-				sortingType = {
-					createdAt: sortType,
+			}
+			// if (propertyType === Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
+			// 	// sortBy = 'isFeatured';
+			// 	// sortingType = {
+			// 	// 	isFeatured: sortType,
+			// 	// };
+			// 	criteria = {
+			// 		$match: {
+			// 			'userId': userData._id,
+			// 			'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+			// 		},
+			// 	};
+			// }
+			if (propertyType === Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER) {
+				// sortBy = 'isFeatured';
+				// sortingType = {
+				// 	isFeatured: sortType,
+				// };
+				criteria = {
+					$match: {
+						userId: userData._id,
+						isFeatured: true,
+					},
 				};
 			}
-			const criteria = {
-				$match: {
-					'userId': userData._id,
-					'property_status.number': propertyType,
-				},
-			};
-
+			else if (propertyType !== Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER) {
+				// sortBy = 'isFeatured';
+				// sortingType = {
+				// 	isFeatured: sortType,
+				// };
+				criteria = {
+					$match: {
+						'userId': userData._id,
+						'property_status.number': propertyType,
+					},
+				};
+			}
+			// else {
+			// 	sortBy = 'createdAt';
+			// 	sortingType = {
+			// 		createdAt: sortType,
+			// 	};
+			// }
+			// if (propertyType === Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER) {
+			// 	// criteria = {
+			// 	// 	$match: {
+			// 	// 		userId: userData._id,
+			// 	// 		isFeatured: true,
+			// 	// 	},
+			// 	// };
+			// }
 			const pipeline = [
 				criteria,
 				{

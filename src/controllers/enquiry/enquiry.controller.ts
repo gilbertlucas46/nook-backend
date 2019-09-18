@@ -2,8 +2,6 @@ import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
-import { ObjectId } from 'mongodb';
-
 /**
  * @author
  * @description this controller contains actions for admin's account related activities
@@ -55,19 +53,51 @@ export class EnquiryController {
         }
     }
 
-    async getEnquiryList(userData) {
+    async getEnquiryList(payload: EnquiryRequest.GetEnquiry, userData) {
         try {
             let sortType;
             sortType = !sortType ? -1 : 1;
-
             const sortingType = {
                 createdAt: sortType,
             };
+            const { fromDate, toDate } = payload;
+            let createdAt;
+            let query: any = {};
+            query = { propertyOwnerId: userData._id };
+            if (fromDate && toDate) {
+                createdAt = {
+                    $gte: fromDate,
+                    $lte: toDate,
+                };
+                query = {
+                    propertyOwnerId: userData._id,
+                    createdAt,
+                };
+            }
+            else if (toDate) {
+                createdAt = {
+                    $lte: new Date().getTime(),
+                };
+                query = {
+                    propertyOwnerId: userData._id,
+                    createdAt,
+                };
+            } else if (fromDate) {
+                createdAt = {
+                    $gte: new Date().getTime(),
+                };
+                query = {
+                    propertyOwnerId: userData._id,
+                    createdAt,
+                };
+            }
+
             const pipeLine = [
                 {
-                    $match: {
-                        propertyOwnerId: userData._id,
-                    },
+                    $match: query,
+                    //     propertyOwnerId: userData._id,
+                    //     createdAt,
+                    // },
                 },
                 {
                     $lookup: {
