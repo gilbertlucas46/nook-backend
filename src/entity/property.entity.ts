@@ -129,7 +129,6 @@ export class PropertyClass extends BaseEntity {
 			let sortingType = {};
 			sortType = !sortType ? -1 : sortType;
 			const matchObject: any = { $match: {} };
-
 			let searchCriteria = {};
 			if (searchTerm) {
 				// for filtration
@@ -167,6 +166,18 @@ export class PropertyClass extends BaseEntity {
 					case 'price':
 						sortBy = 'price';
 						sortingType = {
+							'property_basic_details.sale_rent_price': sortType,
+						};
+						break;
+					case 'date':
+						sortBy = 'date';
+						sortingType = {
+							createdAt: sortType,
+						};
+						break;
+					case 'isFeatured':
+						sortBy = 'isFeatured';
+						sortingType = {
 							sale_rent_price: sortType,
 						};
 						break;
@@ -177,7 +188,8 @@ export class PropertyClass extends BaseEntity {
 						};
 						break;
 				}
-			} else {
+			}
+			else {
 				sortBy = 'createdAt';
 				sortingType = {
 					createdAt: sortType,
@@ -189,7 +201,8 @@ export class PropertyClass extends BaseEntity {
 					$or: [{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
 					{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER }],
 				};
-			} else {
+			}
+			else {
 				matchObject.$match = {
 					'property_status.number': sortBy,
 				};
