@@ -346,8 +346,8 @@ export let propertyRoute: ServerRoute[] = [
 					},
 					property_address: {
 						address: Joi.string().min(1).max(300).trim().required(),
-						region: Joi.string().min(1).max(100).trim().required(),
-						city: Joi.string().min(1).max(100).trim().required(),
+						region: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+						city: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 						barangay: Joi.string().min(1).max(100).trim(),
 						location: {
 							coordinates: Joi.array().ordered([

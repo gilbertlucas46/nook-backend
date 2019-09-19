@@ -137,6 +137,8 @@ export class PropertyController {
 				status: Constant.DATABASE.PROPERTY_STATUS.DRAFT.TYPE,
 				displayName: Constant.DATABASE.PROPERTY_STATUS.DRAFT.DISPLAY_NAME,
 			};
+			payload.property_address.location = {};
+			payload.property_address.location.type = 'Point';
 
 			const userId = userData._id;
 			payload.userId = userId;
