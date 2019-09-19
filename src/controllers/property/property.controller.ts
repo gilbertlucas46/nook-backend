@@ -137,6 +137,10 @@ export class PropertyController {
 				status: Constant.DATABASE.PROPERTY_STATUS.DRAFT.TYPE,
 				displayName: Constant.DATABASE.PROPERTY_STATUS.DRAFT.DISPLAY_NAME,
 			};
+			if (payload.property_address.location.coordinates) {
+				payload.property_address.location = {};
+				payload.property_address.location.type = 'Point';
+			}
 			payload.property_address.location = {};
 			payload.property_address.location.type = 'Point';
 
@@ -161,10 +165,8 @@ export class PropertyController {
 			}];
 
 			if (payload.propertyId) {
-				const criteria = {
-					_id: payload.propertyId,
-				};
-				let updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
+				const criteria = { _id: payload.propertyId };
+				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				console.log('updateDataupdateData', updateData);
 				return updateData;
 			}
