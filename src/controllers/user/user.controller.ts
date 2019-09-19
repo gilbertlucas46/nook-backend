@@ -9,7 +9,6 @@ const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-
 export class UserController {
 
 	async register(payload: UserRequest.Register) {
@@ -89,13 +88,38 @@ export class UserController {
 
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
+			let updatePropertyData;
+			let Obj: object = {};
 			const criteria = { _id: payload._id };
 			if (payload.firstName && payload.lastName && payload.type) {
 				payload.isProfileComplete = true;
 			} else {
 				payload.isProfileComplete = false;
 			}
+			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
+
+			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName || getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
+				Obj = updateUser.firstName;
+				Obj = updateUser.lastName;
+				Obj = updateUser.profilePicUrl;
+				Obj = updateUser.phoneNumber;
+				const propertyCriteria = {
+					userId: updateUser._id,
+				};
+				updatePropertyData = {
+					userId: updateUser._id,
+					property_added_by: {
+						userId: updateUser._id,
+						userName: updateUser.userName,
+						phoneNumber: updateUser.phoneNumber,
+						profilePicUrl: updateUser.profilePicUrl,
+						firstName: updateUser.firstName,
+						lastName: updateUser.lastName,
+					},
+				};
+				const updateProperty = ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
+			}
 			return updateUser;
 		} catch (error) {
 			return Promise.reject(error);
@@ -199,7 +223,7 @@ export class UserController {
 							{
 								$match: {
 									$and: [
-										{ 'Property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+										{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
 										{ userId: userData._id }],
 								},
 							},
@@ -258,15 +282,24 @@ export class UserController {
 						rentedPropertyLast30Days: {
 							$cond: { if: { $size: ['$rentedPropertyLast30Days'] }, then: { $arrayElemAt: ['$rentedPropertyLast30Days.Total', 0] }, else: 0 },
 						},
+						// enquiryLast30Days: '$enquiryLast30Days',
 					},
 				},
 			];
-			const data = await ENTITY.UserE.aggregate(pipeline);
+			const query: any = {};
+			query.propertyOwnerId = userData._id,
+				query.createdAt = { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) };
+
+			const enquiryLast30Days = await ENTITY.EnquiryE.count(query);
+
+			const data = await ENTITY.PropertyE.aggregate(pipeline);
 			return {
 				...data[0],
 				isFeaturedProfile: !!userData.isFeaturedProfile,
+				enquiryLast30Day: enquiryLast30Days,
 			};
 		} catch (error) {
+			utils.consolelog('error', error, true)
 			return Promise.reject(error);
 		}
 	}

@@ -41,6 +41,15 @@ export class BaseEntity {
 		}
 	}
 
+	async count(condition: object) {
+		try {
+			const data = await this.DAOManager.count(this.modelName, condition);
+			return data;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 	async updateOneEntity(criteria: object, dataToUpdate: object, option?) {
 		try {
 			if (option === undefined) {
@@ -97,8 +106,7 @@ export class BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-
-	async aggregate(pipeline , option?) {
+	async aggregate(pipeline, option?) {
 		try {
 			if (!option) {
 				option = { lean: true };
