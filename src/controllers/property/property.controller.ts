@@ -42,6 +42,8 @@ export class PropertyController {
 				phoneNumber: userData.phoneNumber,
 				profilePicUrl: userData.profilePicUrl,
 				userName: userData.userName,
+				firstName: userData.firstName || '',
+				lastName: userData.lastName || '',
 			};
 
 			payload.propertyActions = [{
@@ -142,6 +144,8 @@ export class PropertyController {
 				phoneNumber: userData.phoneNumber,
 				profilePicUrl: userData.profilePicUrl,
 				userName: userData.userName,
+				firstName: userData.firstName || '',
+				lastName: userData.lastName || '',
 			};
 			payload.propertyActions = [{
 				actionString: propertyAction.TYPE,
