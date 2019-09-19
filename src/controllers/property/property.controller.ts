@@ -40,7 +40,7 @@ export class PropertyController {
 			payload.property_added_by = {
 				userId: userData._id,
 				phoneNumber: userData.phoneNumber,
-				imageUrl: userData.profilePicUrl,
+				profilePicUrl: userData.profilePicUrl,
 				userName: userData.userName,
 			};
 
@@ -140,7 +140,7 @@ export class PropertyController {
 			payload.property_added_by = {
 				userId: userData._id,
 				phoneNumber: userData.phoneNumber,
-				imageUrl: userData.profilePicUrl,
+				profilePicUrl: userData.profilePicUrl,
 				userName: userData.userName,
 			};
 			payload.propertyActions = [{

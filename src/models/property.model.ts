@@ -92,7 +92,7 @@ export interface IProperty extends Document {
 		userId?: string;
 		userName: string;
 		contactNo: string;
-		imageUrl: string;
+		profilePicUrl: string;
 	};
 	actions_performed_by_admin: {
 		number: number;
@@ -247,7 +247,9 @@ const propertySchema = new Schema({
 		userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
 		userName: { type: String },
 		phoneNumber: { type: String },
-		imageUrl: { type: String },
+		profilePicUrl: { type: String },
+		firstName: { type: String },
+		lastName: { type: String },
 	},
 	property_status: {
 		number: {
