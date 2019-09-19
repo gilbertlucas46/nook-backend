@@ -179,7 +179,7 @@ export let userRoute: ServerRoute[] = [
 					companyName: Joi.string().allow(''),
 					address: Joi.string().allow(''),
 					aboutMe: Joi.string().allow(''),
-					profilePicUrl: Joi.string().allow(''),
+					profilePicUrl: Joi.string().allow('').default(''),
 					backGroundImageUrl: Joi.string().allow(''),
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
