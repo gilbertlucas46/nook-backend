@@ -122,6 +122,7 @@ export class PropertyController {
 		try {
 			let result;
 			let propertyAction;
+			console.log('------------', payload);
 
 			if (payload.property_basic_details.property_for_number) {
 				result = await this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload.property_basic_details.property_for_number);
@@ -139,10 +140,9 @@ export class PropertyController {
 			};
 			if (payload.property_address.location.coordinates) {
 				payload.property_address.location = {};
+				payload.property_address.location.coordinates = payload.property_address.location.coordinates;
 				payload.property_address.location.type = 'Point';
 			}
-			payload.property_address.location = {};
-			payload.property_address.location.type = 'Point';
 
 			const userId = userData._id;
 			payload.userId = userId;
