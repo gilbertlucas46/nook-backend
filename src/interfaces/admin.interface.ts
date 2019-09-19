@@ -72,11 +72,15 @@ export namespace AdminRequest {
 	}
 
 	export interface PropertyList {
-		propertyStatus: string;
+		propertyStatus?: string;
 		page?: number;
 		limit?: number;
 		sortBy: string;
+		searchTerm: string;
 		sortType: number;
+		fromDate: number;
+		toDate: number;
+		propertyType: number;
 	}
 
 	export interface UpdatePropertyStatus {

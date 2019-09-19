@@ -99,11 +99,11 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					// _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					firstName: Joi.string().min(1).max(20).trim(),
+					name: Joi.string().min(1).max(20).trim(),
 					// lastName: Joi.string().min(1).max(20).trim(),
 					// phoneNumber: Joi.string().min(7).max(15).trim(),
 					profilePicUrl: Joi.string().allow(''),
-					email: Joi.string().email({ minDomainAtoms: 2 }),
+					// email: Joi.string().email({ minDomainAtoms: 2 }),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -283,12 +283,18 @@ export let adminProfileRoute: ServerRoute[] = [
 					limit: Joi.number(),
 					sortBy: Joi.number().valid([
 						// propertyStatus: Joi.number().valid([
-						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+						// Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+						// Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 					]),
 					sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
-					// searchTerm: Joi.string(),),
-					// propertyType: Joi.number()
+					searchTerm: Joi.string(),
+					fromDate: Joi.number(),
+					toDate: Joi.number(),
+					propertyType: Joi.number().valid([
+						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+
+					]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -366,6 +372,41 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 						// Constant.DATABASE.PROPERTY_STATUS.,
 					]),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
+	/**
+	 * @Description:admin logout
+	 */
+	{
+		method: 'POST',
+		path: '/v1/admin/logout',
+		handler: async (request, h) => {
+			try {
+				const payload: any = request.payload;
+				// const registerResponse = await AdminProfileService.logout(payload);
+				// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
+			} catch (error) {
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'login to application',
+			tags: ['api', 'anonymous', 'Admin', 'login'],
+			auth: 'AdminAuth',
+			validate: {
+				payload: {
+					// email: Joi.string().email({ minDomainAtoms: 2 }),
+					// password: Joi.string().min(6).max(14).trim().required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

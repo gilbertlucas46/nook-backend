@@ -122,6 +122,7 @@ export class PropertyController {
 		try {
 			let result;
 			let propertyAction;
+
 			if (payload.property_basic_details.property_for_number) {
 				result = await this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload.property_basic_details.property_for_number);
 				payload.property_basic_details = {
@@ -156,6 +157,15 @@ export class PropertyController {
 					actionTime: new Date().getTime(),
 				},
 			}];
+
+			if (payload.propertyId) {
+				const criteria = {
+					_id: payload.propertyId,
+				};
+				let updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
+				console.log('updateDataupdateData', updateData);
+				return updateData;
+			}
 
 			const propertyData = await ENTITY.PropertyE.createOneEntity(payload);
 			return propertyData;
