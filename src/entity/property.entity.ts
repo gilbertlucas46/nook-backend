@@ -1,6 +1,7 @@
 import { BaseEntity } from './base.entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants/app.constant';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export class PropertyClass extends BaseEntity {
 	constructor() {
@@ -120,10 +121,10 @@ export class PropertyClass extends BaseEntity {
 		}
 	}
 
-	async getPropertyList(payload) {
+	async getPropertyList(payload: PropertyRequest.SearchProperty) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
-			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status } = payload;
+			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate } = payload;
 			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			let sortingType = {};
@@ -204,6 +205,12 @@ export class PropertyClass extends BaseEntity {
 			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
 			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
 			if (property_status) { matchObject.$match['property_status.number'] = property_status; }
+
+			if (fromDate && toDate) {
+				matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate };
+			} else if (fromDate && !toDate) {
+				matchObject.$match['createdAt'] = { $gte: fromDate };
+			} else if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
 
 			if (label && label[0] !== 'all') {
 				label.forEach((item) => {
