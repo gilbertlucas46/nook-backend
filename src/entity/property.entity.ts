@@ -311,17 +311,17 @@ export class PropertyClass extends BaseEntity {
 	async suggested_property(payload, userData) {
 		try {
 			let { sortType, sortBy, page, limit } = payload;
-			if (!limit) { limit = 2; } else { limit = limit; }
+			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			sortType = !sortType ? -1 : sortType;
 			let sortingType = {};
 
 			const query = {
-				'property_addedBy.userId': Types.ObjectId(userData._id),
+				'property_added_by.userId': Types.ObjectId(userData._id),
+				'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 				'_id': {
 					$ne: Types.ObjectId(payload.propertyId),
 				},
-				'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 			};
 
 			if (sortBy) {
@@ -429,7 +429,6 @@ export class PropertyClass extends BaseEntity {
 				{ $sort: sortingType },
 			];
 			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-			console.log('data>>>>>>>>>>>>>.', data);
 			return data;
 
 		} catch (error) {
