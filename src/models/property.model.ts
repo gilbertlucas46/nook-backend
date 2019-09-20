@@ -371,7 +371,7 @@ const propertySchema = new Schema({
 						Constant.DATABASE.USER_TYPE.ADMIN.TYPE,
 						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
-						Constant.DATABASE.USER_TYPE.EMPLOYEE.TYPE,
+						Constant.DATABASE.USER_TYPE.STAFF.TYPE,
 					],
 				},
 				actionTime: { type: Number },

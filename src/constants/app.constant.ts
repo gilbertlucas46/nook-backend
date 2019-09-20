@@ -34,10 +34,10 @@ export let DATABASE = {
 			TYPE: 'OWNER',
 			DISPLAY_NAME: 'Owner',
 		},
-		EMPLOYEE: {
+		STAFF: {
 			NUMBER: 5,
-			TYPE: 'EMPLOYEE',
-			DISPLAY_NAME: 'Employee',
+			TYPE: 'STAFF',
+			DISPLAY_NAME: 'Staff',
 		},
 		GUEST: {
 			NUMBER: 6,
@@ -181,7 +181,38 @@ export let DATABASE = {
 		SERVICED_OFFICE: 'Serviced Office',
 		WAREHOUSE: 'Warehouse',
 	},
-
+	ARTICLE_TYPE: {
+		FEATURED_ARTICLE: {
+			NUMBER: 1,
+			TYPE: 'FEATURED_ARTICLE',
+			DISPLAY_NAME: 'Featured Article',
+		},
+		AGENTS: {
+			NUMBER: 2,
+			TYPE: 'AGENTS',
+			DISPLAY_NAME: 'Agent',
+		},
+		BUYING: {
+			NUMBER: 3,
+			TYPE: 'BUYING',
+			DISPLAY_NAME: 'Buying',
+		},
+		HOME_LOANS: {
+			NUMBER: 4,
+			TYPE: 'HOME_LOANS',
+			DISPLAY_NAME: 'Home Loans',
+		},
+		RENTING: {
+			NUMBER: 5,
+			TYPE: 'RENTING',
+			DISPLAY_NAME: 'Renting',
+		},
+		SELLING: {
+			NUMBER: 6,
+			TYPE: 'SELLING',
+			DISPLAY_NAME: 'Selling',
+		},
+	},
 	PROPERTY_TYPE: {
 		'NONE': 'None',
 		'APPARTMENT/CONDO': 'Apartment/Condo',
