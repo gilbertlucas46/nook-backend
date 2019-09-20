@@ -307,6 +307,16 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
+
+	async userProperty(payload: PropertyRequest.UserProperty, userData) {
+		try {
+			const data = await ENTITY.PropertyE.suggested_property(payload, userData);
+			return data;
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
 }
 
 export let UserService = new UserController();
