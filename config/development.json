@@ -1,9 +1,9 @@
 {
     "environment": "development",
     "port": 7361,
-    "baseUrl": "https://nookdevang.appskeeper.com?reset=",
-    "invalidUrl": "https://nookdevang.appskeeper.com?error=",
-    "homePage": "https://nookdevang.appskeeper.com",
+    "baseUrl": "https://nookdevangweb.appskeeper.com?reset=",
+    "invalidUrl": "https://nookdevangweb.appskeeper.com?error=",
+    "homePage": "https://nookdevangweb.appskeeper.com",
     "host": "https://nookdev.appskeeper.com",
     "dbConfig": {
         "dbPwd": "Iidjsi@#1!",

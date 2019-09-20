@@ -1,9 +1,9 @@
 {
     "environment": "staging",
     "port": 7363,
-    "baseUrl": "https://nookstgang.appskeeper.com?reset=",
-    "invalidUrl": "https://nookstgang.appskeeper.com?error=",
-    "homePage": "https://nookstgang.appskeeper.com",
+    "baseUrl": "https://nooktstangweb.appskeeper.com?reset=",
+    "invalidUrl": "https://nooktstangweb.appskeeper.com?error=",
+    "homePage": "https://nooktstangweb.appskeeper.com",
     "host": "https://nookstg.appskeeper.com",
     "dbConfig": {
         "dbPwd": "Pw#ii@!#21",
