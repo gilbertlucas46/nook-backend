@@ -397,7 +397,7 @@ export let userRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 						Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
-					]),
+					]).default(Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER),
 					page: Joi.number(),
 					limit: Joi.number(),
 					sortType: Joi.number().valid([
