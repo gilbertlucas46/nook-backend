@@ -136,8 +136,6 @@ export class PropertyClass extends BaseEntity {
 					$match: {
 						$or: [
 							{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
-							{ 'property_address.region': new RegExp('.*' + searchTerm + '.*', 'i') },
-							{ 'property_address.city': new RegExp('.*' + searchTerm + '.*', 'i') },
 							{ 'property_address.barangay': new RegExp('.*' + searchTerm + '.*', 'i') },
 						],
 					},
@@ -151,18 +149,6 @@ export class PropertyClass extends BaseEntity {
 
 			if (sortBy) {
 				switch (sortBy) {
-					case Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER:
-						sortBy = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
-						sortingType = {
-							'property_status.number.Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER': sortType,
-						};
-						break;
-					case Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER:
-						sortBy = Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER;
-						sortingType = {
-							'property_status.number.Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER': sortType,
-						};
-						break;
 					case 'price':
 						sortBy = 'price';
 						sortingType = {
@@ -196,17 +182,17 @@ export class PropertyClass extends BaseEntity {
 				};
 			}
 
-			if (sortBy === 'createdAt') {
-				matchObject.$match = {
-					$or: [{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
-					{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER }],
-				};
-			}
-			else {
-				matchObject.$match = {
-					'property_status.number': sortBy,
-				};
-			}
+			// if (sortBy === 'createdAt') {
+			// 	matchObject.$match = {
+			// 		$or: [{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+			// 		{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER }],
+			// 	};
+			// }
+			// else {
+			// 	matchObject.$match = {
+			// 		'property_status.number': sortBy,
+			// 	};
+			// }
 
 			if (propertyId) { matchObject.$match._id = Types.ObjectId(propertyId); }
 			if (propertyType && propertyType !== 3) { matchObject.$match['property_basic_details.property_for_number'] = propertyType; }

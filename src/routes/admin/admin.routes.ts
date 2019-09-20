@@ -7,6 +7,7 @@ import * as config from 'config';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export let adminProfileRoute: ServerRoute[] = [
 	/**
@@ -265,7 +266,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: AdminRequest.PropertyList = request.query as any;
+				const payload: PropertyRequest.SearchProperty = request.query as any;
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
 				const responseData = await AdminService.getProperty(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
@@ -281,20 +282,28 @@ export let adminProfileRoute: ServerRoute[] = [
 				query: {
 					page: Joi.number(),
 					limit: Joi.number(),
-					sortBy: Joi.number().valid([
-						// propertyStatus: Joi.number().valid([
-						// Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-						// Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
-					]),
+					sortBy: Joi.number().valid([]),
 					sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
 					searchTerm: Joi.string(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
-					propertyType: Joi.number().valid([
-						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+					property_status: Joi.number().valid([
 						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
-
+						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 					]),
+					type: Joi.string(),
+					label: Joi.array(),
+					minPrice: Joi.number(),
+					maxPrice: Joi.number(),
+					propertyType: Joi.number(),
+					bedrooms: Joi.number(),
+					bathrooms: Joi.number(),
+					minArea: Joi.number(),
+					maxArea: Joi.number(),
+					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -370,7 +379,6 @@ export let adminProfileRoute: ServerRoute[] = [
 					status: Joi.number().valid([
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
-						// Constant.DATABASE.PROPERTY_STATUS.,
 					]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -418,5 +426,4 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-
 ];
