@@ -89,46 +89,23 @@ export namespace PropertyRequest {
 	export interface SearchProperty {
 		page?: number;
 		limit?: number;
-		searchTerm?: string;
 		sortBy?: string;
+		searchTerm?: string;
 		sortType?: number;
-		fromDate?: string;
-		toDate?: string;
+		fromDate?: number;
+		toDate?: number;
+		propertyType?: number;
 		propertyId?: string;
-		status?: string;
 		type?: string;
-		label?: [string];
+		label?: string[];
 		maxPrice?: number;
 		minPrice?: number;
-		propertyType?: number;
 		bedrooms?: number;
 		bathrooms?: number;
 		minArea?: number;
 		maxArea?: number;
+		property_status?: number;
 	}
-
-	export interface NearByProperty {
-		page?: number;
-		limit?: number;
-		searchTerm?: string;
-		sortBy?: string;
-		sortType?: number;
-		fromDate?: string;
-		toDate?: string;
-		propertyId?: string;
-		status?: string;
-		type?: string;
-		label?: [string];
-		maxPrice?: number;
-		minPrice?: number;
-		propertyType?: number;
-		pickUplocation?: [number];
-		bedrooms?: number;
-		bathrooms?: number;
-		minArea?: number;
-		maxArea?: number;
-	}
-
 	export interface UpdatePropertyByAction {
 		propertyId: string;
 		status?: string;
@@ -141,6 +118,5 @@ export namespace PropertyRequest {
 		limit?: number;
 		sortType?: number;
 		sortBy?: string;
-
 	}
 }

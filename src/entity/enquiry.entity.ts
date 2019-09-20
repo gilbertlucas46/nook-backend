@@ -17,7 +17,6 @@ export class EnquiryClass extends BaseEntity {
     async enquiryList1(pipeline) {
         try {
             const propertyData = await EnquiryE.paginate(this.modelName, pipeline);
-            console.log('propertyData', propertyData);
             return propertyData;
 
         } catch (error) {
