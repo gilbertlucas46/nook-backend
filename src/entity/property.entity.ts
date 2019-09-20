@@ -1,7 +1,7 @@
 import { BaseEntity } from './base.entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants/app.constant';
-
+import * as utils from '../utils';
 export class PropertyClass extends BaseEntity {
 	constructor() {
 		super('Property');
@@ -310,6 +310,135 @@ export class PropertyClass extends BaseEntity {
 			const propertyList = await this.DAOManager.paginate(this.modelName, query, limit, page);
 			return propertyList;
 		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+	async suggested_property(payload, userData) {
+		try {
+			let { sortType, sortBy, page, limit } = payload;
+			if (!limit) { limit = 2; } else { limit = limit; }
+			if (!page) { page = 1; } else { page = page; }
+			sortType = !sortType ? -1 : sortType;
+			let sortingType = {};
+
+			const query = {
+				'property_addedBy.userId': Types.ObjectId(userData._id),
+				'_id': {
+					$ne: Types.ObjectId(payload.propertyId),
+				},
+				'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+			};
+
+			if (sortBy) {
+				switch (sortBy) {
+					case 'price':
+						sortBy = 'price';
+						if (sortType === 1) {
+							sortingType = {
+								price: -1,
+							};
+						} else {
+							sortingType = {
+								isfeatured: 1,
+							};
+						}
+					default:
+						sortBy = 'isFeatured';
+						sortingType = {
+							isFeatured: 1,
+						};
+						break;
+				}
+			}
+			const pipeline = [
+				{
+					$match: query,
+				}, {
+					$lookup: {
+						from: 'regions',
+						let: { regionId: '$property_address.region' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$regionId'],
+									},
+								},
+							},
+							{
+								$project: {
+									fullName: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'regionData',
+					},
+				},
+				{
+					$lookup: {
+						from: 'cities',
+						let: { cityId: '$property_address.city' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$cityId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'cityData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$regionData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$unwind: {
+						path: '$cityData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$project: {
+						'property_features': 1,
+						'updatedAt': 1,
+						'createdAt': 1,
+						'property_details': 1,
+						'property_address.region': '$regionData.fullName',
+						'property_address.regionId': '$regionData._id',
+						'property_address.city': '$cityData.name',
+						'property_address.cityId': '$cityData._id',
+						'property_address.address': '$property_address.address',
+						'property_address.barangay': '$property_address.barangay',
+						'property_address.location': '$property_address.location',
+						'propertyId': '$_id',
+						'propertyShortId': '$propertyId',
+						'property_basic_details': 1,
+						'property_added_by': 1,
+						'propertyImages': 1,
+						'isFeatured': 1,
+						'property_status': 1,
+					},
+				},
+				{ $sort: sortingType },
+			];
+			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+			console.log('data>>>>>>>>>>>>>.', data);
+			return data;
+
+		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
