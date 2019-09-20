@@ -2,6 +2,8 @@ import { BaseEntity } from './base.entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../utils';
+import { PropertyRequest } from '@src/interfaces/property.interface';
+
 export class PropertyClass extends BaseEntity {
 	constructor() {
 		super('Property');
@@ -120,10 +122,10 @@ export class PropertyClass extends BaseEntity {
 		}
 	}
 
-	async getPropertyList(payload) {
+	async getPropertyList(payload: PropertyRequest.SearchProperty) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
-			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea } = payload;
+			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate } = payload;
 			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			let sortingType = {};
@@ -136,8 +138,6 @@ export class PropertyClass extends BaseEntity {
 					$match: {
 						$or: [
 							{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
-							{ 'property_address.region': new RegExp('.*' + searchTerm + '.*', 'i') },
-							{ 'property_address.city': new RegExp('.*' + searchTerm + '.*', 'i') },
 							{ 'property_address.barangay': new RegExp('.*' + searchTerm + '.*', 'i') },
 						],
 					},
@@ -151,18 +151,6 @@ export class PropertyClass extends BaseEntity {
 
 			if (sortBy) {
 				switch (sortBy) {
-					case Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER:
-						sortBy = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
-						sortingType = {
-							'property_status.number.Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER': sortType,
-						};
-						break;
-					case Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER:
-						sortBy = Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER;
-						sortingType = {
-							'property_status.number.Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER': sortType,
-						};
-						break;
 					case 'price':
 						sortBy = 'price';
 						sortingType = {
@@ -178,7 +166,7 @@ export class PropertyClass extends BaseEntity {
 					case 'isFeatured':
 						sortBy = 'isFeatured';
 						sortingType = {
-							sale_rent_price: sortType,
+							isFeatured: 1,
 						};
 						break;
 					default:
@@ -196,17 +184,17 @@ export class PropertyClass extends BaseEntity {
 				};
 			}
 
-			if (sortBy === 'createdAt') {
-				matchObject.$match = {
-					$or: [{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
-					{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER }],
-				};
-			}
-			else {
-				matchObject.$match = {
-					'property_status.number': sortBy,
-				};
-			}
+			// if (sortBy === 'createdAt') {
+			// 	matchObject.$match = {
+			// 		$or: [{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+			// 		{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER }],
+			// 	};
+			// }
+			// else {
+			// 	matchObject.$match = {
+			// 		'property_status.number': sortBy,
+			// 	};
+			// }
 
 			if (propertyId) { matchObject.$match._id = Types.ObjectId(propertyId); }
 			if (propertyType && propertyType !== 3) { matchObject.$match['property_basic_details.property_for_number'] = propertyType; }
@@ -217,6 +205,13 @@ export class PropertyClass extends BaseEntity {
 			if (maxArea) { matchObject.$match['property_details.floor_area'] = { $lt: maxArea }; }
 			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
 			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
+			if (property_status) { matchObject.$match['property_status.number'] = property_status; }
+
+			if (fromDate && toDate) {
+				matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate };
+			} else if (fromDate && !toDate) {
+				matchObject.$match['createdAt'] = { $gte: fromDate };
+			} else if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
 
 			if (label && label[0] !== 'all') {
 				label.forEach((item) => {

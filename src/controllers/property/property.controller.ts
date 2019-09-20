@@ -80,7 +80,7 @@ export class PropertyController {
 		}
 	}
 
-	async nearbyProperties(payload: PropertyRequest.NearByProperty) {
+	async nearbyProperties(payload: PropertyRequest.SearchProperty) {
 		try {
 			// let propertyData = await ENTITY.PropertyE.aggregate([
 			//     {
@@ -137,8 +137,7 @@ export class PropertyController {
 				status: Constant.DATABASE.PROPERTY_STATUS.DRAFT.TYPE,
 				displayName: Constant.DATABASE.PROPERTY_STATUS.DRAFT.DISPLAY_NAME,
 			};
-			payload.property_address.location = {};
-			payload.property_address.location.type = 'Point';
+			payload.property_address.location['type'] = 'Point';
 
 			const userId = userData._id;
 			payload.userId = userId;
@@ -161,11 +160,8 @@ export class PropertyController {
 			}];
 
 			if (payload.propertyId) {
-				const criteria = {
-					_id: payload.propertyId,
-				};
-				let updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
-				console.log('updateDataupdateData', updateData);
+				const criteria = { _id: payload.propertyId };
+				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return updateData;
 			}
 
