@@ -77,6 +77,17 @@ export let DATABASE = {
 			TYPE: 'EXPIRED',
 			DISPLAY_NAME: 'Expired',
 		},
+		ADMIN_PROPERTIES_LIST: {
+			NUMBER: 7,
+			TYPE: 'ADMIN_PROPERTY_LIST',
+			DISPLAY_NAME: 'Admin Property List',
+		},
+		USER_PROPERTIES_LIST: {
+			NUMBER: 8,
+			TYPE: 'USER_PROPERTY_LIST',
+			DISPLAY_NAME: 'User Property List',
+		},
+
 	},
 
 	PROPERTY_FOR: {

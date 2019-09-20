@@ -3,6 +3,7 @@ import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { Types } from 'mongoose';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 
 /**
  * @author
@@ -20,9 +21,10 @@ export class AdminController {
 		return result[0];
 	}
 
-	async getProperty(payload) {
+	async getProperty(payload: PropertyRequest.SearchProperty) {
 		try {
-			const getPropertyData = await ENTITY.PropertyE.getPropertyList(payload);
+			if (!payload.property_status) payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER;
+			const getPropertyData = await ENTITY.PropertyE.getPropertyList(payload );
 			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
 			return getPropertyData;
 		} catch (error) {
