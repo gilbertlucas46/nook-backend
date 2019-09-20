@@ -81,6 +81,17 @@ export namespace AdminRequest {
 		fromDate: number;
 		toDate: number;
 		propertyType: number;
+		propertyId?: string;
+		type?: string;
+		label?: string[];
+		maxPrice?: number;
+		minPrice?: number;
+		bedrooms?: number;
+		bathrooms?: number;
+		minArea?: number;
+		maxArea?: number;
+		property_status?: number;
+
 	}
 
 	export interface UpdatePropertyStatus {
