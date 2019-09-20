@@ -165,7 +165,7 @@ export class PropertyClass extends BaseEntity {
 					case 'isFeatured':
 						sortBy = 'isFeatured';
 						sortingType = {
-							isFeatured: 1,
+							isFeatured: sortType,
 						};
 						break;
 					default:
@@ -183,18 +183,6 @@ export class PropertyClass extends BaseEntity {
 				};
 			}
 
-			// if (sortBy === 'createdAt') {
-			// 	matchObject.$match = {
-			// 		$or: [{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
-			// 		{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER }],
-			// 	};
-			// }
-			// else {
-			// 	matchObject.$match = {
-			// 		'property_status.number': sortBy,
-			// 	};
-			// }
-
 			if (propertyId) { matchObject.$match._id = Types.ObjectId(propertyId); }
 			if (propertyType && propertyType !== 3) { matchObject.$match['property_basic_details.property_for_number'] = propertyType; }
 			if (type && type !== 'all') { matchObject.$match['property_basic_details.type'] = type; }
@@ -204,13 +192,40 @@ export class PropertyClass extends BaseEntity {
 			if (maxArea) { matchObject.$match['property_details.floor_area'] = { $lt: maxArea }; }
 			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
 			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
-			if (property_status) { matchObject.$match['property_status.number'] = property_status; }
 
-			if (fromDate && toDate) {
-				matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate };
-			} else if (fromDate && !toDate) {
-				matchObject.$match['createdAt'] = { $gte: fromDate };
-			} else if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
+			// List of all properties for admin.
+			if (property_status && property_status === Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER) {
+				matchObject.$match = {
+					$or: [
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER },
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER },
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER },
+					],
+				};
+			}
+
+			// List of all properties of user.
+			if (property_status && property_status === Constant.DATABASE.PROPERTY_STATUS.USER_PROPERTIES_LIST.NUMBER) {
+				matchObject.$match = {
+					$or: [
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER },
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER },
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
+						{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER },
+					],
+				};
+			}
+
+			// List of properties acc to specific property status
+			if (property_status && !(property_status === Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER)) { matchObject.$match['property_status.number'] = property_status; }
+			// Date filters
+			if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
+			if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
+			if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
 
 			if (label && label[0] !== 'all') {
 				label.forEach((item) => {
