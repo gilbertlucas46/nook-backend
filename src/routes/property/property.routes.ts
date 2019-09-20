@@ -204,7 +204,13 @@ export let propertyRoute: ServerRoute[] = [
 		path: '/v1/search/nearbyProperties',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
-				const data = await PropertyService.nearbyProperties(request.query);
+				const payload: any = request.query;
+				if (!payload.sortBy) {
+					payload.sortBy = 'isFeatured';
+					payload.sortType = -1;
+				}
+				payload['property_status'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
+				const data = await PropertyService.nearbyProperties(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -235,12 +241,7 @@ export let propertyRoute: ServerRoute[] = [
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
 					property_status: Joi.number().valid([
-						Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 					]),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 				},
