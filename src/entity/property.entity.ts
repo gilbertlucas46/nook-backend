@@ -123,7 +123,7 @@ export class PropertyClass extends BaseEntity {
 	async getPropertyList(payload) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
-			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea } = payload;
+			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status } = payload;
 			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			let sortingType = {};
@@ -178,7 +178,7 @@ export class PropertyClass extends BaseEntity {
 					case 'isFeatured':
 						sortBy = 'isFeatured';
 						sortingType = {
-							sale_rent_price: sortType,
+							isFeatured: 1,
 						};
 						break;
 					default:
@@ -217,6 +217,7 @@ export class PropertyClass extends BaseEntity {
 			if (maxArea) { matchObject.$match['property_details.floor_area'] = { $lt: maxArea }; }
 			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
 			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
+			if (property_status) { matchObject.$match['property_status.number'] = property_status; }
 
 			if (label && label[0] !== 'all') {
 				label.forEach((item) => {

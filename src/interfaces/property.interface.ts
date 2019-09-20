@@ -98,6 +98,7 @@ export namespace PropertyRequest {
 		bathrooms?: number;
 		minArea?: number;
 		maxArea?: number;
+		property_status?: number;
 	}
 
 	export interface NearByProperty {
@@ -111,7 +112,7 @@ export namespace PropertyRequest {
 		propertyId?: string;
 		status?: string;
 		type?: string;
-		label?: [string];
+		label?: string[];
 		maxPrice?: number;
 		minPrice?: number;
 		propertyType?: number;
@@ -120,6 +121,7 @@ export namespace PropertyRequest {
 		bathrooms?: number;
 		minArea?: number;
 		maxArea?: number;
+		property_status?: number;
 	}
 
 	export interface UpdatePropertyByAction {
@@ -134,6 +136,5 @@ export namespace PropertyRequest {
 		limit?: number;
 		sortType?: number;
 		sortBy?: string;
-
 	}
 }

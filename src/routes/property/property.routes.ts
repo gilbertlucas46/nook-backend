@@ -91,8 +91,8 @@ export let propertyRoute: ServerRoute[] = [
 						},
 					},
 					property_basic_details: {
-						title: Joi.string().min(1).max(200).trim().required(),
-						description: Joi.string().min(1).max(10000).trim().required(),
+						title: Joi.string().min(1).max(60).trim().required(),
+						description: Joi.string().min(1).max(2000).trim().required(),
 						type: Joi.string().valid([
 							Constant.DATABASE.PROPERTY_TYPE.NONE,
 							Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
@@ -357,8 +357,8 @@ export let propertyRoute: ServerRoute[] = [
 						},
 					},
 					property_basic_details: {
-						title: Joi.string().min(1).max(200).trim(),
-						description: Joi.string().min(1).max(10000).trim(),
+						title: Joi.string().min(1).max(60).trim(),
+						description: Joi.string().min(1).max(2000).trim(),
 						type: Joi.string().valid([
 							Constant.DATABASE.PROPERTY_TYPE.NONE,
 							Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
