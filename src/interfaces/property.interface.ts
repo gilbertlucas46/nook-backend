@@ -78,7 +78,14 @@ export namespace PropertyRequest {
 	export interface PropertyDetail {
 		_id: string;
 	}
-
+	export interface UserProperty {
+		// userId: string;
+		page: number;
+		limit: number;
+		propertyId: string;
+		sortType?: number;
+		sortBy: string;
+	}
 	export interface SearchProperty {
 		page?: number;
 		limit?: number;
