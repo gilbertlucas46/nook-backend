@@ -7,8 +7,8 @@ import * as config from 'config';
 // let env = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'default';
 
 const originArray: string[] = ['http://localhost:4200', 'http://localhost:4201', 'http://localhost', 'https://nookdevang.appskeeper.com', 'http://nookdevang.appskeeper.com', 'https://nookqaang.appskeeper.com', 'http://nookqaang.appskeeper.com',
-	'https://nookstgang.appskeeper.com', 'http://nookstgang.appskeeper.com', 'https://nookdev.appskeeper.com', 'http://nookdev.appskeeper.com', 'http://nookdevangadmin.appskeeper.com', 'https://nookdevangadmin.appskeeper.com'
- 'http://nookappadmindev.appskeeper.com', 'https://nookappadmindev.appskeeper.com', 'http://nookdevangweb.appskeeper.com', 'https://nookdevangweb.appskeeper.com'];
+	'https://nookstgang.appskeeper.com', 'http://nookstgang.appskeeper.com', 'https://nookdev.appskeeper.com', 'http://nookdev.appskeeper.com', 'http://nookdevangadmin.appskeeper.com', 'https://nookdevangadmin.appskeeper.com',
+	'http://nookappadmindev.appskeeper.com', 'https://nookappadmindev.appskeeper.com', 'http://nookdevangweb.appskeeper.com', 'https://nookdevangweb.appskeeper.com'];
 const server = new Server({
 	port: config.get('port'),
 	routes: {
