@@ -20,10 +20,10 @@ const originArray: string[] = [
 	'http://nookstgangadmin.appskeeper.com',
 	'https://nookstgangadmin.appskeeper.com',
 
-	'http://nooktstangweb.appskeeper.com',
-	'https://nooktstangweb.appskeeper.com',
-	'http://nooktstangadmin.appskeeper.com',
-	'https://nooktstangadmin.appskeeper.com',
+	'http://nookqaangweb.appskeeper.com',
+	'https://nookqaangweb.appskeeper.com',
+	'http://nookqaangadmin.appskeeper.com',
+	'https://nookqaangadmin.appskeeper.com',
 ];
 const server = new Server({
 	port: config.get('port'),
