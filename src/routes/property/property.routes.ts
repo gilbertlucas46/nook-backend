@@ -149,6 +149,12 @@ export let propertyRoute: ServerRoute[] = [
 		path: '/v1/user/propertyList',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
+				const payload: any = request.query;
+				if (!payload.sortBy) {
+					payload.sortBy = 'isFeatured';
+					payload.sortType = -1;
+				}
+				payload['property_status'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
 				const propertyList = await PropertyService.searchProperties(request.query);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList));
 			} catch (error) {
@@ -174,12 +180,7 @@ export let propertyRoute: ServerRoute[] = [
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
 					property_status: Joi.number().valid([
-						Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 					]),
 					bedrooms: Joi.number(),
 					bathrooms: Joi.number(),
