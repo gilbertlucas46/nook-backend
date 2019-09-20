@@ -71,29 +71,6 @@ export namespace AdminRequest {
 		propertyId: string;
 	}
 
-	export interface PropertyList {
-		propertyStatus?: string;
-		page?: number;
-		limit?: number;
-		sortBy: string;
-		searchTerm: string;
-		sortType: number;
-		fromDate: number;
-		toDate: number;
-		propertyType: number;
-		propertyId?: string;
-		type?: string;
-		label?: string[];
-		maxPrice?: number;
-		minPrice?: number;
-		bedrooms?: number;
-		bathrooms?: number;
-		minArea?: number;
-		maxArea?: number;
-		property_status?: number;
-
-	}
-
 	export interface UpdatePropertyStatus {
 		status: number;
 		propertyId: string;

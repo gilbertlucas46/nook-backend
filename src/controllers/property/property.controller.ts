@@ -80,7 +80,7 @@ export class PropertyController {
 		}
 	}
 
-	async nearbyProperties(payload: PropertyRequest.NearByProperty) {
+	async nearbyProperties(payload: PropertyRequest.SearchProperty) {
 		try {
 			// let propertyData = await ENTITY.PropertyE.aggregate([
 			//     {
