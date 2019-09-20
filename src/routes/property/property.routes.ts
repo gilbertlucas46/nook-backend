@@ -244,7 +244,7 @@ export let propertyRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 					]),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					property_features: Joi.object(),
+					property_features: Joi.array(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},

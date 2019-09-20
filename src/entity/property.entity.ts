@@ -231,7 +231,18 @@ export class PropertyClass extends BaseEntity {
 			if (label && label[0] !== 'all') {
 				matchObject.$match = { $or: [] };
 				label.forEach((item) => {
-					if (item) matchObject.$match.$or.push({ 'property_basic_details.label': item });    //  ['property_basic_details.label'] = item;
+					if (item) matchObject.$match.$or.push({ 'property_basic_details.label': item });
+				});
+			}
+
+			if (property_features && property_features.length > 0) {
+				matchObject.$match = { $and: [] };
+				property_features.forEach((item) => {
+					if (item) {
+						const cond = {};
+						cond[`property_features.${item}`] = true;
+						matchObject.$match.$and.push(cond);
+					}
 				});
 			}
 

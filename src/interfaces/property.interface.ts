@@ -105,7 +105,7 @@ export namespace PropertyRequest {
 		minArea?: number;
 		maxArea?: number;
 		property_status?: number;
-		property_features?: object;
+		property_features?: string[];
 	}
 	export interface UpdatePropertyByAction {
 		propertyId: string;
