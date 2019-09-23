@@ -119,7 +119,7 @@ export let userRoute: ServerRoute[] = [
 				// let url = config.get('host1') + ':' + config.get('port') + '/v1/user/verifyLink/' + forgetPasswordResponse
 				return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.FORGET_PASSWORD_EMAIL, {});
 			} catch (error) {
-				await UniversalFunctions.sendError(error);
+				return UniversalFunctions.sendError(error);
 			}
 		},
 		options: {
@@ -179,7 +179,7 @@ export let userRoute: ServerRoute[] = [
 					companyName: Joi.string().allow(''),
 					address: Joi.string().allow(''),
 					aboutMe: Joi.string().allow(''),
-					profilePicUrl: Joi.string().allow('').default(''),
+					profilePicUrl: Joi.string().allow(''),
 					backGroundImageUrl: Joi.string().allow(''),
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
@@ -375,10 +375,9 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/suggested-property',
 		async handler(request, h) {
 			try {
-				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
-				console.log('userData', userData);
+				// const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
 				const payload: PropertyRequest.UserProperty = request.query as any;
-				const propertyDetail = await UserService.userProperty(payload, userData);
+				const propertyDetail = await UserService.userProperty(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -387,7 +386,7 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'get user all property detail of property ',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			auth: 'UserAuth',
+			// auth: 'UserAuth',
 			validate: {
 				query: {
 					propertyType: Joi.number().valid([
@@ -407,7 +406,7 @@ export let userRoute: ServerRoute[] = [
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 
-				headers: UniversalFunctions.authorizationHeaderObj,
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {

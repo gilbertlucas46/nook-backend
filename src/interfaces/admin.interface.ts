@@ -31,6 +31,7 @@ export namespace AdminRequest {
 	export interface Login {
 		email: string;
 		password: string;
+		deviceId?: string;
 	}
 
 	export interface ForgetPassword {
@@ -74,5 +75,11 @@ export namespace AdminRequest {
 	export interface UpdatePropertyStatus {
 		status: number;
 		propertyId: string;
+	}
+
+	export interface Logout {
+		email?: string;
+		deviceId?: string;
+
 	}
 }

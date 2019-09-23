@@ -120,9 +120,8 @@ export let enquiryRoutes = [
 		path: '/v1/user/enquiry/{enquiryId}',
 		handler: async (request, h) => {
 			try {
-				const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+				// const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
 				const payload: EnquiryRequest.GetInquiryById = request.params;
-
 				const registerResponse = await EnquiryService.getEnquiryById(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {

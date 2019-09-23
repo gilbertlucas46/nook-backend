@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../utils';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import { UserRequest } from '@src/interfaces/user.interface';
 
 export class PropertyClass extends BaseEntity {
 	constructor() {
@@ -323,16 +324,23 @@ export class PropertyClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-	async suggested_property(payload, userData) {
+	async suggested_property(payload: PropertyRequest.UserProperty) {
 		try {
 			let { sortType, sortBy, page, limit } = payload;
+			const { propertyId } = payload;
 			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			sortType = !sortType ? -1 : sortType;
 			let sortingType = {};
+			const criteria = {
+				_id: Types.ObjectId(propertyId)
+			};
+
+			const propertyData = await this.DAOManager.findOne(this.modelName, criteria, ['_id', 'property_added_by']);
+			if (!propertyData) return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
 
 			const query = {
-				'property_added_by.userId': Types.ObjectId(userData._id),
+				'property_added_by.userId': Types.ObjectId(propertyData.property_added_by.userId),
 				'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 				'_id': {
 					$ne: Types.ObjectId(payload.propertyId),

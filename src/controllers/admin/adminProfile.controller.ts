@@ -170,6 +170,25 @@ export class AdminProfileController {
 			return Promise.reject(error);
 		}
 	}
+
+	async logout(payload: AdminRequest.Logout, adminData) {
+		try {
+			const criteria = {
+				adminId: adminData._id,
+				deviceId: payload.deviceId,
+			};
+			const dataToUpdate = {
+				isLogin: false,
+			};
+			const logout = await ENTITY.SessionE.updateOneEntity(criteria, dataToUpdate);
+			return logout;
+
+
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
 }
 
 export let AdminProfileService = new AdminProfileController();

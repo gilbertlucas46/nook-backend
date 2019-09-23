@@ -124,7 +124,7 @@ export class PropertyController {
 			let propertyAction;
 
 			if (payload.property_basic_details.property_for_number) {
-				result = await this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload.property_basic_details.property_for_number);
+				result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload.property_basic_details.property_for_number);
 				payload.property_basic_details = {
 					property_for_string: result.TYPE,
 					property_for_displayName: result.DISPLAY_NAME,

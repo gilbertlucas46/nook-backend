@@ -1,16 +1,27 @@
 import * as mongoose from 'mongoose';
-import { Schema } from 'mongoose';
+import { Schema, Document } from 'mongoose';
 import * as Constant from '../constants';
+import { number } from 'joi';
+export interface IEnquiry extends Document {
+    uploadBy: string;
+    category: string;
+    userId: string;
+    description: string;
+    viewCount?: string;
+    shareCount?: string;
+}
 
 const articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-    type: {
+    uploadBy: {
         type: String, enum: [
             Constant.DATABASE.USER_TYPE.ADMIN,
             Constant.DATABASE.USER_TYPE.STAFF,
         ],
+        name: { type: String },
+        userId: { type: Schema.Types.ObjectId },
     },
-    articleType: {
+    category: {
         type: String, enum: [
             Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
             Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
@@ -20,10 +31,13 @@ const articleSchema = new Schema({
             Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
         ],
     },
-    userId: { type: Schema.Types.ObjectId },
+
+    userId: { type: Schema.Types.ObjectId, required: true },
     description: { type: String },
     viewCount: { type: Number },
     shareCount: { type: Number },
+    createdAt: { type: Number },
+    updatedAt: { type: Number },
 });
 
-export let Enquiry = mongoose.model('Article', articleSchema);
+export let Article = mongoose.model('Article', articleSchema);
