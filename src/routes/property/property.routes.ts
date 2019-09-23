@@ -100,11 +100,11 @@ export let propertyRoute: ServerRoute[] = [
 							Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
 							Constant.DATABASE.PROPERTY_TYPE.LAND,
 							Constant.DATABASE.PROPERTY_TYPE.ROOM,
-						]),
+						]).required(),
 						property_for_number: Joi.number().valid([
 							Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
 							Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-						]),
+						]).required(),
 						label: Joi.string().valid([
 							Constant.DATABASE.PROPERTY_LABEL.NONE,
 							Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,
@@ -117,7 +117,7 @@ export let propertyRoute: ServerRoute[] = [
 							Constant.DATABASE.PROPERTY_LABEL.SERVICED_OFFICE,
 							Constant.DATABASE.PROPERTY_LABEL.WAREHOUSE,
 						]),
-						sale_rent_price: Joi.number(),
+						sale_rent_price: Joi.number().required(),
 						price_currency: Joi.string().min(1).max(20).trim(),
 						price_label: Joi.string().valid([
 							Constant.DATABASE.PRICE_LABEL.DAILY,
@@ -149,6 +149,12 @@ export let propertyRoute: ServerRoute[] = [
 		path: '/v1/user/propertyList',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
+				const payload: any = request.query;
+				if (!payload.sortBy) {
+					payload.sortBy = 'isFeatured';
+					payload.sortType = -1;
+				}
+				payload['property_status'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
 				const propertyList = await PropertyService.searchProperties(request.query);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList));
 			} catch (error) {
@@ -174,12 +180,7 @@ export let propertyRoute: ServerRoute[] = [
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
 					property_status: Joi.number().valid([
-						Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 					]),
 					bedrooms: Joi.number(),
 					bathrooms: Joi.number(),
@@ -244,6 +245,7 @@ export let propertyRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 					]),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					property_features: Joi.array(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},

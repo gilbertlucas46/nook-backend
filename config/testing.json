@@ -1,9 +1,9 @@
 {
     "environment": "testing",
     "port": 7362,
-    "baseUrl": "https://nookqaang.appskeeper.com?reset=",
-    "invalidUrl": "https://nookqaang.appskeeper.com?error=",
-    "homePage": "https://nookqaang.appskeeper.com",
+    "baseUrl": "https://nookqaangweb.appskeeper.com?reset=",
+    "invalidUrl": "https://nookqaangweb.appskeeper.com?error=",
+    "homePage": "https://nookqaangweb.appskeeper.com",
     "host": "https://nookqa.appskeeper.com",
     "dbConfig": {
         "dbPwd": "Oimi@#$!12",

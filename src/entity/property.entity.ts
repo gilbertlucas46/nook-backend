@@ -126,7 +126,7 @@ export class PropertyClass extends BaseEntity {
 	async getPropertyList(payload: PropertyRequest.SearchProperty) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
-			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate } = payload;
+			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate, property_features } = payload;
 			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			let sortingType = {};
@@ -230,8 +230,20 @@ export class PropertyClass extends BaseEntity {
 			if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
 
 			if (label && label[0] !== 'all') {
+				matchObject.$match = { $or: [] };
 				label.forEach((item) => {
-					matchObject.$match['property_basic_details.label'] = item;
+					if (item) matchObject.$match.$or.push({ 'property_basic_details.label': item });
+				});
+			}
+
+			if (property_features && property_features.length > 0) {
+				matchObject.$match = { $and: [] };
+				property_features.forEach((item) => {
+					if (item) {
+						const cond = {};
+						cond[`property_features.${item}`] = true;
+						matchObject.$match.$and.push(cond);
+					}
 				});
 			}
 
