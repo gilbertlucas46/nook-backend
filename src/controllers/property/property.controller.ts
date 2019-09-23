@@ -125,12 +125,10 @@ export class PropertyController {
 
 			if (payload.property_basic_details.property_for_number) {
 				result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload.property_basic_details.property_for_number);
-				payload.property_basic_details = {
-					property_for_string: result.TYPE,
-					property_for_displayName: result.DISPLAY_NAME,
-				};
+				// payload.property_basic_details = {
+				payload.property_basic_details['property_for_string'] = result.TYPE;
+				payload.property_basic_details['property_for_displayName'] = result.DISPLAY_NAME;
 			}
-
 			propertyAction = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.DRAFT.NUMBER);
 			payload.property_status = {
 				number: Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
