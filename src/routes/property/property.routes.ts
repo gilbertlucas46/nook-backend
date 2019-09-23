@@ -129,7 +129,7 @@ export let propertyRoute: ServerRoute[] = [
 						]),
 					},
 					isFeatured: Joi.boolean().default(false),
-					propertyImages: Joi.array().required(),
+					propertyImages: Joi.array(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -318,7 +318,7 @@ export let propertyRoute: ServerRoute[] = [
 				// 	return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, registerResponse));
 				// } else {
 				const registerResponse = await PropertyService.saveAsDraft(payload, userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PROPERTY_ADDED, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PROPERTY_SAVE_AS_DRAFT, registerResponse));
 				// }
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
