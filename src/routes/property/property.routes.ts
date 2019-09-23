@@ -100,11 +100,11 @@ export let propertyRoute: ServerRoute[] = [
 							Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
 							Constant.DATABASE.PROPERTY_TYPE.LAND,
 							Constant.DATABASE.PROPERTY_TYPE.ROOM,
-						]),
+						]).required(),
 						property_for_number: Joi.number().valid([
 							Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
 							Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-						]),
+						]).required(),
 						label: Joi.string().valid([
 							Constant.DATABASE.PROPERTY_LABEL.NONE,
 							Constant.DATABASE.PROPERTY_LABEL.FORECLOSURE,
@@ -117,7 +117,7 @@ export let propertyRoute: ServerRoute[] = [
 							Constant.DATABASE.PROPERTY_LABEL.SERVICED_OFFICE,
 							Constant.DATABASE.PROPERTY_LABEL.WAREHOUSE,
 						]),
-						sale_rent_price: Joi.number(),
+						sale_rent_price: Joi.number().required(),
 						price_currency: Joi.string().min(1).max(20).trim(),
 						price_label: Joi.string().valid([
 							Constant.DATABASE.PRICE_LABEL.DAILY,
