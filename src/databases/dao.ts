@@ -124,7 +124,7 @@ export class DAOManager {
 		}
 	}
 
-	async aggregateData(model: ModelNames, aggregateArray, options) {
+	async aggregateData(model: ModelNames, aggregateArray, options?) {
 		try {
 			const ModelName = Models[model];
 			const aggregation = ModelName.aggregate(aggregateArray);
