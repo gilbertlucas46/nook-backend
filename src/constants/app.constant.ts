@@ -638,6 +638,11 @@ export let STATUS_MSG = {
 				message: 'Reset password link sent to email.',
 				type: 'FORGET_PASSWORD_EMAIL',
 			},
+			ENQUIRY_SENT: {
+				statusCode: 200,
+				message: 'Enquiry Sent',
+				type: 'DEFAULT',
+			},
 		},
 		S201: {
 			CREATED: {
@@ -653,6 +658,11 @@ export let STATUS_MSG = {
 			ENQUIRY_SUBMITTED: {
 				statusCode: 201,
 				message: 'Enquiry Submitted',
+				type: 'CREATED',
+			},
+			PROPERTY_SAVE_AS_DRAFT: {
+				statusCode: 201,
+				message: 'Property Added as Draft',
 				type: 'CREATED',
 			},
 		},
