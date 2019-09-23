@@ -5,7 +5,6 @@ import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '../constants';
-import { Enquiry } from '../models';
 export class UserClass extends BaseEntity {
 	constructor() {
 		super('User');
