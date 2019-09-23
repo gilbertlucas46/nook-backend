@@ -51,7 +51,7 @@ export let enquiryRoutes = [
 			try {
 				const payload: EnquiryRequest.CreateEnquiry = request.payload;
 				const registerResponse = await EnquiryService.createAuthEnquiry(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.ENQUIRY_SENT, registerResponse));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
@@ -59,7 +59,7 @@ export let enquiryRoutes = [
 		options: {
 			description: 'create Enquiry application',
 			tags: ['api', 'anonymous', 'user', 'Enquiry'],
-			auth: 'UserAuth',
+			// auth: 'UserAuth',
 			validate: {
 				payload: {
 					name: Joi.string().required(),
@@ -68,7 +68,7 @@ export let enquiryRoutes = [
 					message: Joi.string().required(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
-				headers: UniversalFunctions.authorizationHeaderObj,
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
