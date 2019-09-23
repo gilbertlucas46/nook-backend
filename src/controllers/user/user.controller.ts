@@ -33,7 +33,7 @@ export class UserController {
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
 					const userResponse = UniversalFunctions.formatUserData(User);
-					const html = `<html><head><title> Nook user Register | welcomes you</title></head></html>`;
+					const html = `<html><head><title> Nook user Register | Thanx for Registering with us...</title></head></html>`;
 					const mail = new MailManager(payload.email, 'nook welcomes you', html);
 					mail.sendMail();
 					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);

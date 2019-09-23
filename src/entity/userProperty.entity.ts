@@ -35,7 +35,7 @@ export class UserPropertyClass extends BaseEntity {
 					case 'isFeatured':
 						sortBy = 'isFeatured';
 						sortingType = {
-							createdAt: sortType,
+							isFeatured: sortType,
 						};
 					default:
 						// sortBy = 'isFeatured';
