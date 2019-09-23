@@ -92,7 +92,6 @@ export class UserController {
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
 			let updatePropertyData;
-			let Obj = {};
 			const criteria = { _id: payload._id };
 			if (payload.firstName && payload.lastName && payload.type) {
 				payload.isProfileComplete = true;
@@ -103,18 +102,10 @@ export class UserController {
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName || getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
-				// Obj = updateUser.firstName;
-				// Obj = updateUser.lastName;
-				// Obj = updateUser.phoneNumber;
 				const propertyCriteria = {
 					userId: updateUser._id,
 				};
 				updatePropertyData = {
-					// userId: updateUser._id,
-					// property_added_by['phoneNumber']: updateUser.phoneNumber,
-					// property_added_by['profilePicUrl']: updateUser.profilePicUrl,
-					// property_added_by['firstName']: updateUser.firstName,
-					// property_added_by['lastName']: updateUser.lastName,
 					property_added_by: {
 						userId: updateUser._id,
 						userName: updateUser.userName,
@@ -178,7 +169,6 @@ export class UserController {
 			const userData = await ENTITY.UserE.getOneEntity(result.email, {});
 			if (!userData) { return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR; } else {
 				const criteria = { email: result };
-				// let userAttribute = ['passwordResetTokenExpirationTime', 'passwordResetToken']
 				const userExirationTime: any = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 				const today: any = new Date();
 				const diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
