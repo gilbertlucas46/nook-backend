@@ -79,6 +79,7 @@ export namespace PropertyRequest {
 		_id: string;
 	}
 	export interface UserProperty {
+		propertyType: string;
 		// userId: string;
 		page: number;
 		limit: number;

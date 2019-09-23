@@ -4,7 +4,8 @@ import * as TokenManager from '../lib';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import { UserRequest } from '@src/interfaces/user.interface';
-
+import * as Constant from '../constants';
+import { Enquiry } from '../models';
 export class UserClass extends BaseEntity {
 	constructor() {
 		super('User');
@@ -84,6 +85,96 @@ export class UserClass extends BaseEntity {
 			return data;
 		} catch (error) {
 			Promise.reject(error);
+		}
+	}
+
+	async userDashboad(userData: UserRequest.UserData) {
+		try {
+			const pipeline = [
+				{
+					$facet: {
+						Active: [
+							{
+								$match: {
+									$and: [
+										{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+										{ userId: userData._id }],
+								},
+							},
+							{ $count: 'Total' },
+						],
+						Featured: [
+							{
+								$match: {
+									$and: [
+										{ isFeatured: true },
+										{ userId: userData._id },
+									],
+								},
+							},
+							{ $count: 'Total' },
+						],
+						soldPropertyLast30Days: [
+							{
+								$match: {
+									$and: [
+										{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED },
+										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER },
+										{ userId: userData._id },
+										{ property_sold_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+									],
+								},
+							},
+							{ $count: 'Total' },
+						],
+						rentedPropertyLast30Days: [
+							{
+								$match: {
+									$and: [
+										{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED },
+										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER },
+										{ userId: userData._id },
+										{ property_rent_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+									],
+								},
+							},
+							{ $count: 'rentPropertyLast30Days' },
+						],
+					},
+				},
+				{
+					$project: {
+						Active: {
+							$cond: { if: { $size: '$Active' }, then: { $arrayElemAt: ['$Active.Total', 0] }, else: 0 },
+						},
+						Featured: {
+							$cond: { if: { $size: ['$Featured'] }, then: { $arrayElemAt: ['$Featured.Total', 0] }, else: 0 },
+						},
+						soldPropertyLast30Days: {
+							$cond: { if: { $size: ['$soldPropertyLast30Days'] }, then: { $arrayElemAt: ['$soldPropertyLast30Days.Total', 0] }, else: 0 },
+						},
+						rentedPropertyLast30Days: {
+							$cond: { if: { $size: ['$rentedPropertyLast30Days'] }, then: { $arrayElemAt: ['$rentedPropertyLast30Days.Total', 0] }, else: 0 },
+						},
+						// enquiryLast30Days: '$enquiryLast30Days',
+					},
+				},
+			];
+			const query: any = {};
+			query.propertyOwnerId = userData._id,
+				query.createdAt = { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) };
+
+			const enquiryLast30Days = await this.DAOManager.count('Enquiry', query);
+
+			const data = await this.DAOManager.aggregateData('Property', pipeline);
+			return {
+				...data[0],
+				isFeaturedProfile: !!userData.isFeaturedProfile,
+				enquiryLast30Day: enquiryLast30Days,
+			};
+
+		} catch (error) {
+			return Promise.reject(error);
 		}
 	}
 }

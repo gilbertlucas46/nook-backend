@@ -17,6 +17,7 @@ export const AdminSessionSchema = new Schema(
 			index: true,
 			ref: 'Admin',
 		},
+		deviceId: { types: String },
 		isDeleted: { type: Boolean, default: false },
 		lastActiveTime: { type: Date },
 		isLogin: { type: Boolean, default: false },

@@ -92,7 +92,7 @@ export class UserController {
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
 			let updatePropertyData;
-			let Obj: object = {};
+			let Obj = {};
 			const criteria = { _id: payload._id };
 			if (payload.firstName && payload.lastName && payload.type) {
 				payload.isProfileComplete = true;
@@ -103,16 +103,18 @@ export class UserController {
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName || getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
-				Obj = updateUser.firstName;
-				Obj = updateUser.lastName;
-				Obj = updateUser.profilePicUrl;
-				Obj = updateUser.phoneNumber;
-				Obj = updateUser.userName;
+				// Obj = updateUser.firstName;
+				// Obj = updateUser.lastName;
+				// Obj = updateUser.phoneNumber;
 				const propertyCriteria = {
 					userId: updateUser._id,
 				};
 				updatePropertyData = {
-					userId: updateUser._id,
+					// userId: updateUser._id,
+					// property_added_by['phoneNumber']: updateUser.phoneNumber,
+					// property_added_by['profilePicUrl']: updateUser.profilePicUrl,
+					// property_added_by['firstName']: updateUser.firstName,
+					// property_added_by['lastName']: updateUser.lastName,
 					property_added_by: {
 						userId: updateUser._id,
 						userName: updateUser.userName,
@@ -122,7 +124,7 @@ export class UserController {
 						lastName: updateUser.lastName,
 					},
 				};
-				const updateProperty = ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
+				ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
 			}
 			return updateUser;
 		} catch (error) {
@@ -220,97 +222,16 @@ export class UserController {
 
 	async dashboard(userData: UserRequest.UserData) {
 		try {
-			const pipeline = [
-				{
-					$facet: {
-						Active: [
-							{
-								$match: {
-									$and: [
-										{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
-										{ userId: userData._id }],
-								},
-							},
-							{ $count: 'Total' },
-						],
-						Featured: [
-							{
-								$match: {
-									$and: [
-										{ isFeatured: true },
-										{ userId: userData._id },
-									],
-								},
-							},
-							{ $count: 'Total' },
-						],
-						soldPropertyLast30Days: [
-							{
-								$match: {
-									$and: [
-										{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED },
-										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER },
-										{ userId: userData._id },
-										{ property_sold_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
-									],
-								},
-							},
-							{ $count: 'Total' },
-						],
-						rentedPropertyLast30Days: [
-							{
-								$match: {
-									$and: [
-										{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED },
-										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER },
-										{ userId: userData._id },
-										{ property_rent_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
-									],
-								},
-							},
-							{ $count: 'rentPropertyLast30Days' },
-						],
-					},
-				},
-				{
-					$project: {
-						Active: {
-							$cond: { if: { $size: '$Active' }, then: { $arrayElemAt: ['$Active.Total', 0] }, else: 0 },
-						},
-						Featured: {
-							$cond: { if: { $size: ['$Featured'] }, then: { $arrayElemAt: ['$Featured.Total', 0] }, else: 0 },
-						},
-						soldPropertyLast30Days: {
-							$cond: { if: { $size: ['$soldPropertyLast30Days'] }, then: { $arrayElemAt: ['$soldPropertyLast30Days.Total', 0] }, else: 0 },
-						},
-						rentedPropertyLast30Days: {
-							$cond: { if: { $size: ['$rentedPropertyLast30Days'] }, then: { $arrayElemAt: ['$rentedPropertyLast30Days.Total', 0] }, else: 0 },
-						},
-						// enquiryLast30Days: '$enquiryLast30Days',
-					},
-				},
-			];
-			const query: any = {};
-			query.propertyOwnerId = userData._id,
-				query.createdAt = { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) };
-
-			const enquiryLast30Days = await ENTITY.EnquiryE.count(query);
-
-			const data = await ENTITY.PropertyE.aggregate(pipeline);
-			return {
-				...data[0],
-				isFeaturedProfile: !!userData.isFeaturedProfile,
-				enquiryLast30Day: enquiryLast30Days,
-			};
+			return await ENTITY.UserE.userDashboad(userData);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
 
-	async userProperty(payload: PropertyRequest.UserProperty, userData) {
+	async userProperty(payload: PropertyRequest.UserProperty) {
 		try {
-			const data = await ENTITY.PropertyE.suggested_property(payload, userData);
+			const data = await ENTITY.PropertyE.suggested_property(payload);
 			return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
