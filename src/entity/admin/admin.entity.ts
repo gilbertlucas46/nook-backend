@@ -221,10 +221,9 @@ export class AdminClass extends BaseEntity {
 						declineProperty: {
 							$cond: { if: { $size: ['$adminDeclineProperty'] }, then: { $arrayElemAt: ['$adminDeclineProperty.Total', 0] }, else: 0 },
 						},
-						adminPendingProperty: {
+						pendingProperty: {
 							$cond: { if: { $size: ['$adminPendingProperty'] }, then: { $arrayElemAt: ['$adminPendingProperty.Total', 0] }, else: 0 },
 						},
-						// enquiryLast30Days: '$enquiryLast30Days',
 					},
 				},
 			];
@@ -238,7 +237,6 @@ export class AdminClass extends BaseEntity {
 			const data = await this.DAOManager.aggregateData('Property', pipeline);
 			return {
 				...data[0],
-
 			};
 
 		} catch (error) {
