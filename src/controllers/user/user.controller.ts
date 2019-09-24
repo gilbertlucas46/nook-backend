@@ -62,6 +62,8 @@ export class UserController {
 						return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD;
 					} else {
 						const accessToken = await ENTITY.UserE.createToken(payload, userData);
+						console.log('accessToken-================', accessToken);
+
 						await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
 						const formatedData = await utils.formatUserData(userData);
 						return { formatedData, accessToken };

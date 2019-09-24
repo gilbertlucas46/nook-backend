@@ -12,8 +12,11 @@ export namespace EnquiryRequest {
 	}
 
 	export interface GetEnquiry {
+		page?: number;
+		limit?: number;
 		fromDate: number;
 		toDate: number;
+		sortType?: number;
 	}
 	export interface GetInquiryById {
 		enquiryId: string;

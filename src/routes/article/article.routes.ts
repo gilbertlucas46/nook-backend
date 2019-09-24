@@ -11,10 +11,11 @@ export let articleRoutes = [
         path: '/v1/article',
         handler: async (request, h) => {
             try {
-                const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                const adminData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const payload: ArticleRequest.CreateArticle = request.payload;
-                const registerResponse = await ArticleService.createArticle(payload, userData);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ENQUIRY_SUBMITTED, registerResponse));
+                console.log('payload================-------------', payload, '================', adminData);
+                const registerResponse = await ArticleService.createArticle(payload, adminData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, {}));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
@@ -22,14 +23,21 @@ export let articleRoutes = [
         },
         options: {
             description: 'create article application',
-            tags: ['api', 'anonymous', 'admin', 'staff', 'Article'],
-            auth: 'AdminAuth',
+            tags: ['api', 'anonymous', 'user', 'admin', 'staff', 'Article'],
+            auth: 'UserAuth',
             validate: {
                 payload: {
-                    category: Joi.string().required(),
                     description: Joi.string().required(),
-                    viewCount: Joi.string().required(),
-                    shareCount: Joi.string().required(),
+                    viewCount: Joi.number(),
+                    // shareCount: Joi.number(),
+                    category: Joi.string().valid([
+                        Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                    ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

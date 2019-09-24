@@ -114,6 +114,9 @@ export let formatUserData = (userObj: { [key: string]: any }) => {
 	delete userObj.isLogin;
 	delete userObj.lastActivityTime;
 	delete userObj.password;
+	delete userObj.passwordResetToken;
+	delete userObj.passwordResetTokenExpirationTime;
+	delete userObj.propertyActions;
 	return userObj;
 };
 

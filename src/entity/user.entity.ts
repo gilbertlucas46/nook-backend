@@ -118,7 +118,7 @@ export class UserClass extends BaseEntity {
 							{
 								$match: {
 									$and: [
-										{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED },
+										{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
 										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER },
 										{ userId: userData._id },
 										{ property_sold_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
@@ -140,6 +140,36 @@ export class UserClass extends BaseEntity {
 							},
 							{ $count: 'rentPropertyLast30Days' },
 						],
+						adminTotalProperty: [
+							{
+								$match: {
+									// $or: [
+									'property_status.number': { $ne: Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
+									// ]
+									//  Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
+									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER },
+									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS..NUMBER },
+								},
+							},
+							{ $count: 'Total' },
+						],
+						adminActiveProperty: [
+							{
+								$match: {
+									'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+								},
+							},
+							{ $count: 'Total' },
+						],
+						adminDeclineProperty: [
+							{
+								$match: {
+									'property_status.number': Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
+								},
+							},
+							{ $count: 'Total' },
+						],
 					},
 				},
 				{
@@ -156,15 +186,27 @@ export class UserClass extends BaseEntity {
 						rentedPropertyLast30Days: {
 							$cond: { if: { $size: ['$rentedPropertyLast30Days'] }, then: { $arrayElemAt: ['$rentedPropertyLast30Days.Total', 0] }, else: 0 },
 						},
+						adminTotalProperty: {
+							$cond: { if: { $size: ['$adminTotalProperty'] }, then: { $arrayElemAt: ['$adminTotalProperty.Total', 0] }, else: 0 },
+						},
+						adminActiveProperty: {
+							$cond: { if: { $size: ['$adminActiveProperty'] }, then: { $arrayElemAt: ['$adminActiveProperty.Total', 0] }, else: 0 },
+						},
+						adminDeclineProperty: {
+							$cond: { if: { $size: ['$adminDeclineProperty'] }, then: { $arrayElemAt: ['$adminDeclineProperty.Total', 0] }, else: 0 },
+						},
 						// enquiryLast30Days: '$enquiryLast30Days',
 					},
 				},
 			];
-			const query: any = {};
-			query.propertyOwnerId = userData._id,
-				query.createdAt = { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) };
-
+			const query = {
+				$and: [
+					{ propertyOwnerId: userData._id },
+					{ createdAt: { $gt: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+				],
+			};
 			const enquiryLast30Days = await this.DAOManager.count('Enquiry', query);
+			console.log('enquiryLast30Days', enquiryLast30Days);
 
 			const data = await this.DAOManager.aggregateData('Property', pipeline);
 			return {
