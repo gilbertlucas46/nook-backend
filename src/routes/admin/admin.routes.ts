@@ -2,7 +2,7 @@ import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { AdminProfileService, AdminService } from '../../controllers';
+import { AdminProfileService, AdminService, UserService } from '../../controllers';
 import * as config from 'config';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
@@ -429,4 +429,39 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
+	/**
+	 * admin DASHBOARD
+	 */
+	{
+		method: 'GET',
+		path: '/v1/admin/dashboard',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+
+				const payload = request.query;
+				const registerResponse = await AdminService.dashboard(adminData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'admin dashbiard',
+			tags: ['api', 'anonymous', 'Admin', 'dashboard'],
+			auth: 'AdminAuth',
+			validate: {
+				// query: {
+				// },
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
 ];

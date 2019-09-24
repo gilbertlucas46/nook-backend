@@ -6,3 +6,4 @@ export { AdminSession } from './admin/adminSession.model';
 export { Region } from './region';
 export { City } from './city';
 export { Enquiry } from './enquiry.model';
+export { Article } from './article.model';
