@@ -12,6 +12,7 @@ export class AdminSessionClass extends BaseEntity {
 			const sessionInfo = {
 				_id: mongoose.Types.ObjectId().toString(),
 				adminId: sessionData.adminId,
+				// loginStatus: true,
 				isLogin: true,
 				createdAt: new Date().getTime(),
 				updatedAt: new Date().getTime(),

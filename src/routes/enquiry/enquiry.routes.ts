@@ -98,6 +98,8 @@ export let enquiryRoutes = [
 			auth: 'UserAuth',
 			validate: {
 				query: {
+					page: Joi.number(),
+					limit: Joi.number(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
 				},

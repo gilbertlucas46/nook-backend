@@ -2,7 +2,7 @@
 import { BaseEntity } from './base.entity';
 import { EnquiryRequest } from '../interfaces/enquiry.interface';
 import { UserRequest } from '../interfaces/user.interface';
-
+import * as Constant from '../constants';
 export class EnquiryClass extends BaseEntity {
     constructor() {
         super('Enquiry');
@@ -10,12 +10,16 @@ export class EnquiryClass extends BaseEntity {
 
     async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
-            let sortType;
+            const { fromDate, toDate } = payload;
+            let { sortType, limit, page } = payload;
+            if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
+            if (!page) { page = 1; } else { page = page; }
+            sortType = !sortType ? -1 : sortType;
+            // let sortingType = {};
             sortType = !sortType ? -1 : 1;
             const sortingType = {
                 createdAt: sortType,
             };
-            const { fromDate, toDate } = payload;
             let createdAt;
             let query: any = {};
             query = { propertyOwnerId: userData._id };
@@ -102,7 +106,7 @@ export class EnquiryClass extends BaseEntity {
                 { $sort: sortingType },
             ];
 
-            const enquiryList = await this.DAOManager.paginate(this.modelName, pipeLine);
+            const enquiryList = await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
             return enquiryList;
         } catch (error) {
             return Promise.reject(error);
