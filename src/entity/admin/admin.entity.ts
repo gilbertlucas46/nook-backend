@@ -15,7 +15,7 @@
 // 		try {
 // 			const dataToInsert = {
 // 				email: adminData.email,
-// 				// password:userData.password ,
+// 				// password:adminData.password ,
 // 				firstName: adminData.firstName,
 // 				lastName: adminData.lastName,
 // 				phoneNumber: adminData.phoneNumber,
@@ -93,7 +93,7 @@ const cert: any = config.get('jwtSecret');
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-
+import * as CONSTANT from '../../constants';
 export class AdminClass extends BaseEntity {
 	constructor() {
 		super('Admin');
@@ -165,6 +165,87 @@ export class AdminClass extends BaseEntity {
 			Promise.reject(error);
 		}
 	}
+	async adminDashboard(adminData) {
+		try {
+			const pipeline = [
+				{
+					$facet: {
+						adminTotalProperty: [
+							{
+								$match: {
+									// $or: [
+									'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
+									// ]
+									//  Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
+									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER },
+									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS..NUMBER },
+								},
+							},
+							{ $count: 'Total' },
+						],
+						adminActiveProperty: [
+							{
+								$match: {
+									'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+								},
+							},
+							{ $count: 'Total' },
+						],
+						adminDeclineProperty: [
+							{
+								$match: {
+									'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
+								},
+							},
+							{ $count: 'Total' },
+						],
+						adminPendingProperty: [
+							{
+								$match: {
+									'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+								},
+							},
+							{ $count: 'Total' },
+						],
+					},
+				},
+				{
+					$project: {
+						totalProperty: {
+							$cond: { if: { $size: ['$adminTotalProperty'] }, then: { $arrayElemAt: ['$adminTotalProperty.Total', 0] }, else: 0 },
+						},
+						activeProperty: {
+							$cond: { if: { $size: ['$adminActiveProperty'] }, then: { $arrayElemAt: ['$adminActiveProperty.Total', 0] }, else: 0 },
+						},
+						declineProperty: {
+							$cond: { if: { $size: ['$adminDeclineProperty'] }, then: { $arrayElemAt: ['$adminDeclineProperty.Total', 0] }, else: 0 },
+						},
+						adminPendingProperty: {
+							$cond: { if: { $size: ['$adminPendingProperty'] }, then: { $arrayElemAt: ['$adminPendingProperty.Total', 0] }, else: 0 },
+						},
+						// enquiryLast30Days: '$enquiryLast30Days',
+					},
+				},
+			];
+			const query = {
+				$and: [
+					{ propertyOwnerId: adminData._id },
+					{ createdAt: { $gt: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+				],
+			};
+
+			const data = await this.DAOManager.aggregateData('Property', pipeline);
+			return {
+				...data[0],
+
+			};
+
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 }
 
 export const AdminE = new AdminClass();

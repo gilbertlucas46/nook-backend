@@ -139,36 +139,6 @@ export class UserClass extends BaseEntity {
 							},
 							{ $count: 'rentPropertyLast30Days' },
 						],
-						adminTotalProperty: [
-							{
-								$match: {
-									// $or: [
-									'property_status.number': { $ne: Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
-									// ]
-									//  Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
-									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
-									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER },
-									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS..NUMBER },
-								},
-							},
-							{ $count: 'Total' },
-						],
-						adminActiveProperty: [
-							{
-								$match: {
-									'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-								},
-							},
-							{ $count: 'Total' },
-						],
-						adminDeclineProperty: [
-							{
-								$match: {
-									'property_status.number': Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
-								},
-							},
-							{ $count: 'Total' },
-						],
 					},
 				},
 				{
@@ -184,15 +154,6 @@ export class UserClass extends BaseEntity {
 						},
 						rentedPropertyLast30Days: {
 							$cond: { if: { $size: ['$rentedPropertyLast30Days'] }, then: { $arrayElemAt: ['$rentedPropertyLast30Days.Total', 0] }, else: 0 },
-						},
-						adminTotalProperty: {
-							$cond: { if: { $size: ['$adminTotalProperty'] }, then: { $arrayElemAt: ['$adminTotalProperty.Total', 0] }, else: 0 },
-						},
-						adminActiveProperty: {
-							$cond: { if: { $size: ['$adminActiveProperty'] }, then: { $arrayElemAt: ['$adminActiveProperty.Total', 0] }, else: 0 },
-						},
-						adminDeclineProperty: {
-							$cond: { if: { $size: ['$adminDeclineProperty'] }, then: { $arrayElemAt: ['$adminDeclineProperty.Total', 0] }, else: 0 },
 						},
 						// enquiryLast30Days: '$enquiryLast30Days',
 					},

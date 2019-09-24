@@ -24,7 +24,7 @@ export class AdminController {
 	async getProperty(payload: PropertyRequest.SearchProperty) {
 		try {
 			if (!payload.property_status) payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER;
-			const getPropertyData = await ENTITY.PropertyE.getPropertyList(payload );
+			const getPropertyData = await ENTITY.PropertyE.getPropertyList(payload);
 			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
 			return getPropertyData;
 		} catch (error) {
@@ -80,6 +80,15 @@ export class AdminController {
 			const updateStatus = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet);
 			return updateStatus;
 
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async dashboard(adminData) {
+		try {
+			return await ENTITY.AdminE.adminDashboard(adminData);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);

@@ -156,6 +156,7 @@ export let verifyAdminToken = async (token, tokenType, request?: any) => {
 	try {
 		console.log('===================');
 		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
+		console.log('resultresult', result);
 
 		if (!result) {
 			return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN;

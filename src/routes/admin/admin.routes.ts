@@ -31,7 +31,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			// auth: 'BasicAuth'
 			validate: {
 				payload: {
-					email: Joi.string().email({ minDomainAtoms: 2 }).lowercase(),
+					email: Joi.string().email({ minDomainAtoms: 2 }),
 					password: Joi.string().min(6).max(14).trim().required(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
@@ -440,8 +440,8 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 
 				const payload = request.query;
-				const registerResponse = await UserService.dashboard(adminData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
+				const registerResponse = await AdminService.dashboard(adminData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
