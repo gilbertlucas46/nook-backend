@@ -86,9 +86,6 @@
 
 // export const AdminE = new AdminClass();
 
-
-
-
 import { BaseEntity } from '../base.entity';
 import * as config from 'config';
 import * as Jwt from 'jsonwebtoken';

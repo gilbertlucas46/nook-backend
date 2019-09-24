@@ -345,7 +345,7 @@ export class PropertyClass extends BaseEntity {
 			sortType = !sortType ? -1 : sortType;
 			let sortingType = {};
 			const criteria = {
-				_id: Types.ObjectId(propertyId)
+				_id: Types.ObjectId(propertyId),
 			};
 
 			const propertyData = await this.DAOManager.findOne(this.modelName, criteria, ['_id', 'property_added_by']);

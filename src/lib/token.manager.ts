@@ -155,7 +155,6 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 export let verifyAdminToken = async (token, tokenType, request?: any) => {
 	try {
 		console.log('===================');
-		
 		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
 
 		if (!result) {
