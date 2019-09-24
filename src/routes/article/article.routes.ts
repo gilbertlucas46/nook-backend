@@ -11,9 +11,8 @@ export let articleRoutes = [
         path: '/v1/admin/article',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 const payload: ArticleRequest.CreateArticle = request.payload;
-                console.log('payload================-------------', payload, '================', adminData);
                 const registerResponse = await ArticleService.createArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, {}));
             } catch (error) {
