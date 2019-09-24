@@ -26,10 +26,11 @@ export let articleRoutes = [
             auth: 'AdminAuth',
             validate: {
                 payload: {
+                    title: Joi.string(),
                     description: Joi.string().required(),
                     viewCount: Joi.number(),
                     // shareCount: Joi.number(),
-                    category: Joi.string().valid([
+                    categoryId: Joi.number().valid([
                         Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,

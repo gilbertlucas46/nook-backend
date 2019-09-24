@@ -213,6 +213,23 @@ export let DATABASE = {
 			DISPLAY_NAME: 'Selling',
 		},
 	},
+	ARTICLE_STATUS: {
+		PENDING: {
+			NUMBER: 1,
+			TYPE: 'PENDING',
+			DISPLAY_NAME: 'Pending',
+		},
+		ACTIVE: {
+			NUMBER: 2,
+			TYPE: 'ACTIVE',
+			DISPLAY_NAME: 'Active',
+		},
+		BLOCKED: {
+			NUMBER: 3,
+			TYPE: 'BLOCKED',
+			DISPLAY_NAME: 'Blocked',
+		},
+	},
 	PROPERTY_TYPE: {
 		'NONE': 'None',
 		'APPARTMENT/CONDO': 'Apartment/Condo',

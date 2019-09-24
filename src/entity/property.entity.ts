@@ -3,7 +3,6 @@ import { Types } from 'mongoose';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../utils';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-import { UserRequest } from '@src/interfaces/user.interface';
 
 export class PropertyClass extends BaseEntity {
 	constructor() {
@@ -465,6 +464,102 @@ export class PropertyClass extends BaseEntity {
 			];
 			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 			return data;
+
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+	/**
+	 *
+	 * @param payload
+	 * @description Get the list of cities which has maximum number of active properties.
+	 */
+
+	async popularCities(payload: PropertyRequest.IPaginate) {
+		try {
+			let { page, limit } = payload;
+			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
+			if (!page) { page = 1; } else { page = page; }
+			const skip = (limit * (page - 1));
+
+			const pipeline = [
+				{
+					$match: {
+						'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+					},
+				},
+				{
+					$project: {
+						cityId: '$property_address.city',
+						_id: 1,
+					},
+				},
+				{
+					$group: {
+						_id: '$cityId',
+						property: { $push: '$_id' },
+					},
+				},
+				{
+					$project: {
+						cityId: '$_id',
+						propertyCount: { $cond: { if: { $isArray: '$property' }, then: { $size: '$property' }, else: 0 } },
+						_id: 0,
+					},
+				},
+				{
+					$sort: {
+						propertyCount: -1,
+					},
+				},
+				{ $skip: skip },
+				{ $limit: limit },
+				{
+					$lookup:
+					{
+						from: 'cities',
+						let: { id: '$cityId' },
+						pipeline: [
+							{
+								$match: {
+									$expr:
+									{
+										$eq: ['$_id', '$$id'],
+									},
+								},
+							},
+							{
+								$project:
+								{
+									images: 1,
+									name: 1,
+								},
+							},
+						],
+						as: 'cityData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$cityData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$project:
+					{
+						propertyCount: 1,
+						cityId: 1,
+						cityImages: '$cityData.images',
+						cityName: '$cityData.name',
+					},
+				},
+			];
+
+			const popularCities = await this.DAOManager.aggregateData(this.modelName, pipeline);
+			if (!popularCities) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
+			return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, popularCities;
 
 		} catch (error) {
 			utils.consolelog('error', error, true);

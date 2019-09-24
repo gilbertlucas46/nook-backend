@@ -35,9 +35,10 @@ const citySchema = new Schema({
 	updatedAt: {
 		type: Date,
 	},
-}, {
-	collection: 'cities',
-	timestamps: true,
-});
+},
+	{
+		collection: 'cities',
+		timestamps: true,
+	});
 
 export const City: Model<CityDocument> = model('cities', citySchema);

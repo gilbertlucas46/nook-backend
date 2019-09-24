@@ -5,7 +5,7 @@ import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
 /**
  * @author
- * @description this controller contains actions for admin's account related activities
+ * @description this controller contains actions for admin's articles related activities
  */
 
 export class ArticleController {
@@ -19,36 +19,17 @@ export class ArticleController {
     }
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
-            console.log('userData.type=------------------', userData.type);
-            const uploadedBy = {};
             // Object.assign(payload, { uploadBy });
-            // if (payload.property_basic_details.property_for_number) {
-            //  result = this.getTypeAndDisplayName(Constant.DATABASE.USER_TYPE, payload.property_basic_details.property_for_number);
-            // }
-            payload.uploadBy = {
-                userId: userData._id,
-                name: userData.name,
-                type: userData.type,
-              //  number: ;
-                // DISPLAY_NAME:
-            };
-
+            const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
+            payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
-            // payload.articleAction.push({
-            //     updateBy: userData.name,
-            //     userId: userData._id,
-            //     updatedAt: new Date().getTime(),
-            //     type: userData.type,
-            // },
-            // );
+            payload.userRole = userData.type;
             const articleData = await ENTITY.ArticleE.createOneEntity(payload);
-            console.log('articleData', articleData);
             return articleData;
 
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
-
         }
     }
 }
