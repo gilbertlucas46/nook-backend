@@ -21,6 +21,7 @@ export const AdminSessionSchema = new Schema(
 		isDeleted: { type: Boolean, default: false },
 		lastActiveTime: { type: Date },
 		isLogin: { type: Boolean, default: false },
+		// loginStatus: { type: Boolean, default: false },
 	},
 	{ timestamps: true },
 );

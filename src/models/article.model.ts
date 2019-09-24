@@ -15,8 +15,8 @@ const articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     uploadBy: {
         type: String, enum: [
-            Constant.DATABASE.USER_TYPE.ADMIN,
-            Constant.DATABASE.USER_TYPE.STAFF,
+            Constant.DATABASE.USER_TYPE.ADMIN.TYPE,
+            Constant.DATABASE.USER_TYPE.STAFF.TYPE,
         ],
         name: { type: String },
         userId: { type: Schema.Types.ObjectId },
@@ -31,13 +31,16 @@ const articleSchema = new Schema({
             Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
         ],
     },
-
     userId: { type: Schema.Types.ObjectId, required: true },
     description: { type: String },
     viewCount: { type: Number },
     shareCount: { type: Number },
+    articleAction: [{
+        userId: { type: String },
+        updatedAt: { type: Number },
+    }],
     createdAt: { type: Number },
     updatedAt: { type: Number },
 });
 
-export let Article = mongoose.model('Article', articleSchema);
+export const Article = mongoose.model<IEnquiry>('Article', articleSchema);

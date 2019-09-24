@@ -665,6 +665,11 @@ export let STATUS_MSG = {
 				message: 'Property Added as Draft',
 				type: 'CREATED',
 			},
+			ARTICLE_CREATED: {
+				statusCode: 201,
+				message: 'Article Created',
+				type: 'CREATED',
+			},
 		},
 	},
 	S210: {

@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import * as mongoose from 'mongoose';
-
+import * as CONSTANT from '../../constants';
 export interface IAdmin extends mongoose.Document {
 	_id: string;
 	name: string;
@@ -51,6 +51,14 @@ export const AdminSchema = new Schema(
 		passwordResetTokenExpirationTime: { type: Date },
 		createdAt: { type: Number, default: new Date().getTime() },
 		updatedAt: { type: Number, default: new Date().getTime() },
+		type: {
+			type: String,
+			enum: [
+				CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
+				CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
+			],
+			default: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
+		}
 	},
 	{ timestamps: true },
 );
