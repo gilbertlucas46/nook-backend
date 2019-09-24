@@ -155,7 +155,6 @@ export class AdminProfileController {
 				return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR; // error page will be open here
 			} else {
 				const criteria = { email: result };
-				const userAttribute = ['passwordResetTokenExpirationTime', 'passwordResetToken'];
 				const userExirationTime: any = await ENTITY.AdminE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 				const today: any = new Date();
 				const diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
@@ -180,9 +179,9 @@ export class AdminProfileController {
 			const dataToUpdate = {
 				isLogin: false,
 			};
-			const logout = await ENTITY.SessionE.updateOneEntity(criteria, dataToUpdate);
-			return logout;
-
+			const sessionClose = await ENTITY.SessionE.updateOneEntity(criteria, dataToUpdate);
+			if (!sessionClose) return Constant.STATUS_MSG.ERROR.E401.INVALID_SESSION_REQUEST;
+			return Constant.STATUS_MSG.SUCCESS.S200.LOGOUT;
 
 		} catch (error) {
 			utils.consolelog('error', error, true);

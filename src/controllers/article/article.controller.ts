@@ -1,4 +1,3 @@
-import * as Constant from '@src/constants/app.constant';
 import * as utils from '@src/utils/index';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import { UserRequest } from '@src/interfaces/user.interface';
