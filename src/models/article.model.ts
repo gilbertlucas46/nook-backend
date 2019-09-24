@@ -1,52 +1,63 @@
 import * as mongoose from 'mongoose';
 import { Schema, Document } from 'mongoose';
 import * as Constant from '../constants';
-import { number, strict } from 'joi';
-import { ObjectID } from 'bson';
 export interface IEnquiry extends Document {
     category: string;
+    title: string;
     userId: string;
+    categoryId: string;
+    categoryName: string;
     description: string;
-    viewCount?: string;
-    shareCount?: string;
+    viewCount?: number;
+    shareCount?: number;
+    userRole: number;
+    status: number;
+    createdAt: number;
+    updatedAt: number;
 }
 
 const articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-    uploadBy: {
-        upload_by_number: {
-            type: {
-                type: Number, enum: [
-                    Constant.DATABASE.USER_TYPE.ADMIN.NUMBER,
-                    Constant.DATABASE.USER_TYPE.STAFF.NUMBER,
-                ],
-            },
-        },
-        upload_by_string: {
-            type: String, enum: [
-                Constant.DATABASE.USER_TYPE.ADMIN.NUMBER,
-                Constant.DATABASE.USER_TYPE.STAFF.NUMBER,
-            ],
-        },
-        upload_by_displayName: {
-            type: String, enum: [
-                Constant.DATABASE.USER_TYPE.ADMIN.DISPLAY_NAME,
-                Constant.DATABASE.USER_TYPE.STAFF.DISPLAY_NAME,
-            ],
-        },
-        name: { type: String },
-        userId: { type: Schema.Types.ObjectId },
+    title: { type: String },
+    categoryId: {
+        type: String, enum: [
+            Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+            Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+            Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+            Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+            Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+            Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+        ],
     },
-    userId: { type: Schema.Types.ObjectId },
+    categoryType: {
+        type: String, enum: [
+            Constant.DATABASE.ARTICLE_TYPE.AGENTS.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.BUYING.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.RENTING.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.SELLING.TYPE,
+        ],
+    },
+    userId: { type: Schema.Types.ObjectId, required: true },
+    userRole: {
+        type: String,
+        enum: [
+            Constant.DATABASE.USER_TYPE.ADMIN.TYPE,
+            Constant.DATABASE.USER_TYPE.STAFF.TYPE,
+        ],
+    },
     description: { type: String },
     viewCount: { type: Number },
     shareCount: { type: Number },
-    articleAction: [{
-        updateBy: { type: String },
-        userId: { type: String },
-        updatedAt: { type: Number },
-        type: { type: String },
-    }],
+    status: {
+        type: String, enum: [
+            Constant.DATABASE.ARTICLE_STATUS.PENDING.NUMBER,
+            Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+            Constant.DATABASE.ARTICLE_STATUS.BLOCKED.NUMBER,
+        ],
+        default: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+    },
     createdAt: { type: Number },
     updatedAt: { type: Number },
 });

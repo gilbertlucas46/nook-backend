@@ -34,6 +34,7 @@ export class AdminProfileController {
 			const tokenObj = {
 				adminId: adminData._id,
 				sessionId: sessionObj._id,
+				type: Constant.DATABASE.USER_TYPE.ADMIN.DISPLAY_NAME,
 			};
 			const accessToken = await ENTITY.AdminE.createToken(tokenObj);
 			return { formatedData: adminData, accessToken };

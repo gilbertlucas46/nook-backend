@@ -114,6 +114,11 @@ export namespace PropertyRequest {
 		upgradeToFeature?: boolean;
 	}
 
+	export interface IPaginate {
+		page?: number;
+		limit?: number;
+	}
+
 	export interface PropertyByStatus {
 		propertyType: string;
 		page?: number;
