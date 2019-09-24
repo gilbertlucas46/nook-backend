@@ -8,7 +8,7 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 export let articleRoutes = [
     {
         method: 'POST',
-        path: '/v1/article',
+        path: '/v1/admin/article',
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && request.auth.credentials.userData;
@@ -24,7 +24,7 @@ export let articleRoutes = [
         options: {
             description: 'create article application',
             tags: ['api', 'anonymous', 'user', 'admin', 'staff', 'Article'],
-            auth: 'UserAuth',
+            auth: 'AdminAuth',
             validate: {
                 payload: {
                     description: Joi.string().required(),
