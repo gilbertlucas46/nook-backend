@@ -11,5 +11,6 @@ export namespace ArticleRequest {
         description: string;
         viewCount?: string;
         shareCount?: string;
+        articleAction?: object[];
     }
 }
