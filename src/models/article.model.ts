@@ -3,6 +3,7 @@ import { Schema, Document } from 'mongoose';
 import * as Constant from '../constants';
 export interface IEnquiry extends Document {
     category: string;
+    title: string;
     userId: string;
     categoryId: number;
     categoryName: string;
@@ -17,6 +18,7 @@ export interface IEnquiry extends Document {
 
 const articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
+    title: { type: String },
     categoryId: {
         type: Number, enum: [
             Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
@@ -27,14 +29,14 @@ const articleSchema = new Schema({
             Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
         ],
     },
-    categoryName: {
+    categoryType: {
         type: String, enum: [
-            Constant.DATABASE.ARTICLE_TYPE.AGENTS.DISPLAY_NAME,
-            Constant.DATABASE.ARTICLE_TYPE.BUYING.DISPLAY_NAME,
-            Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.DISPLAY_NAME,
-            Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.DISPLAY_NAME,
-            Constant.DATABASE.ARTICLE_TYPE.RENTING.DISPLAY_NAME,
-            Constant.DATABASE.ARTICLE_TYPE.SELLING.DISPLAY_NAME,
+            Constant.DATABASE.ARTICLE_TYPE.AGENTS.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.BUYING.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.RENTING.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.SELLING.TYPE,
         ],
     },
     userId: { type: Schema.Types.ObjectId, required: true },

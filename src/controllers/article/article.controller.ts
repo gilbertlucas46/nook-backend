@@ -1,36 +1,35 @@
 import * as utils from '@src/utils/index';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import { UserRequest } from '@src/interfaces/user.interface';
-
+import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
 /**
  * @author
- * @description this controller contains actions for admin's account related activities
+ * @description this controller contains actions for admin's articles related activities
  */
 
 export class ArticleController {
+    getTypeAndDisplayName(findObj, num: number) {
+        const obj = findObj;
+        const data = Object.values(obj);
+        const result = data.filter((x: any) => {
+            return x.NUMBER === num;
+        });
+        return result[0];
+    }
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
-            console.log('userData.type=------------------', userData.type);
-            const uploadBy = {};
-            const dataToSet: any = {};
-            // payload.uploadBy.userId = userData._id;
-            if (true) {
-                uploadBy['type'] = userData.type;
-                uploadBy['name'] = userData.name;
-                uploadBy['userId'] = userData._id;
-            }
-            payload['userId'] = userData._id;
-            // console.log('uploadBy-===========', uploadBy);
-            // console.log('payload================>', typeof payload.uploadBy, typeof payload.uploadBy.name, typeof payload.uploadBy.type, typeof payload.uploadBy.userId);
+            // Object.assign(payload, { uploadBy });
+            const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
+            payload.categoryType = result['TYPE'];
+            payload.userId = userData._id;
+            payload.userRole = userData.type;
             const articleData = await ENTITY.ArticleE.createOneEntity(payload);
-            console.log('articleData', articleData);
             return articleData;
 
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
-
         }
     }
 }
