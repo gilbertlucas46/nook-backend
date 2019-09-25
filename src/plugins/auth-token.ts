@@ -14,10 +14,7 @@
 // 			allowMultipleHeaders: true,
 // 			accessTokenName: 'accessToken',
 // 			validate: async (request, token, h) => {
-// 				console.log('111111111111111');
-
 // 				const tokenData = await verifyAdminToken(token, 'ADMIN');
-
 // 				if (!tokenData || !tokenData.adminData) {
 // 					return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED));
 // 				} else {
@@ -36,8 +33,6 @@
 // 				//     return ({ isValid: false, credentials: { token: token, userData: {} } })
 // 				// } else {
 // 				const tokenData = await verifyToken(token, 'USER', request);
-// 				console.log('tokenDatatokenData', tokenData);
-
 // 				if (!tokenData || !tokenData.userData) {
 // 					return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.TOKEN_ALREADY_EXPIRED));
 // 				} else {
