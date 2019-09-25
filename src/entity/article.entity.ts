@@ -24,7 +24,7 @@ export class ArticleClass extends BaseEntity {
                     $project: {
                         title: 1,
                         categoryId: 1,
-                        categoryName: 1,
+                        categoryType: 1,
                         description: 1,
                         viewCount: 1,
                         shareCount: 1,

@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 import { SERVER } from '../constants';
 import { ModelNames } from '@src/interfaces/model.interface';
 import { consolelog } from '@src/utils/index';
+import * as utils from '../utils';
 export class BaseEntity {
 	objectId = mongoose.Types.ObjectId;
 	DAOManager = new Services.DAOManager();
@@ -106,6 +107,17 @@ export class BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+
+	async removeEntity(criteria: object) {
+		try {
+			const data = await this.DAOManager.findAndRemove(this.modelName, criteria);
+			return data;
+		} catch (error) {
+			utils.consolelog('Base entity removeEntity', error, false);
+			return Promise.reject(error);
+		}
+	}
+
 	async aggregate(pipeline, option?) {
 		try {
 			if (!option) {
