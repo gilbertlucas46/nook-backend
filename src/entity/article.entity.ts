@@ -149,14 +149,6 @@ export class ArticleClass extends BaseEntity {
             return Promise.reject(error);
         }
     }
-
-    async showAllArticle() {
-        try {
-
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    }
 }
 
 export const ArticleE = new ArticleClass();
