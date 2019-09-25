@@ -3,7 +3,6 @@ import { Schema, Document } from 'mongoose';
 import * as Constant from '../constants';
 import { join } from 'path';
 export interface IEnquiry extends Document {
-    category: string;
     title: string;
     userId: string;
     categoryId: number;

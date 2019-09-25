@@ -12,74 +12,55 @@ export class ArticleClass extends BaseEntity {
 
     async getArticlelist(payload: ArticleRequest.GetArticle) {
         try {
-            let { page, limit, sortBy, sortType } = payload;
+            let { page, limit } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
             if (!page) { page = 1; } else { page = page; }
-            let sortingType = {};
-            sortType = !sortType ? -1 : sortType;
-            // const matchObject: any = { $match: {} };
-            let query;
-            sortingType = {
-                createdAt: sortType,
-            };
-            // if (sortBy) {
-            //     switch (sortBy) {
-            //         case 'price':
-            //             sortBy = 'price';
-            //             sortingType = {
-            //                 'property_basic_details.sale_rent_price': sortType,
-            //             };
-            //             break;
-            //         case 'date':
-            //             sortBy = 'date';
-            //             sortingType = {
-            //                 createdAt: sortType,
-            //             };
-            //             break;
-            //         case 'isFeatured':
-            //             sortBy = 'isFeatured';
-            //             sortingType = {
-            //                 isFeatured: sortType,
-            //             };
-            //         default:
-            //             sortBy = 'createdAt';
-            //             sortingType = {
-            //                 createdAt: sortType,
-            //             };
-            //             break;
-            //     }
-            // }
-
-            if (payload.categoryId) {
-                query = {
-                    categoryId: payload.categoryId,
-                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
-
-                };
-            } else if (payload.articleId) {
-                query = {
-                    _id: Types.ObjectId(payload.articleId),
-                };
-            } else {
-                query = {
-                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
-                };
-            }
+            const skip = (limit * (page - 1));
             const pipeline = [
                 {
-                    $match: query,
+                    $match: {
+                        status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                    },
                 },
-                { $sort: sortingType },
+                {
+                    $project: {
+                        title: 1,
+                        categoryId: 1,
+                        categoryName: 1,
+                        description: 1,
+                        viewCount: 1,
+                        shareCount: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                        imageUrl: 1,
+                        isFeatured: 1,
+                    },
+                },
+                {
+                    $group: {
+                        _id: '$categoryId',
+                        article: { $push: '$_id' },
+                    },
+                },
+                {
+                    $project: {
+                        cityId: '$_id',
+                        articleCount: { $cond: { if: { $isArray: '$article' }, then: { $size: '$article' }, else: 0 } },
+                        article: 1,
+                    },
+                },
+                {
+                    $sort: {
+                        articleCount: -1,
+                    },
+                },
+                { $skip: skip },
+                { $limit: limit },
             ];
 
-            if (payload.articleId) {
-                const articleList = await this.DAOManager.findOne(this.modelName, query, {});
-                console.log('articleList', articleList);
-                return articleList;
-            } else {
-                const articleList = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-                return articleList;
-            }
+            const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
+            if (!data) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
+            return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data;
 
         } catch (error) {
             utils.consolelog('errrorArticlelist', error, true);

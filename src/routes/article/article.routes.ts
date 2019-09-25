@@ -13,7 +13,7 @@ export let articleRoutes = [
             try {
                 const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 const payload: ArticleRequest.CreateArticle = request.payload;
-                const registerResponse = await ArticleService.createArticle(payload, adminData);
+                await ArticleService.createArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, {}));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
@@ -28,9 +28,7 @@ export let articleRoutes = [
                 payload: {
                     title: Joi.string(),
                     description: Joi.string().required(),
-                    viewCount: Joi.number(),
                     imageUrl: Joi.string().required(),
-                    // shareCount: Joi.number(),
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
@@ -39,6 +37,7 @@ export let articleRoutes = [
                         Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
                     ]),
+                    isFeatured: Joi.boolean(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -133,7 +132,7 @@ export let articleRoutes = [
 
     {
         method: 'GET',
-        path: '/v1/admin/articles',
+        path: '/v1/user/show-articles',
         handler: async (request, h) => {
             try {
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
