@@ -132,7 +132,7 @@ export let articleRoutes = [
 
     {
         method: 'GET',
-        path: '/v1/user/show-articles',
+        path: '/v1/articles/home',
         handler: async (request, h) => {
             try {
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
@@ -152,17 +152,6 @@ export let articleRoutes = [
                 query: {
                     limit: Joi.number(),
                     page: Joi.number(),
-                    sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
-                    sortBy: Joi.string(),
-                    categoryId: Joi.number().valid([
-                        Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                    ]),
-                    articleId: Joi.string(),
                 },
                 // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

@@ -1,10 +1,8 @@
 'use strict';
 import { BaseEntity } from './base.entity';
 import { ArticleRequest } from '../interfaces/article.interface';
-import { UserRequest } from '../interfaces/user.interface';
 import * as Constant from '../constants';
 import * as utils from '../utils';
-import { Types } from 'mongoose';
 export class ArticleClass extends BaseEntity {
     constructor() {
         super('Article');
@@ -15,7 +13,7 @@ export class ArticleClass extends BaseEntity {
             let { page, limit } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
             if (!page) { page = 1; } else { page = page; }
-            const skip = (limit * (page - 1));
+
             const pipeline = [
                 {
                     $match: {
@@ -37,25 +35,109 @@ export class ArticleClass extends BaseEntity {
                     },
                 },
                 {
-                    $group: {
-                        _id: '$categoryId',
-                        article: { $push: '$_id' },
+                    $facet: {
+                        FEATURED_ARTICLE: [
+                            {
+                                $match: {
+                                    isFeatured: true,
+                                },
+                            },
+                            {
+                                $sort: {
+                                    updatedAt: -1,
+                                },
+                            },
+                            {
+                                $limit: 1,
+                            },
+                        ],
+                        RECENT: [
+                            {
+                                $sort: {
+                                    updatedAt: -1,
+                                },
+                            },
+                            {
+                                $limit: limit,
+                            },
+                        ],
+                        AGENTS: [
+                            {
+                                $match: {
+                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                                },
+                            },
+                            {
+                                $sort: {
+                                    updatedAt: -1,
+                                },
+                            },
+                            {
+                                $limit: limit,
+                            },
+                        ],
+                        BUYING: [
+                            {
+                                $match: {
+                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                                },
+                            },
+                            {
+                                $sort: {
+                                    updatedAt: -1,
+                                },
+                            },
+                            {
+                                $limit: 3,
+                            },
+                        ],
+                        HOME_LOANS: [
+                            {
+                                $match: {
+                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                                },
+                            },
+                            {
+                                $sort: {
+                                    updatedAt: -1,
+                                },
+                            },
+                            {
+                                $limit: limit,
+                            },
+                        ],
+                        RENTING: [
+                            {
+                                $match: {
+                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                                },
+                            },
+                            {
+                                $sort: {
+                                    updatedAt: -1,
+                                },
+                            },
+                            {
+                                $limit: limit,
+                            },
+                        ],
+                        SELLING: [
+                            {
+                                $match: {
+                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                                },
+                            },
+                            {
+                                $sort: {
+                                    updatedAt: -1,
+                                },
+                            },
+                            {
+                                $limit: limit,
+                            },
+                        ],
                     },
                 },
-                {
-                    $project: {
-                        cityId: '$_id',
-                        articleCount: { $cond: { if: { $isArray: '$article' }, then: { $size: '$article' }, else: 0 } },
-                        article: 1,
-                    },
-                },
-                {
-                    $sort: {
-                        articleCount: -1,
-                    },
-                },
-                { $skip: skip },
-                { $limit: limit },
             ];
 
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
@@ -63,7 +145,7 @@ export class ArticleClass extends BaseEntity {
             return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data;
 
         } catch (error) {
-            utils.consolelog('errrorArticlelist', error, true);
+            utils.consolelog('Error', error, true);
             return Promise.reject(error);
         }
     }
