@@ -94,6 +94,11 @@ import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
+
+/**
+ * @author
+ * @description This controller contains actions by admin .
+ */
 export class AdminClass extends BaseEntity {
 	constructor() {
 		super('Admin');
@@ -173,13 +178,7 @@ export class AdminClass extends BaseEntity {
 						adminTotalProperty: [
 							{
 								$match: {
-									// $or: [
 									'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
-									// ]
-									//  Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
-									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
-									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER },
-									// { 'property_status.number': Constant.DATABASE.PROPERTY_STATUS..NUMBER },
 								},
 							},
 							{ $count: 'Total' },

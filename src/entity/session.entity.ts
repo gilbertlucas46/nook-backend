@@ -24,7 +24,6 @@ export class SessionClass extends BaseEntity {
 				columnName = 'userId';
 				sessionInfo[columnName] = userData._id;
 			}
-			// if (sessionData.deviceToken) sessionInfo.deviceToken = sessionData.deviceToken;
 			const session = await this.DAOManager.saveData(this.modelName, sessionInfo);
 
 			if (session && session._id) { return session; }

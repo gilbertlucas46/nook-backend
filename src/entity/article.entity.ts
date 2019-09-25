@@ -150,13 +150,6 @@ export class ArticleClass extends BaseEntity {
         }
     }
 
-    async showAllArticle() {
-        try {
-
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    }
     async getArticlelist(payload: ArticleRequest.GetArticle) {
         try {
             let { page, limit, sortType } = payload;
