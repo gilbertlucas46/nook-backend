@@ -58,11 +58,7 @@
 // export let verifyAdminToken = async (token, tokenType, request?: any) => {
 // 	try {
 // 		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
-// console.log('resjulttttttttt',result);
-
-// 		if (!result) {
-// 			return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN;
-// 		}
+// 		if (!result) { return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN;}
 // 		const adminData: any = {};
 // 		const criteria = { _id: result._id };
 // 		const checkAdminExist = await ENTITY.AdminE.getOneEntity(criteria, {});
@@ -81,7 +77,6 @@
 // 		adminData.id = checkAdminExist._id;
 // 		adminData.adminData = checkAdminExist;
 // 		return adminData;
-
 // 	} catch (error) {
 // 		return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 // 	}
@@ -154,13 +149,8 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 
 export let verifyAdminToken = async (token, tokenType, request?: any) => {
 	try {
-		console.log('===================');
 		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
-		console.log('resultresult', result);
-
-		if (!result) {
-			return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN;
-		}
+		if (!result) { return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN; }
 		const adminData: any = {};
 		const criteria = { _id: result._id };
 		const checkAdminExist = await ENTITY.AdminE.getOneEntity(criteria, {});

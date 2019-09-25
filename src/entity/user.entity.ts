@@ -166,8 +166,6 @@ export class UserClass extends BaseEntity {
 				],
 			};
 			const enquiryLast30Days = await this.DAOManager.count('Enquiry', query);
-			console.log('enquiryLast30Days', enquiryLast30Days);
-
 			const data = await this.DAOManager.aggregateData('Property', pipeline);
 			return {
 				...data[0],
