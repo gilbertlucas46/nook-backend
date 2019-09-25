@@ -12,7 +12,8 @@ export class ArticleClass extends BaseEntity {
 
     async getArticlelist(payload: ArticleRequest.GetArticle) {
         try {
-            let { page, limit, sortBy, sortType } = payload;
+            let { page, limit, sortBy, sortType, } = payload;
+            const { articleId } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
             if (!page) { page = 1; } else { page = page; }
             let sortingType = {};
@@ -54,7 +55,11 @@ export class ArticleClass extends BaseEntity {
                 query = {
                     categoryId: payload.categoryId,
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
-
+                    _id: {
+                        $ne: {
+                            articleId,
+                        },
+                    },
                 };
             } else if (payload.articleId) {
                 query = {
@@ -72,14 +77,8 @@ export class ArticleClass extends BaseEntity {
                 { $sort: sortingType },
             ];
 
-            if (payload.articleId) {
-                const articleList = await this.DAOManager.findOne(this.modelName, query, {});
-                console.log('articleList', articleList);
-                return articleList;
-            } else {
-                const articleList = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-                return articleList;
-            }
+            const articleList = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+            return articleList;
 
         } catch (error) {
             utils.consolelog('errrorArticlelist', error, true);
@@ -94,6 +93,7 @@ export class ArticleClass extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
 }
 
 export const ArticleE = new ArticleClass();

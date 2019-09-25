@@ -17,6 +17,7 @@ export interface IEnquiry extends Document {
     updatedAt: number;
     imageUrl: string;
     isFeatured: boolean;
+    // articleAction: [];
 }
 
 const articleSchema = new Schema({
@@ -65,6 +66,11 @@ const articleSchema = new Schema({
     createdAt: { type: Number },
     updatedAt: { type: Number },
     isFeatured: { type: Boolean },
+    articleAction: [{
+        userRole: { type: String },
+        userId: { type: String },
+        updatedAt: { type: Number }
+    }],
 });
 
 export const Article = mongoose.model<IEnquiry>('Article', articleSchema);
