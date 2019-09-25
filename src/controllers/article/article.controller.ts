@@ -1,6 +1,7 @@
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
+import * as utils from '@src/utils';
 /**
  * @author
  * @description this controller contains actions for admin's articles related activities
@@ -40,6 +41,75 @@ export class ArticleController {
         }
     }
 
+    async getArticleById(payload: ArticleRequest.GetArticleById) {
+        try {
+            const criteria = {
+                _id: payload.articleId,
+            };
+            const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
+            return article;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getArticle(payload) {
+        try {
+            const articleData = await ENTITY.ArticleE.getArticlelist(payload);
+            console.log('articleDataarticleData', articleData);
+            return articleData;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async updateArticle(payload, adminData) {
+        try {
+            const criteria = {
+                _id: payload.articleId,
+            };
+            // let result: any;
+            // const dataToSet: any = {};
+
+            // if (payload.status === Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
+            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
+            // } else if (payload.status === Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER) {
+            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER);
+            // } else {
+            //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
+            // }
+
+            // dataToSet.$set = {
+            // };
+
+            // dataToSet.$push = {
+            //     propertyActions: {
+            //         actionNumber: result.NUMBER,
+            //         actionString: result.TYPE,
+            //         actionPerformedBy: {
+            //             userId: adminData._id,
+            //             userType: adminData.TYPE,
+            //         },
+            //         actionTime: new Date().getTime(),
+            //     },
+            // };
+            // const updateStatus = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet);
+            // return updateStatus;
+
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    async deleteArticle(payload) {
+        try {
+            // await ENTITY.ArticleE.
+
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 
 export const ArticleService = new ArticleController();
