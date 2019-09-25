@@ -166,7 +166,7 @@ export let articleRoutes = [
     },
     /** */
     {
-        method: 'PUT',
+        method: 'PATCH',
         path: '/v1/admin/articles/{articleId}',
         handler: async (request, h) => {
             try {
@@ -189,6 +189,9 @@ export let articleRoutes = [
             tags: ['api', 'anonymous', 'user', 'user', 'Article'],
             auth: 'AdminAuth',
             validate: {
+                params: {
+                    articleId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                },
                 payload: {
                     title: Joi.string(),
                     description: Joi.string().required(),
@@ -201,7 +204,6 @@ export let articleRoutes = [
                         Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
                     ]),
-                    articleId: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -303,7 +305,7 @@ export let articleRoutes = [
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const payload: ArticleRequest.DeleteArticle = request.params;
                 const registerResponse = await ArticleService.deleteArticle(payload);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));

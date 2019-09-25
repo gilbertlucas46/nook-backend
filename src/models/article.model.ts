@@ -2,11 +2,18 @@ import * as mongoose from 'mongoose';
 import { Schema, Document } from 'mongoose';
 import * as Constant from '../constants';
 import { join } from 'path';
+
+export interface IArticleAction {
+    userRole: string;
+    userId: string;
+    actionTime: number;
+}
+
 export interface IEnquiry extends Document {
     title: string;
     userId: string;
     categoryId: number;
-    categoryName: string;
+    categoryType: string;
     description: string;
     viewCount?: number;
     shareCount?: number;
@@ -16,7 +23,7 @@ export interface IEnquiry extends Document {
     updatedAt: number;
     imageUrl: string;
     isFeatured: boolean;
-    // articleAction: [];
+    articleAction: [IArticleAction];
 }
 
 const articleSchema = new Schema({
@@ -68,7 +75,7 @@ const articleSchema = new Schema({
     articleAction: [{
         userRole: { type: String },
         userId: { type: String },
-        updatedAt: { type: Number },
+        actionTime: { type: Number },
     }],
 });
 
