@@ -1,8 +1,7 @@
-import * as utils from '@src/utils/index';
 import { ArticleRequest } from '@src/interfaces/article.interface';
-import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
+import * as utils from '@src/utils';
 /**
  * @author
  * @description this controller contains actions for admin's articles related activities
@@ -19,7 +18,6 @@ export class ArticleController {
     }
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
-            // Object.assign(payload, { uploadBy });
             const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
             payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
