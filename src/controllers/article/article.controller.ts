@@ -106,7 +106,7 @@ export class ArticleController {
 
     async deleteArticle(payload) {
         try {
-            // await ENTITY.ArticleE
+            // await ENTITY.ArticleE.
 
         } catch (error) {
             return Promise.reject(error);

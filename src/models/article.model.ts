@@ -68,7 +68,7 @@ const articleSchema = new Schema({
     articleAction: [{
         userRole: { type: String },
         userId: { type: String },
-        updatedAt: { type: Number }
+        updatedAt: { type: Number },
     }],
 });
 

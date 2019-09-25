@@ -159,7 +159,8 @@ export class ArticleClass extends BaseEntity {
     }
     async getArticlelist(payload: ArticleRequest.GetArticle) {
         try {
-            let { page, limit, sortBy, sortType } = payload;
+            let { page, limit, sortType } = payload;
+            const { articleId, sortBy } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
             if (!page) { page = 1; } else { page = page; }
             let sortingType = {};
@@ -201,6 +202,11 @@ export class ArticleClass extends BaseEntity {
                 query = {
                     categoryId: payload.categoryId,
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                    _id: {
+                        $ne: {
+                            articleId,
+                        },
+                    },
 
                 };
             }
