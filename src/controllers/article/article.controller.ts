@@ -34,10 +34,9 @@ export class ArticleController {
         }
     }
 
-    async getArticle(payload) {
+    async getCategoryWiseArticles(payload) {
         try {
-            const articleData = await ENTITY.ArticleE.getArticlelist(payload);
-            console.log('articleDataarticleData', articleData);
+            const articleData = await ENTITY.ArticleE.allArticlesBasedOnCategory(payload);
             return articleData;
         } catch (error) {
             return Promise.reject(error);

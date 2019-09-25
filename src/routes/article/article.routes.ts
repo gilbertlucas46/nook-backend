@@ -135,9 +135,8 @@ export let articleRoutes = [
         path: '/v1/articles/home',
         handler: async (request, h) => {
             try {
-                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const payload: ArticleRequest.GetArticle = request.query;
-                const registerResponse = await ArticleService.getArticle(payload);
+                const registerResponse = await ArticleService.getCategoryWiseArticles(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
@@ -153,7 +152,6 @@ export let articleRoutes = [
                     limit: Joi.number(),
                     page: Joi.number(),
                 },
-                // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {

@@ -8,7 +8,7 @@ export class ArticleClass extends BaseEntity {
         super('Article');
     }
 
-    async getArticlelist(payload: ArticleRequest.GetArticle) {
+    async allArticlesBasedOnCategory(payload: ArticleRequest.GetArticle) {
         try {
             let { page, limit } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
