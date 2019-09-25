@@ -34,10 +34,9 @@ export class ArticleController {
         }
     }
 
-    async getArticle(payload) {
+    async getCategoryWiseArticles(payload) {
         try {
-            const articleData = await ENTITY.ArticleE.getArticlelist(payload);
-            console.log('articleDataarticleData', articleData);
+            const articleData = await ENTITY.ArticleE.allArticlesBasedOnCategory(payload);
             return articleData;
         } catch (error) {
             return Promise.reject(error);
@@ -51,6 +50,16 @@ export class ArticleController {
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
             return article;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getArticle(payload) {
+        try {
+            const articleData = await ENTITY.ArticleE.getArticlelist(payload);
+            console.log('articleDataarticleData', articleData);
+            return articleData;
         } catch (error) {
             return Promise.reject(error);
         }
@@ -97,7 +106,7 @@ export class ArticleController {
 
     async deleteArticle(payload) {
         try {
-await ENTITY.ArticleE
+            // await ENTITY.ArticleE
 
         } catch (error) {
             return Promise.reject(error);
