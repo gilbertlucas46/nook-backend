@@ -56,7 +56,6 @@ export class ArticleController {
     async getArticle(payload) {
         try {
             const articleData = await ENTITY.ArticleE.getArticlelist(payload);
-            console.log('articleDataarticleData', articleData);
             return articleData;
         } catch (error) {
             return Promise.reject(error);

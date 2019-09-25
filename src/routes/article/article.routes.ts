@@ -175,8 +175,6 @@ export let articleRoutes = [
                     ...request.payload,
                     ...request.params,
                 };
-                console.log('payloadpayloadpayloadv', payload);
-
                 const registerResponse = await ArticleService.updateArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200, registerResponse));
             } catch (error) {
@@ -221,7 +219,6 @@ export let articleRoutes = [
         path: '/v1/admin/articles',
         handler: async (request, h) => {
             try {
-                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const payload: ArticleRequest.GetArticle = request.query;
                 const registerResponse = await ArticleService.getArticle(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
