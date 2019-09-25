@@ -79,7 +79,7 @@ export class DAOManager {
 		}
 	}
 
-	async findAndRemove(model: ModelNames, conditions, options) {
+	async findAndRemove(model: ModelNames, conditions, options?) {
 		try {
 			const ModelName: Model<any> = Models[model];
 			return await ModelName.findOneAndRemove(conditions, options);

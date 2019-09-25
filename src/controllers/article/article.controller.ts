@@ -62,38 +62,42 @@ export class ArticleController {
         }
     }
 
-    async updateArticle(payload, adminData) {
+    async updateArticle(payload: ArticleRequest.UpdateArticle, adminData) {
         try {
             const criteria = {
                 _id: payload.articleId,
             };
-            // let result: any;
-            // const dataToSet: any = {};
+            const dataToSet: any = {};
+            let result;
+            result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
 
-            // if (payload.status === Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
-            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
-            // } else if (payload.status === Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER) {
-            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER);
-            // } else {
-            //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
-            // }
+            dataToSet.$set = {
+                title: payload.title,
+                categoryId: payload.categoryId,
+                categoryType: result.TYPE,
+                imageUrl: payload.imageUrl,
+                userId: adminData._id,
+                userRole: adminData.type,
+                description: payload.description,
+            };
 
-            // dataToSet.$set = {
-            // };
+            dataToSet.$push = {
+                articleAction: {
+                    userRole: adminData.type,
+                    userId: adminData._id,
+                    actionTime: new Date().getTime(),
+                    // actionPerformedBy: {
+                    //     userId: adminData._id,
+                    //     userType: adminData.TYPE,
+                    // },
+                    // actionTime: new Date().getTime(),
+                },
+            };
 
-            // dataToSet.$push = {
-            //     propertyActions: {
-            //         actionNumber: result.NUMBER,
-            //         actionString: result.TYPE,
-            //         actionPerformedBy: {
-            //             userId: adminData._id,
-            //             userType: adminData.TYPE,
-            //         },
-            //         actionTime: new Date().getTime(),
-            //     },
-            // };
-            // const updateStatus = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet);
-            // return updateStatus;
+            console.log('dataToSet', dataToSet);
+
+            const updateStatus = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
+            return updateStatus;
 
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -101,9 +105,12 @@ export class ArticleController {
         }
     }
 
-    async deleteArticle(payload) {
+    async deleteArticle(payload: ArticleRequest.DeleteArticle) {
         try {
-            // await ENTITY.ArticleE.
+            const criteria = {
+                _id: payload.articleId,
+            };
+            return await ENTITY.ArticleE.removeEntity(criteria);
 
         } catch (error) {
             return Promise.reject(error);
