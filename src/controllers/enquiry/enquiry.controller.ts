@@ -2,13 +2,18 @@ import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
+
 /**
  * @author
- * @description this controller contains actions for admin's account related activities
+ * @description This controller contains actions for related to enquiry on any property.
  */
 
 export class EnquiryController {
     constructor() { }
+    /**
+     * @description A function to create enquiry regarding any property.
+     * @param payload
+     */
     async createEnquiry(payload: EnquiryRequest.CreateEnquiry) {
         try {
             const propertyOwner = { _id: payload.propertyId };
@@ -32,6 +37,11 @@ export class EnquiryController {
         }
     }
 
+    /**
+     * @description Function to post enquiry regarding any property after login.
+     * @param payload
+     */
+
     async createAuthEnquiry(payload: EnquiryRequest.CreateEnquiry) {
         try {
             const propertyOwner = { _id: payload.propertyId };
@@ -53,6 +63,11 @@ export class EnquiryController {
         }
     }
 
+    /**
+     * @description Get list of all enquiry for particular user.
+     * @param payload
+     * @param userData
+     */
     async getEnquiryList(payload: EnquiryRequest.GetEnquiry, userData) {
         try {
             const propertyData = await ENTITY.EnquiryE.enquiryList(payload, userData);
@@ -62,6 +77,10 @@ export class EnquiryController {
             return Promise.reject(error);
         }
     }
+    /**
+     * @description A function to get details of particular enquiry based on the Id
+     * @param payload
+     */
 
     async getEnquiryById(payload: EnquiryRequest.GetInquiryById) {
         try {

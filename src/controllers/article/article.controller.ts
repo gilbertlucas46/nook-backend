@@ -1,6 +1,4 @@
-import * as utils from '@src/utils/index';
 import { ArticleRequest } from '@src/interfaces/article.interface';
-import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
 /**
@@ -19,7 +17,6 @@ export class ArticleController {
     }
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
-            // Object.assign(payload, { uploadBy });
             const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
             payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
@@ -43,13 +40,6 @@ export class ArticleController {
         }
     }
 
-    async getAllArticle() {
-        try {
-            await ENTITY.ArticleE.showAllArticle();
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    }
 }
 
 export const ArticleService = new ArticleController();

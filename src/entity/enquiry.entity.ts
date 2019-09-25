@@ -15,7 +15,6 @@ export class EnquiryClass extends BaseEntity {
             if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
             if (!page) { page = 1; } else { page = page; }
             sortType = !sortType ? -1 : sortType;
-            // let sortingType = {};
             sortType = !sortType ? -1 : 1;
             const sortingType = {
                 createdAt: sortType,
@@ -54,9 +53,6 @@ export class EnquiryClass extends BaseEntity {
             const pipeLine = [
                 {
                     $match: query,
-                    //     propertyOwnerId: userData._id,
-                    //     createdAt,
-                    // },
                 },
                 {
                     $lookup: {
@@ -122,7 +118,6 @@ export class EnquiryClass extends BaseEntity {
             return Promise.reject(error);
         }
     }
-
 }
 
 export const EnquiryE = new EnquiryClass();

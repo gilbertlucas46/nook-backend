@@ -4,6 +4,10 @@ import { PropertyRequest } from '@src/interfaces/property.interface';
 
 class CityController {
     constructor() { }
+    /**
+     * @description Function to get list of most popular cities ie which contains max number of active properties.
+     * @param payload
+     */
 
     async popularCities(payload: PropertyRequest.IPaginate) {
         try {
