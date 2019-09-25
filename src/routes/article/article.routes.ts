@@ -29,6 +29,7 @@ export let articleRoutes = [
                     title: Joi.string(),
                     description: Joi.string().required(),
                     viewCount: Joi.number(),
+                    imageUrl: Joi.string().required(),
                     // shareCount: Joi.number(),
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
@@ -40,6 +41,132 @@ export let articleRoutes = [
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
+    /**
+     * related Article
+     */
+    {
+        method: 'GET',
+        path: '/v1/articles',
+        handler: async (request, h) => {
+            try {
+                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                const payload: ArticleRequest.GetArticle = request.query;
+                const registerResponse = await ArticleService.getArticle(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'get articles for user application',
+            tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+            // auth: 'UserAuth',
+            validate: {
+                query: {
+                    limit: Joi.number(),
+                    page: Joi.number(),
+                    sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+                    sortBy: Joi.string(),
+                    categoryId: Joi.number().valid([
+                        Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                    ]),
+                    articleId: Joi.string(),
+                },
+                // headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
+    /**
+     * SHOW FULL ARTICLES
+     */
+    {
+        method: 'GET',
+        path: '/v1/show-all-articles',
+        handler: async (request, h) => {
+            try {
+                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                // const payload: ArticleRequest.GetArticle = request.query;
+                const registerResponse = await ArticleService.getAllArticle();
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, registerResponse));
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'get articles for user application',
+            tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+            // auth: 'UserAuth',
+            validate: {
+                query: {
+                    // headers: UniversalFunctions.authorizationHeaderObj,
+                    failAction: UniversalFunctions.failActionFunction,
+                },
+                plugins: {
+                    'hapi-swagger': {
+                        responseMessages: Constant.swaggerDefaultResponseMessages,
+                    },
+                },
+            },
+        },
+    },
+
+    {
+        method: 'GET',
+        path: '/v1/admin/articles',
+        handler: async (request, h) => {
+            try {
+                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                const payload: ArticleRequest.GetArticle = request.query;
+                const registerResponse = await ArticleService.getArticle(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'get articles for user application',
+            tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+            // auth: 'UserAuth',
+            validate: {
+                query: {
+                    limit: Joi.number(),
+                    page: Joi.number(),
+                    sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+                    sortBy: Joi.string(),
+                    categoryId: Joi.number().valid([
+                        Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                    ]),
+                    articleId: Joi.string(),
+                },
+                // headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {

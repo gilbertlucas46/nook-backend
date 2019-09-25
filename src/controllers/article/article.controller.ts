@@ -24,11 +24,30 @@ export class ArticleController {
             payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
             payload.userRole = userData.type;
+            payload.createdAt = new Date().getTime();
+            payload.updatedAt = new Date().getTime();
             const articleData = await ENTITY.ArticleE.createOneEntity(payload);
             return articleData;
 
         } catch (error) {
-            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    async getArticle(payload) {
+        try {
+            const articleData = await ENTITY.ArticleE.getArticlelist(payload);
+            console.log('articleDataarticleData', articleData);
+            return articleData;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getAllArticle() {
+        try {
+            await ENTITY.ArticleE.showAllArticle();
+        } catch (error) {
             return Promise.reject(error);
         }
     }

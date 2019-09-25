@@ -17,10 +17,22 @@ export namespace ArticleRequest {
         title: string;
         description: string;
         viewCount: number;
+        status: number;
         // shareCount: Joi.number(),
         categoryType: string;
         categoryId: number;
         userId: string;
+        createdAt: number;
+        updatedAt: number;
+        isFeatured: boolean;
     }
 
+    export interface GetArticle {
+        limit: number;
+        page: number;
+        sortBy: string;
+        sortType: number;
+        categoryId: number;
+        articleId: string;
+    }
 }
