@@ -67,7 +67,7 @@ export namespace AdminRequest {
 	export interface TokenPayload {
 		adminId: string;
 		sessionId: string;
-		// type: string;
+		type: string;
 	}
 	export interface PropertyDetail {
 		propertyId: string;

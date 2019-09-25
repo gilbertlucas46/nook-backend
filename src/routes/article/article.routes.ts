@@ -11,9 +11,8 @@ export let articleRoutes = [
         path: '/v1/admin/article',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 const payload: ArticleRequest.CreateArticle = request.payload;
-                console.log('payload================-------------', payload, '================', adminData);
                 const registerResponse = await ArticleService.createArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, {}));
             } catch (error) {
@@ -27,10 +26,11 @@ export let articleRoutes = [
             auth: 'AdminAuth',
             validate: {
                 payload: {
+                    title: Joi.string(),
                     description: Joi.string().required(),
                     viewCount: Joi.number(),
                     // shareCount: Joi.number(),
-                    category: Joi.string().valid([
+                    categoryId: Joi.number().valid([
                         Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,

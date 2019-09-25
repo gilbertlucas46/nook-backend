@@ -133,7 +133,7 @@ export class AdminClass extends BaseEntity {
 
 	async createToken(adminData: AdminRequest.TokenPayload) {
 		try {
-			const accessToken = Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId }, cert);
+			const accessToken = Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type }, cert);
 			return accessToken;
 		} catch (error) {
 			return Promise.reject(error);
