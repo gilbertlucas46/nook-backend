@@ -102,11 +102,9 @@ export let articleRoutes = [
      */
     {
         method: 'GET',
-        path: '/v1/show-all-articles',
+        path: '/v1/all-articles',
         handler: async (request, h) => {
             try {
-                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                // const payload: ArticleRequest.GetArticle = request.query;
                 const registerResponse = await ArticleService.getAllArticle();
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, registerResponse));
             } catch (error) {
@@ -120,13 +118,14 @@ export let articleRoutes = [
             // auth: 'UserAuth',
             validate: {
                 query: {
-                    // headers: UniversalFunctions.authorizationHeaderObj,
-                    failAction: UniversalFunctions.failActionFunction,
+                    limit: Joi.number(),
+                    page: Joi.number(),
                 },
-                plugins: {
-                    'hapi-swagger': {
-                        responseMessages: Constant.swaggerDefaultResponseMessages,
-                    },
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
                 },
             },
         },
