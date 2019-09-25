@@ -4,7 +4,7 @@ import * as Constant from '../constants';
 export interface IEnquiry extends Document {
     category: string;
     userId: string;
-    categoryId: string;
+    categoryId: number;
     categoryName: string;
     description: string;
     viewCount?: number;
@@ -18,7 +18,7 @@ export interface IEnquiry extends Document {
 const articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     categoryId: {
-        type: String, enum: [
+        type: Number, enum: [
             Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
             Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
             Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
@@ -49,7 +49,7 @@ const articleSchema = new Schema({
     viewCount: { type: Number },
     shareCount: { type: Number },
     status: {
-        type: String, enum: [
+        type: Number, enum: [
             Constant.DATABASE.ARTICLE_STATUS.PENDING.NUMBER,
             Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
             Constant.DATABASE.ARTICLE_STATUS.BLOCKED.NUMBER,
