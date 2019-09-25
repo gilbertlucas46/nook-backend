@@ -19,7 +19,6 @@ export class AdminProfileController {
 			if (email) {
 				email = email.trim().toLowerCase();
 			}
-			// used to fetch the admin details from the database
 			const checkData = { email };
 			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['password', '_id', 'email']);
 			// check email
