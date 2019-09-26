@@ -296,7 +296,7 @@ export let articleRoutes = [
 
     {
         method: 'DELETE',
-        path: '/v1/articles/{articleId}',
+        path: '/v1/admin/articles/{articleId}',
         handler: async (request, h) => {
             try {
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
