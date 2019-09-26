@@ -47,6 +47,9 @@ export class ArticleController {
                 _id: payload.articleId,
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
+            if (!article) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            }
             return article;
         } catch (error) {
             return Promise.reject(error);

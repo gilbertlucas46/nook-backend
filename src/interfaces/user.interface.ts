@@ -6,6 +6,7 @@ export namespace UserRequest {
 		password: string;
 		firstName: string;
 		lastName: string;
+		middleName: string;
 		phoneNumber?: string;
 		type?: string;
 		// roleType:{
@@ -32,6 +33,7 @@ export namespace UserRequest {
 		userName: string;
 		email: string;
 		password: string;
+		type: string;
 	}
 
 	export interface Login1 {

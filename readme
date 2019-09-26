@@ -1,5 +1,9 @@
 step 1 : npm install
 
+----------------------------------GIT Branch allocation------------------------------------------------
+Nook_User_Admin  Panel - development
+
+
 ----------------------------------Nook development server details---------------------------------
 ssh-- ssh nook_devusr@nookdev.appskeeper.com
 URL-- nookdev.appskeeper.com 
