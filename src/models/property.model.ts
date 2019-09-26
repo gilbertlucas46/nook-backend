@@ -112,6 +112,7 @@ export interface IProperty extends Document {
 		displayName: string;
 	};
 	propertyActions: IPropertyActions[];
+	sole_rent_time: number;
 }
 
 const propertySchema = new Schema({
@@ -297,10 +298,8 @@ const propertySchema = new Schema({
 			default: Constant.DATABASE.PROPERTY_STATUS.PENDING.DISPLAY_NAME,
 		},
 	},
-	property_rent_time: { type: Number },
-	property_sold_time: { type: Number },
-	property_approved_time: { type: Number },
-	proprty_expired_time: { type: Number },
+	sole_rent_time: { type: Number },
+	property_expiry_time: { type: Number },
 	actions_performed_by_admin: {
 		number: {
 			type: Number,
