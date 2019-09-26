@@ -33,6 +33,12 @@ export let userRoute: ServerRoute[] = [
 					userName: Joi.string().min(3).max(32).trim().required(),
 					email: Joi.string().email(),
 					password: Joi.string().min(6).max(16).trim().required(),
+					type: Joi.string().valid([
+						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+						Constant.DATABASE.USER_TYPE.GUEST.TYPE,
+					]),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},

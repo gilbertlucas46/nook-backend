@@ -30,6 +30,7 @@ export class UserController {
 						password: makePassword,
 						isEmailVerified: true,
 						isProfileComplete: false,
+						type: payload.type,
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
 					const userResponse = UniversalFunctions.formatUserData(User);
