@@ -115,7 +115,7 @@ export let articleRoutes = [
         options: {
             description: 'get articles for user application',
             tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-            auth: 'AdminAuth',
+            // auth: 'AdminAuth',
             validate: {
                 query: {
                     limit: Joi.number(),
