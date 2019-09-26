@@ -32,7 +32,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					email: Joi.string().email({ minDomainAtoms: 2 }),
-					password: Joi.string().min(6).max(14).trim().required(),
+					password: Joi.string().min(6).max(16).trim().required(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -206,8 +206,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					oldPassword: Joi.string().min(6).max(14),
-					newPassword: Joi.string().min(6).max(14),
+					oldPassword: Joi.string().min(6).max(16),
+					newPassword: Joi.string().min(6).max(16),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -248,7 +248,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					link: Joi.string(),
-					password: Joi.string().min(6).max(14),
+					password: Joi.string().min(6).max(16),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -414,10 +414,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				query: {
-					// email: Joi.string().email({ minDomainAtoms: 2 }),
 					deviceId: Joi.string(),
-					// email: Joi.string().email({ minDomainAtoms: 2 }),
-					// password: Joi.string().min(6).max(14).trim().required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -438,8 +435,6 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-
-				const payload = request.query;
 				const registerResponse = await AdminService.dashboard(adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -451,8 +446,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'Admin', 'dashboard'],
 			auth: 'AdminAuth',
 			validate: {
-				// query: {
-				// },
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
