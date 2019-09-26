@@ -33,6 +33,7 @@ export namespace UserRequest {
 		userName: string;
 		email: string;
 		password: string;
+		type: string;
 	}
 
 	export interface Login1 {

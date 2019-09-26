@@ -160,13 +160,13 @@ export let adminProfileRoute: ServerRoute[] = [
 				return h.redirect(config.get('adminbaseUrl') + payload.link);
 			} catch (error) {
 				if (error.JsonWebTokenError) {
-					return h.redirect(config.get('invalidUrl') + 'invalid url');
+					return h.redirect(config.get('admininvalidUrl') + 'invalid url');
 				} else if (error === 'LinkExpired') {
-					return h.redirect(config.get('invalidUrl') + 'LinkExpired');
+					return h.redirect(config.get('admininvalidUrl') + 'LinkExpired');
 				} else if (error === 'error') {
-					return h.redirect(config.get('invalidUrl') + 'error');
+					return h.redirect(config.get('admininvalidUrl') + 'error');
 				} else {
-					return h.redirect(config.get('invalidUrl') + 'Something went wrong');
+					return h.redirect(config.get('admininvalidUrl') + 'Something went wrong');
 				}
 			}
 		},
