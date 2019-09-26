@@ -5,6 +5,9 @@
     "invalidUrl": "https://nooktstangweb.appskeeper.com?error=",
     "homePage": "https://nooktstangweb.appskeeper.com",
     "host": "https://nookstg.appskeeper.com",
+    "adminHost": "https://nookdevangadmin.appskeeper.com",
+    "adminInvalidUrl": "https://nookdevangadmin.appskeeper.com?error=",
+    "adminBaseUrl": "https://nookdevangadmin.appskeeper.com?reset=",
     "dbConfig": {
         "dbPwd": "Pw#ii@!#21",
         "dbUser": "nook_stgusr",
