@@ -91,8 +91,11 @@ export interface IProperty extends Document {
 	property_added_by: {
 		userId?: string;
 		userName: string;
-		contactNo: string;
-		profilePicUrl: string;
+		phoneNumber?: string;
+		profilePicUrl?: string;
+		firstName?: string,
+		lastName?: string,
+		email?: string,
 	};
 	actions_performed_by_admin: {
 		number: number;
@@ -250,6 +253,7 @@ const propertySchema = new Schema({
 		profilePicUrl: { type: String },
 		firstName: { type: String },
 		lastName: { type: String },
+		email: { type: String },
 	},
 	property_status: {
 		number: {
