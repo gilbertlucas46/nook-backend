@@ -44,6 +44,7 @@ export class PropertyController {
 				userName: userData.userName,
 				firstName: userData.firstName || '',
 				lastName: userData.lastName || '',
+				email: userData.email,
 			};
 
 			payload.propertyActions = [{
