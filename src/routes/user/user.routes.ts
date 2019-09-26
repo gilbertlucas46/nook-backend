@@ -134,7 +134,7 @@ export let userRoute: ServerRoute[] = [
 			// auth: 'UserAuth',
 			validate: {
 				payload: {
-					email: Joi.string().email().lowercase().trim().required(),
+					email: Joi.string().lowercase().trim().required(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},

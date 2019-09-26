@@ -383,7 +383,8 @@ const propertySchema = new Schema({
 					],
 				},
 				actionTime: { type: Number },
-				message: { type: String },
+				action: { type: String },
+				// message: { type: String },
 
 			},
 		},

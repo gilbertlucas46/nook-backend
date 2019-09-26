@@ -157,16 +157,16 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 				const payload = request.params;
 				await AdminProfileService.verifyLink(payload);
-				return h.redirect(config.get('adminbaseUrl') + payload.link);
+				return h.redirect(config.get('adminBaseUrl') + payload.link);
 			} catch (error) {
 				if (error.JsonWebTokenError) {
-					return h.redirect(config.get('admininvalidUrl') + 'invalid url');
+					return h.redirect(config.get('adminInvalidUrl') + 'invalid url');
 				} else if (error === 'LinkExpired') {
-					return h.redirect(config.get('admininvalidUrl') + 'LinkExpired');
+					return h.redirect(config.get('adminInvalidUrl') + 'LinkExpired');
 				} else if (error === 'error') {
-					return h.redirect(config.get('admininvalidUrl') + 'error');
+					return h.redirect(config.get('adminInvalidUrl') + 'error');
 				} else {
-					return h.redirect(config.get('admininvalidUrl') + 'Something went wrong');
+					return h.redirect(config.get('adminInvalidUrl') + 'Something went wrong');
 				}
 			}
 		},
