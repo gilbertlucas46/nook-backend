@@ -30,9 +30,9 @@ export let userRoute: ServerRoute[] = [
 			// auth: 'BasicAuth'
 			validate: {
 				payload: {
-					userName: Joi.string().min(4).max(100).trim().required(),
+					userName: Joi.string().min(3).max(32).trim().required(),
 					email: Joi.string().email(),
-					password: Joi.string().min(6).max(14).trim().required(),
+					password: Joi.string().min(6).max(16).trim().required(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -65,7 +65,7 @@ export let userRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					email: Joi.string().min(4).max(100),
-					password: Joi.string().min(6).max(14).trim().required(),
+					password: Joi.string().min(6).max(16).trim().required(),
 					// deviceId: Joi.string(),
 					deviceToken: Joi.string(),
 				},
@@ -163,6 +163,7 @@ export let userRoute: ServerRoute[] = [
 				payload: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					firstName: Joi.string().min(1).max(20).trim(),
+					middleName: Joi.string().min(1).max(20).trim(),
 					lastName: Joi.string().min(1).max(20).trim(),
 					phoneNumber: Joi.string().min(7).max(15).trim(),
 					type: Joi.string().valid([
@@ -283,8 +284,8 @@ export let userRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					oldPassword: Joi.string().min(6).max(14),
-					newPassword: Joi.string().min(6).max(14),
+					oldPassword: Joi.string().min(6).max(16),
+					newPassword: Joi.string().min(6).max(16),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -326,7 +327,7 @@ export let userRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					link: Joi.string(),
-					password: Joi.string().min(6).max(14),
+					password: Joi.string().min(6).max(16),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},

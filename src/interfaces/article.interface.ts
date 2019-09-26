@@ -32,6 +32,7 @@ export namespace ArticleRequest {
         title: string;
         description: string;
         articleId: string;
+        isFeatured?: boolean;
     }
     export interface DeleteArticle {
         articleId: string;

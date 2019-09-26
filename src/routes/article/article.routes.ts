@@ -115,7 +115,7 @@ export let articleRoutes = [
         options: {
             description: 'get articles for user application',
             tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-            auth: 'AdminAuth',
+            // auth: 'AdminAuth',
             validate: {
                 query: {
                     limit: Joi.number(),
@@ -191,7 +191,7 @@ export let articleRoutes = [
                     articleId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                 },
                 payload: {
-                    title: Joi.string(),
+                    title: Joi.string().required(),
                     description: Joi.string().required(),
                     imageUrl: Joi.string().required(),
                     categoryId: Joi.number().valid([
@@ -201,7 +201,8 @@ export let articleRoutes = [
                         Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                    ]),
+                    ]).required(),
+                    isFeatured: Joi.boolean(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
