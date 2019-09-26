@@ -45,6 +45,7 @@ export class PropertyController {
 				firstName: userData.firstName || '',
 				lastName: userData.lastName || '',
 				email: userData.email,
+				middleName: userData.middleName || '',
 			};
 
 			payload.propertyActions = [{
@@ -54,6 +55,8 @@ export class PropertyController {
 					userId: userData._id,
 					userType: userData.type,
 					actionTime: new Date().getTime(),
+					// property_basic_details.property_for_number: result.TYPE,
+				
 				},
 			}];
 

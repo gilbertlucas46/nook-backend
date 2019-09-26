@@ -58,7 +58,7 @@ export const AdminSchema = new Schema(
 				CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 			],
 			default: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
-		}
+		},
 	},
 	{ timestamps: true },
 );
