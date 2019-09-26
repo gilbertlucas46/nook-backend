@@ -80,7 +80,7 @@ export class ArticleController {
                 userRole: adminData.type,
                 description: payload.description,
             };
-
+            if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
             dataToSet.$push = {
                 articleAction: {
                     userRole: adminData.type,
