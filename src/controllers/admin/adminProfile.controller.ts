@@ -71,12 +71,16 @@ export class AdminProfileController {
 				email: payload.email.trim().toLowerCase(),
 			};
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id']);
+			console.log('adminData', adminData);
+
 			if (!adminData) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
 			} else {
 				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
-				const url = config.get('host') + '/v1/user/verifyLink/' + passwordResetToken;
+				const url = config.get('adminhost') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
 				const html = `<html><head><title> Nook Admin | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
+				console.log('url------------', url);
+
 				const mail = new MailManager(payload.email, 'forget password', html);
 				mail.sendMail();
 				return {};
@@ -152,7 +156,7 @@ export class AdminProfileController {
 			const result: any = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
 			const adminData = await ENTITY.AdminE.getOneEntity(result.email, {});
 			if (!adminData) {
-				return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR; // error page will be open here
+				return Promise.reject('error'); // error page will be open here
 			} else {
 				const criteria = { email: result };
 				const userExirationTime: any = await ENTITY.AdminE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
