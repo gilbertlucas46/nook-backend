@@ -6,6 +6,7 @@ export namespace UserRequest {
 		password: string;
 		firstName: string;
 		lastName: string;
+		middleName: string;
 		phoneNumber?: string;
 		type?: string;
 		// roleType:{
