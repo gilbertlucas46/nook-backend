@@ -120,7 +120,7 @@ export class UserClass extends BaseEntity {
 										{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
 										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER },
 										{ userId: userData._id },
-										{ property_sold_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+										{ sole_rent_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
 									],
 								},
 							},
@@ -133,7 +133,7 @@ export class UserClass extends BaseEntity {
 										{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED },
 										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER },
 										{ userId: userData._id },
-										{ property_rent_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+										{ sole_rent_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
 									],
 								},
 							},
@@ -155,7 +155,6 @@ export class UserClass extends BaseEntity {
 						rentedPropertyLast30Days: {
 							$cond: { if: { $size: ['$rentedPropertyLast30Days'] }, then: { $arrayElemAt: ['$rentedPropertyLast30Days.Total', 0] }, else: 0 },
 						},
-						// enquiryLast30Days: '$enquiryLast30Days',
 					},
 				},
 			];
