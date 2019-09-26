@@ -361,9 +361,6 @@ export let userRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'reset'],
 			auth: 'UserAuth',
 			validate: {
-				query: {
-					// email: Joi.string()
-				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},

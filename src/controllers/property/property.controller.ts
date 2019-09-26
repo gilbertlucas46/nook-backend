@@ -188,6 +188,8 @@ export class PropertyController {
 						status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
 						displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME,
 					},
+					sole_rent_time :  new Date().getTime(),
+					updatedAt : new Date().getTime(),
 				};
 				dataToSet.$push = {
 					propertyActions: {
@@ -196,13 +198,14 @@ export class PropertyController {
 						actionPerformedBy: {
 							userId: userData._id,
 							userType: userData.type,
+							actionTime: new Date().getTime(),
 						},
-						actionTime: new Date().getTime(),
 					},
 				};
 			} else if (payload.upgradeToFeature) {
 				dataToSet.$set = {
 					isFeatured: payload.upgradeToFeature,
+					updatedAt : new Date().getTime(),
 				};
 				dataToSet.$push = {
 					propertyActions: {
@@ -213,8 +216,8 @@ export class PropertyController {
 							userId: userData._id,
 							userType: userData.type,
 							action: payload.status ? Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE : Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
+							actionTime: new Date().getTime(),
 						},
-						actionTime: new Date().getTime(),
 					},
 				};
 			}
