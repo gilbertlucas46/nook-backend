@@ -188,8 +188,8 @@ export class PropertyController {
 						status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
 						displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME,
 					},
-					sole_rent_time :  new Date().getTime(),
-					updatedAt : new Date().getTime(),
+					sold_rent_time: new Date().getTime(),
+					updatedAt: new Date().getTime(),
 				};
 				dataToSet.$push = {
 					propertyActions: {
@@ -205,7 +205,7 @@ export class PropertyController {
 			} else if (payload.upgradeToFeature) {
 				dataToSet.$set = {
 					isFeatured: payload.upgradeToFeature,
-					updatedAt : new Date().getTime(),
+					updatedAt: new Date().getTime(),
 				};
 				dataToSet.$push = {
 					propertyActions: {
