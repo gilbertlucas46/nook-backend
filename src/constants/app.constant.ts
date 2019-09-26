@@ -392,7 +392,7 @@ export let STATUS_MSG = {
 			},
 			INVALID_EMAIL: {
 				statusCode: 400,
-				message: 'Email is not exist',
+				message: 'Entered username/email is not registered with us!',
 				type: '',
 			},
 			CANNOT_PERFORM_UPDATE_OPERATION: {
@@ -736,6 +736,9 @@ export let SERVER = {
 	DOMAIN_NAME: 'http://localhost:7313/',
 	IOS_URL: 'nook://',
 	ANDROID_URL: 'http://nook.com',
+	FORGET_PASSWORD_URL: '/v1/user/verifyLink/',
+	ADMIN_FORGET_PASSWORD_URL: '/v1/admin/verifyLink/',
+
 	ANDROID_PACKAGE_NAME: 'com.nook.com',
 	APP_URL: config.get('host'),
 	LINKS: {

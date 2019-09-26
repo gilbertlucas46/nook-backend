@@ -157,20 +157,22 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 				const payload = request.params;
 				await AdminProfileService.verifyLink(payload);
-				return h.redirect(config.get('baseUrl') + payload.link);
+				return h.redirect(config.get('adminbaseUrl') + payload.link);
 			} catch (error) {
 				if (error.JsonWebTokenError) {
 					return h.redirect(config.get('invalidUrl') + 'invalid url');
 				} else if (error === 'LinkExpired') {
 					return h.redirect(config.get('invalidUrl') + 'LinkExpired');
+				} else if (error === 'error') {
+					return h.redirect(config.get('invalidUrl') + 'error');
 				} else {
 					return h.redirect(config.get('invalidUrl') + 'Something went wrong');
 				}
 			}
 		},
 		options: {
-			description: 'Get Admin Profile',
-			tags: ['api', 'anonymous', 'Admin', 'Detail'],
+			description: 'Get Admin verifylink',
+			tags: ['api', 'anonymous', 'Admin', 'verifylink'],
 			validate: {
 				params: {
 					link: Joi.string(),

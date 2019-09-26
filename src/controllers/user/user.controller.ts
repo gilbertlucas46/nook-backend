@@ -133,7 +133,8 @@ export class UserController {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
 			} else {
 				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
-				const url = config.get('host') + '/v1/user/verifyLink/' + passwordResetToken;
+				const url = config.get('host') + Constant.SERVER.FORGET_PASSWORD_URL + passwordResetToken;
+
 				const mail = new MailManager(payload.email, 'forGet password', url);
 				mail.sendMail();
 				return {};
@@ -165,7 +166,7 @@ export class UserController {
 
 	async verifyLink(payload) {
 		try {
-			const result: any = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
 			const userData = await ENTITY.UserE.getOneEntity(result.email, {});
 			if (!userData) { return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR; } else {
 				const criteria = { email: result };
@@ -183,7 +184,7 @@ export class UserController {
 
 	async verifyLinkForResetPwd(payload) {
 		try {
-			const result = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			const result = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
 			if (!result) { return Promise.reject(); }
 			const checkAlreadyUsedToken: any = await ENTITY.UserE.getOneEntity({ email: result }, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 			if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null) {
