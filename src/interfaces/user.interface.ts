@@ -25,7 +25,7 @@ export namespace UserRequest {
 		session?: boolean;
 		isProfileComplete: boolean;
 		backGroundImageUrl?: string;
-		isFeaturedProfile: boolean;
+		isFeaturedProfile?: boolean;
 	}
 
 	export interface Register {
@@ -56,19 +56,19 @@ export namespace UserRequest {
 		firstName: string;
 		lastName: string;
 		phoneNumber: string;
-		type: string;
-		title: string;
-		license: string;
-		taxnumber: string;
-		faxNumber: string;
-		fullPhoneNumber: string;
-		language: string;
-		companyName: string;
-		address: string;
-		aboutMe: string;
-		profilePicUrl: string;
-		isProfileComplete: boolean;
-		backGroundImageUrl: string;
+		type?: string;
+		title?: string;
+		license?: string;
+		taxnumber?: string;
+		faxNumber?: string;
+		fullPhoneNumber?: string;
+		language?: string;
+		companyName?: string;
+		address?: string;
+		aboutMe?: string;
+		profilePicUrl?: string;
+		isProfileComplete?: boolean;
+		backGroundImageUrl?: string;
 
 	}
 

@@ -26,7 +26,7 @@ export class AdminProfileController {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
 			}
 			if (!(await utils.deCryptData(payload.password, adminData.password))) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD);
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
 			}
 			const sessionData = { adminId: adminData._id };
 			const sessionObj = await ENTITY.AdminSessionE.createSession(sessionData);
