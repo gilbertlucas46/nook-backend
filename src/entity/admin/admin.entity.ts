@@ -112,6 +112,7 @@ export class AdminClass extends BaseEntity {
 				firstName: adminData.firstName,
 				lastName: adminData.lastName,
 				phoneNumber: adminData.phoneNumber,
+				type: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 
 			};
 			const admin: UserRequest.Register = await this.createOneEntity(dataToInsert);
