@@ -5,7 +5,6 @@
     "invalidUrl": "https://nookdevangweb.appskeeper.com?error=",
     "homePage": "https://nookdevangweb.appskeeper.com",
     "host": "https://nookdev.appskeeper.com",
-    "adminHost": "https://nookdevangadmin.appskeeper.com",
     "adminInvalidUrl": "https://nookdevangadmin.appskeeper.com?error=",
     "adminBaseUrl": "https://nookdevangadmin.appskeeper.com?reset=",
     "dbConfig": {
