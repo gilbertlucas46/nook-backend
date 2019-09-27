@@ -61,6 +61,7 @@ export class PropertyController {
 			}];
 
 			if (payload.propertyId) {
+				delete payload.propertyId;
 				payload.updatedAt = new Date().getTime();
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return updateData;
