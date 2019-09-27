@@ -155,8 +155,11 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/verifyLink/{link}',
 		handler: async (request, h) => {
 			try {
+
 				const payload = request.params;
-				await AdminProfileService.verifyLink(payload);
+				console.log('payloadpayload', payload);
+				const data = await AdminProfileService.verifyLink(payload);
+				console.log('data-=============', data);
 				return h.redirect(config.get('adminBaseUrl') + payload.link);
 			} catch (error) {
 				if (error.JsonWebTokenError) {
