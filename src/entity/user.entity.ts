@@ -130,7 +130,7 @@ export class UserClass extends BaseEntity {
 							{
 								$match: {
 									$and: [
-										{ Property_status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
+										{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
 										{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER },
 										{ userId: userData._id },
 										{ sold_rent_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },

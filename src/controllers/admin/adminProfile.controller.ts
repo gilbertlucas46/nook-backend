@@ -71,6 +71,7 @@ export class AdminProfileController {
 				email: payload.email.trim().toLowerCase(),
 			};
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id']);
+			console.log('adminData', adminData);
 			if (!adminData) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
 			} else {
@@ -168,6 +169,8 @@ export class AdminProfileController {
 				console.log('diffMins', diffMs);
 
 				const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+				console.log('diffMinsdiffMins', diffMins);
+
 				if (diffMins > 0) {
 					return Promise.reject('LinkExpired');
 				}
