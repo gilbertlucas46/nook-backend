@@ -116,6 +116,8 @@ export class AdminProfileController {
 	async verifyLinkForResetPwd(payload) {
 		try {
 			const result = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			console.log('resultresultresult', result);
+
 			if (!result) {
 				return Promise.reject();
 			}
@@ -133,6 +135,8 @@ export class AdminProfileController {
 			const today: any = new Date();
 			const diffMs = (today - checkAlreadyUsedToken.passwordResetTokenExpirationTime);
 			const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes in negative minus
+			console.log('diffMinsdiffMinsdiffMinsdiffMins', diffMins);
+
 			if (diffMins > 0) {
 				return Promise.reject('Time_Expired');
 			} else {

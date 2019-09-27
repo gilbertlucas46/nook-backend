@@ -234,6 +234,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 				const payload = request.query;
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
+				console.log('responseDataresponseData', responseData);
+
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
 				if (error.JsonWebTokenError) {
