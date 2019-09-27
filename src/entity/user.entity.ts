@@ -137,7 +137,7 @@ export class UserClass extends BaseEntity {
 									],
 								},
 							},
-							{ $count: 'rentPropertyLast30Days' },
+							{ $count: 'Total' },
 						],
 					},
 				},
