@@ -127,7 +127,8 @@ export class UserController {
 	async forgetPassword(payload: UserRequest.ForgetPassword) {
 		try {
 			const criteria = {
-				email: payload.email.trim().toLowerCase(),
+				$or: [{ userName: payload.email }, { email: payload.email }],
+				// email: payload.email.trim().toLowerCase(),
 			};
 			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id']);
 			if (!userData) {
@@ -135,8 +136,8 @@ export class UserController {
 			} else {
 				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
 				const url = config.get('host') + Constant.SERVER.FORGET_PASSWORD_URL + passwordResetToken;
-
-				const mail = new MailManager(payload.email, 'forGet password', url);
+				const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
+				const mail = new MailManager(userData.email, 'forGet password', html);
 				mail.sendMail();
 				return {};
 			}

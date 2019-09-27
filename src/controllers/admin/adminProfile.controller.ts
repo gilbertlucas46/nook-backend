@@ -71,16 +71,12 @@ export class AdminProfileController {
 				email: payload.email.trim().toLowerCase(),
 			};
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id']);
-			console.log('adminData', adminData);
-
 			if (!adminData) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
 			} else {
 				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
-				const url = config.get('adminhost') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
+				const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
 				const html = `<html><head><title> Nook Admin | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
-				console.log('url------------', url);
-
 				const mail = new MailManager(payload.email, 'forget password', html);
 				mail.sendMail();
 				return {};
@@ -153,7 +149,9 @@ export class AdminProfileController {
 
 	async verifyLink(payload) {
 		try {
+			console.log('payload>>>>>>>>>>>>>>>>>>>', payload);
 			const result: any = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			console.log('result>>>>>>>>>>>>>>>', result);
 			const adminData = await ENTITY.AdminE.getOneEntity(result.email, {});
 			if (!adminData) {
 				return Promise.reject('error'); // error page will be open here
@@ -162,6 +160,8 @@ export class AdminProfileController {
 				const userExirationTime: any = await ENTITY.AdminE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 				const today: any = new Date();
 				const diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
+				console.log('diffMins', diffMs);
+
 				const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 				if (diffMins > 0) {
 					return Promise.reject('LinkExpired');
