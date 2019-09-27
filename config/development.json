@@ -6,7 +6,7 @@
     "homePage": "https://nookdevangweb.appskeeper.com",
     "host": "https://nookdev.appskeeper.com",
     "adminInvalidUrl": "https://nookdevangadmin.appskeeper.com?error=",
-    "adminBaseUrl": "https://nookdevangadmin.appskeeper.com?reset=",
+    "adminBaseUrl": "https://nookdevangadmin.appskeeper.com/account/reset-password",
     "dbConfig": {
         "dbPwd": "Iidjsi@#1!",
         "dbUser": "nook_devusr",

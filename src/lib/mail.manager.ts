@@ -18,7 +18,7 @@ export class MailManager {
 					user: config.get('smtp.mailUserName'), // config.get('MAIL_USERNAME'),
 					pass: config.get('smtp.mailPassword'), // '12345Appinventiv'
 				},
-				// debug: true,
+				debug: true,
 				logger: true,
 			});
 

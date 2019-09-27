@@ -159,7 +159,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const payload = request.params;
 				console.log('payloadpayload', payload);
 				const data = await AdminProfileService.verifyLink(payload);
-				console.log('data-=============', data);
+				console.log('data-=============', data, payload.link);
 				return h.redirect(config.get('adminBaseUrl') + payload.link);
 			} catch (error) {
 				if (error.JsonWebTokenError) {
@@ -232,7 +232,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/reset-password',
 		handler: async (request, h) => {
 			try {
-				const payload = request.payload;
+				const payload = request.query;
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
@@ -251,7 +251,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			description: 'Get Admin Profile',
 			tags: ['api', 'anonymous', 'admin', 'reset'],
 			validate: {
-				payload: {
+				query: {
 					link: Joi.string(),
 					password: Joi.string().min(6).max(16),
 				},
