@@ -2,6 +2,8 @@ import { Schema, Document, model } from 'mongoose';
 import * as shortid from 'shortid';
 import * as Constant from '../constants';
 
+shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
+
 export interface IPropertyActions extends Document {
 	actionNumber?: number;
 	actionString?: string;
@@ -112,7 +114,7 @@ export interface IProperty extends Document {
 		displayName: string;
 	};
 	propertyActions: IPropertyActions[];
-	sole_rent_time: number;
+	sold_rent_time: number;
 }
 
 const propertySchema = new Schema({
@@ -298,7 +300,7 @@ const propertySchema = new Schema({
 			default: Constant.DATABASE.PROPERTY_STATUS.PENDING.DISPLAY_NAME,
 		},
 	},
-	sole_rent_time: { type: Number },
+	sold_rent_time: { type: Number },
 	property_expiry_time: { type: Number },
 	actions_performed_by_admin: {
 		number: {
@@ -382,7 +384,8 @@ const propertySchema = new Schema({
 					],
 				},
 				actionTime: { type: Number },
-				message: { type: String },
+				action: { type: String },
+				// message: { type: String },
 
 			},
 		},

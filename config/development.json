@@ -5,9 +5,8 @@
     "invalidUrl": "https://nookdevangweb.appskeeper.com?error=",
     "homePage": "https://nookdevangweb.appskeeper.com",
     "host": "https://nookdev.appskeeper.com",
-    "adminhost": "https://nookdevangadmin.appskeeper.com",
-
-    "adminbaseUrl": "https://nookdevangadmin.appskeeper.com?reset=",
+    "adminInvalidUrl": "https://nookdevangadmin.appskeeper.com?error=",
+    "adminBaseUrl": "https://nookdevangadmin.appskeeper.com?reset=",
     "dbConfig": {
         "dbPwd": "Iidjsi@#1!",
         "dbUser": "nook_devusr",
