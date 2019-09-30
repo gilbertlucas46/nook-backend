@@ -294,6 +294,39 @@ export let DATABASE = {
 			DELETE: 'DELETE',
 		},
 	},
+	AGENT_SPECIALIZING: {
+		LICENSED_BROKER: {
+			NUMBER: 1,
+			TYPE: 'LICENSED BROKER',
+			DISPLAY_NAME: 'Licensed Broker',
+		},
+
+		PROPERTY_CONSULTANT: {
+			NUMBER: 2,
+			TYPE: 'PROPERTY_CONSULTANT',
+			DISPLAY_NAME: 'Property_Consultant',
+		},
+		REAL_ESTATE_BROKER: {
+			NUMBER: 3,
+			TYPE: 'REAL_ESTATE_BROKER',
+			DISPLAY_NAME: 'Real Estate Broker',
+		},
+		SALES_MANAGER: {
+			NUMBER: 4,
+			TYPE: 'SALES_MANAGER',
+			DISPLAY_NAME: 'Sales Manager',
+		},
+	},
+	SPECIALIZING_IN: {
+		'NONE': 'None',
+		'APPARTMENT/CONDO': 'Apartment/Condo',
+		'COMMERCIAL': 'Commercial',
+		'HOUSE_LOT': 'House & Lot',
+		'LAND': 'Land',
+		'ROOM': 'Room',
+	},
+
+
 
 	ACTION:
 	{
