@@ -85,6 +85,7 @@ export class EnquiryClass extends BaseEntity {
                 },
                 {
                     $project: {
+                        property_id: '$propertyData._id',
                         updatedAt: 1,
                         createdAt: 1,
                         enquiry_status: 1,
