@@ -116,12 +116,10 @@ export class AdminProfileController {
 
 	async verifyLinkForResetPwd(payload) {
 		try {
-			const result = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			const result = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
 			console.log('resultresultresult', result);
 
-			if (!result) {
-				return Promise.reject();
-			}
+			if (!result) {return Promise.reject(); }
 			const checkAlreadyUsedToken: any = await ENTITY.AdminE.getOneEntity({ email: result }, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 			if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null) {
 				// send the error page that the already change the pssword in case of already changes fromthe browser
@@ -156,7 +154,7 @@ export class AdminProfileController {
 	async verifyLink(payload) {
 		try {
 			console.log('payload>>>>>>>>>>>>>>>>>>>', payload);
-			const result: any = await Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
 			console.log('result>>>>>>>>>>>>>>>', result);
 			const adminData = await ENTITY.AdminE.getOneEntity(result.email, {});
 			if (!adminData) {
