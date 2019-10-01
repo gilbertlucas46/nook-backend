@@ -71,10 +71,8 @@ export class AdminProfileController {
 				email: payload.email.trim().toLowerCase(),
 			};
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id']);
-			console.log('adminData', adminData);
-			if (!adminData) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
-			} else {
+			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
+			else {
 				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
 				const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
 				console.log('url---==================', url);
@@ -117,9 +115,7 @@ export class AdminProfileController {
 	async verifyLinkForResetPwd(payload) {
 		try {
 			const result = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
-			console.log('resultresultresult', result);
-
-			if (!result) {return Promise.reject(); }
+			if (!result) { return Promise.reject(); }
 			const checkAlreadyUsedToken: any = await ENTITY.AdminE.getOneEntity({ email: result }, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 			if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null) {
 				// send the error page that the already change the pssword in case of already changes fromthe browser
@@ -134,11 +130,8 @@ export class AdminProfileController {
 			const today: any = new Date();
 			const diffMs = (today - checkAlreadyUsedToken.passwordResetTokenExpirationTime);
 			const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes in negative minus
-			console.log('diffMinsdiffMinsdiffMinsdiffMins', diffMins);
-
-			if (diffMins > 0) {
-				return Promise.reject('Time_Expired');
-			} else {
+			if (diffMins > 0) { return Promise.reject('Time_Expired'); }
+			else {
 				const updatePassword = await ENTITY.AdminE.updateOneEntity({ email: result }, updatePswd);
 				if (!updatePassword) {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR);
@@ -153,7 +146,6 @@ export class AdminProfileController {
 
 	async verifyLink(payload) {
 		try {
-			console.log('payload>>>>>>>>>>>>>>>>>>>', payload);
 			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
 			console.log('result>>>>>>>>>>>>>>>', result);
 			const adminData = await ENTITY.AdminE.getOneEntity(result.email, {});
@@ -164,14 +156,8 @@ export class AdminProfileController {
 				const userExirationTime: any = await ENTITY.AdminE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 				const today: any = new Date();
 				const diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
-				console.log('diffMins', diffMs);
-
 				const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-				console.log('diffMinsdiffMins', diffMins);
-
-				if (diffMins > 0) {
-					return Promise.reject('LinkExpired');
-				}
+				if (diffMins > 0) { return Promise.reject('LinkExpired'); }
 				return {}; // success
 			}
 		} catch (error) {
