@@ -82,6 +82,27 @@ const userSchema = new Schema({
 	passwordResetToken: { type: String },
 	passwordResetTokenExpirationTime: { type: Date },
 	isFeaturedProfile: { type: Boolean, default: false },
+	specializingIn_property_type: [{
+		type: Number,
+		enum: [
+			CONSTANT.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+			CONSTANT.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+		],
+	}],
+	propertyCategory: [{
+		type: String,
+		enum: [
+			CONSTANT.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
+			CONSTANT.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+			CONSTANT.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+			CONSTANT.DATABASE.PROPERTY_TYPE.LAND,
+			CONSTANT.DATABASE.PROPERTY_TYPE.ROOM,
+		],
+	}],
+	serviceAreas: [{
+		type: String,
+		ref: 'City',  // Refer to region schema
+	}],
 });
 
 export let User = mongoose.model<IUser>('User', userSchema);
