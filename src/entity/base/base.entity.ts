@@ -1,9 +1,10 @@
-import * as Services from '../databases/dao';
+import * as Services from '@src/databases/dao';
 import * as mongoose from 'mongoose';
-import { SERVER } from '../constants';
+import { SERVER } from '@src/constants';
 import { ModelNames } from '@src/interfaces/model.interface';
 import { consolelog } from '@src/utils/index';
-import * as utils from '../utils';
+import * as utils from '@src/utils';
+
 export class BaseEntity {
 	objectId = mongoose.Types.ObjectId;
 	DAOManager = new Services.DAOManager();

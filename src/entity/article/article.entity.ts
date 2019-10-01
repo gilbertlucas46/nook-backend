@@ -1,8 +1,8 @@
 'use strict';
-import { BaseEntity } from './base.entity';
-import { ArticleRequest } from '../interfaces/article.interface';
-import * as Constant from '../constants';
-import * as utils from '../utils';
+import { BaseEntity } from '@src/entity/base/base.entity';
+import { ArticleRequest } from '@src/interfaces/article.interface';
+import * as Constant from '@src/constants';
+import * as utils from '@src/utils';
 export class ArticleClass extends BaseEntity {
     constructor() {
         super('Article');

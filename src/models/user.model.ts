@@ -27,9 +27,9 @@ export interface IUser extends Document {
 	passwordResetTokenExpirationTime?: Date;
 	backGroundImageUrl: string;
 	isFeaturedProfile: boolean;
-	// roleType:{
-	//     type:Array ,
-	// }
+	specializingIn_property_type ?: number[];
+	specializingIn_property_category?: string[];
+	serviceAreas?: string[];
 }
 
 const userSchema = new Schema({
@@ -89,7 +89,7 @@ const userSchema = new Schema({
 			CONSTANT.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 		],
 	}],
-	propertyCategory: [{
+	specializingIn_property_category: [{
 		type: String,
 		enum: [
 			CONSTANT.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],

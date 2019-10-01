@@ -56,7 +56,7 @@ export const AdminSchema = new Schema(
 			enum: [
 				CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
 				CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
-			],
+			], index: true,
 			default: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 		},
 	},

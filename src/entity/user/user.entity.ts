@@ -1,15 +1,15 @@
-import { BaseEntity } from './base.entity';
+import { BaseEntity } from '@src/entity/base/base.entity';
 import * as config from 'config';
-import * as TokenManager from '../lib';
+import * as TokenManager from '@src/lib';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import { UserRequest } from '@src/interfaces/user.interface';
-import * as Constant from '../constants';
+import * as Constant from '@src/constants';
+
 export class UserClass extends BaseEntity {
 	constructor() {
 		super('User');
 	}
-
 	async createUser(userData: UserRequest.UserData) {
 		try {
 			const dataToInsert = {
