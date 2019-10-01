@@ -92,7 +92,6 @@ export class UserController {
 
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
-			let updatePropertyData;
 			const criteria = { _id: payload._id };
 			if (payload.firstName && payload.lastName && payload.type) {
 				payload.isProfileComplete = true;
@@ -106,7 +105,7 @@ export class UserController {
 				const propertyCriteria = {
 					userId: updateUser._id,
 				};
-				updatePropertyData = {
+				const updatePropertyData = {
 					property_added_by: {
 						userId: updateUser._id,
 						userName: updateUser.userName,

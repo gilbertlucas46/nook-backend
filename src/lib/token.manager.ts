@@ -11,7 +11,7 @@
 // 		return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
 // 	} else {
 // 		try {
-// 			const tokenToSend = await Jwt.sign(tokenData, cert, { algorithm: 'HS256' });
+// 			const tokenToSend = Jwt.sign(tokenData, cert, { algorithm: 'HS256' });
 // 			return { accessToken: tokenToSend };
 // 		} catch (error) {
 // 			return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
@@ -21,7 +21,7 @@
 
 // export let verifyToken = async (token, tokenType, request?: any) => {
 // 	try {
-// 		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
+// 		const result: any =  Jwt.verify(token, cert, { algorithms: ['HS256'] });
 // 		utils.consolelog('resultToken', result, true);
 // 		if (result.tokenType) {
 // 			if (result.tokenType === 'TENANT' || 'AGENT' || 'OWNER') {
@@ -57,7 +57,7 @@
 
 // export let verifyAdminToken = async (token, tokenType, request?: any) => {
 // 	try {
-// 		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
+// 		const result: any = Jwt.verify(token, cert, { algorithms: ['HS256'] });
 // 		if (!result) { return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN;}
 // 		const adminData: any = {};
 // 		const criteria = { _id: result._id };
@@ -103,7 +103,7 @@ export let setToken = async (tokenData: any) => {
 		return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
 	} else {
 		try {
-			const tokenToSend = await Jwt.sign(tokenData, cert, { algorithm: 'HS256' });
+			const tokenToSend = Jwt.sign(tokenData, cert, { algorithm: 'HS256' });
 			return { accessToken: tokenToSend };
 		} catch (error) {
 			return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
@@ -113,7 +113,7 @@ export let setToken = async (tokenData: any) => {
 
 export let verifyToken = async (token, tokenType, request?: any) => {
 	try {
-		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
+		const result: any = Jwt.verify(token, cert, { algorithms: ['HS256'] });
 		utils.consolelog('resultToken', result, true);
 		if (result.tokenType) {
 			if (result.tokenType === 'TENANT' || 'AGENT' || 'OWNER') {
@@ -149,7 +149,7 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 
 export let verifyAdminToken = async (token, tokenType, request?: any) => {
 	try {
-		const result: any = await Jwt.verify(token, cert, { algorithms: ['HS256'] });
+		const result: any = Jwt.verify(token, cert, { algorithms: ['HS256'] });
 		if (!result) { return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN; }
 		const adminData: any = {};
 		const criteria = { _id: result._id };
