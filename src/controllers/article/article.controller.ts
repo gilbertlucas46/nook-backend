@@ -96,9 +96,6 @@ export class ArticleController {
                     // actionTime: new Date().getTime(),
                 },
             };
-
-            console.log('dataToSet', dataToSet);
-
             const updateStatus = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
             return updateStatus;
 
