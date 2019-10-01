@@ -1,7 +1,7 @@
-import { BaseEntity } from './base.entity';
+import { BaseEntity } from '@src/entity/base/base.entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants/app.constant';
-import * as utils from '../utils';
+import * as utils from '@src/utils';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export class PropertyClass extends BaseEntity {

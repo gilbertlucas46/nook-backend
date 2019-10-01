@@ -1,4 +1,4 @@
-import { BaseEntity } from './base.entity';
+import { BaseEntity } from '@src/entity/base/base.entity';
 import { ICity, CityDocument } from '@src/models/city';
 import { Location } from '@src/interfaces/region.interface';
 
