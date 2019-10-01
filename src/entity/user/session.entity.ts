@@ -1,4 +1,4 @@
-import { BaseEntity } from './base.entity';
+import { BaseEntity } from '@src/entity/base/base.entity';
 import * as mongoose from 'mongoose';
 import { UserRequest } from '@src/interfaces/user.interface';
 

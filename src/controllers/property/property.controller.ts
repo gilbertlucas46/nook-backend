@@ -56,7 +56,6 @@ export class PropertyController {
 					userType: userData.type,
 					actionTime: new Date().getTime(),
 					// property_basic_details.property_for_number: result.TYPE,
-
 				},
 			}];
 
