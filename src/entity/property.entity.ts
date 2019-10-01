@@ -125,7 +125,7 @@ export class PropertyClass extends BaseEntity {
 	async getPropertyList(payload: PropertyRequest.SearchProperty) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
-			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate, property_features } = payload;
+			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate, property_features, byCity, byRegion } = payload;
 			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			let sortingType = {};
@@ -139,10 +139,16 @@ export class PropertyClass extends BaseEntity {
 						$or: [
 							{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
 							{ 'property_address.barangay': new RegExp('.*' + searchTerm + '.*', 'i') },
+							{ 'property_added_by.userName': new RegExp('.*' + searchTerm + '.*', 'i') },
+							{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
+							// { 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
+							// { 'property_added_by.firstName': new RegExp('.*' + searchTerm + '.*', 'i') },
+							// { 'property_added_by.lastName': new RegExp('.*' + searchTerm + '.*', 'i') },
 						],
 					},
 				};
-			} else {
+			}
+			else {
 				searchCriteria = {
 					$match: {
 					},
@@ -184,16 +190,6 @@ export class PropertyClass extends BaseEntity {
 				};
 			}
 
-			if (propertyId) { matchObject.$match._id = Types.ObjectId(propertyId); }
-			if (propertyType && propertyType !== 3) { matchObject.$match['property_basic_details.property_for_number'] = propertyType; }
-			if (type && type !== 'all') { matchObject.$match['property_basic_details.type'] = type; }
-			if (bedrooms) { matchObject.$match['property_details.bedrooms'] = bedrooms; }
-			if (bathrooms) { matchObject.$match['property_details.bathrooms'] = bathrooms; }
-			if (minArea) { matchObject.$match['property_details.floor_area'] = { $gt: minArea }; }
-			if (maxArea) { matchObject.$match['property_details.floor_area'] = { $lt: maxArea }; }
-			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
-			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
-
 			// List of all properties for admin.
 			if (property_status && property_status === Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER) {
 				matchObject.$match = {
@@ -220,6 +216,18 @@ export class PropertyClass extends BaseEntity {
 					],
 				};
 			}
+
+			if (propertyId) { matchObject.$match._id = Types.ObjectId(propertyId); }
+			if (propertyType && propertyType !== 3) { matchObject.$match['property_basic_details.property_for_number'] = propertyType; }
+			if (type && type !== 'all') { matchObject.$match['property_basic_details.type'] = type; }
+			if (bedrooms) { matchObject.$match['property_details.bedrooms'] = bedrooms; }
+			if (bathrooms) { matchObject.$match['property_details.bathrooms'] = bathrooms; }
+			if (minArea) { matchObject.$match['property_details.floor_area'] = { $gt: minArea }; }
+			if (maxArea) { matchObject.$match['property_details.floor_area'] = { $lt: maxArea }; }
+			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
+			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
+			if (byCity) { matchObject.$match['city'] = byCity; }
+			if (byRegion) { matchObject.$match['region'] = byRegion; }
 
 			// List of properties acc to specific property status
 			if (property_status && !(property_status === Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER)) { matchObject.$match['property_status.number'] = property_status; }

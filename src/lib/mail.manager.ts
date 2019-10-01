@@ -31,7 +31,9 @@ export class MailManager {
 				html: `<b>${this.content}</b>`,    // html body
 				// bcc: config.get('smtp.bccMail')
 			};
-			await transporter.sendMail(mailOptions);
+			const data1 = await transporter.sendMail(mailOptions);
+			console.log('datamailaaaaaaaaaaaaa', data1);
+
 		} catch (error) {
 			utils.consolelog('MailManager', error, false);
 		}

@@ -107,6 +107,8 @@ export namespace PropertyRequest {
 		maxArea?: number;
 		property_status?: number;
 		property_features?: string[];
+		byRegion?: string;
+		byCity?: string;
 	}
 	export interface UpdatePropertyByAction {
 		propertyId: string;
