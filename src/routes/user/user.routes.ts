@@ -7,7 +7,6 @@ import * as config from 'config';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-
 export let userRoute: ServerRoute[] = [
 	/**
 	 * @description: register user based on unique mail and userName
@@ -188,6 +187,26 @@ export let userRoute: ServerRoute[] = [
 					aboutMe: Joi.string().allow(''),
 					profilePicUrl: Joi.string().allow(''),
 					backGroundImageUrl: Joi.string().allow(''),
+					specializingIn_property_type:
+						Joi.array().items(
+							Joi.number().valid([
+								Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+								Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+							]),
+						),
+					propertyCategory:
+						// Joi.array().items(Joi.string().valid('client_app', 'client_web').required()).required(),
+						Joi.array().items(Joi.string().valid([
+							Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
+							Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+							Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+							Constant.DATABASE.PROPERTY_TYPE.LAND,
+							Constant.DATABASE.PROPERTY_TYPE.ROOM,
+						]),
+						),
+					serviceAreas:
+						Joi.array().items(Joi.string()),
+					ref: 'City',  // Refer to region schema
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
