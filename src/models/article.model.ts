@@ -37,7 +37,7 @@ const articleSchema = new Schema({
             Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
             Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
             Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-        ],
+        ], index: true,
     },
     categoryType: {
         type: String, enum: [
@@ -47,16 +47,16 @@ const articleSchema = new Schema({
             Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.TYPE,
             Constant.DATABASE.ARTICLE_TYPE.RENTING.TYPE,
             Constant.DATABASE.ARTICLE_TYPE.SELLING.TYPE,
-        ],
+        ], index: true,
     },
     imageUrl: { type: String },
-    userId: { type: Schema.Types.ObjectId, required: true },
+    userId: { type: Schema.Types.ObjectId, required: true, index: true },
     userRole: {
         type: String,
         enum: [
             Constant.DATABASE.USER_TYPE.ADMIN.TYPE,
             Constant.DATABASE.USER_TYPE.STAFF.TYPE,
-        ],
+        ], index: true,
     },
     description: { type: String },
     viewCount: { type: Number },
@@ -66,7 +66,7 @@ const articleSchema = new Schema({
             Constant.DATABASE.ARTICLE_STATUS.PENDING.NUMBER,
             Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
             Constant.DATABASE.ARTICLE_STATUS.BLOCKED.NUMBER,
-        ],
+        ], index: true,
         default: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
     },
     createdAt: { type: Number },

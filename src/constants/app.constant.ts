@@ -87,7 +87,6 @@ export let DATABASE = {
 			TYPE: 'USER_PROPERTY_LIST',
 			DISPLAY_NAME: 'User Property List',
 		},
-
 	},
 
 	PROPERTY_FOR: {
@@ -325,7 +324,6 @@ export let DATABASE = {
 		'LAND': 'Land',
 		'ROOM': 'Room',
 	},
-
 
 
 	ACTION:

@@ -5,7 +5,7 @@ import * as Constant from '@src/constants/app.constant';
 import { AgentService } from '@src/controllers';
 import { AgentRequest } from '@src/interfaces/agent.interface';
 
-export let AgentRoute: ServerRoute[] = [
+export let agentRoute: ServerRoute[] = [
     {
         method: 'GET',
         path: '/v1/agents',

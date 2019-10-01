@@ -6,6 +6,7 @@ import { contentRoutes } from './content/content.routes';
 import { enquiryRoutes } from './enquiry/enquiry.routes';
 import { articleRoutes } from './article/article.routes';
 import { cityRoutes } from './city/city.routes';
+import { agentRoute } from './user/agent.routes';
 export let Routes: ServerRoute[] = [
 	...userRoute,
 	...propertyRoute,
@@ -14,4 +15,5 @@ export let Routes: ServerRoute[] = [
 	...enquiryRoutes,
 	...articleRoutes,
 	...cityRoutes,
+	...agentRoute,
 ];
