@@ -1,10 +1,10 @@
-import { BaseEntity } from './base.entity';
+import { BaseEntity } from '@src/entity/base/base.entity';
 import * as Constant from '@src/constants/app.constant';
+
 export class UserPropertyClass extends BaseEntity {
 	constructor() {
 		super('Property');
 	}
-
 	async getUserPropertyList(payload, userData) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;

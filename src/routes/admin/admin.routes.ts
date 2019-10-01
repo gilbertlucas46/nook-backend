@@ -157,7 +157,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 
 				const payload = request.params;
-				console.log('payloadpayload', payload);
 				const data = await AdminProfileService.verifyLink(payload);
 				console.log('data-=============', data, payload.link);
 				return h.redirect(config.get('adminBaseUrl') + payload.link);
@@ -237,7 +236,6 @@ export let adminProfileRoute: ServerRoute[] = [
 				const payload = request.payload;
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
 				console.log('responseDataresponseData', responseData);
-
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
 				console.log('error-=======----------------=============', error);

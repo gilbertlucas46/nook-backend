@@ -16,26 +16,26 @@ export interface IEnquiry extends Document {
 
 const enquirySchena = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-    userId: { type: Schema.Types.ObjectId, ref: 'User' },
-    propertyId: { type: Schema.Types.ObjectId, required: true, ref: 'Property' },
-    email: { type: String },
-    propertyOwnerId: { type: Schema.Types.ObjectId, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', index: true },
+    propertyId: { type: Schema.Types.ObjectId, required: true, ref: 'Property', index: true },
+    email: { type: String, index: true },
+    propertyOwnerId: { type: Schema.Types.ObjectId, required: true, index: true },
     name: { type: String, required: true },
     userType: {
         type: Number,
         enum: [
             CONSTANT.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
             CONSTANT.DATABASE.ENQUIRY_TYPE.REGISTERED_USER.NUMBER,
-        ],
+        ], index: true,
     },
-    phoneNumber: { type: String },
+    phoneNumber: { type: String, index: true },
     message: { type: String },
     enquiry_status: {
         type: String,
         enum: [
             CONSTANT.DATABASE.ENQUIRY_STATUS.PENDING,
             CONSTANT.DATABASE.ENQUIRY_STATUS.RESOLVED,
-        ],
+        ], index: true,
         default: CONSTANT.DATABASE.ENQUIRY_STATUS.PENDING,
     },
     createdAt: { type: Number, default: new Date().getTime() },

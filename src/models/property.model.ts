@@ -119,7 +119,7 @@ export interface IProperty extends Document {
 
 const propertySchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true, auto: true },
-	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User', index: true },
 	createdAt: { type: Number, default: new Date().getTime() },
 	updatedAt: { type: Number, default: new Date().getTime() },
 	propertyId: { type: String, default: shortid.generate },
@@ -172,9 +172,9 @@ const propertySchema = new Schema({
 		buildYear: { type: Number },
 	},
 	property_address: {
-		address: { type: String, required: true },
-		region: { type: Schema.Types.ObjectId, ref: 'Region' }, // Refer to region schema
-		city: { type: Schema.Types.ObjectId, ref: 'City' },     // Refer to city schema
+		address: { type: String, required: true, index: true },
+		region: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
+		city: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
 		barangay: { type: String },
 		location: {
 			type: {
@@ -253,7 +253,7 @@ const propertySchema = new Schema({
 		},
 	},
 	property_added_by: {
-		userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+		userId: { type: Schema.Types.ObjectId, required: true, ref: 'User', index: true },
 		userName: { type: String },
 		phoneNumber: { type: String },
 		profilePicUrl: { type: String },
@@ -272,7 +272,7 @@ const propertySchema = new Schema({
 				Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 				Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 				Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
-			],
+			], index: true,
 			default: Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 		},
 		status: {
@@ -284,7 +284,7 @@ const propertySchema = new Schema({
 				Constant.DATABASE.PROPERTY_STATUS.DECLINED.TYPE,
 				Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
 				Constant.DATABASE.PROPERTY_STATUS.EXPIRED.TYPE,
-			],
+			], index: true,
 			default: Constant.DATABASE.PROPERTY_STATUS.PENDING.TYPE,
 		},
 		displayName: {
@@ -296,7 +296,7 @@ const propertySchema = new Schema({
 				Constant.DATABASE.PROPERTY_STATUS.DECLINED.DISPLAY_NAME,
 				Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME,
 				Constant.DATABASE.PROPERTY_STATUS.EXPIRED.DISPLAY_NAME,
-			],
+			], index: true,
 			default: Constant.DATABASE.PROPERTY_STATUS.PENDING.DISPLAY_NAME,
 		},
 	},
@@ -386,7 +386,6 @@ const propertySchema = new Schema({
 				actionTime: { type: Number },
 				action: { type: String },
 				// message: { type: String },
-
 			},
 		},
 	],

@@ -1,13 +1,13 @@
 'use strict';
-import { BaseEntity } from './base.entity';
-import { EnquiryRequest } from '../interfaces/enquiry.interface';
-import { UserRequest } from '../interfaces/user.interface';
-import * as Constant from '../constants';
+import { BaseEntity } from '@src/entity/base/base.entity';
+import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
+import { UserRequest } from '@src/interfaces/user.interface';
+import * as Constant from '@src/constants';
+
 export class EnquiryClass extends BaseEntity {
     constructor() {
         super('Enquiry');
     }
-
     async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
             const { fromDate, toDate } = payload;
