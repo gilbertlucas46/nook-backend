@@ -187,25 +187,21 @@ export let userRoute: ServerRoute[] = [
 					aboutMe: Joi.string().allow(''),
 					profilePicUrl: Joi.string().allow(''),
 					backGroundImageUrl: Joi.string().allow(''),
-					specializingIn_property_type:
-						Joi.array().items(
-							Joi.number().valid([
-								Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
-								Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-							]),
-						),
-					propertyCategory:
-						Joi.array().items(Joi.string().valid([
-							Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
-							Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
-							Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
-							Constant.DATABASE.PROPERTY_TYPE.LAND,
-							Constant.DATABASE.PROPERTY_TYPE.ROOM,
+					specializingIn_property_type: Joi.array().items(
+						Joi.number().valid([
+							Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+							Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 						]),
-						),
-					serviceAreas:
-						Joi.array().items(Joi.string()),
-					ref: 'City',  // Refer to region schema
+					),
+					propertyCategory: Joi.array().items(Joi.string().valid([
+						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
+						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+						Constant.DATABASE.PROPERTY_TYPE.LAND,
+						Constant.DATABASE.PROPERTY_TYPE.ROOM,
+					]),
+					),
+					serviceAreas: Joi.array().items(Joi.string()),
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
