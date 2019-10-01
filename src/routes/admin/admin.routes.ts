@@ -161,7 +161,9 @@ export let adminProfileRoute: ServerRoute[] = [
 				const data = await AdminProfileService.verifyLink(payload);
 				console.log('data-=============', data, payload.link);
 				return h.redirect(config.get('adminBaseUrl') + payload.link);
+				// return h.redirect(('localhost:7361') + payload.link);
 			} catch (error) {
+				console.log('errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', error);
 				if (error.JsonWebTokenError) {
 					return h.redirect(config.get('adminInvalidUrl') + 'invalid url');
 				} else if (error === 'LinkExpired') {
@@ -232,12 +234,14 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/reset-password',
 		handler: async (request, h) => {
 			try {
-				const payload = request.query;
+				const payload = request.payload;
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
 				console.log('responseDataresponseData', responseData);
 
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				console.log('error-=======----------------=============', error);
+
 				if (error.JsonWebTokenError) {
 					return h.redirect(config.get('invalidUrl') + 'invalid url');
 				} else if (error === 'Already_Changed') {
@@ -253,8 +257,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			description: 'Get Admin Profile',
 			tags: ['api', 'anonymous', 'admin', 'reset'],
 			validate: {
-				query: {
-					link: Joi.string(),
+				payload: {
+					token: Joi.string(),
 					password: Joi.string().min(6).max(16),
 				},
 				failAction: UniversalFunctions.failActionFunction,
@@ -287,9 +291,10 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				query: {
+					// in admin searching by email, address
 					page: Joi.number(),
 					limit: Joi.number(),
-					sortBy: Joi.number().valid([]),
+					sortBy: Joi.string(),
 					sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
 					searchTerm: Joi.string(),
 					fromDate: Joi.number(),
@@ -311,6 +316,8 @@ export let adminProfileRoute: ServerRoute[] = [
 					minArea: Joi.number(),
 					maxArea: Joi.number(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					byCity: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					byRegion: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
