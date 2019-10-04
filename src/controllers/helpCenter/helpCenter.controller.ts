@@ -18,12 +18,17 @@ export class HelpCenter {
             if (payload.categoryId) {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
             }
+            console.log('result', result);
 
-            payload['userId'] = adminData['_id'];
+            console.log('adminData._id', adminData);
+
+            payload['userId'] = adminData._id;
             payload['createdAt'] = new Date().getTime();
             payload['updtedAt'] = new Date().getTime();
-            payload['categoryType'] = result.type;
+            payload['categoryType'] = result.TYPE;
             payload['userRole'] = adminData.type;
+            console.log('payload>>>>>>>>>>>>>>>>>>.', payload);
+
             const data = await ENTITY.HelpCenterE.createOneEntity(payload);
             return data;
         } catch (error) {
@@ -34,7 +39,7 @@ export class HelpCenter {
     async getHelpCenter(payload: helpCenterRequest.GetHelpCenter) {
         try {
             const criteria = {
-                categoryId: payload.categoryId,
+                categoryId: payload.id,
             };
             const data = await ENTITY.HelpCenterE.getOneEntity(criteria, {});
             return data;
@@ -83,6 +88,15 @@ export class HelpCenter {
                 },
             };
             const data = await ENTITY.HelpCenterE.updateOneEntity(criteria, dataToSet);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getHelpCenterCategoryBygroup() {
+        try {
+            const data = await ENTITY.HelpCenterE.getHelpCenterCategoryBygroup();
             return data;
         } catch (error) {
             return Promise.reject(error);

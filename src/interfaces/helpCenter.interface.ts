@@ -9,7 +9,7 @@ export namespace helpCenterRequest {
     }
 
     export interface GetHelpCenter {
-        categoryId: number;
+        id: number;
     }
     export interface DeleteHelpCenter {
         id: string;
