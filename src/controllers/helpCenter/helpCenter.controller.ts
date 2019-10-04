@@ -15,9 +15,6 @@ export class HelpCenter {
     async createHelpCenter(payload: helpCenterRequest.CreateHelpCenter, adminData) {
         try {
             let result;
-            // const dataToSave = {
-            console.log('adminData', adminData);
-
             if (payload.categoryId) {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
             }
@@ -27,14 +24,9 @@ export class HelpCenter {
             payload['updtedAt'] = new Date().getTime();
             payload['categoryType'] = result.type;
             payload['userRole'] = adminData.type;
-            // }
-            console.log('payload>>>>>>>>>>>>>>>>>>>>>', payload);
-
             const data = await ENTITY.HelpCenterE.createOneEntity(payload);
-            console.log('datadatadatadata', data);
             return data;
         } catch (error) {
-            console.log('errorrrrrrrrrrrrrrrrrrrrrr', error);
             return Promise.reject(error);
         }
     }
@@ -45,7 +37,6 @@ export class HelpCenter {
                 categoryId: payload.categoryId,
             };
             const data = await ENTITY.HelpCenterE.getOneEntity(criteria, {});
-            console.log('datadatadatadata', data);
             return data;
         } catch (error) {
             return Promise.reject(error);

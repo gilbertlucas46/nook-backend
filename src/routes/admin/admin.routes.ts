@@ -158,11 +158,9 @@ export let adminProfileRoute: ServerRoute[] = [
 
 				const payload = request.params;
 				const data = await AdminProfileService.verifyLink(payload);
-				console.log('data-=============', data, payload.link);
 				return h.redirect(config.get('adminBaseUrl') + payload.link);
 				// return h.redirect(('localhost:7361') + payload.link);
 			} catch (error) {
-				console.log('errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', error);
 				if (error.JsonWebTokenError) {
 					return h.redirect(config.get('adminInvalidUrl') + 'invalid url');
 				} else if (error === 'LinkExpired') {
@@ -234,13 +232,9 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const payload = request.payload;
-				console.log('payloadpayloadpayload', payload);
-
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
-				console.log('responseDataresponseData', responseData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
-				console.log('error-=======----------------=============', error);
 				// if (error.JsonWebTokenError) {
 				// 	return h.redirect(config.get('invalidUrl') + 'invalid url');
 				// } else if (error === 'Already_Changed') {

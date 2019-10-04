@@ -6,7 +6,7 @@ export namespace UserRequest {
 		password: string;
 		firstName: string;
 		lastName: string;
-		middleName: string;
+		middleName?: string;
 		phoneNumber?: string;
 		type?: string;
 		// roleType:{
@@ -57,8 +57,9 @@ export namespace UserRequest {
 	export interface ProfileUpdate {
 		_id?: string;
 		firstName: string;
+		middleName?: string;
 		lastName: string;
-		phoneNumber: string;
+		phoneNumber?: string;
 		type?: string;
 		title?: string;
 		license?: string;
