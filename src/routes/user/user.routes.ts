@@ -71,7 +71,6 @@ export let userRoute: ServerRoute[] = [
 				payload: {
 					email: Joi.string().min(4).max(100),
 					password: Joi.string().min(6).max(16).trim().required(),
-					// deviceId: Joi.string(),
 					deviceToken: Joi.string(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
@@ -442,15 +441,12 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/update-account',
 		async handler(request, h) {
 			try {
-				console.log('userData');
 				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
-
 				const payload: UserRequest.UpdateAccount = request.payload as any;
 				const propertyDetail = await UserService.updateAccount(payload, userData);
 				const userResponse = UniversalFunctions.formatUserData(propertyDetail);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
 			} catch (error) {
-				console.log('error...............', error);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
