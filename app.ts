@@ -50,7 +50,6 @@ const init = async () => {
 		},
 	});
 	server.route(Routes);
-
 	await server.start();
 	const db = new Bootstrap.Bootstrap();
 	await db.bootstrap();
