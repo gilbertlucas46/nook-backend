@@ -150,7 +150,7 @@ export class AgentClass extends BaseEntity {
                     },
                 },
             ];
-            const agentList = await this.DAOManager.aggregateData(this.modelName, query);
+            const agentList = await this.DAOManager.paginate(this.modelName, query, limit, page);
             return agentList;
 
         } catch (err) {
