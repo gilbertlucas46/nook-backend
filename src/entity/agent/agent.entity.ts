@@ -11,7 +11,7 @@ export class AgentClass extends BaseEntity {
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const { fromDate, toDate, cityId, propertySpecialisationIn, byCompanyName, searchTerm } = payload;
+            const { fromDate, toDate, cityId, specializingIn_property_type, byCompanyName, searchTerm } = payload;
             if (!limit) { limit = SERVER.LIMIT; } else { limit = limit; }
             if (!page) { page = 1; } else { page = page; }
             const skip = (limit * (page - 1));
@@ -59,10 +59,10 @@ export class AgentClass extends BaseEntity {
                 };
             }
 
-            if (propertySpecialisationIn) {
+            if (specializingIn_property_type) {
                 matchObject = {
                     $match: {
-                        specializingIn_property_type: { $all: propertySpecialisationIn },
+                        specializingIn_property_type: { $all: specializingIn_property_type },
                     },
                 };
             }

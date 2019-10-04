@@ -36,7 +36,7 @@ export let agentRoute: ServerRoute[] = [
                     toDate: Joi.number(),
                     cityId: Joi.string(),
                     // agentSpecialisation: Joi.boolean().default('false'),
-                    propertySpecialisationIn: Joi.array().items(
+                    specializingIn_property_type: Joi.array().items(
                         Joi.number().valid([
                             1, 2,
                         ]),
