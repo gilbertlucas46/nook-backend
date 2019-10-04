@@ -51,7 +51,6 @@ export let helpCenterRoute: ServerRoute[] = [
                 const data = await HelpCenterService.getHelpCenter(payload);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
             } catch (error) {
-                console.log('error>>>>>>>>>>>>>>>>>>>>>>>>>>>', error);
                 return (UniversalFunction.sendError(error));
             }
         },
