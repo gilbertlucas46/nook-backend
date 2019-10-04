@@ -26,9 +26,9 @@ export namespace UserRequest {
 		isProfileComplete: boolean;
 		backGroundImageUrl?: string;
 		isFeaturedProfile?: boolean;
-		specializingIn_property_type ?: number[];
-	    specializingIn_property_category?: string[];
-	    serviceAreas?: string[];
+		specializingIn_property_type?: number[];
+		specializingIn_property_category?: string[];
+		serviceAreas?: string[];
 	}
 
 	export interface Register {
@@ -72,9 +72,9 @@ export namespace UserRequest {
 		profilePicUrl?: string;
 		isProfileComplete?: boolean;
 		backGroundImageUrl?: string;
-		specializingIn_property_type ?: number[];
-	    specializingIn_property_category?: string[];
-	    serviceAreas?: string[];
+		specializingIn_property_type?: number[];
+		specializingIn_property_category?: string[];
+		serviceAreas?: string[];
 	}
 
 	export interface Login extends Session, Login1 { }
@@ -89,5 +89,9 @@ export namespace UserRequest {
 	export interface ChangePassword {
 		oldPassword: string;
 		newPassword: string;
+	}
+
+	export interface UpdateAccount {
+		userType: string;
 	}
 }

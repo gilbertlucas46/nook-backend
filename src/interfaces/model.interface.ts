@@ -1,1 +1,1 @@
-export type ModelNames = 'User' | 'Property' | 'Admin' | 'Session' | 'AdminSession' | 'Region' | 'City' | 'Enquiry' | 'Article';
+export type ModelNames = 'User' | 'Property' | 'Admin' | 'Session' | 'AdminSession' | 'Region' | 'City' | 'Enquiry' | 'Article' | 'HelpCenter';

@@ -16,10 +16,6 @@ export let propertyRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: PropertyRequest.PropertyData = request.payload as any;
-				// if (payload.propertyId) {
-				// 	const registerResponse = await PropertyService.addProperty(payload, userData);
-				// 	return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, registerResponse));
-				// } else {
 				const registerResponse = await PropertyService.addProperty(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PROPERTY_ADDED, registerResponse));
 				// }

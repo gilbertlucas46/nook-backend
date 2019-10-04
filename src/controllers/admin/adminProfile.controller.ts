@@ -114,7 +114,10 @@ export class AdminProfileController {
 
 	async verifyLinkForResetPwd(payload) {
 		try {
-			const result = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			console.log('payload>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', payload);
+			const result = Jwt.verify(payload.token, cert, { algorithms: ['HS256'] });
+			console.log('result>>>>>>>>>>>>>>>>>>>>>>', result);
+
 			if (!result) { return Promise.reject(); }
 			const checkAlreadyUsedToken: any = await ENTITY.AdminE.getOneEntity({ email: result }, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 			if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null) {
@@ -130,7 +133,7 @@ export class AdminProfileController {
 			const today: any = new Date();
 			const diffMs = (today - checkAlreadyUsedToken.passwordResetTokenExpirationTime);
 			const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes in negative minus
-			if (diffMins > 0) { return Promise.reject('Time_Expired'); }
+			if (diffMins > 0) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); }
 			else {
 				const updatePassword = await ENTITY.AdminE.updateOneEntity({ email: result }, updatePswd);
 				if (!updatePassword) {
