@@ -12,7 +12,7 @@ export namespace AgentRequest {
         type?: string;
         label?: string[];
         cityId?: string;
-        agentSpecialisation?: number[];
+        propertySpecialisationIn?: number[];
         byCompanyName?: string;
 
     }
