@@ -193,7 +193,7 @@ export let userRoute: ServerRoute[] = [
 							Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 						]),
 					),
-					propertyCategory: Joi.array().items(Joi.string().valid([
+					specializingIn_property_category: Joi.array().items(Joi.string().valid([
 						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
 						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
 						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
