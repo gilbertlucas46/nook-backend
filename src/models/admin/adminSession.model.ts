@@ -1,7 +1,6 @@
-import { Schema, model } from 'mongoose';
-import * as mongoose from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
-export interface IAdminSession extends mongoose.Document {
+export interface IAdminSession extends Document {
 	_id: string;
 	adminId: string;
 	// isDeleted:  Boolean,

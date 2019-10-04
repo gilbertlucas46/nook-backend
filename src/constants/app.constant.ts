@@ -229,6 +229,28 @@ export let DATABASE = {
 			DISPLAY_NAME: 'Blocked',
 		},
 	},
+	HELP_CENTER_TYPE: {
+		ACCOUNT: {
+			NUMBER: 1,
+			TYPE: 'ACCOUNT',
+			DISPLAY_NAME: 'ACCOUNT',
+		},
+		PROPERTIES: {
+			NUMBER: 2,
+			TYPE: 'PROPERTIES',
+			DISPLAY_NAME: 'PROPERTIES',
+		},
+		BILLING: {
+			NUMBER: 3,
+			TYPE: 'BILLING',
+			DISPLAY_NAME: 'BILLING',
+		},
+		HOME_LOANS: {
+			NUMBER: 4,
+			TYPE: 'HOME_LOANS',
+			DISPLAY_NAME: 'Home Loans',
+		},
+	},
 	PROPERTY_TYPE: {
 		'NONE': 'None',
 		'APPARTMENT/CONDO': 'Apartment/Condo',

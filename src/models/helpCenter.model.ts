@@ -1,6 +1,7 @@
-import * as mongoose from 'mongoose';
-import { Schema, Document } from 'mongoose';
+// import * as mongoose from 'mongoose';
+import { Schema, Document, model } from 'mongoose';
 import * as Constant from '../constants';
+import { string, number } from 'joi';
 
 // export interface IArticleAction {
 //     userRole: string;
@@ -12,17 +13,16 @@ export interface IHelpCenter extends Document {
     title: string;
     userId: string;
     description: string;
-    viewCount?: number;
-    shareCount?: number;
     userRole: number;
     createdAt: number;
     updatedAt: number;
     imageUrl: string;
-    isFeatured: boolean;
+    categoryId: number;
+    categoryType: string;
     // articleAction: [IArticleAction];
 }
 
-const helpCenter = new Schema({
+const helpCenterSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     title: { type: String },
     videoUrl: { type: String },
@@ -31,12 +31,30 @@ const helpCenter = new Schema({
         type: String,
         enum: [
             Constant.DATABASE.USER_TYPE.ADMIN.TYPE,
-            // Constant.DATABASE.USER_TYPE.STAFF.TYPE,
+            Constant.DATABASE.USER_TYPE.STAFF.TYPE,
         ],
     },
     description: { type: String },
     likesCount: { type: Number },
     disLikesCount: { type: Number },
+    categoryId: {
+        type: Number,
+        enum: [
+            Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+            Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+            Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+            Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+        ],
+    },
+    categoryType: {
+        type: String,
+        enum: [
+            Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.BILLING.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.TYPE,
+        ],
+    },
     // status: {
     //     type: Number, enum: [
     //         Constant.DATABASE.ARTICLE_STATUS.PENDING.NUMBER,
@@ -45,13 +63,13 @@ const helpCenter = new Schema({
     //     ],
     //     default: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
     // },
-    // helpCenterAction: [{
-    //     userRole: { type: String },
-    //     userId: { type: String },
-    //     actionTime: { type: Number },
-    // }],
+    actions: [{
+        userRole: { type: String },
+        userId: { type: String },
+        actionTime: { type: Number },
+    }],
     createdAt: { type: Number },
     updatedAt: { type: Number },
 });
 
-export const HelpCenter = mongoose.model<IHelpCenter>('HelpCenter', helpCenter);
+export let HelpCentre = model<IHelpCenter>('helpcenter', helpCenterSchema);

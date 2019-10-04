@@ -7,3 +7,4 @@ export { Region } from './region';
 export { City } from './city';
 export { Enquiry } from './enquiry.model';
 export { Article } from './article.model';
+export { HelpCentre } from './helpCenter.model';
