@@ -42,7 +42,6 @@ export let agentRoute: ServerRoute[] = [
                         ]),
                     ),
                     byCompanyName: Joi.string(),
-
                 },
                 failAction: UniversalFunctions.failActionFunction,
             },
