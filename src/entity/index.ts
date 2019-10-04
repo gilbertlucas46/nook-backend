@@ -8,4 +8,5 @@ export { EnquiryE } from './enquiry/enquiry.entity';
 export * from './city/cities.entity';
 export * from './city/region.entity';
 export { ArticleE } from './article/article.entity';
-export { AgentE } from './agent/agent.entity'
+export { AgentE } from './agent/agent.entity';
+export { HelpCenterE } from './helpCenter/helpCenter.entity';

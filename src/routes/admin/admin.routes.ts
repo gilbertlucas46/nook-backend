@@ -234,21 +234,23 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const payload = request.payload;
+				console.log('payloadpayloadpayload', payload);
+
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
 				console.log('responseDataresponseData', responseData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
 				console.log('error-=======----------------=============', error);
-
-				if (error.JsonWebTokenError) {
-					return h.redirect(config.get('invalidUrl') + 'invalid url');
-				} else if (error === 'Already_Changed') {
-					return h.redirect(config.get('invalidUrl') + 'Already_Changed');
-				} else if (error === 'Time_Expired') {
-					return h.redirect(config.get('invalidUrl') + 'Oops Time_Expired');
-				} else {
-					return h.redirect(config.get('invalidUrl') + 'Something went wrong');
-				}
+				// if (error.JsonWebTokenError) {
+				// 	return h.redirect(config.get('invalidUrl') + 'invalid url');
+				// } else if (error === 'Already_Changed') {
+				// 	return h.redirect(config.get('invalidUrl') + 'Already_Changed');
+				// } else if (error === 'Time_Expired') {
+				// 	return h.redirect(config.get('invalidUrl') + 'Oops Time_Expired');
+				// } else {
+				// 	return h.redirect(config.get('invalidUrl') + 'Something went wrong');
+				// }
+				return (UniversalFunctions.sendError(error));
 			}
 		},
 		options: {

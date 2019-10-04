@@ -434,4 +434,45 @@ export let userRoute: ServerRoute[] = [
 			},
 		},
 	},
+	/**
+	 *
+	 */
+	{
+		method: 'PATCH',
+		path: '/v1/user/update-account',
+		async handler(request, h) {
+			try {
+				console.log('userData');
+				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
+
+				const payload: UserRequest.UpdateAccount = request.payload as any;
+				const propertyDetail = await UserService.updateAccount(payload, userData);
+				const userResponse = UniversalFunctions.formatUserData(propertyDetail);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
+			} catch (error) {
+				console.log('error...............', error);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'update account type ',
+			tags: ['api', 'anonymous', 'user', 'updateAccount'],
+			auth: 'UserAuth',
+			validate: {
+				payload: {
+					userType: Joi.string().valid([
+						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+					]),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
 ];

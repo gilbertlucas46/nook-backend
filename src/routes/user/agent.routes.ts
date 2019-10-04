@@ -35,6 +35,8 @@ export let agentRoute: ServerRoute[] = [
                     fromDate: Joi.number(),
                     toDate: Joi.number(),
                     cityId: Joi.string(),
+                    // agentSpecialisation: Joi.boolean().default('false'),
+                    agentSpecialisation: Joi.number(),
                 },
                 failAction: UniversalFunctions.failActionFunction,
             },
@@ -45,4 +47,4 @@ export let agentRoute: ServerRoute[] = [
             },
         },
     },
-]
+];

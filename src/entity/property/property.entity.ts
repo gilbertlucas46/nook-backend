@@ -139,9 +139,9 @@ export class PropertyClass extends BaseEntity {
 						$or: [
 							{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
 							{ 'property_address.barangay': new RegExp('.*' + searchTerm + '.*', 'i') },
-							{ 'property_added_by.userName': new RegExp('.*' + searchTerm + '.*', 'i') },
-							{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
+							// { 'property_added_by.userName': new RegExp('.*' + searchTerm + '.*', 'i') },
 							// { 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
+							{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
 							// { 'property_added_by.firstName': new RegExp('.*' + searchTerm + '.*', 'i') },
 							// { 'property_added_by.lastName': new RegExp('.*' + searchTerm + '.*', 'i') },
 						],

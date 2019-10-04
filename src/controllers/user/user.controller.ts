@@ -114,6 +114,7 @@ export class UserController {
 						firstName: updateUser.firstName,
 						lastName: updateUser.lastName,
 					},
+					isProfileComplete: true,
 				};
 				ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
 			}
@@ -227,6 +228,27 @@ export class UserController {
 			return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async updateAccount(payload: UserRequest.UpdateAccount, userData: UserRequest.UserData) {
+		try {
+			const criteria = {
+				_id: userData._id,
+			};
+			const dataToUpdate = {
+				type: payload.userType,
+			};
+
+			const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
+			const accessToken = await ENTITY.UserE.createToken(payload, data);
+			// await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
+			const formatedData = await utils.formatUserData(data);
+			return { formatedData, accessToken };
+		}
+		catch (error) {
+			console.log('error...............', error);
 			return Promise.reject(error);
 		}
 	}
