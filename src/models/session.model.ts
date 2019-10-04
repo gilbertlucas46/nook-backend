@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { ISession } from './ISession';
+
 const sessionSchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true },
 	userId: { type: Schema.Types.ObjectId, ref: 'User' },

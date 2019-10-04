@@ -1,7 +1,5 @@
-import * as mongoose from 'mongoose';
-import { Schema, Document } from 'mongoose';
+import { Schema, Document, model } from 'mongoose';
 import * as Constant from '../constants';
-import { join } from 'path';
 
 export interface IArticleAction {
     userRole: string;
@@ -79,4 +77,4 @@ const articleSchema = new Schema({
     }],
 });
 
-export const Article = mongoose.model<IEnquiry>('Article', articleSchema);
+export const Article = model<IEnquiry>('Article', articleSchema);
