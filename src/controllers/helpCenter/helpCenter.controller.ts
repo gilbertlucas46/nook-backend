@@ -83,8 +83,7 @@ export class HelpCenter {
                 userRole: adminData.type,
                 description: payload.description,
             };
-            // let dataToUpdate = {
-            // }
+
             dataToSet.$push = {
                 actions: {
                     userRole: adminData.type,

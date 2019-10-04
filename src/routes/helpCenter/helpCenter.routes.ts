@@ -109,7 +109,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload = {
                     ...request.params,
-                    // ...request.payload,
+                    ...request.payload as object,
                 };
                 // const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
                 const data = await HelpCenterService.updateHelpCenter(payload, adminData);
