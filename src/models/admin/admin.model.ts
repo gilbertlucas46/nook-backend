@@ -1,7 +1,6 @@
-import { Schema, model } from 'mongoose';
-import * as mongoose from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import * as CONSTANT from '../../constants';
-export interface IAdmin extends mongoose.Document {
+export interface IAdmin extends Document {
 	_id: string;
 	name: string;
 	otp?: string;

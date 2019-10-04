@@ -1,7 +1,5 @@
-import * as mongoose from 'mongoose';
 import * as CONSTANT from '../constants/app.constant';
 import { Schema, Document, model } from 'mongoose';
-import { join } from 'path';
 
 export interface IEnquiry extends Document {
     name: string;
@@ -42,4 +40,4 @@ const enquirySchena = new Schema({
     updatedAt: { type: Number, default: new Date().getTime() },
 });
 
-export let Enquiry = mongoose.model<IEnquiry>('Enquiry', enquirySchena);
+export let Enquiry = model<IEnquiry>('Enquiry', enquirySchena);

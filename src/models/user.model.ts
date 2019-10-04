@@ -1,5 +1,4 @@
-import * as mongoose from 'mongoose';
-import { Schema, Document } from 'mongoose';
+import { Schema, Document, model } from 'mongoose';
 import * as CONSTANT from '../constants/app.constant';
 export interface IUser extends Document {
 	userName: string;
@@ -27,7 +26,7 @@ export interface IUser extends Document {
 	passwordResetTokenExpirationTime?: Date;
 	backGroundImageUrl: string;
 	isFeaturedProfile: boolean;
-	specializingIn_property_type ?: number[];
+	specializingIn_property_type?: number[];
 	specializingIn_property_category?: string[];
 	serviceAreas?: string[];
 }
@@ -105,4 +104,4 @@ const userSchema = new Schema({
 	}],
 });
 
-export let User = mongoose.model<IUser>('User', userSchema);
+export let User = model<IUser>('User', userSchema);
