@@ -244,11 +244,10 @@ export class UserController {
 			const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
 			const accessToken = await ENTITY.UserE.createToken(payload, data);
 			// await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
-			const formatedData = await utils.formatUserData(data);
+			const formatedData = utils.formatUserData(data);
 			return { formatedData, accessToken };
 		}
 		catch (error) {
-			console.log('error...............', error);
 			return Promise.reject(error);
 		}
 	}
