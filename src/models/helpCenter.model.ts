@@ -35,8 +35,8 @@ const helpCenterSchema = new Schema({
         ],
     },
     description: { type: String },
-    likesCount: { type: Number },
-    disLikesCount: { type: Number },
+    likesCount: { type: Number, default: 0 },
+    disLikesCount: { type: Number, default: 0 },
     categoryId: {
         type: Number,
         enum: [

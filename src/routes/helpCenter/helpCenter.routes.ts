@@ -5,7 +5,7 @@ import { HelpCenterService } from '@src/controllers/helpCenter/helpCenter.contro
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as Joi from 'joi';
-export let helpCenterRoute: ServerRoute[] = [
+export let helpCenterRoute: any[] = [
     {
         method: 'POST',
         path: '/v1/admin/help-center',
@@ -16,6 +16,8 @@ export let helpCenterRoute: ServerRoute[] = [
                 const data = await HelpCenterService.createHelpCenter(payload, adminData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
             } catch (error) {
+                console.log('errorerrorerror', error);
+
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -43,7 +45,7 @@ export let helpCenterRoute: ServerRoute[] = [
 
     {
         method: 'GET',
-        path: '/v1/user/help-center/{categoryId}',
+        path: '/v1/user/help-center/{id}',
         handler: async (request, h) => {
             try {
                 // const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
@@ -60,12 +62,45 @@ export let helpCenterRoute: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 params: {
-                    categoryId: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                    ]),
+                    id: Joi.string(),
+                    // categoryId: Joi.number().valid([
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                    // ]),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+    {
+        method: 'GET',
+        path: '/v1/admin/help-center/{id}',
+        handler: async (request, h) => {
+            try {
+                // const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
+                const payload: helpCenterRequest.GetHelpCenter = request.params as any;
+                const data = await HelpCenterService.getHelpCenter(payload);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
+            } catch (error) {
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'get help center by id account type ',
+            tags: ['api', 'anonymous', 'user', 'updateAccount'],
+            auth: 'UserAuth',
+            validate: {
+                params: {
+                    id: Joi.string(),
+                    // categoryId: Joi.number().valid([
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                    // ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -75,7 +110,7 @@ export let helpCenterRoute: ServerRoute[] = [
 
     {
         method: 'DELETE',
-        path: '/v1/user/help-center/{id}',
+        path: '/v1/admin/help-center/{id}',
         handler: async (request, h) => {
             try {
                 // const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
@@ -108,7 +143,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload = {
                     ...request.params,
-                    // ...request.payload,
+                    ...request.payload as object,
                 };
                 // const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
                 const data = await HelpCenterService.updateHelpCenter(payload, adminData);
@@ -137,6 +172,32 @@ export let helpCenterRoute: ServerRoute[] = [
                         Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
                     ]),
                 },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+
+    {
+        method: 'GET',
+        path: '/v1/user/help-center-group',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
+                // const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
+                const data = await HelpCenterService.getHelpCenterCategoryBygroup();
+                const responseData = UniversalFunction.formatUserData(data);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData);
+            } catch (error) {
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'delete the help ceneter by id ',
+            tags: ['api', 'anonymous', 'user', 'delete helpcenter'],
+            auth: 'AdminAuth',
+            validate: {
+
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },

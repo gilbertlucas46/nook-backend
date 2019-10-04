@@ -346,8 +346,6 @@ export let DATABASE = {
 		'LAND': 'Land',
 		'ROOM': 'Room',
 	},
-
-
 	ACTION:
 	{
 		DEEPLINK: {
