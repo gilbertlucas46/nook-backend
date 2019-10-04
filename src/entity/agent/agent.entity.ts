@@ -14,6 +14,7 @@ export class AgentClass extends BaseEntity {
             const { fromDate, toDate, cityId, agentSpecialisation } = payload;
             if (!limit) { limit = SERVER.LIMIT; } else { limit = limit; }
             if (!page) { page = 1; } else { page = page; }
+            const skip = (limit * (page - 1));
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             let matchObject: any = { $match: { type: 'AGENT' } };
@@ -53,36 +54,75 @@ export class AgentClass extends BaseEntity {
 
             const query = [
                 matchObject,
+                { $sort: sortingType },
+                { $skip: skip },
+                { $limit: limit },
                 {
-                    $project: {
-                        firstName: 1,
-                        userName: 1,
-                        email: 1,
-                        password: 1,
-                        middleName: 1,
-                        lastName: 1,
-                        phoneNumber: 1,
-                        type: 1,
-                        title: 1,
-                        license: 1,
-                        taxNumber: 1,
-                        faxNumber: 1,
-                        companyName: 1,
-                        address: 1,
-                        aboutMe: 1,
-                        profilePicUrl: 1,
-                        backGroundImageUrl: 1,
-                        specializingIn_property_type: 1,
-                        specializingIn_property_category: 1,
-                        serviceAreas: 1,
-                        isFeaturedProfile: 1,
+                    $unwind: {
+                        path: '$serviceAreas',
+                        preserveNullAndEmptyArrays: true,
                     },
                 },
                 {
-                    $sort: sortingType,
+                    $lookup: {
+                        from: 'cities',
+                        let: { cityId: '$serviceAreas' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$cityId'],
+                                    },
+                                },
+                            },
+                            {
+                                $project: {
+                                    name: 1,
+                                    _id: 1,
+                                },
+                            },
+                        ],
+                        as: 'cityData',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$cityData',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $group: {
+                        _id: '$_id',
+                        firstName: { $first: '$firstName' },
+                        userName: { $first: '$userName' },
+                        email: { $first: '$email' },
+                        middleName: { $first: '$middleName' },
+                        createdAt: { $first: '$createdAt' },
+                        phoneNumber: { $first: '$phoneNumber' },
+                        type: { $first: '$type' },
+                        title: { $first: '$title' },
+                        license: { $first: '$license' },
+                        taxNumber: { $first: '$taxNumber' },
+                        faxNumber: { $first: '$faxNumber' },
+                        companyName: { $first: '$companyName' },
+                        address: { $first: '$address' },
+                        aboutMe: { $first: '$aboutMe' },
+                        profilePicUrl: { $first: '$profilePicUrl' },
+                        backGroundImageUrl: { $first: '$backGroundImageUrl' },
+                        specializingIn_property_type: { $first: '$specializingIn_property_type' },
+                        specializingIn_property_category: { $first: '$specializingIn_property_category' },
+                        isFeaturedProfile: { $first: '$isFeaturedProfile' },
+                        city: {
+                            $push: {
+                                cityId: '$cityData._id',
+                                cityName: '$cityData.name',
+                            },
+                        },
+                    },
                 },
             ];
-            const agentList = await this.DAOManager.paginate(this.modelName, query, limit, page);
+            const agentList = await this.DAOManager.aggregateData(this.modelName, query);
             return agentList;
 
         } catch (err) {

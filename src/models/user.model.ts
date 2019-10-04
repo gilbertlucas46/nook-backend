@@ -1,4 +1,4 @@
-import { Schema, Document, model } from 'mongoose';
+import { Schema, Document, model, Types } from 'mongoose';
 import * as CONSTANT from '../constants/app.constant';
 export interface IUser extends Document {
 	userName: string;
@@ -28,7 +28,7 @@ export interface IUser extends Document {
 	isFeaturedProfile: boolean;
 	specializingIn_property_type?: number[];
 	specializingIn_property_category?: string[];
-	serviceAreas?: string[];
+	serviceAreas?: Types.ObjectId[];
 }
 
 const userSchema = new Schema({
@@ -99,7 +99,7 @@ const userSchema = new Schema({
 		],
 	}],
 	serviceAreas: [{
-		type: String,
+		type: Schema.Types.ObjectId,
 		ref: 'City',  // Refer to region schema
 	}],
 });
