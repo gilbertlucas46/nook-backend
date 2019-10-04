@@ -168,7 +168,7 @@ export let userRoute: ServerRoute[] = [
 				payload: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					firstName: Joi.string().min(1).max(20).trim(),
-					middleName: Joi.string().min(1).max(20).trim(),
+					middleName: Joi.string().trim().allow(''),
 					lastName: Joi.string().min(1).max(20).trim(),
 					phoneNumber: Joi.string().min(7).max(15).trim(),
 					type: Joi.string().valid([
@@ -201,7 +201,7 @@ export let userRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_TYPE.ROOM,
 					]),
 					),
-					serviceAreas: Joi.array().items(Joi.string()),
+					serviceAreas: Joi.array().items(Joi.number()),
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -463,6 +463,7 @@ export let userRoute: ServerRoute[] = [
 					userType: Joi.string().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 					]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,

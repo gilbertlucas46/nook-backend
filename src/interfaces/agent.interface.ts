@@ -14,7 +14,8 @@ export namespace AgentRequest {
         cityId?: string;
         // propertyId?: string;
         // agentSpecialisation?: boolean;
-        agentSpecialisation?: number;
+        agentSpecialisation?: [number];
+        byCompanyName?: string;
 
     }
 }

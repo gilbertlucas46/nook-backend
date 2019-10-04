@@ -47,7 +47,7 @@ export class AgentClass extends BaseEntity {
     //                     specializingIn_property_category: 1,
     //                     serviceAreas: 1,
     //                 },
-//             },
+    //             },
     //         ];
     //         const agentList = await this.DAOManager.paginate(this.modelName, query, limit, page);
     //         return agentList;
@@ -60,12 +60,32 @@ export class AgentClass extends BaseEntity {
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const { fromDate, toDate, cityId, agentSpecialisation } = payload;
+            const { fromDate, toDate, cityId, agentSpecialisation, byCompanyName, searchTerm } = payload;
             if (!limit) { limit = SERVER.LIMIT; } else { limit = limit; }
             if (!page) { page = 1; } else { page = page; }
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             let matchObject: any = { $match: { type: 'AGENT' } };
+            let searchCriteria;
+
+            if (searchTerm) {
+                // for filtration
+                searchCriteria = {
+                    $match: {
+                        $or: [
+                            { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                            { serviceAreas: new RegExp('.*' + searchTerm + '.*', 'i') },
+                            { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        ],
+                    },
+                };
+            }
+            else {
+                searchCriteria = {
+                    $match: {
+                    },
+                };
+            }
 
             if (sortBy) {
                 switch (sortBy) {
@@ -90,11 +110,19 @@ export class AgentClass extends BaseEntity {
             if (agentSpecialisation) {
                 matchObject = {
                     $match: {
-                        specializingIn_property_type: agentSpecialisation,
+                        specializingIn_property_type: { $all: agentSpecialisation },
                     },
                 };
             }
-            // if (cityId) { matchObject.$match._id = Types.ObjectId(cityId); }
+            else if (byCompanyName) {
+                matchObject = {
+                    $match: {
+                        companyName: byCompanyName,
+                    },
+                };
+            }
+
+            if (cityId) { matchObject.$match._id = Types.ObjectId(cityId); }
             // // Date filters
             // if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             // if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
