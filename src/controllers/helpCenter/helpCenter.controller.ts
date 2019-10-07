@@ -96,6 +96,15 @@ export class HelpCenter {
             return Promise.reject(error);
         }
     }
+
+    async getHelpCenterByCategoryId(id: number) {
+        try {
+            const data = await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 
 export let HelpCenterService = new HelpCenter();
