@@ -166,9 +166,9 @@ export let userRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					firstName: Joi.string().min(1).max(20).trim(),
+					firstName: Joi.string().min(3).max(30).trim(),
 					middleName: Joi.string().trim().allow(''),
-					lastName: Joi.string().min(1).max(20).trim(),
+					lastName: Joi.string().min(3).max(30).trim(),
 					phoneNumber: Joi.string().min(7).max(15).trim(),
 					type: Joi.string().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,

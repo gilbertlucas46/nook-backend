@@ -57,20 +57,19 @@ export class UserController {
 			const checkData = { $or: [{ email: unique }, { userName: payload.email.trim().toLowerCase() }] };
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 			if (userData && userData._id) {
-
 				if (userData.isEmailVerified) {
 					if (!(await utils.deCryptData(payload.password, userData.password))) {
 						return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD;
 					} else {
 						const accessToken = await ENTITY.UserE.createToken(payload, userData);
 						await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
-						const formatedData = await utils.formatUserData(userData);
+						const formatedData = utils.formatUserData(userData);
 						return { formatedData, accessToken };
 					}
 				} else {
 					const accessToken = await ENTITY.UserE.createToken(payload, userData);
 					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
-					const formatedData = await utils.formatUserData(userData);
+					const formatedData = utils.formatUserData(userData);
 					return { formatedData, accessToken };
 				}
 			} else {
@@ -80,6 +79,7 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
+
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
 			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
@@ -93,18 +93,15 @@ export class UserController {
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
 			const criteria = { _id: payload._id };
-			if (payload.firstName && payload.lastName && payload.type) {
-				payload.isProfileComplete = true;
-			} else {
-				payload.isProfileComplete = false;
-			}
+			if (payload.firstName && payload.lastName && payload.type) { payload.isProfileComplete = true; }
+			else { payload.isProfileComplete = false; }
 			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
-			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName || getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
-				const propertyCriteria = {
-					userId: updateUser._id,
-				};
+			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
+				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
+
+				const propertyCriteria = { userId: updateUser._id };
 				const updatePropertyData = {
 					property_added_by: {
 						userId: updateUser._id,
@@ -126,14 +123,10 @@ export class UserController {
 
 	async forgetPassword(payload: UserRequest.ForgetPassword) {
 		try {
-			const criteria = {
-				$or: [{ userName: payload.email }, { email: payload.email }],
-				// email: payload.email.trim().toLowerCase(),
-			};
+			const criteria = { $or: [{ userName: payload.email }, { email: payload.email }] };
 			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id']);
-			if (!userData) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
-			} else {
+			if (!userData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
+			else {
 				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
 				const url = config.get('host') + Constant.SERVER.FORGET_PASSWORD_URL + passwordResetToken;
 				const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
@@ -149,9 +142,7 @@ export class UserController {
 
 	async changePassword(payload: UserRequest.ChangePassword, userData: UserRequest.UserData) {
 		try {
-			const criteria = {
-				_id: userData._id,
-			};
+			const criteria = { _id: userData._id };
 			const password = await ENTITY.UserE.getOneEntity(criteria, ['password']);
 			if (!(await utils.deCryptData(payload.oldPassword, password.password))) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD); } else {
 				const updatePswd = {
@@ -170,7 +161,7 @@ export class UserController {
 		try {
 			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
 			const userData = await ENTITY.UserE.getOneEntity(result.email, {});
-			if (!userData) { return Constant.STATUS_MSG.ERROR.E500.IMP_ERROR; } else {
+			if (!userData) { return Constant.STATUS_MSG.ERROR.E400.INVALID_ID; } else {
 				const criteria = { email: result };
 				const userExirationTime: any = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 				const today: any = new Date();
@@ -179,7 +170,6 @@ export class UserController {
 				if (diffMins > 0) { return Promise.reject('LinkExpired'); } else { return {}; } // success
 			}
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -201,14 +191,12 @@ export class UserController {
 			const today: any = new Date();
 			const diffMs = (today - checkAlreadyUsedToken.passwordResetTokenExpirationTime);
 			const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes in negative minus
-			if (diffMins > 0) {
-				return Promise.reject('Time_Expired');
-			} else {
+			if (diffMins > 0) { return Promise.reject('Time_Expired'); }
+			else {
 				const updatePassword = await ENTITY.UserE.updateOneEntity({ email: result }, updatePswd);
 				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); } else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
 			}
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -217,7 +205,6 @@ export class UserController {
 		try {
 			return await ENTITY.UserE.userDashboad(userData);
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -227,20 +214,14 @@ export class UserController {
 			const data = await ENTITY.PropertyE.suggested_property(payload);
 			return data;
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
 
 	async updateAccount(payload: UserRequest.UpdateAccount, userData: UserRequest.UserData) {
 		try {
-			const criteria = {
-				_id: userData._id,
-			};
-			const dataToUpdate = {
-				type: payload.userType,
-			};
-
+			const criteria = { _id: userData._id };
+			const dataToUpdate = { type: payload.userType };
 			const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
 			const accessToken = await ENTITY.UserE.createToken(payload, data);
 			// await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');

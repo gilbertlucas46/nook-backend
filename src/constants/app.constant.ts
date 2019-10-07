@@ -418,7 +418,7 @@ export let STATUS_MSG = {
 		E400: {
 			REQUEST_ALLREDY_SENT: {
 				statusCode: 400,
-				message: 'Request has allready been sent to the admin for approval.',
+				message: 'Request has already been sent to the admin for approval.',
 				type: 'REQUEST_ALLREDY_SENT',
 			},
 			INVALID_CURRENT_PASSWORD: {
@@ -428,39 +428,38 @@ export let STATUS_MSG = {
 			},
 			USER_NAME_ALREDY_TAKEN: {
 				statusCode: 400,
-				message: 'This username is already taken',
-				type: '',
+				message: 'Entered username is already registered with us!',
+				type: 'USERNAME_ALREADY_REGISTERED',
 			},
 			EMAIL_ALREADY_TAKEN: {
 				statusCode: 400,
-				message: 'Email Address is already taken by other user',
+				message: 'Entered email is already registered with us!',
 				type: '',
 			},
 			NOT_VERIFIED: {
 				statusCode: 400,
 				message: 'You are not verified first verify.',
-				type: '',
+				type: 'NOT_VERIFIED',
 			},
 			INVALID_EMAIL: {
 				statusCode: 400,
 				message: 'Entered username/email is not registered with us!',
-				type: '',
+				type: 'INVALID_EMAIL',
 			},
 			CANNOT_PERFORM_UPDATE_OPERATION: {
 				statusCode: 400,
 				message: 'Cannot perform update operation.',
 				type: 'CANNOT_PERFORM_UPDATE_OPERATION',
 			},
-
 			INVALID_PASSWORD: {
 				statusCode: 400,
-				message: 'Please enter the valid password.',
+				message: 'Please enter correct password!',
 				type: 'INVALID_USER_PASS',
 			},
 			INVALID_LOGIN: {
 				statusCode: 400,
 				type: 'INVALID_LOGIN',
-				message: 'Invalid login credentials',
+				message: 'Entered username/email is not registered with us!',
 			},
 			PROPERTY_NOT_REGISTERED: {
 				statusCode: 400,
