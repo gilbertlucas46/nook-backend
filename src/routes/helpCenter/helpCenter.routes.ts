@@ -5,7 +5,7 @@ import { HelpCenterService } from '@src/controllers/helpCenter/helpCenter.contro
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as Joi from 'joi';
-export let helpCenterRoute: any[] = [
+export let helpCenterRoute: ServerRoute[] = [
     {
         method: 'POST',
         path: '/v1/admin/help-center',
@@ -178,7 +178,7 @@ export let helpCenterRoute: any[] = [
 
     {
         method: 'GET',
-        path: '/v1/user/help-center-group',
+        path: '/v1/admin/help-center-group',
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
@@ -195,7 +195,6 @@ export let helpCenterRoute: any[] = [
             tags: ['api', 'anonymous', 'user', 'delete helpcenter'],
             auth: 'AdminAuth',
             validate: {
-
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
