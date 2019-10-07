@@ -30,6 +30,28 @@ export class HelpCenterEntity extends BaseEntity {
         }
     }
 
+    async getHelpCenterByCategory(id: number) {
+        try {
+            const pipeline: any[] = [
+                {
+                    $match: {
+                        categoryId: id,
+                    },
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        title: 1,
+                    },
+                },
+            ];
+            const result = await this.DAOManager.aggregateData(this.modelName, pipeline, {});
+            return result;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 }
 
 export let HelpCenterE = new HelpCenterEntity();
