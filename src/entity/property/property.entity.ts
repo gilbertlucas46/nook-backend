@@ -183,10 +183,15 @@ export class PropertyClass extends BaseEntity {
 						break;
 				}
 			}
-			else {
-				sortBy = 'createdAt';
+			else if ( property_status === Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
+				sortBy = 'approvedAt';
 				sortingType = {
-					createdAt: sortType,
+					approvedAt: sortType,
+				};
+			}else {
+				sortBy = 'updatedAt';
+				sortingType = {
+					updatedAt: sortType,
 				};
 			}
 
