@@ -7,12 +7,12 @@ export interface ICity {
 	region: Types.ObjectId;
 	location: Location.ILocationPoint;
 	images?: string[];
-	createdAt?: Date;
-	updatedAt?: Date;
+	createdAt?: number;
+	updatedAt?: number;
 }
 
 export interface ICityRegion {
 	region: RegionDocument;
 }
 
-export interface CityDocument extends Document, ICity {}
+export interface CityDocument extends Document, ICity { }

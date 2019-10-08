@@ -6,8 +6,8 @@ export interface IRegion {
 	shortName: string;
 	location: Location.ILocationPoint;
 	images?: string[];
-	createdAt?: Date;
-	updatedAt?: Date;
+	createdAt?: number;
+	updatedAt?: number;
 }
 
-export interface RegionDocument extends Document, IRegion {}
+export interface RegionDocument extends Document, IRegion { }

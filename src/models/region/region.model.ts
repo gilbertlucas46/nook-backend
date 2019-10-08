@@ -29,14 +29,14 @@ const regionSchema = new Schema({
 	},
 	images: [String],
 	createdAt: {
-		type: Date,
+		type: Number,
 	},
 	updatedAt: {
-		type: Date,
+		type: Number,
 	},
 }, {
-	collection: 'regions',
-	timestamps: true,
-});
+		collection: 'regions',
+		timestamps: true,
+	});
 
 export const Region: Model<RegionDocument> = model('regions', regionSchema);
