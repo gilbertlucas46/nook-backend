@@ -186,7 +186,7 @@ export class PropertyController {
 				if (status === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
 					STATUS_DATA = Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED;
 				} else if (status === Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER) {
-					STATUS_DATA = Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED;
+					STATUS_DATA = Constant.DATABASE.PROPERTY_STATUS.PENDING;
 				}
 				dataToSet.$set = {
 					property_status: {
