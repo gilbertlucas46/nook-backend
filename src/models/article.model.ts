@@ -67,8 +67,8 @@ const articleSchema = new Schema({
         ], index: true,
         default: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
     },
-    createdAt: { type: Number },
-    updatedAt: { type: Number },
+    createdAt: { type: Number, required: true },
+    updatedAt: { type: Number, required: true },
     isFeatured: { type: Boolean },
     articleAction: [{
         userRole: { type: String },

@@ -1,4 +1,3 @@
-// import * as mongoose from 'mongoose';
 import { Schema, Document, model } from 'mongoose';
 import * as Constant from '../constants';
 import { string, number } from 'joi';
@@ -68,8 +67,8 @@ const helpCenterSchema = new Schema({
         userId: { type: String },
         actionTime: { type: Number },
     }],
-    createdAt: { type: Number },
-    updatedAt: { type: Number },
+    createdAt: { type: Number, required: true },
+    updatedAt: { type: Number, required: true },
 });
 
 export let HelpCentre = model<IHelpCenter>('helpcenter', helpCenterSchema);

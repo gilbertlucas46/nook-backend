@@ -15,7 +15,7 @@ export class UserPropertyClass extends BaseEntity {
 			sortType = !sortType ? -1 : sortType;
 			let criteria;
 			sortingType = {
-				createdAt: sortType,
+				updatedAt: sortType,
 			};
 
 			if (sortBy) {

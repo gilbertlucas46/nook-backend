@@ -184,7 +184,7 @@ export class PropertyClass extends BaseEntity {
 				}
 			}
 			else {
-				sortBy = 'createdAt';
+				sortBy = 'updatedAt';
 				sortingType = {
 					createdAt: sortType,
 				};

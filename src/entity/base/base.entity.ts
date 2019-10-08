@@ -15,6 +15,8 @@ export class BaseEntity {
 
 	async createOneEntity(saveData: object) {
 		try {
+			saveData['createdAt'] = new Date().getTime();
+			saveData['updatedAt'] = new Date().getTime();
 			const data = await this.DAOManager.saveData(this.modelName, saveData);
 			return data;
 		} catch (error) {
@@ -54,9 +56,37 @@ export class BaseEntity {
 
 	async updateOneEntity(criteria: object, dataToUpdate: object, option?) {
 		try {
+			// dataToUpdate.$set = {
+			// 	updatedAt: new Date().getTime(),
+			// };
+
 			if (option === undefined) {
-				option = { new: true, lean: true };
+				option = {
+					new: true,
+					lean: true,
+					$setOnInsert: {
+						updatedAt: new Date().getTime(),
+					},
+				};
+			} else {
+				option['new'] = true;
+				option['lean'] = true;
+				option['$setOnInsert'] = {
+					updatedAt: new Date().getTime(),
+				};
 			}
+			// if (option === undefined) {
+			// 	option = {
+			// 		new: true,
+			// 		lean: true ,
+			// 		updatedAt: new Date(),
+			// 		$setOnInsert: {
+			// 		  createdAt: new Date(),
+			// 		} };
+			// }else {
+			// 	option[]
+			// }
+
 			const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate, option);
 			return data;
 		} catch (error) {
@@ -99,7 +129,18 @@ export class BaseEntity {
 	async updateMultiple(criteria: object, projection: object, option?) {
 		try {
 			if (!option) {
-				option = { new: true, multi: true };
+				option = {
+					new: true, multi: true,
+					$setOnInsert: {
+						updatedAt: new Date().getTime(),
+					},
+				};
+			} else {
+				option['new'] = true;
+				option['lean'] = true;
+				option['$setOnInsert'] = {
+					updatedAt: new Date().getTime(),
+				};
 			}
 			const data = await this.DAOManager.updateMany(this.modelName, criteria, projection, option);
 			return data;
