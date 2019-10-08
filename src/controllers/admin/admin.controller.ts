@@ -64,10 +64,9 @@ export class AdminController {
 					status: result.TYPE,
 					displayName: result.DISPLAY_NAME,
 				},
-			};
-			dataToSet.$set = {
 				approvedAt: new Date().getTime(),
 			};
+
 			dataToSet.$push = {
 				propertyActions: {
 					actionNumber: result.NUMBER,
