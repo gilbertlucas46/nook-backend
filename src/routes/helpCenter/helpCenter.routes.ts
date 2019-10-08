@@ -49,7 +49,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 // const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload: helpCenterRequest.GetHelpCenter = request.params as any;
                 const data = await HelpCenterService.getHelpCenter(payload);
-                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
                 return (UniversalFunction.sendError(error));
             }
@@ -81,7 +81,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 // const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload: helpCenterRequest.GetHelpCenter = request.params as any;
                 const data = await HelpCenterService.getHelpCenter(payload);
-                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
                 return (UniversalFunction.sendError(error));
             }
@@ -185,7 +185,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 // const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
                 const data = await HelpCenterService.getHelpCenterCategoryBygroup();
                 const responseData = UniversalFunction.formatUserData(data);
-                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
             } catch (error) {
                 return (UniversalFunction.sendError(error));
             }
@@ -210,7 +210,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const payload = Number(request.params.id);
                 const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
                 const responseData = UniversalFunction.formatUserData(data);
-                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
             } catch (error) {
                 return (UniversalFunction.sendError(error));
             }
