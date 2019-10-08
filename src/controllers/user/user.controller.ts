@@ -147,7 +147,6 @@ export class UserController {
 			if (!(await utils.deCryptData(payload.oldPassword, password.password))) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD); } else {
 				const updatePswd = {
 					password: await utils.cryptData(payload.newPassword),
-					updatedAt: new Date().getTime(),
 				};
 				const updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd);
 				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); } else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }

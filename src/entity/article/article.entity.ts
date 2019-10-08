@@ -161,7 +161,7 @@ export class ArticleClass extends BaseEntity {
             // const matchObject: any = { $match: {} };
             let query;
             sortingType = {
-                createdAt: sortType,
+                updatedAt: sortType,
             };
             // if (sortBy) {
             //     switch (sortBy) {

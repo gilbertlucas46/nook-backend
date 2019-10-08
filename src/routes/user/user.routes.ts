@@ -472,4 +472,54 @@ export let userRoute: ServerRoute[] = [
 			},
 		},
 	},
+	/**
+	 * @description:Recent Property
+	 */
+	{
+		method: 'PATCH',
+		path: '/v1/user/recent-property',
+		async handler(request, h) {
+			try {
+				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
+				const payload: UserRequest.UpdateAccount = request.payload as any;
+				const propertyDetail = await UserService.updateAccount(payload, userData);
+				const userResponse = UniversalFunctions.formatUserData(propertyDetail);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
+			} catch (error) {
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'recent-property list',
+			tags: ['api', 'anonymous', 'user', 'recent Property'],
+			auth: 'UserAuth',
+			validate: {
+				query: {
+					propertyType: Joi.number().valid([
+						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+						Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
+					]).default(Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER),
+					page: Joi.number(),
+					limit: Joi.number(),
+					sortType: Joi.number().valid([
+						Constant.ENUM.SORT_TYPE,
+					]),
+					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']).default('price'),
+					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
 ];
