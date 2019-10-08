@@ -468,6 +468,7 @@ export let propertyRoute: ServerRoute[] = [
 					property_status:
 						Joi.number().valid([
 							Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+							Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						]),
 					upgradeToFeature: Joi.boolean(),
 				},

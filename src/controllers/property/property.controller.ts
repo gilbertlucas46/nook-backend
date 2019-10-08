@@ -181,18 +181,25 @@ export class PropertyController {
 				_id: payload.propertyId,
 			};
 			if (payload.status) {
+				const status: number = parseInt(payload.status);
+				let STATUS_DATA;
+				if (status === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
+					STATUS_DATA = Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED;
+				} else if (status === Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER) {
+					STATUS_DATA = Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED;
+				}
 				dataToSet.$set = {
 					property_status: {
-						number: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-						status: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.TYPE,
-						displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME,
+						number: STATUS_DATA.NUMBER,
+						status: STATUS_DATA.TYPE,
+						displayName: STATUS_DATA.DISPLAY_NAME,
 					},
 					sold_rent_time: new Date().getTime(),
 				};
 				dataToSet.$push = {
 					propertyActions: {
-						actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.NUMBER,
-						actionString: Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE,
+						actionNumber: STATUS_DATA.NUMBER,
+						actionString: STATUS_DATA.TYPE,
 						actionPerformedBy: {
 							userId: userData._id,
 							userType: userData.type,
