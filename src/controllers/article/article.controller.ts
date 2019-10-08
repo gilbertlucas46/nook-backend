@@ -22,8 +22,6 @@ export class ArticleController {
             payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
             payload.userRole = userData.type;
-            payload.createdAt = new Date().getTime();
-            payload.updatedAt = new Date().getTime();
             const articleData = await ENTITY.ArticleE.createOneEntity(payload);
             return articleData;
 

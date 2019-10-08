@@ -10,6 +10,7 @@ export class DAOManager {
 		try {
 			const ModelName: Model<any> = Models[model];
 			data.createdDate = new Date().getTime();
+			data.updatedAt = new Date().getTime();
 			return await new ModelName(data).save();
 		} catch (error) {
 			return Promise.reject(error);
@@ -21,6 +22,8 @@ export class DAOManager {
 	 * @param data payload for a document
 	 */
 	async save<T extends Document>(model: ModelNames, data: any): Promise<T> {
+		data['createdAt'] = new Date().getTime();
+		data['updatedAt'] = new Date().getTime();
 		const EntityModel: Model<T> = Models[model] as any;
 		return await EntityModel.create(data);
 	}
@@ -72,6 +75,7 @@ export class DAOManager {
 
 	async findAndUpdate(model: ModelNames, conditions, update, options?) {
 		try {
+			update['updatedAt'] = new Date().getTime();
 			const ModelName: Model<any> = Models[model];
 			return await ModelName.findOneAndUpdate(conditions, update, options);
 		} catch (error) {
@@ -90,6 +94,7 @@ export class DAOManager {
 
 	async updateMany(model: ModelNames, conditions, update, options) {
 		try {
+			update['updatedAt'] = new Date().getTime();
 			const ModelName = Models[model];
 			return await ModelName.updateMany(conditions, update, options);
 		} catch (error) {

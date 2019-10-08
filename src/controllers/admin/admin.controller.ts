@@ -65,7 +65,9 @@ export class AdminController {
 					displayName: result.DISPLAY_NAME,
 				},
 			};
-
+			dataToSet.$set = {
+				approvedAt: new Date().getTime(),
+			};
 			dataToSet.$push = {
 				propertyActions: {
 					actionNumber: result.NUMBER,
@@ -73,7 +75,7 @@ export class AdminController {
 					actionPerformedBy: {
 						userId: adminData._id,
 						userType: adminData.TYPE,
-					},
+				},
 					actionTime: new Date().getTime(),
 				},
 			};

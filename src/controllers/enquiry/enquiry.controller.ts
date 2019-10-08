@@ -27,8 +27,6 @@ export class EnquiryController {
                 phoneNumber: payload.phoneNumber,
                 propertyId: payload.propertyId,
                 propertyOwnerId: propertyOnwerId.property_added_by.userId,
-                createdAt: new Date().getTime(),
-                updatedAt: new Date().getTime(),
             };
 
             const enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
@@ -56,8 +54,6 @@ export class EnquiryController {
                 phoneNumber: payload.phoneNumber,
                 propertyId: payload.propertyId,
                 propertyOwnerId: propertyOnwerId.property_added_by.userId,
-                createdAt: new Date().getTime(),
-                updatedAt: new Date().getTime(),
             };
             const enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
             return enquiryData;

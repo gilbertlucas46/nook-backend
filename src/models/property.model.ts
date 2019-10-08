@@ -21,6 +21,7 @@ export interface IActionPerformedBy extends Document {
 export interface IProperty extends Document {
 	createdAt?: number;
 	updatedAt?: number;
+	approvedAt: number;
 	property_features: {
 		storeys_2?: boolean;
 		security_24hr?: boolean;
@@ -120,8 +121,8 @@ export interface IProperty extends Document {
 const propertySchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true, auto: true },
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User', index: true },
-	createdAt: { type: Number, default: new Date().getTime() },
-	updatedAt: { type: Number, default: new Date().getTime() },
+	createdAt: { type: Number, required: true },
+	updatedAt: { type: Number, required: true },
 	propertyId: { type: String, default: shortid.generate },
 	property_features: {
 		storeys_2: { type: Boolean, default: false },
@@ -328,6 +329,7 @@ const propertySchema = new Schema({
 			],
 		},
 	},
+	approvedAt: { type: Number },
 	isFeatured: { type: Boolean, default: false },
 	propertyActions: [
 		{
@@ -392,7 +394,7 @@ const propertySchema = new Schema({
 	propertyImages: { type: [String] },
 });
 
-/* Create 2dsphere index */
+// /* Create 2dsphere index */
 propertySchema.index({
 	'property_address.location': '2dsphere',
 });

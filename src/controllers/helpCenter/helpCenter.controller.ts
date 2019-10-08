@@ -19,8 +19,6 @@ export class HelpCenter {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
             }
             payload['userId'] = adminData._id;
-            payload['createdAt'] = new Date().getTime();
-            payload['updtedAt'] = new Date().getTime();
             payload['categoryType'] = result.TYPE;
             payload['userRole'] = adminData.type;
             const data = await ENTITY.HelpCenterE.createOneEntity(payload);
@@ -33,7 +31,7 @@ export class HelpCenter {
     async getHelpCenter(payload: helpCenterRequest.GetHelpCenter) {
         try {
             const criteria = {
-                categoryId: payload.id,
+                _id: payload.id,
             };
             const data = await ENTITY.HelpCenterE.getOneEntity(criteria, {});
             return data;

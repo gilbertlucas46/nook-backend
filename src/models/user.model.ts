@@ -65,8 +65,8 @@ const userSchema = new Schema({
 		],
 		default: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
 	},
-	createdAt: { type: Number, default: new Date().getTime() },
-	updatedAt: { type: Number, default: new Date().getTime() },
+	createdAt: { type: Number, required: true },
+	updatedAt: { type: Number, required: true },
 	type: {
 		type: String,
 		enum: [
