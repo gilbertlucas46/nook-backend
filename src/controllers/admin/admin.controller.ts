@@ -75,7 +75,7 @@ export class AdminController {
 					actionPerformedBy: {
 						userId: adminData._id,
 						userType: adminData.TYPE,
-				},
+					},
 					actionTime: new Date().getTime(),
 				},
 			};

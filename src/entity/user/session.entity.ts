@@ -16,8 +16,6 @@ export class SessionClass extends BaseEntity {
 				// ipAddress: sessionData.ipAddress,
 				source: sessionData.source,
 				loginStatus: true,
-				createdAt: new Date().getTime(),
-				updatedAt: new Date().getTime(),
 				// deviceToken: sessionData.deviceToken,
 			};
 			if (type === 'user') {
@@ -25,8 +23,8 @@ export class SessionClass extends BaseEntity {
 				sessionInfo[columnName] = userData._id;
 			}
 			const session = await this.DAOManager.saveData(this.modelName, sessionInfo);
-
 			if (session && session._id) { return session; }
+
 		} catch (error) {
 			return Promise.reject(error);
 		}

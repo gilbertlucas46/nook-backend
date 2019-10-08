@@ -29,7 +29,7 @@ export class UserPropertyClass extends BaseEntity {
 					case 'date':
 						sortBy = 'date';
 						sortingType = {
-							createdAt: sortType,
+							updatedAt: sortType,
 						};
 						break;
 					case 'isFeatured':
@@ -38,9 +38,9 @@ export class UserPropertyClass extends BaseEntity {
 							isFeatured: sortType,
 						};
 					default:
-						sortBy = 'createdAt';
+						sortBy = 'updatedAt';
 						sortingType = {
-							createdAt: sortType,
+							updatedAt: sortType,
 						};
 						break;
 				}

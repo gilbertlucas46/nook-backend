@@ -97,7 +97,6 @@ export class AdminProfileController {
 			} else {
 				const updatePswd = {
 					password: await utils.cryptData(payload.newPassword),
-					updatedAt: new Date().getTime(),
 				};
 				const updatePassword = await ENTITY.AdminE.updateOneEntity(criteria, updatePswd);
 				if (!updatePassword) {
@@ -122,7 +121,6 @@ export class AdminProfileController {
 			}
 			const updatePswd = {
 				password: await utils.cryptData(payload.password),
-				updatedAt: new Date().getTime(),
 				passwordResetTokenExpirationTime: null,
 				passwordResetToken: null,
 			};

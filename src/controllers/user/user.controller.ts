@@ -183,7 +183,6 @@ export class UserController {
 			} // send the error page that the already change the pssword in case of already changes fromthe browser
 			const updatePswd = {
 				password: await utils.cryptData(payload.password),
-				updatedAt: new Date().getTime(),
 				passwordResetTokenExpirationTime: null,
 				passwordResetToken: null,
 			};

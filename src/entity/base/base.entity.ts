@@ -56,10 +56,6 @@ export class BaseEntity {
 
 	async updateOneEntity(criteria: object, dataToUpdate: object, option?) {
 		try {
-			// dataToUpdate.$set = {
-			// 	updatedAt: new Date().getTime(),
-			// };
-
 			if (option === undefined) {
 				option = {
 					new: true,
@@ -75,17 +71,6 @@ export class BaseEntity {
 					updatedAt: new Date().getTime(),
 				};
 			}
-			// if (option === undefined) {
-			// 	option = {
-			// 		new: true,
-			// 		lean: true ,
-			// 		updatedAt: new Date(),
-			// 		$setOnInsert: {
-			// 		  createdAt: new Date(),
-			// 		} };
-			// }else {
-			// 	option[]
-			// }
 
 			const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate, option);
 			return data;

@@ -48,8 +48,8 @@ export const AdminSchema = new Schema(
 		isPhoneVerified: { type: Boolean },
 		passwordResetToken: { type: String },
 		passwordResetTokenExpirationTime: { type: Date },
-		createdAt: { type: Number, default: new Date().getTime() },
-		updatedAt: { type: Number, default: new Date().getTime() },
+		createdAt: { type: Number, required: true },
+		updatedAt: { type: Number, required: true },
 		type: {
 			type: String,
 			enum: [
