@@ -14,8 +14,6 @@ export class AdminSessionClass extends BaseEntity {
 				adminId: sessionData.adminId,
 				// loginStatus: true,
 				isLogin: true,
-				createdAt: new Date().getTime(),
-				updatedAt: new Date().getTime(),
 			};
 
 			const session = await this.DAOManager.saveData(this.modelName, sessionInfo);
