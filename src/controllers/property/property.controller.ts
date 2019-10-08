@@ -61,7 +61,6 @@ export class PropertyController {
 
 			if (payload.propertyId) {
 				delete payload.propertyId;
-				// payload.updatedAt = new Date().getTime();
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return updateData;
 			}
@@ -189,7 +188,6 @@ export class PropertyController {
 						displayName: Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.DISPLAY_NAME,
 					},
 					sold_rent_time: new Date().getTime(),
-					updatedAt: new Date().getTime(),
 				};
 				dataToSet.$push = {
 					propertyActions: {
@@ -205,7 +203,6 @@ export class PropertyController {
 			} else if (payload.upgradeToFeature) {
 				dataToSet.$set = {
 					isFeatured: payload.upgradeToFeature,
-					updatedAt: new Date().getTime(),
 				};
 				dataToSet.$push = {
 					propertyActions: {

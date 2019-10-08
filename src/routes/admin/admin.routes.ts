@@ -57,7 +57,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				await AdminProfileService.forgetPassword(payload);
 				return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.FORGET_PASSWORD_EMAIL, {});
 			} catch (error) {
-				return await UniversalFunctions.sendError(error);
+				return UniversalFunctions.sendError(error);
 			}
 		},
 		options: {
