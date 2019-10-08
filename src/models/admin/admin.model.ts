@@ -59,7 +59,6 @@ export const AdminSchema = new Schema(
 			default: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 		},
 	},
-	{ timestamps: true },
 );
 
 export const Admin = model<IAdmin>('Admin', AdminSchema);
