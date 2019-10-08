@@ -30,10 +30,10 @@ const citySchema = new Schema({
 	},
 	images: [Number],
 	createdAt: {
-		type: Date,
+		type: Number,
 	},
 	updatedAt: {
-		type: Date,
+		type: Number,
 	},
 },
 	{

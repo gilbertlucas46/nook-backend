@@ -4,7 +4,9 @@ export interface IAdminSession extends Document {
 	_id: string;
 	adminId: string;
 	// isDeleted:  Boolean,
-	lastActiveTime: Date;
+	lastActiveTime: number;
+	createdAt: number;
+	updatedAt: number;
 }
 
 export const AdminSessionSchema = new Schema(
@@ -20,6 +22,8 @@ export const AdminSessionSchema = new Schema(
 		isDeleted: { type: Boolean, default: false },
 		lastActiveTime: { type: Date },
 		isLogin: { type: Boolean, default: false },
+		createdAt: { type: Number },
+		updatedAt: { type: Number },
 		// loginStatus: { type: Boolean, default: false },
 	},
 	{ timestamps: true },

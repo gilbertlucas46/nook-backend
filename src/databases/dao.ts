@@ -9,7 +9,7 @@ export class DAOManager {
 	async saveData(model: ModelNames, data) {
 		try {
 			const ModelName: Model<any> = Models[model];
-			data.createdDate = new Date().getTime();
+			data.createdAt = new Date().getTime();
 			data.updatedAt = new Date().getTime();
 			return await new ModelName(data).save();
 		} catch (error) {

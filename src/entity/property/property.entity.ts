@@ -166,7 +166,7 @@ export class PropertyClass extends BaseEntity {
 					case 'date':
 						sortBy = 'date';
 						sortingType = {
-							createdAt: sortType,
+							updatedAt: sortType,
 						};
 						break;
 					case 'isFeatured':
@@ -178,7 +178,7 @@ export class PropertyClass extends BaseEntity {
 					default:
 						sortBy = 'createdAt';
 						sortingType = {
-							createdAt: sortType,
+							updatedAt: sortType,
 						};
 						break;
 				}
