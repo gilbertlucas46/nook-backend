@@ -89,7 +89,7 @@ export let helpCenterRoute: ServerRoute[] = [
         options: {
             description: 'get help center by id account type ',
             tags: ['api', 'anonymous', 'user', 'updateAccount'],
-            auth: 'UserAuth',
+            auth: 'AdminAuth',
             validate: {
                 params: {
                     id: Joi.string(),
