@@ -1,7 +1,6 @@
 // import * as mongoose from 'mongoose';
 import { Schema, Document, model } from 'mongoose';
 import * as Constant from '../constants';
-import { string, number } from 'joi';
 
 // export interface IArticleAction {
 //     userRole: string;

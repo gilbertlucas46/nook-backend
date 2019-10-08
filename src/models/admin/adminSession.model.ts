@@ -20,9 +20,9 @@ export const AdminSessionSchema = new Schema(
 		isDeleted: { type: Boolean, default: false },
 		lastActiveTime: { type: Date },
 		isLogin: { type: Boolean, default: false },
-		// loginStatus: { type: Boolean, default: false },
+		createdAt: { type: Number, default: new Date().getTime() },
+		updatedAt: { type: Number, default: new Date().getTime() },
 	},
-	{ timestamps: true },
 );
 
 export const AdminSession = model('AdminSession', AdminSessionSchema);
