@@ -180,6 +180,7 @@ export let DATABASE = {
 		SERVICED_OFFICE: 'Serviced Office',
 		WAREHOUSE: 'Warehouse',
 	},
+
 	ARTICLE_TYPE: {
 		FEATURED_ARTICLE: {
 			NUMBER: 1,
@@ -212,6 +213,7 @@ export let DATABASE = {
 			DISPLAY_NAME: 'Selling',
 		},
 	},
+
 	ARTICLE_STATUS: {
 		PENDING: {
 			NUMBER: 1,
@@ -229,6 +231,7 @@ export let DATABASE = {
 			DISPLAY_NAME: 'Blocked',
 		},
 	},
+
 	HELP_CENTER_TYPE: {
 		ACCOUNT: {
 			NUMBER: 1,
@@ -251,6 +254,7 @@ export let DATABASE = {
 			DISPLAY_NAME: 'Home Loans',
 		},
 	},
+
 	PROPERTY_TYPE: {
 		'NONE': 'None',
 		'APPARTMENT/CONDO': 'Apartment/Condo',
@@ -309,19 +313,14 @@ export let DATABASE = {
 			BLOCKED: 'BLOCKED',
 			DELETED: 'DELETED',
 		},
-		MESSAGE: {
-			DELIVERED: 'DELIVERED',
-			SEEN: 'SEEN',
-			DELETE: 'DELETE',
-		},
 	},
+
 	AGENT_SPECIALIZING: {
 		LICENSED_BROKER: {
 			NUMBER: 1,
 			TYPE: 'LICENSED BROKER',
 			DISPLAY_NAME: 'Licensed Broker',
 		},
-
 		PROPERTY_CONSULTANT: {
 			NUMBER: 2,
 			TYPE: 'PROPERTY_CONSULTANT',
@@ -338,14 +337,7 @@ export let DATABASE = {
 			DISPLAY_NAME: 'Sales Manager',
 		},
 	},
-	SPECIALIZING_IN: {
-		'NONE': 'None',
-		'APPARTMENT/CONDO': 'Apartment/Condo',
-		'COMMERCIAL': 'Commercial',
-		'HOUSE_LOT': 'House & Lot',
-		'LAND': 'Land',
-		'ROOM': 'Room',
-	},
+
 	ACTION:
 	{
 		DEEPLINK: {
@@ -354,7 +346,6 @@ export let DATABASE = {
 			USER: 'USER',
 			ADD_MEMBER: 'ADD_MEMBER',
 		},
-
 		UNDELIVERED_CHAT: {
 			DELETE: 'DELETE',
 			KICK: 'KICK',
@@ -373,12 +364,10 @@ export let DATABASE = {
 			UPDATE_STATUS: 'UPDATE_STATUS',
 		},
 	},
-
 	RESEND_OTP_TYPE: {
 		REGISTER: 'REGISTER',
 		FORGOT: 'FORGOT',
 	},
-
 	MIME_TYPE: {
 		DEFAULT: 'default',
 		IMAGE: 'image',
@@ -394,9 +383,7 @@ export let DATABASE = {
 		TXT: 'txt',
 		PPTX: 'pptx',
 	},
-
 	DEEPLINK_URL: config.get('host') + '/deeplink/',
-
 	DEEPLINK_REDIRECT_URL: {
 		APP: '/v1/deeplink?url=',
 	},
@@ -418,43 +405,43 @@ export let STATUS_MSG = {
 		E400: {
 			REQUEST_ALLREDY_SENT: {
 				statusCode: 400,
-				message: 'Request has already been sent to the admin for approval.',
 				type: 'REQUEST_ALLREDY_SENT',
+				message: 'Request has already been sent to the admin for approval.',
 			},
 			INVALID_CURRENT_PASSWORD: {
 				statusCode: 400,
+				type: 'INVALID_CURRENT_PASSWORD',
 				message: 'Your Current Password did not match with new Password',
-				type: 'CHANGE_PASSWORD',
 			},
 			USER_NAME_ALREDY_TAKEN: {
 				statusCode: 400,
-				message: 'Entered username is already registered with us!',
 				type: 'USERNAME_ALREADY_REGISTERED',
+				message: 'Entered username is already registered with us!',
 			},
 			EMAIL_ALREADY_TAKEN: {
 				statusCode: 400,
+				type: 'EMAIL_ALREADY_TAKEN',
 				message: 'Entered email is already registered with us!',
-				type: '',
 			},
 			NOT_VERIFIED: {
 				statusCode: 400,
-				message: 'You are not verified first verify.',
 				type: 'NOT_VERIFIED',
+				message: 'You are not verified first verify.',
 			},
 			INVALID_EMAIL: {
 				statusCode: 400,
-				message: 'Entered username/email is not registered with us!',
 				type: 'INVALID_EMAIL',
+				message: 'Entered username/email is not registered with us!',
 			},
 			CANNOT_PERFORM_UPDATE_OPERATION: {
 				statusCode: 400,
-				message: 'Cannot perform update operation.',
 				type: 'CANNOT_PERFORM_UPDATE_OPERATION',
+				message: 'Cannot perform update operation.',
 			},
 			INVALID_PASSWORD: {
 				statusCode: 400,
+				type: 'INVALID_PASSWORD',
 				message: 'Please enter correct password!',
-				type: 'INVALID_USER_PASS',
 			},
 			INVALID_LOGIN: {
 				statusCode: 400,
@@ -476,11 +463,6 @@ export let STATUS_MSG = {
 				type: 'USER_ALREADY_EXIST',
 				message: 'User already exist, please login.',
 			},
-			INVALID_EMAIL_TOKEN: {
-				statusCode: 400,
-				type: 'INVALID_EMAIL_TOKEN',
-				message: 'Wrong email token entered',
-			},
 			INVALID_OTP: {
 				statusCode: 400,
 				type: 'INVALID_OTP',
@@ -488,45 +470,38 @@ export let STATUS_MSG = {
 			},
 			APP_VERSION_ERROR: {
 				statusCode: 400,
-				message: 'One of the latest version or updated version value must be present',
 				type: 'APP_VERSION_ERROR',
+				message: 'One of the latest version or updated version value must be present',
 			},
 			VALIDATION_ERROR: {
 				statusCode: 400,
-				message: 'Validation Error',
 				type: 'VALIDATION_ERROR',
-			},
-			CUSTOM_VALIDATION_ERROR: (err: any) => {
-				return {
-					statusCode: 400,
-					message: err,
-					type: 'VALIDATION_ERROR',
-				};
+				message: 'Validation Error',
 			},
 			INVALID_ID: {
 				statusCode: 400,
-				message: 'Invalid Id Provided ',
 				type: 'INVALID_ID',
+				message: 'Invalid Id Provided ',
 			},
 			INVALID_PROPERTY_STATUS: {
 				statusCode: 400,
-				message: 'Invalid Property Status ',
 				type: 'INVALID_PROPERTY_STATUS',
+				message: 'Invalid Property Status ',
 			},
 			APP_ERROR: {
 				statusCode: 400,
-				message: 'Application Error',
 				type: 'APP_ERROR',
+				message: 'Application Error',
 			},
 			DB_ERROR: {
 				statusCode: 400,
-				message: 'DB Error : ',
 				type: 'DB_ERROR',
+				message: 'DB Error',
 			},
 			DEFAULT: {
 				statusCode: 400,
-				message: 'Error',
 				type: 'DEFAULT',
+				message: 'Error',
 			},
 			CUSTOM_DEFAULT: (error: any) => {
 				return {
@@ -535,22 +510,29 @@ export let STATUS_MSG = {
 					type: 'CUSTOM_DEFAULT',
 				};
 			},
+			CUSTOM_VALIDATION_ERROR: (err: any) => {
+				return {
+					statusCode: 400,
+					message: err,
+					type: 'VALIDATION_ERROR',
+				};
+			},
 		},
 		E401: {
 			RESET_PASSWORD_EXPIRED: {
 				statusCode: 401,
-				message: 'Your reset password token is expired!',
 				type: 'TOKEN_EXPIRED',
+				message: 'Your reset password token is expired!',
 			},
 			INVALID_LINK: {
 				statusCode: 401,
-				message: 'Link is no more valid.',
 				type: 'INVALID_LINK',
+				message: 'Link is no more valid.',
 			},
 			EMAIL_FORGET_PWD_LINK: {
 				statusCode: 401,
+				type: 'EMAIL_FORGET_PWD_LINK',
 				message: 'Link has been expired',
-				type: 'EXPIRE_LINK',
 			},
 			INVALID_SESSION_REQUEST: {
 				statusCode: 401,
@@ -559,28 +541,28 @@ export let STATUS_MSG = {
 			},
 			TOKEN_ALREADY_EXPIRED: {
 				statusCode: 401,
-				message: 'Please Login to continue. ',
 				type: 'TOKEN_ALREADY_EXPIRED',
+				message: 'Please Login to continue.',
 			},
 			INVALID_TOKEN: {
 				statusCode: 401,
-				message: 'Invalid token provided',
 				type: 'INVALID_TOKEN',
+				message: 'Invalid token provided',
 			},
 			ADMIN_DELETED: {
 				statusCode: 401,
-				message: 'You are blocked by Admin',
 				type: 'ADMIN_DELETED',
+				message: 'You are blocked by Admin',
 			},
 			ADMIN_BLOCKED: {
 				statusCode: 401,
-				message: 'You are blocked by Admin',
 				type: 'ADMIN_BLOCKED',
+				message: 'You are blocked by Admin',
 			},
 			UNAUTHORIZED: {
 				statusCode: 401,
-				message: 'You are not authorized to perform this action',
 				type: 'UNAUTHORIZED',
+				message: 'You are not authorized to perform this action',
 			},
 			MISSINING_AUTHENTICATION: (tokenType: any) => {
 				return {
@@ -591,18 +573,6 @@ export let STATUS_MSG = {
 			},
 		},
 		E404: {
-			CHAT_THREAD_NOT_FOUND: {
-				statusCode: 404,
-				type: 'CHAT_THREAD_NOT_FOUND',
-				message: 'Chat thread not found',
-			},
-
-			GROUP_NOT_FOUND: {
-				statusCode: 404,
-				type: 'GROUP_NOT_FOUND',
-				message: 'Group not found',
-			},
-
 			DATA_NOT_FOUND: {
 				statusCode: 404,
 				type: 'DATA_NOT_FOUND',
@@ -612,15 +582,15 @@ export let STATUS_MSG = {
 		E500: {
 			IMP_ERROR: {
 				statusCode: 500,
-				message: 'Implementation Error',
 				type: 'IMP_ERROR',
+				message: 'Something went wrong, Please try again!',
 			},
 		},
 		E501: {
 			TOKENIZATION_ERROR: {
 				statusCode: 501,
-				message: 'Failure in creating token.',
 				type: 'TOKENIZATION_ERROR',
+				message: 'Failure in creating token.',
 			},
 		},
 	},
@@ -632,55 +602,65 @@ export let STATUS_MSG = {
 				type: 'REQUEST_SENT_FOR_ADDING_MEMBER',
 				message: 'Your request for joining group has been sent.',
 			},
-			INVITED_SUCCESSFULLY: {
-				statusCode: 200,
-				message: 'Contacts invited successfully',
-				type: 'INVITED_SUCCESSFULLY',
-			},
 			PHONE_VERIFIED: {
 				statusCode: 200,
-				message: 'Phone number successfully verified.',
 				type: 'PHONE_VERIFIED',
+				message: 'Phone number successfully verified.',
 			},
 			EMAIL_VERIFIED: {
 				statusCode: 200,
-				message: 'EMAIL  successfully verified.',
 				type: 'EMAIL_VERIFIED',
+				message: 'EMAIL  successfully verified.',
 			},
 			FORGET_PASSWORD: {
 				statusCode: 200,
-				message: 'Forget password successfully.',
 				type: 'FORGET_PASSWORD',
+				message: 'Forget password successfully.',
 			},
 			UPLOAD: {
 				statusCode: 200,
-				message: 'File uploaded successfully.',
 				type: 'UPLOAD',
+				message: 'File uploaded successfully.',
 			},
 			UPDATED: {
 				statusCode: 200,
-				message: 'Updated Successfully',
 				type: 'UPDATED',
-			},
-			REPORTED: {
-				statusCode: 200,
-				message: 'Reported Successfully',
-				type: 'REPORTED',
+				message: 'Updated Successfully',
 			},
 			DELETED: {
 				statusCode: 200,
-				message: 'Deleted Successfully',
 				type: 'DELETED',
+				message: 'Deleted Successfully',
 			},
 			BLOCKED: {
 				statusCode: 200,
-				message: 'Blocked Successfully',
 				type: 'BLOCKED',
+				message: 'Blocked Successfully',
 			},
 			LOGIN: {
 				statusCode: 200,
-				message: 'Logged In Successfully',
 				type: 'LOGIN',
+				message: 'Logged In Successfully',
+			},
+			LOGOUT: {
+				statusCode: 200,
+				type: 'LOGOUT',
+				message: 'Logged Out Successfully',
+			},
+			DEFAULT: {
+				statusCode: 200,
+				type: 'DEFAULT',
+				message: 'Success',
+			},
+			FORGET_PASSWORD_EMAIL: {
+				statusCode: 200,
+				type: 'FORGET_PASSWORD_EMAIL',
+				message: 'Reset password link sent to email.',
+			},
+			ENQUIRY_SENT: {
+				statusCode: 200,
+				type: 'ENQUIRY_SENT',
+				message: 'Enquiry Sent',
 			},
 			LOGIN_TEST: (language: any) => {
 				const body = {
@@ -690,60 +670,40 @@ export let STATUS_MSG = {
 				};
 				return body;
 			},
-			LOGOUT: {
-				statusCode: 200,
-				message: 'Logged Out Successfully',
-				type: 'LOGOUT',
-			},
-			DEFAULT: {
-				statusCode: 200,
-				message: 'Success',
-				type: 'DEFAULT',
-			},
-			FORGET_PASSWORD_EMAIL: {
-				statusCode: 200,
-				message: 'Reset password link sent to email.',
-				type: 'FORGET_PASSWORD_EMAIL',
-			},
-			ENQUIRY_SENT: {
-				statusCode: 200,
-				message: 'Enquiry Sent',
-				type: 'DEFAULT',
-			},
 		},
 		S201: {
 			CREATED: {
 				statusCode: 201,
-				message: 'Created Successfully',
 				type: 'CREATED',
+				message: 'Created Successfully',
 			},
 			PROPERTY_ADDED: {
 				statusCode: 201,
+				type: 'PROPERTY_ADDED',
 				message: 'Property Added Successfully',
-				type: 'CREATED',
 			},
 			ENQUIRY_SUBMITTED: {
 				statusCode: 201,
+				type: 'ENQUIRY_SUBMITTED',
 				message: 'Enquiry Submitted',
-				type: 'CREATED',
 			},
 			PROPERTY_SAVE_AS_DRAFT: {
 				statusCode: 201,
+				type: 'PROPERTY_SAVE_AS_DRAFT',
 				message: 'Property Added as Draft',
-				type: 'CREATED',
 			},
 			ARTICLE_CREATED: {
 				statusCode: 201,
-				message: 'Article Created',
 				type: 'CREATED',
+				message: 'Article Created',
 			},
 		},
 	},
 	S210: {
 		FORGET_PASSWORD_PHONE_NUMBER: {
 			statusCode: 210,
-			message: 'Reset otp sent to registered phone number.',
 			type: 'FORGET_PASSWORD_PHONE_NUMBER',
+			message: 'Reset otp sent to registered phone number.',
 		},
 	},
 	S304: {
@@ -752,32 +712,10 @@ export let STATUS_MSG = {
 			type: 'GROUP_ALLREADY_EXISTS',
 			message: 'Similar unused group exists.',
 		},
-
-		REQUEST_SENT_FOR_ADDING_MEMBER_BY_OTHER: {
-			statusCode: 304,
-			type: 'REQUEST_SENT_FOR_ADDING_MEMBER_BY_OTHER',
-			message: 'Your request for adding the members has been sent to the admin.',
-		},
-
-		ALLREADY_FRIENDS: {
-			statusCode: 304,
-			message: 'You are allready friend with this user',
-			type: 'ALLREADY_FRIENDS',
-		},
 		REQUEST_EXISTS: {
 			statusCode: 304,
 			message: 'Friend request already Exists',
 			type: 'REQUEST_EXISTS',
-		},
-		NO_SUCH_REQUEST: {
-			statusCode: 304,
-			message: 'No such request exists.',
-			type: 'NO_SUCH_REQUEST',
-		},
-		SOME_MEMBER_IS_BLOCKED_FROM_GROUP: {
-			statusCode: 304,
-			message: 'Some of the member you want to add has already blocked this group.',
-			type: 'SOME_MEMBER_IS_BLOCKED_FROM_GROUP',
 		},
 	},
 };
