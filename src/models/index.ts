@@ -8,3 +8,4 @@ export { City } from './city';
 export { Enquiry } from './enquiry.model';
 export { Article } from './article.model';
 export { HelpCentre } from './helpCenter.model';
+export { SavedProperty } from './savedProperty.model';

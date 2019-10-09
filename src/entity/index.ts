@@ -10,3 +10,4 @@ export * from './city/region.entity';
 export { ArticleE } from './article/article.entity';
 export { AgentE } from './agent/agent.entity';
 export { HelpCenterE } from './helpCenter/helpCenter.entity';
+export { SavedPropertyE } from './savedProperty/savedPropert.entity';
