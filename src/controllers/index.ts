@@ -8,3 +8,4 @@ export { EnquiryService } from './enquiry/enquiry.controller';
 export { ArticleService } from './article/article.controller';
 export { CityService } from './city/city.controller';
 export { AgentService } from './agent/agent.controller';
+export { SavedProperty } from './savedProperty/savedProperty.controller';

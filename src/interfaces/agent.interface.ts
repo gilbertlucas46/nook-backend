@@ -16,4 +16,15 @@ export namespace AgentRequest {
         byCompanyName?: string;
 
     }
+
+    export interface UserProperty {
+        propertyType: number;
+        // userId: string;
+        page: number;
+        limit: number;
+        propertyId: string;
+        sortType?: number;
+        sortBy: string;
+        propertyFor: number;
+    }
 }

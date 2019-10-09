@@ -356,6 +356,7 @@ export class PropertyClass extends BaseEntity {
 			if (!page) { page = 1; } else { page = page; }
 			sortType = !sortType ? -1 : sortType;
 			let sortingType = {};
+			let query;
 			const criteria = {
 				_id: Types.ObjectId(propertyId),
 			};
@@ -363,13 +364,24 @@ export class PropertyClass extends BaseEntity {
 			const propertyData = await this.DAOManager.findOne(this.modelName, criteria, ['_id', 'property_added_by']);
 			if (!propertyData) return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
 
-			const query = {
-				'property_added_by.userId': Types.ObjectId(propertyData.property_added_by.userId),
-				'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-				'_id': {
-					$ne: Types.ObjectId(payload.propertyId),
-				},
-			};
+			if (payload.propertyFor) {
+				query = {
+					'property_added_by.userId': Types.ObjectId(propertyData.property_added_by.userId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+					'_id': {
+						$ne: Types.ObjectId(payload.propertyId),
+					},
+				};
+			} else {
+				query = {
+					'property_added_by.userId': Types.ObjectId(propertyData.property_added_by.userId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+					'property_for.number': payload.propertyFor,
+					'_id': {
+						$ne: Types.ObjectId(payload.propertyId),
+					},
+				};
+			}
 
 			if (sortBy) {
 				switch (sortBy) {
@@ -391,6 +403,11 @@ export class PropertyClass extends BaseEntity {
 						};
 						break;
 				}
+			} else {
+				sortBy = 'isFeatured';
+				sortingType = {
+					isFeatured: 1,
+				};
 			}
 			const pipeline = [
 				{

@@ -2,7 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { AgentRequest } from '@src/interfaces/agent.interface';
 import { SERVER } from '@src/constants/app.constant';
 import { Types } from 'mongoose';
-
+import * as Constant from '@src/constants';
 export class AgentClass extends BaseEntity {
     constructor() {
         super('User');
@@ -158,6 +158,145 @@ export class AgentClass extends BaseEntity {
         }
     }
 
+    async getAgentProperty(payload: AgentRequest.UserProperty) {
+        try {
+            let { sortType, sortBy, page, limit } = payload;
+            const { propertyId } = payload;
+            if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
+            if (!page) { page = 1; } else { page = page; }
+            sortType = !sortType ? -1 : sortType;
+            let sortingType = {};
+            const criteria = {
+                _id: Types.ObjectId(propertyId),
+            };
+
+            const propertyData = await this.DAOManager.findOne(this.modelName, criteria, ['_id', 'property_added_by']);
+            if (!propertyData) return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
+
+            const query = {
+                'property_added_by.userId': Types.ObjectId(propertyData.property_added_by.userId),
+                'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+                'property_for.number': payload.propertyFor,
+                '_id': {
+                    $ne: Types.ObjectId(payload.propertyId),
+                },
+            };
+
+            if (sortBy) {
+                switch (sortBy) {
+                    case 'price':
+                        sortBy = 'price';
+                        if (sortType === 1) {
+                            sortingType = {
+                                price: -1,
+                            };
+                        } else {
+                            sortingType = {
+                                isfeatured: 1,
+                            };
+                        }
+                    default:
+                        sortBy = 'isFeatured';
+                        sortingType = {
+                            isFeatured: 1,
+                        };
+                        break;
+                }
+            } else {
+                sortingType = {
+                    isFeatured: 1,
+                };
+            }
+            const pipeline = [
+                {
+                    $match: query,
+                }, {
+                    $lookup: {
+                        from: 'regions',
+                        let: { regionId: '$property_address.region' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$regionId'],
+                                    },
+                                },
+                            },
+                            {
+                                $project: {
+                                    fullName: 1,
+                                    _id: 1,
+                                },
+                            },
+                        ],
+                        as: 'regionData',
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'cities',
+                        let: { cityId: '$property_address.city' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$cityId'],
+                                    },
+                                },
+                            },
+                            {
+                                $project: {
+                                    name: 1,
+                                    _id: 1,
+                                },
+                            },
+                        ],
+                        as: 'cityData',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$regionData',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$cityData',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $project: {
+                        'property_features': 1,
+                        'updatedAt': 1,
+                        'createdAt': 1,
+                        'property_details': 1,
+                        'property_address.region': '$regionData.fullName',
+                        'property_address.regionId': '$regionData._id',
+                        'property_address.city': '$cityData.name',
+                        'property_address.cityId': '$cityData._id',
+                        'property_address.address': '$property_address.address',
+                        'property_address.barangay': '$property_address.barangay',
+                        'property_address.location': '$property_address.location',
+                        'propertyId': '$_id',
+                        'propertyShortId': '$propertyId',
+                        'property_basic_details': 1,
+                        'property_added_by': 1,
+                        'propertyImages': 1,
+                        'isFeatured': 1,
+                        'property_status': 1,
+                    },
+                },
+                { $sort: sortingType },
+            ];
+            const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+            return data;
+        } catch (error) {
+            // utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
 }
 
 export let AgentE = new AgentClass();

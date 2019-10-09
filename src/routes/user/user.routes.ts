@@ -419,6 +419,10 @@ export let userRoute: ServerRoute[] = [
 					sortType: Joi.number().valid([
 						Constant.ENUM.SORT_TYPE,
 					]),
+					propertyFor: Joi.number().valid([
+						Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+						Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+					]),
 					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']).default('price'),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
