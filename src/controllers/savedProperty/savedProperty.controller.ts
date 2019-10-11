@@ -9,7 +9,19 @@ export class SavedProperty {
                 userId: userData._id,
                 propertyId: payload.propertyId,
             };
-            const data = await ENTITY.SavedPropertyE.createOneEntity(dataToSave);
+            const criteria = {
+                userId: userData._id,
+                propertyId: payload.propertyId,
+            };
+            let data;
+            data = await ENTITY.SavedPropertyE.getOneEntity(criteria, {});
+            if (!data) {
+                data = await ENTITY.SavedPropertyE.createOneEntity(dataToSave);
+            } else {
+                data = await ENTITY.SavedPropertyE.removeEntity(dataToSave);
+            }
+
+            console.log('data>>>>>>>>>>>>>>>>>>>>', data);
             return data;
 
         } catch (error) {
@@ -19,7 +31,6 @@ export class SavedProperty {
 
     async savePropertyList(payload: SavePropertyRequest.SavePropertyList, userData) {
         try {
-
             const data = await ENTITY.SavedPropertyE.getList(payload, userData);
             return data;
         } catch (error) {
