@@ -2,7 +2,7 @@ import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
 export class HelpCenter {
-    // constructor()
+
     getTypeAndDisplayName(findObj, num) {
         const obj = findObj;
         const data = Object.values(obj);
