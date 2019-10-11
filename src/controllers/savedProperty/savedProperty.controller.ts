@@ -2,9 +2,7 @@ import * as ENTITY from '@src/entity';
 import * as Constant from '@src/constants';
 import { SavePropertyRequest } from '@src/interfaces/saveProperty.interface';
 export class SavedProperty {
-    // constructor() {
-    // super()
-    // }
+
     async saveProperty(payload: SavePropertyRequest.SaveProperty, userData) {
         try {
             const dataToSave = {

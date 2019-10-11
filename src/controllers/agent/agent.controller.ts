@@ -23,5 +23,14 @@ export class AgentController {
 	// 		return Promise.reject(error);
 	// 	}
 	// }
+
+	async agentInfo(userName: string) {
+		try {
+			const data = await AgentE.getAgentInfo(userName);
+			return data;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
 }
 export let AgentService = new AgentController();

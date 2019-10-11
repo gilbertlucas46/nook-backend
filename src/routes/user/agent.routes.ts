@@ -61,4 +61,34 @@ export let agentRoute: ServerRoute[] = [
             },
         },
     },
+
+    {
+        method: 'GET',
+        path: '/v1/agents/{userName}',
+        handler: async (request, h: ResponseToolkit) => {
+            try {
+                const userName = request.params.userName;
+                const agentData = await AgentService.agentInfo(userName);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, agentData));
+            } catch (error) {
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'GET agents',
+            tags: ['api', 'anonymous', 'agent'],
+            auth: 'UserAuth',
+            validate: {
+                params: {
+                    userName: Joi.string(),
+                },
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
 ];
