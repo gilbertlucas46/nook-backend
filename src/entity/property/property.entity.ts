@@ -229,30 +229,44 @@ export class PropertyClass extends BaseEntity {
 	async suggested_property(payload: PropertyRequest.UserProperty) {
 		try {
 			let { sortType, sortBy, page, limit } = payload;
-			const { propertyId } = payload;
+			let { propertyId, userId } = payload;
 			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
 			if (!page) { page = 1; } else { page = page; }
 			sortType = !sortType ? -1 : sortType;
 			let sortingType = {};
 			let query;
-			const criteria = {
-				_id: Types.ObjectId(propertyId),
-			};
-
-			const propertyData = await this.DAOManager.findOne(this.modelName, criteria, ['_id', 'property_added_by']);
-			if (!propertyData) return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
+			if (!userId) {
+				const criteria = {
+					_id: Types.ObjectId(propertyId),
+				};
+				const propertyData = await this.DAOManager.findOne(this.modelName, criteria, ['_id', 'property_added_by']);
+				if (!propertyData) return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
+				userId = propertyData.property_added_by.userId;
+			}
 
 			if (payload.propertyFor) {
 				query = {
-					'property_added_by.userId': Types.ObjectId(propertyData.property_added_by.userId),
+					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 					'_id': {
 						$ne: Types.ObjectId(payload.propertyId),
 					},
 				};
-			} else {
+			}
+			else if (payload.propertyType === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
 				query = {
-					'property_added_by.userId': Types.ObjectId(propertyData.property_added_by.userId),
+					'property_added_by.userId': Types.ObjectId(userId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+					'property_for.number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+					// payload.propertyFor,
+					'_id': {
+						$ne: Types.ObjectId(payload.propertyId),
+					},
+				};
+			}
+			else {
+				query = {
+					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 					'property_for.number': payload.propertyFor,
 					'_id': {

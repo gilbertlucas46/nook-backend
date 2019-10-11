@@ -13,8 +13,10 @@ export namespace AgentRequest {
         label?: string[];
         cityId?: string;
         specializingIn_property_type?: number[];
-        byCompanyName?: string;
+        searchBy?: string;
         specializingIn_property_category?: string[];
+        soldProperty?: number;
+        userId?: string;
 
     }
 

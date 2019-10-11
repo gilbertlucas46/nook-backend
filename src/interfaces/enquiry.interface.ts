@@ -1,3 +1,5 @@
+import { string } from "joi";
+
 export namespace EnquiryRequest {
 
 	export interface CreateEnquiry {
@@ -5,10 +7,11 @@ export namespace EnquiryRequest {
 		phoneNumber: string;
 		email: string;
 		message?: string;
-		userId?: string;
+		// userId?: string;
 		propertyId: string;
 		type: string;
 		propertOwner_id?: string;
+		agentEmail?: string;
 	}
 
 	export interface GetEnquiry {

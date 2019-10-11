@@ -102,12 +102,12 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'get detail of property ',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			auth: 'DoubleAuth',
+			// auth: 'DoubleAuth',
 			validate: {
 				params: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
-				headers: UniversalFunctions.authorizationHeaderObj,
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 		},
@@ -428,8 +428,9 @@ export let userRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
 						Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 					]),
-					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']).default('price'),
-					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']),
+					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 				},
 
 				// headers: UniversalFunctions.authorizationHeaderObj,
