@@ -143,6 +143,39 @@ export let plugin = {
 				// }
 			},
 		});
+		/**
+		 * DoubleAuth -: conbination of both basic auth and userAuth
+		 */
+		server.auth.strategy('DoubleAuth', 'bearer-access-token', {
+			allowQueryToken: false,
+			allowMultipleHeaders: true,
+			// accessTokenName: 'accessToken',
+			// tokenType: 'Basic' || 'Bearer' || 'bearer',
+
+			validate: async (request, token, h) => {
+				console.log('BasicAuthCheckTemporary', token);
+				const tokens = token;
+				const checkFunction = await basicAuthFunction(token);
+				if (checkFunction) {
+					return ({ isValid: true, credentials: { token: tokens, userData: {} } });
+				} else {
+					const tokenData = await verifyToken(token, 'USER', request);
+
+					if (!tokenData || !tokenData['userData']) {
+						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.TOKEN_ALREADY_EXPIRED));
+					} else {
+						if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.BLOCKED) {
+							return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED));
+						} else if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.DELETED) {
+							return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED));
+						} else {
+							return ({ isValid: true, credentials: { token: tokens, userData: tokenData['userData'] } });
+						}
+					}
+				}
+			},
+			// }
+		});
 
 		server.auth.strategy('GuestAuth', 'bearer-access-token', {
 			allowQueryToken: false,
@@ -161,18 +194,18 @@ export let plugin = {
 		server.auth.strategy('BasicAuth', 'bearer-access-token', {
 			tokenType: 'Basic',
 			validate: async (request, token, h) => {
-				const checkApiKeyFunction = await apiKeyFunction(request.headers.api_key);
-				if (!checkApiKeyFunction) {
-					return ({ isValid: false, credentials: { token, userData: {} } });
+				// const checkApiKeyFunction = await apiKeyFunction(request.headers.api_key);
+				// if (!checkApiKeyFunction) {
+				// 	return ({ isValid: false, credentials: { token, userData: {} } });
 
-				} else {
-					// validate user and pwd here
-					const checkFunction = await basicAuthFunction(token);
-					if (!checkFunction) {
-						return ({ isValid: false, credentials: { token, userData: {} } });
-					}
-					return ({ isValid: true, credentials: { token, userData: {} } });
+				// } else {
+				// validate user and pwd here
+				const checkFunction = await basicAuthFunction(token);
+				if (!checkFunction) {
+					return ({ isValid: false, credentials: { token, userData: {} } });
 				}
+				return ({ isValid: true, credentials: { token, userData: {} } });
+				// }
 			},
 		});
 	},

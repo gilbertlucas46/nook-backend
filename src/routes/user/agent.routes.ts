@@ -30,7 +30,7 @@ export let agentRoute: ServerRoute[] = [
                     type: Joi.string(),
                     label: Joi.array(),
                     propertyType: Joi.number(),
-                    sortBy: Joi.number().valid([]),
+                    sortBy: Joi.number().valid(['date']),
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                     fromDate: Joi.number(),
                     toDate: Joi.number(),
@@ -39,6 +39,15 @@ export let agentRoute: ServerRoute[] = [
                     specializingIn_property_type: Joi.array().items(
                         Joi.number().valid([
                             1, 2,
+                        ]),
+                    ),
+                    specializingIn_property_category: Joi.array().items(
+                        Joi.string().valid([
+                            Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
+                            Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+                            Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+                            // Constant.DATABASE.PROPERTY_TYPE.LAND,
+                            // Constant.DATABASE.PROPERTY_TYPE.ROOM,
                         ]),
                     ),
                     byCompanyName: Joi.string(),

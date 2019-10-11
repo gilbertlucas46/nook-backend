@@ -26,7 +26,7 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'Register to applications',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			// auth: 'BasicAuth'
+			auth: 'BasicAuth',
 			validate: {
 				payload: {
 					userName: Joi.string().min(3).max(32).trim().required(),
@@ -39,6 +39,7 @@ export let userRoute: ServerRoute[] = [
 						Constant.DATABASE.USER_TYPE.GUEST.TYPE,
 					]),
 				},
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -66,13 +67,14 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'login to applications',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			// auth: 'BasicAuth'
+			auth: 'BasicAuth',
 			validate: {
 				payload: {
 					email: Joi.string().min(4).max(100),
 					password: Joi.string().min(6).max(16).trim().required(),
 					deviceToken: Joi.string(),
 				},
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -100,11 +102,12 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'get detail of property ',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			//  auth: 'UserAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				params: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 		},
@@ -129,11 +132,12 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'forget-password to user',
 			tags: ['api', 'anonymous', 'user', 'forget-password', 'link'],
-			// auth: 'UserAuth',
+			auth: 'BasicAuth',
 			validate: {
 				payload: {
 					email: Joi.string().lowercase().trim().required(),
 				},
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -363,6 +367,7 @@ export let userRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const payload = request.query;
 				const responseData = await UserService.dashboard(userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
@@ -525,5 +530,4 @@ export let userRoute: ServerRoute[] = [
 			},
 		},
 	},
-
 ];

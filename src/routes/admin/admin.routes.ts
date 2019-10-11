@@ -404,12 +404,12 @@ export let adminProfileRoute: ServerRoute[] = [
 	 * @Description:admin logout
 	 */
 	{
-		method: 'POST',
+		method: 'PATCH',
 		path: '/v1/admin/logout',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: AdminRequest.Logout = request.query;
+				const payload: AdminRequest.Logout = request.payload as AdminRequest.Logout;
 				const registerResponse = await AdminProfileService.logout(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
@@ -421,7 +421,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'Admin', 'logout'],
 			auth: 'AdminAuth',
 			validate: {
-				query: {
+				payload: {
 					deviceId: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,

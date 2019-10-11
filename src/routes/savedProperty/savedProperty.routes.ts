@@ -69,7 +69,7 @@ export let savedProperty: ServerRoute[] = [
                 query: {
                     page: Joi.number(),
                     limit: Joi.number(),
-                    sortBy: Joi.string().valid(['price', 'date']),
+                    sortBy: Joi.string().valid(['price', 'date', 'isFeatured']),
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                 },
                 failAction: UniversalFunctions.failActionFunction,

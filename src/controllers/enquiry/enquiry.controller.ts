@@ -14,11 +14,10 @@ export class EnquiryController {
      * @description A function to create enquiry regarding any property.
      * @param payload
      */
-    async createEnquiry(payload: EnquiryRequest.CreateEnquiry) {
+    async createEnquiry(payload: EnquiryRequest.CreateEnquiry, userData?) {
         try {
             const propertyOwner = { _id: payload.propertyId };
             const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['property_added_by.userId', '_id']);
-
             const dataToSave = {
                 email: payload.email,
                 userType: Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
@@ -26,9 +25,10 @@ export class EnquiryController {
                 message: payload.message,
                 phoneNumber: payload.phoneNumber,
                 propertyId: payload.propertyId,
+                // userId: userData._id ? userData._id : '',
+                userId: userData._id,
                 propertyOwnerId: propertyOnwerId.property_added_by.userId,
             };
-
             const enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
             return enquiryData;
         } catch (error) {
@@ -42,26 +42,26 @@ export class EnquiryController {
      * @param payload
      */
 
-    async createAuthEnquiry(payload: EnquiryRequest.CreateEnquiry) {
-        try {
-            const propertyOwner = { _id: payload.propertyId };
-            const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['property_added_by.userId', '_id']);
-            const dataToSave = {
-                email: payload.email,
-                userType: Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
-                name: payload.name,
-                message: payload.message,
-                phoneNumber: payload.phoneNumber,
-                propertyId: payload.propertyId,
-                propertyOwnerId: propertyOnwerId.property_added_by.userId,
-            };
-            const enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
-            return enquiryData;
-        } catch (error) {
-            utils.consolelog('error', error, true);
-            return Promise.reject(error);
-        }
-    }
+    // async createAuthEnquiry(payload: EnquiryRequest.CreateEnquiry) {
+    //     try {
+    //         const propertyOwner = { _id: payload.propertyId };
+    //         const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['property_added_by.userId', '_id']);
+    //         const dataToSave = {
+    //             email: payload.email,
+    //             userType: Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
+    //             name: payload.name,
+    //             message: payload.message,
+    //             phoneNumber: payload.phoneNumber,
+    //             propertyId: payload.propertyId,
+    //             propertyOwnerId: propertyOnwerId.property_added_by.userId,
+    //         };
+    //         const enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
+    //         return enquiryData;
+    //     } catch (error) {
+    //         utils.consolelog('error', error, true);
+    //         return Promise.reject(error);
+    //     }
+    // }
 
     /**
      * @description Get list of all enquiry for particular user.

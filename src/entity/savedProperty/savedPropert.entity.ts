@@ -28,6 +28,12 @@ export class SavedProperty extends BaseEntity {
                         sortingType = {
                             updatedAt: sortType,
                         };
+                        break;
+                    case 'isFeatured':
+                        sortingType = {
+                            isFeatured: sortType,
+                        };
+                        break;
                 }
             } else {
                 sortingType = {
@@ -38,27 +44,40 @@ export class SavedProperty extends BaseEntity {
                 matchObject,
                 { $skip: skip },
                 { $limit: limit },
-                // {
-                //     $unwind: {
-                //         path: '$propertyId',
-                //         preserveNullAndEmptyArrays: true,
-                //     },
-                // },
+                {
+                    $unwind: {
+                        path: '$propertyId',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
                 {
                     $lookup: {
-                        from: 'property',
+                        from: 'properties',
                         let: { propertyId: '$propertyId' },
+                        // localField: 'propertyId',
+                        // foreignField: '_id',
                         pipeline: [
                             {
                                 $match: {
                                     $expr: {
-                                        $eq: ['$_id', '$$propertyId'],
+                                        $and: [
+                                            { $eq: ['$_id', '$$propertyId'] },
+                                            { $eq: ['$property_status.number', 3] },
+                                            // { $eq: ['$property_status.number', 1 || '$property_status.status', 'ACTIVE'] },
+
+                                        ],
                                     },
                                 },
                             },
+                            { $project: { _id: 0 } },
 
                         ],
                         as: 'propertyData',
+                    },
+                },
+                {
+                    $match: {
+                        $expr: { $gt: [{ $size: '$propertyData' }, 0] },
                     },
                 },
                 {
@@ -67,16 +86,34 @@ export class SavedProperty extends BaseEntity {
                         preserveNullAndEmptyArrays: true,
                     },
                 },
+                { $replaceRoot: { newRoot: '$propertyData' } },
                 {
-                    $project: {
-                        'property_address.barangay': '$propertyData.property_address.barangay',
-                        'createdAt': 1,
-                        'property_status.status': '$propertyData.property_status.status',
+                    $lookup: {
+                        from: 'cities',
+                        let: { cityId: '$property_address.city' },
+                        //         localField: 'propertyData.property_address.city',
+                        //         foreignField: '_id',
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$cityId'],
+                                    },
+                                },
+                            },
+                        ],
+                        as: 'property_address.city',
                     },
-                    // _id: 1,
-                },
-                { $sort: sortingType },
 
+                },
+                {
+                    $unwind: {
+                        path: '$property_address.city',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+
+                { $sort: sortingType },
             ];
             const data = await this.DAOManager.paginate(this.modelName, query, limit, page);
             console.log('data>>>>>>>>>>>>>>>>>>>>', data);

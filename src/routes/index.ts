@@ -9,6 +9,7 @@ import { cityRoutes } from './city/city.routes';
 import { agentRoute } from './user/agent.routes';
 import { helpCenterRoute } from './helpCenter/helpCenter.routes';
 import { savedProperty } from './savedProperty/savedProperty.routes';
+
 export let Routes: ServerRoute[] = [
 	...userRoute,
 	...propertyRoute,
