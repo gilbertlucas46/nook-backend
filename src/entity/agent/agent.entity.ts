@@ -147,6 +147,7 @@ export class AgentClass extends BaseEntity {
                         specializingIn_property_type: { $first: '$specializingIn_property_type' },
                         specializingIn_property_category: { $first: '$specializingIn_property_category' },
                         isFeaturedProfile: { $first: '$isFeaturedProfile' },
+                        lastName: { $first: '$lastName' },
                         city: {
                             $push: {
                                 cityId: '$cityData._id',
