@@ -54,8 +54,6 @@ export class SavedProperty extends BaseEntity {
                     $lookup: {
                         from: 'properties',
                         let: { propertyId: '$propertyId' },
-                        // localField: 'propertyId',
-                        // foreignField: '_id',
                         pipeline: [
                             {
                                 $match: {
@@ -70,7 +68,6 @@ export class SavedProperty extends BaseEntity {
                                 },
                             },
                             { $project: { _id: 0 } },
-
                         ],
                         as: 'propertyData',
                     },
@@ -87,41 +84,35 @@ export class SavedProperty extends BaseEntity {
                     },
                 },
                 { $replaceRoot: { newRoot: '$propertyData' } },
-                {
-                    $lookup: {
-                        from: 'cities',
-                        let: { cityId: '$property_address.city' },
-                        //         localField: 'propertyData.property_address.city',
-                        //         foreignField: '_id',
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $eq: ['$_id', '$$cityId'],
-                                    },
-                                },
-                            },
-                        ],
-                        as: 'property_address.city',
-                    },
+                // {
+                //     $lookup: {
+                //         from: 'cities',
+                //         let: { cityId: '$property_address.cityId' },
+                //         pipeline: [
+                //             {
+                //                 $match: {
+                //                     $expr: {
+                //                         $eq: ['$_id', '$$cityId'],
+                //                     },
+                //                 },
+                //             },
+                //         ],
+                //         as: 'property_address.city',
+                //     },
 
-                },
-                {
-                    $unwind: {
-                        path: '$property_address.city',
-                        preserveNullAndEmptyArrays: true,
-                    },
-                },
-
+                // },
+                // {
+                //     $unwind: {
+                //         path: '$property_address.city',
+                //         preserveNullAndEmptyArrays: true,
+                //     },
+                // },
                 { $sort: sortingType },
             ];
             const data = await this.DAOManager.paginate(this.modelName, query, limit, page);
-            console.log('data>>>>>>>>>>>>>>>>>>>>', data);
             return data;
 
         } catch (error) {
-            console.log('errorerrorerrorerror', error);
-
             return Promise.reject(error);
         }
     }
