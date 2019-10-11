@@ -35,82 +35,84 @@ export class PropertyClass extends BaseEntity {
 						_id: Types.ObjectId(propertyId),
 					},
 				},
-				{
-					$lookup: {
-						from: 'regions',
-						let: { regionId: '$property_address.region' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$_id', '$$regionId'],
-									},
-								},
-							},
-							{
-								$project: {
-									fullName: 1,
-									_id: 1,
-								},
-							},
-						],
-						as: 'regionData',
-					},
-				},
-				{
-					$lookup: {
-						from: 'cities',
-						let: { cityId: '$property_address.city' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$_id', '$$cityId'],
-									},
-								},
-							},
-							{
-								$project: {
-									name: 1,
-									_id: 1,
-								},
-							},
-						],
-						as: 'cityData',
-					},
-				},
-				{
-					$unwind: {
-						path: '$regionData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
-				{
-					$unwind: {
-						path: '$cityData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
+				// {
+				// 	$lookup: {
+				// 		from: 'regions',
+				// 		let: { regionId: '$property_address.regionId' },
+				// 		pipeline: [
+				// 			{
+				// 				$match: {
+				// 					$expr: {
+				// 						$eq: ['$_id', '$$regionId'],
+				// 					},
+				// 				},
+				// 			},
+				// 			{
+				// 				$project: {
+				// 					fullName: 1,
+				// 					_id: 1,
+				// 				},
+				// 			},
+				// 		],
+				// 		as: 'regionData',
+				// 	},
+				// },
+				// {
+				// 	$lookup: {
+				// 		from: 'cities',
+				// 		let: { cityId: '$property_address.cityId' },
+				// 		pipeline: [
+				// 			{
+				// 				$match: {
+				// 					$expr: {
+				// 						$eq: ['$_id', '$$cityId'],
+				// 					},
+				// 				},
+				// 			},
+				// 			{
+				// 				$project: {
+				// 					name: 1,
+				// 					_id: 1,
+				// 				},
+				// 			},
+				// 		],
+				// 		as: 'cityData',
+				// 	},
+				// },
+				// {
+				// 	$unwind: {
+				// 		path: '$regionData',
+				// 		preserveNullAndEmptyArrays: true,
+				// 	},
+				// },
+				// {
+				// 	$unwind: {
+				// 		path: '$cityData',
+				// 		preserveNullAndEmptyArrays: true,
+				// 	},
+				// },
 				{
 					$project: {
-						'property_features': 1,
-						'updatedAt': 1,
-						'createdAt': 1,
-						'property_details': 1,
-						'property_address.region': '$regionData.fullName',
-						'property_address.regionId': '$regionData._id',
-						'property_address.city': '$cityData.name',
-						'property_address.cityId': '$cityData._id',
-						'property_address.address': '$property_address.address',
-						'property_address.barangay': '$property_address.barangay',
-						'property_address.location': '$property_address.location',
-						'propertyId': '$_id',
-						'propertyShortId': '$propertyId',
-						'property_basic_details': 1,
-						'property_added_by': 1,
-						'propertyImages': 1,
-						'isFeatured': 1,
-						'property_status': 1,
+						property_features: 1,
+						updatedAt: 1,
+						createdAt: 1,
+						property_details: 1,
+						property_address: 1,
+						approvedAt: 1,
+						// 'property_address.region': '$regionData.fullName',
+						// 'property_address.regionId': '$regionData._id',
+						// 'property_address.city': '$cityData.name',
+						// 'property_address.cityId': '$cityData._id',
+						// 'property_address.address': '$property_address.address',
+						// 'property_address.barangay': '$property_address.barangay',
+						// 'property_address.location': '$property_address.location',
+						propertyId: '$_id',
+						propertyShortId: '$propertyId',
+						property_basic_details: 1,
+						property_added_by: 1,
+						propertyImages: 1,
+						isFeatured: 1,
+						property_status: 1,
 					},
 				},
 			];
@@ -139,11 +141,11 @@ export class PropertyClass extends BaseEntity {
 						$or: [
 							{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
 							{ 'property_address.barangay': new RegExp('.*' + searchTerm + '.*', 'i') },
-							// { 'property_added_by.userName': new RegExp('.*' + searchTerm + '.*', 'i') },
-							// { 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
+							{ 'property_added_by.userName': new RegExp('.*' + searchTerm + '.*', 'i') },
+							{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
 							{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
-							// { 'property_added_by.firstName': new RegExp('.*' + searchTerm + '.*', 'i') },
-							// { 'property_added_by.lastName': new RegExp('.*' + searchTerm + '.*', 'i') },
+							{ 'property_added_by.firstName': new RegExp('.*' + searchTerm + '.*', 'i') },
+							{ 'property_added_by.lastName': new RegExp('.*' + searchTerm + '.*', 'i') },
 						],
 					},
 				};
@@ -231,8 +233,8 @@ export class PropertyClass extends BaseEntity {
 			if (maxArea) { matchObject.$match['property_details.floor_area'] = { $lt: maxArea }; }
 			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
 			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
-			if (byCity) { matchObject.$match['city'] = byCity; }
-			if (byRegion) { matchObject.$match['region'] = byRegion; }
+			if (byCity) { matchObject.$match['cityId'] = byCity; }
+			if (byRegion) { matchObject.$match['regionId'] = byRegion; }
 
 			// List of properties acc to specific property status
 			if (property_status && !(property_status === Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER)) { matchObject.$match['property_status.number'] = property_status; }
@@ -262,82 +264,77 @@ export class PropertyClass extends BaseEntity {
 			const query = [
 				matchObject,
 				searchCriteria,
-				{
-					$lookup: {
-						from: 'regions',
-						let: { regionId: '$property_address.region' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$_id', '$$regionId'],
-									},
-								},
-							},
-							{
-								$project: {
-									fullName: 1,
-									_id: 1,
-								},
-							},
-						],
-						as: 'regionData',
-					},
-				},
-				{
-					$lookup: {
-						from: 'cities',
-						let: { cityId: '$property_address.city' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$_id', '$$cityId'],
-									},
-								},
-							},
-							{
-								$project: {
-									name: 1,
-									_id: 1,
-								},
-							},
-						],
-						as: 'cityData',
-					},
-				},
-				{
-					$unwind: {
-						path: '$regionData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
-				{
-					$unwind: {
-						path: '$cityData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
+				// {
+				// 	$lookup: {
+				// 		from: 'regions',
+				// 		let: { regionId: '$property_address.region' },
+				// 		pipeline: [
+				// 			{
+				// 				$match: {
+				// 					$expr: {
+				// 						$eq: ['$_id', '$$regionId'],
+				// 					},
+				// 				},
+				// 			},
+				// 			{
+				// 				$project: {
+				// 					fullName: 1,
+				// 					_id: 1,
+				// 				},
+				// 			},
+				// 		],
+				// 		as: 'regionData',
+				// 	},
+				// },
+				// {
+				// 	$lookup: {
+				// 		from: 'cities',
+				// 		let: { cityId: '$property_address.city' },
+				// 		pipeline: [
+				// 			{
+				// 				$match: {
+				// 					$expr: {
+				// 						$eq: ['$_id', '$$cityId'],
+				// 					},
+				// 				},
+				// 			},
+				// 			{
+				// 				$project: {
+				// 					name: 1,
+				// 					_id: 1,
+				// 				},
+				// 			},
+				// 		],
+				// 		as: 'cityData',
+				// 	},
+				// },
+				// {
+				// 	$unwind: {
+				// 		path: '$regionData',
+				// 		preserveNullAndEmptyArrays: true,
+				// 	},
+				// },
+				// {
+				// 	$unwind: {
+				// 		path: '$cityData',
+				// 		preserveNullAndEmptyArrays: true,
+				// 	},
+				// },
 				{
 					$project: {
-						'property_features': 1,
-						'updatedAt': 1,
-						'createdAt': 1,
-						'property_details': 1,
-						'property_address.region': '$regionData.fullName',
-						'property_address.regionId': '$regionData._id',
-						'property_address.city': '$cityData.name',
-						'property_address.cityId': '$cityData._id',
-						'property_address.address': '$property_address.address',
-						'property_address.barangay': '$property_address.barangay',
-						'property_address.location': '$property_address.location',
-						'propertyId': '$_id',
-						'propertyShortId': '$propertyId',
-						'property_basic_details': 1,
-						'property_added_by': 1,
-						'propertyImages': 1,
-						'isFeatured': 1,
-						'property_status': 1,
+						property_features: 1,
+						updatedAt: 1,
+						createdAt: 1,
+						approvedAt: 1,
+						property_details: 1,
+						property_address: 1,
+						propertyId: '$_id',
+						propertyShortId: '$propertyId',
+						property_basic_details: 1,
+						property_added_by: 1,
+						propertyImages: 1,
+						isFeatured: 1,
+						property_status: 1,
 					},
 				},
 				{ $sort: sortingType },
@@ -412,82 +409,84 @@ export class PropertyClass extends BaseEntity {
 			const pipeline = [
 				{
 					$match: query,
-				}, {
-					$lookup: {
-						from: 'regions',
-						let: { regionId: '$property_address.region' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$_id', '$$regionId'],
-									},
-								},
-							},
-							{
-								$project: {
-									fullName: 1,
-									_id: 1,
-								},
-							},
-						],
-						as: 'regionData',
-					},
 				},
-				{
-					$lookup: {
-						from: 'cities',
-						let: { cityId: '$property_address.city' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$_id', '$$cityId'],
-									},
-								},
-							},
-							{
-								$project: {
-									name: 1,
-									_id: 1,
-								},
-							},
-						],
-						as: 'cityData',
-					},
-				},
-				{
-					$unwind: {
-						path: '$regionData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
-				{
-					$unwind: {
-						path: '$cityData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
+				// {
+				// 	$lookup: {
+				// 		from: 'regions',
+				// 		let: { regionId: '$property_address.region' },
+				// 		pipeline: [
+				// 			{
+				// 				$match: {
+				// 					$expr: {
+				// 						$eq: ['$_id', '$$regionId'],
+				// 					},
+				// 				},
+				// 			},
+				// 			{
+				// 				$project: {
+				// 					fullName: 1,
+				// 					_id: 1,
+				// 				},
+				// 			},
+				// 		],
+				// 		as: 'regionData',
+				// 	},
+				// },
+				// {
+				// 	$lookup: {
+				// 		from: 'cities',
+				// 		let: { cityId: '$property_address.city' },
+				// 		pipeline: [
+				// 			{
+				// 				$match: {
+				// 					$expr: {
+				// 						$eq: ['$_id', '$$cityId'],
+				// 					},
+				// 				},
+				// 			},
+				// 			{
+				// 				$project: {
+				// 					name: 1,
+				// 					_id: 1,
+				// 				},
+				// 			},
+				// 		],
+				// 		as: 'cityData',
+				// 	},
+				// },
+				// {
+				// 	$unwind: {
+				// 		path: '$regionData',
+				// 		preserveNullAndEmptyArrays: true,
+				// 	},
+				// },
+				// {
+				// 	$unwind: {
+				// 		path: '$cityData',
+				// 		preserveNullAndEmptyArrays: true,
+				// 	},
+				// },
 				{
 					$project: {
-						'property_features': 1,
-						'updatedAt': 1,
-						'createdAt': 1,
-						'property_details': 1,
-						'property_address.region': '$regionData.fullName',
-						'property_address.regionId': '$regionData._id',
-						'property_address.city': '$cityData.name',
-						'property_address.cityId': '$cityData._id',
-						'property_address.address': '$property_address.address',
-						'property_address.barangay': '$property_address.barangay',
-						'property_address.location': '$property_address.location',
-						'propertyId': '$_id',
-						'propertyShortId': '$propertyId',
-						'property_basic_details': 1,
-						'property_added_by': 1,
-						'propertyImages': 1,
-						'isFeatured': 1,
-						'property_status': 1,
+						property_features: 1,
+						updatedAt: 1,
+						createdAt: 1,
+						approvedAt: 1,
+						property_details: 1,
+						property_address: 1,
+						// 'property_address.regionId': '$regionData._id',
+						// 'property_address.city': '$cityData.name',
+						// 'property_address.cityId': '$cityData._id',
+						// 'property_address.address': '$property_address.address',
+						// 'property_address.barangay': '$property_address.barangay',
+						// 'property_address.location': '$property_address.location',
+						propertyId: '$_id',
+						propertyShortId: '$propertyId',
+						property_basic_details: 1,
+						property_added_by: 1,
+						propertyImages: 1,
+						isFeatured: 1,
+						property_status: 1,
 					},
 				},
 				{ $sort: sortingType },
@@ -521,7 +520,7 @@ export class PropertyClass extends BaseEntity {
 				},
 				{
 					$project: {
-						cityId: '$property_address.city',
+						cityId: '$property_address.cityId',
 						_id: 1,
 					},
 				},
