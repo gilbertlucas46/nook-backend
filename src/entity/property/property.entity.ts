@@ -219,6 +219,48 @@ export class PropertyClass extends BaseEntity {
 					},
 				},
 				{ $sort: sortingType },
+				{
+					$lookup: {
+						from: 'savedproperties',
+						let: { id: '$propertyId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$propertyId', '$$id'],
+									},
+								},
+							},
+							{
+								$project: {
+									_id: 1,
+								},
+							},
+						],
+						as: 'saveProp',
+					},
+				},
+				{
+					$addFields: {
+						isSaved: {
+							$cond: {
+								if: {
+									$gt: [
+										{ $size: '$saveProp' },
+										0,
+									],
+								},
+								then: true,
+								else: false,
+							},
+						},
+					},
+				},
+				{
+					$project : {
+						saveProp : 0,
+					},
+				},
 			];
 			const propertyList = await this.DAOManager.paginate(this.modelName, query, limit, page);
 			return propertyList;
@@ -309,6 +351,48 @@ export class PropertyClass extends BaseEntity {
 					},
 				},
 				{ $sort: sortingType },
+				{
+					$lookup: {
+						from: 'savedproperties',
+						let: { id: '$propertyId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$propertyId', '$$id'],
+									},
+								},
+							},
+							{
+								$project: {
+									_id: 1,
+								},
+							},
+						],
+						as: 'saveProp',
+					},
+				},
+				{
+					$addFields: {
+						isSaved: {
+							$cond: {
+								if: {
+									$gt: [
+										{ $size: '$saveProp' },
+										0,
+									],
+								},
+								then: true,
+								else: false,
+							},
+						},
+					},
+				},
+				{
+					$project : {
+						saveProp : 0,
+					},
+				},
 			];
 			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 			return data;

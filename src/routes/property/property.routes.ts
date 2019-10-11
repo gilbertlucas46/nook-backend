@@ -18,7 +18,6 @@ export let propertyRoute: ServerRoute[] = [
 				const payload: PropertyRequest.PropertyData = request.payload as any;
 				const registerResponse = await PropertyService.addProperty(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PROPERTY_ADDED, registerResponse));
-				// }
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
