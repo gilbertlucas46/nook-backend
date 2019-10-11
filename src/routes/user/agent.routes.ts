@@ -21,7 +21,7 @@ export let agentRoute: ServerRoute[] = [
         options: {
             description: 'GET agents',
             tags: ['api', 'anonymous', 'agent'],
-            //  auth: 'UserAuth',
+            auth: 'DoubleAuth',
             validate: {
                 query: {
                     page: Joi.number(),
@@ -35,11 +35,13 @@ export let agentRoute: ServerRoute[] = [
                     fromDate: Joi.number(),
                     toDate: Joi.number(),
                     cityId: Joi.string(),
-                    // agentSpecialisation: Joi.boolean().default('false'),
-                    specializingIn_property_type: Joi.array().items(
-                        Joi.number().valid([
-                            1, 2,
-                        ]),
+                    userId: Joi.string(),
+                    specializingIn_property_type: Joi.number().valid([
+                        Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+                        Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+                    ]),
+                    soldProperty: Joi.number().valid(
+                        Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
                     ),
                     specializingIn_property_category: Joi.array().items(
                         Joi.string().valid([
@@ -48,10 +50,12 @@ export let agentRoute: ServerRoute[] = [
                             Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
                             Constant.DATABASE.PROPERTY_TYPE.LAND,
                             Constant.DATABASE.PROPERTY_TYPE.ROOM,
+                            '',
                         ]),
                     ),
-                    byCompanyName: Joi.string(),
+                    searchBy: Joi.string().valid('company', 'name', 'location').default('location'),
                 },
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {
