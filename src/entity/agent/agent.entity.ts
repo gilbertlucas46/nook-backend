@@ -10,8 +10,8 @@ export class AgentClass extends BaseEntity {
 
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
-            let { page, limit, sortType, sortBy } = payload;
-            const { fromDate, toDate, cityId, specializingIn_property_type, byCompanyName, searchTerm, specializingIn_property_category } = payload;
+            let { page, limit, sortType, sortBy, userId } = payload;
+            const { fromDate, toDate, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty } = payload;
             if (!limit) { limit = SERVER.LIMIT; } else { limit = limit; }
             if (!page) { page = 1; } else { page = page; }
             const skip = (limit * (page - 1));
@@ -21,17 +21,29 @@ export class AgentClass extends BaseEntity {
             let searchCriteria;
 
             if (searchTerm) {
-                // for filtration
-                searchCriteria = {
-                    $match: {
-                        $or: [
+                if (payload.searchBy === 'company') {
+                    searchCriteria = {
+                        $match:
                             { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            // { serviceAreas: new RegExp('.*' + searchTerm + '.*', 'i') },
+                    };
+                }
+            } else if (payload.searchBy === 'location') {
+                searchCriteria = {
+                    $match:
+                        { address: new RegExp('.*' + searchTerm + '.*', 'i') },
+                };
+            } else if (payload.searchBy === 'name') {
+                searchCriteria = {
+                    $match:
+                    {
+                        $or: [
                             { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                            { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
                         ],
                     },
                 };
             }
+
             else {
                 searchCriteria = {
                     $match: {
@@ -62,17 +74,23 @@ export class AgentClass extends BaseEntity {
             if (specializingIn_property_type) {
                 matchObject = {
                     $match: {
-                        specializingIn_property_type: { $all: specializingIn_property_type },
+                        'specializingIn_property_type': specializingIn_property_type,
+
+                        // specializingIn_property_type: { $all: specializingIn_property_type },
                     },
                 };
             }
-            else if (byCompanyName) {
-                matchObject = {
-                    $match: {
-                        companyName: byCompanyName,
-                    },
-                };
-            } else if (specializingIn_property_category) {
+            else if (soldProperty) {
+
+            }
+            // else if (byCompanyName) {
+            //     matchObject = {
+            //         $match: {
+            //             companyName: byCompanyName,
+            //         },
+            //     };
+            // } 
+            else if (specializingIn_property_category) {
                 matchObject = {
                     $match: {
                         specializingIn_property_category: { $all: specializingIn_property_category },

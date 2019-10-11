@@ -2,6 +2,7 @@ import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
+import { MailManager } from '@src/lib/mail.manager';
 
 /**
  * @author
@@ -16,9 +17,25 @@ export class EnquiryController {
      */
     async createEnquiry(payload: EnquiryRequest.CreateEnquiry, userData?) {
         try {
+            let dataToSave;
+            let enquiryData;
+            if (payload.agentEmail) {
+                dataToSave = {
+                    email: payload.email,
+                    userType: userData ? userData.type : '',
+                    name: payload.name,
+                    message: payload.message,
+                    phoneNumber: payload.phoneNumber,
+                    userId: userData._id,
+                };
+                const mail = new MailManager(payload.agentEmail, 'Enquiry', {});
+                mail.sendMail();
+                enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
+                return enquiryData;
+            }
             const propertyOwner = { _id: payload.propertyId };
             const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['property_added_by.userId', '_id']);
-            const dataToSave = {
+            dataToSave = {
                 email: payload.email,
                 userType: Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
                 name: payload.name,
@@ -29,7 +46,7 @@ export class EnquiryController {
                 userId: userData._id,
                 propertyOwnerId: propertyOnwerId.property_added_by.userId,
             };
-            const enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
+            enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
             return enquiryData;
         } catch (error) {
             utils.consolelog('error', error, true);
