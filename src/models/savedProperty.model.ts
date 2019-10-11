@@ -14,4 +14,6 @@ const savedPropertySchema = new Schema({
     updatedAt: { type: Number, required: true },
 });
 
+savedPropertySchema.index({ userId: 1, propertyId: 1 }, { unique: true });
+
 export let SavedProperty = model<ISavedProperty>('SavedProperty', savedPropertySchema);
