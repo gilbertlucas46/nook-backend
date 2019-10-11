@@ -16,4 +16,4 @@ const savedPropertySchema = new Schema({
 
 savedPropertySchema.index({ userId: 1, propertyId: 1 }, { unique: true });
 
-export let SavedProperty = model<ISavedProperty>('SavedProperty', savedPropertySchema);
+export let SavedProperty = model<ISavedProperty>('savedproperties', savedPropertySchema);
