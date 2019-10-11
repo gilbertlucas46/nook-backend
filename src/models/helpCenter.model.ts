@@ -1,12 +1,6 @@
 import { Schema, Document, model } from 'mongoose';
 import * as Constant from '../constants';
 
-// export interface IArticleAction {
-//     userRole: string;
-//     userId: string;
-//     actionTime: number;
-// }
-
 export interface IHelpCenter extends Document {
     title: string;
     userId: string;
@@ -17,7 +11,6 @@ export interface IHelpCenter extends Document {
     imageUrl: string;
     categoryId: number;
     categoryType: string;
-    // articleAction: [IArticleAction];
 }
 
 const helpCenterSchema = new Schema({
@@ -53,14 +46,6 @@ const helpCenterSchema = new Schema({
             Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.TYPE,
         ],
     },
-    // status: {
-    //     type: Number, enum: [
-    //         Constant.DATABASE.ARTICLE_STATUS.PENDING.NUMBER,
-    //         Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
-    //         Constant.DATABASE.ARTICLE_STATUS.BLOCKED.NUMBER,
-    //     ],
-    //     default: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
-    // },
     actions: [{
         userRole: { type: String },
         userId: { type: String },

@@ -12,7 +12,6 @@ export class SavedProperty {
                 propertyId: payload.propertyId,
             };
             const data = await ENTITY.SavedPropertyE.createOneEntity(dataToSave);
-            console.log('data>>>>>>>>>>>>>>>>>>>>', data);
             return data;
 
         } catch (error) {

@@ -18,7 +18,6 @@ export class AgentController {
 	// async agentProperty(payload: AgentRequest.UserProperty) {
 	// 	try {
 	// 		const data = await AgentE.getAgentProperty(payload);
-	// 		console.log('>>data>>>>>>>>>>>', data);
 	// 		return data;
 	// 	} catch (error) {
 	// 		return Promise.reject(error);

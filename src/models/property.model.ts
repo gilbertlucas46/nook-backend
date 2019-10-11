@@ -72,8 +72,10 @@ export interface IProperty extends Document {
 	};
 	property_address: {
 		address: string;
-		region: string;
-		city: string;
+		regionId: string;
+		regionName: string,
+		cityId: string,
+		cityName: string,
 		barangay: string;
 		location?: {
 			type: string;
@@ -174,8 +176,10 @@ const propertySchema = new Schema({
 	},
 	property_address: {
 		address: { type: String, required: true, index: true },
-		region: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
-		city: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
+		regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
+		cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
+		regionName: { type: String },
+		cityName: { type: String },
 		barangay: { type: String },
 		location: {
 			type: {

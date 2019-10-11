@@ -47,16 +47,13 @@ const userSchema = new Schema({
 	fullPhoneNumber: { type: String },
 	language: { type: String },
 	companyName: { type: String },
-	address: {
-		type: String,
-	},
+	address: { type: String },
 	aboutMe: { type: String },
 	profilePicUrl: { type: String },
 	backGroundImageUrl: { type: String },
 	isEmailVerified: { type: Boolean },
 	isPhoneVerified: { type: Boolean },
 	countryCode: { type: String },
-	// roleType: { type: String, enum: [] },
 	status: {
 		type: String, enum: [
 			CONSTANT.DATABASE.STATUS.USER.ACTIVE,
@@ -100,7 +97,7 @@ const userSchema = new Schema({
 	}],
 	serviceAreas: [{
 		type: Schema.Types.ObjectId,
-		ref: 'City',  // Refer to region schema
+		ref: 'City',  // Refer to city schema
 	}],
 });
 
