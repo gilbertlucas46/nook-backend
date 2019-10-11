@@ -14,7 +14,7 @@ export interface IEnquiry extends Document {
 
 const enquirySchena = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-    userId: { type: Schema.Types.ObjectId, ref: 'User', index: true },
+    userId: { allow: '', type: Schema.Types.ObjectId, ref: 'User', index: true },
     propertyId: { type: Schema.Types.ObjectId, required: true, ref: 'Property', index: true },
     email: { type: String, index: true },
     propertyOwnerId: { type: Schema.Types.ObjectId, required: true, index: true },
