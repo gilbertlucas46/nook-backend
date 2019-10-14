@@ -26,7 +26,7 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'Register to applications',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			auth: 'BasicAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					userName: Joi.string().min(3).max(32).trim().required(),
@@ -67,7 +67,7 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'login to applications',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			auth: 'BasicAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					email: Joi.string().min(4).max(100),
@@ -132,7 +132,7 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'forget-password to user',
 			tags: ['api', 'anonymous', 'user', 'forget-password', 'link'],
-			auth: 'BasicAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					email: Joi.string().lowercase().trim().required(),
