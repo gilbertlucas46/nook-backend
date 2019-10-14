@@ -30,7 +30,7 @@ export class EnquiryController {
                 };
                 const mail = new MailManager(payload.agentEmail, 'Enquiry', {});
                 mail.sendMail();
-                enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
+                // enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
                 return enquiryData;
             }
             const propertyOwner = { _id: payload.propertyId };
