@@ -67,7 +67,7 @@ export class SavedProperty extends BaseEntity {
                                     },
                                 },
                             },
-                            { $project: { _id: 0 } },
+                            { $project: { propertyActions: 0 } },
                         ],
                         as: 'propertyData',
                     },
