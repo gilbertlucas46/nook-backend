@@ -17,8 +17,8 @@ const citySchema = new Schema({
 		],
 	},
 	images: [Number],
-	createdAt: { type: Number, required: true },
-	updatedAt: { type: Number, required: true },
+	createdAt: { type: Number, required: true, default: new Date().getTime() },
+	updatedAt: { type: Number, required: true, default: new Date().getTime() },
 });
 
 export const City: Model<CityDocument> = model('cities', citySchema);

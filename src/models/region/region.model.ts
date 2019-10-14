@@ -17,8 +17,8 @@ const regionSchema = new Schema({
 		],
 	},
 	images: [String],
-	createdAt: { type: Number, required: true },
-	updatedAt: { type: Number, required: true },
+	createdAt: { type: Number, required: true, default: new Date().getTime() },
+	updatedAt: { type: Number, required: true, default: new Date().getTime() },
 });
 
 export const Region: Model<RegionDocument> = model('regions', regionSchema);
