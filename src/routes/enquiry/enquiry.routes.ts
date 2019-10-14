@@ -69,10 +69,9 @@ export let enquiryRoutes: ServerRoute[] = [
 					email: Joi.string().email(),
 					phoneNumber: Joi.string().required(),
 					message: Joi.string().required(),
-					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					// type: Joi.string().valid('Agent'),
-					agentEmail: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-
+					agentEmail: Joi.string().email(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
