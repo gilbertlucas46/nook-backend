@@ -233,7 +233,7 @@ export class PropertyController {
 		}
 	}
 
-	async getCityBasedData(payload) {
+	async getCityBasedData(payload: UserRequest.RecentProperty) {
 		try {
 			const getPropertyViaCity = await ENTITY.PropertyE.getPropertyViaCity(payload);
 			return getPropertyViaCity;

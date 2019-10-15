@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '@src/utils';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import { UserRequest } from '@src/interfaces/user.interface';
 import * as mongoose from 'mongoose';
 
 export class PropertyClass extends BaseEntity {
@@ -514,7 +515,7 @@ export class PropertyClass extends BaseEntity {
 		}
 	}
 
-	async getPropertyViaCity(payload) {
+	async getPropertyViaCity(payload: UserRequest.RecentProperty) {
 		try {
 			const promise = [];
 			let { sortType, sortBy, page, limit } = payload;
@@ -591,7 +592,7 @@ export class PropertyClass extends BaseEntity {
 					propertyTypeAndFor: properties_In_Makati_City,
 				};
 			}
-			
+
 		} catch (error) {
 			console.log('error>>>>>>>>>>>>>>', error);
 			return Promise.reject(error);

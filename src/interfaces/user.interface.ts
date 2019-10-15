@@ -97,6 +97,13 @@ export namespace UserRequest {
 	}
 
 	export interface RecentProperty {
-
+		propertyType?: string;
+		propertyFor?: number;
+		All?: boolean;
+		cityId: string;
+		page?: number;
+		limit?: number;
+		sortType?: number;
+		sortBy?: string;
 	}
 }
