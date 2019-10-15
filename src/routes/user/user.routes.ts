@@ -492,8 +492,8 @@ export let userRoute: ServerRoute[] = [
 			try {
 				//
 				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
-				const payload: UserRequest.RecentProperty = request.query;
-				const cityBasedData: any = await PropertyService.getCityBasedData(payload);
+				const payload: UserRequest.RecentProperty = request.query as any;
+				const cityBasedData = await PropertyService.getCityBasedData(payload);
 				const userResponse = UniversalFunctions.formatUserData(cityBasedData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
 			} catch (error) {
@@ -511,7 +511,7 @@ export let userRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
 						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
 					]),
-					propertyFor: Joi.string().valid([
+					propertyFor: Joi.number().valid([
 						Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
 						Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 					]),

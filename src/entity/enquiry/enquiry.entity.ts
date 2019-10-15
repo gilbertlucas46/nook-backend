@@ -37,13 +37,12 @@ export class EnquiryClass extends BaseEntity {
             }
             else if (toDate) {
                 query['createdAt'] = {
-                    $lte: new Date().getTime(),
+                    $lte: toDate,
                 };
             } else if (fromDate) {
                 query['createdAt'] = {
                     $gte: fromDate,
-                    $lte: new Date().getTime()
-
+                    $lte: new Date().getTime(),
                 };
             }
 
