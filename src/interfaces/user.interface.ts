@@ -95,4 +95,8 @@ export namespace UserRequest {
 	export interface UpdateAccount {
 		userType: string;
 	}
+
+	export interface RecentProperty {
+
+	}
 }
