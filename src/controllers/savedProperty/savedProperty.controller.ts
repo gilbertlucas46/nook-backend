@@ -20,10 +20,7 @@ export class SavedProperty {
             } else {
                 data = await ENTITY.SavedPropertyE.removeEntity(dataToSave);
             }
-
-            console.log('data>>>>>>>>>>>>>>>>>>>>', data);
             return data;
-
         } catch (error) {
             return Promise.reject(error);
         }
