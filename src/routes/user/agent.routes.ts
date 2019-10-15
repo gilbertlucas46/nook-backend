@@ -82,11 +82,12 @@ export let agentRoute: ServerRoute[] = [
         options: {
             description: 'GET agents',
             tags: ['api', 'anonymous', 'agent'],
-            auth: 'UserAuth',
+            auth: 'DoubleAuth',
             validate: {
                 params: {
                     userName: Joi.string(),
                 },
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {
