@@ -18,7 +18,7 @@ export class AgentClass extends BaseEntity {
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             // let matchObject: any = [];
-            let matchObject: any = {};
+            const matchObject: any = {};
             matchObject['type'] = 'AGENT';
             let searchCriteria;
 
@@ -75,13 +75,13 @@ export class AgentClass extends BaseEntity {
 
             if (specializingIn_property_type) {
                 matchObject['specializingIn_property_type'] =
-                    specializingIn_property_type
+                    specializingIn_property_type;
             }
             else if (soldProperty) {
 
             }
             if (specializingIn_property_category) {
-                matchObject["specializingIn_property_category"] =
+                matchObject['specializingIn_property_category'] =
                     { $in: specializingIn_property_category };
             }
 
