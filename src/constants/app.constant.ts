@@ -14,37 +14,37 @@ export const ENUM = {
 
 export let DATABASE = {
 	LOAN_DURATION: {
-        BETWEEN_0_1: '1',
-        BETWEEN_1_2: '2',
-        BETWEEN_2_3: '3',
-        BETWEEN_3_4: '4',
-        BETWEEN_4_5: '5',
-        BETWEEN_5_6: '6',
-        BETWEEN_6_7: '7',
-        BETWEEN_7_8: '8',
-        BETWEEN_8_9: '9',
-        BETWEEN_9_10: '10',
-        BETWEEN_10_11: '11',
-        BETWEEN_11_12: '12',
-        BETWEEN_12_13: '13',
-        BETWEEN_13_14: '14',
-        BETWEEN_14_15: '15',
-        BETWEEN_15_16: '16',
-        BETWEEN_16_17: '17',
-        BETWEEN_17_18: '18',
-        BETWEEN_18_19: '19',
-        BETWEEN_19_20: '20',
-        BETWEEN_20_21: '21',
-        BETWEEN_21_22: '22',
-        BETWEEN_22_23: '23',
-        BETWEEN_23_24: '24',
-        BETWEEN_24_25: '25',
-        BETWEEN_25_26: '26',
-        BETWEEN_26_27: '27',
-        BETWEEN_27_28: '28',
-        BETWEEN_28_29: '29',
-        BETWEEN_28_30: '29'
-    },
+		BETWEEN_0_1: '1',
+		BETWEEN_1_2: '2',
+		BETWEEN_2_3: '3',
+		BETWEEN_3_4: '4',
+		BETWEEN_4_5: '5',
+		BETWEEN_5_6: '6',
+		BETWEEN_6_7: '7',
+		BETWEEN_7_8: '8',
+		BETWEEN_8_9: '9',
+		BETWEEN_9_10: '10',
+		BETWEEN_10_11: '11',
+		BETWEEN_11_12: '12',
+		BETWEEN_12_13: '13',
+		BETWEEN_13_14: '14',
+		BETWEEN_14_15: '15',
+		BETWEEN_15_16: '16',
+		BETWEEN_16_17: '17',
+		BETWEEN_17_18: '18',
+		BETWEEN_18_19: '19',
+		BETWEEN_19_20: '20',
+		BETWEEN_20_21: '21',
+		BETWEEN_21_22: '22',
+		BETWEEN_22_23: '23',
+		BETWEEN_23_24: '24',
+		BETWEEN_24_25: '25',
+		BETWEEN_25_26: '26',
+		BETWEEN_26_27: '27',
+		BETWEEN_27_28: '28',
+		BETWEEN_28_29: '29',
+		BETWEEN_28_30: '29',
+	},
 	COLLATERAL: {
 		DOC: {
 			TYPE: {
@@ -52,10 +52,10 @@ export let DATABASE = {
 				TAX_DECLARATION_1: 'tax_declaration_1',
 				TAX_DECLARATION_2: 'tax_declaration_2',
 				BILL_MATERIAL: 'bill_material',
-				FLOOR_PLAN: 'floor_plan'
+				FLOOR_PLAN: 'floor_plan',
 
-			}
-		}
+			},
+		},
 	},
 	INDUSTRY: {
 		AGRI_FOREST_FISH: 'Agriculture',
@@ -65,7 +65,7 @@ export let DATABASE = {
 		CONSTRUCTION: 'Construction',
 		EDUCATION: 'Education',
 		IT: 'IT',
-		OTHERS: 'Others'
+		OTHERS: 'Others',
 
 	},
 	HOME_OWNERSHIP: {
@@ -73,26 +73,26 @@ export let DATABASE = {
 		RENTED: 'Rented',
 		MORTGAGED: 'Mortgaged',
 		USED_FREE: 'UsedFree',
-		LIVING_WITH_RELATIVE: 'Living_with_relative'
+		LIVING_WITH_RELATIVE: 'Living_with_relative',
 	},
 	RELATIONSHIP: {
 		BROTHER: 'Brother',
 		SISTER: 'Sister',
 		FATHER: 'Father',
 		MOTHER: 'Mother',
-		SPOUSE: 'SPOUSE'
+		SPOUSE: 'SPOUSE',
 	},
-	CIVI_STATUS:{
+	CIVI_STATUS: {
 		SINGLE: 'Single',
 		MARRIED: 'Married',
 		WIDOW: 'Widowed',
-		SEPERATED: 'Seperated'	
+		SEPERATED: 'Seperated',
 	},
 	EDUCATION_BACKGROUND: {
 		POST_GRAD: 'PostGraduate',
 		UNDER_GRAD: 'UnderGraduate',
 		COLLEGE: 'College',
-		VOCATIONAL: 'Vocational'
+		VOCATIONAL: 'Vocational',
 	},
 	USER_TYPE: {
 		ADMIN: {
@@ -252,8 +252,8 @@ export let DATABASE = {
 			USERS: 'users',
 			STAFF: 'staff',
 			ARTICLE: 'article',
-			PROPERTY: 'property'
-		}
+			PROPERTY: 'property',
+		},
 	},
 	PROPERTY_LABEL: {
 		NONE: 'None',

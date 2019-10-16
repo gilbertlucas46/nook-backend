@@ -137,7 +137,6 @@ export let articleRoutes = [
         path: '/v1/articles/{articleId}',
         handler: async (request, h) => {
             try {
-                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const payload: ArticleRequest.GetArticleById = request.params;
                 const registerResponse = await ArticleService.getArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -246,7 +245,6 @@ export let articleRoutes = [
                         Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
                     ]),
-                    // articleId: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -258,14 +256,11 @@ export let articleRoutes = [
             },
         },
     },
-
-    /** */
     {
         method: 'GET',
         path: '/v1/admin/articles/{articleId}',
         handler: async (request, h) => {
             try {
-                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const payload: ArticleRequest.GetArticleById = request.params;
                 const registerResponse = await ArticleService.getArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -292,17 +287,13 @@ export let articleRoutes = [
             },
         },
     },
-
-    /** */
-
     {
         method: 'DELETE',
         path: '/v1/admin/articles/{articleId}',
         handler: async (request, h) => {
             try {
-                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const payload: ArticleRequest.DeleteArticle = request.params;
-                const registerResponse = await ArticleService.deleteArticle(payload);
+                await ArticleService.deleteArticle(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);

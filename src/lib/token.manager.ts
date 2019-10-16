@@ -154,9 +154,7 @@ export let verifyAdminToken = async (token, tokenType, request?: any) => {
 		const adminData: any = {};
 		const criteria = { _id: result._id };
 		const checkAdminExist = await ENTITY.AdminE.getOneEntity(criteria, {});
-		if (!checkAdminExist) {
-			return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN;
-		}
+		if (!checkAdminExist) { return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN; }
 		const sessionCriteria = {
 			adminId: result._id,
 			isLogin: true,
