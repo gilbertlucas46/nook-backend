@@ -42,6 +42,7 @@ export class AdminProfileController {
 			return Promise.reject(err);
 		}
 	}
+
 	async profile(payload) {
 		try {
 			const criteria = {

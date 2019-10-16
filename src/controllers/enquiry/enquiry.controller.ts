@@ -17,6 +17,8 @@ export class EnquiryController {
      */
     async createEnquiry(payload: EnquiryRequest.CreateEnquiry, userData?) {
         try {
+            console.log('payload', payload);
+
             let dataToSave;
             let enquiryData;
             if (payload.agentEmail) {
@@ -27,11 +29,13 @@ export class EnquiryController {
                     message: payload.message,
                     phoneNumber: payload.phoneNumber,
                     userId: userData._id,
+                    // enquiryFor:'Agent'
                 };
-                const mail = new MailManager(payload.agentEmail, 'Enquiry', {});
+                const html = `<p> this user want to contact to you | email: ${payload.email} |phoneNumber:${payload.phoneNumber}...</p>`;
+                const mail = new MailManager(payload.agentEmail, 'Enquiry', html);
                 mail.sendMail();
-                enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
-                return enquiryData;
+                enquiryData = ENTITY.EnquiryE.createOneEntity(dataToSave);
+                return {};
             }
             const propertyOwner = { _id: payload.propertyId };
             const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['property_added_by.userId', '_id']);

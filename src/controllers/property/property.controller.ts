@@ -232,5 +232,14 @@ export class PropertyController {
 			return Promise.reject(error);
 		}
 	}
+
+	async getCityBasedData(payload: UserRequest.RecentProperty) {
+		try {
+			const getPropertyViaCity = await ENTITY.PropertyE.getPropertyViaCity(payload);
+			return getPropertyViaCity;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
 }
 export let PropertyService = new PropertyController();

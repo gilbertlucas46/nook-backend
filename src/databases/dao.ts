@@ -73,6 +73,15 @@ export class DAOManager {
 		}
 	}
 
+	async findAllPaginate(model: ModelNames, query, projection, options) {
+		try {
+			const ModelName: Model<any> = Models[model];
+			return await ModelName.find(query, projection, options).exec();
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 	async findAndUpdate(model: ModelNames, conditions, update, options?) {
 		try {
 			update['updatedAt'] = new Date().getTime();

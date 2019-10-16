@@ -153,7 +153,6 @@ export let plugin = {
 			// tokenType: 'Basic' || 'Bearer' || 'bearer',
 
 			validate: async (request, token, h) => {
-				console.log('BasicAuthCheckTemporary', token);
 				const tokens = token;
 				const checkFunction = await basicAuthFunction(token);
 				if (checkFunction) {

@@ -580,6 +580,11 @@ export let STATUS_MSG = {
 				type: 'INVALID_PROPERTY_STATUS',
 				message: 'Invalid Property Status ',
 			},
+			PROPERTY_SOLD: {
+				statusCode: 400,
+				type: 'PROPERTY_SOLD',
+				message: 'OOPs Property Sold ',
+			},
 			APP_ERROR: {
 				statusCode: 400,
 				type: 'APP_ERROR',

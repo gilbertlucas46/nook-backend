@@ -15,6 +15,8 @@ export namespace AgentRequest {
         specializingIn_property_type?: number[];
         searchBy?: string;
         specializingIn_property_category?: string[];
+        // specializingIn_property_category?: any;
+
         soldProperty?: number;
         userId?: string;
 
