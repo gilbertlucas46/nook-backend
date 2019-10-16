@@ -55,9 +55,7 @@ class AdminStaffControllers {
     async addPermissions(payload: any) {
         try {
             const dataToUpdate = {
-                $addToSet: {
-                    permission: payload.permission,
-                },
+                $addToSet: { permission: payload.permission },
             };
             await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload._id }, dataToUpdate);
             return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200, {});
@@ -87,11 +85,7 @@ class AdminStaffControllers {
                 mail.sendMail();
                 await ENTITY.AdminStaffEntity.updateOneEntity(
                     { _id: Types.ObjectId(payload._id) },
-                    {
-                        $set: {
-                            password: hashPassword,
-                        },
-                    },
+                    { $set: { password: hashPassword } },
                 );
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
             }
