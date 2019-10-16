@@ -1,8 +1,8 @@
-import { Schema, Document, model, Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import * as CONSTANT from '../constants/app.constant';
 
 const schema = new Schema({
-    userId: { type: Schema.Types.ObjectId,index: true, required: true },
+    userId: { type: Schema.Types.ObjectId, index: true, required: true },
     saveAsDraft: { type: Schema.Types.Boolean, default: false },
     personalInfo: {
         firstName: { type: Schema.Types.String, trim: true },
@@ -12,8 +12,8 @@ const schema = new Schema({
             type: Schema.Types.String, enum: [
                 CONSTANT.DATABASE.GENDER.MALE,
                 CONSTANT.DATABASE.GENDER.FEMALE,
-                CONSTANT.DATABASE.GENDER.OTHER
-            ]
+                CONSTANT.DATABASE.GENDER.OTHER,
+            ],
         },
         educationBackground: {
             type: Schema.Types.String, enum: [
@@ -21,7 +21,7 @@ const schema = new Schema({
                 CONSTANT.DATABASE.EDUCATION_BACKGROUND.UNDER_GRAD,
                 CONSTANT.DATABASE.EDUCATION_BACKGROUND.COLLEGE,
                 CONSTANT.DATABASE.EDUCATION_BACKGROUND.VOCATIONAL,
-            ]
+            ],
         },
         civilStatus: {
             type: Schema.Types.String, enum: [
@@ -29,7 +29,7 @@ const schema = new Schema({
                 CONSTANT.DATABASE.CIVI_STATUS.WIDOW,
                 CONSTANT.DATABASE.CIVI_STATUS.SEPERATED,
                 CONSTANT.DATABASE.CIVI_STATUS.MARRIED,
-            ]
+            ],
         },
         spouseFirstName: { type: Schema.Types.String, trim: true },
         spouseMiddleName: { type: Schema.Types.String, trim: true },
@@ -45,13 +45,13 @@ const schema = new Schema({
                 CONSTANT.DATABASE.RELATIONSHIP.MOTHER,
                 CONSTANT.DATABASE.RELATIONSHIP.SISTER,
                 CONSTANT.DATABASE.RELATIONSHIP.SPOUSE,
-            ]
+            ],
         },
     },
     contactInfo: {
         phoneNo: { type: Schema.Types.Number, trim: true },
         email: { type: Schema.Types.String, trim: true },
-        mobileNo: { type: Schema.Types.Number, trim: true }
+        mobileNo: { type: Schema.Types.Number, trim: true },
     },
     property_address: {
         address: { type: Schema.Types.String, index: true },
@@ -63,10 +63,10 @@ const schema = new Schema({
         location: {
             type: {
                 type: Schema.Types.String,
-                default: 'Point'
+                default: 'Point',
             },
             coordinates: {
-                type: [Number]
+                type: [Number],
             },
         },
         homeOwnership: {
@@ -76,14 +76,14 @@ const schema = new Schema({
                 CONSTANT.DATABASE.HOME_OWNERSHIP.OWNED,
                 CONSTANT.DATABASE.HOME_OWNERSHIP.RENTED,
                 CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
-            ]
-        }
+            ],
+        },
     },
     loanDetails: {
         fixedPeriod: { type: Schema.Types.String, trim: true },
         loanTerm: { type: Schema.Types.String, trim: true },
         rate: { type: Schema.Types.Number, trim: true },
-        monthlyRepayment: { type: Schema.Types.Number, trim: true }
+        monthlyRepayment: { type: Schema.Types.Number, trim: true },
     },
     borrowerEmploymentInfo: {
         companyIndustry: {
@@ -95,8 +95,8 @@ const schema = new Schema({
                 CONSTANT.DATABASE.INDUSTRY.CONSTRUCTION,
                 CONSTANT.DATABASE.INDUSTRY.EDUCATION,
                 CONSTANT.DATABASE.INDUSTRY.IT,
-                CONSTANT.DATABASE.INDUSTRY.OTHERS
-            ]
+                CONSTANT.DATABASE.INDUSTRY.OTHERS,
+            ],
         },
         tin: { type: Schema.Types.String, trim: true },
         companyName: { type: Schema.Types.String, trime: true },
@@ -109,7 +109,7 @@ const schema = new Schema({
         regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
         regionName: { type: Schema.Types.String, trim: true },
         barangay: { type: Schema.Types.String, trim: true },
-        country: { type: Schema.Types.String, trim: true }
+        country: { type: Schema.Types.String, trim: true },
     },
     coBorrowerInfo: {
         employmentType: {},
@@ -127,8 +127,8 @@ const schema = new Schema({
                 CONSTANT.DATABASE.INDUSTRY.CONSTRUCTION,
                 CONSTANT.DATABASE.INDUSTRY.EDUCATION,
                 CONSTANT.DATABASE.INDUSTRY.IT,
-                CONSTANT.DATABASE.INDUSTRY.OTHERS
-            ]
+                CONSTANT.DATABASE.INDUSTRY.OTHERS,
+            ],
         },
         officePhone: { type: Schema.Types.Number, trim: true },
         officeEmail: { type: Schema.Types.String, trim: true },
@@ -138,7 +138,7 @@ const schema = new Schema({
         regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
         regionName: { type: Schema.Types.String, trim: true },
         barangay: { type: Schema.Types.String, trim: true },
-        country: { type: Schema.Types.String, trim: true }
+        country: { type: Schema.Types.String, trim: true },
     },
     dependentsInfo: [
         {
@@ -151,7 +151,7 @@ const schema = new Schema({
                     CONSTANT.DATABASE.RELATIONSHIP.MOTHER,
                     CONSTANT.DATABASE.RELATIONSHIP.SISTER,
                     CONSTANT.DATABASE.RELATIONSHIP.SPOUSE,
-                ]
+                ],
             },
         },
     ],
@@ -159,7 +159,7 @@ const schema = new Schema({
         borrowerValidId: [Schema.Types.String],
         coBorrowerValidId: [Schema.Types.String],
         LatestITR: { type: Schema.Types.String },
-        employmentCert: { type: Schema.Types.String }
+        employmentCert: { type: Schema.Types.String },
     },
     purchasePropertyInfo: {
         address: { type: Schema.Types.String, index: true },
@@ -171,10 +171,10 @@ const schema = new Schema({
         location: {
             type: {
                 type: Schema.Types.String,
-                default: 'Point'
+                default: 'Point',
             },
             coordinates: {
-                type: [Number]
+                type: [Number],
             },
         },
         contactPerson: { type: Schema.Types.String, trim: true },
@@ -183,7 +183,7 @@ const schema = new Schema({
         collDocUrl: [{
             docUrl: {
                 type: Schema.Types.String,
-                trim: true
+                trim: true,
             },
             docType: {
                 type: Schema.Types.String, enum: [
@@ -192,8 +192,8 @@ const schema = new Schema({
                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
-                ]
-            }
+                ],
+            },
         }],
     },
     nookAgent: { type: Schema.Types.String, trim: true },
@@ -201,4 +201,4 @@ const schema = new Schema({
     updatedAt: { type: Schema.Types.Number },
 });
 
-export const HomeLoan = model('HomeLoan', schema);
+export const HomeLoan = model('homeloans', schema);
