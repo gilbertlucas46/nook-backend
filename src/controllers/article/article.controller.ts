@@ -7,7 +7,7 @@ import * as utils from '@src/utils';
  * @description this controller contains actions for admin's articles related activities
  */
 
-export class ArticleController {
+class ArticleController {
     getTypeAndDisplayName(findObj, num: number) {
         const obj = findObj;
         const data = Object.values(obj);
@@ -16,6 +16,7 @@ export class ArticleController {
         });
         return result[0];
     }
+
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
             const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
