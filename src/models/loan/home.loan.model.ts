@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose';
-import * as CONSTANT from '../constants/app.constant';
+import { Schema, Document, model, Types } from 'mongoose';
+import * as CONSTANT from './../../constants';
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, index: true, required: true },
