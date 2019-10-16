@@ -54,6 +54,9 @@ export let enquiryRoutes: ServerRoute[] = [
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: EnquiryRequest.CreateEnquiry = request.payload as any;
 				const registerResponse = await EnquiryService.createEnquiry(payload, userData);
+				if (registerResponse === {}) {
+					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.ENQUIRY_SENT, registerResponse));
+				}
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.ENQUIRY_SENT, registerResponse));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -69,10 +72,9 @@ export let enquiryRoutes: ServerRoute[] = [
 					email: Joi.string().email(),
 					phoneNumber: Joi.string().required(),
 					message: Joi.string().required(),
-					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					// type: Joi.string().valid('Agent'),
-					agentEmail: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-
+					agentEmail: Joi.string().email(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

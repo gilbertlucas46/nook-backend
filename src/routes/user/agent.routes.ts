@@ -43,16 +43,17 @@ export let agentRoute: ServerRoute[] = [
                     soldProperty: Joi.number().valid(
                         Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
                     ),
-                    specializingIn_property_category: Joi.array().items(
-                        Joi.string().valid([
-                            Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
-                            Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
-                            Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
-                            Constant.DATABASE.PROPERTY_TYPE.LAND,
-                            Constant.DATABASE.PROPERTY_TYPE.ROOM,
-                            '',
-                        ]),
-                    ),
+                    specializingIn_property_category: Joi.array()
+                        .items(
+                            Joi.string().trim().valid(
+                                Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
+                                Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+                                Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+                                Constant.DATABASE.PROPERTY_TYPE.LAND,
+                                Constant.DATABASE.PROPERTY_TYPE.ROOM,
+                                '',
+                            ),
+                        ),
                     searchBy: Joi.string().valid('company', 'name', 'location').default('location'),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -81,11 +82,12 @@ export let agentRoute: ServerRoute[] = [
         options: {
             description: 'GET agents',
             tags: ['api', 'anonymous', 'agent'],
-            auth: 'UserAuth',
+            auth: 'DoubleAuth',
             validate: {
                 params: {
                     userName: Joi.string(),
                 },
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {

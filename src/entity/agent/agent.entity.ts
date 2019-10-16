@@ -17,7 +17,9 @@ export class AgentClass extends BaseEntity {
             const skip = (limit * (page - 1));
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-            let matchObject: any = { $match: { type: 'AGENT' } };
+            // let matchObject: any = [];
+            const matchObject: any = {};
+            matchObject['type'] = 'AGENT';
             let searchCriteria;
 
             if (searchTerm) {
@@ -27,23 +29,23 @@ export class AgentClass extends BaseEntity {
                             { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
                 }
-            } else if (payload.searchBy === 'location') {
-                searchCriteria = {
-                    $match:
-                        { address: new RegExp('.*' + searchTerm + '.*', 'i') },
-                };
-            } else if (payload.searchBy === 'name') {
-                searchCriteria = {
-                    $match:
-                    {
-                        $or: [
-                            { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                        ],
-                    },
-                };
+                else if (payload.searchBy === 'location') {
+                    searchCriteria = {
+                        $match:
+                            { address: new RegExp('.*' + searchTerm + '.*', 'i') },
+                    };
+                } else if (payload.searchBy === 'name') {
+                    searchCriteria = {
+                        $match:
+                        {
+                            $or: [
+                                { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                            ],
+                        },
+                    };
+                }
             }
-
             else {
                 searchCriteria = {
                     $match: {
@@ -55,13 +57,13 @@ export class AgentClass extends BaseEntity {
                 switch (sortBy) {
                     case 'date':
                         sortingType = {
-                            userName: sortType,
+                            createdAt: sortType,
                         };
                         break;
                     default:
                         sortBy = 'isFeaturedProfile';
                             sortingType = {
-                                createdAt: sortType,
+                                isFeaturedProfile: sortType,
                             };
                         break;
                 }
@@ -72,40 +74,24 @@ export class AgentClass extends BaseEntity {
             }
 
             if (specializingIn_property_type) {
-                matchObject = {
-                    $match: {
-                        'specializingIn_property_type': specializingIn_property_type,
-
-                        // specializingIn_property_type: { $all: specializingIn_property_type },
-                    },
-                };
+                matchObject['specializingIn_property_type'] =
+                    specializingIn_property_type;
             }
             else if (soldProperty) {
 
             }
-            // else if (byCompanyName) {
-            //     matchObject = {
-            //         $match: {
-            //             companyName: byCompanyName,
-            //         },
-            //     };
-            // } 
-            else if (specializingIn_property_category) {
-                matchObject = {
-                    $match: {
-                        specializingIn_property_category: { $all: specializingIn_property_category },
-                    },
-                };
+            if (specializingIn_property_category) {
+                matchObject['specializingIn_property_category'] =
+                    { $in: specializingIn_property_category };
             }
 
-            if (cityId) { matchObject.$match._id = Types.ObjectId(cityId); }
+            if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
             // // Date filters
             // if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             // if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
             // if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
-
             const query = [
-                matchObject,
+                { $match: matchObject },
                 { $sort: sortingType },
                 { $skip: skip },
                 { $limit: limit },

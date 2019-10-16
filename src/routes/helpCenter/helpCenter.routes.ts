@@ -57,7 +57,7 @@ export let helpCenterRoute: ServerRoute[] = [
         options: {
             description: 'get help center by id account type ',
             tags: ['api', 'anonymous', 'user', 'updateAccount'],
-            auth: 'AdminAuth',
+            auth: 'DoubleAuth',
             validate: {
                 params: {
                     id: Joi.string(),
@@ -219,6 +219,40 @@ export let helpCenterRoute: ServerRoute[] = [
             description: 'Get help topics by id ',
             tags: ['api', 'anonymous', 'user', 'delete helpcenter'],
             auth: 'AdminAuth',
+            validate: {
+                params: {
+                    id: Joi.number().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                    ]),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+
+    {
+        method: 'GET',
+        path: '/v1/user/help-center-group/{id}',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
+                // const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
+                const payload = Number(request.params.id);
+                const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
+                const responseData = UniversalFunction.formatUserData(data);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
+            } catch (error) {
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'Get help topics by id ',
+            tags: ['api', 'anonymous', 'user', 'delete helpcenter'],
+            auth: 'DoubleAuth',
             validate: {
                 params: {
                     id: Joi.number().valid([

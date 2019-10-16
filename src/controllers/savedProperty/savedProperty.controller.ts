@@ -13,17 +13,13 @@ export class SavedProperty {
                 userId: userData._id,
                 propertyId: payload.propertyId,
             };
-            let data;
-            data = await ENTITY.SavedPropertyE.getOneEntity(criteria, {});
+            let data = await ENTITY.SavedPropertyE.getOneEntity(criteria, {});
             if (!data) {
                 data = await ENTITY.SavedPropertyE.createOneEntity(dataToSave);
             } else {
                 data = await ENTITY.SavedPropertyE.removeEntity(dataToSave);
             }
-
-            console.log('data>>>>>>>>>>>>>>>>>>>>', data);
             return data;
-
         } catch (error) {
             return Promise.reject(error);
         }
