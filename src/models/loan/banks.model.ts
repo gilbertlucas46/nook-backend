@@ -48,7 +48,7 @@ const bankSchema = new Schema({
         default: 0,
     },
     loanApplicationFeePercent: {
-        type: Number
+        type: Number,
     },
     loanMinAmount: {
         type: Number,
@@ -57,18 +57,18 @@ const bankSchema = new Schema({
     loanMaxAmount: {
         type: Number,
         max: 1000000000,
-        required: true
+        required: true,
     },
     minLoanDuration: {
         type: Number,
         required: true,
         min: 12,
-        max: 360
+        max: 360,
     },
     maxLoanDuration: {
         type: Number,
         required: true,
-        max: 360
+        max: 360,
     },
     loanForForeigner: {
         type: Boolean,
