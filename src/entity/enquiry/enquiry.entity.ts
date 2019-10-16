@@ -20,7 +20,7 @@ export class EnquiryClass extends BaseEntity {
                 createdAt: sortType,
             };
             let query: any = {};
-            if (userData.type === 'Tenanat' || userData.type === 'TENANT') {
+            if (userData.type === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
                 query = {
                     userId: userData._id,
                 };
@@ -29,34 +29,20 @@ export class EnquiryClass extends BaseEntity {
                     propertyOwnerId: userData._id,
                 };
             }
-            let createdAt;
-
-            // query = { propertyOwnerId: userData._id };
             if (fromDate && toDate) {
-                createdAt = {
+                query['createdAt'] = {
                     $gte: fromDate,
                     $lte: toDate,
                 };
-                query = {
-                    query,
-                    createdAt,
-                };
             }
             else if (toDate) {
-                createdAt = {
-                    $lte: new Date().getTime(),
-                };
-                query = {
-                    query,
-                    createdAt,
+                query['createdAt'] = {
+                    $lte: toDate,
                 };
             } else if (fromDate) {
-                createdAt = {
-                    $gte: new Date().getTime(),
-                };
-                query = {
-                    query,
-                    createdAt,
+                query['createdAt'] = {
+                    $gte: fromDate,
+                    $lte: new Date().getTime(),
                 };
             }
 

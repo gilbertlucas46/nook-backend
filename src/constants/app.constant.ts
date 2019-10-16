@@ -491,7 +491,7 @@ export let STATUS_MSG = {
 			PROPERTY_SOLD: {
 				statusCode: 400,
 				type: 'PROPERTY_SOLD',
-				message: 'OOPs proeprty sold ',
+				message: 'OOPs Property Sold ',
 			},
 			APP_ERROR: {
 				statusCode: 400,

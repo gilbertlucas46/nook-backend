@@ -2,7 +2,7 @@ import { ServerRoute, Request } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { UserService } from '@src/controllers';
+import { UserService, PropertyService, CityService } from '@src/controllers';
 import * as config from 'config';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
@@ -486,14 +486,15 @@ export let userRoute: ServerRoute[] = [
 	 * @description:Recent Property
 	 */
 	{
-		method: 'PATCH',
-		path: '/v1/user/recent-property',
+		method: 'GET',
+		path: '/v1/user/city-based-data',
 		async handler(request, h) {
 			try {
+				//
 				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
-				const payload: UserRequest.UpdateAccount = request.payload as any;
-				const propertyDetail = await UserService.updateAccount(payload, userData);
-				const userResponse = UniversalFunctions.formatUserData(propertyDetail);
+				const payload: UserRequest.RecentProperty = request.query as any;
+				const cityBasedData = await PropertyService.getCityBasedData(payload);
+				const userResponse = UniversalFunctions.formatUserData(cityBasedData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -501,25 +502,28 @@ export let userRoute: ServerRoute[] = [
 		},
 		options: {
 			description: 'recent-property list',
-			tags: ['api', 'anonymous', 'user', 'recent Property'],
-			auth: 'UserAuth',
+			tags: ['api', 'anonymous', 'user', 'city vise Property'],
+			auth: 'DoubleAuth',
 			validate: {
 				query: {
-					propertyType: Joi.number().valid([
-						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-						Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
-					]).default(Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER),
+					propertyType: Joi.string().valid([
+						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
+						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+					]),
+					propertyFor: Joi.number().valid([
+						Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+						Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+					]),
+					All: Joi.boolean(),
+					cityId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
 					page: Joi.number(),
 					limit: Joi.number(),
 					sortType: Joi.number().valid([
 						Constant.ENUM.SORT_TYPE,
 					]),
-					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']).default('price'),
-					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					sortBy: Joi.string().valid('price', 'date', 'isFeatured').default('price'),
+					// propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
