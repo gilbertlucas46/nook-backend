@@ -3,6 +3,8 @@ import { Types } from 'mongoose';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '@src/utils';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import { UserRequest } from '@src/interfaces/user.interface';
+import * as mongoose from 'mongoose';
 
 export class PropertyClass extends BaseEntity {
 	constructor() {
@@ -257,8 +259,8 @@ export class PropertyClass extends BaseEntity {
 					},
 				},
 				{
-					$project : {
-						saveProp : 0,
+					$project: {
+						saveProp: 0,
 					},
 				},
 			];
@@ -403,8 +405,8 @@ export class PropertyClass extends BaseEntity {
 					},
 				},
 				{
-					$project : {
-						saveProp : 0,
+					$project: {
+						saveProp: 0,
 					},
 				},
 			];
@@ -509,6 +511,90 @@ export class PropertyClass extends BaseEntity {
 
 		} catch (error) {
 			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async getPropertyViaCity(payload: UserRequest.RecentProperty) {
+		try {
+			const promise = [];
+			let { sortType, sortBy, page, limit } = payload;
+			let sortingType: any = {};
+			const { cityId, All, propertyType, propertyFor } = payload;
+			let query: any = {};
+			let data;
+			sortType = !sortType ? -1 : sortType;
+			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
+			if (!page) { page = 1; } else { page = page; }
+			const skip = (limit * (page - 1));
+
+			if (sortBy) {
+				switch (sortBy) {
+					case 'price':
+						sortBy = 'price';
+						sortingType = {
+							'property_basic_details.sale_rent_price': sortType,
+						};
+						break;
+					default:
+						sortingType = {
+							createdAt: sortType,
+						};
+				}
+			} else {
+				sortingType = {
+					createdAt: sortType,
+				};
+			}
+			if (propertyType && propertyFor) {
+				query = {
+					'property_address.cityId': mongoose.Types.ObjectId(cityId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+					'property_basic_details.type': payload.propertyType,
+					'property_basic_details.property_for_number': payload.propertyFor,
+				};
+				data = await this.DAOManager.findAllPaginate(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType });
+				return data;
+
+			} else if (All) {
+				query = {
+					'property_address.cityId': mongoose.Types.ObjectId(cityId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+
+				};
+				data = await this.DAOManager.findAllPaginate(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType });
+				return data;
+			} else {
+				query = {
+					'property_address.cityId': mongoose.Types.ObjectId(cityId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+				};
+				promise.push(this.DAOManager.findAllPaginate(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
+				const agentQuery =
+				{
+					type: 'AGENT', serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] }, isFeaturedProfile: true,
+				};
+
+				promise.push(this.DAOManager.getData('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'specializingIn_property_category, type', 'specializingIn_property_category', 'serviceAreas'],
+					{ limit, skip, $sort: { isFeaturedProfile: sortType } }));
+
+				const [latestCity, agents] = await Promise.all(promise);
+
+				const properties_In_Makati_City = {
+					'APARTMENT/CONDO FOR RENT': Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
+					'APARTMENT/CONDO FOR SALE': Constant.DATABASE.PROPERTY_FOR.SALE.DISPLAY_NAME,
+					'HOUSE AND LOT FOR RENT': Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+					'COMMERCIAL FOR RENT': Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+				};
+				return {
+					latestCity,
+					agents,
+					propertyTypeAndFor: properties_In_Makati_City,
+				};
+			}
+
+		} catch (error) {
+			console.log('error>>>>>>>>>>>>>>', error);
 			return Promise.reject(error);
 		}
 	}

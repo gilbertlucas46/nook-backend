@@ -83,7 +83,7 @@ export class UserController {
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
 			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
-			if (getPropertyData.property_status.number === 5 && getPropertyData.property_status.status === 'SOLD/RENTED') {
+			if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
 			}
 			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
