@@ -59,7 +59,7 @@ export class AgentClass extends BaseEntity {
                         };
                         break;
                     default:
-                        sortBy = 'isFeaturedProfile',
+                        sortBy = 'isFeaturedProfile';
                             sortingType = {
                                 createdAt: sortType,
                             };

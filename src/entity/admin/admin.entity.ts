@@ -51,7 +51,7 @@ export class AdminClass extends BaseEntity {
 
 	async createToken(adminData: AdminRequest.TokenPayload) {
 		try {
-			const accessToken = Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type }, cert);
+			const accessToken = Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type, permission: adminData.permission }, cert);
 			return accessToken;
 		} catch (error) {
 			return Promise.reject(error);
@@ -146,7 +146,7 @@ export class AdminClass extends BaseEntity {
 				],
 			};
 
-			const data = await this.DAOManager.aggregateData('Property', pipeline);
+			const data = this.DAOManager.aggregateData('Property', pipeline);
 			return {
 				...data[0],
 			};

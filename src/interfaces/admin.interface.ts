@@ -68,6 +68,7 @@ export namespace AdminRequest {
 		adminId: string;
 		sessionId: string;
 		type: string;
+		permission: [string]
 	}
 	export interface PropertyDetail {
 		propertyId: string;
