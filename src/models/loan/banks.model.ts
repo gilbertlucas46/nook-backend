@@ -3,10 +3,9 @@ import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS } from '../../constants';
 
 const bankSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-    userEmploymentCriteria: { type: Schema.Types.ObjectId, required: true, index: true, ref: 'UserEmployment' },
     abbrevation: { type: String },
     bankName: { type: String },
-    headquarters: { type: String },
+    headquarterLocation: { type: String },
     propertySpecification: [
         {
             allowedPropertyType: {
@@ -36,29 +35,40 @@ const bankSchema = new Schema({
     ],
     interestRateDetails: [
         {
-            fixedPeriod: { type: Schema.Types.Number, min: 1, max: 30, trim: true },
+            fixedPeriod: { type: Schema.Types.Number, min: 1, max: 360, trim: true }, // In Months
             interestRate: { type: Schema.Types.Number },
         },
     ],
-    loanProcessingFees: {
-        type: Number,                 // Percentage
+    bankFeePercent: {
+        type: Number,
         default: 0,
     },
-    minAmount: {                      // In PHP
+    bankFeeAmount: {
         type: Number,
-        default: 50000,
+        default: 0,
     },
-    maxAmount: {
-        type: Number,
-        default: 1000000000,
+    loanApplicationFeePercent: {
+        type: Number
     },
-    minLoanDuration: {                  // Months
+    loanMinAmount: {
         type: Number,
-        default: 12,
+        required: true,
+    },
+    loanMaxAmount: {
+        type: Number,
+        max: 1000000000,
+        required: true
+    },
+    minLoanDuration: {
+        type: Number,
+        required: true,
+        min: 12,
+        max: 360
     },
     maxLoanDuration: {
         type: Number,
-        default: 360,
+        required: true,
+        max: 360
     },
     loanForForeigner: {
         type: Boolean,
@@ -82,25 +92,27 @@ const bankSchema = new Schema({
     },
     minAgeRequiredForLoan: {
         type: Number,
-        default: 21,
+        min: 21,
+        max: 65,
     },
     maxAgeTillLoanCompleted: {
         type: Number,
-        default: 65,
+        min: 21,
+        max: 65,
     },
-    loanIfAlreadyExistLoanForDifferentBank: {
+    loanAlreadyExistDiffBank: {
         type: Boolean,
         default: true,
     },
-    loanIfAlreadyExistLoanForSameBank: {
+    loanAlreadyExistSameBank: {
         type: Boolean,
         default: true,
     },
-    minMonthlyIncomeForLoan: {
+    minMonthlyIncomeLoan: {
         type: Number,
-        default: 50000,
+        required: true,
     },
-    loanForMissedLoanPayment: {
+    missedLoanPaymentAllowance: {
         type: Boolean,
         default: false,
     },
