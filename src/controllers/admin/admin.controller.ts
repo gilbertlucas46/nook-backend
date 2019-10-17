@@ -20,11 +20,14 @@ export class AdminController {
 		});
 		return result[0];
 	}
-
+	/**
+	 *
+	 * @param payload 
+	 */
 	async getProperty(payload: PropertyRequest.SearchProperty) {
 		try {
-			if (!payload.property_status) payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER;
-			const getPropertyData = await ENTITY.PropertyE.getPropertyList(payload);
+			// if (!payload.property_status) payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER;
+			const getPropertyData = await ENTITY.AdminE.getPropertyList(payload);
 			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
 			return getPropertyData;
 		} catch (error) {
@@ -32,6 +35,10 @@ export class AdminController {
 			return Promise.reject(error);
 		}
 	}
+	/**
+	 *
+	 * @param payload property detail by _id
+	 */
 
 	async getPropertyById(payload: AdminRequest.PropertyDetail) {
 		try {

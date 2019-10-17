@@ -12,6 +12,11 @@ import { AdminRequest } from '@src/interfaces/admin.interface';
  */
 
 export class AdminProfileController {
+	/**
+	 *
+	 * @param payload login
+	 * @description login via email or userName
+	 */
 
 	async login(payload: AdminRequest.Login) {
 		try {
@@ -41,6 +46,11 @@ export class AdminProfileController {
 			return Promise.reject(err);
 		}
 	}
+	/**
+	 *
+	 * @param payload  profile detail
+	 */
+
 	async profile(payload) {
 		try {
 			const criteria = {
@@ -64,7 +74,10 @@ export class AdminProfileController {
 			return Promise.reject(err);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload admin forgetpassword link
+	 */
 	async forgetPassword(payload: AdminRequest.ForgetPassword) {
 		try {
 			const criteria = {
@@ -85,7 +98,11 @@ export class AdminProfileController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload new password
+	 * @param adminData via_id
+	 */
 	async changePassword(payload: AdminRequest.ChangePassword, adminData: AdminRequest.AdminData) {
 		try {
 			const criteria = {
@@ -109,7 +126,10 @@ export class AdminProfileController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload  new password for reset
+	 */
 	async verifyLinkForResetPwd(payload) {
 		try {
 			const result = Jwt.verify(payload.token, cert, { algorithms: ['HS256'] });
@@ -140,7 +160,10 @@ export class AdminProfileController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload link for verification
+	 */
 	async verifyLink(payload) {
 		try {
 			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });

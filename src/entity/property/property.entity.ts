@@ -514,10 +514,14 @@ export class PropertyClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+	/**
+	 * 
+	 * @param payload 
+	 */
 
 	async getPropertyViaCity(payload: UserRequest.RecentProperty) {
 		try {
-			const promise = [];
+			const promiseArray = [];
 			let { sortType, sortBy, page, limit } = payload;
 			let sortingType: any = {};
 			const { cityId, All, propertyType, propertyFor } = payload;
@@ -560,7 +564,6 @@ export class PropertyClass extends BaseEntity {
 				query = {
 					'property_address.cityId': mongoose.Types.ObjectId(cityId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-
 				};
 				data = await this.DAOManager.findAllPaginate(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType });
 				return data;
@@ -569,16 +572,18 @@ export class PropertyClass extends BaseEntity {
 					'property_address.cityId': mongoose.Types.ObjectId(cityId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 				};
-				promise.push(this.DAOManager.findAllPaginate(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
+				promiseArray.push(this.DAOManager.findAllPaginate(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
+				promiseArray.push(this.DAOManager.count(this.modelName, query));
 				const agentQuery =
 				{
 					type: 'AGENT', serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] }, isFeaturedProfile: true,
 				};
 
-				promise.push(this.DAOManager.getData('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'specializingIn_property_category, type', 'specializingIn_property_category', 'serviceAreas'],
+				promiseArray.push(this.DAOManager.getData('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'specializingIn_property_category, type', 'specializingIn_property_category', 'serviceAreas'],
 					{ limit, skip, $sort: { isFeaturedProfile: sortType } }));
+				promiseArray.push(this.DAOManager.count('User', agentQuery));
 
-				const [latestCity, agents] = await Promise.all(promise);
+				const [latestCity, latestCityCount, agents, agentCount] = await Promise.all(promiseArray);
 
 				const properties_In_Makati_City = {
 					'APARTMENT/CONDO FOR RENT': Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
@@ -588,7 +593,9 @@ export class PropertyClass extends BaseEntity {
 				};
 				return {
 					latestCity,
+					latestCityCount,
 					agents,
+					agentCount,
 					propertyTypeAndFor: properties_In_Makati_City,
 				};
 			}

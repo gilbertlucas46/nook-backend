@@ -224,7 +224,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		},
 	},
 	/**
-	 * @description : reset-password send the verify token adnd the password in the query
+	 * @description : reset-password send the verify token and the password in the query
 	 */
 	{
 		method: 'PATCH',
@@ -235,15 +235,6 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
-				// if (error.JsonWebTokenError) {
-				// 	return h.redirect(config.get('invalidUrl') + 'invalid url');
-				// } else if (error === 'Already_Changed') {
-				// 	return h.redirect(config.get('invalidUrl') + 'Already_Changed');
-				// } else if (error === 'Time_Expired') {
-				// 	return h.redirect(config.get('invalidUrl') + 'Oops Time_Expired');
-				// } else {
-				// 	return h.redirect(config.get('invalidUrl') + 'Something went wrong');
-				// }
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -264,7 +255,10 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-
+	/**
+	 *
+	 * @param payload property and filtering
+	 */
 	{
 		method: 'GET',
 		path: '/v1/admin/property',
@@ -300,16 +294,18 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 					]),
-					type: Joi.string(),
+					property_type: Joi.string().trim().valid([
+						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
+						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+						Constant.DATABASE.PROPERTY_TYPE.LAND,
+						Constant.DATABASE.PROPERTY_TYPE.ROOM,
+					]),
+					// type: Joi.string(),
 					label: Joi.array(),
 					minPrice: Joi.number(),
 					maxPrice: Joi.number(),
 					propertyType: Joi.number(),
-					bedrooms: Joi.number(),
-					bathrooms: Joi.number(),
-					minArea: Joi.number(),
-					maxArea: Joi.number(),
-					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					byCity: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					byRegion: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 				},
@@ -323,7 +319,9 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-
+	/**
+	 * @Description: property detail by id
+	 */
 	{
 		method: 'GET',
 		path: '/v1/admin/property/{propertyId}',
@@ -356,7 +354,9 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-
+	/**
+	 * @Description:approve property request accept or decline
+	 */
 	{
 		method: 'PATCH',
 		path: '/v1/admin/property/{propertyId}',
@@ -367,7 +367,6 @@ export let adminProfileRoute: ServerRoute[] = [
 					status: (request.payload as any).status,
 					propertyId: request.params.propertyId,
 				};
-
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
 				const responseData = await AdminService.updatePropertyStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
@@ -399,7 +398,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-
 	/**
 	 * @Description:admin logout
 	 */
@@ -435,7 +433,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		},
 	},
 	/**
-	 * admin DASHBOARD
+	 * @Description:admin dashboard
 	 */
 	{
 		method: 'GET',

@@ -83,4 +83,29 @@ export namespace AdminRequest {
 		deviceId?: string;
 
 	}
+
+	export interface SearchProperty {
+		page?: number;
+		limit?: number;
+		sortBy?: string;
+		searchTerm?: string;
+		sortType?: number;
+		fromDate?: number;
+		toDate?: number;
+		propertyType?: number;
+		propertyId?: string;
+		property_type?: string;
+		label?: string[];
+		maxPrice?: number;
+		minPrice?: number;
+		bedrooms?: number;
+		bathrooms?: number;
+		minArea?: number;
+		maxArea?: number;
+		property_status?: number;
+		property_features?: string[];
+		byRegion?: string;
+		byCity?: string;
+	}
+
 }
