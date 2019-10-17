@@ -23,9 +23,14 @@ export class AdminProfileController {
 			let email: string = payload.email;
 			if (email) { email = email.trim().toLowerCase(); }
 			const checkData = { email };
-			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email']);
+			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type','password','permission', '_id', 'email', 'staffStatus']);
 			// check email
-			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
+			if (!adminData) {
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
+			}
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
+			}
 			if (!(await utils.deCryptData(payload.password, adminData.password))) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
 			}
@@ -34,8 +39,8 @@ export class AdminProfileController {
 			const tokenObj = {
 				adminId: adminData._id,
 				sessionId: sessionObj._id,
-				type: Constant.DATABASE.USER_TYPE.ADMIN.TYPE,
-				permission: adminData.permission,
+				type: adminData.type,
+				permission: adminData.permission
 			};
 			const accessToken = await ENTITY.AdminE.createToken(tokenObj);
 			return { formatedData: adminData, accessToken };

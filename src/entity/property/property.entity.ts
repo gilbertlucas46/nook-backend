@@ -507,7 +507,7 @@ export class PropertyClass extends BaseEntity {
 
 			const popularCities = await this.DAOManager.aggregateData(this.modelName, pipeline);
 			if (!popularCities) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
-			return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, popularCities
+			return popularCities;
 
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -522,6 +522,7 @@ export class PropertyClass extends BaseEntity {
 	async getPropertyViaCity(payload: UserRequest.RecentProperty) {
 		try {
 			const promiseArray = [];
+			let latestCity, latestCityCount, agents, agentCount, total;
 			let { sortType, sortBy, page, limit } = payload;
 			let sortingType: any = {};
 			const { cityId, All, propertyType, propertyFor } = payload;
@@ -547,7 +548,7 @@ export class PropertyClass extends BaseEntity {
 				}
 			} else {
 				sortingType = {
-					createdAt: sortType,
+					approvedAt: sortType,
 				};
 			}
 			if (propertyType && propertyFor) {
@@ -557,32 +558,39 @@ export class PropertyClass extends BaseEntity {
 					'property_basic_details.type': payload.propertyType,
 					'property_basic_details.property_for_number': payload.propertyFor,
 				};
-				data = await this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType });
-				return data;
+				data = promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
+				total = promiseArray.push(this.DAOManager.count(this.modelName, query));
+				[data, total] = await Promise.all(promiseArray);
+				return { data, total };
 
 			} else if (All) {
 				query = {
 					'property_address.cityId': mongoose.Types.ObjectId(cityId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 				};
-				data = await this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType });
-				return data;
+				data = promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
+				total = promiseArray.push(this.DAOManager.count(this.modelName, query));
+				[data, total] = await Promise.all(promiseArray);
+				return { data, total };
 			} else {
 				query = {
 					'property_address.cityId': mongoose.Types.ObjectId(cityId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 				};
 				promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
+				promiseArray.push(this.DAOManager.count(this.modelName, query));
+
 				const agentQuery =
 				{
-					type: 'AGENT', serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] }, isFeaturedProfile: true,
+					type: 'AGENT', serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] },
+					isFeaturedProfile: true,
 				};
 
-				promiseArray.push(this.DAOManager.getData('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'specializingIn_property_category, type', 'specializingIn_property_category', 'serviceAreas'],
+				promiseArray.push(this.DAOManager.findAll('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'specializingIn_property_category, type', 'specializingIn_property_category', 'serviceAreas'],
 					{ limit, skip, $sort: { isFeaturedProfile: sortType } }));
 				promiseArray.push(this.DAOManager.count('User', agentQuery));
 
-				const [latestCity, latestCityCount, agents, agentCount] = await Promise.all(promiseArray);
+				[latestCity, latestCityCount, agents, agentCount] = await Promise.all(promiseArray);
 
 				const properties_In_Makati_City = {
 					'APARTMENT/CONDO FOR RENT': Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],

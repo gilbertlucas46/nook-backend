@@ -22,6 +22,7 @@
       "./node_modules/@types"
     ],
     "paths": {
+        "@types/*": ["types/*"],
       "@src/*": [
         "src/*"
       ]
