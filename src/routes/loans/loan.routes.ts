@@ -49,10 +49,7 @@ export let loanRoute: ServerRoute[] = [
 							maxLoanPercent: Joi.number().min(3).max(80),
 							debtIncomeRatio: Joi.number().min(0).max(100).required()
 						}).required(),
-						interestRateDetails: Joi.array().items({
-							fixedPeriod: Joi.number().min(12).max(360).required(),
-							interestRate: Joi.number().required()
-						}).required(),
+						interestRateDetails: Joi.object().required(),
 						bankFeePercent: Joi.number(),
 						bankFeeAmount: Joi.number(),
 						debtIncomeRatio: Joi.number().max(100),

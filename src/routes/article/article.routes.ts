@@ -309,8 +309,12 @@ export let articleRoutes = [
         path: '/v1/admin/articles/{articleId}',
         handler: async (request, h) => {
             try {
+                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 const payload: ArticleRequest.DeleteArticle = request.params;
-                await ArticleService.deleteArticle(payload);
+                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+					await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+				}
+                const registerResponse = await ArticleService.deleteArticle(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
