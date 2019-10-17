@@ -35,12 +35,7 @@ const bankSchema = new Schema({
             debtIncomeRatio: { type: Number, required: true, max: 100 } //percentage
         },
     ],
-    interestRateDetails: [
-        {
-            fixedPeriod: { type: Schema.Types.Number, min: 1, max: 360, trim: true }, // In Months
-            interestRate: { type: Schema.Types.Number },
-        },
-    ],
+    interestRateDetails: { type: Object },
     bankFeePercent: {
         type: Number,
         min: 0,
