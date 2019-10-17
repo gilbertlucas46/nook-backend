@@ -16,10 +16,9 @@ export class AdminProfileController {
 	async login(payload: AdminRequest.Login) {
 		try {
 			let email: string = payload.email;
-			if (email) {
-				email = email.trim().toLowerCase();
-			}
+			if (email) { email = email.trim().toLowerCase(); }
 			const checkData = { email };
+<<<<<<< HEAD
 			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type','password','permission', '_id', 'email', 'staffStatus']);
 			// check email
 			if (!adminData) {
@@ -28,6 +27,11 @@ export class AdminProfileController {
 			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
 			}
+=======
+			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email']);
+			// check email
+			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
+>>>>>>> c3d5e7569ec1f8387fe25ce495b9f07dcc778aa5
 			if (!(await utils.deCryptData(payload.password, adminData.password))) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
 			}
@@ -36,8 +40,13 @@ export class AdminProfileController {
 			const tokenObj = {
 				adminId: adminData._id,
 				sessionId: sessionObj._id,
+<<<<<<< HEAD
 				type: adminData.type,
 				permission: adminData.permission
+=======
+				type: Constant.DATABASE.USER_TYPE.ADMIN.TYPE,
+				permission: adminData.permission,
+>>>>>>> c3d5e7569ec1f8387fe25ce495b9f07dcc778aa5
 			};
 			const accessToken = await ENTITY.AdminE.createToken(tokenObj);
 			return { formatedData: adminData, accessToken };
@@ -48,9 +57,7 @@ export class AdminProfileController {
 
 	async profile(payload) {
 		try {
-			const criteria = {
-				_id: payload._id,
-			};
+			const criteria = { _id: payload._id };
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode']);
 			return adminData;
 		} catch (err) {
@@ -60,9 +67,7 @@ export class AdminProfileController {
 
 	async editProfile(payload: AdminRequest.ProfileUpdate, adminData) {
 		try {
-			const criteria = {
-				_id: adminData._id,
-			};
+			const criteria = { _id: adminData._id };
 			const updateAdmin = await ENTITY.AdminE.updateOneEntity(criteria, payload);
 			return updateAdmin;
 		} catch (err) {
@@ -72,9 +77,7 @@ export class AdminProfileController {
 
 	async forgetPassword(payload: AdminRequest.ForgetPassword) {
 		try {
-			const criteria = {
-				email: payload.email.trim().toLowerCase(),
-			};
+			const criteria = { email: payload.email.trim().toLowerCase() };
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id']);
 			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
@@ -93,9 +96,7 @@ export class AdminProfileController {
 
 	async changePassword(payload: AdminRequest.ChangePassword, adminData: AdminRequest.AdminData) {
 		try {
-			const criteria = {
-				_id: adminData._id,
-			};
+			const criteria = { _id: adminData._id };
 			const password = await ENTITY.AdminE.getOneEntity(criteria, ['password']);
 			if (!(await utils.deCryptData(payload.oldPassword, password.password))) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD);

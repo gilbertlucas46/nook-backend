@@ -17,7 +17,6 @@ export let savedProperty: ServerRoute[] = [
                 const payload: SavePropertyRequest.SaveProperty = request.payload as object;
                 const data = await SavedPropertyServices.saveProperty(payload, userData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
-                // let a = request.payload;
             } catch (error) {
                 console.log('error', error);
                 return UniversalFunctions.sendError(error);
@@ -29,7 +28,6 @@ export let savedProperty: ServerRoute[] = [
             tags: ['api', 'users'],
             auth: 'UserAuth',
             validate: {
-                // How do I include something like the schema above as an either/or payload attribute?
                 payload: {
                     propertyId: Joi.string(),
                 },
@@ -40,7 +38,6 @@ export let savedProperty: ServerRoute[] = [
             plugins: {
                 'hapi-swagger': {
                     responseMessages: Constant.swaggerDefaultResponseMessages,
-                    // payloadType: 'form',
                 },
             },
         },
@@ -54,7 +51,6 @@ export let savedProperty: ServerRoute[] = [
                 const payload: SavePropertyRequest.SavePropertyList = request.query;
                 const data = await SavedPropertyServices.savePropertyList(payload, userData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
-                // let a = request.payload;
             } catch (error) {
                 console.log('error', error);
                 return UniversalFunctions.sendError(error);
@@ -78,7 +74,6 @@ export let savedProperty: ServerRoute[] = [
             plugins: {
                 'hapi-swagger': {
                     responseMessages: Constant.swaggerDefaultResponseMessages,
-                    // payloadType: 'form',
                 },
             },
         },

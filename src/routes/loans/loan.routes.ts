@@ -2,8 +2,7 @@ import { ServerRoute, Request, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { PropertyService, LoanController } from '@src/controllers';
-import { PropertyRequest } from '@src/interfaces/property.interface';
+import { LoanController } from '@src/controllers';
 import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK } from '@src/constants';
 
 export let loanRoute: ServerRoute[] = [
@@ -122,4 +121,4 @@ export let loanRoute: ServerRoute[] = [
 			},
 		},
 	},
-]
+];

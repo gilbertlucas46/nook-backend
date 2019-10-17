@@ -5,7 +5,6 @@ import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as CONSTANT from '../../constants';
 import { AdminStaffController } from '../../controllers';
-import * as config from 'config';
 
 export let subAdminRoutes: ServerRoute[] = [
 	{
@@ -39,7 +38,7 @@ export let subAdminRoutes: ServerRoute[] = [
 					])).required()
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction
+				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
 				'hapi-swagger': {
@@ -73,10 +72,10 @@ export let subAdminRoutes: ServerRoute[] = [
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
-					])).required()
+					])).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction
+				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
 				'hapi-swagger': {
@@ -104,7 +103,7 @@ export let subAdminRoutes: ServerRoute[] = [
 			// auth: 'AdminAuth',
 			validate: {
 				payload: {
-					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
+					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -122,11 +121,9 @@ export let subAdminRoutes: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				console.log(adminData, "!!!!!!!!!");
 				const payload: any = request.params;
 				await AdminStaffController.deleteStaff(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
-
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
@@ -180,7 +177,7 @@ export let subAdminRoutes: ServerRoute[] = [
 					limit: Joi.number(),
 					sortBy: Joi.string(),
 					permission: Joi.string().valid([
-						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF
+						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 					]).required(),
 					sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
 					searchTerm: Joi.string(),
@@ -197,4 +194,4 @@ export let subAdminRoutes: ServerRoute[] = [
 			},
 		},
 	},
-]
+];

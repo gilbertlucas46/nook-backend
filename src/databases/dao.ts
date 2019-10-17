@@ -41,7 +41,8 @@ export class DAOManager {
 	async getData(model: ModelNames, query: any, projection: any, options: any) {
 		try {
 			const ModelName: Model<any> = Models[model];
-			return await ModelName.find(query, projection, options);
+			const data = ModelName.find(query, projection, options);
+			return data;
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -74,20 +75,11 @@ export class DAOManager {
 		}
 	}
 
-	async findAllPaginate(model: ModelNames, query, projection, options) {
-		try {
-			const ModelName: Model<any> = Models[model];
-			return await ModelName.find(query, projection, options).exec();
-		} catch (error) {
-			return Promise.reject(error);
-		}
-	}
-
 	async findAndUpdate(model: ModelNames, conditions, update, options?) {
 		try {
 			update['updatedAt'] = new Date().getTime();
 			const ModelName: Model<any> = Models[model];
-			return await ModelName.findOneAndUpdate(conditions, update, options);
+			return ModelName.findOneAndUpdate(conditions, update, options);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -96,7 +88,7 @@ export class DAOManager {
 	async findAndRemove(model: ModelNames, conditions, options?) {
 		try {
 			const ModelName: Model<any> = Models[model];
-			return await ModelName.findOneAndRemove(conditions, options);
+			return ModelName.findOneAndRemove(conditions, options);
 		} catch (error) {
 			return Promise.reject(error);
 		}

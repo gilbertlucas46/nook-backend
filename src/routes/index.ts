@@ -24,6 +24,5 @@ export let Routes: ServerRoute[] = [
 	...helpCenterRoute,
 	...savedProperty,
 	...subAdminRoutes,
-	...loanRoute
+	...loanRoute,
 ];
-

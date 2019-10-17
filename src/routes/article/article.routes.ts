@@ -141,7 +141,6 @@ export let articleRoutes = [
         path: '/v1/articles/{articleId}',
         handler: async (request, h) => {
             try {
-                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const payload: ArticleRequest.GetArticleById = request.params;
                 const registerResponse = await ArticleService.getArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -258,7 +257,6 @@ export let articleRoutes = [
                         Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
                     ]),
-                    // articleId: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -270,15 +268,16 @@ export let articleRoutes = [
             },
         },
     },
-
-    /** */
     {
         method: 'GET',
         path: '/v1/admin/articles/{articleId}',
         handler: async (request, h) => {
             try {
+<<<<<<< HEAD
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
+=======
+>>>>>>> c3d5e7569ec1f8387fe25ce495b9f07dcc778aa5
                 const payload: ArticleRequest.GetArticleById = request.params;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 					await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
@@ -308,20 +307,22 @@ export let articleRoutes = [
             },
         },
     },
-
-    /** */
-
     {
         method: 'DELETE',
         path: '/v1/admin/articles/{articleId}',
         handler: async (request, h) => {
             try {
+<<<<<<< HEAD
                 const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 const payload: ArticleRequest.DeleteArticle = request.params;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 					await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
 				}
                 const registerResponse = await ArticleService.deleteArticle(payload);
+=======
+                const payload: ArticleRequest.DeleteArticle = request.params;
+                await ArticleService.deleteArticle(payload);
+>>>>>>> c3d5e7569ec1f8387fe25ce495b9f07dcc778aa5
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
