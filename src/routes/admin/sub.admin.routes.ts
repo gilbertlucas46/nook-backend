@@ -5,6 +5,7 @@ import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as CONSTANT from '../../constants';
 import { AdminStaffController } from '../../controllers';
+import { AdminProfileController, AdminProfileService } from '@src/controllers/admin/adminProfile.controller';
 
 export let subAdminRoutes: ServerRoute[] = [
 	{
@@ -183,6 +184,43 @@ export let subAdminRoutes: ServerRoute[] = [
 					searchTerm: Joi.string(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	/**
+	 * @description :Admin Staff Listing
+	 */
+	{
+		method: 'GET',
+		path: '/v1/admin/staff/{_id}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload: any = request.params;
+				if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
+					await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
+				}
+				const registerResponse = await AdminProfileService.profile(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Get Admin Profile',
+			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

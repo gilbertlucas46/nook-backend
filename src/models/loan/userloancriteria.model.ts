@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK } from '../../constants';
 
-const UserEmploymentCriteria = new Schema({
+const UserLoanCriteria = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     bankId: { type: Schema.Types.ObjectId, required: true, index: true, ref: 'Bank' },
     LoanForEmploymentType: [
@@ -53,4 +53,4 @@ const UserEmploymentCriteria = new Schema({
     updatedAt: { type: Number, required: true },
 });
 
-export const UserEmployment = model('useremployment', UserEmploymentCriteria);
+export const Userloancriteria = model('userloancriteria', UserLoanCriteria);

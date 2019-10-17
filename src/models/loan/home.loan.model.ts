@@ -60,15 +60,6 @@ const schema = new Schema({
         regionName: { type: Schema.Types.String },
         cityName: { type: Schema.Types.String },
         barangay: { type: Schema.Types.String },
-        location: {
-            type: {
-                type: Schema.Types.String,
-                default: 'Point',
-            },
-            coordinates: {
-                type: [Number],
-            },
-        },
         homeOwnership: {
             type: Schema.Types.String, enum: [
                 CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
