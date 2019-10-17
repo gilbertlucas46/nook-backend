@@ -70,7 +70,7 @@ export let articleRoutes = [
         options: {
             description: 'get articles for user application',
             tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-            // auth: 'UserAuth',
+            auth: 'DoubleAuth',
             validate: {
                 query: {
                     limit: Joi.number(),
@@ -87,7 +87,7 @@ export let articleRoutes = [
                     ]),
                     articleId: Joi.string(),
                 },
-                // headers: UniversalFunctions.authorizationHeaderObj,
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {
@@ -115,7 +115,7 @@ export let articleRoutes = [
         options: {
             description: 'get articles for user application',
             tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-            // auth: 'AdminAuth',
+            auth: 'DoubleAuth',
             validate: {
                 query: {
                     limit: Joi.number(),
@@ -149,12 +149,12 @@ export let articleRoutes = [
         options: {
             description: 'get articles for user application',
             tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-            // auth: 'UserAuth',
+            auth: 'DoubleAuth',
             validate: {
                 params: {
                     articleId: Joi.string(),
                 },
-                // headers: UniversalFunctions.authorizationHeaderObj,
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {
@@ -292,8 +292,6 @@ export let articleRoutes = [
             },
         },
     },
-
-    /** */
 
     {
         method: 'DELETE',
