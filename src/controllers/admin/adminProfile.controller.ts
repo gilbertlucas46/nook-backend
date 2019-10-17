@@ -47,7 +47,7 @@ export class AdminProfileController {
 	async profile(payload) {
 		try {
 			const criteria = { _id: payload._id };
-			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode']);
+			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
 			return adminData;
 		} catch (err) {
 			return Promise.reject(err);

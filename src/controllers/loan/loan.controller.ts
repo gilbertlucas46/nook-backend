@@ -2,7 +2,7 @@ import * as ENTITY from '@src/entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
 import { DAOManager } from '@src/databases/dao';
-import { UserEmployment } from '@src/models';
+import { Userloancriteria } from '@src/models';
 import { BaseEntity } from '@src/entity/base/base.entity';
 
 class LoanControllers extends BaseEntity {
@@ -20,6 +20,10 @@ class LoanControllers extends BaseEntity {
         } catch (error) {
             return Promise.reject(error)
         }
+    }
+
+    async addLoanApplication(payload) {
+        
     }
 
 }

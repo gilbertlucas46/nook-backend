@@ -10,6 +10,6 @@ export type ModelNames = 'User' |
     'HelpCenter' |
     'SavedProperty' |
     'Bank' |
-    'UserEmployment' |
+    'Userloancriteria' |
     'HomeLoan'
     ;

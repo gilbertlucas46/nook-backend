@@ -11,4 +11,4 @@ export { HelpCentre } from './helpCenter.model';
 export { SavedProperty } from './savedProperty.model';
 export { HomeLoan } from './loan/home.loan.model';
 export { Bank } from './loan/banks.model';
-export { UserEmployment } from './loan/userElegibility.model';
+export { Userloancriteria } from './loan/userloancriteria.model';
