@@ -287,10 +287,6 @@ export let articleRoutes = [
             },
         },
     },
-<<<<<<< HEAD
-
-=======
->>>>>>> c3d5e7569ec1f8387fe25ce495b9f07dcc778aa5
     {
         method: 'DELETE',
         path: '/v1/admin/articles/{articleId}',
