@@ -46,7 +46,6 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/user/help-center/{id}',
         handler: async (request, h) => {
             try {
-                // const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload: helpCenterRequest.GetHelpCenter = request.params as any;
                 const data = await HelpCenterService.getHelpCenter(payload);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
@@ -61,12 +60,6 @@ export let helpCenterRoute: ServerRoute[] = [
             validate: {
                 params: {
                     id: Joi.string(),
-                    // categoryId: Joi.number().valid([
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                    // ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -78,7 +71,6 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/admin/help-center/{id}',
         handler: async (request, h) => {
             try {
-                // const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload: helpCenterRequest.GetHelpCenter = request.params as any;
                 const data = await HelpCenterService.getHelpCenter(payload);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
@@ -93,12 +85,6 @@ export let helpCenterRoute: ServerRoute[] = [
             validate: {
                 params: {
                     id: Joi.string(),
-                    // categoryId: Joi.number().valid([
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                    // ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -111,7 +97,6 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/admin/help-center/{id}',
         handler: async (request, h) => {
             try {
-                // const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
                 const data = await HelpCenterService.deleteHelpCenter(payload);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, data);
@@ -143,7 +128,6 @@ export let helpCenterRoute: ServerRoute[] = [
                     ...request.params,
                     ...request.payload as object,
                 };
-                // const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
                 const data = await HelpCenterService.updateHelpCenter(payload, adminData);
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData);
@@ -205,8 +189,6 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/admin/help-center-group/{id}',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
-                // const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
                 const payload = Number(request.params.id);
                 const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
                 const responseData = UniversalFunction.formatUserData(data);
@@ -239,8 +221,6 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/user/help-center-group/{id}',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
-                // const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
                 const payload = Number(request.params.id);
                 const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
                 const responseData = UniversalFunction.formatUserData(data);

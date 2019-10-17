@@ -48,6 +48,22 @@ export const AdminSchema = new Schema(
 		isPhoneVerified: { type: Boolean },
 		passwordResetToken: { type: String },
 		passwordResetTokenExpirationTime: { type: Date },
+		staffLoggedIn: { type: Boolean, default: false },
+		staffStatus: {
+			type: String, enum: [
+				CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+				CONSTANT.DATABASE.STATUS.USER.DELETED,
+				CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+			]
+		},
+		permission: {
+			type: [String], enum: [
+				CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
+				CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
+				CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+				CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
+			]
+		},
 		createdAt: { type: Number, required: true },
 		updatedAt: { type: Number, required: true },
 		type: {
