@@ -42,10 +42,6 @@ export let enquiryRoutes: ServerRoute[] = [
 	// 		},
 	// 	},
 	// },
-
-	/**
-	 *
-	 */
 	{
 		method: 'POST',
 		path: '/v1/user/enquiry',
@@ -86,7 +82,6 @@ export let enquiryRoutes: ServerRoute[] = [
 			},
 		},
 	},
-
 	{
 		method: 'GET',
 		path: '/v1/user/enquiry',
@@ -121,9 +116,6 @@ export let enquiryRoutes: ServerRoute[] = [
 			},
 		},
 	},
-	/**
-	 * @description : ''
-	 */
 	{
 		method: 'GET',
 		path: '/v1/user/enquiry/{enquiryId}',

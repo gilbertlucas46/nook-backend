@@ -17,8 +17,6 @@ export class EnquiryController {
      */
     async createEnquiry(payload: EnquiryRequest.CreateEnquiry, userData?) {
         try {
-            console.log('payload', payload);
-
             let dataToSave;
             let enquiryData;
             if (payload.agentEmail) {
@@ -105,9 +103,7 @@ export class EnquiryController {
 
     async getEnquiryById(payload: EnquiryRequest.GetInquiryById) {
         try {
-            const criteria = {
-                _id: payload.enquiryId,
-            };
+            const criteria = { _id: payload.enquiryId };
             const getData = await ENTITY.EnquiryE.getOneEntity(criteria, {});
             return getData;
 
