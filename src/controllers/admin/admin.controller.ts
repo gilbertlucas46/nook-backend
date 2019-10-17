@@ -22,7 +22,7 @@ export class AdminController {
 	}
 	/**
 	 *
-	 * @param payload 
+	 * @param payload
 	 */
 	async getProperty(payload: PropertyRequest.SearchProperty) {
 		try {
@@ -35,9 +35,10 @@ export class AdminController {
 			return Promise.reject(error);
 		}
 	}
+
 	/**
-	 *
-	 * @param payload property detail by _id
+	 * @param payload
+	 * @description This function is used to fetch property details using propertyId.
 	 */
 
 	async getPropertyById(payload: AdminRequest.PropertyDetail) {

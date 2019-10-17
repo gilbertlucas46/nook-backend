@@ -54,7 +54,7 @@ export const AdminSchema = new Schema(
 				CONSTANT.DATABASE.STATUS.USER.ACTIVE,
 				CONSTANT.DATABASE.STATUS.USER.DELETED,
 				CONSTANT.DATABASE.STATUS.USER.BLOCKED,
-			]
+			],
 		},
 		permission: {
 			type: [String], enum: [
@@ -62,7 +62,7 @@ export const AdminSchema = new Schema(
 				CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 				CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 				CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
-			]
+			],
 		},
 		createdAt: { type: Number, required: true },
 		updatedAt: { type: Number, required: true },
