@@ -14,13 +14,15 @@ export let sendError = (data: any) => {
 		(data.hasOwnProperty('message') || data.hasOwnProperty('customMessage'))
 	) {
 		let errorToSend: Boom;
-		if (data.hasOwnProperty('message')) {
-			const error = new Error(data.message);
-			errorToSend = Boom.boomify(error, { statusCode: data.statusCode });
-		} else {
-			const error = new Error(data.message);
-			errorToSend = Boom.boomify(error, { statusCode: data.statusCode });
-		}
+		// if (data.hasOwnProperty('message')) {
+		// 	const error = new Error(data.message);
+		// 	errorToSend = Boom.boomify(error, { statusCode: data.statusCode });
+		// } else {
+		// 	const error = new Error(data.message);
+		// 	errorToSend = Boom.boomify(error, { statusCode: data.statusCode });
+		// }
+		const error = new Error(data.message);
+		errorToSend = Boom.boomify(error, { statusCode: data.statusCode });
 		(errorToSend.output.payload as any).responseType = data.type;
 		return errorToSend;
 	} else {
