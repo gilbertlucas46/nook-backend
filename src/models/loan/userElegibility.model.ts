@@ -18,7 +18,7 @@ const UserEmploymentCriteria = new Schema({
                 ],
             },
             employmentRank: {
-                type: String,
+                type: [String],
                 enum: [
                     EMPLOYMENT_RANK.ASSISSTANT_VICE_PRESIDENT.value,
                     EMPLOYMENT_RANK.ASSISTANT_MANAGER.value,
