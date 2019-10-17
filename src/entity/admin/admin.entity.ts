@@ -5,8 +5,10 @@ import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
+import * as Mongoose from 'mongoose';
 
 /**
  * @author
@@ -16,6 +18,7 @@ export class AdminClass extends BaseEntity {
 	constructor() {
 		super('Admin');
 	}
+
 	async createAdmin(adminData: AdminRequest.AdminData) {
 		try {
 			const dataToInsert = {
@@ -34,6 +37,11 @@ export class AdminClass extends BaseEntity {
 		}
 	}
 
+	/**
+	 *
+	 * @param adminData
+	 * @description:default admin creator
+	 */
 	async adminAccountCreator() {
 		const toSave = {
 			name: 'Base Admin',
@@ -51,7 +59,7 @@ export class AdminClass extends BaseEntity {
 
 	async createToken(adminData: AdminRequest.TokenPayload) {
 		try {
-			const accessToken = Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type, permission: adminData.permission }, cert);
+			const accessToken = Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type }, cert);
 			return accessToken;
 		} catch (error) {
 			return Promise.reject(error);
@@ -83,6 +91,11 @@ export class AdminClass extends BaseEntity {
 			Promise.reject(error);
 		}
 	}
+	/**
+	 *
+	 * @param adminData
+	 * @description : admin dashboard
+	 */
 	async adminDashboard(adminData) {
 		try {
 			const pipeline = [
@@ -146,7 +159,7 @@ export class AdminClass extends BaseEntity {
 				],
 			};
 
-			const data = this.DAOManager.aggregateData('Property', pipeline);
+			const data = await this.DAOManager.aggregateData('Property', pipeline);
 			return {
 				...data[0],
 			};
@@ -156,6 +169,110 @@ export class AdminClass extends BaseEntity {
 		}
 	}
 
+	async getPropertyList(payload: AdminRequest.SearchProperty) {
+		try {
+			const pipeline = [];
+			console.log('payload: payload: ', payload);
+			let { page, limit, sortBy, sortType } = payload;
+			const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, property_type } = payload;
+			if (!limit) { limit = CONSTANT.SERVER.LIMIT; } else { limit = limit; }
+			if (!page) { page = 1; } else { page = page; }
+			let sortingType = {};
+			sortType = !sortType ? -1 : sortType;
+			let matchObject: any = {};
+			const searchCriteria = {};
+			const skip = (limit * (page - 1));
+
+			if (sortBy) {
+				switch (sortBy) {
+					case 'price':
+						sortBy = 'price';
+						sortingType = {
+							'property_basic_details.sale_rent_price': sortType,
+						};
+						break;
+					case 'isFeatured':
+						sortBy = 'isFeatured';
+						sortingType = {
+							isFeatured: sortType,
+						};
+						break;
+					default:
+						sortBy = 'createdAt';
+						sortingType = {
+							updatedAt: sortType,
+						};
+						break;
+				}
+			} else {
+				sortBy = 'approvedAt';
+				sortingType = {
+					updatedAt: sortType,
+				};
+			}
+
+			if (searchTerm) {
+				matchObject = {
+					$or: [
+						{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
+						{ 'property_address.cityName': new RegExp('.*' + searchTerm + '.*', 'i') },
+						// { 'property_added_by.userName': new RegExp('.*' + searchTerm + '.*', 'i') },
+						{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
+						{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
+						// { 'property_added_by.firstName': new RegExp('.*' + searchTerm + '.*', 'i') },
+						// { 'property_added_by.lastName': new RegExp('.*' + searchTerm + '.*', 'i') },
+					],
+				};
+			}
+
+			// // List of all properties for admin.
+			if (!property_status) {
+				matchObject = {
+					$or: [
+						{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER },
+						{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
+						{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER },
+						{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
+						{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER },
+					],
+				};
+			}
+
+			if (property_status) {
+				matchObject['property_status.number'] = payload.property_status;
+			}
+			// console.log('matchObjectmatchObjectmatchObjectmatchObject', matchObject);
+
+			if (property_type) {
+				matchObject['property_basic_details.type'] = payload.property_type;
+			}
+			// if (propertyType && propertyType !== 3) { matchObject.$match['property_basic_details.property_for_number'] = propertyType; }
+			// // if (type && type !== 'all') { matchObject.$match['property_basic_details.type'] = type; }
+
+			if (byCity) { matchObject.$match['cityId'] = byCity; }
+			if (byRegion) { matchObject.$match['regionId'] = byRegion; }
+
+			// // List of properties acc to specific property status
+
+			// if (property_status && !(property_status === CONSTANT.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER)) { matchObject.$match['property_status.number'] = property_status; }
+
+			// // Date filters
+			if (fromDate && toDate) { matchObject['createdAt'] = { $gte: fromDate, $lte: toDate }; }
+			if (fromDate && !toDate) { matchObject['createdAt'] = { $gte: fromDate }; }
+			if (!fromDate && toDate) { matchObject['createdAt'] = { $lte: toDate }; }
+
+			pipeline.push(this.DAOManager.findAll('Property', matchObject, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
+			pipeline.push(this.DAOManager.count('Property', matchObject));
+			const [propertyList, totalPropertyList] = await Promise.all(pipeline);
+
+			return {
+				propertyList,
+				totalPropertyList,
+			};
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
 }
 
 export const AdminE = new AdminClass();

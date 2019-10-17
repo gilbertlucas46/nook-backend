@@ -16,8 +16,8 @@ const options = {
 		filename: `${appRoot}/logs/db.log`,
 		handleExceptions: true,
 		json: true,
-		//   maxsize: 5242880, // 5MB
-		//   maxFiles: 5,
+		// maxsize: 5242880, // 5MB
+		// maxFiles: 5,
 		colorize: false,
 	},
 	infofile: {
@@ -25,8 +25,8 @@ const options = {
 		filename: `${appRoot}/logs/infofile.log`,
 		handleExceptions: true,
 		json: true,
-		//   maxsize: 5242880, // 5MB
-		//   maxFiles: 5,
+		// maxsize: 5242880, // 5MB
+		// maxFiles: 5,
 		colorize: false,
 	},
 	console: {
@@ -45,8 +45,5 @@ export const logger = createLogger({
 		new transports.File(options.dbfile),
 		new transports.File(options.infofile),
 	],
-	// exceptionHandlers: [
-	//   new transports.File(options.exceptionfile)
-	// ],
 	exitOnError: false,
 });

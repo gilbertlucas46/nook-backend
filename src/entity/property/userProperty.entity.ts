@@ -9,8 +9,8 @@ export class UserPropertyClass extends BaseEntity {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
 			const propertyType = payload.propertyType;
-			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
-			if (!page) { page = 1; } else { page = page; }
+			if (!limit) { limit = Constant.SERVER.LIMIT; }
+			if (!page) { page = 1; }
 			let sortingType = {};
 			sortType = !sortType ? -1 : sortType;
 			let criteria;

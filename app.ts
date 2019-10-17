@@ -10,7 +10,6 @@ const originArray: string[] = [
 	'http://localhost:4200',
 	'http://localhost:4201',
 	'http://localhost',
-	'http://nookdevangweb.appskeeper.com',
 	'https://nookdevangweb.appskeeper.com',
 	'http://nookdevangadmin.appskeeper.com',
 	'https://nookdevangadmin.appskeeper.com',
@@ -24,6 +23,11 @@ const originArray: string[] = [
 	'https://nookqaangweb.appskeeper.com',
 	'http://nookqaangadmin.appskeeper.com',
 	'https://nookqaangadmin.appskeeper.com',
+	'http://10.10.6.249:4200',
+	'http://localhost:4200',
+	'http://10.10.7.255:4200',
+	'http://10.10.8.213:4200',
+
 ];
 const server = new Server({
 	port: config.get('port'),

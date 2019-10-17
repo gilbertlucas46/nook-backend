@@ -12,13 +12,18 @@ import { AdminRequest } from '@src/interfaces/admin.interface';
  */
 
 export class AdminProfileController {
+	/**
+	 *
+	 * @param payload login
+	 * @description login via email or userName
+	 */
 
 	async login(payload: AdminRequest.Login) {
 		try {
 			let email: string = payload.email;
 			if (email) { email = email.trim().toLowerCase(); }
 			const checkData = { email };
-			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type','password','permission', '_id', 'email', 'staffStatus']);
+			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
 			// check email
 			if (!adminData) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
@@ -35,7 +40,7 @@ export class AdminProfileController {
 				adminId: adminData._id,
 				sessionId: sessionObj._id,
 				type: adminData.type,
-				permission: adminData.permission
+				permission: adminData.permission,
 			};
 			const accessToken = await ENTITY.AdminE.createToken(tokenObj);
 			return { formatedData: adminData, accessToken };
@@ -43,6 +48,10 @@ export class AdminProfileController {
 			return Promise.reject(err);
 		}
 	}
+	/**
+	 *
+	 * @param payload  profile detail
+	 */
 
 	async profile(payload) {
 		try {
@@ -63,7 +72,10 @@ export class AdminProfileController {
 			return Promise.reject(err);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload admin forgetpassword link
+	 */
 	async forgetPassword(payload: AdminRequest.ForgetPassword) {
 		try {
 			const criteria = { email: payload.email.trim().toLowerCase() };
@@ -82,7 +94,11 @@ export class AdminProfileController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload new password
+	 * @param adminData via_id
+	 */
 	async changePassword(payload: AdminRequest.ChangePassword, adminData: AdminRequest.AdminData) {
 		try {
 			const criteria = { _id: adminData._id };
@@ -104,7 +120,10 @@ export class AdminProfileController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload  new password for reset
+	 */
 	async verifyLinkForResetPwd(payload) {
 		try {
 			const result = Jwt.verify(payload.token, cert, { algorithms: ['HS256'] });
@@ -135,7 +154,10 @@ export class AdminProfileController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload link for verification
+	 */
 	async verifyLink(payload) {
 		try {
 			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
