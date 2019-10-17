@@ -5,8 +5,9 @@ import { SERVER } from '@src/constants';
 import { ModelNames } from '@src/interfaces/model.interface';
 
 export class DAOManager {
+	constructor() { }
 	ObjectId = Types.ObjectId;
-	async saveData(model: ModelNames, data) {
+	 async saveData(model: ModelNames, data) {
 		try {
 			const ModelName: Model<any> = Models[model];
 			data.createdAt = new Date().getTime();

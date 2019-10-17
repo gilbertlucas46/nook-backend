@@ -10,7 +10,7 @@ import * as config from 'config';
 export let subAdminRoutes: ServerRoute[] = [
 	{
 		method: 'POST',
-		path: '/v1/staff',
+		path: '/v1/admin/staff',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
@@ -30,7 +30,13 @@ export let subAdminRoutes: ServerRoute[] = [
 					email: Joi.string().email({ minDomainAtoms: 2 }).required(),
 					firstName: Joi.string().min(1).max(32).required(),
 					lastName: Joi.string().min(1).max(32).required(),
-					phoneNumber: Joi.string().min(10).max(15)
+					phoneNumber: Joi.string().min(10).max(15),
+					permission: Joi.array().items(Joi.string().valid([
+						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
+						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
+						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
+					])).required()
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction
@@ -44,7 +50,7 @@ export let subAdminRoutes: ServerRoute[] = [
 	},
 	{
 		method: 'PATCH',
-		path: '/v1/staff/permission',
+		path: '/v1/staff/admin/permission',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
@@ -81,7 +87,7 @@ export let subAdminRoutes: ServerRoute[] = [
 	},
 	{
 		method: 'PATCH',
-		path: '/v1/staff/resend',
+		path: '/v1/staff/admin/resend',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
@@ -112,7 +118,7 @@ export let subAdminRoutes: ServerRoute[] = [
 	},
 	{
 		method: 'DELETE',
-		path: '/v1/staff/delete/{_id}',
+		path: '/v1/admin/staff/delete/{_id}',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
@@ -150,7 +156,7 @@ export let subAdminRoutes: ServerRoute[] = [
 	 */
 	{
 		method: 'GET',
-		path: '/v1/staff',
+		path: '/v1/admin/staff',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
