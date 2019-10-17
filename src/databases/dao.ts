@@ -5,6 +5,7 @@ import { SERVER } from '@src/constants';
 import { ModelNames } from '@src/interfaces/model.interface';
 
 export class DAOManager {
+	constructor() { }
 	ObjectId = Types.ObjectId;
 	async saveData(model: ModelNames, data) {
 		try {

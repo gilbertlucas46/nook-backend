@@ -11,7 +11,7 @@ const bankSchema = new Schema({
             allowedPropertyType: {
                 type: String,
                 enum: [
-                    LOAN_PROPERTY_TYPES.VACANT_LOT.value,
+                    LOAN_PROPERTY_TYPES.APARTMENT.value,
                     LOAN_PROPERTY_TYPES.CONDOMINIUM.value,
                     LOAN_PROPERTY_TYPES.HOUSE_LOT.value,
                     LOAN_PROPERTY_TYPES.TOWNHOUSE.value,
@@ -19,7 +19,7 @@ const bankSchema = new Schema({
                 ],
             },
             allowedPropertyStatus: {
-                type: String,
+                type: [String],
                 enum: [
                     LOAN_PROPERTY_STATUS.FORECLOSED.value,
                     LOAN_PROPERTY_STATUS.REFINANCING.value,
@@ -31,6 +31,8 @@ const bankSchema = new Schema({
             maxLoanDurationAllowed: {
                 type: Number,
             },
+            maxLoanPercent: { type: Number, required: true, min: 4, max: 80 },
+            debtIncomeRatio: { type: Number, required: true, max: 100 } //percentage
         },
     ],
     interestRateDetails: [
@@ -41,14 +43,16 @@ const bankSchema = new Schema({
     ],
     bankFeePercent: {
         type: Number,
-        default: 0,
+        min: 0,
+        max: 100
     },
     bankFeeAmount: {
         type: Number,
-        default: 0,
     },
     loanApplicationFeePercent: {
         type: Number,
+        min: 0,
+        max: 100
     },
     loanMinAmount: {
         type: Number,
@@ -74,7 +78,7 @@ const bankSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    loanForForeignerMarriedToLocal: {
+    loanForForeignerMarriedLocal: {
         type: Boolean,
         default: true,
     },
@@ -92,8 +96,7 @@ const bankSchema = new Schema({
     },
     minAgeRequiredForLoan: {
         type: Number,
-        min: 21,
-        max: 65,
+        min: 21
     },
     maxAgeTillLoanCompleted: {
         type: Number,
@@ -108,7 +111,7 @@ const bankSchema = new Schema({
         type: Boolean,
         default: true,
     },
-    minMonthlyIncomeLoan: {
+    minMonthlyIncomeRequired: {
         type: Number,
         required: true,
     },
