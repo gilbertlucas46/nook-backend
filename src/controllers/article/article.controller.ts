@@ -70,13 +70,12 @@ class ArticleController {
                 _id: payload.articleId,
             };
             const dataToSet: any = {};
-            let result;
-            result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
+            const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
 
             dataToSet.$set = {
                 title: payload.title,
                 categoryId: payload.categoryId,
-                categoryType: result.TYPE,
+                categoryType: result['TYPE'],
                 imageUrl: payload.imageUrl,
                 userId: adminData._id,
                 userRole: adminData.type,
@@ -88,11 +87,6 @@ class ArticleController {
                     userRole: adminData.type,
                     userId: adminData._id,
                     actionTime: new Date().getTime(),
-                    // actionPerformedBy: {
-                    //     userId: adminData._id,
-                    //     userType: adminData.TYPE,
-                    // },
-                    // actionTime: new Date().getTime(),
                 },
             };
             const updateStatus = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);

@@ -18,7 +18,7 @@ export class EnquiryController {
     async createEnquiry(payload: EnquiryRequest.CreateEnquiry, userData?) {
         try {
             let dataToSave;
-            let enquiryData;
+            let enquiryData = {};
             if (payload.agentEmail) {
                 dataToSave = {
                     email: payload.email,
@@ -44,7 +44,6 @@ export class EnquiryController {
                 message: payload.message,
                 phoneNumber: payload.phoneNumber,
                 propertyId: payload.propertyId,
-                // userId: userData._id ? userData._id : '',
                 userId: userData._id,
                 propertyOwnerId: propertyOnwerId.property_added_by.userId,
             };
@@ -55,32 +54,6 @@ export class EnquiryController {
             return Promise.reject(error);
         }
     }
-
-    /**
-     * @description Function to post enquiry regarding any property after login.
-     * @param payload
-     */
-
-    // async createAuthEnquiry(payload: EnquiryRequest.CreateEnquiry) {
-    //     try {
-    //         const propertyOwner = { _id: payload.propertyId };
-    //         const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['property_added_by.userId', '_id']);
-    //         const dataToSave = {
-    //             email: payload.email,
-    //             userType: Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
-    //             name: payload.name,
-    //             message: payload.message,
-    //             phoneNumber: payload.phoneNumber,
-    //             propertyId: payload.propertyId,
-    //             propertyOwnerId: propertyOnwerId.property_added_by.userId,
-    //         };
-    //         const enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
-    //         return enquiryData;
-    //     } catch (error) {
-    //         utils.consolelog('error', error, true);
-    //         return Promise.reject(error);
-    //     }
-    // }
 
     /**
      * @description Get list of all enquiry for particular user.
@@ -96,6 +69,7 @@ export class EnquiryController {
             return Promise.reject(error);
         }
     }
+
     /**
      * @description A function to get details of particular enquiry based on the Id
      * @param payload

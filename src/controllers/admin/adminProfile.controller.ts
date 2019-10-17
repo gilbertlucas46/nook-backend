@@ -23,7 +23,7 @@ export class AdminProfileController {
 			let email: string = payload.email;
 			if (email) { email = email.trim().toLowerCase(); }
 			const checkData = { email };
-			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type','password','permission', '_id', 'email', 'staffStatus']);
+			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
 			// check email
 			if (!adminData) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
@@ -40,7 +40,7 @@ export class AdminProfileController {
 				adminId: adminData._id,
 				sessionId: sessionObj._id,
 				type: adminData.type,
-				permission: adminData.permission
+				permission: adminData.permission,
 			};
 			const accessToken = await ENTITY.AdminE.createToken(tokenObj);
 			return { formatedData: adminData, accessToken };
