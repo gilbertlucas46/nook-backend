@@ -7,41 +7,6 @@ import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
 import { ServerRoute } from 'hapi';
 
 export let enquiryRoutes: ServerRoute[] = [
-	// {
-	// 	method: 'POST',
-	// 	path: '/v1/guest/enquiry',
-	// 	handler: async (request, h) => {
-	// 		try {
-	// 			const payload: EnquiryRequest.CreateEnquiry = request.payload;
-	// 			const registerResponse = await EnquiryService.createEnquiry(payload);
-	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ENQUIRY_SUBMITTED, registerResponse));
-	// 		} catch (error) {
-	// 			UniversalFunctions.consolelog('error', error, true);
-	// 			return (UniversalFunctions.sendError(error));
-	// 		}
-	// 	},
-	// 	options: {
-	// 		description: 'create Enquiry application',
-	// 		tags: ['api', 'anonymous', 'user', 'Enquiry'],
-	// 		auth: 'BasicAuth',
-	// 		validate: {
-	// 			payload: {
-	// 				name: Joi.string().required(),
-	// 				email: Joi.string().email().required(),
-	// 				phoneNumber: Joi.string().required(),
-	// 				message: Joi.string().required(),
-	// 				propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-	// 			},
-	// 			// headers: UniversalFunctions.authorizationHeaderObj,
-	// 			failAction: UniversalFunctions.failActionFunction,
-	// 		},
-	// 		plugins: {
-	// 			'hapi-swagger': {
-	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
-	// 			},
-	// 		},
-	// 	},
-	// },
 	{
 		method: 'POST',
 		path: '/v1/user/enquiry',

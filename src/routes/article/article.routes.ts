@@ -15,8 +15,8 @@ export let articleRoutes = [
                 const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 const payload: ArticleRequest.CreateArticle = request.payload;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-				}
+                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                }
                 await ArticleService.createArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, {}));
             } catch (error) {
@@ -74,7 +74,7 @@ export let articleRoutes = [
         options: {
             description: 'get articles for user application',
             tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-            // auth: 'UserAuth',
+            auth: 'DoubleAuth',
             validate: {
                 query: {
                     limit: Joi.number(),
@@ -91,7 +91,7 @@ export let articleRoutes = [
                     ]),
                     articleId: Joi.string(),
                 },
-                // headers: UniversalFunctions.authorizationHeaderObj,
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {
@@ -119,7 +119,7 @@ export let articleRoutes = [
         options: {
             description: 'get articles for user application',
             tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-            // auth: 'AdminAuth',
+            auth: 'DoubleAuth',
             validate: {
                 query: {
                     limit: Joi.number(),
@@ -152,12 +152,12 @@ export let articleRoutes = [
         options: {
             description: 'get articles for user application',
             tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-            // auth: 'UserAuth',
+            auth: 'DoubleAuth',
             validate: {
                 params: {
                     articleId: Joi.string(),
                 },
-                // headers: UniversalFunctions.authorizationHeaderObj,
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {
@@ -178,10 +178,10 @@ export let articleRoutes = [
                     ...request.payload,
                     ...request.params,
                 };
-                
+
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-				}
+                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                }
                 const registerResponse = await ArticleService.updateArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200, registerResponse));
             } catch (error) {
@@ -230,8 +230,8 @@ export let articleRoutes = [
                 const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 const payload: ArticleRequest.GetArticle = request.query;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-				}
+                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                }
                 const registerResponse = await ArticleService.getArticle(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
@@ -277,8 +277,8 @@ export let articleRoutes = [
                 const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 const payload: ArticleRequest.GetArticleById = request.params;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-				}
+                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                }
                 const registerResponse = await ArticleService.getArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {

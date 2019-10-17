@@ -6,6 +6,9 @@ import { AgentService } from '@src/controllers';
 import { AgentRequest } from '@src/interfaces/agent.interface';
 
 export let agentRoute: ServerRoute[] = [
+    /**
+     * @description  agent listing
+     */
     {
         method: 'GET',
         path: '/v1/agents',
@@ -40,7 +43,10 @@ export let agentRoute: ServerRoute[] = [
                         Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
                         Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
                     ]),
-                    soldProperty: Joi.number().valid(
+                    // soldProperty: Joi.number().valid(
+                    // Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
+                    // ),
+                    propertyFor: Joi.number().valid(
                         Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
                     ),
                     specializingIn_property_category: Joi.array()
@@ -66,7 +72,9 @@ export let agentRoute: ServerRoute[] = [
             },
         },
     },
-
+    /**
+     * @description:agent info by userName
+     */
     {
         method: 'GET',
         path: '/v1/agents/{userName}',

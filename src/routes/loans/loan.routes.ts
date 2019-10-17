@@ -1,4 +1,4 @@
-import { ServerRoute, Request, ResponseToolkit } from 'hapi';
+import { ServerRoute, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
@@ -11,9 +11,8 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/loan',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
-				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: any = request.payload;
-				const registerResponse = await LoanController.addLoanRequirements(payload);
+				await LoanController.addLoanRequirements(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {}));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -25,8 +24,6 @@ export let loanRoute: ServerRoute[] = [
 			// auth: 'UserAuth',
 			validate: {
 				payload: {
-					// userEmploymentCriteria: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					// bankPayload: Joi.array().items({
 					abbrevation: Joi.string().min(2).max(6).required(),
 					bankName: Joi.string().min(3).max(80).required(),
 					headquarterLocation: Joi.string().min(3).max(50).required(),
@@ -36,18 +33,18 @@ export let loanRoute: ServerRoute[] = [
 							LOAN_PROPERTY_TYPES.CONDOMINIUM.value,
 							LOAN_PROPERTY_TYPES.HOUSE_LOT.value,
 							LOAN_PROPERTY_TYPES.TOWNHOUSE.value,
-							LOAN_PROPERTY_TYPES.VACANT_LOT.value
+							LOAN_PROPERTY_TYPES.VACANT_LOT.value,
 						]).required(),
 						allowedPropertyStatus: Joi.array().items(Joi.string().valid([
 							LOAN_PROPERTY_STATUS.FORECLOSED.value,
 							LOAN_PROPERTY_STATUS.REFINANCING.value,
 							LOAN_PROPERTY_STATUS.PRE_SELLING.value,
 							LOAN_PROPERTY_STATUS.READY_FOR_OCCUPANCY.value,
-							LOAN_PROPERTY_STATUS.RESELLING.value
+							LOAN_PROPERTY_STATUS.RESELLING.value,
 						])).required(),
 						maxLoanDurationAllowed: Joi.number().max(30).required(),
 						maxLoanPercent: Joi.number().min(3).max(80),
-						debtIncomeRatio: Joi.number().min(0).max(100).required()
+						debtIncomeRatio: Joi.number().min(0).max(100).required(),
 					}).required(),
 					interestRateDetails: Joi.object().required(),
 					bankFeePercent: Joi.number(),
@@ -70,7 +67,7 @@ export let loanRoute: ServerRoute[] = [
 					minMonthlyIncomeLoan: Joi.number(),
 					minMonthlyIncomeRequired: Joi.number(),
 					missedLoanPaymentAllowance: Joi.boolean(),
-					bankImageLogoUrl: Joi.string().allow(""),
+					bankImageLogoUrl: Joi.string().allow(''),
 					LoanForEmploymentType: Joi.array().items({
 						employmentType: Joi.string().valid([
 							EMPLOYMENT_TYPE.BPO.value,
@@ -103,12 +100,9 @@ export let loanRoute: ServerRoute[] = [
 							EMPLOYMENT_RANK.SUPERVISOR.value,
 							EMPLOYMENT_RANK.VICE_PRESIDENT.value,
 						])),
-						minEmploymentTenure: Joi.number()
-					})
-					// })
-
+						minEmploymentTenure: Joi.number(),
+					}),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {

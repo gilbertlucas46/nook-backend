@@ -10,7 +10,10 @@ import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 export class UserController {
-
+	/**
+	 *
+	 * @param payload user detail
+	 */
 	async register(payload: UserRequest.Register) {
 		try {
 			const checkMail = { email: payload.email.trim().toLowerCase() };
@@ -44,7 +47,10 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload login via userName and email
+	 */
 	async login(payload: UserRequest.Login) {
 		try {
 			let unique = payload.email;
@@ -79,7 +85,10 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload property detail by id
+	 */
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
 			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
@@ -92,7 +101,10 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload userProfile data to update
+	 */
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
 			const criteria = { _id: payload._id };
@@ -123,7 +135,10 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload forget password via email or userName
+	 */
 	async forgetPassword(payload: UserRequest.ForgetPassword) {
 		try {
 			const criteria = { $or: [{ userName: payload.email }, { email: payload.email }] };
@@ -142,7 +157,11 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload password to be update
+	 * @param userData user's _id
+	 */
 	async changePassword(payload: UserRequest.ChangePassword, userData: UserRequest.UserData) {
 		try {
 			const criteria = { _id: userData._id };
@@ -175,7 +194,10 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload verify link of the forget password e-mail
+	 */
 	async verifyLinkForResetPwd(payload) {
 		try {
 			const result = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
@@ -201,7 +223,10 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param userData userId
+	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
 			return await ENTITY.UserE.userDashboad(userData);
@@ -209,7 +234,10 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload user's suggested property except current
+	 */
 	async userProperty(payload: PropertyRequest.UserProperty) {
 		try {
 			const data = await ENTITY.PropertyE.suggested_property(payload);
@@ -218,7 +246,11 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 *
+	 * @param payload type to be update
+	 * @param userData
+	 */
 	async updateAccount(payload: UserRequest.UpdateAccount, userData: UserRequest.UserData) {
 		try {
 			const criteria = { _id: userData._id };

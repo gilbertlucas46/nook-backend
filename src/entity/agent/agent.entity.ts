@@ -56,15 +56,16 @@ export class AgentClass extends BaseEntity {
             if (sortBy) {
                 switch (sortBy) {
                     case 'date':
+                        sortBy = 'date';
                         sortingType = {
                             createdAt: sortType,
                         };
                         break;
                     default:
-                        sortBy = 'isFeaturedProfile';
-                            sortingType = {
-                                isFeaturedProfile: sortType,
-                            };
+                        // sortBy = 'isFeaturedProfile';
+                        sortingType = {
+                            isFeaturedProfile: sortType,
+                        };
                         break;
                 }
             } else {
@@ -77,9 +78,7 @@ export class AgentClass extends BaseEntity {
                 matchObject['specializingIn_property_type'] =
                     specializingIn_property_type;
             }
-            else if (soldProperty) {
 
-            }
             if (specializingIn_property_category) {
                 matchObject['specializingIn_property_category'] =
                     { $in: specializingIn_property_category };

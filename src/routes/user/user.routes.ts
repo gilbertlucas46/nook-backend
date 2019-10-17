@@ -361,6 +361,9 @@ export let userRoute: ServerRoute[] = [
 			},
 		},
 	},
+	/**
+	 * @description : user dashboard count
+	 */
 	{
 		method: 'GET',
 		path: '/v1/user/dashboard',
@@ -406,9 +409,9 @@ export let userRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'get user all property detail of property ',
+			description: 'get user usggested-property ',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			// auth: 'UserAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				query: {
 					propertyType: Joi.number().valid([
@@ -433,7 +436,7 @@ export let userRoute: ServerRoute[] = [
 					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 				},
 
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -444,7 +447,7 @@ export let userRoute: ServerRoute[] = [
 		},
 	},
 	/**
-	 *
+	 * @description: update user Account
 	 */
 	{
 		method: 'PATCH',
@@ -483,7 +486,7 @@ export let userRoute: ServerRoute[] = [
 		},
 	},
 	/**
-	 * @description:Recent Property
+	 * @description:Recent Property city based data
 	 */
 	{
 		method: 'GET',
