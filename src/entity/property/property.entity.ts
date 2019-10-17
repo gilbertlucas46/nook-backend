@@ -67,8 +67,8 @@ export class PropertyClass extends BaseEntity {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
 			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate, property_features, byCity, byRegion } = payload;
-			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
-			if (!page) { page = 1; } else { page = page; }
+			if (!limit) { limit = Constant.SERVER.LIMIT; }
+			if (!page) { page = 1; }
 			let sortingType = {};
 			sortType = !sortType ? -1 : sortType;
 			const matchObject: any = { $match: {} };
@@ -272,10 +272,10 @@ export class PropertyClass extends BaseEntity {
 	}
 	async suggested_property(payload: PropertyRequest.UserProperty) {
 		try {
-			let { sortType, sortBy, page, limit } = payload;
-			let { propertyId, userId } = payload;
-			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
-			if (!page) { page = 1; } else { page = page; }
+			let { sortType, sortBy, page, limit, userId } = payload;
+			const { propertyId } = payload;
+			if (!limit) { limit = Constant.SERVER.LIMIT; }
+			if (!page) { page = 1; }
 			sortType = !sortType ? -1 : sortType;
 			let sortingType = {};
 			let query;
@@ -427,8 +427,8 @@ export class PropertyClass extends BaseEntity {
 	async popularCities(payload: PropertyRequest.IPaginate) {
 		try {
 			let { page, limit } = payload;
-			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
-			if (!page) { page = 1; } else { page = page; }
+			if (!limit) { limit = Constant.SERVER.LIMIT; }
+			if (!page) { page = 1; }
 			const skip = (limit * (page - 1));
 
 			const pipeline = [
@@ -507,7 +507,7 @@ export class PropertyClass extends BaseEntity {
 
 			const popularCities = await this.DAOManager.aggregateData(this.modelName, pipeline);
 			if (!popularCities) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
-			return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, popularCities;
+			return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, popularCities
 
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -515,8 +515,8 @@ export class PropertyClass extends BaseEntity {
 		}
 	}
 	/**
-	 * 
-	 * @param payload 
+	 *
+	 * @param payload
 	 */
 
 	async getPropertyViaCity(payload: UserRequest.RecentProperty) {
@@ -528,8 +528,8 @@ export class PropertyClass extends BaseEntity {
 			let query: any = {};
 			let data;
 			sortType = !sortType ? -1 : sortType;
-			if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
-			if (!page) { page = 1; } else { page = page; }
+			if (!limit) { limit = Constant.SERVER.LIMIT; }
+			if (!page) { page = 1; }
 			const skip = (limit * (page - 1));
 
 			if (sortBy) {
@@ -557,7 +557,7 @@ export class PropertyClass extends BaseEntity {
 					'property_basic_details.type': payload.propertyType,
 					'property_basic_details.property_for_number': payload.propertyFor,
 				};
-				data = await this.DAOManager.findAllPaginate(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType });
+				data = await this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType });
 				return data;
 
 			} else if (All) {
@@ -565,15 +565,14 @@ export class PropertyClass extends BaseEntity {
 					'property_address.cityId': mongoose.Types.ObjectId(cityId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 				};
-				data = await this.DAOManager.findAllPaginate(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType });
+				data = await this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType });
 				return data;
 			} else {
 				query = {
 					'property_address.cityId': mongoose.Types.ObjectId(cityId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 				};
-				promiseArray.push(this.DAOManager.findAllPaginate(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
-				promiseArray.push(this.DAOManager.count(this.modelName, query));
+				promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
 				const agentQuery =
 				{
 					type: 'AGENT', serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] }, isFeaturedProfile: true,
@@ -599,9 +598,7 @@ export class PropertyClass extends BaseEntity {
 					propertyTypeAndFor: properties_In_Makati_City,
 				};
 			}
-
 		} catch (error) {
-			console.log('error>>>>>>>>>>>>>>', error);
 			return Promise.reject(error);
 		}
 	}

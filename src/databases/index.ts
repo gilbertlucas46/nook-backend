@@ -13,40 +13,10 @@ export class Database {
 		db.on('error', (err) => { console.error('%s', err); })
 			.on('close', () => console.log('Database connection closed.'));
 		switch (environment) {
+			case 'development':
+			case 'testing':
+			case 'staging':
 			case 'default': {
-				connect(dbUrl, {
-					auth: {
-						user: dbUserName,
-						password: dbUserPwd,
-					},
-					useCreateIndex: true,
-					useNewUrlParser: true,
-				});
-				break;
-			}
-			case 'development': {
-				connect(dbUrl, {
-					auth: {
-						user: dbUserName,
-						password: dbUserPwd,
-					},
-					useCreateIndex: true,
-					useNewUrlParser: true,
-				});
-				break;
-			}
-			case 'testing': {
-				connect(dbUrl, {
-					auth: {
-						user: dbUserName,
-						password: dbUserPwd,
-					},
-					useCreateIndex: true,
-					useNewUrlParser: true,
-				});
-				break;
-			}
-			case 'staging': {
 				connect(dbUrl, {
 					auth: {
 						user: dbUserName,

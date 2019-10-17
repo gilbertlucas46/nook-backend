@@ -279,7 +279,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				query: {
-					// in admin searching by email, address
 					page: Joi.number(),
 					limit: Joi.number(),
 					sortBy: Joi.string(),
