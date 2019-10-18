@@ -11,5 +11,6 @@ export type ModelNames = 'User' |
     'SavedProperty' |
     'Bank' |
     'UserEmployment' |
-    'HomeLoan'
+    'HomeLoan' |
+    'HelpfulHelCenter'
     ;
