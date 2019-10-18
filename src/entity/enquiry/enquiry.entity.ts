@@ -12,8 +12,8 @@ export class EnquiryClass extends BaseEntity {
         try {
             const { fromDate, toDate } = payload;
             let { sortType, limit, page } = payload;
-            if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
-            if (!page) { page = 1; } else { page = page; }
+            if (!limit) { limit = Constant.SERVER.LIMIT; }
+            if (!page) { page = 1; }
             sortType = !sortType ? -1 : sortType;
             sortType = !sortType ? -1 : 1;
             const sortingType = {

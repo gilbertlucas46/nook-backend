@@ -11,6 +11,7 @@ import { agentRoute } from './user/agent.routes';
 import { helpCenterRoute } from './helpCenter/helpCenter.routes';
 import { savedProperty } from './property/savedProperty.routes';
 import { loanRoute } from './loans/loan.routes';
+import { preloanRoute } from './loans/preloan.routes';
 
 export let Routes: ServerRoute[] = [
 	...userRoute,
@@ -25,4 +26,5 @@ export let Routes: ServerRoute[] = [
 	...savedProperty,
 	...subAdminRoutes,
 	...loanRoute,
+	...preloanRoute,
 ];
