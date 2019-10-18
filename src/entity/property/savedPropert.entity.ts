@@ -11,8 +11,8 @@ export class SavedProperty extends BaseEntity {
         try {
             let { page, limit, sortType } = payload;
             const { sortBy } = payload;
-            if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
-            if (!page) { page = 1; } else { page = page; }
+            if (!limit) { limit = Constant.SERVER.LIMIT; }
+            if (!page) { page = 1; }
             const skip = (limit * (page - 1));
             sortType = !sortType ? -1 : sortType;
             let sortingType = {};
@@ -62,7 +62,6 @@ export class SavedProperty extends BaseEntity {
                                             { $eq: ['$_id', '$$propertyId'] },
                                             { $eq: ['$property_status.number', 3] },
                                             // { $eq: ['$property_status.number', 1 || '$property_status.status', 'ACTIVE'] },
-
                                         ],
                                     },
                                 },
@@ -84,29 +83,6 @@ export class SavedProperty extends BaseEntity {
                     },
                 },
                 { $replaceRoot: { newRoot: '$propertyData' } },
-                // {
-                //     $lookup: {
-                //         from: 'cities',
-                //         let: { cityId: '$property_address.cityId' },
-                //         pipeline: [
-                //             {
-                //                 $match: {
-                //                     $expr: {
-                //                         $eq: ['$_id', '$$cityId'],
-                //                     },
-                //                 },
-                //             },
-                //         ],
-                //         as: 'property_address.city',
-                //     },
-
-                // },
-                // {
-                //     $unwind: {
-                //         path: '$property_address.city',
-                //         preserveNullAndEmptyArrays: true,
-                //     },
-                // },
                 { $sort: sortingType },
             ];
             const data = await this.DAOManager.paginate(this.modelName, query, limit, page);

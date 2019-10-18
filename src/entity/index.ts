@@ -10,7 +10,7 @@ export * from './city/region.entity';
 export { ArticleE } from './article/article.entity';
 export { AgentE } from './agent/agent.entity';
 export { HelpCenterE } from './helpCenter/helpCenter.entity';
-export { SavedPropertyE } from './savedProperty/savedPropert.entity';
+export { SavedPropertyE } from './property/savedPropert.entity';
 export { AdminStaffEntity } from './admin/admin.staff.entity';
 export { LoanEntity } from './loan/loan.entity';
 export { EligibilityEntity } from './loan/eligibility.entity';

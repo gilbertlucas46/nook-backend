@@ -24,8 +24,6 @@ export class AdminProfileController {
 			if (email) { email = email.trim().toLowerCase(); }
 			const checkData = { email };
 			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
-			console.log('adminDataadminData', adminData);
-
 			// check email
 			if (!adminData) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
@@ -58,7 +56,7 @@ export class AdminProfileController {
 	async profile(payload) {
 		try {
 			const criteria = { _id: payload._id };
-			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode']);
+			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
 			return adminData;
 		} catch (err) {
 			return Promise.reject(err);

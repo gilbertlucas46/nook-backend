@@ -1,4 +1,4 @@
-import * as CONSTANT from '../constants/app.constant';
+import * as CONSTANT from '../../constants/app.constant';
 import { Schema, Document, model } from 'mongoose';
 
 export interface IEnquiry extends Document {
