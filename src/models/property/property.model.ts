@@ -1,7 +1,6 @@
 import { Schema, Document, model } from 'mongoose';
 import * as shortid from 'shortid';
-import * as Constant from '../constants';
-
+import * as Constant from '../../constants';
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
 
 export interface IPropertyActions extends Document {

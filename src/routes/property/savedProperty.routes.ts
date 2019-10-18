@@ -2,7 +2,7 @@ import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
 import * as Constant from '@src/constants';
 import * as UniversalFunctions from '@src/utils';
-import { SavedPropertyServices } from '@src/controllers/savedProperty/savedProperty.controller';
+import { SavedPropertyServices } from '@src/controllers/property/savedProperty.controller';
 import { SavePropertyRequest } from '@src/interfaces/saveProperty.interface';
 export let savedProperty: ServerRoute[] = [
 	/**

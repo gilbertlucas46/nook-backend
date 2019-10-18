@@ -32,14 +32,14 @@ const bankSchema = new Schema({
                 type: Number,
             },
             maxLoanPercent: { type: Number, required: true, min: 4, max: 80 },
-            debtIncomeRatio: { type: Number, required: true, max: 100 } //percentage
+            debtIncomeRatio: { type: Number, required: true, max: 100 }, // percentage
         },
     ],
     interestRateDetails: { type: Object },
     bankFeePercent: {
         type: Number,
         min: 0,
-        max: 100
+        max: 100,
     },
     bankFeeAmount: {
         type: Number,
@@ -47,7 +47,7 @@ const bankSchema = new Schema({
     loanApplicationFeePercent: {
         type: Number,
         min: 0,
-        max: 100
+        max: 100,
     },
     loanMinAmount: {
         type: Number,
@@ -91,7 +91,7 @@ const bankSchema = new Schema({
     },
     minAgeRequiredForLoan: {
         type: Number,
-        min: 21
+        min: 21,
     },
     maxAgeTillLoanCompleted: {
         type: Number,

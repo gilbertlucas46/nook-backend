@@ -1,5 +1,5 @@
 import { Schema, Document, model, Types } from 'mongoose';
-import * as CONSTANT from '../constants/app.constant';
+import * as CONSTANT from '../../constants/app.constant';
 export interface IUser extends Document {
 	userName: string;
 	email: string;
