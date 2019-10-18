@@ -14,4 +14,11 @@ export namespace helpCenterRequest {
     export interface DeleteHelpCenter {
         id: string;
     }
+    export interface IsHelpful {
+        isHelpful: boolean;
+    //    _id: string;
+        ipAddress: string;
+        helpCenterId: string;
+    }
+
 }

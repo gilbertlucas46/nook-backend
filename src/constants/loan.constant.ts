@@ -20,6 +20,20 @@ export const LOAN_TYPES = {
         value: 'LOAN_TAKE_OUT',
     },
 };
+export const CREDIT_CARD_STATUS = {
+    YES: {
+        label: 'Yes, active credit card',
+        value: 'YES',
+    },
+    NOT_NOW: {
+        label: 'No, but I used to own one',
+        value: 'NOT_NOW',
+    },
+    NO: {
+        label: 'No, i"ve never had one',
+        value: 'NO',
+    },
+};
 
 export const LOAN_TERMS: number[] = [1, 2, 3, 4, 5, 10, 15, 20, 25, 30];
 
@@ -199,21 +213,6 @@ export const EMPLOYMENT_TENURE = {
     3_100: {
         label: 'more than 3 years',
         value: '3_100',
-    },
-};
-
-export const CREDIT_CARD_STATUS = {
-    YES: {
-        label: 'Yes, active credit card',
-        value: 'YES',
-    },
-    NO: {
-        label: 'No, but i used to own one',
-        value: 'NO',
-    },
-    NEVER: {
-        label: 'No, i"ve never had one',
-        value: 'NEVER',
     },
 };
 

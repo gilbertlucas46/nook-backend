@@ -1,6 +1,7 @@
 import * as ENTITY from '@src/entity';
 import { Types } from 'mongoose';
 import { BaseEntity } from '@src/entity/base/base.entity';
+import {LoanEntity} from '@src/entity/loan/loan.entity'
 
 class LoanControllers extends BaseEntity {
 
@@ -32,8 +33,17 @@ class LoanControllers extends BaseEntity {
         } catch (error) {
             
         }
+
+    }
+
+    async checkPreloanApplication(payload) {
+        try {
+            const bankList = await LoanEntity.preloan(payload);
+            return bankList;
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 
 }
-
 export const LoanController = new LoanControllers();

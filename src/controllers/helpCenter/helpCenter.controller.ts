@@ -1,6 +1,8 @@
 import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
+import { request } from 'http';
+import { date } from 'joi';
 export class HelpCenter {
 
     getTypeAndDisplayName(findObj, num) {
@@ -100,6 +102,18 @@ export class HelpCenter {
             const data = await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
             return data;
         } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async isArticleHelpful(payload: helpCenterRequest.IsHelpful, userData?) {
+        try {
+            const data = await ENTITY.HelpfulE.createhelpfulStatus(payload);
+            return data;
+
+        } catch (error) {
+            console.log('error>>>>>>>>>>>', error);
+
             return Promise.reject(error);
         }
     }
