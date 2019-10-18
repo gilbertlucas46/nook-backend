@@ -1,6 +1,8 @@
 import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
+import { request } from 'http';
+import { date } from 'joi';
 export class HelpCenter {
 
     getTypeAndDisplayName(findObj, num) {
@@ -99,6 +101,27 @@ export class HelpCenter {
         try {
             const data = await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
             return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async isArticleHelpful(payload: helpCenterRequest.IsHelpful, userData?) {
+        try {
+            payload['createdAt'] = new Date().getTime();
+            payload['updatedAt'] = new Date().getTime();
+
+            if (payload.isHelpful) {
+                const helpFule = ENTITY.HelpfulE.updateOneEntity({ ipAddress: payload.ipAddress }, payload, { new: true, upsert: true, lean: true });
+                ENTITY.HelpCenterE.updateOneEntity({ _id: payload.helpCenterId }, { $inc: { likesCount: 1 } });
+                console.log('helpFUle>>>>>>>>>>>>>>>>', helpFule);
+                return {};
+            }
+            else {
+                ENTITY.HelpfulE.updateOneEntity({ ipAddress: payload.ipAddress }, payload, { new: true, upsert: true, lean: true });
+                ENTITY.HelpCenterE.updateOneEntity({ _id: payload.helpCenterId }, { $inc: { likesCount: 1 } });
+                return {}
+            }
         } catch (error) {
             return Promise.reject(error);
         }

@@ -13,6 +13,27 @@ export interface IHelpCenter extends Document {
     categoryType: string;
 }
 
+export interface IHelpFulHelpCenter extends Document {
+    // userId: string;
+    // userRole: number;
+    helpCenterId: string;
+    ipAddress: string;
+    createdAt: number;
+    updatedAt: number;
+}
+
+const HelpFulHelpCenterSchema = new Schema({
+    _id: { type: Schema.Types.ObjectId, required: true, auto: true },
+    helpCenterId: { type: Schema.Types.ObjectId, required: true, ref: 'helpcenter' },
+    ipAddress: { type: String, required: true, index: true },
+    createdAt: { type: Number, required: true },
+    updatedAt: { type: Number, required: true },
+    likesCount: { type: Number, default: 0 },
+    disLikesCount: { type: Number, default: 0 },
+});
+
+export let HelpfulHelCenter = model<IHelpFulHelpCenter>('helpfulHelpCenter', HelpFulHelpCenterSchema);
+
 const helpCenterSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     title: { type: String },
@@ -26,8 +47,6 @@ const helpCenterSchema = new Schema({
         ],
     },
     description: { type: String },
-    likesCount: { type: Number, default: 0 },
-    disLikesCount: { type: Number, default: 0 },
     categoryId: {
         type: Number,
         enum: [
