@@ -312,8 +312,8 @@ export let articleRoutes = [
                 const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
                 const payload: ArticleRequest.DeleteArticle = request.params;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-				}
+                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                }
                 const registerResponse = await ArticleService.deleteArticle(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
             } catch (error) {
