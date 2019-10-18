@@ -257,7 +257,6 @@ export let helpCenterRoute: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
-                console.log(' req.client.remoteAddress;', request.server.info);
                 const payload: helpCenterRequest.IsHelpful = request.payload as any;
                 payload['ipAddress'] = request.info.remoteAddress;
                 const data = await HelpCenterService.isArticleHelpful(payload, userData);
