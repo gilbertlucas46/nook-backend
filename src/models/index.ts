@@ -12,3 +12,4 @@ export { SavedProperty } from './savedProperty.model';
 export { HomeLoan } from './loan/home.loan.model';
 export { Bank } from './loan/banks.model';
 export { UserEmployment } from './loan/userElegibility.model';
+export { HelpfulHelCenter } from './helpCenter.model';

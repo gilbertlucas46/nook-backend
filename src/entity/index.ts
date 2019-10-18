@@ -14,3 +14,4 @@ export { SavedPropertyE } from './savedProperty/savedPropert.entity';
 export { AdminStaffEntity } from './admin/admin.staff.entity';
 export { LoanEntity } from './loan/loan.entity';
 export { EligibilityEntity } from './loan/eligibility.entity';
+export { HelpfulE } from './helpCenter/helpfulHelpCenter.entity';

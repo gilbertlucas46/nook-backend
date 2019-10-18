@@ -22,7 +22,7 @@ export class AdminController {
 	}
 	/**
 	 *
-	 * @param payload 
+	 * @param payload
 	 */
 	async getProperty(payload: PropertyRequest.SearchProperty) {
 		try {
