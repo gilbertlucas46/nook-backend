@@ -4,7 +4,7 @@ import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
 import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, CREDIT_CARD_STATUS } from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
-import { LoanController } from '@src/controllers/loan/loan.controller'
+import { LoanController } from '@src/controllers/loan/loan.controller';
 
 export let preloanRoute: ServerRoute[] = [
   {
@@ -12,7 +12,7 @@ export let preloanRoute: ServerRoute[] = [
     path: '/v1/user/loan/pre-application',
     handler: async (request, h: ResponseToolkit) => {
       try {
-        const payload = request.payload;
+        const payload: LoanRequest.PreLoan = request.payload as LoanRequest.PreLoan;
         const bankData = await LoanController.checkPreloanApplication(payload);
         return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, bankData));
       } catch (error) {
