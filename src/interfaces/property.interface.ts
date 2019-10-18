@@ -106,6 +106,7 @@ export namespace PropertyRequest {
 		bathrooms?: number;
 		minArea?: number;
 		maxArea?: number;
+		permissionType: string;
 		property_status?: number;
 		property_features?: string[];
 		byRegion?: string;
