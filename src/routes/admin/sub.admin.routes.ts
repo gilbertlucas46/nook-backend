@@ -176,7 +176,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				query: {
 					page: Joi.number(),
 					limit: Joi.number(),
-					sortBy: Joi.string(),
+					sortBy: Joi.string().allow("createdAt"),
 					permission: Joi.string().valid([
 						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 					]).required(),
