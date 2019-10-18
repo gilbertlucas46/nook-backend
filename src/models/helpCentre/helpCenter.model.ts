@@ -20,18 +20,19 @@ export interface IHelpFulHelpCenter extends Document {
     ipAddress: string;
     createdAt: number;
     updatedAt: number;
+    isHelpful: boolean;
 }
 
-const HelpFulHelpCenterSchema = new Schema({
+const HelpCenterStatusSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     helpCenterId: { type: Schema.Types.ObjectId, required: true, ref: 'helpcenter' },
     ipAddress: { type: String, required: true, index: true },
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
-    isliked: { type: Boolean },
+    isHelpful: { type: Boolean },
 });
 
-export let HelpfulHelCenter = model<IHelpFulHelpCenter>('helpfulHelpCenter', HelpFulHelpCenterSchema);
+export let HelpCenterStatus = model<IHelpFulHelpCenter>('helpcenterStatus', HelpCenterStatusSchema);
 
 const helpCenterSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
