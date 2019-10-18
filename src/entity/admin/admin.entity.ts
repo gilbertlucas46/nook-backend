@@ -5,10 +5,8 @@ import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
-import { PropertyRequest } from '@src/interfaces/property.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
-import * as Mongoose from 'mongoose';
 
 /**
  * @author
@@ -172,15 +170,13 @@ export class AdminClass extends BaseEntity {
 	async getPropertyList(payload: AdminRequest.SearchProperty) {
 		try {
 			const pipeline = [];
-			console.log('payload: payload: ', payload);
 			let { page, limit, sortBy, sortType } = payload;
 			const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, property_type } = payload;
-			if (!limit) { limit = CONSTANT.SERVER.LIMIT; } else { limit = limit; }
-			if (!page) { page = 1; } else { page = page; }
+			if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
+			if (!page) { page = 1; }
 			let sortingType = {};
 			sortType = !sortType ? -1 : sortType;
 			let matchObject: any = {};
-			const searchCriteria = {};
 			const skip = (limit * (page - 1));
 
 			if (sortBy) {
@@ -216,16 +212,13 @@ export class AdminClass extends BaseEntity {
 					$or: [
 						{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
 						{ 'property_address.cityName': new RegExp('.*' + searchTerm + '.*', 'i') },
-						// { 'property_added_by.userName': new RegExp('.*' + searchTerm + '.*', 'i') },
 						{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
 						{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
-						// { 'property_added_by.firstName': new RegExp('.*' + searchTerm + '.*', 'i') },
-						// { 'property_added_by.lastName': new RegExp('.*' + searchTerm + '.*', 'i') },
 					],
 				};
 			}
 
-			// // List of all properties for admin.
+			// List of all properties for admin.
 			if (!property_status) {
 				matchObject = {
 					$or: [
@@ -241,22 +234,11 @@ export class AdminClass extends BaseEntity {
 			if (property_status) {
 				matchObject['property_status.number'] = payload.property_status;
 			}
-			// console.log('matchObjectmatchObjectmatchObjectmatchObject', matchObject);
-
-			if (property_type) {
-				matchObject['property_basic_details.type'] = payload.property_type;
-			}
-			// if (propertyType && propertyType !== 3) { matchObject.$match['property_basic_details.property_for_number'] = propertyType; }
-			// // if (type && type !== 'all') { matchObject.$match['property_basic_details.type'] = type; }
-
+			if (property_type) matchObject['property_basic_details.type'] = payload.property_type;
 			if (byCity) { matchObject.$match['cityId'] = byCity; }
 			if (byRegion) { matchObject.$match['regionId'] = byRegion; }
 
-			// // List of properties acc to specific property status
-
-			// if (property_status && !(property_status === CONSTANT.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER)) { matchObject.$match['property_status.number'] = property_status; }
-
-			// // Date filters
+			// Date filters
 			if (fromDate && toDate) { matchObject['createdAt'] = { $gte: fromDate, $lte: toDate }; }
 			if (fromDate && !toDate) { matchObject['createdAt'] = { $gte: fromDate }; }
 			if (!fromDate && toDate) { matchObject['createdAt'] = { $lte: toDate }; }

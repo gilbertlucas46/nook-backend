@@ -117,9 +117,8 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/user/loan/application',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
-				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: any = request.payload;
-				const registerResponse = await LoanController.addLoanApplication(payload);
+				await LoanController.addLoanApplication(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {}));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -152,7 +151,7 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.CIVI_STATUS.SINGLE,
 							Constant.DATABASE.CIVI_STATUS.WIDOW,
 							Constant.DATABASE.CIVI_STATUS.SEPERATED,
-							Constant.DATABASE.CIVI_STATUS.MARRIED
+							Constant.DATABASE.CIVI_STATUS.MARRIED,
 						]),
 						spouseFirstName: Joi.string().min(1).max(32),
 						spouseMiddleName: Joi.string().min(1).max(32),
@@ -167,12 +166,12 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
-						])
+						]),
 					}),
 					contactInfo: Joi.object().keys({
 						phoneNo: Joi.number().min(8).max(15),
 						email: Joi.string(),
-						mobileNo: Joi.number().min(8).max(15)
+						mobileNo: Joi.number().min(8).max(15),
 					}),
 					property_address: Joi.object().keys({
 						address: Joi.string().min(3).max(80),
@@ -187,8 +186,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.HOME_OWNERSHIP.OWNED,
 							Constant.DATABASE.HOME_OWNERSHIP.RENTED,
 							Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
-						])
-					})
+						]),
+					}),
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
