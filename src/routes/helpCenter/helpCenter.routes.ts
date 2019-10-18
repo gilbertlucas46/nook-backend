@@ -269,13 +269,13 @@ export let helpCenterRoute: ServerRoute[] = [
         options: {
             description: 'was this article helpful or not',
             tags: ['api', 'anonymous', 'user', 'helpcenter-article-helpful'],
-            // auth: 'DoubleAuth',
+            auth: 'DoubleAuth',
             validate: {
                 payload: {
                     helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     isHelpful: Joi.boolean(),
                 },
-                // headers: UniversalFunctions.authorizationHeaderObj,
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
         },

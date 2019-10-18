@@ -28,8 +28,7 @@ const HelpFulHelpCenterSchema = new Schema({
     ipAddress: { type: String, required: true, index: true },
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
-    likesCount: { type: Number, default: 0 },
-    disLikesCount: { type: Number, default: 0 },
+    isliked: { type: Boolean },
 });
 
 export let HelpfulHelCenter = model<IHelpFulHelpCenter>('helpfulHelpCenter', HelpFulHelpCenterSchema);
