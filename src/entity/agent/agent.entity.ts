@@ -10,14 +10,13 @@ export class AgentClass extends BaseEntity {
 
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
-            let { page, limit, sortType, sortBy, userId } = payload;
+            let { page, limit, sortType, sortBy } = payload;
             const { fromDate, toDate, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty } = payload;
-            if (!limit) { limit = SERVER.LIMIT; } else { limit = limit; }
-            if (!page) { page = 1; } else { page = page; }
+            if (!limit) { limit = SERVER.LIMIT; }
+            if (!page) { page = 1; }
             const skip = (limit * (page - 1));
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-            // let matchObject: any = [];
             const matchObject: any = {};
             matchObject['type'] = 'AGENT';
             let searchCriteria;
@@ -172,8 +171,8 @@ export class AgentClass extends BaseEntity {
         try {
             let { sortType, sortBy, page, limit } = payload;
             const { propertyId } = payload;
-            if (!limit) { limit = Constant.SERVER.LIMIT; } else { limit = limit; }
-            if (!page) { page = 1; } else { page = page; }
+            if (!limit) { limit = Constant.SERVER.LIMIT; }
+            if (!page) { page = 1; }
             sortType = !sortType ? -1 : sortType;
             let sortingType = {};
             const criteria = {
