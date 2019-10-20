@@ -257,7 +257,6 @@ export let helpCenterRoute: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
-                console.log(' req.client.remoteAddress;', request.server.info);
                 const payload: helpCenterRequest.IsHelpful = request.payload as any;
                 payload['ipAddress'] = request.info.remoteAddress;
                 const data = await HelpCenterService.isArticleHelpful(payload, userData);
@@ -269,13 +268,13 @@ export let helpCenterRoute: ServerRoute[] = [
         options: {
             description: 'was this article helpful or not',
             tags: ['api', 'anonymous', 'user', 'helpcenter-article-helpful'],
-            // auth: 'DoubleAuth',
+            auth: 'DoubleAuth',
             validate: {
                 payload: {
                     helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     isHelpful: Joi.boolean(),
                 },
-                // headers: UniversalFunctions.authorizationHeaderObj,
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
         },
