@@ -8,6 +8,7 @@ import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import { AdminStaffEntity } from '@src/entity';
 
 export let adminProfileRoute: ServerRoute[] = [
 	/**
@@ -267,6 +268,9 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: PropertyRequest.SearchProperty = request.query as any;
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
+				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				    await AdminStaffEntity.checkPermission(payload.permissionType);
+				}
 				const responseData = await AdminService.getProperty(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
@@ -292,6 +296,12 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
+					]),
+					permissionType: Joi.string().valid([
+						Constant.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
 					]),
 					property_type: Joi.string().trim().valid([
 						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
@@ -438,6 +448,9 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+					await AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.DASHBOARD);
+				}
 				const registerResponse = await AdminService.dashboard(adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {

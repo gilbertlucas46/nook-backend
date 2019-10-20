@@ -19,6 +19,20 @@ class LoanControllers extends BaseEntity {
     }
 
     async addLoanApplication(payload) {
+        try {
+            await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
+            return {};            
+        } catch (error) {
+            return Promise.reject(error)
+        } 
+    }
+    async updateLoanApplication(payload) {
+        try {
+            await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
+            return {};
+        } catch (error) {
+            
+        }
 
     }
 

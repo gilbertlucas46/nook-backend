@@ -134,8 +134,8 @@ export let loanRoute: ServerRoute[] = [
 					saveAsDraft: Joi.boolean().required(),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
-						lastName: Joi.string().min(1).max(32).required(),
-						middleName: Joi.string().min(1).max(32).required(),
+						lastName: Joi.string().min(1).max(32),
+						middleName: Joi.string().max(32),
 						gender: Joi.string().valid([
 							Constant.DATABASE.GENDER.MALE,
 							Constant.DATABASE.GENDER.FEMALE,
@@ -169,7 +169,7 @@ export let loanRoute: ServerRoute[] = [
 						]),
 					}),
 					contactInfo: Joi.object().keys({
-						phoneNo: Joi.number().min(8).max(15),
+						phoneNo: Joi.number(),
 						email: Joi.string(),
 						mobileNo: Joi.number().min(8).max(15),
 					}),

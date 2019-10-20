@@ -108,21 +108,12 @@ export class HelpCenter {
 
     async isArticleHelpful(payload: helpCenterRequest.IsHelpful, userData?) {
         try {
-            payload['createdAt'] = new Date().getTime();
-            payload['updatedAt'] = new Date().getTime();
+            const data = await ENTITY.HelpfulE.createhelpfulStatus(payload);
+            return data;
 
-            if (payload.isHelpful) {
-                const helpFule = ENTITY.HelpfulE.updateOneEntity({ ipAddress: payload.ipAddress }, payload, { new: true, upsert: true, lean: true });
-                ENTITY.HelpCenterE.updateOneEntity({ _id: payload.helpCenterId }, { $inc: { likesCount: 1 } });
-                console.log('helpFUle>>>>>>>>>>>>>>>>', helpFule);
-                return {};
-            }
-            else {
-                ENTITY.HelpfulE.updateOneEntity({ ipAddress: payload.ipAddress }, payload, { new: true, upsert: true, lean: true });
-                ENTITY.HelpCenterE.updateOneEntity({ _id: payload.helpCenterId }, { $inc: { likesCount: 1 } });
-                return {}
-            }
         } catch (error) {
+            console.log('error>>>>>>>>>>>', error);
+
             return Promise.reject(error);
         }
     }
