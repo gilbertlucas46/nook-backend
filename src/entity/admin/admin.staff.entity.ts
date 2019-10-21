@@ -21,7 +21,7 @@ class AdminStaffE extends BaseEntity {
 
     async checkPermission(permission: string) {
         let data = await this.getOneEntity({ permission: { $in: permission } }, {});
-        if (data) {
+        if (!data) {
             return Promise.reject(CONSTANT.STATUS_MSG.ERROR.E401);
         }
     }
