@@ -4,7 +4,7 @@ import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK } from '../../constants';
 const UserLoanCriteria = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     bankId: { type: Schema.Types.ObjectId, required: true, index: true, ref: 'Bank' },
-    LoanForEmploymentType: [
+    loanForEmploymentType: [
         {
             employmentType: {
                 type: String,
@@ -53,4 +53,4 @@ const UserLoanCriteria = new Schema({
     updatedAt: { type: Number, required: true },
 });
 
-export const Userloancriteria = model('userloancriteria', UserLoanCriteria);
+export const Userloancriteria = model('userloancriterias', UserLoanCriteria);
