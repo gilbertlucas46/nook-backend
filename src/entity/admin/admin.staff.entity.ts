@@ -4,6 +4,7 @@ import * as moment from 'moment'
 
 import * as CONSTANT from '../../constants';
 import { Types } from 'mongoose';
+import { MailManager } from '@src/lib';
 
 /**
  * @author
@@ -19,15 +20,19 @@ class AdminStaffE extends BaseEntity {
     }
 
     async checkPermission(permission: string) {
-        let data = await this.getOneEntity({ permission: { $in: [permission] } }, {});
-        if (data) {
+        let data = await this.getOneEntity({ permission: { $in: permission } }, {});
+        if (!data) {
             return Promise.reject(CONSTANT.STATUS_MSG.ERROR.E401);
+        } else {
+            return data
         }
     }
 
     async fetchAdminEmail(id: string) {
         let query = {
-            _id: Types.ObjectId(id)
+            _id: Types.ObjectId(id),
+            staffLoggedIn: false,
+            type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE
         }
         return this.getOneEntity(query, {});
     }
@@ -49,7 +54,8 @@ class AdminStaffE extends BaseEntity {
             if (payload.sortBy) {
                 sortCondition[payload.sortBy] = parseInt(payload.sortType);
                 pipeline.push({ $sort: sortCondition }
-                )}
+                )
+            }
 
             if (fromDate || toDate) {
                 matchCondition['createdAt'] = {};
@@ -65,12 +71,24 @@ class AdminStaffE extends BaseEntity {
                         lastName: 1,
                         email: 1,
                         phoneNumber: 1,
+                        staffLoggedIn: 1,
                         createdAt: 1,
                         permission: 1
                     }
                 });
             return this.DAOManager.paginate(this.modelName, pipeline, limit, page);
         }
+    }
+
+    sendInvitationMail(payload: string, genCredentials: string) {
+        const html = `<html><head><title> Nook Admin | Staff Credentials</title></head>
+                        <body>
+                        Your system generated password is : '${genCredentials}'
+                        <p>Login with your email and password sent above.</p>
+                        </body>
+                        </html>`;
+        const mail = new MailManager(payload, 'Staff Login Credentials', html);
+        mail.sendMail()
     }
 }
 
