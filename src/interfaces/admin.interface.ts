@@ -72,7 +72,7 @@ export namespace AdminRequest {
 	}
 	export interface PropertyDetail {
 		propertyId: string;
-		permissionType: string
+		permissionType: string;
 	}
 
 	export interface UpdatePropertyStatus {
@@ -110,5 +110,4 @@ export namespace AdminRequest {
 		byRegion?: string;
 		byCity?: string;
 	}
-
 }

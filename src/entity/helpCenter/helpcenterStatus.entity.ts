@@ -6,28 +6,14 @@ class HelpfulHelpCentre extends BaseEntity {
     }
     async createhelpfulStatus(payload) {
         try {
-            console.log('payload', payload);
-
-            const criteria = {
-                ipAddress: payload.ipAddress,
-            };
+            const criteria = { ipAddress: payload.ipAddress };
 
             let data;
             payload['createdAt'] = new Date().getTime();
             payload['updatedAt'] = new Date().getTime();
+            data = await this.DAOManager.findAndUpdate('HelpCenterStatus', criteria, payload, { new: true, upsert: true, lean: true });
+            return data;
 
-            if (payload.isHelpful) {
-                console.log('payload>>>>>>>>>>>>>>>>>>>>>>>>', payload);
-                data = await this.DAOManager.findAndUpdate('HelpCenterStatus', criteria, payload, { new: true, upsert: true, lean: true });
-                console.log('datadatadatadatadatadatadata', data);
-
-                return data;
-            }
-            else {
-                console.log('payload>>>>>>>>>>>>>>>>>>>>>>>>11111111111111111111', payload);
-                data = await this.DAOManager.findAndUpdate('HelpCenterStatus', criteria, payload, { new: true, upsert: true, lean: true });
-                return data;
-            }
         } catch (error) {
             return Promise.reject(error);
         }

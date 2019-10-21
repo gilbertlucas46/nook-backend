@@ -7,7 +7,7 @@ import { AgentRequest } from '@src/interfaces/agent.interface';
 
 export let agentRoute: ServerRoute[] = [
     /**
-     * @description  agent listing
+     * @description  agent listing and by specialisation
      */
     {
         method: 'GET',
@@ -73,7 +73,7 @@ export let agentRoute: ServerRoute[] = [
         },
     },
     /**
-     * @description:agent info by userName
+     * @description: agent info by userName
      */
     {
         method: 'GET',

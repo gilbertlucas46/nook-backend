@@ -16,15 +16,15 @@ export let DATABASE = {
 	LOAN_APPLICATION_STATUS: {
 		PENDING: 'pending',
 		REJECTED: 'rejected',
-		APPROVED: 'approved'
+		APPROVED: 'approved',
 	},
 	EMPLOYMENT: {
 		TENURE: {
 			LESS_THAN_ONE: 'less_than_1',
 			BETWEEN_ONE_TWO: 'between_1_2',
 			BETWEEN_TWO_THREE: 'between_2_3',
-			MORE_THAN_THREE: 'more_than_3'
-		}
+			MORE_THAN_THREE: 'more_than_3',
+		},
 	},
 	LOAN_DURATION: {
 		BETWEEN_0_1: '1',
@@ -262,7 +262,7 @@ export let DATABASE = {
 	},
 	PERMISSION: {
 		TYPE: {
-			DASHBOARD: 'dashboard', 
+			DASHBOARD: 'dashboard',
 			ALL_PROPERTIES: 'all-property',
 			ACTIVE_PROPERTIES: 'active-property',
 			PENDING_PROPERTIES: 'pending-property',
@@ -513,7 +513,7 @@ export let STATUS_MSG = {
 				statusCode: 406,
 				type: 'STAFF_ALREADY_LOGGED_IN',
 				message: 'Staff already logged in',
-			}
+			},
 		},
 		E400: {
 			REQUEST_ALLREDY_SENT: {
