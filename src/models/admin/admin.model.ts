@@ -48,7 +48,7 @@ export const AdminSchema = new Schema(
 		isPhoneVerified: { type: Boolean },
 		passwordResetToken: { type: String },
 		passwordResetTokenExpirationTime: { type: Date },
-		staffLoggedIn: { type: Boolean, default: false },
+		staffLoggedIn: { type: Schema.Types.Boolean, default: false },
 		staffStatus: {
 			type: String, enum: [
 				CONSTANT.DATABASE.STATUS.USER.ACTIVE,
@@ -64,7 +64,6 @@ export const AdminSchema = new Schema(
 				CONSTANT.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
 				CONSTANT.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
 				CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-				CONSTANT.DATABASE.PERMISSION.TYPE.NOOK_STAFF,
 				CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 				CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 				CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
