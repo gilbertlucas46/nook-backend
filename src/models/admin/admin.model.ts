@@ -48,7 +48,7 @@ export const AdminSchema = new Schema(
 		isPhoneVerified: { type: Boolean },
 		passwordResetToken: { type: String },
 		passwordResetTokenExpirationTime: { type: Date },
-		staffLoggedIn: { type: Boolean, default: false },
+		staffLoggedIn: { type: Boolean },
 		staffStatus: {
 			type: String, enum: [
 				CONSTANT.DATABASE.STATUS.USER.ACTIVE,

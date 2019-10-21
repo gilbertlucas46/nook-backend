@@ -44,6 +44,9 @@ export class AdminProfileController {
 				type: adminData.type,
 				permission: adminData.permission,
 			};
+			if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				await ENTITY.AdminE.updateOneEntity({ $set: { staffLoggedIn: true } }, {});
+			}
 			const accessToken = await ENTITY.AdminE.createToken(tokenObj);
 			return { formatedData: adminData, accessToken };
 		} catch (err) {

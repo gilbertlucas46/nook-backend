@@ -269,7 +269,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const payload: PropertyRequest.SearchProperty = request.query as any;
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
 				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				    await AdminStaffEntity.checkPermission(payload.permissionType);
+					await AdminStaffEntity.checkPermission(payload.permissionType);
 				}
 				const responseData = await AdminService.getProperty(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
@@ -334,9 +334,12 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/property/{propertyId}',
 		handler: async (request, h) => {
 			try {
-				// let adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: AdminRequest.PropertyDetail = request.params as any;
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
+				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+					await AdminStaffEntity.checkPermission(payload.permissionType);
+				}
 				const responseData = await AdminService.getPropertyById(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
@@ -350,6 +353,12 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				params: {
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					permissionType: Joi.string().valid([
+						Constant.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+					]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -373,7 +382,11 @@ export let adminProfileRoute: ServerRoute[] = [
 				const payload: AdminRequest.UpdatePropertyStatus = {
 					status: (request.payload as any).status,
 					propertyId: request.params.propertyId,
+					permissionType: (request.payload as any).permissionType
 				};
+				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+					await AdminStaffEntity.checkPermission(payload.permissionType);
+				}
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
 				const responseData = await AdminService.updatePropertyStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
@@ -394,6 +407,12 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 					]),
+					permissionType: Joi.string().valid([
+						Constant.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+					])
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
