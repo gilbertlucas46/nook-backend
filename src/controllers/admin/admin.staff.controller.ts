@@ -34,14 +34,7 @@ class AdminStaffControllers {
                     type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
                 };
                 await ENTITY.AdminStaffEntity.createOneEntity(datatoSave);
-                const html = `<html><head><title> Nook Admin | Staff Credentials</title></head>
-                    <body>
-                    Your system generated password is : '${genCredentials}'
-                    <p>Login with your email and password sent above.</p>
-                    </body>
-                    </html>`;
-                const mail = new MailManager(payload.email, 'Staff Login Credentials', html);
-                mail.sendMail();
+                ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
             } else {
                 return Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT;
@@ -75,19 +68,14 @@ class AdminStaffControllers {
                 const generateString = generateRandomString(4);
                 const genCredentials = `${payload.firstName}_${generateString}`;
                 const hashPassword = await utils.cryptData(genCredentials);
-                const html = `<html><head><title> Nook Admin | Staff Credentials</title></head>
-                    <body>
-                    Your system generated password is : '${genCredentials}'
-                    <p>Login with your email and password sent above.</p>
-                    </body>
-                    </html>`;
-                const mail = new MailManager(payload.email, 'Staff Login Credentials', html);
-                mail.sendMail();
                 await ENTITY.AdminStaffEntity.updateOneEntity(
                     { _id: Types.ObjectId(payload._id) },
                     { $set: { password: hashPassword } },
                 );
+                ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
+            } else {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E406.STAFF_ALREADY_LOGGED_IN)
             }
         } catch (error) {
             return Promise.reject(error);

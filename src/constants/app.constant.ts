@@ -509,6 +509,13 @@ export let STATUS_MSG = {
 			type: 'ALREADY_EXIST',
 			message: 'Already Exist ',
 		},
+		E406: {
+			STAFF_ALREADY_LOGGED_IN: {
+				statusCode: 406,
+				type: 'STAFF_ALREADY_LOGGED_IN',
+				message: 'Staff already logged in',
+			}
+		},
 		E400: {
 			REQUEST_ALLREDY_SENT: {
 				statusCode: 400,
