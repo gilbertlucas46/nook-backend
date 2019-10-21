@@ -9,7 +9,7 @@ export { Enquiry } from './enquiry/enquiry.model';
 export { Article } from './article/article.model';
 export { HelpCentre } from './helpCentre/helpCenter.model';
 export { SavedProperty } from './property/savedProperty.model';
-export { HomeLoan } from './loan/home.loan.model';
+export { LoanApplication } from './loan/loan.application.model';
 export { Bank } from './loan/banks.model';
 export { Userloancriteria } from './loan/userloancriteria.model';
 export { HelpCenterStatus } from './helpCentre/helpCenter.model';

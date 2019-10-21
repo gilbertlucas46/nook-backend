@@ -32,10 +32,15 @@ export let subAdminRoutes: ServerRoute[] = [
 					lastName: Joi.string().min(1).max(32).required(),
 					phoneNumber: Joi.string().min(10).max(15),
 					permission: Joi.array().items(Joi.string().valid([
+						CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
+						CONSTANT.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
+						CONSTANT.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+						CONSTANT.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+						CONSTANT.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+						CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
 						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
-						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
+						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY
 					])).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -69,10 +74,15 @@ export let subAdminRoutes: ServerRoute[] = [
 				payload: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					permission: Joi.array().items(Joi.string().valid([
+						CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
+						CONSTANT.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
+						CONSTANT.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+						CONSTANT.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+						CONSTANT.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+						CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
 						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
-						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
+						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY
 					])).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -101,7 +111,7 @@ export let subAdminRoutes: ServerRoute[] = [
 		options: {
 			description: 'Create staff member',
 			tags: ['api', 'anonymous', 'Admin', 'staff_member'],
-			// auth: 'AdminAuth',
+			auth: 'AdminAuth',
 			validate: {
 				payload: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
@@ -176,7 +186,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				query: {
 					page: Joi.number(),
 					limit: Joi.number(),
-					sortBy: Joi.string(),
+					sortBy: Joi.string().allow("createdAt"),
 					permission: Joi.string().valid([
 						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 					]).required(),
