@@ -7,6 +7,9 @@ import * as ENTITY from '../../entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 
 export let articleRoutes = [
+    /**
+     * @description:admin add the article
+     */
     {
         method: 'POST',
         path: '/v1/admin/article',

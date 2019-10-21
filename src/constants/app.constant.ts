@@ -263,13 +263,12 @@ export let DATABASE = {
 	PERMISSION: {
 		TYPE: {
 			DASHBOARD: 'dashboard', 
-			ALL_PROPERTIES: 'allProperties',
-			ACTIVE_PROPERTIES: 'activeProperties',
-			PENDING_PROPERTIES: 'pendingProperties',
-			DECLINED_PROPERTIES: 'declinedProperties',
-			HELP_CENTER: 'helpCenter',
-			NOOK_STAFF: 'nookStaff',
-			USERS: 'users',
+			ALL_PROPERTIES: 'all-property',
+			ACTIVE_PROPERTIES: 'active-property',
+			PENDING_PROPERTIES: 'pending-property',
+			DECLINED_PROPERTIES: 'declined-property',
+			HELP_CENTER: 'help-center',
+			USERS: 'user',
 			STAFF: 'staff',
 			ARTICLE: 'article',
 			PROPERTY: 'property',
@@ -508,6 +507,13 @@ export let STATUS_MSG = {
 			statusCode: 400,
 			type: 'ALREADY_EXIST',
 			message: 'Already Exist ',
+		},
+		E406: {
+			STAFF_ALREADY_LOGGED_IN: {
+				statusCode: 406,
+				type: 'STAFF_ALREADY_LOGGED_IN',
+				message: 'Staff already logged in',
+			}
 		},
 		E400: {
 			REQUEST_ALLREDY_SENT: {
