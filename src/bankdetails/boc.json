@@ -1,0 +1,259 @@
+{
+    "abbrevation": "BoC",
+    "bankName": "Bank of Commerce",
+    "headquarterLocation": "Mandaluyoung",
+    "propertySpecification": [
+        {
+            "allowedPropertyType": "APARTMENT",
+            "allowedPropertyStatus": [
+                "FORECLOSED",
+                "RESELLING",
+                "REFINANCING"
+            ],
+            "maxLoanDurationAllowed": 20,
+            "maxLoanPercent": 80,
+            "debtIncomeRatio": 40
+        },
+        {
+            "allowedPropertyType": "CONDOMINIUM",
+            "allowedPropertyStatus": [
+                 "FORECLOSED",
+                "RESELLING",
+                "REFINANCING"
+            ],
+            "maxLoanDurationAllowed": 20,
+            "maxLoanPercent": 80,
+            "debtIncomeRatio": 40
+        },
+        {
+            "allowedPropertyType": "HOUSE_LOT",
+            "allowedPropertyStatus": [
+                 "FORECLOSED",
+                "RESELLING",
+                "REFINANCING"
+            ],
+            "maxLoanDurationAllowed": 20,
+            "maxLoanPercent": 80,
+            "debtIncomeRatio": 40
+        },
+        {
+            "allowedPropertyType": "TOWNHOUSE",
+            "allowedPropertyStatus": [
+                 "FORECLOSED",
+                "RESELLING",
+                "REFINANCING"
+            ],
+            "maxLoanDurationAllowed": 20,
+            "maxLoanPercent": 80,
+            "debtIncomeRatio": 40
+        },
+        {
+            "allowedPropertyType": "VACANT_LOT",
+            "allowedPropertyStatus": [
+                 "FORECLOSED",
+                "RESELLING",
+                "REFINANCING"
+            ],
+            "maxLoanDurationAllowed": 20,
+            "maxLoanPercent": 80,
+            "debtIncomeRatio": 40
+        }
+    ],
+    "interestRateDetails": {
+        "1": 6.75,
+        "2": 6.75,
+        "3": 6.75,
+        "4": 6.75,
+        "5": 6.75,
+        "6" : 6.75,
+        "7" : 6.75,
+        "8" : 6.75,
+        "9" : 6.75,
+        "10" : 6.75,
+        "11" : 6.75,
+        "12" : 6.75,
+        "13" : 6.75,
+        "14" : 6.75,
+        "15" : 6.75,
+        "16" : 6.75,
+        "17" : 6.75,
+        "18" : 6.75,
+        "19" : 6.75,
+        "20" : 6.75
+    },
+    "bankFeePercent": 0,
+    "bankFeeAmount": 0,
+    "loanApplicationFeePercent": 0,
+    "loanMinAmount": 500000,
+    "loanMaxAmount": 1000000000,
+    "minLoanDuration": 12,
+    "maxLoanDuration": 240,
+    "loanForForeigner": false,
+    "loanForForeignerMarriedLocal": true,
+    "loanForNotNowCreditCardHolder": true,
+    "minAgeRequiredForLoan": 21,
+    "maxAgeRequiredForLoan": 65,
+    "loanAlreadyExistDiffBank": true,
+    "loanAlreadyExistSameBank": true,
+    "minMonthlyIncomeRequired": 25000,
+    "missedLoanPaymentAllowance": true,
+    "bankImageLogoUrl": "",
+    "loanForEmploymentType": [
+        {
+            "employmentType": "PRIVATE",
+            "employmentRank": [
+                "ASSISTANT_MANAGER",
+                "ASSISSTANT_VICE_PRESIDENT",
+                "CHAIRMAN",
+                "CHIEF_EXECUTIVE_OFFICER",
+                "CLERK",
+                "DIRECTOR",
+                "FIRST_VICE_PRESIDENT",
+                "GENERAL_EMPLOYEE",
+                "MANAGER",
+                "NON_PROFESIONNAL",
+                "OWNER",
+                "PRESIDENT",
+                "PROFESSIONAL",
+                "RANK_FILE",
+                "SENIOR_ASSISTANT_MANAGER",
+                "SENIOR_ASSISTANT_VICE_PRESIDENT",
+                "SENIOR_MANAGER",
+                "SENIOR_VICE_PRESIDENT",
+                "SUPERVISOR",
+                "VICE_PRESIDENT"
+            ],
+            "minEmploymentTenure": 1
+        },
+        {
+            "employmentType": "GOVT",
+            "employmentRank": [
+                "ASSISTANT_MANAGER",
+                "ASSISSTANT_VICE_PRESIDENT",
+                "CHAIRMAN",
+                "CHIEF_EXECUTIVE_OFFICER",
+                "CLERK",
+                "DIRECTOR",
+                "FIRST_VICE_PRESIDENT",
+                "GENERAL_EMPLOYEE",
+                "MANAGER",
+                "NON_PROFESIONNAL",
+                "OWNER",
+                "PRESIDENT",
+                "PROFESSIONAL",
+                "RANK_FILE",
+                "SENIOR_ASSISTANT_MANAGER",
+                "SENIOR_ASSISTANT_VICE_PRESIDENT",
+                "SENIOR_MANAGER",
+                "SENIOR_VICE_PRESIDENT",
+                "SUPERVISOR",
+                "VICE_PRESIDENT"
+            ],
+            "minEmploymentTenure": 1
+        },
+        {
+            "employmentType": "BPO",
+            "employmentRank": [
+                "ASSISTANT_MANAGER",
+                "ASSISSTANT_VICE_PRESIDENT",
+                "CHAIRMAN",
+                "CHIEF_EXECUTIVE_OFFICER",
+                "CLERK",
+                "DIRECTOR",
+                "FIRST_VICE_PRESIDENT",
+                "GENERAL_EMPLOYEE",
+                "MANAGER",
+                "NON_PROFESIONNAL",
+                "OWNER",
+                "PRESIDENT",
+                "PROFESSIONAL",
+                "RANK_FILE",
+                "SENIOR_ASSISTANT_MANAGER",
+                "SENIOR_ASSISTANT_VICE_PRESIDENT",
+                "SENIOR_MANAGER",
+                "SENIOR_VICE_PRESIDENT",
+                "SUPERVISOR",
+                "VICE_PRESIDENT"
+            ],
+            "minEmploymentTenure": 1
+        },
+        {
+            "employmentType": "OFW",
+            "employmentRank": [
+                "ASSISTANT_MANAGER",
+                "ASSISSTANT_VICE_PRESIDENT",
+                "CHAIRMAN",
+                "CHIEF_EXECUTIVE_OFFICER",
+                "CLERK",
+                "DIRECTOR",
+                "FIRST_VICE_PRESIDENT",
+                "GENERAL_EMPLOYEE",
+                "MANAGER",
+                "NON_PROFESIONNAL",
+                "OWNER",
+                "PRESIDENT",
+                "PROFESSIONAL",
+                "RANK_FILE",
+                "SENIOR_ASSISTANT_MANAGER",
+                "SENIOR_ASSISTANT_VICE_PRESIDENT",
+                "SENIOR_MANAGER",
+                "SENIOR_VICE_PRESIDENT",
+                "SUPERVISOR",
+                "VICE_PRESIDENT"
+            ],
+            "minEmploymentTenure": 1
+        },
+        {
+            "employmentType": "SELF",
+            "employmentRank": [
+                "ASSISTANT_MANAGER",
+                "ASSISSTANT_VICE_PRESIDENT",
+                "CHAIRMAN",
+                "CHIEF_EXECUTIVE_OFFICER",
+                "CLERK",
+                "DIRECTOR",
+                "FIRST_VICE_PRESIDENT",
+                "GENERAL_EMPLOYEE",
+                "MANAGER",
+                "NON_PROFESIONNAL",
+                "OWNER",
+                "PRESIDENT",
+                "PROFESSIONAL",
+                "RANK_FILE",
+                "SENIOR_ASSISTANT_MANAGER",
+                "SENIOR_ASSISTANT_VICE_PRESIDENT",
+                "SENIOR_MANAGER",
+                "SENIOR_VICE_PRESIDENT",
+                "SUPERVISOR",
+                "VICE_PRESIDENT"
+            ],
+            "minEmploymentTenure": 1
+        },
+        {
+            "employmentType": "PROFESSIONAL",
+            "employmentRank": [
+                "ASSISTANT_MANAGER",
+                "ASSISSTANT_VICE_PRESIDENT",
+                "CHAIRMAN",
+                "CHIEF_EXECUTIVE_OFFICER",
+                "CLERK",
+                "DIRECTOR",
+                "FIRST_VICE_PRESIDENT",
+                "GENERAL_EMPLOYEE",
+                "MANAGER",
+                "NON_PROFESIONNAL",
+                "OWNER",
+                "PRESIDENT",
+                "PROFESSIONAL",
+                "RANK_FILE",
+                "SENIOR_ASSISTANT_MANAGER",
+                "SENIOR_ASSISTANT_VICE_PRESIDENT",
+                "SENIOR_MANAGER",
+                "SENIOR_VICE_PRESIDENT",
+                "SUPERVISOR",
+                "VICE_PRESIDENT"
+            ],
+            "minEmploymentTenure": 1
+        }
+    ]
+}
