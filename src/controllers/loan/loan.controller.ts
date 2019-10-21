@@ -1,7 +1,7 @@
 import * as ENTITY from '@src/entity';
 import { Types } from 'mongoose';
 import { BaseEntity } from '@src/entity/base/base.entity';
-import {LoanEntity} from '@src/entity/loan/loan.entity'
+import { LoanEntity } from '@src/entity/loan/loan.entity';
 
 class LoanControllers extends BaseEntity {
 
@@ -21,19 +21,19 @@ class LoanControllers extends BaseEntity {
     async addLoanApplication(payload) {
         try {
             await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
-            return {};            
+            return {};
         } catch (error) {
-            return Promise.reject(error)
-        } 
+            return Promise.reject(error);
+        }
     }
+
     async updateLoanApplication(payload) {
         try {
             await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return {};
         } catch (error) {
-            
-        }
 
+        }
     }
 
     async checkPreloanApplication(payload) {

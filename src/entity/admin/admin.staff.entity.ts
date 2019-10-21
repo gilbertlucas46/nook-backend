@@ -1,7 +1,5 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
-import * as moment from 'moment'
-
-
+import * as moment from 'moment';
 import * as CONSTANT from '../../constants';
 import { Types } from 'mongoose';
 import { MailManager } from '@src/lib';
@@ -16,36 +14,36 @@ class AdminStaffE extends BaseEntity {
     }
 
     async checkStaffEmail(email: string) {
-        return this.getOneEntity({ email: email }, {})
+        return this.getOneEntity({ email }, {});
     }
 
     async checkPermission(permission: string) {
-        let data = await this.getOneEntity({ permission: { $in: permission } }, {});
+        const data = await this.getOneEntity({ permission: { $in: permission } }, {});
         if (!data) {
             return Promise.reject(CONSTANT.STATUS_MSG.ERROR.E401);
         } else {
-            return data
+            return data;
         }
     }
 
     async fetchAdminEmail(id: string) {
-        let query = {
+        const query = {
             _id: Types.ObjectId(id),
             staffLoggedIn: false,
-            type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE
-        }
+            type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
+        };
         return this.getOneEntity(query, {});
     }
 
     async staffListing(payload: any) {
         const { fromDate, toDate } = payload;
         let { limit, page } = payload;
-        let matchCondition: any = {
+        const matchCondition: any = {
             type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
-            staffStatus: CONSTANT.DATABASE.STATUS.USER.ACTIVE
-        }
-        let pipeline = [];
-        let sortCondition: any = {};
+            staffStatus: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+        };
+        const pipeline = [];
+        const sortCondition: any = {};
         if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
         if (!page) {
             page = 1;
@@ -53,8 +51,8 @@ class AdminStaffE extends BaseEntity {
             // sortType = !sortType ? -1 : 1;
             if (payload.sortBy) {
                 sortCondition[payload.sortBy] = parseInt(payload.sortType);
-                pipeline.push({ $sort: sortCondition }
-                )
+                pipeline.push({ $sort: sortCondition },
+                );
             }
 
             if (fromDate || toDate) {
@@ -63,7 +61,7 @@ class AdminStaffE extends BaseEntity {
                 if (toDate) matchCondition['createdAt']['$lte'] = moment(toDate).endOf('day').toDate();
             }
             pipeline.push({
-                $match: matchCondition
+                $match: matchCondition,
             },
                 {
                     $project: {
@@ -73,8 +71,8 @@ class AdminStaffE extends BaseEntity {
                         phoneNumber: 1,
                         staffLoggedIn: 1,
                         createdAt: 1,
-                        permission: 1
-                    }
+                        permission: 1,
+                    },
                 });
             return this.DAOManager.paginate(this.modelName, pipeline, limit, page);
         }
@@ -88,7 +86,7 @@ class AdminStaffE extends BaseEntity {
                         </body>
                         </html>`;
         const mail = new MailManager(payload, 'Staff Login Credentials', html);
-        mail.sendMail()
+        mail.sendMail();
     }
 }
 

@@ -12,7 +12,7 @@ class LoanEntities extends BaseEntity {
             const pipeline = [
                 {
                     $match: {
-                        loanMinAmount: { $gte: payload.property.value },
+                        loanMinAmount: { $lte: payload.property.value },
                         propertySpecification: {
                             $elemMatch: {
                                 $and: [
