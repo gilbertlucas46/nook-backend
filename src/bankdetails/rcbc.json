@@ -107,7 +107,7 @@
     "loanAlreadyExistSameBank": true,
     "minMonthlyIncomeRequired": 50000,
     "missedLoanPaymentAllowance": true,
-    "bankImageLogoUrl": "",
+    "bankImageLogoUrl": "https://www.rcbc.com/Content/Web/img/home/logo.png",
     "LoanForEmploymentType": [
         {
             "employmentType": "PRIVATE",
