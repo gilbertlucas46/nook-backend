@@ -7,14 +7,14 @@ class LoanApplicationE extends BaseEntity {
     }
     /**
      * @description saving loan application
-     * @param payload 
+     * @param payload
      */
     async saveLoanApplication(payload) {
         return this.createOneEntity(payload);
     }
     /**
      * @description saving loan application
-     * @param payload 
+     * @param payload
      */
     async updateLoanApplication(payload) {
         return this.updateOneEntity({ _id: Types.ObjectId(payload._id) }, { payload });
