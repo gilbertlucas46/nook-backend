@@ -9,6 +9,7 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import { AdminStaffEntity } from '@src/entity';
+import * as Hapi from "hapi";
 
 export let adminProfileRoute: ServerRoute[] = [
 	/**
@@ -17,7 +18,7 @@ export let adminProfileRoute: ServerRoute[] = [
 	{
 		method: 'POST',
 		path: '/v1/admin/login',
-		handler: async (request, h) => {
+		handler: async (request, h: Hapi.ResponseToolkit) => {
 			try {
 				const payload: any = request.payload;
 				const registerResponse = await AdminProfileService.login(payload);
