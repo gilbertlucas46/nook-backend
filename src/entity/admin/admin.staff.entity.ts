@@ -23,6 +23,8 @@ class AdminStaffE extends BaseEntity {
         let data = await this.getOneEntity({ permission: { $in: permission } }, {});
         if (!data) {
             return Promise.reject(CONSTANT.STATUS_MSG.ERROR.E401);
+        } else {
+            return data
         }
     }
 
