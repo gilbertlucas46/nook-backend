@@ -71,20 +71,24 @@ class LoanEntities extends BaseEntity {
                     $addFields: {
                         interestRate: `$interestRateDetails.${payload.loan.term}`,
                         loanableAmount: payload.loan.amount,
-                        loanDuration: payload.loan.term,
+                        loanDurationYearly: payload.loan.term,
                     },
                 },
                 {
                     $addFields: {
-                        monthlyPayment: 1,
                         interestRateMonthly: { $divide: [{ $divide: ['$interestRate', 100] }, 12] },
-                        loanAbleDuration: { $multiply: [payload.loan.term, 12] },
+                        loanDurationMonthly: { $multiply: [payload.loan.term, 12] },
                     },
                 },
                 {
                     $addFields: {
-                        numerator: { $multiply: [{ $multiply: [{ $add: ['$interestRateMonthly', 1] }, payload.loan.amount] }, '$loanAbleDuration'] },
-                        denominator: { $subtract: [{ $multiply: [{ $add: ['$interestRateMonthly', 1] }, '$loanAbleDuration'] }, 1] },
+                        numerator1: { $pow: [{ $add: ['$interestRateMonthly', 1] }, '$loanDurationMonthly'] },
+                        denominator: { $subtract: [{ $pow: [{ $add: ['$interestRateMonthly', 1] }, '$loanDurationMonthly'] }, 1] },
+                    },
+                },
+                {
+                    $addFields: {
+                        numerator: { $multiply: ['$numerator1', '$interestRateMonthly', payload.loan.amount] },
                     },
                 },
                 {
@@ -106,7 +110,8 @@ class LoanEntities extends BaseEntity {
 
                         loanableAmount: 1,
                         interestRateMonthly: 1,
-                        loanAbleDuration: 1,
+                        loanDurationYearly: 1,
+                        loanDurationMonthly: 1,
                     },
                 },
             ];
