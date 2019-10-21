@@ -198,19 +198,19 @@ export const EMPLOYMENT_RANK = {
 };
 
 export const EMPLOYMENT_TENURE = {
-    0_1: {
+    '0_1': {
         label: 'less than a year',
         value: '0_1',
     },
-    1_2: {
+    '1_2': {
         label: '1 - 2 years',
         value: '1_2',
     },
-    2_3: {
+    '2_3': {
         label: '2 - 3 years',
         value: '2_3',
     },
-    3_100: {
+    '3_100': {
         label: 'more than 3 years',
         value: '3_100',
     },

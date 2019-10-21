@@ -135,7 +135,7 @@ export let loanRoute: ServerRoute[] = [
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
-						middleName: Joi.string().min(1).max(32),
+						middleName: Joi.string().max(32),
 						gender: Joi.string().valid([
 							Constant.DATABASE.GENDER.MALE,
 							Constant.DATABASE.GENDER.FEMALE,
