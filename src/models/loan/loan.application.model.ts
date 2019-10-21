@@ -9,9 +9,9 @@ const schema = new Schema({
         type: Schema.Types.String, enum: [
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.APPROVED
+            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
         ],
-        default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING
+        default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
     },
     personalInfo: {
         firstName: { type: Schema.Types.String, trim: true },
@@ -120,7 +120,7 @@ const schema = new Schema({
                 EMPLOYMENT_TYPE.PRIVATE.value,
                 EMPLOYMENT_TYPE.PROFESSIONAL.value,
                 EMPLOYMENT_TYPE.SELF.value,
-            ]
+            ],
         },
         tin: { type: Schema.Types.String, trim: true },
         companyName: { type: Schema.Types.String, trime: true },
@@ -148,7 +148,7 @@ const schema = new Schema({
                 EMPLOYMENT_RANK.SENIOR_VICE_PRESIDENT.value,
                 EMPLOYMENT_RANK.SUPERVISOR.value,
                 EMPLOYMENT_RANK.VICE_PRESIDENT.value,
-            ]
+            ],
         },
         employmentTenure: {
             type: Schema.Types.String, enum: [
@@ -156,7 +156,7 @@ const schema = new Schema({
                 CONSTANT.DATABASE.EMPLOYMENT.TENURE.BETWEEN_ONE_TWO,
                 CONSTANT.DATABASE.EMPLOYMENT.TENURE.BETWEEN_TWO_THREE,
                 CONSTANT.DATABASE.EMPLOYMENT.TENURE.MORE_THAN_THREE,
-            ]
+            ],
         },
         companyIndustry: {
             type: Schema.Types.String, enum: [
@@ -224,7 +224,7 @@ const schema = new Schema({
             docUrl: {
                 type: Schema.Types.String,
                 trim: true,
-            }
+            },
         }],
     },
     nookAgent: { type: Schema.Types.String, trim: true },

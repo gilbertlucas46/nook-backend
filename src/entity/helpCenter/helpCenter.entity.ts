@@ -51,7 +51,6 @@ export class HelpCenterEntity extends BaseEntity {
             return Promise.reject(error);
         }
     }
-
 }
 
 export let HelpCenterE = new HelpCenterEntity();

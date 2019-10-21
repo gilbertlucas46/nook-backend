@@ -110,10 +110,7 @@ export class HelpCenter {
         try {
             const data = await ENTITY.HelpfulE.createhelpfulStatus(payload);
             return data;
-
         } catch (error) {
-            console.log('error>>>>>>>>>>>', error);
-
             return Promise.reject(error);
         }
     }
