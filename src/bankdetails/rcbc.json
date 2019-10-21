@@ -108,7 +108,7 @@
     "minMonthlyIncomeRequired": 50000,
     "missedLoanPaymentAllowance": true,
     "bankImageLogoUrl": "",
-    "LoanForEmploymentType": [
+    "loanForEmploymentType": [
         {
             "employmentType": "PRIVATE",
             "employmentRank": [
