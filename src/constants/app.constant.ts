@@ -13,6 +13,19 @@ export const ENUM = {
 };
 
 export let DATABASE = {
+	LOAN_APPLICATION_STATUS: {
+		PENDING: 'pending',
+		REJECTED: 'rejected',
+		APPROVED: 'approved'
+	},
+	EMPLOYMENT: {
+		TENURE: {
+			LESS_THAN_ONE: 'less_than_1',
+			BETWEEN_ONE_TWO: 'between_1_2',
+			BETWEEN_TWO_THREE: 'between_2_3',
+			MORE_THAN_THREE: 'more_than_3'
+		}
+	},
 	LOAN_DURATION: {
 		BETWEEN_0_1: '1',
 		BETWEEN_1_2: '2',
@@ -249,7 +262,13 @@ export let DATABASE = {
 	},
 	PERMISSION: {
 		TYPE: {
-			USERS: 'users',
+			DASHBOARD: 'dashboard', 
+			ALL_PROPERTIES: 'all-property',
+			ACTIVE_PROPERTIES: 'active-property',
+			PENDING_PROPERTIES: 'pending-property',
+			DECLINED_PROPERTIES: 'declined-property',
+			HELP_CENTER: 'help-center',
+			USERS: 'user',
 			STAFF: 'staff',
 			ARTICLE: 'article',
 			PROPERTY: 'property',
@@ -488,6 +507,13 @@ export let STATUS_MSG = {
 			statusCode: 400,
 			type: 'ALREADY_EXIST',
 			message: 'Already Exist ',
+		},
+		E406: {
+			STAFF_ALREADY_LOGGED_IN: {
+				statusCode: 406,
+				type: 'STAFF_ALREADY_LOGGED_IN',
+				message: 'Staff already logged in',
+			}
 		},
 		E400: {
 			REQUEST_ALLREDY_SENT: {

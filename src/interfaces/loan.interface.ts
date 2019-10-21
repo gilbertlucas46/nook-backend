@@ -5,11 +5,12 @@ export namespace LoanRequest {
             value: number;
             type: string;
             status: string;
+            developer?: string;
         };
         work: {
             type: string;
             rank: string;
-            tenure: number;
+            tenure: string;
             income: number;
         };
         other: {

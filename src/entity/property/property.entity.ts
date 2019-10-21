@@ -302,7 +302,6 @@ export class PropertyClass extends BaseEntity {
 					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 					'property_for.number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-					// payload.propertyFor,
 					'_id': {
 						$ne: Types.ObjectId(payload.propertyId),
 					},
