@@ -97,8 +97,8 @@
     "loanAlreadyExistSameBank": true,
     "minMonthlyIncomeRequired": 35000,
     "missedLoanPaymentAllowance": false,
-    "bankImageLogoUrl": "",
-    "LoanForEmploymentType": [
+    "bankImageLogoUrl": "https://en.wikipedia.org/wiki/Chinabank#/media/File:China_Bank_logo_wiki.svg",
+    "loanForEmploymentType": [
         {
             "employmentType": "PRIVATE",
             "employmentRank": [

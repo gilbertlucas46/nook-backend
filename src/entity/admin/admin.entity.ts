@@ -245,11 +245,11 @@ export class AdminClass extends BaseEntity {
 
 			pipeline.push(this.DAOManager.findAll('Property', matchObject, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
 			pipeline.push(this.DAOManager.count('Property', matchObject));
-			const [propertyList, totalPropertyList] = await Promise.all(pipeline);
+			const [data, total] = await Promise.all(pipeline);
 
 			return {
-				propertyList,
-				totalPropertyList,
+				data,
+				total,
 			};
 		} catch (error) {
 			return Promise.reject(error);

@@ -68,7 +68,7 @@ export let loanRoute: ServerRoute[] = [
 					minMonthlyIncomeRequired: Joi.number(),
 					missedLoanPaymentAllowance: Joi.boolean(),
 					bankImageLogoUrl: Joi.string().allow(''),
-					LoanForEmploymentType: Joi.array().items({
+					loanForEmploymentType: Joi.array().items({
 						employmentType: Joi.string().valid([
 							EMPLOYMENT_TYPE.BPO.value,
 							EMPLOYMENT_TYPE.GOVT.value,

@@ -24,8 +24,6 @@ export class AdminProfileController {
 			if (email) { email = email.trim().toLowerCase(); }
 			const checkData = { email };
 			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
-			console.log('admin>>>>>>>>>', adminData);
-
 			// check email
 			if (!adminData) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);

@@ -4,10 +4,10 @@ import * as utils from '@src/utils';
 import { AgentRequest } from '@src/interfaces/agent.interface';
 
 export class AgentController {
-/**
- *
- * @param payload category by and specialisation by agents
- */
+	/**
+	 *
+	 * @param payload category by and specialisation by agents
+	 */
 	async searchAgent(payload: AgentRequest.SearchAgent) {
 		try {
 			const propertyData = await AgentE.getAgent(payload);
@@ -18,20 +18,12 @@ export class AgentController {
 		}
 	}
 
-	// async agentProperty(payload: AgentRequest.UserProperty) {
-	// 	try {
-	// 		const data = await AgentE.getAgentProperty(payload);
-	// 		return data;
-	// 	} catch (error) {
-	// 		return Promise.reject(error);
-	// 	}
-	// }
-/**
- *
- * @param agent detail via userName
- */
+	/**
+	 *
+	 * @param agent detail via userName
+	 */
 
- async agentInfo(userName: string) {
+	async agentInfo(userName: string) {
 		try {
 			const data = await AgentE.getAgentInfo(userName);
 			return data;

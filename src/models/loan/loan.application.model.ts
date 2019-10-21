@@ -9,9 +9,9 @@ const schema = new Schema({
         type: Schema.Types.String, enum: [
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.APPROVED
+            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
         ],
-        default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING
+        default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
     },
     personalInfo: {
         firstName: { type: Schema.Types.String, trim: true },
