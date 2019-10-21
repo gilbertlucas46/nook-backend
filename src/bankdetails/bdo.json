@@ -92,7 +92,7 @@
     "loanAlreadyExistSameBank": true,
     "minMonthlyIncomeRequired": 50000,
     "missedLoanPaymentAllowance": false,
-    "bankImageLogoUrl": "",
+    "bankImageLogoUrl": "https://www.bdo.com.ph/sites/default/files/images/BDO-logo-2019.png",
     "LoanForEmploymentType": [
         {
             "employmentType": "PRIVATE",
