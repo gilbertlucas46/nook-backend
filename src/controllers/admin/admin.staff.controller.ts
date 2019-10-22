@@ -6,7 +6,6 @@ import * as UniversalFunctions from '@src/utils';
 import { Types } from 'mongoose';
 import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
-import { MailManager } from '@src/lib';
 const cert: any = config.get('jwtSecret');
 
 /**
