@@ -23,7 +23,6 @@ class AdminStaffControllers {
                 const generateString = generateRandomString(4);
                 const genCredentials = `${payload.firstName}_${generateString}`;
                 const hashPassword = await utils.cryptData(genCredentials);
-
                 const datatoSave = {
                     email: payload.email,
                     firstName: payload.firstName,
@@ -32,6 +31,7 @@ class AdminStaffControllers {
                     phoneNumber: payload.phoneNumber,
                     staffStatus: Constant.DATABASE.STATUS.USER.ACTIVE,
                     type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
+                    permission: payload.permission,
                 };
                 await ENTITY.AdminStaffEntity.createOneEntity(datatoSave);
                 ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
@@ -42,7 +42,6 @@ class AdminStaffControllers {
         } catch (error) {
             return Promise.reject(error);
         }
-
     }
 
     async addPermissions(payload: any) {
@@ -75,7 +74,7 @@ class AdminStaffControllers {
                 ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
             } else {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E406.STAFF_ALREADY_LOGGED_IN)
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E406.STAFF_ALREADY_LOGGED_IN);
             }
         } catch (error) {
             return Promise.reject(error);
