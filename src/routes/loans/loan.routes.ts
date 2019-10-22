@@ -148,10 +148,10 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.EDUCATION_BACKGROUND.VOCATIONAL,
 						]),
 						civilStatus: Joi.string().valid([
-							Constant.DATABASE.CIVI_STATUS.SINGLE,
-							Constant.DATABASE.CIVI_STATUS.WIDOW,
-							Constant.DATABASE.CIVI_STATUS.SEPERATED,
-							Constant.DATABASE.CIVI_STATUS.MARRIED,
+							Constant.DATABASE.CIVIL_STATUS.SINGLE,
+							Constant.DATABASE.CIVIL_STATUS.WIDOW,
+							Constant.DATABASE.CIVIL_STATUS.SEPERATED,
+							Constant.DATABASE.CIVIL_STATUS.MARRIED,
 						]),
 						spouseFirstName: Joi.string().min(1).max(32),
 						spouseMiddleName: Joi.string().min(1).max(32),
@@ -192,7 +192,7 @@ export let loanRoute: ServerRoute[] = [
 						fixedPeriod: Joi.number(),
 						loanTerm: Joi.number(),
 						rate: Joi.number().max(100),
-						monthlyRepayment: Joi.number()
+						monthlyRepayment: Joi.number(),
 					}),
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
@@ -302,7 +302,7 @@ export let loanRoute: ServerRoute[] = [
 									Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
 									Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
 								]),
-								docUrl: Joi.string()
+								docUrl: Joi.string(),
 							}),
 							nookAgent: Joi.string(),
 						}),
@@ -316,6 +316,6 @@ export let loanRoute: ServerRoute[] = [
 					responseMessages: Constant.swaggerDefaultResponseMessages,
 				},
 			},
-		}
-	}
+		},
+	},
 ];

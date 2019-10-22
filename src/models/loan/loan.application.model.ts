@@ -34,10 +34,10 @@ const schema = new Schema({
         },
         civilStatus: {
             type: Schema.Types.String, enum: [
-                CONSTANT.DATABASE.CIVI_STATUS.SINGLE,
-                CONSTANT.DATABASE.CIVI_STATUS.WIDOW,
-                CONSTANT.DATABASE.CIVI_STATUS.SEPERATED,
-                CONSTANT.DATABASE.CIVI_STATUS.MARRIED,
+                CONSTANT.DATABASE.CIVIL_STATUS.SINGLE,
+                CONSTANT.DATABASE.CIVIL_STATUS.WIDOW,
+                CONSTANT.DATABASE.CIVIL_STATUS.SEPERATED,
+                CONSTANT.DATABASE.CIVIL_STATUS.MARRIED,
             ],
         },
         spouseFirstName: { type: Schema.Types.String, trim: true },
@@ -78,7 +78,6 @@ const schema = new Schema({
                 ],
             },
         },
-        
     },
     loanDetails: {
         fixedPeriod: { type: Schema.Types.Number, trim: true },
@@ -120,7 +119,7 @@ const schema = new Schema({
                     EMPLOYMENT_TYPE.PRIVATE.value,
                     EMPLOYMENT_TYPE.PROFESSIONAL.value,
                     EMPLOYMENT_TYPE.SELF.value,
-                ]
+                ],
             },
             tin: { type: Schema.Types.String, trim: true },
             companyName: { type: Schema.Types.String, trime: true },
@@ -148,7 +147,7 @@ const schema = new Schema({
                     EMPLOYMENT_RANK.SENIOR_VICE_PRESIDENT.value,
                     EMPLOYMENT_RANK.SUPERVISOR.value,
                     EMPLOYMENT_RANK.VICE_PRESIDENT.value,
-                ]
+                ],
             },
             employmentTenure: {
                 type: Schema.Types.String, enum: [
@@ -156,7 +155,7 @@ const schema = new Schema({
                     CONSTANT.DATABASE.EMPLOYMENT.TENURE.BETWEEN_ONE_TWO,
                     CONSTANT.DATABASE.EMPLOYMENT.TENURE.BETWEEN_TWO_THREE,
                     CONSTANT.DATABASE.EMPLOYMENT.TENURE.MORE_THAN_THREE,
-                ]
+                ],
             },
             companyIndustry: {
                 type: Schema.Types.String, enum: [
@@ -224,7 +223,7 @@ const schema = new Schema({
                 docUrl: {
                     type: Schema.Types.String,
                     trim: true,
-                }
+                },
             }],
         },
         nookAgent: { type: Schema.Types.String, trim: true },

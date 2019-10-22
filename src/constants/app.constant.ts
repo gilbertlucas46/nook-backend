@@ -71,42 +71,46 @@ export let DATABASE = {
 		},
 	},
 	INDUSTRY: {
-		AGRI_FOREST_FISH: 'Agriculture',
-		ACCOMOD_FOOD_SERVICES: 'Accomodation',
-		ARTS_ENTERTAINMENT_RECREATION: 'Arts',
-		COMMUNICATION: 'Communication',
-		CONSTRUCTION: 'Construction',
-		EDUCATION: 'Education',
-		IT: 'IT',
-		OTHERS: 'Others',
+		AGRI_FOREST_FISH: 'agriculture',
+		ACCOMOD_FOOD_SERVICES: 'accomodation',
+		ARTS_ENTERTAINMENT_RECREATION: 'arts',
+		COMMUNICATION: 'communication',
+		CONSTRUCTION: 'construction',
+		EDUCATION: 'education',
+		IT: 'it',
+		OTHERS: 'others',
 	},
 
 	HOME_OWNERSHIP: {
-		OWNED: 'Owned',
-		RENTED: 'Rented',
-		MORTGAGED: 'Mortgaged',
-		USED_FREE: 'UsedFree',
-		LIVING_WITH_RELATIVE: 'Living_with_relative',
+		OWNED: 'owned',
+		RENTED: 'rented',
+		MORTGAGED: 'mortgaged',
+		USED_FREE: 'used_free',
+		LIVING_WITH_RELATIVE: 'living_with_relative',
 	},
+
 	RELATIONSHIP: {
-		BROTHER: 'Brother',
-		SISTER: 'Sister',
-		FATHER: 'Father',
-		MOTHER: 'Mother',
-		SPOUSE: 'SPOUSE',
+		BROTHER: 'brother',
+		SISTER: 'sister',
+		FATHER: 'father',
+		MOTHER: 'mother',
+		SPOUSE: 'spouse',
 	},
-	CIVI_STATUS: {
-		SINGLE: 'Single',
-		MARRIED: 'Married',
-		WIDOW: 'Widowed',
-		SEPERATED: 'Seperated',
+
+	CIVIL_STATUS: {
+		SINGLE: 'single',
+		MARRIED: 'married',
+		WIDOW: 'widowed',
+		SEPERATED: 'seperated',
 	},
+
 	EDUCATION_BACKGROUND: {
-		POST_GRAD: 'PostGraduate',
-		UNDER_GRAD: 'UnderGraduate',
-		COLLEGE: 'College',
-		VOCATIONAL: 'Vocational',
+		POST_GRAD: 'postGraduate',
+		UNDER_GRAD: 'underGraduate',
+		COLLEGE: 'college',
+		VOCATIONAL: 'vocational',
 	},
+
 	USER_TYPE: {
 		ADMIN: {
 			NUMBER: 0,
@@ -139,6 +143,7 @@ export let DATABASE = {
 			DISPLAY_NAME: 'Guest',
 		},
 	},
+
 	PROPERTY_STATUS: {
 		DRAFT: {
 			NUMBER: 1,
