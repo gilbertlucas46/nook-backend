@@ -3,7 +3,6 @@ import * as mongoose from 'mongoose';
 import { SERVER } from '@src/constants';
 import { ModelNames } from '@src/interfaces/model.interface';
 import { consolelog } from '@src/utils/index';
-import * as utils from '@src/utils';
 
 export class BaseEntity {
 	objectId = mongoose.Types.ObjectId;
@@ -140,7 +139,7 @@ export class BaseEntity {
 			const data = await this.DAOManager.findAndRemove(this.modelName, criteria);
 			return data;
 		} catch (error) {
-			utils.consolelog('Base entity removeEntity', error, false);
+			consolelog('Base entity removeEntity', error, false);
 			return Promise.reject(error);
 		}
 	}

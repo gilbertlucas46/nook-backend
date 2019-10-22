@@ -37,7 +37,7 @@ class AdminStaffE extends BaseEntity {
 
     async staffListing(payload: any) {
         const { fromDate, toDate } = payload;
-        let { limit, page } = payload;
+        let { limit, page, sortType } = payload;
         const matchCondition: any = {
             type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
             staffStatus: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
@@ -45,37 +45,34 @@ class AdminStaffE extends BaseEntity {
         const pipeline = [];
         const sortCondition: any = {};
         if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
-        if (!page) {
-            page = 1;
-            // sortType = !sortType ? -1 : sortType;
-            // sortType = !sortType ? -1 : 1;
-            if (payload.sortBy) {
-                sortCondition[payload.sortBy] = parseInt(payload.sortType);
-                pipeline.push({ $sort: sortCondition },
-                );
-            }
+        if (!page) page = 1;
+        if (!sortType) sortType = 1;
+        if (payload.sortBy) {
+            sortCondition[payload.sortBy] = parseInt(payload.sortType);
+            pipeline.push({ $sort: sortCondition });
+        }
 
-            if (fromDate || toDate) {
-                matchCondition['createdAt'] = {};
-                if (fromDate) matchCondition['createdAt']['$gte'] = moment(fromDate).startOf('day').toDate();
-                if (toDate) matchCondition['createdAt']['$lte'] = moment(toDate).endOf('day').toDate();
-            }
-            pipeline.push({
+        if (fromDate || toDate) {
+            matchCondition['createdAt'] = {};
+            if (fromDate) matchCondition['createdAt']['$gte'] = moment(fromDate).startOf('day').toDate();
+            if (toDate) matchCondition['createdAt']['$lte'] = moment(toDate).endOf('day').toDate();
+        }
+        pipeline.push(
+            {
                 $match: matchCondition,
             },
-                {
-                    $project: {
-                        firstName: 1,
-                        lastName: 1,
-                        email: 1,
-                        phoneNumber: 1,
-                        staffLoggedIn: 1,
-                        createdAt: 1,
-                        permission: 1,
-                    },
-                });
-            return this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-        }
+            {
+                $project: {
+                    firstName: 1,
+                    lastName: 1,
+                    email: 1,
+                    phoneNumber: 1,
+                    staffLoggedIn: 1,
+                    createdAt: 1,
+                    permission: 1,
+                },
+            });
+        return this.DAOManager.paginate(this.modelName, pipeline, limit, page);
     }
 
     sendInvitationMail(payload: string, genCredentials: string) {

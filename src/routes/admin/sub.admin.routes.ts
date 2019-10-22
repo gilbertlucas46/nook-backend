@@ -5,7 +5,7 @@ import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as CONSTANT from '../../constants';
 import { AdminStaffController } from '../../controllers';
-import { AdminProfileController, AdminProfileService } from '@src/controllers/admin/adminProfile.controller';
+import { AdminProfileService } from '@src/controllers/admin/adminProfile.controller';
 
 export let subAdminRoutes: ServerRoute[] = [
 	{
@@ -40,7 +40,7 @@ export let subAdminRoutes: ServerRoute[] = [
 						CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
 						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY
+						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
 					])).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -82,7 +82,7 @@ export let subAdminRoutes: ServerRoute[] = [
 						CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
 						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY
+						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
 					])).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -186,7 +186,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				query: {
 					page: Joi.number(),
 					limit: Joi.number(),
-					sortBy: Joi.string().allow("createdAt"),
+					sortBy: Joi.string().allow('createdAt'),
 					permission: Joi.string().valid([
 						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 					]).required(),
