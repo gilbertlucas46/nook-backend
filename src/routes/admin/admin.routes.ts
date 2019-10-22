@@ -9,6 +9,7 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import { AdminStaffEntity } from '@src/entity';
+import * as Hapi from "hapi";
 
 export let adminProfileRoute: ServerRoute[] = [
 	/**
@@ -17,7 +18,7 @@ export let adminProfileRoute: ServerRoute[] = [
 	{
 		method: 'POST',
 		path: '/v1/admin/login',
-		handler: async (request, h) => {
+		handler: async (request, h: Hapi.ResponseToolkit) => {
 			try {
 				const payload: any = request.payload;
 				const registerResponse = await AdminProfileService.login(payload);
@@ -267,6 +268,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: PropertyRequest.SearchProperty = request.query as any;
+				console.log('payload>>>>>>>>>>>>>>>>>>>>>', payload);
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
 				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 					await AdminStaffEntity.checkPermission(payload.permissionType);
