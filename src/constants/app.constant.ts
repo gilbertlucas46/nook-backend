@@ -79,8 +79,8 @@ export let DATABASE = {
 		EDUCATION: 'Education',
 		IT: 'IT',
 		OTHERS: 'Others',
-
 	},
+
 	HOME_OWNERSHIP: {
 		OWNED: 'Owned',
 		RENTED: 'Rented',

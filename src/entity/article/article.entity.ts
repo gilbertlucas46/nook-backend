@@ -189,7 +189,7 @@ export class ArticleClass extends BaseEntity {
         }
 
         catch (error) {
-            utils.consolelog('errrorArticlelist', error, true);
+            utils.consolelog('Error', error, true);
             return Promise.reject(error);
         }
     }
