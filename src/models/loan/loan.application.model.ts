@@ -61,7 +61,7 @@ const schema = new Schema({
         phoneNo: { type: Schema.Types.Number, trim: true },
         email: { type: Schema.Types.String, trim: true },
         mobileNo: { type: Schema.Types.Number, trim: true },
-        property_address: {
+        currentAddress: {
             address: { type: Schema.Types.String, index: true },
             regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
             cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema

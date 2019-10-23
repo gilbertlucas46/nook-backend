@@ -172,7 +172,7 @@ export let loanRoute: ServerRoute[] = [
 						phoneNo: Joi.number(),
 						email: Joi.string(),
 						mobileNo: Joi.number().min(8).max(15),
-						property_address: Joi.object().keys({
+						currentAddress: Joi.object().keys({
 							address: Joi.string().min(3).max(80),
 							regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 							cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
