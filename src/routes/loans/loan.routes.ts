@@ -329,8 +329,7 @@ export let loanRoute: ServerRoute[] = [
 				const payload = request.query;
 				const data = await LoanController.userLoansList(payload, userData);
 
-				// const registerResponse = await ArticleService.getArticle(payload);
-				// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
