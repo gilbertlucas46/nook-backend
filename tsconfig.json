@@ -19,7 +19,8 @@
       "es2017"
     ],
     "typeRoots": [
-      "./node_modules/@types"
+      "./node_modules/@types",
+      "./typings/index.d.ts"
     ],
     "paths": {
         "@types/*": ["types/*"],
