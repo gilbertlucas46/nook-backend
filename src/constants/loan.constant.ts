@@ -26,11 +26,11 @@ export const CREDIT_CARD_STATUS = {
         value: 'YES',
     },
     NOT_NOW: {
-        label: 'No, but I used to own one',
+        label: 'No, but i used to own one',
         value: 'NOT_NOW',
     },
     NO: {
-        label: 'No, i"ve never had one',
+        label: 'No, i never had one',
         value: 'NO',
     },
 };
@@ -230,7 +230,7 @@ export const EMPLOYMENT_TENURE = {
 
 export const NATIONALITY = {
     FILIPINO: {
-        label: 'Philipino',
+        label: 'Filipino',
         value: 'FILIPINO',
     },
     FOREIGNER: {

@@ -39,7 +39,6 @@ export namespace LoanRequest {
                 status: boolean;
                 coBorrowerMonthlyIncome?: number;
             },
-            isCoBorrower: boolean;
         };
         loan: {
             type: string;

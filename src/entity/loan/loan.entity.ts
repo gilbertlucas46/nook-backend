@@ -9,6 +9,10 @@ class LoanEntities extends BaseEntity {
 
     async preloan(payload: LoanRequest.PreLoan) {
         try {
+            let totalMonthlyIncome = payload.work.income;
+            if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome;
+            if (payload.other.coBorrower.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.coBorrower.coBorrowerMonthlyIncome;
+            if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome;
             const pipeline = [
                 {
                     $match: {
@@ -20,6 +24,7 @@ class LoanEntities extends BaseEntity {
                                     { allowedPropertyStatus: payload.property.status },
                                     { maxLoanDurationAllowed: { $gte: payload.loan.term } },
                                     { maxLoanPercent: { $gte: payload.loan.percent } },
+                                    // missed loan payment condition need to be added.
                                 ],
                             },
                         },
@@ -56,6 +61,7 @@ class LoanEntities extends BaseEntity {
                 {
                     $match: {
                         // Used different $match basically to handle some other conditions. will optimize later once we get the complete requirement.
+                        // need to apply conditions based based on total income of borrower spouse(ifAny) and coborrower(ifAny) and the total assets(ifAny)
                         'userloan.loanForEmploymentType': {
                             $elemMatch: {
                                 $and: [
@@ -95,6 +101,7 @@ class LoanEntities extends BaseEntity {
                 {
                     $project: {
                         abbrevation: 1,
+                        totalPrice: 1,
                         bankName: 1,
                         headquarterLocation: 1,
                         bankFeePercent: 'up to 2%',
@@ -113,6 +120,10 @@ class LoanEntities extends BaseEntity {
                         loanDurationYearly: 1,
                         loanDurationMonthly: 1,
                     },
+                },
+                {
+                    $match : {
+                        monthlyPayment: { $lte: totalMonthlyIncome }},
                 },
             ];
 
