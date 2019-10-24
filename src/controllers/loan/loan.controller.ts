@@ -21,17 +21,17 @@ class LoanControllers extends BaseEntity {
         }
     }
 
-    async addLoanApplication(payload) {
+    async addLoanApplication(payload, userData) {
         try {
             const criteria = {
-                createdAt: { $lt: new Date().getTime() },
-                // saveAsDraft: { $ne: true },
+                // createdAt: { $lt: new Date().getTime() },
+                saveAsDraft: { $ne: true },
             };
-
-            payload['createdAt'] = new Date().getTime();
-            payload['updatedAt'] = new Date().getTime();
+            payload['userId'] = userData._id;
+            // payload['createdAt'] = new Date().getTime();
+            // payload['updatedAt'] = new Date().getTime();
             // const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
-            const refrenceNumber = await ENTITY.LoanApplicationEntity.getRefrenceId();
+            const refrenceNumber = await ENTITY.LoanApplicationEntity.getRefrenceId(criteria);
             if (!refrenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
                 const month = ('0' + (new Date(new Date().getTime()).getMonth() + 1)).slice(-2);
@@ -39,7 +39,6 @@ class LoanControllers extends BaseEntity {
                 const refrenceId = 1;
                 const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + Contsant.SERVER.LOAN_PRE__ZEOS + refrenceId;
                 payload['refrenceId'] = formattedTime;
-
             } else {
                 const year = new Date(refrenceNumber.createdAt).getFullYear().toString().substr(-2);
                 const month = new Date(refrenceNumber.createdAt).getMonth();
@@ -55,11 +54,16 @@ class LoanControllers extends BaseEntity {
                 const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + num;
                 payload['refrenceId'] = formattedTime;
             }
+            console.log('payloadpayloadpayloadpayloadpayloadpayload', payload);
 
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
+            console.log('data>>>>>>>>>>>>>>>>>>>>>.', data);
+
             return data['refrenceId'];
 
         } catch (error) {
+            console.log('error>>>>>>>>>>>>>>>>>', error);
+
             return Promise.reject(error);
         }
     }
@@ -77,6 +81,15 @@ class LoanControllers extends BaseEntity {
         try {
             const bankList = await LoanEntity.preloan(payload);
             return bankList;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async userLoansList(payload, userData) {
+        try {
+
+            await ENTITY.LoanEntity.getUserLoanList(payload, userData);
         } catch (error) {
             return Promise.reject(error);
         }
