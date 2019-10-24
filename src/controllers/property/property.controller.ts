@@ -123,8 +123,8 @@ export class PropertyController {
 
 	async saveAsDraft(payload, userData: UserRequest.UserData) {
 		try {
-			let result;
-			let propertyAction;
+			let result: any;
+			let propertyAction: any;
 
 			if (payload.property_basic_details.property_for_number) {
 				result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload.property_basic_details.property_for_number);
