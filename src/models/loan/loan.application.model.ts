@@ -228,7 +228,7 @@ const schema = new Schema({
         },
         nookAgent: { type: Schema.Types.String, trim: true },
     },
-    refrenceId: { type: String, unique: true },
+    refrenceId: { type: String, },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },
 });
