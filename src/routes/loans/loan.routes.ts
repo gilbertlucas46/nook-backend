@@ -200,9 +200,20 @@ export let loanRoute: ServerRoute[] = [
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
 						companyName: Joi.string().min(1).max(300),
+						sss: Joi.string(),
 						officePhone: Joi.string(),
 						officeEmail: Joi.string(),
 						officeAddress: Joi.string().max(300),
+						companyIndustry: Joi.string().valid([
+							Constant.DATABASE.INDUSTRY.AGRI_FOREST_FISH,
+							Constant.DATABASE.INDUSTRY.ACCOMOD_FOOD_SERVICES,
+							Constant.DATABASE.INDUSTRY.ARTS_ENTERTAINMENT_RECREATION,
+							Constant.DATABASE.INDUSTRY.COMMUNICATION,
+							Constant.DATABASE.INDUSTRY.CONSTRUCTION,
+							Constant.DATABASE.INDUSTRY.EDUCATION,
+							Constant.DATABASE.INDUSTRY.IT,
+							Constant.DATABASE.INDUSTRY.OTHERS,
+						]),
 						// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),      // Refer to city schema
 						// cityName: Joi.string(),
 						// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
@@ -302,8 +313,8 @@ export let loanRoute: ServerRoute[] = [
 								]),
 								docUrl: Joi.string(),
 							}),
-							nookAgent: Joi.string(),
 						}),
+						nookAgent: Joi.string(),
 					}),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -328,7 +339,6 @@ export let loanRoute: ServerRoute[] = [
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload = request.query;
 				const data = await LoanController.userLoansList(payload, userData);
-
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
@@ -344,7 +354,7 @@ export let loanRoute: ServerRoute[] = [
 					limit: Joi.number(),
 					page: Joi.number(),
 					sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
-					sortBy: Joi.string(),
+					sortBy: Joi.string().default('date'),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

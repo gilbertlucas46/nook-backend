@@ -88,8 +88,9 @@ class LoanControllers extends BaseEntity {
 
     async userLoansList(payload, userData) {
         try {
+            console.log('payloadpayload', payload);
 
-            await ENTITY.LoanEntity.getUserLoanList(payload, userData);
+            return await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
         } catch (error) {
             return Promise.reject(error);
         }
