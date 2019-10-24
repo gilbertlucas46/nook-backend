@@ -3,7 +3,7 @@ import * as CONSTANT from './../../constants';
 import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK } from './../../constants';
 
 const schema = new Schema({
-    userId: { type: Schema.Types.ObjectId, index: true, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     saveAsDraft: { type: Schema.Types.Boolean, default: false },
     applicationStatus: {
         type: Schema.Types.String, enum: [
@@ -43,7 +43,7 @@ const schema = new Schema({
         spouseFirstName: { type: Schema.Types.String, trim: true },
         spouseMiddleName: { type: Schema.Types.String, trim: true },
         spouseLastName: { type: Schema.Types.String, trim: true },
-        birthDate: { type: Schema.Types.Date },
+        dob: { type: Schema.Types.Number },
         coBorrowerFirstName: { type: Schema.Types.String, trim: true },
         coBorrowerMiddleName: { type: Schema.Types.String, trim: true },
         coBorrowerLastName: { type: Schema.Types.String, trim: true },
@@ -58,16 +58,16 @@ const schema = new Schema({
         },
     },
     contactInfo: {
-        phoneNo: { type: Schema.Types.Number, trim: true },
+        phoneNumber: { type: Schema.Types.String, trim: true },
         email: { type: Schema.Types.String, trim: true },
-        mobileNo: { type: Schema.Types.Number, trim: true },
+        mobileNo: { type: Schema.Types.String, trim: true },
         property_address: {
             address: { type: Schema.Types.String, index: true },
-            regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
-            cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
-            regionName: { type: Schema.Types.String },
-            cityName: { type: Schema.Types.String },
-            barangay: { type: Schema.Types.String },
+            // regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
+            // cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
+            // regionName: { type: Schema.Types.String },
+            // cityName: { type: Schema.Types.String },
+            // barangay: { type: Schema.Types.String },
             homeOwnership: {
                 type: Schema.Types.String, enum: [
                     CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
@@ -101,15 +101,15 @@ const schema = new Schema({
         tin: { type: Schema.Types.String, trim: true },
         companyName: { type: Schema.Types.String, trime: true },
         sss: { type: Schema.Types.String, trim: true },
-        officePhone: { type: Schema.Types.Number, trim: true },
+        officePhone: { type: Schema.Types.String, trim: true },
         officeEmail: { type: Schema.Types.String, trim: true },
         officeAddress: { type: Schema.Types.String, trim: true },
-        cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
-        cityName: { type: Schema.Types.String },
-        regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
-        regionName: { type: Schema.Types.String, trim: true },
-        barangay: { type: Schema.Types.String, trim: true },
-        country: { type: Schema.Types.String, trim: true },
+        // cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
+        // cityName: { type: Schema.Types.String },
+        // regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
+        // regionName: { type: Schema.Types.String, trim: true },
+        // barangay: { type: Schema.Types.String, trim: true },
+        // country: { type: Schema.Types.String, trim: true },
         coBorrowerInfo: {
             employmentType: {
                 type: Schema.Types.String, enum: [
@@ -169,21 +169,21 @@ const schema = new Schema({
                     CONSTANT.DATABASE.INDUSTRY.OTHERS,
                 ],
             },
-            officePhone: { type: Schema.Types.Number, trim: true },
+            officePhone: { type: Schema.Types.String, trim: true },
             officeEmail: { type: Schema.Types.String, trim: true },
             officeAddress: { type: Schema.Types.String, trim: true },
-            cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
-            cityName: { type: Schema.Types.String },
-            regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
-            regionName: { type: Schema.Types.String, trim: true },
-            barangay: { type: Schema.Types.String, trim: true },
-            country: { type: Schema.Types.String, trim: true },
+            // cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
+            // cityName: { type: Schema.Types.String },
+            // regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
+            // regionName: { type: Schema.Types.String, trim: true },
+            // barangay: { type: Schema.Types.String, trim: true },
+            // country: { type: Schema.Types.String, trim: true },
         },
     },
     dependentsInfo: [
         {
             name: { type: Schema.Types.String, trim: true },
-            dob: { type: Schema.Types.Date },
+            dob: { type: Schema.Types.Number },
             relationship: {
                 type: Schema.Types.String, enum: [
                     CONSTANT.DATABASE.RELATIONSHIP.BROTHER,
@@ -202,13 +202,13 @@ const schema = new Schema({
         employmentCert: { type: Schema.Types.String },
         purchasePropertyInfo: {
             address: { type: Schema.Types.String, index: true },
-            regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
-            cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
-            regionName: { type: Schema.Types.String },
-            cityName: { type: Schema.Types.String },
-            barangay: { type: Schema.Types.String },
+            // regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
+            // cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
+            // regionName: { type: Schema.Types.String },
+            // cityName: { type: Schema.Types.String },
+            // barangay: { type: Schema.Types.String },
             contactPerson: { type: Schema.Types.String, trim: true },
-            contactNumber: { type: Schema.Types.Number, trim: true },
+            contactNumber: { type: Schema.Types.String, trim: true },
             collateralDocStatus: { type: Schema.Types.Boolean },
             collateralDocList: [{
                 docType: {
@@ -228,7 +228,8 @@ const schema = new Schema({
         },
         nookAgent: { type: Schema.Types.String, trim: true },
     },
-    createdAt: { type: Schema.Types.Number },
+    refrenceId: { type: String, unique: true },
+    createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },
 });
 
