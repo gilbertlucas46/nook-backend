@@ -200,9 +200,20 @@ export let loanRoute: ServerRoute[] = [
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
 						companyName: Joi.string().min(1).max(300),
+						sss: Joi.string(),
 						officePhone: Joi.string(),
 						officeEmail: Joi.string(),
 						officeAddress: Joi.string().max(300),
+						companyIndustry: Joi.string().valid([
+							Constant.DATABASE.INDUSTRY.AGRI_FOREST_FISH,
+							Constant.DATABASE.INDUSTRY.ACCOMOD_FOOD_SERVICES,
+							Constant.DATABASE.INDUSTRY.ARTS_ENTERTAINMENT_RECREATION,
+							Constant.DATABASE.INDUSTRY.COMMUNICATION,
+							Constant.DATABASE.INDUSTRY.CONSTRUCTION,
+							Constant.DATABASE.INDUSTRY.EDUCATION,
+							Constant.DATABASE.INDUSTRY.IT,
+							Constant.DATABASE.INDUSTRY.OTHERS,
+						]),
 						// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),      // Refer to city schema
 						// cityName: Joi.string(),
 						// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
@@ -302,8 +313,8 @@ export let loanRoute: ServerRoute[] = [
 								]),
 								docUrl: Joi.string(),
 							}),
-							nookAgent: Joi.string(),
 						}),
+						nookAgent: Joi.string(),
 					}),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
