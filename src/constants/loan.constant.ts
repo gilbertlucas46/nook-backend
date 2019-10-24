@@ -230,7 +230,7 @@ export const EMPLOYMENT_TENURE = {
 
 export const NATIONALITY = {
     FILIPINO: {
-        label: 'Philipino',
+        label: 'Filipino',
         value: 'FILIPINO',
     },
     FOREIGNER: {
