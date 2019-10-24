@@ -123,6 +123,34 @@ class LoanEntities extends BaseEntity {
             return Promise.reject(err);
         }
     }
+
+    async getUserLoanList(payload, userData) {
+        try {
+            let { page, limit, sortBy, sortType } = payload;
+            if (!limit) { limit = Constant.SERVER.LIMIT; }
+            if (!page) { page = 1; }
+            const skip = (limit * (page - 1));
+            sortType = !sortType ? -1 : sortType;
+            let sortingType = {};
+            if (sortBy) {
+
+            } else {
+                sortBy = 'createdAt';
+                sortingType = {
+                    updatedAt: sortType,
+                };
+            }
+
+
+            // const { limit, skip } = payload;
+            const criteria = {
+                userId: userData._id,
+            };
+            await this.DAOManager.findAll(this.modelName, criteria, {}, { skip: skip, limit, sort: sortingType })
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 
 export const LoanEntity = new LoanEntities();

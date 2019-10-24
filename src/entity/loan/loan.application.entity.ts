@@ -20,8 +20,8 @@ class LoanApplicationE extends BaseEntity {
         return this.updateOneEntity({ _id: Types.ObjectId(payload._id) }, { payload });
     }
 
-    async getRefrenceId() {
-        return this.DAOManager.findOne(this.modelName, {}, {}, { sort: { _id: - 1 }, limit: 1 });
+    async getRefrenceId(criteria) {
+        return this.DAOManager.findOne(this.modelName, criteria, {}, { sort: { _id: - 1 }, limit: 1 });
     }
 }
 export const LoanApplicationEntity = new LoanApplicationE();
