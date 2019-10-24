@@ -118,8 +118,8 @@ export let loanRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const payload: any = request.payload;
-				await LoanController.addLoanApplication(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {}));
+				const data = await LoanController.addLoanApplication(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
@@ -156,7 +156,7 @@ export let loanRoute: ServerRoute[] = [
 						spouseFirstName: Joi.string().min(1).max(32),
 						spouseMiddleName: Joi.string().min(1).max(32),
 						spouseLastName: Joi.string().min(1).max(32),
-						birthDate: Joi.date(),
+						dob: Joi.number(),
 						coBorrowerFirstName: Joi.string().min(1).max(32),
 						coBorrowerMiddleName: Joi.string().min(1).max(32),
 						coBorrowerLastName: Joi.string().min(1).max(32),
@@ -169,16 +169,16 @@ export let loanRoute: ServerRoute[] = [
 						]),
 					}),
 					contactInfo: Joi.object().keys({
-						phoneNo: Joi.number(),
-						email: Joi.string(),
-						mobileNo: Joi.number().min(8).max(15),
-						currentAddress: Joi.object().keys({
-							address: Joi.string().min(3).max(80),
-							regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-							cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-							regionName: Joi.string().min(1).max(32),
-							cityName: Joi.string().min(1).max(32),
-							barangay: Joi.string().min(1).max(32),
+						phoneNumber: Joi.string(),
+						email: Joi.string().email(),
+						mobileNo: Joi.string().min(8).max(15),
+						property_address: Joi.object().keys({
+							address: Joi.string().max(300),
+							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+							// regionName: Joi.string().min(1).max(32),
+							// cityName: Joi.string().min(1).max(32),
+							// barangay: Joi.string().min(1).max(32),
 							homeOwnership: Joi.string().valid([
 								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
 								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
@@ -196,16 +196,16 @@ export let loanRoute: ServerRoute[] = [
 					}),
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
-						companyName: Joi.string().min(1).max(150),
-						officePhone: Joi.number(),
+						companyName: Joi.string().min(1).max(300),
+						officePhone: Joi.string(),
 						officeEmail: Joi.string(),
-						officeAddress: Joi.string(),
-						cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),      // Refer to city schema
-						cityName: Joi.string(),
-						regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
-						regionName: Joi.string(),
-						barangay: Joi.string(),
-						country: Joi.string(),
+						officeAddress: Joi.string().max(300),
+						// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),      // Refer to city schema
+						// cityName: Joi.string(),
+						// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
+						// regionName: Joi.string(),
+						// barangay: Joi.string(),
+						// country: Joi.string(),
 						coBorrowerInfo: {
 							employmentType: Joi.string().valid([
 								EMPLOYMENT_TYPE.BPO.value,
@@ -258,19 +258,19 @@ export let loanRoute: ServerRoute[] = [
 								Constant.DATABASE.INDUSTRY.OTHERS,
 							]),
 							officePhone: Joi.number(),
-							officeEmail: Joi.string(),
-							officeAddress: Joi.string().max(150),
-							cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
-							cityName: Joi.string(),
-							regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
-							regionName: Joi.string(),
-							barangay: Joi.string(),
-							country: Joi.string(),
+							officeEmail: Joi.string().email(),
+							officeAddress: Joi.string().max(300),
+							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
+							// cityName: Joi.string(),
+							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
+							// regionName: Joi.string(),
+							// barangay: Joi.string(),
+							// country: Joi.string(),
 						},
 					}),
 					dependentsInfo: Joi.array().items({
 						name: Joi.string(),
-						dob: Joi.date(),
+						dob: Joi.number(),
 						relationship: Joi.string().valid([
 							Constant.DATABASE.RELATIONSHIP.BROTHER,
 							Constant.DATABASE.RELATIONSHIP.FATHER,
@@ -285,12 +285,12 @@ export let loanRoute: ServerRoute[] = [
 						latestITR: Joi.string().uri(),
 						employmentCert: Joi.string().uri(),
 						purchasePropertyInfo: Joi.object().keys({
-							address: Joi.string().max(150),
-							regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
-							cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
-							regionName: Joi.string(),
-							cityName: Joi.string(),
-							barangay: Joi.string(),
+							address: Joi.string().max(300),
+							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
+							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
+							// regionName: Joi.string(),
+							// cityName: Joi.string(),
+							// barangay: Joi.string(),
 							contactPerson: Joi.string(),
 							contactNumber: Joi.number(),
 							collateralDocStatus: Joi.boolean(),
@@ -308,7 +308,7 @@ export let loanRoute: ServerRoute[] = [
 						}),
 					}),
 				},
-				headers: UniversalFunctions.authorizationHeaderObj,
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -318,4 +318,54 @@ export let loanRoute: ServerRoute[] = [
 			},
 		},
 	},
+	/**
+	 * @description: user loan for user loan-section
+	 *
+	 */
+	// {
+	// 	method: 'GET',
+	// 	path: '/v1/user/loan',
+	// 	handler: async (request, h) => {
+	// 		try {
+	// 			// const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+	// 			const payload = request.query;
+	// 			const data = await LoanController. (payload);
+
+	// 			// const registerResponse = await ArticleService.getArticle(payload);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+	// 		} catch (error) {
+	// 			UniversalFunctions.consolelog('error', error, true);
+	// 			return (UniversalFunctions.sendError(error));
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'get articles for user application',
+	// 		tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+	// 		auth: 'DoubleAuth',
+	// 		validate: {
+	// 			query: {
+	// 				limit: Joi.number(),
+	// 				page: Joi.number(),
+	// 				sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+	// 				sortBy: Joi.string(),
+	// 				// categoryId: Joi.number().valid([
+	// 				// 	Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+	// 				// 	Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+	// 				// 	Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+	// 				// 	Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+	// 				// 	Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+	// 				// 	Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+	// 				// ]),
+	// 				// articleId: Joi.string(),
+	// 			},
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 		plugins: {
+	// 			'hapi-swagger': {
+	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
+	// 			},
+	// 		},
+	// 	},
+	// },
 ];
