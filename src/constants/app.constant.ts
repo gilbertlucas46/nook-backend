@@ -881,6 +881,7 @@ export let SERVER = {
 	MAX_LIMIT: 1000,
 	RANDOM_NUMBER: 4,
 	HLA: 'HLA',
+	LOAN_PRE__ZEOS: '000',
 };
 
 export let EMAIL_SUB: {

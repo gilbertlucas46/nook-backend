@@ -23,67 +23,41 @@ class LoanControllers extends BaseEntity {
 
     async addLoanApplication(payload) {
         try {
-            // const data = utils.generateRandomString(Contsant.SERVER.RANDOM_NUMBER);
             const criteria = {
                 createdAt: { $lt: new Date().getTime() },
                 // saveAsDraft: { $ne: true },
             };
+
             payload['createdAt'] = new Date().getTime();
             payload['updatedAt'] = new Date().getTime();
-
             // const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
-            const refrenceNumber = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, { refrenceId: 1, createdAt: 1 });
-            console.log('refrenceNumberrefrenceNumber', refrenceNumber);
+            const refrenceNumber = await ENTITY.LoanApplicationEntity.getRefrenceId();
             if (!refrenceNumber) {
-                const year = new Date().getFullYear().toString().substr(-2);
-                const month = ('0' + (new Date().getMonth() + 1)).slice(-2);
-                // + ('0' + today.getDate()).slice(-2)
-                const date = new Date().getDate();
+                const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
+                const month = ('0' + (new Date(new Date().getTime()).getMonth() + 1)).slice(-2);
+                const date = new Date(new Date().getTime()).getDate();
                 const refrenceId = 1;
-                payload['refrenceId'] = 1;
-                const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + refrenceId;
-                console.log('formattedTime>>>>>>>>.....', formattedTime);
-
-                const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
-                return formattedTime;
+                const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + Contsant.SERVER.LOAN_PRE__ZEOS + refrenceId;
+                payload['refrenceId'] = formattedTime;
 
             } else {
                 const year = new Date(refrenceNumber.createdAt).getFullYear().toString().substr(-2);
                 const month = new Date(refrenceNumber.createdAt).getMonth();
                 const date = new Date(refrenceNumber.createdAt).getDate();
-                console.log('formattedTimeformattedTimeformattedTimeformattedTime', refrenceNumber['refrenceId']);
+                const id = refrenceNumber['refrenceId'].split('-')[2];
 
                 refrenceNumber['refrenceId']++;
-                const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + refrenceNumber['refrenceId'];
-                console.log('formattedTimeformattedTimeformattedTimeformattedTime', formattedTime);
-
-                // const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
-
-                console.log('formattedTimeformattedTime', formattedTime);
-
+                let num = (parseInt(id) + 1).toString();
+                const remainingChars = 4 - num.length;
+                for (let i = 0; i < remainingChars; i++) {
+                    num = '0' + num;
+                }
+                const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + num;
+                payload['refrenceId'] = formattedTime;
             }
 
-            // const shortId: string = new Date(refrenceNumber.createdAt).shortId();            // const id: string = `${a.getFullYear}`
-
-            // console.log(new Date().getFullYear().toString().substr(-2));
-            // console.log('shortIdshortId', shortId);
-
-
-            // Date.prototype.shortId = function(this: Date) {
-            //     return `${this.getFullYear().toString().substr(-2)}${this.getMonth()}${this.getDate()}`;
-            // };
-
-            console.log('refrenceNumberrefrenceNumber', refrenceNumber);
-            // if (!refrenceNumber) {
-            //     const createRefrence = Contsant.SERVER.HLA;
-            // }
-            return refrenceNumber;
-
-            // if (!refrenceNumber.refrenceNumbe) {
-
-            // };
-
-            // return data['referenceId'];
+            const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
+            return data['refrenceId'];
 
         } catch (error) {
             return Promise.reject(error);
@@ -109,4 +83,12 @@ class LoanControllers extends BaseEntity {
     }
 
 }
+
+// const shortId: string = new Date(refrenceNumber.createdAt).shortId();            // const id: string = `${a.getFullYear}`
+// Date.prototype.shortId = function(this: Date) {
+//     return `${this.getFullYear().toString().substr(-2)}${this.getMonth()}${this.getDate()}`;
+// };
+// return refrenceNumber;
+// return data['referenceId'];
+
 export const LoanController = new LoanControllers();
