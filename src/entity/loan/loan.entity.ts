@@ -1,6 +1,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanRequest } from './../../interfaces/loan.interface';
 import * as Constant from '@src/constants';
+import { NATIONALITY } from '@src/constants';
 
 class LoanEntities extends BaseEntity {
     constructor() {
@@ -13,10 +14,16 @@ class LoanEntities extends BaseEntity {
             if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome;
             if (payload.other.coBorrower.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.coBorrower.coBorrowerMonthlyIncome;
             if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome;
+
+            let localVisa = false;
+            if (payload.other.nationality === NATIONALITY.FILIPINO.value) localVisa = true;
+            if (payload.other.nationality === NATIONALITY.FOREIGNER.value && payload.other.localVisa === true) localVisa = true;
+
             const pipeline = [
                 {
                     $match: {
                         loanMinAmount: { $lte: payload.property.value },
+                        loanForForeignerMarriedLocal: localVisa,
                         propertySpecification: {
                             $elemMatch: {
                                 $and: [
@@ -105,6 +112,7 @@ class LoanEntities extends BaseEntity {
                         bankName: 1,
                         headquarterLocation: 1,
                         bankFeePercent: 'up to 2%',
+                        propertySpecification: 1,
                         bankFeeAmount: 1,
                         loanApplicationFeePercent: 1,
                         loanApplicationFeeAmount: 1,
@@ -122,8 +130,38 @@ class LoanEntities extends BaseEntity {
                     },
                 },
                 {
-                    $match : {
-                        monthlyPayment: { $lte: totalMonthlyIncome }},
+                    $addFields: {
+                        debtIncomePercentRatio: { $divide: [{ $multiply: ['$monthlyPayment', 100] }, totalMonthlyIncome] },
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$propertySpecification',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $match: {
+                        'propertySpecification.allowedPropertyType': 'APARTMENT',
+                        'propertySpecification.allowedPropertyStatus': 'FORECLOSED',
+                    },
+                },
+                {
+                    $addFields: {
+                        debtIncomeRatio: '$propertySpecification.debtIncomeRatio',
+                    },
+                },
+                {
+                    $project: {
+                        propertySpecification: 0,
+                    },
+                },
+                {
+                    $match: {
+                        $expr: {
+                            $gte: ['$debtIncomeRatio', '$debtIncomePercentRatio'],
+                        },
+                    },
                 },
             ];
 
