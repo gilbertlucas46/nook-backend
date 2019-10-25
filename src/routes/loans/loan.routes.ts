@@ -121,6 +121,7 @@ export let loanRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: any = request.payload;
+
 				const data = await LoanController.addLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
@@ -171,6 +172,11 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
 						]),
+					}),
+					bankInfo: Joi.object().keys({
+						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+						bankName: Joi.string().min(5).max(50),
+						abbrevation: Joi.string().max(10),
 					}),
 					contactInfo: Joi.object().keys({
 						phoneNumber: Joi.string(),
