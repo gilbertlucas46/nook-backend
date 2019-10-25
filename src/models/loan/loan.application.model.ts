@@ -59,6 +59,11 @@ const schema = new Schema({
             ],
         },
     },
+    bankInfo: {
+        bankId: { type: Schema.Types.ObjectId },
+        bankName: { type: Schema.Types.String },
+        abbrevation: { type: Schema.Types.String },
+    },
     contactInfo: {
         phoneNumber: { type: Schema.Types.String, trim: true },
         email: { type: Schema.Types.String, trim: true },
@@ -225,7 +230,7 @@ const schema = new Schema({
         },
         nookAgent: { type: Schema.Types.String, trim: true },
     },
-    refrenceId: { type: String, },
+    referenceId: { type: String, index: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },
 });
