@@ -246,8 +246,6 @@ export class AdminClass extends BaseEntity {
 			pipeline.push(this.DAOManager.findAll('Property', matchObject, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
 			pipeline.push(this.DAOManager.count('Property', matchObject));
 			const [data, total] = await Promise.all(pipeline);
-			console.log('data>>>>>>>>>>>>>>>>>>>>>>>', data, total);
-
 			return {
 				data,
 				total,

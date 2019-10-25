@@ -18,7 +18,6 @@ class LoanEntities extends BaseEntity {
             let localVisa = false;
             if (payload.other.nationality === NATIONALITY.FILIPINO.value) localVisa = true;
             if (payload.other.nationality === NATIONALITY.FOREIGNER.value && payload.other.localVisa === true) localVisa = true;
-
             const pipeline = [
                 {
                     $match: {
@@ -31,7 +30,6 @@ class LoanEntities extends BaseEntity {
                                     { allowedPropertyStatus: payload.property.status },
                                     { maxLoanDurationAllowed: { $gte: payload.loan.term } },
                                     { maxLoanPercent: { $gte: payload.loan.percent } },
-                                    // missed loan payment condition need to be added.
                                 ],
                             },
                         },
@@ -127,6 +125,7 @@ class LoanEntities extends BaseEntity {
                         loanableAmount: 1,
                         loanDurationYearly: 1,
                         loanDurationMonthly: 1,
+                        loanForCancelledCreditCard: 1,
                     },
                 },
                 {
@@ -163,8 +162,14 @@ class LoanEntities extends BaseEntity {
                         },
                     },
                 },
+                {
+                    $sort: {
+                        monthlyPayment: 1,
+                    },
+                },
             ];
 
+            // if (payload.other.creditCard.cancelled === true) pipeline.push({'$match': { loanForCancelledCreditCard : true}})
             const bankList = await this.DAOManager.aggregateData(this.modelName, pipeline);
             return bankList;
 

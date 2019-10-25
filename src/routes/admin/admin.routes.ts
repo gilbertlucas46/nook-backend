@@ -268,7 +268,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: PropertyRequest.SearchProperty = request.query as any;
-				console.log('payload>>>>>>>>>>>>>>>>>>>>>', payload);
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
 				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 					await AdminStaffEntity.checkPermission(payload.permissionType);
