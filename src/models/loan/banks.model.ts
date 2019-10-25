@@ -89,6 +89,9 @@ const bankSchema = new Schema({
         type: Boolean,
         default: true,
     },
+    loanForCancelledCreditCard : {
+        type: Boolean,
+    },
     minAgeRequiredForLoan: {
         type: Number,
         min: 21,

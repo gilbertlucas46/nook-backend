@@ -61,6 +61,7 @@ export let loanRoute: ServerRoute[] = [
 					loanForNonCreditCardHolder: Joi.boolean(),
 					loanForCreditCardHolder: Joi.boolean(),
 					loanForNotNowCreditCardHolder: Joi.boolean(),
+					loanForCancelledCreditCard: Joi.boolean(),
 					minAgeRequiredForLoan: Joi.number().min(21).max(65),
 					maxAgeRequiredForLoan: Joi.number().min(21).max(65),
 					loanAlreadyExistDiffBank: Joi.boolean(),
