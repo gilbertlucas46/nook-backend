@@ -2,7 +2,7 @@ import { ServerRoute, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, CREDIT_CARD_STATUS, EMPLOYMENT_TENURE } from '@src/constants';
+import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, CREDIT_CARD_STATUS, EMPLOYMENT_TENURE ,NATIONALITY} from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import { LoanController } from '@src/controllers/loan/loan.controller';
 
@@ -84,7 +84,10 @@ export let preloanRoute: ServerRoute[] = [
 
           other: Joi.object().keys({
             age: Joi.number().min(21).max(65),
-            nationality: Joi.string(),
+            nationality:  Joi.string().valid([
+              NATIONALITY.FILIPINO.value,
+              NATIONALITY.FOREIGNER.value,
+            ]),
             localVisa: Joi.boolean(),
             creditCard: Joi.object().keys({
               status: Joi.string().valid([
