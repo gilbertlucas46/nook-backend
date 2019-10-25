@@ -1,6 +1,7 @@
 import { Schema, Document, model, Types } from 'mongoose';
 import * as CONSTANT from './../../constants';
-import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK } from './../../constants';
+import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../constants';
+// import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from '@src/constants';
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
@@ -43,10 +44,11 @@ const schema = new Schema({
         spouseFirstName: { type: Schema.Types.String, trim: true },
         spouseMiddleName: { type: Schema.Types.String, trim: true },
         spouseLastName: { type: Schema.Types.String, trim: true },
-        dob: { type: Schema.Types.Number },
+        birthDate: { type: Schema.Types.Number },
         coBorrowerFirstName: { type: Schema.Types.String, trim: true },
         coBorrowerMiddleName: { type: Schema.Types.String, trim: true },
         coBorrowerLastName: { type: Schema.Types.String, trim: true },
+        motherMaidenName: { type: Schema.Types.String, trim: true },
         relationship: {
             type: Schema.Types.String, enum: [
                 CONSTANT.DATABASE.RELATIONSHIP.BROTHER,
@@ -60,7 +62,7 @@ const schema = new Schema({
     contactInfo: {
         phoneNumber: { type: Schema.Types.String, trim: true },
         email: { type: Schema.Types.String, trim: true },
-        mobileNo: { type: Schema.Types.String, trim: true },
+        mobileNumber: { type: Schema.Types.String, trim: true },
         property_address: {
             address: { type: Schema.Types.String, index: true },
             // regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
@@ -150,12 +152,7 @@ const schema = new Schema({
                 ],
             },
             employmentTenure: {
-                type: Schema.Types.String, enum: [
-                    CONSTANT.DATABASE.EMPLOYMENT.TENURE.LESS_THAN_ONE,
-                    CONSTANT.DATABASE.EMPLOYMENT.TENURE.BETWEEN_ONE_TWO,
-                    CONSTANT.DATABASE.EMPLOYMENT.TENURE.BETWEEN_TWO_THREE,
-                    CONSTANT.DATABASE.EMPLOYMENT.TENURE.MORE_THAN_THREE,
-                ],
+                type: Schema.Types.String, enum: Object.keys(EMPLOYMENT_TENURE),
             },
             companyIndustry: {
                 type: Schema.Types.String, enum: [
@@ -183,7 +180,7 @@ const schema = new Schema({
     dependentsInfo: [
         {
             name: { type: Schema.Types.String, trim: true },
-            dob: { type: Schema.Types.Number },
+            age: { type: Schema.Types.Number },
             relationship: {
                 type: Schema.Types.String, enum: [
                     CONSTANT.DATABASE.RELATIONSHIP.BROTHER,

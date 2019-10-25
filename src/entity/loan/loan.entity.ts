@@ -172,6 +172,7 @@ class LoanEntities extends BaseEntity {
             return Promise.reject(err);
         }
     }
+
 }
 
 export const LoanEntity = new LoanEntities();
