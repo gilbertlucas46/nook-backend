@@ -47,4 +47,8 @@ export namespace LoanRequest {
             amount: number;
         };
     }
+
+    export interface LoanById {
+        loanId: string;
+    }
 }
