@@ -21,7 +21,7 @@ class LoanEntities extends BaseEntity {
             let localVisa = false;
             if (payload.other.nationality === NATIONALITY.FILIPINO.value) localVisa = true;
             if (payload.other.nationality === NATIONALITY.FOREIGNER.value && payload.other.localVisa === true) localVisa = true;
-            const pipeline = [
+            const queryPipeline = [
                 {
                     $match: {
                         loanMinAmount: { $lte: payload.property.value },
@@ -36,6 +36,13 @@ class LoanEntities extends BaseEntity {
                                 ],
                             },
                         },
+                        // loanForCancelledCreditCard: {
+                        //   //  $cond: {
+                        //         if: {
+                        //             $eq: [payload.other.creditCard.cancelled, true],
+                        //         }, then: true, // else: "NO"
+                        //   //  },
+                        // },
                     },
                 },
                 {
@@ -173,8 +180,17 @@ class LoanEntities extends BaseEntity {
                 },
             ];
 
+            // if (payload.other.creditCard.cancelled) {
+            //     queryPipeline.push(
+            //         {
+            //             $match: {
+            //                 loanForCancelledCreditCard : true,
+            //             },
+            //         });
+            // }
+
             // if (payload.other.creditCard.cancelled) pipeline.push({'$match': { loanForCancelledCreditCard : true}})
-            const bankList = await this.DAOManager.aggregateData(this.modelName, pipeline);
+            const bankList = await this.DAOManager.aggregateData(this.modelName, queryPipeline);
             return bankList;
 
         } catch (err) {

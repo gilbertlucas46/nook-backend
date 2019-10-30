@@ -12,7 +12,6 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/loan',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
-				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: any = request.payload;
 				await LoanController.addLoanRequirements(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {}));
@@ -122,7 +121,6 @@ export let loanRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: any = request.payload;
-
 				const data = await LoanController.addLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {

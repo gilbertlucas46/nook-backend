@@ -4,8 +4,6 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
 import { LoanRequest } from '@src/interfaces/loan.interface';
-import { constants } from 'fs';
-// import { DAOManager } from '@src/databases/dao';
 
 class LoanControllers extends BaseEntity {
 
@@ -28,7 +26,6 @@ class LoanControllers extends BaseEntity {
                 saveAsDraft: { $ne: true },
             };
             payload['userId'] = userData._id;
-            // const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
             const referenceNumber = await ENTITY.LoanApplicationEntity.getReferenceId(criteria);
             if (!referenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
@@ -56,6 +53,7 @@ class LoanControllers extends BaseEntity {
             return data['referenceId'];
 
         } catch (error) {
+            console.log('Error ', error);
             return Promise.reject(error);
         }
     }
@@ -65,7 +63,8 @@ class LoanControllers extends BaseEntity {
             await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return {};
         } catch (error) {
-
+            console.log('Error ', error);
+            return Promise.reject(error);
         }
     }
 

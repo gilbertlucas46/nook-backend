@@ -11,7 +11,12 @@ class LoanApplicationE extends BaseEntity {
      * @param payload
      */
     async saveLoanApplication(payload) {
-        return this.createOneEntity(payload);
+        try {
+            return await this.createOneEntity(payload);
+        } catch (error) {
+            console.log('Error in saving loan data ', error);
+            return Promise.reject(error);
+        }
     }
     /**
      * @description saving loan applicationu
@@ -33,7 +38,7 @@ class LoanApplicationE extends BaseEntity {
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
             sortType = !sortType ? -1 : sortType;
-            let sortingType = {};
+            // let sortingType = {};
 
             // sortingType = {
             //     createdAt: sortType,
@@ -43,10 +48,10 @@ class LoanApplicationE extends BaseEntity {
             const criteria = {
                 userId: userData._id,
             };
-            const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { skip: skip, limit: 10 })
-            console.log('switch (sortBy)', data);
+            const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { skip, limit: 10 });
             return data;
         } catch (error) {
+            console.log('Error in saving loan data ', error);
             return Promise.reject(error);
         }
     }
