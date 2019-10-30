@@ -3,6 +3,8 @@ import { Types } from 'mongoose';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
+import { LoanRequest } from '@src/interfaces/loan.interface';
+import { constants } from 'fs';
 // import { DAOManager } from '@src/databases/dao';
 
 class LoanControllers extends BaseEntity {
@@ -84,6 +86,21 @@ class LoanControllers extends BaseEntity {
         }
     }
 
+    async loanById(payload: LoanRequest.LoanById, userData) {
+        try {
+            const criteria = {
+                _id: payload.loanId,
+            };
+            const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
+            if (!data) {
+                return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            } else {
+                return data;
+            }
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 
 // const shortId: string = new Date(referenceNumber.createdAt).shortId();            // const id: string = `${a.getFullYear}`

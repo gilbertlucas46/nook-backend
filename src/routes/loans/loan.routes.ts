@@ -4,6 +4,7 @@ import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
 import { LoanController } from '@src/controllers';
 import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from '@src/constants';
+import { LoanRequest } from '@src/interfaces/loan.interface';
 
 export let loanRoute: ServerRoute[] = [
 	{
@@ -353,8 +354,8 @@ export let loanRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'get articles for user application',
-			tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+			description: 'get user loan applications',
+			tags: ['api', 'anonymous', 'user', 'user', 'loan'],
 			auth: 'UserAuth',
 			validate: {
 				query: {
@@ -362,6 +363,43 @@ export let loanRoute: ServerRoute[] = [
 					page: Joi.number(),
 					sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
 					sortBy: Joi.string().default('date'),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	/**
+	 * @description: user loan by id
+	 *
+	 */
+	{
+		method: 'GET',
+		path: '/v1/user/loan/{loanId}',
+		handler: async (request, h: ResponseToolkit) => {
+			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const payload: LoanRequest.LoanById = request.params as any;
+				const data = await LoanController.loanById(payload, userData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				// return UniversalFunctions. (Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'get loan by id',
+			tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+			auth: 'UserAuth',
+			validate: {
+				params: {
+					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
