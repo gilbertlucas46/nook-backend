@@ -11,9 +11,12 @@ class LoanEntities extends BaseEntity {
     async preloan(payload: LoanRequest.PreLoan) {
         try {
             let totalMonthlyIncome = payload.work.income;
+            let preLoanMonthlyAmount = 0;
             if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome;
             if (payload.other.coBorrower.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.coBorrower.coBorrowerMonthlyIncome;
             if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome;
+            // if other loans exits
+            if (payload.other.prevLoans.status) preLoanMonthlyAmount = payload.other.prevLoans.monthlyTotal;
 
             let localVisa = false;
             if (payload.other.nationality === NATIONALITY.FILIPINO.value) localVisa = true;
@@ -118,6 +121,7 @@ class LoanEntities extends BaseEntity {
                         processingTime: '5-7 working days',
                         interestRate: 1,
                         loanDuration: 1,
+                        totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
                         monthlyPayment: { $divide: ['$numerator', '$denominator'] },
                         totalLoanPayment: 1,
                         bankId: '$_id',
@@ -130,7 +134,7 @@ class LoanEntities extends BaseEntity {
                 },
                 {
                     $addFields: {
-                        debtIncomePercentRatio: { $divide: [{ $multiply: ['$monthlyPayment', 100] }, totalMonthlyIncome] },
+                        debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
                     },
                 },
                 {
@@ -169,7 +173,7 @@ class LoanEntities extends BaseEntity {
                 },
             ];
 
-            // if (payload.other.creditCard.cancelled === true) pipeline.push({'$match': { loanForCancelledCreditCard : true}})
+            // if (payload.other.creditCard.cancelled) pipeline.push({'$match': { loanForCancelledCreditCard : true}})
             const bankList = await this.DAOManager.aggregateData(this.modelName, pipeline);
             return bankList;
 

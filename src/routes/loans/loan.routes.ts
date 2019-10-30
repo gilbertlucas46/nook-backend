@@ -139,7 +139,7 @@ export let loanRoute: ServerRoute[] = [
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
-						middleName: Joi.string().max(32),
+						middleName: Joi.string().max(32).allow(''),
 						gender: Joi.string().valid([
 							Constant.DATABASE.GENDER.MALE,
 							Constant.DATABASE.GENDER.FEMALE,
@@ -158,12 +158,12 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.CIVIL_STATUS.MARRIED,
 						]),
 						spouseFirstName: Joi.string().min(1).max(32),
-						spouseMiddleName: Joi.string().min(1).max(32),
+						spouseMiddleName: Joi.string().min(1).max(32).allow(''),
 						spouseLastName: Joi.string().min(1).max(32),
 						motherMaidenName: Joi.string(),
 						birthDate: Joi.number(),
 						coBorrowerFirstName: Joi.string().min(1).max(32),
-						coBorrowerMiddleName: Joi.string().min(1).max(32),
+						coBorrowerMiddleName: Joi.string().min(1).max(32).allow(''),
 						coBorrowerLastName: Joi.string().min(1).max(32),
 						relationship: Joi.string().valid([
 							Constant.DATABASE.RELATIONSHIP.BROTHER,
