@@ -21,30 +21,47 @@ class LoanEntities extends BaseEntity {
             let localVisa = false;
             if (payload.other.nationality === NATIONALITY.FILIPINO.value) localVisa = true;
             if (payload.other.nationality === NATIONALITY.FOREIGNER.value && payload.other.localVisa === true) localVisa = true;
-            const queryPipeline = [
-                {
-                    $match: {
-                        loanMinAmount: { $lte: payload.property.value },
-                        loanForForeignerMarriedLocal: localVisa,
-                        propertySpecification: {
-                            $elemMatch: {
-                                $and: [
-                                    { allowedPropertyType: payload.property.type },
-                                    { allowedPropertyStatus: payload.property.status },
-                                    { maxLoanDurationAllowed: { $gte: payload.loan.term } },
-                                    { maxLoanPercent: { $gte: payload.loan.percent } },
-                                ],
+            const queryPipeline = [];
+            if (payload.other.creditCard.cancelled) {
+                queryPipeline.push(
+                    {
+                        $match: {
+                            loanForCancelledCreditCard: true,
+                            loanMinAmount: { $lte: payload.property.value },
+                            loanForForeignerMarriedLocal: localVisa,
+                            propertySpecification: {
+                                $elemMatch: {
+                                    $and: [
+                                        { allowedPropertyType: payload.property.type },
+                                        { allowedPropertyStatus: payload.property.status },
+                                        { maxLoanDurationAllowed: { $gte: payload.loan.term } },
+                                        { maxLoanPercent: { $gte: payload.loan.percent } },
+                                    ],
+                                },
                             },
                         },
-                        // loanForCancelledCreditCard: {
-                        //   //  $cond: {
-                        //         if: {
-                        //             $eq: [payload.other.creditCard.cancelled, true],
-                        //         }, then: true, // else: "NO"
-                        //   //  },
-                        // },
-                    },
-                },
+                    });
+            } else {
+                queryPipeline.push(
+                    {
+                        $match: {
+                            loanMinAmount: { $lte: payload.property.value },
+                            loanForForeignerMarriedLocal: localVisa,
+                            propertySpecification: {
+                                $elemMatch: {
+                                    $and: [
+                                        { allowedPropertyType: payload.property.type },
+                                        { allowedPropertyStatus: payload.property.status },
+                                        { maxLoanDurationAllowed: { $gte: payload.loan.term } },
+                                        { maxLoanPercent: { $gte: payload.loan.percent } },
+                                    ],
+                                },
+                            },
+                        },
+                    });
+            }
+
+            queryPipeline.push(
                 {
                     $lookup: {
                         from: 'userloancriterias',
@@ -178,18 +195,8 @@ class LoanEntities extends BaseEntity {
                         monthlyPayment: 1,
                     },
                 },
-            ];
+            );
 
-            // if (payload.other.creditCard.cancelled) {
-            //     queryPipeline.push(
-            //         {
-            //             $match: {
-            //                 loanForCancelledCreditCard : true,
-            //             },
-            //         });
-            // }
-
-            // if (payload.other.creditCard.cancelled) pipeline.push({'$match': { loanForCancelledCreditCard : true}})
             const bankList = await this.DAOManager.aggregateData(this.modelName, queryPipeline);
             return bankList;
 
