@@ -235,4 +235,11 @@ const schema = new Schema({
     updatedAt: { type: Schema.Types.Number },
 });
 
+schema.pre('save', function (this: any, next: () => void) {
+    if (!this.referenceId) {
+        this.referenceId = `USR${++globalThis.counters.LoanApplication}`;
+    }
+    next();
+});
+
 export const LoanApplication = model('loanapplications', schema);
