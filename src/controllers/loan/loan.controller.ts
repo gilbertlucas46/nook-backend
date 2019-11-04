@@ -4,7 +4,6 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
 import { LoanRequest } from '@src/interfaces/loan.interface';
-import { constants } from 'fs';
 // import { DAOManager } from '@src/databases/dao';
 
 class LoanControllers extends BaseEntity {
@@ -80,7 +79,8 @@ class LoanControllers extends BaseEntity {
 
     async userLoansList(payload, userData) {
         try {
-            return await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
+            const data = await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }

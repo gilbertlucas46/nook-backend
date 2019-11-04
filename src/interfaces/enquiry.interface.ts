@@ -9,7 +9,7 @@ export namespace EnquiryRequest {
 		// userId?: string;
 		propertyId: string;
 		type: string;
-		propertOwner_id?: string;
+		propertyOwnerId: string;
 		agentEmail?: string;
 	}
 
