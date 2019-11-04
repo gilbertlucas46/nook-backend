@@ -11,7 +11,12 @@ class LoanApplicationE extends BaseEntity {
      * @param payload
      */
     async saveLoanApplication(payload) {
-        return this.createOneEntity(payload);
+        try {
+            return await this.createOneEntity(payload);
+        } catch (error) {
+            console.log('Error in saving loan data ', error);
+            return Promise.reject(error);
+        }
     }
     /**
      * @description saving loan applicationu
