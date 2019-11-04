@@ -22,8 +22,8 @@ export class Bootstrap {
 			// console.log('userCounteruserCounteruserCounter', userCounter);
 
 		}
-		globalThis.counters = {
-			LoanApplication: userCounter,
-		};
+		// global.counters = {
+		// 	LoanApplication: userCounter,
+		// };
 	}
 }
