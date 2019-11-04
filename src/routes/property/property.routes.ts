@@ -161,7 +161,7 @@ export let propertyRoute: ServerRoute[] = [
 		options: {
 			description: 'GET properties',
 			tags: ['api', 'anonymous', 'user', 'update'],
-			//  auth: 'UserAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				query: {
 					page: Joi.number(),
@@ -185,6 +185,7 @@ export let propertyRoute: ServerRoute[] = [
 					maxArea: Joi.number(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 				},
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
