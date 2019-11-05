@@ -29,9 +29,9 @@ export let helpCenterRoute: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 payload: {
-                    title: Joi.string(),
-                    videoUrl: Joi.string(),
-                    description: Joi.string(),
+                    title: Joi.string().trim(),
+                    videoUrl: Joi.string().trim().allow(''),
+                    description: Joi.string().trim(),
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
@@ -141,6 +141,8 @@ export let helpCenterRoute: ServerRoute[] = [
                     ...request.params,
                     ...request.payload as object,
                 };
+                console.log('payloadpayloadpayloadpayload', payload);
+
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
                 }
@@ -161,7 +163,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 },
                 payload: {
                     title: Joi.string(),
-                    videoUrl: Joi.string(),
+                    videoUrl: Joi.string().trim().allow('').optional(),
                     description: Joi.string(),
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,

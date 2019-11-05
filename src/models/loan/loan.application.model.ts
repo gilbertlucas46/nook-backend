@@ -68,7 +68,8 @@ const schema = new Schema({
         phoneNumber: { type: Schema.Types.String, trim: true },
         email: { type: Schema.Types.String, trim: true },
         mobileNumber: { type: Schema.Types.String, trim: true },
-        property_address: {
+        // property_address: {
+        currentAddress: {
             address: { type: Schema.Types.String, index: true },
             // regionId: { type: Schema.Types.ObjectId, ref: 'Region', index: true }, // Refer to region schema
             // cityId: { type: Schema.Types.ObjectId, ref: 'City', index: true },     // Refer to city schema
@@ -87,10 +88,12 @@ const schema = new Schema({
         },
     },
     loanDetails: {
-        fixedPeriod: { type: Schema.Types.Number, trim: true },
-        loanTerm: { type: Schema.Types.String, trim: true },
-        rate: { type: Schema.Types.Number, trim: true },
-        monthlyRepayment: { type: Schema.Types.Number, trim: true },
+        fixedPeriod: { type: Schema.Types.Number },
+        loanTerm: { type: Schema.Types.Number },
+        rate: { type: Schema.Types.Number },
+        monthlyRepayment: { type: Schema.Types.Number },
+        hasCoBorrower: { type: Boolean },
+
     },
     employmentInfo: {
         companyIndustry: {
@@ -235,7 +238,7 @@ const schema = new Schema({
     updatedAt: { type: Schema.Types.Number },
 });
 
-schema.pre('save', function(this: any, next: () => void) {
+schema.pre('save', function (this: any, next: () => void) {
     if (!this.referenceId) {
         // this.referenceId = `USR${++global.counters.LoanApplication}`;
     }

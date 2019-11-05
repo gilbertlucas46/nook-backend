@@ -16,3 +16,4 @@ export { LoanEntity } from './loan/loan.entity';
 export { EligibilityEntity } from './loan/eligibility.entity';
 export { LoanApplicationEntity } from './loan/loan.application.entity';
 export { HelpfulE } from './helpCenter/helpcenterStatus.entity';
+export { ReferalE } from './loan/loan.referral.entity';

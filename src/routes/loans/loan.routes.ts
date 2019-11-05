@@ -203,6 +203,7 @@ export let loanRoute: ServerRoute[] = [
 						loanTerm: Joi.number(),
 						rate: Joi.number().max(100),
 						monthlyRepayment: Joi.number(),
+						hasCoBorrower: Joi.boolean(),
 					}),
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
@@ -417,11 +418,12 @@ export let loanRoute: ServerRoute[] = [
 	 */
 	{
 		method: 'PATCH',
-		path: '/v1/user/loan',
+		path: '/v1/user/loan/application',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
 				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload: LoanRequest.UpdateLoan = request.params as any;
+				const payload: LoanRequest.UpdateLoan = request.payload as any;
+
 				const data = await LoanController.updateLoanApplication(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 				// return UniversalFunctions. (Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
@@ -505,6 +507,7 @@ export let loanRoute: ServerRoute[] = [
 						loanTerm: Joi.number(),
 						rate: Joi.number().max(100),
 						monthlyRepayment: Joi.number(),
+						hasCoBorrower: Joi.boolean(),
 					}),
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),

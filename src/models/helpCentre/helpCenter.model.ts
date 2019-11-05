@@ -37,7 +37,7 @@ export let HelpCenterStatus = model<IHelpFulHelpCenter>('helpcenterStatus', Help
 const helpCenterSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     title: { type: String },
-    videoUrl: { type: String },
+    videoUrl: { type: String, allow: '' },
     userId: { type: Schema.Types.ObjectId, required: true },
     userRole: {
         type: String,
