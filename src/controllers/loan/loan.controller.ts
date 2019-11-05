@@ -30,25 +30,30 @@ class LoanControllers extends BaseEntity {
             if (!referenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
                 const month = ('0' + (new Date(new Date().getTime()).getMonth() + 1)).slice(-2);
-                const date = new Date(new Date().getTime()).getDate();
+                // const date = new Date(new Date(new Date()).getTime()).getDate();
+                const date = ('0' + (new Date(new Date().getTime()).getDate() + 1)).slice(-2);
+
                 const referenceId = 1;
                 const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + Contsant.SERVER.LOAN_PRE__ZEOS + referenceId;
                 payload['referenceId'] = formattedTime;
             } else {
                 const year = new Date(referenceNumber.createdAt).getFullYear().toString().substr(-2);
-                const month = new Date(referenceNumber.createdAt).getMonth();
-                const date = new Date(referenceNumber.createdAt).getDate();
+                const month = new Date(referenceNumber.createdAt).getMonth().toString().substr(-2);
+                const date = new Date(referenceNumber.createdAt).getDate().toString().substr(-2);
                 const id = referenceNumber['referenceId'].split('-')[2];
 
                 referenceNumber['referenceId']++;
                 let num = (parseInt(id) + 1).toString();
+                console.log('numnumnumnumnumnum', num);
                 const remainingChars = 4 - num.length;
                 for (let i = 0; i < remainingChars; i++) {
                     num = '0' + num;
                 }
                 const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + num;
+                console.log('formattedTimeformattedTimeformattedTimeformattedTime', formattedTime);
                 payload['referenceId'] = formattedTime;
             }
+
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
             return data['referenceId'];
 

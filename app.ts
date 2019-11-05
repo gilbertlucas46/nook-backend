@@ -33,8 +33,12 @@ const server = new Server({
 	port: config.get('port'),
 	routes: {
 		cors: {
-			origin: originArray,
+ 			origin: ['*'], // originArray,
 			additionalHeaders: ['Accept', 'Access-Control-Allow-Origin', 'x-requested-with', 'Access-Control-Allow-Headers', 'api_key', 'Authorization', 'authorization', 'Content-Type', 'If-None-Match', 'platform'],
+			exposedHeaders: ['Accept'],
+			maxAge: 60,
+			credentials: true,
+			headers: ['Authorization'],
 		},
 	},
 });

@@ -810,6 +810,11 @@ export let STATUS_MSG = {
 				type: 'CREATED',
 				message: 'Created Successfully',
 			},
+			LOAN_REFERRAL: {
+				statusCode: 201,
+				type: 'CREATED',
+				message: 'Successfully send your referral to nook ',
+			},
 			PROPERTY_ADDED: {
 				statusCode: 201,
 				type: 'PROPERTY_ADDED',

@@ -23,7 +23,7 @@ class LoanApplicationE extends BaseEntity {
      * @param payload
      */
     async updateLoanApplication(payload) {
-        return this.updateOneEntity({ _id: Types.ObjectId(payload._id) }, { payload });
+        return this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
     }
 
     async getReferenceId(criteria) {
@@ -72,14 +72,14 @@ class LoanApplicationE extends BaseEntity {
             // query = {
             //     userId: userData._id,
             // };
-            promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { skip: skip, limit: limit }))
+            promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { skip: skip, limit: limit }));
             promiseArray.push(this.DAOManager.count(this.modelName, query));
             const [data, total] = await Promise.all(promiseArray);
             return {
                 data,
                 total,
             };
-         } catch (error) {
+        } catch (error) {
             return Promise.reject(error);
         }
     }

@@ -20,7 +20,6 @@ export class Bootstrap {
 			// console.log('userIduserId', userId);
 			userCounter = parseInt(userId.substr(3), 10);
 			// console.log('userCounteruserCounteruserCounter', userCounter);
-
 		}
 		// global.counters = {
 		// 	LoanApplication: userCounter,
