@@ -29,6 +29,7 @@ class LoanEntities extends BaseEntity {
                             loanForCancelledCreditCard: true,
                             loanMinAmount: { $lte: payload.property.value },
                             loanForForeignerMarriedLocal: localVisa,
+                            minMonthlyIncomeRequired : {$lte : payload.work.income},
                             propertySpecification: {
                                 $elemMatch: {
                                     $and: [
@@ -47,6 +48,7 @@ class LoanEntities extends BaseEntity {
                         $match: {
                             loanMinAmount: { $lte: payload.property.value },
                             loanForForeignerMarriedLocal: localVisa,
+                            minMonthlyIncomeRequired : {$lte : payload.work.income},
                             propertySpecification: {
                                 $elemMatch: {
                                     $and: [
