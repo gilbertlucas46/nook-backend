@@ -22,7 +22,7 @@ export let loanRoute: ServerRoute[] = [
 		options: {
 			description: 'add Loan Requirements',
 			tags: ['api', 'anonymous', 'loan', 'Add'],
-			// auth: 'UserAuth',
+			auth: 'UserAuth',
 			validate: {
 				payload: {
 					abbrevation: Joi.string().min(2).max(6).required(),
@@ -105,6 +105,7 @@ export let loanRoute: ServerRoute[] = [
 						minEmploymentTenure: Joi.number(),
 					}),
 				},
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -202,6 +203,7 @@ export let loanRoute: ServerRoute[] = [
 						loanTerm: Joi.number(),
 						rate: Joi.number().max(100),
 						monthlyRepayment: Joi.number(),
+						hasCoBorrower: Joi.boolean(),
 					}),
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
@@ -361,6 +363,8 @@ export let loanRoute: ServerRoute[] = [
 					page: Joi.number(),
 					sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
 					sortBy: Joi.string().default('date'),
+					fromDate: Joi.number(),
+					toDate: Joi.number(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -398,6 +402,232 @@ export let loanRoute: ServerRoute[] = [
 			validate: {
 				params: {
 					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	/**
+     * @description: update loan application
+	 */
+	{
+		method: 'PATCH',
+		path: '/v1/user/loan/application',
+		handler: async (request, h: ResponseToolkit) => {
+			try {
+				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const payload: LoanRequest.UpdateLoan = request.payload as any;
+
+				const data = await LoanController.updateLoanApplication(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				// return UniversalFunctions. (Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'get loan by id',
+			tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+			auth: 'UserAuth',
+			validate: {
+				payload: {
+					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					saveAsDraft: Joi.boolean().required(),
+					personalInfo: Joi.object().keys({
+						firstName: Joi.string().min(1).max(32).required(),
+						lastName: Joi.string().min(1).max(32),
+						middleName: Joi.string().max(32),
+						gender: Joi.string().valid([
+							Constant.DATABASE.GENDER.MALE,
+							Constant.DATABASE.GENDER.FEMALE,
+							Constant.DATABASE.GENDER.OTHER,
+						]),
+						educationBackground: Joi.string().valid([
+							Constant.DATABASE.EDUCATION_BACKGROUND.POST_GRAD,
+							Constant.DATABASE.EDUCATION_BACKGROUND.UNDER_GRAD,
+							Constant.DATABASE.EDUCATION_BACKGROUND.COLLEGE,
+							Constant.DATABASE.EDUCATION_BACKGROUND.VOCATIONAL,
+						]),
+						civilStatus: Joi.string().valid([
+							Constant.DATABASE.CIVIL_STATUS.SINGLE,
+							Constant.DATABASE.CIVIL_STATUS.WIDOW,
+							Constant.DATABASE.CIVIL_STATUS.SEPERATED,
+							Constant.DATABASE.CIVIL_STATUS.MARRIED,
+						]),
+						spouseFirstName: Joi.string().min(1).max(32),
+						spouseMiddleName: Joi.string().min(1).max(32),
+						spouseLastName: Joi.string().min(1).max(32),
+						motherMaidenName: Joi.string(),
+						birthDate: Joi.number(),
+						coBorrowerFirstName: Joi.string().min(1).max(32),
+						coBorrowerMiddleName: Joi.string().min(1).max(32),
+						coBorrowerLastName: Joi.string().min(1).max(32),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+						]),
+					}),
+					bankInfo: Joi.object().keys({
+						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+						bankName: Joi.string().min(5).max(50),
+						abbrevation: Joi.string().max(10),
+					}),
+					contactInfo: Joi.object().keys({
+						phoneNumber: Joi.string(),
+						email: Joi.string().email(),
+						mobileNumber: Joi.string().min(8).max(15),
+						currentAddress: Joi.object().keys({
+							address: Joi.string().max(300),
+							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+							// regionName: Joi.string().min(1).max(32),
+							// cityName: Joi.string().min(1).max(32),
+							// barangay: Joi.string().min(1).max(32),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]),
+						}),
+					}),
+					loanDetails: Joi.object().keys({
+						fixedPeriod: Joi.number(),
+						loanTerm: Joi.number(),
+						rate: Joi.number().max(100),
+						monthlyRepayment: Joi.number(),
+						hasCoBorrower: Joi.boolean(),
+					}),
+					employmentInfo: Joi.object().keys({
+						tin: Joi.string(),
+						companyName: Joi.string().min(1).max(300),
+						sss: Joi.string(),
+						officePhone: Joi.string(),
+						officeEmail: Joi.string(),
+						officeAddress: Joi.string().max(300),
+						companyIndustry: Joi.string().valid([
+							Constant.DATABASE.INDUSTRY.AGRI_FOREST_FISH,
+							Constant.DATABASE.INDUSTRY.ACCOMOD_FOOD_SERVICES,
+							Constant.DATABASE.INDUSTRY.ARTS_ENTERTAINMENT_RECREATION,
+							Constant.DATABASE.INDUSTRY.COMMUNICATION,
+							Constant.DATABASE.INDUSTRY.CONSTRUCTION,
+							Constant.DATABASE.INDUSTRY.EDUCATION,
+							Constant.DATABASE.INDUSTRY.IT,
+							Constant.DATABASE.INDUSTRY.OTHERS,
+						]),
+						// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),      // Refer to city schema
+						// cityName: Joi.string(),
+						// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
+						// regionName: Joi.string(),
+						// barangay: Joi.string(),
+						// country: Joi.string(),
+						coBorrowerInfo: {
+							employmentType: Joi.string().valid([
+								EMPLOYMENT_TYPE.BPO.value,
+								EMPLOYMENT_TYPE.GOVT.value,
+								EMPLOYMENT_TYPE.OFW.value,
+								EMPLOYMENT_TYPE.PRIVATE.value,
+								EMPLOYMENT_TYPE.PROFESSIONAL.value,
+								EMPLOYMENT_TYPE.SELF.value,
+							]),
+							tin: Joi.string(),
+							companyName: Joi.string(),
+							sss: Joi.string(),
+							employmentRank: Joi.string().valid([
+								EMPLOYMENT_RANK.ASSISSTANT_VICE_PRESIDENT.value,
+								EMPLOYMENT_RANK.ASSISTANT_MANAGER.value,
+								EMPLOYMENT_RANK.CHAIRMAN.value,
+								EMPLOYMENT_RANK.CHIEF_EXECUTIVE_OFFICER.value,
+								EMPLOYMENT_RANK.CLERK.value,
+								EMPLOYMENT_RANK.DIRECTOR.value,
+								EMPLOYMENT_RANK.EXECUTIVE_VICE_PRESIDENT.value,
+								EMPLOYMENT_RANK.FIRST_VICE_PRESIDENT.value,
+								EMPLOYMENT_RANK.GENERAL_EMPLOYEE.value,
+								EMPLOYMENT_RANK.MANAGER.value,
+								EMPLOYMENT_RANK.NON_PROFESIONNAL.value,
+								EMPLOYMENT_RANK.OWNER.value,
+								EMPLOYMENT_RANK.PRESIDENT.value,
+								EMPLOYMENT_RANK.PROFESSIONAL.value,
+								EMPLOYMENT_RANK.RANK_FILE.value,
+								EMPLOYMENT_RANK.SENIOR_ASSISTANT_MANAGER.value,
+								EMPLOYMENT_RANK.SENIOR_ASSISTANT_VICE_PRESIDENT.value,
+								EMPLOYMENT_RANK.SENIOR_MANAGER.value,
+								EMPLOYMENT_RANK.SENIOR_VICE_PRESIDENT.value,
+								EMPLOYMENT_RANK.SUPERVISOR.value,
+								EMPLOYMENT_RANK.VICE_PRESIDENT.value,
+							]),
+							employmentTenure: Joi.string().valid(Object.keys(EMPLOYMENT_TENURE)),
+							companyIndustry: Joi.string().valid([
+								Constant.DATABASE.INDUSTRY.AGRI_FOREST_FISH,
+								Constant.DATABASE.INDUSTRY.ACCOMOD_FOOD_SERVICES,
+								Constant.DATABASE.INDUSTRY.ARTS_ENTERTAINMENT_RECREATION,
+								Constant.DATABASE.INDUSTRY.COMMUNICATION,
+								Constant.DATABASE.INDUSTRY.CONSTRUCTION,
+								Constant.DATABASE.INDUSTRY.EDUCATION,
+								Constant.DATABASE.INDUSTRY.IT,
+								Constant.DATABASE.INDUSTRY.OTHERS,
+							]),
+							officePhone: Joi.number(),
+							officeEmail: Joi.string().email(),
+							officeAddress: Joi.string().max(300),
+							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
+							// cityName: Joi.string(),
+							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
+							// regionName: Joi.string(),
+							// barangay: Joi.string(),
+							// country: Joi.string(),
+						},
+					}),
+					dependentsInfo: Joi.array().items({
+						name: Joi.string(),
+						age: Joi.number(),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+						]),
+					}),
+					propertyDocuments: Joi.object().keys({
+						borrowerValidDocIds: Joi.array().items(Joi.string()),
+						coBorrowerValidId: Joi.array().items(Joi.string()),
+						latestITR: Joi.string().uri(),
+						employmentCert: Joi.string().uri(),
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
+							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
+							// regionName: Joi.string(),
+							// cityName: Joi.string(),
+							// barangay: Joi.string(),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.number(),
+							collateralDocStatus: Joi.boolean(),
+							collateralDocList: Joi.array().items({
+								docType: Joi.string().valid([
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+								]),
+								docUrl: Joi.string(),
+							}),
+						}),
+						nookAgent: Joi.string(),
+					}),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

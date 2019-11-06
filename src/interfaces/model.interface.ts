@@ -13,5 +13,7 @@ export type ModelNames = 'User' |
     'Userloancriteria' |
     'HomeLoan' |
     'HelpCenterStatus' |
-    'LoanApplication'
+    'LoanApplication' |
+    'Payment' |
+    'LoanReferral'
     ;

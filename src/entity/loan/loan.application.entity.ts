@@ -23,7 +23,7 @@ class LoanApplicationE extends BaseEntity {
      * @param payload
      */
     async updateLoanApplication(payload) {
-        return this.updateOneEntity({ _id: Types.ObjectId(payload._id) }, { payload });
+        return this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
     }
 
     async getReferenceId(criteria) {
@@ -33,25 +33,53 @@ class LoanApplicationE extends BaseEntity {
 
     async getUserLoanList(payload, userData) {
         try {
+            console.log('payloadpayload', payload);
+
             let { page, limit, sortType } = payload;
+            const { fromDate, toDate } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
             sortType = !sortType ? -1 : sortType;
-            // let sortingType = {};
+            const sortingType = {};
+            const promiseArray = [];
+            const query = {
+                userId: userData._id,
+            };
 
             // sortingType = {
             //     createdAt: sortType,
             // }; sort: sortingType
 
+            if (fromDate && toDate) {
+                query['createdAt'] = {
+                    $gte: fromDate,
+                    $lte: toDate,
+                };
+            }
+            else if (toDate) {
+                query['createdAt'] = {
+                    $lte: toDate,
+                };
+            } else if (fromDate) {
+                query['createdAt'] = {
+                    $gte: fromDate,
+                    $lte: new Date().getTime(),
+                };
+            }
+
             // const { limit, skip } = payload;
-            const criteria = {
-                userId: userData._id,
+            // query = {
+            //     userId: userData._id,
+            // };
+            promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { skip: skip, limit: limit }));
+            promiseArray.push(this.DAOManager.count(this.modelName, query));
+            const [data, total] = await Promise.all(promiseArray);
+            return {
+                data,
+                total,
             };
-            const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { skip, limit: 10 });
-            return data;
         } catch (error) {
-            console.log('Error in saving loan data ', error);
             return Promise.reject(error);
         }
     }

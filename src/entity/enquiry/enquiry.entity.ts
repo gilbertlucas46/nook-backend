@@ -19,23 +19,19 @@ export class EnquiryClass extends BaseEntity {
             const sortingType = {
                 createdAt: sortType,
             };
-            let query: any = {};
-            if (userData.type === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
-                query = {
-                    userId: userData._id,
-                };
-            } else {
-                query = {
-                    propertyOwnerId: userData._id,
-                };
+            const query: any = {};
+            if (userData.type) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                query['userId'] = userData._id;
             }
+            // else {
+            //     query['propertyOwnerId'] = userData._id;
+            // }
             if (fromDate && toDate) {
                 query['createdAt'] = {
                     $gte: fromDate,
                     $lte: toDate,
                 };
-            }
-            else if (toDate) {
+            } else if (toDate) {
                 query['createdAt'] = {
                     $lte: toDate,
                 };
@@ -101,16 +97,6 @@ export class EnquiryClass extends BaseEntity {
 
             const enquiryList = await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
             return enquiryList;
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    }
-
-    async enquiryList1(pipeline) {
-        try {
-            const propertyData = await EnquiryE.paginate(this.modelName, pipeline);
-            return propertyData;
-
         } catch (error) {
             return Promise.reject(error);
         }

@@ -22,6 +22,9 @@ export class Database {
 						user: dbUserName,
 						password: dbUserPwd,
 					},
+					reconnectTries: 100000,
+					// wait 1 second before retrying
+					reconnectInterval: 6000,
 					useCreateIndex: true,
 					useNewUrlParser: true,
 				});
