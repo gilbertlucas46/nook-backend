@@ -101,7 +101,7 @@ export let DATABASE = {
 		SINGLE: 'single',
 		MARRIED: 'married',
 		WIDOW: 'widowed',
-		SEPERATED: 'seperated',
+		SEPERATED: 'separated',
 	},
 
 	EDUCATION_BACKGROUND: {
@@ -790,6 +790,11 @@ export let STATUS_MSG = {
 				type: 'ENQUIRY_SENT',
 				message: 'Enquiry Sent',
 			},
+			ENQUIRY_SENT_AGENT: {
+				statusCode: 200,
+				type: 'ENQUIRY_SENT',
+				message: 'Enquiry Sent To Agent',
+			},
 			LOGIN_TEST: (language: any) => {
 				const body = {
 					statusCode: 200,
@@ -804,6 +809,11 @@ export let STATUS_MSG = {
 				statusCode: 201,
 				type: 'CREATED',
 				message: 'Created Successfully',
+			},
+			LOAN_REFERRAL: {
+				statusCode: 201,
+				type: 'CREATED',
+				message: 'Successfully send your referral to nook ',
 			},
 			PROPERTY_ADDED: {
 				statusCode: 201,

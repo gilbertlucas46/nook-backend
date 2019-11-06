@@ -14,17 +14,17 @@ export interface IEnquiry extends Document {
 
 const enquirySchena = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-    userId: { type: Schema.Types.ObjectId, ref: 'User' },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', allow: '' },
     propertyId: { type: Schema.Types.ObjectId, ref: 'Property', index: true },
     email: { type: String, index: true },
     propertyOwnerId: { type: Schema.Types.ObjectId, index: true },
     name: { type: String, required: true },
     userType: {
-        type: Number,
-        enum: [
-            CONSTANT.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
-            CONSTANT.DATABASE.ENQUIRY_TYPE.REGISTERED_USER.NUMBER,
-        ], index: true,
+        type: String,
+        // enum: [
+        //     CONSTANT.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
+        //     CONSTANT.DATABASE.ENQUIRY_TYPE.REGISTERED_USER.NUMBER,
+        // ], index: true,
     },
     phoneNumber: { type: String, index: true },
     message: { type: String },

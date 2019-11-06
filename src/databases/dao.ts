@@ -38,11 +38,23 @@ export class DAOManager {
 		const docs: T[] = await EntityModel.insertMany(data) as any;
 		return docs;
 	}
+
+	async getData1<T extends Document>(model: ModelNames, query: any, projection: any, options?: any): Promise<T> {
+		try {
+			const EntityModel: Model<T> = Models[model] as any;
+			return EntityModel.findOne(query, projection, options);
+			// const data = ModelName.find(query, projection, options);
+			// return docs;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 	async getData(model: ModelNames, query: any, projection: any, options: any) {
 		try {
 			const ModelName: Model<any> = Models[model];
-			const data = ModelName.find(query, projection, options);
-			return data;
+			// const data = ModelName.find(query, projection, options);
+			// return data;
 		} catch (error) {
 			return Promise.reject(error);
 		}

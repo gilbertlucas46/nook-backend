@@ -19,11 +19,13 @@
       "es2017"
     ],
     "typeRoots": [
-      "./node_modules/@types",
-      "./typings/index.d.ts"
+      "./src/typings/node.d.ts",
+      "./src/interfaces"
     ],
     "paths": {
-        "@types/*": ["types/*"],
+      "@types/*": [
+        "types/*"
+      ],
       "@src/*": [
         "src/*"
       ]
