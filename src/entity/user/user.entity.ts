@@ -90,7 +90,7 @@ export class UserClass extends BaseEntity {
 	async userDashboad(userData: UserRequest.UserData) {
 		try {
 			const promise = [];
-			if (userData.type === Constant.DATABASE.USER_TYPE.TENANT.TYPE || Constant.DATABASE.USER_TYPE.TENANT.DISPLAY_NAME) {
+			if (userData.type === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
 				const query = {
 					$and: [
 						{ userId: userData._id },
