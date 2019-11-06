@@ -12,15 +12,20 @@ class LoanEntities extends BaseEntity {
         try {
             let totalMonthlyIncome = payload.work.income;
             let preLoanMonthlyAmount = 0;
-            if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome;
-            if (payload.other.coBorrower.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.coBorrower.coBorrowerMonthlyIncome;
-            if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome;
+            if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome; // If married need to add spouse income also to calculate debtToIncomeRatio
+            if (payload.other.coBorrower.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.coBorrower.coBorrowerMonthlyIncome; // If coborrower need to add coborrower income
+            if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome; // If any investment exists than that is also added in the income part.
             // if other loans exits
             if (payload.other.prevLoans.status) preLoanMonthlyAmount = payload.other.prevLoans.monthlyTotal;
-
             let localVisa = false;
+            let ageAtlastLoanPayment = 0;
             if (payload.other.nationality === NATIONALITY.FILIPINO.value) localVisa = true;
             if (payload.other.nationality === NATIONALITY.FOREIGNER.value && payload.other.localVisa === true) localVisa = true;
+
+            // age filters
+            if (payload.other.age) ageAtlastLoanPayment = payload.other.age + payload.loan.term;
+            if (ageAtlastLoanPayment >= 64) return []; // Max age is 65 till the final loan payment.
+
             const queryPipeline = [];
             if (payload.other.creditCard.cancelled) {
                 queryPipeline.push(
@@ -28,7 +33,7 @@ class LoanEntities extends BaseEntity {
                         $match: {
                             loanForCancelledCreditCard: true,
                             loanMinAmount: { $lte: payload.property.value },
-                            minMonthlyIncomeRequired : {$lte : payload.work.income},
+                            minMonthlyIncomeRequired: { $lte: payload.work.income },
                             loanForForeignerMarriedLocal: localVisa,
                             propertySpecification: {
                                 $elemMatch: {
@@ -48,7 +53,7 @@ class LoanEntities extends BaseEntity {
                         $match: {
                             loanMinAmount: { $lte: payload.property.value },
                             loanForForeignerMarriedLocal: localVisa,
-                            minMonthlyIncomeRequired : {$lte : payload.work.income},
+                            minMonthlyIncomeRequired: { $lte: payload.work.income },
                             propertySpecification: {
                                 $elemMatch: {
                                     $and: [
@@ -206,7 +211,6 @@ class LoanEntities extends BaseEntity {
             return Promise.reject(err);
         }
     }
-
 }
 
 export const LoanEntity = new LoanEntities();
