@@ -29,14 +29,16 @@ export class EnquiryController {
                     phoneNumber: payload.phoneNumber,
                     propertyId: payload.propertyId,
                     // enquiryFor:'Agent'
-                    propertyOwnerId: payload.propertyOwnerId,
+                    // propertyOwnerId: payload.propertyOwnerId,
+                    enquiryType: Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
+                    agentId: payload.agentId,
                 };
                 if (userData._id) {
                     dataToSave['userId'] = userData._id;
                 }
                 const html = `<p> this user want to contact to you | email: ${payload.email} |phoneNumber:${payload.phoneNumber}...</p>`;
                 const mail = new MailManager(payload.agentEmail, 'Enquiry', html);
-                mail.sendMail();
+                // mail.sendMail();
                 enquiryData = ENTITY.EnquiryE.createOneEntity(dataToSave);
                 return {};
             }
@@ -52,11 +54,14 @@ export class EnquiryController {
                 // userId: userData._id ? userData._id : '',
                 // propertyOwnerId: propertyOnwerId.property_added_by.userId,
                 propertyOwnerId: payload.propertyOwnerId,
+                enquiryType: Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY,
             };
             if (userData._id) {
                 dataToSave['userId'] = userData._id;
             }
-
+            const html = `<p> this user want an enquiry of your property | email: ${payload.email} |phoneNumber:${payload.phoneNumber} | propertyId:${payload.propertyId}    ...</p>`;
+            const mail = new MailManager(payload.propertyOwnerEmail, 'Enquiry', html);
+            // mail.sendMail();
             enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
             return enquiryData;
         } catch (error) {

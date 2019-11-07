@@ -384,17 +384,25 @@ export let DATABASE = {
 		YEARLY: 'yearly',
 	},
 
+	// ENQUIRY_TYPE: {
+	// 	GUEST: {
+	// 		NUMBER: 1,
+	// 		TYPE: 'GUEST',
+	// 		DISPLAY_NAME: 'GUEST',
+	// 	},
+	// 	REGISTERED_USER: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'REGISTERED_USER',
+	// 		DISPLAY_NAME: 'Registered_User',
+	// 	},
+	// },
+	ENQUIRY_CATEGORY: {
+		SENT: 'Sent',
+		RECEIVED: 'Received',
+	},
 	ENQUIRY_TYPE: {
-		GUEST: {
-			NUMBER: 1,
-			TYPE: 'GUEST',
-			DISPLAY_NAME: 'GUEST',
-		},
-		REGISTERED_USER: {
-			NUMBER: 2,
-			TYPE: 'REGISTERED_USER',
-			DISPLAY_NAME: 'Registered_User',
-		},
+		ENQUIRY: 'Enquiry',
+		CONTACT: 'Contact',
 	},
 
 	ENQUIRY_STATUS: {

@@ -7,10 +7,10 @@ import * as Constant from '@src/constants';
 export class EnquiryClass extends BaseEntity {
     constructor() {
         super('Enquiry');
-    }
-    async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
+    }// EnquiryRequest.GetEnquiry,
+    async enquiryList(payload: any, userData: UserRequest.UserData) {
         try {
-            const { fromDate, toDate } = payload;
+            const { fromDate, toDate, category, enquiryType } = payload;
             let { sortType, limit, page } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
@@ -20,12 +20,26 @@ export class EnquiryClass extends BaseEntity {
                 createdAt: sortType,
             };
             const query: any = {};
-            if (userData.type) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
                 query['userId'] = userData._id;
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY;
             }
-            // else {
-            //     query['propertyOwnerId'] = userData._id;
-            // }
+
+            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                query['propertyOwnerId'] = userData._id;
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY;
+            }
+            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && payload.category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                // query
+                query['userId'] = userData._id;
+                query['enquiryType'] = payload.enquiryType;
+            }
+
+            if (userData.type && payload.category === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && enquiryType === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                query['userId'] = userData._id;
+                query['enquiryType'] = payload.enquiryType;
+            }
+
             if (fromDate && toDate) {
                 query['createdAt'] = {
                     $gte: fromDate,
