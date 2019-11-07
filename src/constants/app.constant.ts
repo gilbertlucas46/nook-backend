@@ -521,6 +521,11 @@ export let STATUS_MSG = {
 			type: 'ALREADY_EXIST',
 			message: 'Already Exist ',
 		},
+		ENQUIRY_ALREADY_SENT: {
+			statusCode: 400,
+			type: 'ALREADY_SUBMITTED',
+			message: 'Request already beeen submitted',
+		},
 		E406: {
 			STAFF_ALREADY_LOGGED_IN: {
 				statusCode: 406,
