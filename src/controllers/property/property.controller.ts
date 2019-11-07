@@ -19,6 +19,7 @@ export class PropertyController {
 		try {
 			let result;
 			let propertyAction;
+			const promiseArray = [];
 			const criteria = {
 				_id: payload.propertyId,
 			};
@@ -60,9 +61,18 @@ export class PropertyController {
 			}];
 
 			if (payload.propertyId) {
+				const enquiryCriteria = {
+					propertyId: payload.propertyId,
+				};
+				const enquiryDataToUpdate = {
+					title: payload.property_basic_details.title,
+				};
+				promiseArray.push(ENTITY.EnquiryE.updateOneEntity(criteria, enquiryDataToUpdate));
+
 				delete payload.propertyId;
-				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
-				return updateData;
+				promiseArray.push(ENTITY.PropertyE.updateOneEntity(criteria, payload));
+				const [updateData, enquiryData] = await Promise.all(promiseArray);
+				return { updateData };
 			}
 			const propertyData = await ENTITY.PropertyE.createOneEntity(payload);
 			return propertyData;

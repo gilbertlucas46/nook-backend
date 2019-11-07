@@ -233,6 +233,11 @@ const schema = new Schema({
         },
         nookAgent: { type: Schema.Types.String, trim: true },
     },
+    approvedBy: [{
+        adminId: { type: Schema.Types.ObjectId },
+        adminName: { type: String },
+        approvedAt: { type: Number },
+    }],
     referenceId: { type: String, index: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },

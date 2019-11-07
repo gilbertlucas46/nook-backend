@@ -8,9 +8,12 @@ export namespace EnquiryRequest {
 		message?: string;
 		// userId?: string;
 		propertyId: string;
-		type: string;
+		enquiryType: string;
 		propertyOwnerId: string;
 		agentEmail?: string;
+		// propertyOwnerEmail?: string;
+		agentId?: string;
+		propertyOwnerEmail?: string;
 	}
 
 	export interface GetEnquiry {

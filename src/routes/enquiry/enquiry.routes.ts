@@ -30,13 +30,19 @@ export let enquiryRoutes: ServerRoute[] = [
 			validate: {
 				payload: {
 					name: Joi.string().required(),
-					email: Joi.string().email(),
+					email: Joi.string().email().required(),
 					phoneNumber: Joi.string().required(),
 					message: Joi.string().required(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					// type: Joi.string().valid('Agent'),
+					// type: Joi.string().valid('Enquiry', 'Contact'),
 					agentEmail: Joi.string().email(),
-					propertyOwnerId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					agentId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					propertyOwnerId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					enquiryType: Joi.string().valid([
+						Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
+						Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY,
+					]).required(),
+					propertyOwnerEmail: Joi.string().email(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -67,6 +73,12 @@ export let enquiryRoutes: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				query: {
+					enquiryType: Joi.string().valid('Contact', 'Enquiry'),
+					category: Joi.string().valid([
+						Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED,
+						Constant.DATABASE.ENQUIRY_CATEGORY.SENT,
+					]),
+					// getType: Joi.string().valid('sent'),
 					page: Joi.number(),
 					limit: Joi.number(),
 					fromDate: Joi.number(),

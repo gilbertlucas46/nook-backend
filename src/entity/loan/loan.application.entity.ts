@@ -33,47 +33,77 @@ class LoanApplicationE extends BaseEntity {
 
     async getUserLoanList(payload, userData) {
         try {
-            console.log('payloadpayload', payload);
-
-            let { page, limit, sortType } = payload;
-            const { fromDate, toDate } = payload;
+            let { page, limit, sortType, sortBy } = payload;
+            const { fromDate, toDate, status } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
             sortType = !sortType ? -1 : sortType;
-            const sortingType = {};
+            let sortingType = {};
             const promiseArray = [];
-            const query = {
-                userId: userData._id,
-            };
+            let matchObject: any = {};
+            if (userData.type === 'User') {
+                matchObject = {
+                    userId: userData._id,
+                };
+            } else {
+                matchObject['saveAsDraft'] = false;
+                // saveAsDraft: false,
+            }
+
+            if (sortBy) {
+                // switch (sortBy) {
+                // case 'Date':
+                sortBy = 'Date';
+                sortingType = {
+                    createdAt: sortType,
+                };
+                // break;
+                // default:
+                //     sortBy = 'createdAt';
+                //     sortingType = {
+                //         updatedAt: sortType,
+                //     };
+                //     break;
+                // }
+            }
+
+            if (status) {
+                matchObject['applicationStatus'] = status;
+            }
+            else {
+                matchObject['applicationStatus'] = {
+                    $or: [
+                        Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
+                        Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
+                        Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
+                    ],
+                };
+            }
 
             // sortingType = {
             //     createdAt: sortType,
             // }; sort: sortingType
 
             if (fromDate && toDate) {
-                query['createdAt'] = {
+                matchObject['createdAt'] = {
                     $gte: fromDate,
                     $lte: toDate,
                 };
             }
             else if (toDate) {
-                query['createdAt'] = {
+                matchObject['createdAt'] = {
                     $lte: toDate,
                 };
             } else if (fromDate) {
-                query['createdAt'] = {
+                matchObject['createdAt'] = {
                     $gte: fromDate,
                     $lte: new Date().getTime(),
                 };
             }
 
-            // const { limit, skip } = payload;
-            // query = {
-            //     userId: userData._id,
-            // };
-            promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { skip: skip, limit: limit }));
-            promiseArray.push(this.DAOManager.count(this.modelName, query));
+            promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit }));
+            promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
             const [data, total] = await Promise.all(promiseArray);
             return {
                 data,

@@ -65,8 +65,8 @@ class LoanControllers extends BaseEntity {
 
     async updateLoanApplication(payload) {
         try {
-            await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
-            return {};
+            const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
+            return data['referenceId'];
         } catch (error) {
             console.log('Error ', error);
             return Promise.reject(error);
@@ -97,6 +97,36 @@ class LoanControllers extends BaseEntity {
                 _id: payload.loanId,
             };
             const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
+
+            if (!data) {
+                return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            } else {
+                return data;
+            }
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async adminUpdateLoanStatus(payload, adminData) {
+        try {
+            const criteria = {
+                _id: payload.loanId,
+            };
+            const dataToUpdate: any = {};
+            dataToUpdate.$set = {
+                applicationStatus: payload.status,
+            };
+
+            dataToUpdate.$push = {
+                approvedBy: {
+                    adminId: adminData._id,
+                    adminName: adminData ? adminData.name : '',
+                    approvedAt: new Date().getTime(),
+                },
+            };
+
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
             if (!data) {
                 return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
             } else {

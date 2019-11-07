@@ -2,13 +2,13 @@ import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { AdminProfileService, AdminService, UserService } from '../../controllers';
+import { AdminProfileService, AdminService, UserService, LoanController } from '../../controllers';
 import * as config from 'config';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-import { AdminStaffEntity } from '@src/entity';
+import { AdminStaffEntity, } from '@src/entity';
 import * as Hapi from 'hapi';
 
 export let adminProfileRoute: ServerRoute[] = [
@@ -492,4 +492,132 @@ export let adminProfileRoute: ServerRoute[] = [
 		},
 	},
 
+	/***
+	  * @description Admin loan listing
+	 */
+	{
+		method: 'GET',
+		path: '/v1/admin/loan',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload: any = request.query;
+				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+					await AdminStaffEntity.checkPermission(payload.permission);
+				}
+				const registerResponse = await LoanController.userLoansList(payload, adminData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Admin loan list',
+			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			auth: 'AdminAuth',
+			validate: {
+				query: {
+					status: Joi.string().valid([
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
+					]),
+					fromDate: Joi.number(),
+					toDate: Joi.number(),
+					sortBy: Joi.string(),
+					sortType: Joi.string(),
+					limit: Joi.number(),
+					page: Joi.number().min(1).default(1),
+					// type: Joi.string().valid('admin', 'user')
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	/***
+	*@description : admin update the loan status
+	 */
+	{
+		method: 'PATCH',
+		path: '/v1/admin/loan/status/{loanId}/{status}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload: any = request.params;
+				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+					await AdminStaffEntity.checkPermission(payload.permission);
+				}
+				const registerResponse = await LoanController.adminUpdateLoanStatus(payload, adminData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Admin update loan status',
+			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					loanId: Joi.string(),
+					status: Joi.string().valid([
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
+					]),
+					// type: Joi.string().valid('admin', 'user')
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	/***
+	 *@description : admin get the loan
+	 */
+	{
+		method: 'GET',
+		path: '/v1/admin/loan/{loanId}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload: any = request.params;
+				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+					await AdminStaffEntity.checkPermission(payload.permission);
+				}
+				const registerResponse = await LoanController.loanById(payload, adminData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Admin update loan status',
+			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					loanId: Joi.string(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
 ];
