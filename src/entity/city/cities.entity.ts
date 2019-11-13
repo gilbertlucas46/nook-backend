@@ -66,6 +66,9 @@ class CityEntity extends BaseEntity {
 	async clear() {
 		await this.DAOManager.remove(this.modelName, {});
 	}
+	async featuredList() {
+		return this.DAOManager.findAll(this.modelName, { isFeatured: true }, { _id: 1, name: 1 });
+	}
 }
 
 export const cityEntity = new CityEntity();

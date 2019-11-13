@@ -1,5 +1,6 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
- import { LoanReferralDocument } from '@src/models/referral';
+import { LoanReferralDocument } from '@src/models/referral';
+import * as Constant from '@src/constants';
 class LoanReferral extends BaseEntity {
     constructor() {
         super('LoanReferral');
@@ -27,7 +28,55 @@ class LoanReferral extends BaseEntity {
 
     async getUserReferral(payload, userData) {
         try {
+            const pipeline = [];
+            let { page, limit, sortBy, sortType } = payload;
+            const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, property_type } = payload;
+            if (!limit) { limit = Constant.SERVER.LIMIT; }
+            if (!page) { page = 1; }
+            let sortingType = {};
+            sortType = !sortType ? -1 : sortType;
+            let matchObject: any = {};
+            const skip = (limit * (page - 1));
+            const promiseArray = [];
 
+            // if (sortBy) {
+            //     sortBy = 'Date';
+            //     sortingType = {
+            //         createdAt: sortType,
+            //     };
+            // }
+
+            // if (fromDate && toDate) {
+            //     matchObject['createdAt'] = {
+            //         $gte: fromDate,
+            //         $lte: toDate,
+            //     };
+            // }
+            // else if (toDate) {
+            //     matchObject['createdAt'] = {
+            //         $lte: toDate,
+            //     };
+            // } else if (fromDate) {
+            //     matchObject['createdAt'] = {
+            //         $gte: fromDate,
+            //         $lte: new Date().getTime(),
+            //     };
+            // }
+
+            const criteria = {
+                userId: userData._id,
+            };
+
+            promiseArray.push(this.DAOManager.findAll(this.modelName, criteria, {}, { limit, skip, sort: sortingType }));
+            promiseArray.push(this.DAOManager.count(this.modelName, criteria));
+            const [data, total] = await Promise.all(promiseArray);
+            console.log('dataaaaaaaaaaaaaaaaaaaaaaaaaa', data);
+            console.log('dataaaaaaaaaaaaaaaaaaaaaaaaaa', total);
+
+            // pipeline.push(this.DAOManager.findAll('Property', matchObject, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
+            return {
+                data, total,
+            };
         } catch (error) {
             return Promise.reject(error);
         }

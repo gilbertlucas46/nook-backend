@@ -40,9 +40,10 @@ export let enquiryRoutes: ServerRoute[] = [
 					propertyOwnerId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					enquiryType: Joi.string().valid([
 						Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
-						Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY,
+						Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
 					]).required(),
 					propertyOwnerEmail: Joi.string().email(),
+					// title: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -60,7 +61,9 @@ export let enquiryRoutes: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload: EnquiryRequest.GetEnquiry = request.query as any;
+				const payload: any = request.query;
+				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
+
 				const registerResponse = await EnquiryService.getEnquiryList(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -73,11 +76,15 @@ export let enquiryRoutes: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				query: {
-					enquiryType: Joi.string().valid('Contact', 'Enquiry'),
+					enquiryType: Joi.string().valid([
+						Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
+						Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
+					]),
 					category: Joi.string().valid([
 						Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED,
 						Constant.DATABASE.ENQUIRY_CATEGORY.SENT,
 					]),
+					// agentId: Joi.string(),
 					// getType: Joi.string().valid('sent'),
 					page: Joi.number(),
 					limit: Joi.number(),

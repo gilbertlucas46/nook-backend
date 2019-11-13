@@ -13,5 +13,4 @@ export const referralSchema = new Schema({
     updatedAt: { type: Number, required: true, default: new Date().getTime() },
 });
 
-// export let LoanReferral: Model<CityDocument> = model ('')
 export const LoanReferral: Model<LoanReferralDocument> = model('referral', referralSchema);

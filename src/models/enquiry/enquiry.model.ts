@@ -46,13 +46,16 @@ const enquirySchema = new Schema({
         type: String,
         enum: [
             CONSTANT.DATABASE.ENQUIRY_TYPE.CONTACT,
-            CONSTANT.DATABASE.ENQUIRY_TYPE.ENQUIRY,
+            CONSTANT.DATABASE.ENQUIRY_TYPE.PROPERTY,
         ], index: true,
     },
+
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
 });
 
 enquirySchema.index({ userId: 1, propertyId: 1 }, { unique: true });
+
+// enquirySchema.plugin(require('mongoose-beautiful-unique-validation'));
 
 export let Enquiry = model<IEnquiry>('Enquiry', enquirySchema);

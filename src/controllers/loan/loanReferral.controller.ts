@@ -23,12 +23,13 @@ class Referal extends BaseEntity {
         }
     }
     async getUserReferral(payload, userData) {
-        await ENTITY.ReferalE.getUserReferral(payload, userData);
-        return;
-    } catch(error) {
-        return Promise.reject(error);
+        try {
+            const data = await ENTITY.ReferalE.getUserReferral(payload, userData);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
 
+        }
     }
 }
-
 export const referralController = new Referal();

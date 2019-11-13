@@ -8,36 +8,41 @@ export class EnquiryClass extends BaseEntity {
     constructor() {
         super('Enquiry');
     }// EnquiryRequest.GetEnquiry,
-    async enquiryList(payload: any, userData: UserRequest.UserData) {
+    async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
+            console.log('payload', payload, payload.category);
+
             const { fromDate, toDate, category, enquiryType } = payload;
             let { sortType, limit, page } = payload;
+            sortType = !sortType ? -1 : sortType;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
-            sortType = !sortType ? -1 : sortType;
-            sortType = !sortType ? -1 : 1;
+            const skip = (limit * (page - 1));
             const sortingType = {
                 createdAt: sortType,
             };
             const query: any = {};
-            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.PROPERTY && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                console.log('11111111111111111111');
                 query['userId'] = userData._id;
-                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY;
-            }
-
-            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
+            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.PROPERTY && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                console.log('222222222222222222222222222');
                 query['propertyOwnerId'] = userData._id;
-                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.ENQUIRY;
-            }
-            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && payload.category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
+            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                console.log('3333333333333333333333333');
                 // query
                 query['userId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
-            }
-
-            if (userData.type && payload.category === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && enquiryType === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
-                query['userId'] = userData._id;
+            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+                console.log('44444444444444444444444444444444');
+                // query['userId'] = userData._id;
+                query['agentId'] = userData._id; // payload.agentId;
                 query['enquiryType'] = payload.enquiryType;
+            } else {
+                query['userId'] = userData._id; // payload.agentId;
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
             }
 
             if (fromDate && toDate) {
@@ -55,7 +60,7 @@ export class EnquiryClass extends BaseEntity {
                     $lte: new Date().getTime(),
                 };
             }
-
+            console.log('query>>>>>>>>>>>>>>>>>>>>>', query);
             const pipeLine = [
                 {
                     $match: query,
@@ -108,8 +113,16 @@ export class EnquiryClass extends BaseEntity {
                 },
                 { $sort: sortingType },
             ];
+            // const promiseArray = [];
+            // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+            // promiseArray.push(this.DAOManager.count(this.modelName, query));
 
+            // const [data, total] = await Promise.all(promiseArray);
             const enquiryList = await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
+            // return {
+            //     data,
+            //     total,
+            // };
             return enquiryList;
         } catch (error) {
             return Promise.reject(error);

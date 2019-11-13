@@ -30,7 +30,7 @@ class RegionEntity extends BaseEntity {
 	}
 	async bootstrap() {
 		if (await this.isEmpty()) {
-			const regionsData: IRegion[] = REGIONS.map(({cities, ...data}) => data);
+			const regionsData: IRegion[] = REGIONS.map(({ cities, ...data }) => data);
 			const regionDocs: RegionDocument[] = await this.store(regionsData);
 			const citiesData: ICity[] = regionDocs.map<ICity[]>((doc: RegionDocument, index: number) => {
 				return REGIONS[index].cities.map((city) => {
