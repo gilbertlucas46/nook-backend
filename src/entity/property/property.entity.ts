@@ -562,7 +562,8 @@ export class PropertyClass extends BaseEntity {
 				[data, total] = await Promise.all(promiseArray);
 				return { data, total };
 
-			} else if (All) {
+			}
+			if (All) {
 				query = {
 					'property_address.cityId': mongoose.Types.ObjectId(cityId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
@@ -597,6 +598,7 @@ export class PropertyClass extends BaseEntity {
 					'HOUSE AND LOT FOR RENT': Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
 					'COMMERCIAL FOR RENT': Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
 				};
+
 				return {
 					latestCity,
 					latestCityCount,
