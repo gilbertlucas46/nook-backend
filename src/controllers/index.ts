@@ -10,4 +10,4 @@ export { CityService } from './city/city.controller';
 export { AgentService } from './agent/agent.controller';
 export { SavedProperty } from './property/savedProperty.controller';
 export { LoanController } from './loan/loan.controller';
-export { stripeController } from './stripe/stripe.controller';
+export { stripeController } from './stripe/payment.controller';

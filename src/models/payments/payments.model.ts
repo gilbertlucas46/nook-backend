@@ -10,15 +10,11 @@ export interface IPayment extends Document {
 }
 
 const paymentSchema = new Schema({
-    _id: { type: Schema.Types.ObjectId, required: true, auto: true },
+    // _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     userId: { type: Schema.Types.ObjectId },
     stripeCustomerId: { type: Schema.Types.String },
-    // cardDetails: [{
-    //     cardNumber: { type: Number },
-    //     cvvNumber: { type: Number },
-    //     expiryDate:{}
-    // }]
-    cardTokenDetail: { type: Schema.Types.Mixed },
+    cardDetail: [{ type: Schema.Types.Mixed }],
+    createdAt: { type: Number },
     updatedAt: { type: Number, required: true },
 });
 

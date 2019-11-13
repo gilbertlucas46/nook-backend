@@ -78,7 +78,7 @@ export class DAOManager {
 		}
 	}
 
-	async findAll(model: ModelNames, query, projection, options) {
+	async findAll(model: ModelNames, query, projection = {}, options = {}) {
 		try {
 			const ModelName: Model<any> = Models[model];
 			return await ModelName.find(query, projection, options).exec();

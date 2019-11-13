@@ -28,7 +28,7 @@ export let propertyRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					propertyId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/),
 					property_features: {
 						storeys_2: Joi.boolean().default(false),
 						security_24hr: Joi.boolean().default(false),

@@ -18,6 +18,14 @@ class CityController {
             return Promise.reject(error);
         }
     }
+    async featuredCities() {
+        // try {
+        return ENTITY.cityEntity.featuredList();
+        // } catch (error) {
+        //     utils.consolelog('error', error, true);
+        //     return Promise.reject(error);
+        // }
+    }
 }
 
 export let CityService = new CityController();

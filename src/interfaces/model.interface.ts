@@ -15,5 +15,6 @@ export type ModelNames = 'User' |
     'HelpCenterStatus' |
     'LoanApplication' |
     'Payment' |
-    'LoanReferral'
+    'LoanReferral' |
+    'Transaction'
     ;

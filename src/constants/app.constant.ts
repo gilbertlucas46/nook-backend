@@ -397,12 +397,12 @@ export let DATABASE = {
 	// 	},
 	// },
 	ENQUIRY_CATEGORY: {
-		SENT: 'Sent',
-		RECEIVED: 'Received',
+		SENT: 'sent',
+		RECEIVED: 'received',
 	},
 	ENQUIRY_TYPE: {
-		ENQUIRY: 'Enquiry',
-		CONTACT: 'Contact',
+		PROPERTY: 'property',
+		CONTACT: 'contact',
 	},
 
 	ENQUIRY_STATUS: {
