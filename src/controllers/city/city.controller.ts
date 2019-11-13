@@ -19,12 +19,20 @@ class CityController {
         }
     }
     async featuredCities() {
-        // try {
-        return ENTITY.cityEntity.featuredList();
-        // } catch (error) {
-        //     utils.consolelog('error', error, true);
-        //     return Promise.reject(error);
-        // }
+        try {
+            return await ENTITY.cityEntity.featuredList();
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+    async cityData(payload) {
+        try {
+            return await ENTITY.cityEntity.getCityData(payload);
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
     }
 }
 

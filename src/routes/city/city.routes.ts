@@ -64,4 +64,35 @@ export let cityRoutes: ServerRoute[] = [
             },
         },
     },
+
+    {
+        method: 'GET',
+        path: '/v1/cities/featured/{cityId}',
+        handler: async (req: Request, h: ResponseToolkit) => {
+            try {
+                const payload = req.params;
+                const data_to_get = await CityService.cityData(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data_to_get));
+            } catch (error) {
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'Get featured cities data',
+            tags: ['api', 'anonymous', 'user', 'Cities', 'data'],
+            auth: 'DoubleAuth',
+            validate: {
+                params: {
+                    cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
 ];

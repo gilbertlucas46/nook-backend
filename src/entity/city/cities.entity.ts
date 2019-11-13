@@ -69,6 +69,10 @@ class CityEntity extends BaseEntity {
 	async featuredList() {
 		return this.DAOManager.findAll(this.modelName, { isFeatured: true }, { _id: 1, name: 1 });
 	}
+
+	async getCityData(payload): Promise<object> {
+		return this.DAOManager.findOne(this.modelName, { _id: payload.cityId }, {}, {});
+	}
 }
 
 export const cityEntity = new CityEntity();

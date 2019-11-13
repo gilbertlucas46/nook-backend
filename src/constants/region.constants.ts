@@ -595,6 +595,171 @@ export const REGIONS: Location.RegionLocation[] = [
 			{
 				name: 'Cebu City',
 				location: { type: 'Point', coordinates: [0, 0] },
+					subTitle: 'FQueen City of the South',
+					isFeatured: true,
+					mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125585.15595432151!2d123.77608292271593!3d10.37892568466247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a999258dcd2dfd%3A0x4c34030cdbd33507!2sCebu%20City%2C%20Cebu%2C%20Philippines!5e0!3m2!1sen!2sin!4v1573544727146!5m2!1sen!2sin',
+					description: 'Located in the middle of the eastern side of Cebu Island, it is the center of a metropolitan area called Metro Cebu which also includes the cities of Carcar, Danao, Lapu-Lapu, Mandaue, Naga and Talisay; and the municipalities (towns) of Compostela, Consolacion, Cordova, Liloan, Minglanilla and San Fernando. Metro Cebu had a total population of 2,849,213 as of 2015, making it the second-most populous metropolitan area of the nation, after Metro Manila in Luzon. Cebu is bounded on the north by the town of Balamban and the city of Danao, on the west by the city of Toledo, on the east by the cities of Lapu-Lapu and Mandaue and the towns of Liloan, Consolacion and Compostela, and on the south by the city of Talisay.',
+					directory: {
+						medical: [
+							{
+								name: 'CEBU CITY MEDICAL CENTER',
+								address: 'Natalio B. Bacalso Ave, Cebu City, 6000 Cebu',
+								email: '',
+								website: 'https://www.facebook.com/cebucitymedicalcenterofficial/',
+								telephone: '+63 (02) 32 516 3934,(02) 32 512 4622',
+								locationUrl: 'https://goo.gl/maps/YxMzSncQ52wwLkUN8',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipMYHnEP0hASDSeLSJ49Sjdi_jMG8CIMQpSTF-P_=w426-h240-k-no'
+							},
+							{
+								name: 'CHONG HUA HOSPITAL',
+								address: 'Fuente Osmeña, Don Mariano Cui St, Cebu City, 6000 Cebu',
+								email: 'customerservice@chonghua.com.ph',
+								website: 'http://www.chonghuahospital.org/',
+								telephone: '+63 (02) 882 6316, (02) 524 6061',
+								locationUrl: 'https://goo.gl/maps/GVBuze745tumzwAs5',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipPN9Tx13Yhs27MjDMmkxBPmR_Bg23AvqZT-w50t=w408-h306-k-no'
+							},
+							{
+								name: 'PERPETUAL SUCCOUR HOSPITAL',
+								address: 'Gorordo Avenue, Lahug, Cebu City, 6000 Cebu',
+								email: 'pshcares@perpetualsuccourcebu.com',
+								website: 'https://www.perpetualsuccourcebu.com/',
+								telephone: '+63 32 233 8620 – 39',
+								locationUrl: 'https://goo.gl/maps/NiAmuSrS3QRuoLox6',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipPdfyK4M5plVowfQL1HSLThrK6ym_v35k4IDWyY=w408-h306-k-no'
+							},
+							{
+								name: 'CEBU DOCTORS’ UNIVERSITY HOSPITAL',
+								address: 'Osmena Boulevard, Capitol Site, Cebu City 6000 Cebu',
+								email: 'cduwebmarketing2018@gmail.com',
+								website: 'http://cebudoctorsuniversity.edu/',
+								telephone: '+63 32 255 5555',
+								locationUrl: 'https://goo.gl/maps/mVgWXHNSbNDTZWPt8',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipMCFrj3CWznQhSX1MfCKPNBzOA1DKEI_yw6V3lk=w408-h271-k-no'
+							},
+							{
+								name: 'VICENTE SOTTO MEMORIAL MEDICAL CENTER',
+								address: 'B. Rodriguez St, Sambag II, Cebu City, Cebu',
+								email: '',
+								website: 'http://vsmmc.doh.gov.ph/',
+								telephone: '+63 32 253 9891',
+								locationUrl: 'https://goo.gl/maps/jj7TGZuXxJbN64oAA',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipN_KPem-FtmrPPdoSTt6nzJYPA-6nJcfw6enoq3=w426-h240-k-no'
+							}
+						],
+						shopping: [
+							{
+								name: 'SM CITY CEBU',
+								address: 'Juan Luna Avenue, North Reclamation Area, Cebu City, Cebu',
+								email: '',
+								website: 'https://www.smsupermalls.com/mall-locator/sm-city-cebu/information/',
+								telephone: '+63 (032) 231 0557',
+								locationUrl: 'https://goo.gl/maps/fpCiwaCfBy6kiWF77',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipM1NHwsS-HLc0b7ISc-Ct6zTjRn5aFJ84bPg1Mf=w408-h306-k-no'
+							},
+							{
+								name: 'AYALA CENTER CEBU',
+								address: 'Cardinal Rosales Ave, Cebu City, Cebu',
+								email: '',
+								website: 'http://www.ayalamalls.com.ph/malls-philippines/ayala-center-cebu/',
+								telephone: '+63 (032) 888 3777',
+								locationUrl: 'https://goo.gl/maps/6Tzh5jTNGRTaPyDW9',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipOrDmh8ImlZ8-iR_b_ROKdCtwDGNkmuZdQt3SCU=w408-h306-k-no'
+							},
+							{
+								name: 'SM SEASIDE CITY CEBU',
+								address: 'South Road Properties, Cebu City, 6000 Cebu',
+								email: '',
+								website: 'https://www.smsupermalls.com/mall-locator/sm-seaside-city-cebu/information/',
+								telephone: '+63 (032) 340 8756',
+								locationUrl: 'https://g.page/sm-seaside-city-cebu?share',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipOGIlakf4QnuT8T2I-654-ZC7_uR-GSiwXzdhda=w408-h306-k-no'
+							},
+							{
+								name: 'METRO GAISANO COLON',
+								address: '179 Osmena Boulevard Juan Luna St, Cebu City, Cebu',
+								email: '',
+								website: 'http://www.metro.com.ph/',
+								telephone: '+63 (032) 416 8793',
+								locationUrl: 'https://goo.gl/maps/iVnAnjhwh95bipkw7',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipMmZZYSSHuIyZsW9ievj7fECzgCf5WYUFonIwgt=w408-h725-k-no'
+							},
+							{
+								name: 'GAISANO COUNTRY MALL',
+								address: 'Banilad Rd, Apas, Cebu City, 6000 Cebu',
+								email: '',
+								website: 'https://gaisanocountrymall.business.site/',
+								telephone: '+63 (032) 231 1481',
+								locationUrl: 'https://goo.gl/maps/iNFpba6zaGjxmR338',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipOhvevKsWbclu8gbG4lt82rhWXSbjXxV_l5fzWQ=w426-h240-k-no'
+							},
+							{
+								name: 'J CENTRE MALL',
+								address: '165 A. S. Fortuna St, Mandaue City, 6014 Cebu',
+								email: 'marketing@jcentrecebu.com',
+								website: 'http://jcentrecebu.com/',
+								telephone: '+63 (032) 266 8888',
+								locationUrl: 'https://goo.gl/maps/Nn4TVeVEzAMJqpeE9',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipPu7zznU_eetNnKuJlBsrDQwR0FAmwitc-5sRiZ=w408-h306-k-no'
+							}
+						],
+						others: [
+							{
+								name: 'JESUIT HOUSE MUSEUM',
+								address: '26 Zulueta St, Cebu City, 6000 Cebu',
+								email: 'http://mailto/',
+								website: 'https://www.facebook.com/1730JesuitHouse/',
+								telephone: '+63 (032) 255 5408',
+								locationUrl: 'https://goo.gl/maps/SbExsnfPfJB8fDyR8',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipNY18frWZ4qQaBwLMcOSSDu5fNe5ohTlAQCNIQK=w408-h306-k-no',
+							},
+							{
+								name: 'CARMELITE MONASTERY',
+								address: 'S. Jose de la Montaña St., Mabolo, Cebu City',
+								email: 'http://mailto/',
+								website: 'https://www.cebucity.gov.ph/4-about-cebu/government/128-carmelite-monastery',
+								telephone: '+63 (032) 231-5931, (032) 232-1933',
+								locationUrl: 'https://goo.gl/maps/PULdXSfG3xxBR6kt8',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipPaqa72pwQMsUCJFeOjx7irOZWRNH8OwPAp1I0=w408-h544-k-no',
+							},
+							{
+								name: 'SKY EXPERIENCE ADVENTURE',
+								address: 'Tower 1, Crown Regency Hotel and Towers, Osmeña Blvd., Cebu City, 6000',
+								email: 'http://mailto/',
+								website: 'http://www.skyexperienceadventure.com/',
+								telephone: '+63 (032) 418 – 8888, (032) 418 7777',
+								locationUrl: 'https://goo.gl/maps/UikoRakUVnG1sHVR8',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipONJyOFn6GG0OSFVr6WoYNDACXS_oQ8Oyu7UXKR=w408-h306-k-no',
+							},
+							{
+								name: 'TEMPLE OF LEAH ',
+								address: 'Cebu Transcentral Hwy, Cebu City, Cebu',
+								email: 'http://mailto/',
+								website: '',
+								telephone: '+63 906 324 5687',
+								locationUrl: 'https://goo.gl/maps/23XMtZzzYCnkydaR6',
+								imageUrl: 'https://lh5.googleusercontent.com/p/AF1QipNVgMUFFRhWs6xHQkcKnoUJEV0YtfFuP5OvOHeT=w690-h240-k-no',
+							},
+							{
+								name: 'MAGELLAN’S CROSS',
+								address: 'P. Burgos St, Cebu City, Cebu',
+								email: '',
+								website: '',
+								telephone: '',
+								locationUrl: '',
+								imageUrl: '',
+							},
+							{
+								name: 'CEBU PROVINCIAL MUSEUM',
+								address: '731 M. J. Cuenco Ave, Cebu City, 6000 Cebu',
+								email: '',
+								website: 'https://www.facebook.com/angmuseosugbo',
+								telephone: '+63 (032) 239 5626',
+								locationUrl: '',
+								imageUrl: '  ',
+							},
+						],
+					}
 			},
 			{
 				name: 'Danao City',

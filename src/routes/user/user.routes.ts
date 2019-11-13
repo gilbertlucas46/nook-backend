@@ -490,7 +490,7 @@ export let userRoute: ServerRoute[] = [
 	 */
 	{
 		method: 'GET',
-		path: '/v1/user/city-based-data',
+		path: '/v1/user/city-based',
 		async handler(request, h) {
 			try {
 				//
