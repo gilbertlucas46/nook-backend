@@ -1,2 +1,2 @@
 export * from './transaction.model';
-export * from './transaction.document';
+// export * from './transaction.document';
