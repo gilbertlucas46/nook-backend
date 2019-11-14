@@ -32,7 +32,6 @@ class CityController {
             const data = await ENTITY.PropertyE.getPropertyViaCity(payload);
             return data;
         } catch (error) {
-            
             // console.log('error', error);
                   return Promise.reject(error);
         }

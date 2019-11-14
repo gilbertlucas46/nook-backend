@@ -532,24 +532,24 @@ export class PropertyClass extends BaseEntity {
 			if (!page) { page = 1; }
 			const skip = (limit * (page - 1));
 
-			// if (sortBy) {
-			// 	switch (sortBy) {
-			// 		case 'price':
-			// 			sortBy = 'price';
-			// 			sortingType = {
-			// 				'property_basic_details.sale_rent_price': sortType,
-			// 			};
-			// 			break;
-			// 		default:
-			// 			sortingType = {
-			// 				createdAt: sortType,
-			// 			};
-			// 	}
-			// } else {
-			// 	sortingType = {
-			// 		approvedAt: sortType,
-			// 	};
-			// }
+			if (sortBy) {
+				switch (sortBy) {
+					case 'price':
+						sortBy = 'price';
+						sortingType = {
+							'property_basic_details.sale_rent_price': sortType,
+						};
+						break;
+					default:
+						sortingType = {
+							createdAt: sortType,
+						};
+				}
+			} else {
+				sortingType = {
+					approvedAt: sortType,
+				};
+			}
 			// if (propertyType && propertyFor) {
 			// 	query = {
 			// 		'property_address.cityId': mongoose.Types.ObjectId(cityId),
@@ -595,7 +595,7 @@ export class PropertyClass extends BaseEntity {
 
 			promiseArray.push(this.DAOManager.findOne('City', { _id: cityId }, {}, {}));
 
-			[latestProperty, latestCityCount, agents, agentCount, featuredCity] = await Promise.all(promiseArray);
+			[latestProperty, agents, featuredCity] = await Promise.all(promiseArray);
 			console.log('featuredCityfeaturedCityfeaturedCity', featuredCity);
 
 			// const properties_In_Makati_City = {
@@ -607,7 +607,7 @@ export class PropertyClass extends BaseEntity {
 
 			return {
 				latestProperty,
-				latestCityCount,
+				// latestCityCount,
 				agents,
 				// agentCount,
 				// propertyTypeAndFor: properties_In_Makati_City,
