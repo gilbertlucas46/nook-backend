@@ -9,6 +9,7 @@ export interface ICity {
 	images?: string[];
 	createdAt?: number;
 	updatedAt?: number;
+	isFeatured?: boolean;
 }
 
 export interface ICityRegion {

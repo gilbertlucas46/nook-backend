@@ -396,6 +396,11 @@ export let DATABASE = {
 		YEARLY: 'yearly',
 	},
 
+	REFERRAL_STATUS: {
+		ACKNOWLEDGE: 'Acknowledge',
+		CONTACTED: 'Contact',
+		PENDING: 'Pending',
+	},
 	// ENQUIRY_TYPE: {
 	// 	GUEST: {
 	// 		NUMBER: 1,
