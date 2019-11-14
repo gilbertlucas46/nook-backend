@@ -136,6 +136,21 @@ export class ArticleClass extends BaseEntity {
                                 $limit: limit,
                             },
                         ],
+                        NEWS: [
+                            {
+                                $match: {
+                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                                },
+                            },
+                            {
+                                $sort: {
+                                    updatedAt: -1,
+                                },
+                            },
+                            {
+                                $limit: limit,
+                            },
+                        ],
                     },
                 },
             ];
