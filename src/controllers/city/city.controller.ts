@@ -28,10 +28,13 @@ class CityController {
     }
     async cityData(payload) {
         try {
-            return await ENTITY.cityEntity.getCityData(payload);
+            // return await ENTITY.cityEntity.getCityData(payload);
+            const data = await ENTITY.PropertyE.getPropertyViaCity(payload);
+            return data;
         } catch (error) {
-            utils.consolelog('error', error, true);
-            return Promise.reject(error);
+            
+            // console.log('error', error);
+                  return Promise.reject(error);
         }
     }
 }

@@ -245,8 +245,9 @@ export class PropertyController {
 
 	async getCityBasedData(payload: UserRequest.RecentProperty) {
 		try {
-			const getPropertyViaCity = await ENTITY.PropertyE.getPropertyViaCity(payload);
-			return getPropertyViaCity;
+			const getPopularCityData = await ENTITY.PropertyE.getPropertyViaCity(payload);
+			// const getPropertyViaCity = await
+			return getPopularCityData;
 		} catch (error) {
 			return Promise.reject(error);
 		}
