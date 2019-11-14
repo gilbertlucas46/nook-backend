@@ -323,16 +323,16 @@ export let DATABASE = {
 			TYPE: 'SELLING',
 			DISPLAY_NAME: 'Selling',
 		},
-		POLITICAL_NEWS: {
+		NEWS: {
 			NUMBER: 7,
-			TYPE: 'POLITICAL',
-			DISPLAY_NAME: 'Political',
+			TYPE: 'NEWS',
+			DISPLAY_NAME: 'News',
 		},
-		DOMESTIC_NEWS: {
-			NUMBER: 8,
-			TYPE: 'DOMESTIC',
-			DISPLAY_NAME: 'Domestic',
-		},
+		// DOMESTIC_NEWS: {
+		// 	NUMBER: 8,
+		// 	TYPE: 'DOMESTIC',
+		// 	DISPLAY_NAME: 'Domestic',
+		// },
 		// legal stuff, international news, domestic news, sports coverage, political news
 
 	},
