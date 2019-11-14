@@ -588,7 +588,6 @@ export class PropertyClass extends BaseEntity {
 			// async featuredList() {
 			// }
 
-
 			promiseArray.push(this.DAOManager.findAll('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'specializingIn_property_category, type', 'specializingIn_property_category', 'serviceAreas'],
 				{ limit, skip, $sort: { isFeaturedProfile: sortType } }));
 			// promiseArray.push(this.DAOManager.count('User', agentQuery));

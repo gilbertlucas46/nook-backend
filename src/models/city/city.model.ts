@@ -6,7 +6,7 @@ const citySchema = new Schema({
 	name: { type: String, required: true },
 	region: { type: Types.ObjectId, required: true, ref: 'regions' },
 	subTitle: String,
-	isFeatured: Boolean,
+	isFeatured: { type: Boolean, default: false },
 	mapUrl: String,
 	description: String,
 	directory: {
