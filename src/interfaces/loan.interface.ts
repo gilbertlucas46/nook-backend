@@ -1,6 +1,7 @@
 export namespace LoanRequest {
 
     export interface PreLoan {
+        bankId ?: string ;
         property: {
             value: number;
             type: string;
@@ -45,6 +46,7 @@ export namespace LoanRequest {
             term: number;
             percent: number;
             amount: number;
+            fixingPeriod: number;
         };
     }
 
