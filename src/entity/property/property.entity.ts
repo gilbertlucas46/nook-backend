@@ -270,6 +270,7 @@ export class PropertyClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+
 	async suggested_property(payload: PropertyRequest.UserProperty) {
 		try {
 			let { sortType, sortBy, page, limit, userId } = payload;
@@ -297,6 +298,7 @@ export class PropertyClass extends BaseEntity {
 					},
 				};
 			}
+
 			else if (payload.propertyType === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
 				query = {
 					'property_added_by.userId': Types.ObjectId(userId),

@@ -2,6 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanRequest } from './../../interfaces/loan.interface';
 import * as Constant from '@src/constants';
 import { NATIONALITY } from '@src/constants';
+import { Types } from 'mongoose';
 
 class LoanEntities extends BaseEntity {
     constructor() {
@@ -24,7 +25,7 @@ class LoanEntities extends BaseEntity {
 
             // age filters
             if (payload.other.age) ageAtlastLoanPayment = payload.other.age + payload.loan.term;
-            if (ageAtlastLoanPayment >= 64) return []; // Max age is 65 till the final loan payment.
+            if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
 
             const queryPipeline = [];
             if (payload.other.creditCard.cancelled) {
@@ -46,7 +47,8 @@ class LoanEntities extends BaseEntity {
                                 },
                             },
                         },
-                    });
+                    },
+                );
             } else {
                 queryPipeline.push(
                     {
@@ -65,8 +67,11 @@ class LoanEntities extends BaseEntity {
                                 },
                             },
                         },
-                    });
+                    },
+                );
             }
+
+            if (payload.bankId) queryPipeline[0].$match._id = Types.ObjectId(payload.bankId);
 
             queryPipeline.push(
                 {
@@ -114,10 +119,11 @@ class LoanEntities extends BaseEntity {
                 },
                 {
                     $addFields: {
-                        interestRate: `$interestRateDetails.${payload.loan.term}`,
+                        interestRate: `$interestRateDetails.${payload.loan.fixingPeriod}`,
                         loanableAmount: payload.loan.amount,
                         loanDurationYearly: payload.loan.term,
                         loanApplicationFeeAmount: 0,
+                        fixingPeriod: payload.loan.fixingPeriod,
                     },
                 },
                 {
@@ -161,6 +167,7 @@ class LoanEntities extends BaseEntity {
                         loanDurationYearly: 1,
                         loanDurationMonthly: 1,
                         loanForCancelledCreditCard: 1,
+                        fixingPeriod: 1,
                     },
                 },
                 {
@@ -183,6 +190,7 @@ class LoanEntities extends BaseEntity {
                 {
                     $addFields: {
                         debtIncomeRatio: '$propertySpecification.debtIncomeRatio',
+                        maxLoanDurationAllowed: '$propertySpecification.maxLoanDurationAllowed',
                     },
                 },
                 {
