@@ -42,11 +42,12 @@ class LoanApplicationE extends BaseEntity {
             let sortingType = {};
             const promiseArray = [];
             let matchObject: any = {};
-            if (userData.type === 'User') {
+            if (userData.type === 'TENANT' || userData.type === 'OWNER' || userData.type === 'AGENT') {
                 matchObject = {
                     userId: userData._id,
                 };
-            } else {
+            }
+            else {
                 matchObject['saveAsDraft'] = false;
                 // saveAsDraft: false,
             }
