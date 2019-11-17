@@ -91,7 +91,6 @@ export class UserClass extends BaseEntity {
 		try {
 			const promise = [];
 			if (userData.type === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
-
 				const query = {
 					$and: [
 						{ userId: userData._id },
