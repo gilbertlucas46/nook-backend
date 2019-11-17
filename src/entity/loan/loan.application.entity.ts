@@ -72,19 +72,15 @@ class LoanApplicationE extends BaseEntity {
             if (status) {
                 matchObject['applicationStatus'] = status;
             }
-            else {
-                matchObject['applicationStatus'] = {
-                    $or: [
-                        Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
-                        Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
-                        Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-                    ],
-                };
-            }
-
-            // sortingType = {
-            //     createdAt: sortType,
-            // }; sort: sortingType
+            // else {
+            //     matchObject.$match = {
+            //         $or: [
+            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED },
+            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING },
+            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED },
+            //         ],
+            //     };
+            // }
 
             if (fromDate && toDate) {
                 matchObject['createdAt'] = {
