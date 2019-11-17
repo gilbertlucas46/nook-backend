@@ -14,6 +14,7 @@ import { loanRoute } from './loans/loan.routes';
 import { preloanRoute } from './loans/preloan.routes';
 import { paymentRoute } from './payments/payment.routes';
 import { loanReferral } from './referral/loanReferral.routes';
+import { searchRoutes } from './search.routes';
 export let Routes: ServerRoute[] = [
 	...userRoute,
 	...propertyRoute,
@@ -30,4 +31,5 @@ export let Routes: ServerRoute[] = [
 	...preloanRoute,
 	...paymentRoute,
 	...loanReferral,
+	...searchRoutes,
 ];
