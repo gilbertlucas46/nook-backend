@@ -136,6 +136,14 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    async loanShuffle() {
+        try {
+//
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 
 // const shortId: string = new Date(referenceNumber.createdAt).shortId();            // const id: string = `${a.getFullYear}`

@@ -42,11 +42,12 @@ class LoanApplicationE extends BaseEntity {
             let sortingType = {};
             const promiseArray = [];
             let matchObject: any = {};
-            if (userData.type === 'User') {
+            if (userData.type === 'TENANT' || userData.type === 'OWNER' || userData.type === 'AGENT') {
                 matchObject = {
                     userId: userData._id,
                 };
-            } else {
+            }
+            else {
                 matchObject['saveAsDraft'] = false;
                 // saveAsDraft: false,
             }
@@ -71,19 +72,15 @@ class LoanApplicationE extends BaseEntity {
             if (status) {
                 matchObject['applicationStatus'] = status;
             }
-            else {
-                matchObject['applicationStatus'] = {
-                    $or: [
-                        Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
-                        Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
-                        Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-                    ],
-                };
-            }
-
-            // sortingType = {
-            //     createdAt: sortType,
-            // }; sort: sortingType
+            // else {
+            //     matchObject.$match = {
+            //         $or: [
+            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED },
+            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING },
+            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED },
+            //         ],
+            //     };
+            // }
 
             if (fromDate && toDate) {
                 matchObject['createdAt'] = {

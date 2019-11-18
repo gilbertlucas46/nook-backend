@@ -414,7 +414,7 @@ export let loanRoute: ServerRoute[] = [
 		},
 	},
 	/**
-     * @description: update loan application
+    * @description: update loan application
 	 */
 	{
 		method: 'PATCH',
@@ -629,6 +629,38 @@ export let loanRoute: ServerRoute[] = [
 						nookAgent: Joi.string(),
 					}),
 				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	{
+		method: 'GET',
+		path: '/v1/banks/shuffle',
+		handler: async (request, h: ResponseToolkit) => {
+			try {
+				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const data = await LoanController.loanShuffle();
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				// return UniversalFunctions. (Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'get loan by id',
+			tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+			auth: 'UserAuth',
+			validate: {
+				// payload: {
+
+				// 	},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
