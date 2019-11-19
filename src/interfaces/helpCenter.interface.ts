@@ -20,4 +20,10 @@ export namespace helpCenterRequest {
         helpCenterId: string;
     }
 
+    export interface IupdateHelpCenter {
+        title?: string;
+        videoUrl?: string;
+        description?: string;
+        categoryId?: number;
+    }
 }

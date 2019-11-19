@@ -57,7 +57,7 @@ export const AdminSchema = new Schema(
 			],
 		},
 		permission: {
-			type: [Schema.Types.String], enum: [
+			type: [String], enum: [
 				CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
 				CONSTANT.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
 				CONSTANT.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,

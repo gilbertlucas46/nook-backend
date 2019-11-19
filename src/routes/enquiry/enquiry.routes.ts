@@ -61,8 +61,7 @@ export let enquiryRoutes: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload: any = request.query;
-				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
+				const payload: EnquiryRequest.GetEnquiry = request.query as any;
 
 				const registerResponse = await EnquiryService.getEnquiryList(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));

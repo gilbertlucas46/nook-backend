@@ -3,7 +3,12 @@ import { Types } from 'mongoose';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
+import * as bankConstant from '@src/constants/banks.constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
+import { Enquiry } from '@src/models';
+import { number } from 'joi';
+import { loanReferral } from '@src/routes/referral/loanReferral.routes';
+import { setTimeout } from 'timers';
 
 class LoanControllers extends BaseEntity {
 
@@ -22,10 +27,13 @@ class LoanControllers extends BaseEntity {
 
     async addLoanApplication(payload, userData) {
         try {
+
             const criteria = {
                 saveAsDraft: { $ne: true },
             };
             payload['userId'] = userData._id;
+
+
             const referenceNumber = await ENTITY.LoanApplicationEntity.getReferenceId(criteria);
             if (!referenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
@@ -139,7 +147,29 @@ class LoanControllers extends BaseEntity {
 
     async loanShuffle() {
         try {
-//
+            const bankList = await this.DAOManager.findAll('Bank', {}, { bankName: 1, iconUrl: 1, bannerUrl: 1, logoUrl: 1 });
+
+            // const bankList = bankConstant.bankinsert.map(data => {
+            //     const rObj = {};
+            //     rObj['_id'] = data._id;
+            //     rObj['bankName'] = data.bankName;
+            //     rObj['iconUrl'] = data.iconUrl;
+            //     rObj['bannerUrl'] = data.bannerUrl;
+            //     rObj['logoUrl'] = data.logoUrl;
+            //     return rObj;
+            // },
+            // ).sort(shufflefunc);
+            bankList.sort(shufflefunc);
+            // const shuffle = bankList.sort(shufflefunc ? : (a, b): this => {
+            //     return 0.5 - Math.random();
+            // }
+            // sort(compareFn?: (a: T, b: T) => number): this;
+            // Array<{}>.sort(compareFn?: (a: {}, b: {}) => number): {}[]
+            function shufflefunc(a: {}, b: {}) {
+                console.log('a>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', a, 'bbbbbbb>>>>>>>>>>>>>>>>>>', b);
+                return 0.5 - Math.random();
+            }
+            return bankList;
         } catch (error) {
             return Promise.reject(error);
         }
