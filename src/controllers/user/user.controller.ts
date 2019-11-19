@@ -53,13 +53,13 @@ export class UserController {
 	 */
 	async login(payload: UserRequest.Login) {
 		try {
-			const unique = payload.email;
+			let unique = payload.email;
 			// check if entered value is email or username
-			// const checkEmailOrUserName = (unique) => {
-			// 	const re = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-			// 	return re.test(String(unique).toLowerCase());
-			// };
-			// if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
+			const checkEmailOrUserName = (unique) => {
+				const re = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				return re.test(String(unique).toLowerCase());
+			};
+			if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
 			const checkData = { $or: [{ email: unique }, { userName: payload.email }] };
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 			if (userData && userData._id) {
