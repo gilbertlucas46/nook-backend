@@ -241,7 +241,7 @@ export let helpCenterRoute: ServerRoute[] = [
     {
         method: 'GET',
         path: '/v1/user/help-center-group/{id}',
-        handler: async (request , h: ResponseToolkit) => {
+        handler: async (request, h) => {
             try {
                 const payload = Number(request.params.id);
                 const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
