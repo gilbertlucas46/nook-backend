@@ -24,7 +24,7 @@ export class AdminController {
 	 *
 	 * @param payload
 	 */
-	async getProperty(payload: PropertyRequest.SearchProperty) {
+	async getProperty(payload: AdminRequest.AdminPropertyList) {
 		try {
 			// if (!payload.property_status) payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER;
 			const getPropertyData = await ENTITY.AdminE.getPropertyList(payload);

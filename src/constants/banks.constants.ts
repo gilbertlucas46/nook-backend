@@ -3,7 +3,7 @@ import { Schema, model, Model, Types, Document } from 'mongoose';
 
 // db.getCollection('banks').insertMany([
 /* 1 */
-const bankinsert = [{
+export const bankinsert = [{
     _id: Types.ObjectId('5da838b11591fd466731948c'),
     loanForForeigner: false,
     loanForForeignerMarriedLocal: true,

@@ -654,14 +654,14 @@ export let loanRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'get loan by id',
-			tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+			description: 'get abnk images data shufedl',
+			tags: ['api', 'anonymous', 'user', 'shuffle', 'banks'],
 			auth: 'UserAuth',
 			validate: {
 				// payload: {
 
 				// 	},
-				headers: UniversalFunctions.authorizationHeaderObj,
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {

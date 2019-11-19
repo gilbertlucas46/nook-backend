@@ -19,13 +19,14 @@ export namespace EnquiryRequest {
 	export interface GetEnquiry {
 		page?: number;
 		limit?: number;
-		fromDate: number;
-		toDate: number;
+		fromDate?: number;
+		toDate?: number;
 		sortType?: number;
 		enquiryType?: string;
 		category: string;
 		agentId?: string;
 	}
+
 	export interface GetInquiryById {
 		enquiryId: string;
 	}

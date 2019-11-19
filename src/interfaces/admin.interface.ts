@@ -62,6 +62,7 @@ export namespace AdminRequest {
 		fullPhoneNumber?: string;
 		profilePicUrl?: string;
 		backGroundImageUrl?: string;
+		name?: string;
 	}
 
 	export interface TokenPayload {
@@ -109,5 +110,32 @@ export namespace AdminRequest {
 		property_features?: string[];
 		byRegion?: string;
 		byCity?: string;
+	}
+
+	// export interface VerifyLink {
+	// 	link: string;
+	// }
+
+	export interface ResetPassword {
+		token: string;
+		password: string;
+	}
+
+	export interface AdminPropertyList {
+		page: number;
+		limit: number;
+		sortBy?: string;
+		sortType?: number;
+		searchTerm?: string;
+		fromDate?: number;
+		toDate?: number;
+		property_status?: number;
+		permissionType?: string;
+		property_type?: string;
+		// label?: [];
+		minPrice?: number;
+		maxPrice?: number;
+		byCity?: string;
+		byRegion?: string;
 	}
 }

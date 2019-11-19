@@ -53,8 +53,8 @@ export class DAOManager {
 	async getData(model: ModelNames, query: any, projection: any, options: any) {
 		try {
 			const ModelName: Model<any> = Models[model];
-			// const data = ModelName.find(query, projection, options);
-			// return data;
+			const data = ModelName.find(query, projection, options);
+			return data;
 		} catch (error) {
 			return Promise.reject(error);
 		}

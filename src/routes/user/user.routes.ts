@@ -70,7 +70,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					email: Joi.string().min(4).max(100),
+					email: Joi.string().min(4).max(100).email().trim(),
 					password: Joi.string().min(6).max(16).trim().required(),
 					deviceToken: Joi.string(),
 				},
@@ -455,7 +455,7 @@ export let userRoute: ServerRoute[] = [
 		async handler(request, h) {
 			try {
 				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
-				const payload: UserRequest.UpdateAccount = request.payload as any;
+				const payload = request.payload as UserRequest.UpdateAccount;
 				const propertyDetail = await UserService.updateAccount(payload, userData);
 				const userResponse = UniversalFunctions.formatUserData(propertyDetail);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));

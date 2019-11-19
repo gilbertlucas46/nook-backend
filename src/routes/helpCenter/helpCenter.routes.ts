@@ -12,7 +12,7 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/admin/help-center',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload: helpCenterRequest.CreateHelpCenter = request.payload as any;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
@@ -138,8 +138,8 @@ export let helpCenterRoute: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload = {
-                    ...request.params,
-                    ...request.payload as object,
+                    ...request.params as any,
+                    ...request.payload as helpCenterRequest.IupdateHelpCenter,
                 };
                 console.log('payloadpayloadpayloadpayload', payload);
 
@@ -241,7 +241,7 @@ export let helpCenterRoute: ServerRoute[] = [
     {
         method: 'GET',
         path: '/v1/user/help-center-group/{id}',
-        handler: async (request, h) => {
+        handler: async (request , h: ResponseToolkit) => {
             try {
                 const payload = Number(request.params.id);
                 const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
@@ -272,6 +272,7 @@ export let helpCenterRoute: ServerRoute[] = [
 
     /**
      * @description: was this article helpful or not
+     * maintaining by ipaddress
      */
     {
         method: 'POST',

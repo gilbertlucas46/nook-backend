@@ -1,12 +1,13 @@
 'use strict';
 import * as Joi from 'joi';
+import { ServerRoute } from 'hapi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
 import { ArticleService } from '@src/controllers';
 import * as ENTITY from '../../entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 
-export let articleRoutes = [
+export let articleRoutes: ServerRoute[] = [
     /**
      * @description:admin add the article
      */
@@ -15,8 +16,8 @@ export let articleRoutes = [
         path: '/v1/admin/article',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
-                const payload: ArticleRequest.CreateArticle = request.payload;
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload = request.payload as ArticleRequest.CreateArticle;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 }
@@ -68,7 +69,7 @@ export let articleRoutes = [
         handler: async (request, h) => {
             try {
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                const payload: ArticleRequest.GetArticle = request.query;
+                const payload: ArticleRequest.GetArticle = request.query as any;
                 const registerResponse = await ArticleService.getArticle(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
@@ -115,7 +116,7 @@ export let articleRoutes = [
         path: '/v1/articles/home',
         handler: async (request, h) => {
             try {
-                const payload: ArticleRequest.GetArticle = request.query;
+                const payload: ArticleRequest.GetArticle = request.query as any;
                 const registerResponse = await ArticleService.getCategoryWiseArticles(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
@@ -149,7 +150,7 @@ export let articleRoutes = [
         path: '/v1/articles/{articleId}',
         handler: async (request, h) => {
             try {
-                const payload: ArticleRequest.GetArticleById = request.params;
+                const payload: ArticleRequest.GetArticleById = request.params as any;
                 const registerResponse = await ArticleService.getArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
@@ -181,9 +182,9 @@ export let articleRoutes = [
         path: '/v1/admin/articles/{articleId}',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload = {
-                    ...request.payload,
+                    ...request.payload as ArticleRequest.UpdateArticle,
                     ...request.params,
                 };
 
@@ -237,8 +238,8 @@ export let articleRoutes = [
         path: '/v1/admin/articles',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
-                const payload: ArticleRequest.GetArticle = request.query;
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload: ArticleRequest.GetArticle = request.query as any;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 }
@@ -286,8 +287,8 @@ export let articleRoutes = [
         handler: async (request, h) => {
             try {
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
-                const payload: ArticleRequest.GetArticleById = request.params;
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload: ArticleRequest.GetArticleById = request.params as any;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 }
@@ -321,13 +322,18 @@ export let articleRoutes = [
         path: '/v1/admin/articles/{articleId}',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
-                const payload: ArticleRequest.DeleteArticle = request.params;
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload: ArticleRequest.DeleteArticle = request.params as any;
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 }
-                const registerResponse = await ArticleService.deleteArticle(payload);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
+                const deletResponse = await ArticleService.deleteArticle(payload);
+                // { "acknowledged" : true, "deletedCount" : 7 }
+                if (deletResponse['acknowledged'] === true || deletResponse['deletedCount'] > 0) {
+                    return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
+                } else {
+                    return (UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E400.DEFAULT));
+                }
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
