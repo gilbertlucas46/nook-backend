@@ -141,8 +141,6 @@ export let helpCenterRoute: ServerRoute[] = [
                     ...request.params as any,
                     ...request.payload as helpCenterRequest.IupdateHelpCenter,
                 };
-                console.log('payloadpayloadpayloadpayload', payload);
-
                 if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
                 }

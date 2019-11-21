@@ -19,7 +19,7 @@ export class AgentClass extends BaseEntity {
             sortType = !sortType ? -1 : sortType;
             const matchObject: any = {};
             matchObject['type'] = 'AGENT';
-            let searchCriteria;
+            let searchCriteria: any;
 
             if (searchTerm) {
                 if (payload.searchBy === 'company') {

@@ -100,14 +100,12 @@ class LoanApplicationE extends BaseEntity {
             promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit, sort: sortingType }));
             promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
             const [data, total] = await Promise.all(promiseArray);
-
             return {
                 data,
                 total,
             };
         } catch (error) {
-            console.log('errorerrorerrorerror', error);
-
+            console.log('Error', error);
             return Promise.reject(error);
         }
     }

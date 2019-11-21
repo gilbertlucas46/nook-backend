@@ -124,7 +124,7 @@ class LoanEntities extends BaseEntity {
                         loanDurationYearly: payload.loan.term,
                         loanApplicationFeeAmount: 0,
                         fixingPeriod: payload.loan.fixingPeriod,
-                        grossIncome : totalMonthlyIncome,
+                        grossIncome: totalMonthlyIncome,
                     },
                 },
                 {
@@ -172,7 +172,7 @@ class LoanEntities extends BaseEntity {
                         loanDurationMonthly: 1,
                         loanForCancelledCreditCard: 1,
                         fixingPeriod: 1,
-                        grossIncome :1,
+                        grossIncome: 1,
                     },
                 },
                 {

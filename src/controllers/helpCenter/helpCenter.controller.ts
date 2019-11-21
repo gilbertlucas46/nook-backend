@@ -1,8 +1,7 @@
 import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
-import { request } from 'http';
-import { date } from 'joi';
+
 export class HelpCenter {
 
     getTypeAndDisplayName(findObj, num) {

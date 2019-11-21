@@ -17,9 +17,7 @@ export class Bootstrap {
 		let userCounter = 0;
 		if (lastUser) {
 			const userId = lastUser.referenceId || 'USR0';
-			// console.log('userIduserId', userId);
 			userCounter = parseInt(userId.substr(3), 10);
-			// console.log('userCounteruserCounteruserCounter', userCounter);
 		}
 		// global.counters = {
 		// 	LoanApplication: userCounter,

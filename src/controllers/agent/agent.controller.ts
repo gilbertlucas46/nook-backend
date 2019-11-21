@@ -19,10 +19,9 @@ export class AgentController {
 	}
 
 	/**
-	 *
-	 * @param agent detail via userName
+	 * @description Function for getting agent profile details.
+	 * @param userName
 	 */
-
 	async agentInfo(userName: string) {
 		try {
 			const data = await AgentE.getAgentInfo(userName);
