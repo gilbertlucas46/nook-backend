@@ -183,23 +183,8 @@ class LoanControllers extends BaseEntity {
     async loanShuffle() {
         try {
             const bankList = await this.DAOManager.findAll('Bank', {}, { bankName: 1, iconUrl: 1, bannerUrl: 1, logoUrl: 1 });
-
-            // const bankList = bankConstant.bankinsert.map(data => {
-            //     const rObj = {};
-            //     rObj['_id'] = data._id;
-            //     rObj['bankName'] = data.bankName;
-            //     rObj['iconUrl'] = data.iconUrl;
-            //     rObj['bannerUrl'] = data.bannerUrl;
-            //     rObj['logoUrl'] = data.logoUrl;
-            //     return rObj;
-            // },
-            // ).sort(shufflefunc);
             bankList.sort(shufflefunc);
-            // const shuffle = bankList.sort(shufflefunc ? : (a, b): this => {
-            //     return 0.5 - Math.random();
-            // }
-            // sort(compareFn?: (a: T, b: T) => number): this;
-            // Array<{}>.sort(compareFn?: (a: {}, b: {}) => number): {}[]
+
             function shufflefunc(a: {}, b: {}) {
                 return 0.5 - Math.random();
             }
@@ -214,7 +199,24 @@ class LoanControllers extends BaseEntity {
 // Date.prototype.shortId = function(this: Date) {
 //     return `${this.getFullYear().toString().substr(-2)}${this.getMonth()}${this.getDate()}`;
 // };
+
 // return referenceNumber;
 // return data['referenceId'];
+// const bankList = bankConstant.bankinsert.map(data => {
+//     const rObj = {};
+//     rObj['_id'] = data._id;
+//     rObj['bankName'] = data.bankName;
+//     rObj['iconUrl'] = data.iconUrl;
+//     rObj['bannerUrl'] = data.bannerUrl;
+//     rObj['logoUrl'] = data.logoUrl;
+//     return rObj;
+// },
+// ).sort(shufflefunc);
+
+// const shuffle = bankList.sort(shufflefunc ? : (a, b): this => {
+//     return 0.5 - Math.random();
+// }
+// sort(compareFn?: (a: T, b: T) => number): this;
+// Array<{}>.sort(compareFn?: (a: {}, b: {}) => number): {}[]
 
 export const LoanController = new LoanControllers();

@@ -8,8 +8,8 @@ export let swaggerDefaultResponseMessages = [
 	{ code: 500, message: 'Internal Server Error' },
 ];
 export const PRIVILEGE = {
-    SUB_ADMIN_PRIVILEGE: [0, 1, 2],
-    SUB_MERCHANT_PRIVILEGE: [0, 1, 2],
+	SUB_ADMIN_PRIVILEGE: [0, 1, 2],
+	SUB_MERCHANT_PRIVILEGE: [0, 1, 2],
 };
 
 export const ENUM = {
@@ -582,7 +582,7 @@ export let STATUS_MSG = {
 			INVALID_CURRENT_PASSWORD: {
 				statusCode: 400,
 				type: 'INVALID_CURRENT_PASSWORD',
-				message: 'Your Current Password did not match with new Password',
+				message: 'Password did not match with old Password',
 			},
 			USER_NAME_ALREDY_TAKEN: {
 				statusCode: 400,

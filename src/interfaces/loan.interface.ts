@@ -200,6 +200,6 @@ export namespace LoanRequest {
         sortBy?: string;
         fromDate?: number;
         toDate?: number;
-        // status?: string;
+        status?: string;
     }
 }
