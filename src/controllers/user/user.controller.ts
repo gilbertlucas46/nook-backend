@@ -9,6 +9,8 @@ const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import * as request from 'request';
+
 export class UserController {
 	/**
 	 *
@@ -130,6 +132,25 @@ export class UserController {
 				};
 				ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
 			}
+
+			/**
+			 *  push contract to salesforce
+			 */
+			const salesforceData = {
+				userName: updateUser.userName,
+				email: updateUser.email,
+				firstName: updateUser.firstName,
+				middleName: updateUser.middleName,
+				lastName: updateUser.lastName,
+				phoneNumber: updateUser.phoneNumber,
+				type: updateUser.type,
+			};
+
+			request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
+				if (err) { return console.log(err); }
+				console.log('body ----', body);
+			});
+
 			return updateUser;
 		} catch (error) {
 			return Promise.reject(error);
