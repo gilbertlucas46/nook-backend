@@ -13,7 +13,6 @@ import { AdminRequest } from '@src/interfaces/admin.interface';
 
 export class AdminProfileController {
 	/**
-	 *
 	 * @param payload login
 	 * @description login via email or userName
 	 */
@@ -25,9 +24,7 @@ export class AdminProfileController {
 			const checkData = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
 			// check email
-			if (!adminData) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
-			}
+			if (!adminData) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
 			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
 			}
@@ -81,7 +78,7 @@ export class AdminProfileController {
 	 */
 	async forgetPassword(payload: AdminRequest.ForgetPassword) {
 		try {
-			const criteria = { email: payload.email};
+			const criteria = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id']);
 			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
@@ -98,7 +95,6 @@ export class AdminProfileController {
 		}
 	}
 	/**
-	 *
 	 * @param payload new password
 	 * @param adminData via_id
 	 */
@@ -113,11 +109,8 @@ export class AdminProfileController {
 					password: await utils.cryptData(payload.newPassword),
 				};
 				const updatePassword = await ENTITY.AdminE.updateOneEntity(criteria, updatePswd);
-				if (!updatePassword) {
-					return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR);
-				} else {
-					return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT;
-				}
+				if (!updatePassword) return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR);
+				else return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT;
 			}
 		} catch (error) {
 			return Promise.reject(error);

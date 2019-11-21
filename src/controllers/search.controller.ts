@@ -20,7 +20,6 @@ export class SearchController {
                 matchObject = {
                     userId: userData._id,
                     $or: [
-                        // { 'property_address.address': new RegExp('.*' + text + '.*', 'i') },
                         { 'property_address.address': { $regex: text, $options: 'i' } },
                         { 'property_basic_details.title': { $regex: text, $options: 'i' } },
                         { 'property_added_by.firstName': { $regex: text, $options: 'i' } },
@@ -28,11 +27,7 @@ export class SearchController {
                     ],
                 };
             }
-            // var text = '42px';
-            // var integer = parseInt(text, 10);
-
             if (payload.text) {
-                console.log('userData._id: ', userData._id);
                 enquiryObject = {
                     userId: userData._id,
                     $or: [
@@ -42,15 +37,12 @@ export class SearchController {
                 };
             }
 
-            // by the phone number
-
             promiseArr.push(ENTITY.PropertyE.getMultiple(matchObject, { property_features: 0 }));
             promiseArr.push(ENTITY.PropertyE.count(matchObject));
-
             promiseArr.push(ENTITY.EnquiryE.getMultiple(enquiryObject, {}));
             promiseArr.push(ENTITY.EnquiryE.count(enquiryObject));
 
-            const [propertyData, propertyTotal, enquiryData, enquiryTotal] = await Promise.all(promiseArr)
+            const [propertyData, propertyTotal, enquiryData, enquiryTotal] = await Promise.all(promiseArr);
             return { propertyData, propertyTotal, enquiryData, enquiryTotal };
         }
         catch (error) {

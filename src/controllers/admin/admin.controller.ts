@@ -3,7 +3,6 @@ import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { Types } from 'mongoose';
-import { PropertyRequest } from '@src/interfaces/property.interface';
 
 /**
  * @author

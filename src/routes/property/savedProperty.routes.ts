@@ -1,4 +1,4 @@
-import { ServerRoute } from 'hapi';
+import { ServerRoute, Request, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
 import * as Constant from '@src/constants';
 import * as UniversalFunctions from '@src/utils';
@@ -11,7 +11,7 @@ export let savedProperty: ServerRoute[] = [
     {
         method: 'POST',
         path: '/v1/user/save-property',
-        handler: async (request, reply) => {
+        handler: async (request, h: ResponseToolkit) => {
             try {
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
                 const payload: SavePropertyRequest.SaveProperty = request.payload as object;
@@ -45,14 +45,13 @@ export let savedProperty: ServerRoute[] = [
     {
         method: 'GET',
         path: '/v1/user/save-property',
-        handler: async (request, reply) => {
+        handler: async (request, h: ResponseToolkit) => {
             try {
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
                 const payload: SavePropertyRequest.SavePropertyList = request.query;
                 const data = await SavedPropertyServices.savePropertyList(payload, userData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
-                console.log('error', error);
                 return UniversalFunctions.sendError(error);
             }
         },

@@ -1,5 +1,4 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
-import { basename } from 'path';
 import * as Constant from '@src/constants';
 import { SavePropertyRequest } from '@src/interfaces/saveProperty.interface';
 

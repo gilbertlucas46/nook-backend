@@ -16,7 +16,6 @@ class ArticleController {
      * @function createArticle
      * @description admin creata the aticle
      * @payload  CreateArticle
-     * return {}
      */
 
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {

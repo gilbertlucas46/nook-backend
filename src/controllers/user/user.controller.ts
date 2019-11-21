@@ -121,10 +121,7 @@ export class UserController {
 			if (payload.firstName && payload.lastName && payload.type) { payload.isProfileComplete = true; }
 			else { payload.isProfileComplete = false; }
 			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
-			console.log('payloadpayloadpayloadpayload', payload);
-
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
-			console.log('updateUserupdateUserupdateUserupdateUser', updateUser);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
 				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
@@ -285,7 +282,7 @@ export class UserController {
 	 * @payload  UserProperty
 	 * return Array
 	 */
-	 async userProperty(payload: PropertyRequest.UserProperty) {
+	async userProperty(payload: PropertyRequest.UserProperty) {
 		try {
 			const data = await ENTITY.PropertyE.suggested_property(payload);
 			return data;

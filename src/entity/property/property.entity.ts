@@ -55,7 +55,6 @@ export class PropertyClass extends BaseEntity {
 					},
 				},
 			];
-			// const getPropertyData = await this.DAOManager.findOne(this.modelName, criteria, {});
 			const getPropertyData = await this.DAOManager.aggregateData(this.modelName, criteria, {});
 			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
 			return getPropertyData[0];
@@ -524,12 +523,11 @@ export class PropertyClass extends BaseEntity {
 	async getPropertyViaCity(payload: UserRequest.RecentProperty) {
 		try {
 			const promiseArray = [];
-			let latestProperty, latestCityCount, agents, agentCount, total, featuredCity;
+			let latestProperty, agents, featuredCity;
 			let { sortType, sortBy, page, limit } = payload;
 			let sortingType: any = {};
 			const { cityId, All, propertyType, propertyFor } = payload;
 			let query: any = {};
-			let data;
 			sortType = !sortType ? -1 : sortType;
 			if (!limit) { limit = 4; }
 			if (!page) { page = 1; }
@@ -553,66 +551,25 @@ export class PropertyClass extends BaseEntity {
 					approvedAt: sortType,
 				};
 			}
-			// if (propertyType && propertyFor) {
-			// 	query = {
-			// 		'property_address.cityId': mongoose.Types.ObjectId(cityId),
-			// 		'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-			// 		'property_basic_details.type': payload.propertyType,
-			// 		'property_basic_details.property_for_number': payload.propertyFor,
-			// 	};
-			// 	data = promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
-			// 	total = promiseArray.push(this.DAOManager.count(this.modelName, query));
-			// 	[data, total] = await Promise.all(promiseArray);
-			// 	return { data, total };
-
-			// } else if (All) {
-			// 	query = {
-			// 		'property_address.cityId': mongoose.Types.ObjectId(cityId),
-			// 		'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-			// 	};
-			// 	data = promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
-			// 	total = promiseArray.push(this.DAOManager.count(this.modelName, query));
-			// 	[data, total] = await Promise.all(promiseArray);
-			// 	return { data, total };
-			// } else {
 			query = {
 				'property_address.cityId': mongoose.Types.ObjectId(cityId),
 				'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 			};
 			promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
-			// promiseArray.push(this.DAOManager.count(this.modelName, query));
-
 			const agentQuery =
 			{
 				type: 'AGENT', serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] },
 				isFeaturedProfile: true,
 			};
 
-			// async featuredList() {
-			// }
-
 			promiseArray.push(this.DAOManager.findAll('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'specializingIn_property_category, type', 'specializingIn_property_category', 'serviceAreas'],
 				{ limit, skip, $sort: { isFeaturedProfile: sortType } }));
-			// promiseArray.push(this.DAOManager.count('User', agentQuery));
-
 			promiseArray.push(this.DAOManager.findOne('City', { _id: cityId }, {}, {}));
-
 			[latestProperty, agents, featuredCity] = await Promise.all(promiseArray);
-			console.log('featuredCityfeaturedCityfeaturedCity', featuredCity);
-
-			// const properties_In_Makati_City = {
-			// 	'APARTMENT/CONDO FOR RENT': Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
-			// 	'APARTMENT/CONDO FOR SALE': Constant.DATABASE.PROPERTY_FOR.SALE.DISPLAY_NAME,
-			// 	'HOUSE AND LOT FOR RENT': Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
-			// 	'COMMERCIAL FOR RENT': Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
-			// };
 
 			return {
 				latestProperty,
-				// latestCityCount,
 				agents,
-				// agentCount,
-				// propertyTypeAndFor: properties_In_Makati_City,
 				featuredCity,
 			};
 		}
