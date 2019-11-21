@@ -67,6 +67,7 @@ export namespace LoanRequest {
         relationship: string;
     }
     export interface BankInfo {
+        iconUrl: string;
         bankId: string;
         bankName: string;
         abbrevation: string;

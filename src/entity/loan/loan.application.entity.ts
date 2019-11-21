@@ -73,13 +73,11 @@ class LoanApplicationE extends BaseEntity {
             }
 
             else {
-                matchObject.$match = {
-                    $or: [
-                        { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED },
-                        { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING },
-                        { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED },
-                    ],
-                };
+                matchObject['$or'] = [
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED },
+                ];
             }
 
             if (fromDate && toDate) {
@@ -99,14 +97,17 @@ class LoanApplicationE extends BaseEntity {
                 };
             }
 
-            promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit }));
+            promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit, sort: sortingType }));
             promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
             const [data, total] = await Promise.all(promiseArray);
+
             return {
                 data,
                 total,
             };
         } catch (error) {
+            console.log('errorerrorerrorerror', error);
+
             return Promise.reject(error);
         }
     }
