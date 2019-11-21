@@ -8,8 +8,9 @@ import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-import { AdminStaffEntity, } from '@src/entity';
+import { AdminStaffEntity } from '@src/entity';
 import * as Hapi from 'hapi';
+import { LoanRequest } from '@src/interfaces/loan.interface';
 
 export let adminProfileRoute: ServerRoute[] = [
 	/**
@@ -20,7 +21,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/login',
 		handler: async (request, h: Hapi.ResponseToolkit) => {
 			try {
-				const payload: any = request.payload;
+				const payload: AdminRequest.Login = request.payload as AdminRequest.Login;
 				const registerResponse = await AdminProfileService.login(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
@@ -33,7 +34,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			// auth: 'BasicAuth'
 			validate: {
 				payload: {
-					email: Joi.string().email({ minDomainAtoms: 2 }),
+					email: Joi.string().lowercase().email().trim().required(),
 					password: Joi.string().min(6).max(16).trim().required(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
@@ -55,7 +56,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/forgetPassword',
 		handler: async (request, h) => {
 			try {
-				const payload: UserRequest.ForgetPassword = request.payload as any;
+				const payload: UserRequest.ForgetPassword = request.payload as AdminRequest.ForgetPassword;
 				await AdminProfileService.forgetPassword(payload);
 				return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.FORGET_PASSWORD_EMAIL, {});
 			} catch (error) {
@@ -68,7 +69,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			// auth: 'AdminAuth',
 			validate: {
 				payload: {
-					email: Joi.string().email({ minDomainAtoms: 2 }),
+					email: Joi.string().lowercase().email().trim().required(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -88,7 +89,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: UserRequest.ProfileUpdate = request.payload as any;
+				const payload = request.payload as AdminRequest.ProfileUpdate;
 				const responseData = await AdminProfileService.editProfile(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
 			} catch (error) {
@@ -137,8 +138,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'admin', 'Detail'],
 			auth: 'AdminAuth',
 			validate: {
-				query: {
-				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -178,7 +177,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'Admin', 'verifylink'],
 			validate: {
 				params: {
-					link: Joi.string(),
+					link: Joi.string().required(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -198,7 +197,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: AdminRequest.ChangePassword = request.payload as any;
+				const payload: AdminRequest.ChangePassword = request.payload as AdminRequest.ChangePassword;
 				const responseData = await AdminProfileService.changePassword(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
@@ -211,8 +210,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					oldPassword: Joi.string().min(6).max(16),
-					newPassword: Joi.string().min(6).max(16),
+					oldPassword: Joi.string().min(6).max(16).trim(),
+					newPassword: Joi.string().min(6).max(16).trim(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -232,7 +231,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/reset-password',
 		handler: async (request, h) => {
 			try {
-				const payload = request.payload;
+				const payload = request.payload as AdminRequest.ResetPassword;
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
@@ -244,8 +243,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'admin', 'reset'],
 			validate: {
 				payload: {
-					token: Joi.string(),
-					password: Joi.string().min(6).max(16),
+					token: Joi.string().required(),
+					password: Joi.string().min(6).max(16).trim(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -263,14 +262,14 @@ export let adminProfileRoute: ServerRoute[] = [
 	{
 		method: 'GET',
 		path: '/v1/admin/property',
-		handler: async (request, h) => {
+		handler: async (request: Hapi.Request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: PropertyRequest.SearchProperty = request.query as any;
+				const payload: AdminRequest.AdminPropertyList = request.query as any;
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
-				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await AdminStaffEntity.checkPermission(payload.permissionType);
-				}
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permissionType);
+				// }
 				const responseData = await AdminService.getProperty(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
@@ -337,9 +336,9 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: AdminRequest.PropertyDetail = request.params as any;
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
-				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await AdminStaffEntity.checkPermission(payload.permissionType);
-				}
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permissionType);
+				// }
 				const responseData = await AdminService.getPropertyById(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
@@ -384,9 +383,9 @@ export let adminProfileRoute: ServerRoute[] = [
 					propertyId: request.params.propertyId,
 					permissionType: (request.payload as any).permissionType,
 				};
-				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await AdminStaffEntity.checkPermission(payload.permissionType);
-				}
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permissionType);
+				// }
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
 				const responseData = await AdminService.updatePropertyStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
@@ -467,9 +466,9 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.DASHBOARD);
-				}
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.DASHBOARD);
+				// }
 				const registerResponse = await AdminService.dashboard(adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -502,9 +501,9 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: any = request.query;
-				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await AdminStaffEntity.checkPermission(payload.permission);
-				}
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
 				const registerResponse = await LoanController.userLoansList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -524,8 +523,8 @@ export let adminProfileRoute: ServerRoute[] = [
 					]),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
-					sortBy: Joi.string(),
-					sortType: Joi.string(),
+					// sortBy: Joi.string(),
+					// sortType: Joi.string(),
 					limit: Joi.number(),
 					page: Joi.number().min(1).default(1),
 					// type: Joi.string().valid('admin', 'user')
@@ -545,14 +544,14 @@ export let adminProfileRoute: ServerRoute[] = [
 	 */
 	{
 		method: 'PATCH',
-		path: '/v1/admin/loan/status/{loanId}/{status}',
+		path: '/v1/admin/loan/{loanId}/{status}',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.params;
-				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await AdminStaffEntity.checkPermission(payload.permission);
-				}
+				const payload: AdminRequest.IUpdateLoanRequest = request.params as any;
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
 				const registerResponse = await LoanController.adminUpdateLoanStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -592,10 +591,10 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.params;
-				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await AdminStaffEntity.checkPermission(payload.permission);
-				}
+				const payload: LoanRequest.LoanById = request.params as any;
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
 				const registerResponse = await LoanController.loanById(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {

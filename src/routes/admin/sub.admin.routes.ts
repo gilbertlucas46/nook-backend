@@ -7,6 +7,25 @@ import * as CONSTANT from '../../constants';
 import { AdminStaffController } from '../../controllers';
 import { AdminProfileService } from '@src/controllers/admin/adminProfile.controller';
 
+const objectSchema = Joi.object({
+	moduleName: Joi.string().min(1).valid([
+		// CONSTANT.DATABASE.SUB_ADMIN_ROLES.USER,
+		// CONSTANT.DATABASE.SUB_ADMIN_ROLES.ADMIN,
+		// CONSTANT.DATABASE.SUB_ADMIN_ROLES.DASHBOARD,
+		// CONSTANT.DATABASE.SUB_ADMIN_ROLES.STORY,
+	CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
+    CONSTANT.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
+	CONSTANT.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+	CONSTANT.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+	CONSTANT.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+	CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
+    CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
+	CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
+	CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
+	]).required(),
+	accessLevel: Joi.number().valid([CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE]).default(2),
+})
+
 export let subAdminRoutes: ServerRoute[] = [
 	{
 		method: 'POST',
@@ -27,21 +46,11 @@ export let subAdminRoutes: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+					email: Joi.string().email().required(),
 					firstName: Joi.string().min(1).max(32).required(),
 					lastName: Joi.string().min(1).max(32).required(),
 					phoneNumber: Joi.string().min(10).max(15),
-					permission: Joi.array().items(Joi.string().valid([
-						CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
-						CONSTANT.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
-						CONSTANT.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-						CONSTANT.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-						CONSTANT.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-						CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
-						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
-					])).required(),
+					permission: Joi.array().items(objectSchema).min(1).unique(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -72,18 +81,9 @@ export let subAdminRoutes: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					permission: Joi.array().items(Joi.string().valid([
-						CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
-						CONSTANT.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
-						CONSTANT.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-						CONSTANT.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-						CONSTANT.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-						CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
-						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
-					])).required(),
+					adminId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					permission: Joi.array().items(objectSchema).min(1).unique(),
+					//
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -95,37 +95,37 @@ export let subAdminRoutes: ServerRoute[] = [
 			},
 		},
 	},
-	{
-		method: 'PATCH',
-		path: '/v1/staff/admin/resend',
-		handler: async (request, h) => {
-			try {
-				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.payload;
-				await AdminStaffController.systemGeneratedMail(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
-			} catch (error) {
-				return (UniversalFunctions.sendError(error));
-			}
-		},
-		options: {
-			description: 'Create staff member',
-			tags: ['api', 'anonymous', 'Admin', 'staff_member'],
-			auth: 'AdminAuth',
-			validate: {
-				payload: {
-					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-				},
-				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction,
-			},
-			plugins: {
-				'hapi-swagger': {
-					responseMessages: Constant.swaggerDefaultResponseMessages,
-				},
-			},
-		},
-	},
+	// {
+	// 	method: 'PATCH',
+	// 	path: '/v1/staff/admin/resend',
+	// 	handler: async (request, h) => {
+	// 		try {
+	// 			const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+	// 			const payload: any = request.payload;
+	// 			await AdminStaffController.systemGeneratedMail(payload);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
+	// 		} catch (error) {
+	// 			return (UniversalFunctions.sendError(error));
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'Create staff member',
+	// 		tags: ['api', 'anonymous', 'Admin', 'staff_member'],
+	// 		auth: 'AdminAuth',
+	// 		validate: {
+	// 			payload: {
+	// 				_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+	// 			},
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 		plugins: {
+	// 			'hapi-swagger': {
+	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
+	// 			},
+	// 		},
+	// 	},
+	// },
 	{
 		method: 'DELETE',
 		path: '/v1/admin/staff/delete/{_id}',

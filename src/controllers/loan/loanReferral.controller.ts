@@ -3,6 +3,12 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { loanReferralRequest } from '@src/interfaces/loanReferral.interface';
 class Referal extends BaseEntity {
     // constructor() { }
+    /**
+     * @function loanShuffle
+     * @description  user send the info of the another user to admin
+     * @payload :CreateReferral
+     * return {success/error}
+     */
 
     async createReferral(payload: loanReferralRequest.CreateReferral, userData) {
         try {
@@ -14,6 +20,13 @@ class Referal extends BaseEntity {
         }
     }
 
+    /**
+     * @function loanShuffle
+     * @description  info of the referral by id
+     * @payload :GetReferral
+     * return {success/error}
+     */
+
     async getReferral(payload: loanReferralRequest.GetReferral) {
         try {
             await ENTITY.ReferalE.getReferral(payload);
@@ -22,7 +35,13 @@ class Referal extends BaseEntity {
             return Promise.reject(error);
         }
     }
-    async getUserReferral(payload, userData) {
+    /**
+     * @function getUserReferral
+     * @description  user Referral list
+     * @payload :IUserLoanRefferal
+     * return []
+     */
+    async getUserReferral(payload: loanReferralRequest.IUserLoanRefferal, userData) {
         try {
             const data = await ENTITY.ReferalE.getUserReferral(payload, userData);
             return data;

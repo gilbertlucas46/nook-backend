@@ -1,6 +1,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
+import { LoanRequest } from '@src/interfaces/loan.interface';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -31,10 +32,10 @@ class LoanApplicationE extends BaseEntity {
         return data[0];
     }
 
-    async getUserLoanList(payload, userData) {
+    async getUserLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
-            let { page, limit, sortType, sortBy } = payload;
-            const { fromDate, toDate, status } = payload;
+            let { page, limit, sortType, sortBy, status } = payload;
+            const { fromDate, toDate } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -55,32 +56,29 @@ class LoanApplicationE extends BaseEntity {
             if (sortBy) {
                 // switch (sortBy) {
                 // case 'Date':
+                // sortBy = 'Date';
+                // sortingType = {
+                //     createdAt: sortType,
+                // };
+
+            } else {
                 sortBy = 'Date';
                 sortingType = {
                     createdAt: sortType,
                 };
-                // break;
-                // default:
-                //     sortBy = 'createdAt';
-                //     sortingType = {
-                //         updatedAt: sortType,
-                //     };
-                //     break;
-                // }
             }
 
             if (status) {
                 matchObject['applicationStatus'] = status;
             }
-            // else {
-            //     matchObject.$match = {
-            //         $or: [
-            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED },
-            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING },
-            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED },
-            //         ],
-            //     };
-            // }
+
+            else {
+                matchObject['$or'] = [
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED },
+                ];
+            }
 
             if (fromDate && toDate) {
                 matchObject['createdAt'] = {
@@ -99,14 +97,17 @@ class LoanApplicationE extends BaseEntity {
                 };
             }
 
-            promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit }));
+            promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit, sort: sortingType }));
             promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
             const [data, total] = await Promise.all(promiseArray);
+
             return {
                 data,
                 total,
             };
         } catch (error) {
+            console.log('errorerrorerrorerror', error);
+
             return Promise.reject(error);
         }
     }

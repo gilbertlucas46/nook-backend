@@ -20,9 +20,9 @@ export class AdminProfileController {
 
 	async login(payload: AdminRequest.Login) {
 		try {
-			let email: string = payload.email;
-			if (email) { email = email.trim().toLowerCase(); }
-			const checkData = { email };
+			const email: string = payload.email;
+			// if (email) { email = email.trim().toLowerCase(); }
+			const checkData = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
 			// check email
 			if (!adminData) {
@@ -43,7 +43,7 @@ export class AdminProfileController {
 				permission: adminData.permission,
 			};
 			if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				await ENTITY.AdminE.updateOneEntity( { _id: adminData._id } , { $set: { staffLoggedIn: true } }, {});
+				await ENTITY.AdminE.updateOneEntity({ _id: adminData._id }, { $set: { staffLoggedIn: true } }, {});
 			}
 			const accessToken = await ENTITY.AdminE.createToken(tokenObj);
 			return { formatedData: adminData, accessToken };
@@ -81,7 +81,7 @@ export class AdminProfileController {
 	 */
 	async forgetPassword(payload: AdminRequest.ForgetPassword) {
 		try {
-			const criteria = { email: payload.email.trim().toLowerCase() };
+			const criteria = { email: payload.email};
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id']);
 			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {

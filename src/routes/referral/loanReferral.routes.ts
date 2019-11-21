@@ -57,7 +57,7 @@ export let loanReferral: any = [
         options: {
             description: 'home loan referral',
             tags: ['api', 'user', 'home', 'loan', 'referral'],
-            // Auth: 'UserAuth',
+            auth: 'UserAuth',
             validate: {
                 params: {
                     referralId: Joi.string(),
@@ -79,7 +79,7 @@ export let loanReferral: any = [
         handler: async (request, h: ResponseToolkit) => {
             try {
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials).userData;
-                const payload: any = request.query;
+                const payload: loanReferralRequest.IUserLoanRefferal = request.query;
                 const data = await referralController.getUserReferral(payload, userData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {

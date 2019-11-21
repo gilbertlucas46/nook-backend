@@ -3,15 +3,25 @@ import { Types } from 'mongoose';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
+import * as bankConstant from '@src/constants/banks.constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
+import { AdminRequest } from '@src/interfaces/admin.interface';
+import { setTimeout } from 'timers';
 
 class LoanControllers extends BaseEntity {
 
-    async addLoanRequirements(payload: any) {
+    /**
+     * @function addLoanRequirements
+     * @description
+     * @payload :IAddLoanRequirement
+     * return
+     */
+
+    async addLoanRequirements(payload: LoanRequest.IAddLoanRequirement) {
         try {
             const bankData = await ENTITY.LoanEntity.createOneEntity(payload);
             if (bankData) {
-                payload.bankId = Types.ObjectId(bankData._id);
+                payload['bankId'] = Types.ObjectId(bankData._id);
                 await ENTITY.EligibilityEntity.createOneEntity(payload);
             }
             return;
@@ -19,13 +29,20 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
-
-    async addLoanApplication(payload, userData) {
+    /**
+     * @function addLoanApplication
+     * @description
+     * @payload :AddLoan
+     * return loanID
+     */
+    async addLoanApplication(payload: LoanRequest.AddLoan, userData) {
         try {
+
             const criteria = {
                 saveAsDraft: { $ne: true },
             };
             payload['userId'] = userData._id;
+
             const referenceNumber = await ENTITY.LoanApplicationEntity.getReferenceId(criteria);
             if (!referenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
@@ -62,8 +79,14 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function updateLoanApplication
+     * @description updateLoanApplication before submitted
+     * @payload :AddLoan
+     * return {data}
+     */
 
-    async updateLoanApplication(payload) {
+    async updateLoanApplication(payload: LoanRequest.AddLoan) {
         try {
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return data['referenceId'];
@@ -72,6 +95,12 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function checkPreloanApplication
+     * @description pre loan conditions
+     * @payload :
+     * return []
+     */
 
     async checkPreloanApplication(payload) {
         try {
@@ -82,7 +111,7 @@ class LoanControllers extends BaseEntity {
         }
     }
 
-    async userLoansList(payload, userData) {
+    async userLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
             const data = await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
             return data;
@@ -108,7 +137,14 @@ class LoanControllers extends BaseEntity {
         }
     }
 
-    async adminUpdateLoanStatus(payload, adminData) {
+    /**
+     * @function adminUpdateLoanStatus
+     * @description admin update status of the loan
+     * @payload :IUpdateLoanRequest
+     * return {}
+     */
+
+    async adminUpdateLoanStatus(payload: AdminRequest.IUpdateLoanRequest, adminData) {
         try {
             const criteria = {
                 _id: payload.loanId,
@@ -137,9 +173,22 @@ class LoanControllers extends BaseEntity {
         }
     }
 
+    /**
+     * @function loanShuffle
+     * @description bankshuffledList name and images
+     * @payload :
+     * return [{}]
+     */
+
     async loanShuffle() {
         try {
-//
+            const bankList = await this.DAOManager.findAll('Bank', {}, { bankName: 1, iconUrl: 1, bannerUrl: 1, logoUrl: 1 });
+            bankList.sort(shufflefunc);
+
+            function shufflefunc(a: {}, b: {}) {
+                return 0.5 - Math.random();
+            }
+            return bankList;
         } catch (error) {
             return Promise.reject(error);
         }
@@ -150,7 +199,24 @@ class LoanControllers extends BaseEntity {
 // Date.prototype.shortId = function(this: Date) {
 //     return `${this.getFullYear().toString().substr(-2)}${this.getMonth()}${this.getDate()}`;
 // };
+
 // return referenceNumber;
 // return data['referenceId'];
+// const bankList = bankConstant.bankinsert.map(data => {
+//     const rObj = {};
+//     rObj['_id'] = data._id;
+//     rObj['bankName'] = data.bankName;
+//     rObj['iconUrl'] = data.iconUrl;
+//     rObj['bannerUrl'] = data.bannerUrl;
+//     rObj['logoUrl'] = data.logoUrl;
+//     return rObj;
+// },
+// ).sort(shufflefunc);
+
+// const shuffle = bankList.sort(shufflefunc ? : (a, b): this => {
+//     return 0.5 - Math.random();
+// }
+// sort(compareFn?: (a: T, b: T) => number): this;
+// Array<{}>.sort(compareFn?: (a: {}, b: {}) => number): {}[]
 
 export const LoanController = new LoanControllers();

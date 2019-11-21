@@ -59,7 +59,7 @@ export let savedProperty: ServerRoute[] = [
         options: {
             description: 'get saved Property of user',
             notes: 'saved property of user',
-            tags: ['api', 'users'],
+            tags: ['api', 'users', 'save-property'],
             auth: 'UserAuth',
             validate: {
                 query: {

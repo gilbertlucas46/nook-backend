@@ -13,8 +13,10 @@ import * as request from 'request';
 
 export class UserController {
 	/**
-	 *
-	 * @param payload user detail
+	 * @function register
+	 * @description function to register agent/owner/tenant
+	 * @payload payload :Register
+	 * return object and send mail
 	 */
 	async register(payload: UserRequest.Register) {
 		try {
@@ -50,8 +52,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload login via userName and email
+	 * @function login
+	 * @description function to login agent/owner/tenant
+	 * @payload payload :Login
+	 * return object with access token
 	 */
 	async login(payload: UserRequest.Login) {
 		try {
@@ -62,7 +66,7 @@ export class UserController {
 				return re.test(String(unique).toLowerCase());
 			};
 			if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
-			const checkData = { $or: [{ email: unique }, { userName: payload.email.trim().toLowerCase() }] };
+			const checkData = { $or: [{ email: unique }, { userName: payload.email }] };
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
@@ -88,8 +92,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload property detail by id
+	 * @function propertyDetail
+	 * @description function to get Detail of the property
+	 * @payload payload :PropertyDetail
+	 * return Proeperty Data
 	 */
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
@@ -104,8 +110,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload userProfile data to update
+	 * @function updateProfile
+	 * @description function to update the user profile
+	 * @payload  ProfileUpdate
+	 * return object
 	 */
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
@@ -113,7 +121,10 @@ export class UserController {
 			if (payload.firstName && payload.lastName && payload.type) { payload.isProfileComplete = true; }
 			else { payload.isProfileComplete = false; }
 			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
+			console.log('payloadpayloadpayloadpayload', payload);
+
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
+			console.log('updateUserupdateUserupdateUserupdateUser', updateUser);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
 				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
@@ -157,8 +168,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload forget password via email or userName
+	 * @function forgetPassword
+	 * @description function to send the email on the registered emailId
+	 * @payload  ForgetPassword
+	 * return send mail
 	 */
 	async forgetPassword(payload: UserRequest.ForgetPassword) {
 		try {
@@ -179,9 +192,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload password to be update
-	 * @param userData user's _id
+	 * @function changePassword
+	 * @description chanage the password
+	 * @payload  ChangePassword and userData
+	 * return success
 	 */
 	async changePassword(payload: UserRequest.ChangePassword, userData: UserRequest.UserData) {
 		try {
@@ -192,13 +206,19 @@ export class UserController {
 					password: await utils.cryptData(payload.newPassword),
 				};
 				const updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd);
-				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); } else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
+				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); }
+				else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
 			}
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 * @function verifyLink
+	 * @description verify the link of the forgerPassword and verify the expiration time
+	 * @payload  jwt link
+	 * return and redirect the another api if success
+	 */
 	async verifyLink(payload) {
 		try {
 			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
@@ -216,8 +236,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload verify link of the forget password e-mail
+	 * @function verifyLinkForResetPwd
+	 * @description verify the link of the user and
+	 * @payload  jwt link
+	 * return success
 	 */
 	async verifyLinkForResetPwd(payload) {
 		try {
@@ -245,8 +267,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param userData userId
+	 * @function dashboard
+	 * @description user dashboard accoordinf to user type
+	 * @payload  UserData
+	 * return Array
 	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
@@ -256,10 +280,12 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload user's suggested property except current
+	 * @function userProperty
+	 * @description property of the particular user
+	 * @payload  UserProperty
+	 * return Array
 	 */
-	async userProperty(payload: PropertyRequest.UserProperty) {
+	 async userProperty(payload: PropertyRequest.UserProperty) {
 		try {
 			const data = await ENTITY.PropertyE.suggested_property(payload);
 			return data;
@@ -268,9 +294,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload type to be update
-	 * @param userData
+	 * @function updateAccount
+	 * @description updayte user account to the agent/owner/guest
+	 * @payload  UserProperty
+	 * return object userdata with access token
 	 */
 	async updateAccount(payload: UserRequest.UpdateAccount, userData: UserRequest.UserData) {
 		try {

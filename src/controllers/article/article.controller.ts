@@ -2,10 +2,6 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
 import * as utils from '@src/utils';
-/**
- * @author
- * @description this controller contains actions for admin's articles related activities
- */
 
 class ArticleController {
     getTypeAndDisplayName(findObj, num: number) {
@@ -16,6 +12,12 @@ class ArticleController {
         });
         return result[0];
     }
+    /**
+     * @function createArticle
+     * @description admin creata the aticle
+     * @payload  CreateArticle
+     * return {}
+     */
 
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
@@ -31,7 +33,14 @@ class ArticleController {
         }
     }
 
-    async getCategoryWiseArticles(payload) {
+    /**
+     * @function getCategoryWiseArticles
+     * @description get articlewiseCategory
+     * @payload  GetArticle
+     * return []
+     */
+
+    async getCategoryWiseArticles(payload: ArticleRequest.GetArticle) {
         try {
             const articleData = await ENTITY.ArticleE.allArticlesBasedOnCategory(payload);
             return articleData;
@@ -39,6 +48,12 @@ class ArticleController {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function getArticleById
+     * @description get articleById
+     * @payload  GetArticleById
+     * return []
+     */
 
     async getArticleById(payload: ArticleRequest.GetArticleById) {
         try {
@@ -54,8 +69,14 @@ class ArticleController {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function getArticle
+     * @description get article list
+     * @payload  GetArticleById
+     * return []
+     */
 
-    async getArticle(payload) {
+    async getArticle(payload: ArticleRequest.GetArticle) {
         try {
             const articleData = await ENTITY.ArticleE.getArticlelist(payload);
             return articleData;
@@ -63,6 +84,12 @@ class ArticleController {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function updateArticle
+     * @description admin update thg article
+     * @payload  UpdateArticle
+     * return {data}
+     */
 
     async updateArticle(payload: ArticleRequest.UpdateArticle, adminData) {
         try {
@@ -97,6 +124,12 @@ class ArticleController {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function deleteArticle
+     * @description admin delete thg article
+     * @payload  DeleteArticle
+     * return {} sucess/error
+     */
 
     async deleteArticle(payload: ArticleRequest.DeleteArticle) {
         try {
