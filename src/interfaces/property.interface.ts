@@ -124,9 +124,9 @@ export namespace PropertyRequest {
 	}
 
 	export interface PropertyByStatus {
-		propertyType: string;
-		page?: number;
-		limit?: number;
+		propertyType?: number;
+		page: number;
+		limit: number;
 		sortType?: number;
 		sortBy?: string;
 	}

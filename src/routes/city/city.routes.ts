@@ -4,6 +4,7 @@ import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
 import { CityService } from '@src/controllers';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export let cityRoutes: ServerRoute[] = [
     {
@@ -11,7 +12,8 @@ export let cityRoutes: ServerRoute[] = [
         path: '/v1/cities/popular',
         handler: async (req: Request, h: ResponseToolkit) => {
             try {
-                const data_to_send = await CityService.popularCities(req.query);
+                const data_to_send = await CityService.popularCities(req.query as PropertyRequest.IPaginate);
+
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data_to_send));
             } catch (error) {
                 return (UniversalFunctions.sendError(error));
@@ -20,14 +22,13 @@ export let cityRoutes: ServerRoute[] = [
         options: {
             description: 'Get most popular cities list',
             tags: ['api', 'anonymous', 'user', 'Cities'],
-            // auth: 'UserAuth',
+            auth: 'DoubleAuth',
             validate: {
                 query: {
-                    query: {
-                        page: Joi.number(),
-                        limit: Joi.number(),
-                    },
+                    page: Joi.number(),
+                    limit: Joi.number(),
                 },
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {
@@ -51,10 +52,11 @@ export let cityRoutes: ServerRoute[] = [
         options: {
             description: 'Get featured cities list',
             tags: ['api', 'anonymous', 'user', 'Cities'],
-            // auth: 'UserAuth',
+            auth: 'DoubleAuth',
             validate: {
                 // query: {
                 // },
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {

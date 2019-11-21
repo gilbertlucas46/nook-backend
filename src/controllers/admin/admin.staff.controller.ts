@@ -11,11 +11,12 @@ const cert: any = config.get('jwtSecret');
 /**
  * @author Ashish Jain
  * @description this controller contains actions for admin's staff related activities
- */
+*/
 class AdminStaffControllers {
 
     async createStaff(payload: any) {
         try {
+
             const email: string = payload.email;
             const checkEmail = await ENTITY.AdminStaffEntity.checkStaffEmail(email);
             if (!checkEmail) {
@@ -32,6 +33,7 @@ class AdminStaffControllers {
                     type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
                     permission: payload.permission,
                 };
+                console.log('datatoSavedatatoSavedatatoSave', payload);
                 await ENTITY.AdminStaffEntity.createOneEntity(datatoSave);
                 ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
@@ -48,7 +50,17 @@ class AdminStaffControllers {
             const dataToUpdate = {
                 $addToSet: { permission: payload.permission },
             };
-            await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload._id }, dataToUpdate);
+
+            // case
+            const query = {
+                $match: { permission: payload.permission },
+            };
+            // { $match: {_id: ObjectId("512e28984815cbfcb21646a7")}},
+            // { $unwind: '$list'},
+            // { $match: {'list.a': {$gt: 3}}},
+            // { $group: {_id: '$_id', list: {$push: '$list.a'}}}
+
+            await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.adminId }, dataToUpdate);
             return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200, {});
         } catch (error) {
             return Promise.reject(error);

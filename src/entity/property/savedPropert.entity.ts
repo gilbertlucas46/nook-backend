@@ -1,13 +1,14 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { basename } from 'path';
 import * as Constant from '@src/constants';
+import { SavePropertyRequest } from '@src/interfaces/saveProperty.interface';
 
 export class SavedProperty extends BaseEntity {
     constructor() {
         super('SavedProperty');
     }
 
-    async getList(payload, userData) {
+    async getList(payload: SavePropertyRequest.SavePropertyList, userData) {
         try {
             let { page, limit, sortType } = payload;
             const { sortBy } = payload;

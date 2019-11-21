@@ -263,7 +263,7 @@ export let propertyRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload = request.query;
+				const payload: PropertyRequest.PropertyByStatus = request.query as any;
 				const data = await PropertyService.userPropertyByStatus(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -302,7 +302,7 @@ export let propertyRoute: ServerRoute[] = [
 		},
 	},
 	/**
-	 * @description
+	 * @description user save property as a draft
 	 */
 	{
 		method: 'POST',
@@ -448,7 +448,6 @@ export let propertyRoute: ServerRoute[] = [
 					status: (request.payload as any).property_status,
 					upgradeToFeature: (request.payload as any).upgradeToFeature,
 				};
-
 				const data = await PropertyService.updatePropertyStatus(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {

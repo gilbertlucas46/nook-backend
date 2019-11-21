@@ -12,8 +12,11 @@ export let searchRoutes: ServerRoute[] = [
         path: '/v1/user/search',
         async handler(request, h) {
             try {
+                const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
+                // const payload: UserRequest.UpdateAccount = request.payload as any;
+
                 const payload: any = request.query;
-                const registerResponse = await searchController.search (payload);
+                const registerResponse = await searchController.search(payload, userData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
             } catch (error) {
                 return (UniversalFunctions.sendError(error));
