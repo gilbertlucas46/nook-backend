@@ -17,10 +17,10 @@ export namespace ArticleRequest {
     export interface GetArticle {
         limit: number;
         page: number;
-        sortBy: string;
-        sortType: number;
-        categoryId: number;
-        articleId: string;
+        sortBy?: string;
+        sortType?: number;
+        categoryId?: number;
+        articleId?: string;
 
     }
     export interface GetArticleById {

@@ -7,7 +7,7 @@ import * as Constant from '@src/constants';
 export class EnquiryClass extends BaseEntity {
     constructor() {
         super('Enquiry');
-    }// EnquiryRequest.GetEnquiry,
+    }
     async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
             console.log('payload', payload, payload.category);
@@ -22,25 +22,21 @@ export class EnquiryClass extends BaseEntity {
                 createdAt: sortType,
             };
             const query: any = {};
-            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.PROPERTY && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
-                console.log('11111111111111111111');
+            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.PROPERTY && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) {
                 query['userId'] = userData._id;
                 query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
-            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.PROPERTY && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
-                console.log('222222222222222222222222222');
+            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.PROPERTY && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) {
                 query['propertyOwnerId'] = userData._id;
                 query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
-            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
-                console.log('3333333333333333333333333');
-                // query
+            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) {
                 query['userId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
-            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
-                console.log('44444444444444444444444444444444');
+            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) {
                 // query['userId'] = userData._id;
                 query['agentId'] = userData._id; // payload.agentId;
                 query['enquiryType'] = payload.enquiryType;
             } else {
+                console.log('else condition');
                 query['userId'] = userData._id; // payload.agentId;
                 query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
             }
@@ -60,7 +56,7 @@ export class EnquiryClass extends BaseEntity {
                     $lte: new Date().getTime(),
                 };
             }
-            console.log('query>>>>>>>>>>>>>>>>>>>>>', query);
+
             const pipeLine = [
                 {
                     $match: query,

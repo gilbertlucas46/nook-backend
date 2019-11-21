@@ -5,32 +5,22 @@ import * as ENTITY from '@src/entity';
 const cert: any = config.get('jwtSecret');
 export class SearchController {
 	/**
-	 *
-	 * @param payload user detail
+	 * @function search
+	 * @description global search on the property and enquiry
+	 * @payload  adminData:adminData
+	 * return {}
 	 */
     async search(payload, userData) {
         try {
             const { text } = payload;
             let matchObject: any = {};
             let enquiryObject: any = {};
-            // matchObject = {
             const promiseArr: Array<object> = [];
-            console.log('payloadpayloadpayload', payload);
-
-            // }
             if (payload.text) {
-                // for filtration
                 matchObject = {
                     userId: userData._id,
                     $or: [
-                        //         { 'property_address.address': new RegExp('.*' + text + '.*', 'i') },
-                        //         // { 'property_address.barangay': new RegExp('.*' + text + '.*', 'i') },
-                        //        // { 'property_basic_details.title': new RegExp('.*' + text + '.*', 'i') },
-                        //         { 'property_added_by.firstName': new RegExp('.*' + text + '.*', 'i') },
-                        //         { 'property_added_by.lastName': new RegExp('.*' + text + '.*', 'i') },
-                        //     ],
-                        // },
-                        // { <field>: { $regex: /pattern/, $options: '<options>' } }
+                        // { 'property_address.address': new RegExp('.*' + text + '.*', 'i') },
                         { 'property_address.address': { $regex: text, $options: 'i' } },
                         { 'property_basic_details.title': { $regex: text, $options: 'i' } },
                         { 'property_added_by.firstName': { $regex: text, $options: 'i' } },
@@ -38,8 +28,10 @@ export class SearchController {
                     ],
                 };
             }
+            // var text = '42px';
+            // var integer = parseInt(text, 10);
 
-            if (true) {
+            if (payload.text) {
                 console.log('userData._id: ', userData._id);
                 enquiryObject = {
                     userId: userData._id,

@@ -1,5 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 import * as CONSTANT from '../../constants';
+// import * as SCHEMA_VALIDATOR from '../revalidator';
 export interface IAdmin extends Document {
 	_id: string;
 	name: string;
@@ -23,6 +24,7 @@ export interface IAdmin extends Document {
 	isPhoneVerified?: boolean;
 	passwordResetToken?: string;
 	passwordResetTokenExpirationTime?: Date;
+	permisssion: any;
 }
 
 export const AdminSchema = new Schema(
@@ -56,19 +58,24 @@ export const AdminSchema = new Schema(
 				CONSTANT.DATABASE.STATUS.USER.BLOCKED,
 			],
 		},
-		permission: {
-			type: [String], enum: [
-				CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
-				CONSTANT.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
-				CONSTANT.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-				CONSTANT.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-				CONSTANT.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-				CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-				CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
-				CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-				CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
-			],
-		},
+		// type: Schema.Types.Mixed
+		permission: [{
+			moduleName: {
+				type: String, enum: [
+					CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
+					CONSTANT.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
+					CONSTANT.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+					CONSTANT.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+					CONSTANT.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+					CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
+					CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
+					CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
+					CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
+				],
+			},
+			accessLevel: { type: Number, enum: [CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE] },
+
+		}],
 		createdAt: { type: Number, required: true },
 		updatedAt: { type: Number, required: true },
 		type: {

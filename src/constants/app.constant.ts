@@ -7,12 +7,35 @@ export let swaggerDefaultResponseMessages = [
 	{ code: 404, message: 'Data Not Found' },
 	{ code: 500, message: 'Internal Server Error' },
 ];
+export const PRIVILEGE = {
+    SUB_ADMIN_PRIVILEGE: [0, 1, 2],
+    SUB_MERCHANT_PRIVILEGE: [0, 1, 2],
+};
 
 export const ENUM = {
 	SORT_TYPE: [1, -1],
 };
 
 export let DATABASE = {
+	SUB_ADMIN_ROLES: {
+		USER: 'users',
+		STORY: 'story',
+		ADMIN: 'admin',  // for the subAdmin roles constant
+		DASHBOARD: 'dashboard',
+	},
+	SUB_MERCHANT_ROLES: {
+		DASHBOARD: 'dashboard',
+		BUSINESS: 'business',
+		FAQ: 'faq',
+		DEV_CENTRE: 'devCenter',
+		MERCHANT_ASSISTANT: 'merchantAssistant',
+		CHAT_BOT: 'chatBot',
+		SUPPORT: 'support',
+		SUB_MERCHANT: 'subMerchant',
+		PAYMENT: 'payment',
+	},
+
+
 	LOAN_APPLICATION_STATUS: {
 		PENDING: 'pending',
 		REJECTED: 'rejected',

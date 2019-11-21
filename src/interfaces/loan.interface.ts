@@ -1,7 +1,7 @@
 export namespace LoanRequest {
 
     export interface PreLoan {
-        bankId ?: string ;
+        bankId?: string;
         property: {
             value: number;
             type: string;
@@ -132,7 +132,7 @@ export namespace LoanRequest {
         purchasePropertyInfo: PurchasePropertyInfo;
         nookAgent: string;
     }
-    export interface UpdateLoan extends PropertyDocuments, EmploymentInfo, DependentsInfo, LoanDetails, ContactInfo, BankInfo, PersonalInfo {
+    export interface AddLoan extends PropertyDocuments, EmploymentInfo, DependentsInfo, LoanDetails, ContactInfo, BankInfo, PersonalInfo {
         loanId?: string;
         saveAsDraft?: boolean;
         personalInfo?: PersonalInfo;
@@ -145,5 +145,61 @@ export namespace LoanRequest {
     }
     export interface LoanById {
         loanId: string;
+    }
+
+    export interface LoanForEmploymentType {
+        employmentType?: string;
+        employmentRank?: string;
+        minEmploymentTenure?: number;
+    }
+    export interface PropertySpecification {
+
+        allowedPropertyType: string;
+        allowedPropertyStatus: string;
+        maxLoanDurationAllowed: number;
+        maxLoanPercent?: number;
+        debtIncomeRatio: number;
+
+    }
+    export interface IAddLoanRequirement {
+        abbrevation: string;
+        bankName: string;
+        headquarterLocation: string;
+        propertySpecification: [PropertySpecification];
+        interestRateDetails: object;
+        bankFeePercent?: number;
+        bankFeeAmount?: number;
+        debtIncomeRatio?: number;
+        loanApplicationFeePercent?: number;
+        loanMinAmount: number;
+        loanMaxAmount: number;
+        minLoanDuration?: number;
+        maxLoanDuration?: number;
+        loanForForeigner?: boolean;
+        loanForForeignerMarriedLocal?: boolean;
+        loanForNonCreditCardHolder?: boolean;
+        loanForCreditCardHolder?: boolean;
+        loanForNotNowCreditCardHolder?: boolean;
+        loanForCancelledCreditCard?: boolean;
+        minAgeRequiredForLoan?: number;
+        maxAgeRequiredForLoan?: number;
+        loanAlreadyExistDiffBank?: boolean;
+        loanAlreadyExistSameBank?: boolean;
+        minMonthlyIncomeLoan?: number;
+        minMonthlyIncomeRequired?: number;
+        missedLoanPaymentAllowance?: boolean;
+        bankImageLogoUrl?: string;
+        loanForEmploymentType: [LoanForEmploymentType];
+
+    }
+
+    export interface IGetUserLoanList {
+        limit: number;
+        page: number;
+        sortType?: number;
+        sortBy?: string;
+        fromDate?: number;
+        toDate?: number;
+        // status?: string;
     }
 }
