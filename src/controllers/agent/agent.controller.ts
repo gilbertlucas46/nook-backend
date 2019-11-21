@@ -10,8 +10,7 @@ export class AgentController {
 	 */
 	async searchAgent(payload: AgentRequest.SearchAgent) {
 		try {
-			const propertyData = await AgentE.getAgent(payload);
-			return propertyData;
+			return await AgentE.getAgent(payload);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -24,8 +23,7 @@ export class AgentController {
 	 */
 	async agentInfo(userName: string) {
 		try {
-			const data = await AgentE.getAgentInfo(userName);
-			return data;
+			return await AgentE.getAgentInfo(userName);
 		} catch (error) {
 			return Promise.reject(error);
 		}

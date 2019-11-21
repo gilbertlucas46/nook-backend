@@ -96,8 +96,8 @@ class ArticleController {
                 _id: payload.articleId,
             };
             const dataToSet: any = {};
+            if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
             const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
-
             dataToSet.$set = {
                 title: payload.title,
                 categoryId: payload.categoryId,
@@ -107,7 +107,6 @@ class ArticleController {
                 userRole: adminData.type,
                 description: payload.description,
             };
-            if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
             dataToSet.$push = {
                 articleAction: {
                     userRole: adminData.type,
@@ -115,9 +114,7 @@ class ArticleController {
                     actionTime: new Date().getTime(),
                 },
             };
-            const updateStatus = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
-            return updateStatus;
-
+            return await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -136,7 +133,6 @@ class ArticleController {
                 _id: payload.articleId,
             };
             return await ENTITY.ArticleE.removeEntity(criteria);
-
         } catch (error) {
             return Promise.reject(error);
         }

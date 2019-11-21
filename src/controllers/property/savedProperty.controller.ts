@@ -22,8 +22,7 @@ export class SavedProperty {
 
     async savePropertyList(payload: SavePropertyRequest.SavePropertyList, userData) {
         try {
-            const data = await ENTITY.SavedPropertyE.getList(payload, userData);
-            return data;
+            return await ENTITY.SavedPropertyE.getList(payload, userData);
         } catch (error) {
             return Promise.reject(error);
         }
