@@ -41,5 +41,6 @@
         "mailPassword": "12345Appinventiv",
         "mailEncryption": "tls",
         "mailFromAddress": "mailtestingappinventiv@gmail.com"
-    }
+    },
+    "zapier_enquiryUrl": "https://hooks.zapier.com/hooks/catch/4460154/o4xfoal/"
 }
