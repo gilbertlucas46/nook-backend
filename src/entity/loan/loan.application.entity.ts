@@ -1,6 +1,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
+import { LoanRequest } from '@src/interfaces/loan.interface';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -31,10 +32,10 @@ class LoanApplicationE extends BaseEntity {
         return data[0];
     }
 
-    async getUserLoanList(payload, userData) {
+    async getUserLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const { fromDate, toDate, status } = payload;
+            const { fromDate, toDate } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -69,9 +70,10 @@ class LoanApplicationE extends BaseEntity {
                 // }
             }
 
-            if (status) {
-                matchObject['applicationStatus'] = status;
-            }
+            // if (status) {
+            //     matchObject['applicationStatus'] = status;
+            // }
+
             // else {
             //     matchObject.$match = {
             //         $or: [

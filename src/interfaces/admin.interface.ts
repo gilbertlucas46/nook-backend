@@ -138,4 +138,8 @@ export namespace AdminRequest {
 		byCity?: string;
 		byRegion?: string;
 	}
+	export interface IUpdateLoanRequest {
+		loanId: string;
+		status: string;
+	}
 }

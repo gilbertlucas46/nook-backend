@@ -12,7 +12,7 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/loan',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
-				const payload: any = request.payload;
+				const payload = request.payload as LoanRequest.IAddLoanRequirement;
 				await LoanController.addLoanRequirements(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {}));
 			} catch (error) {
@@ -121,7 +121,7 @@ export let loanRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload: any = request.payload;
+				const payload: LoanRequest.AddLoan = request.payload as any;
 				const data = await LoanController.addLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
@@ -345,7 +345,7 @@ export let loanRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload = request.query;
+				const payload: LoanRequest.IGetUserLoanList = request.query as any;
 				const data = await LoanController.userLoansList(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -365,6 +365,7 @@ export let loanRoute: ServerRoute[] = [
 					sortBy: Joi.string().default('date'),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
+					status: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -378,7 +379,6 @@ export let loanRoute: ServerRoute[] = [
 	},
 	/**
 	 * @description: user loan by id
-	 *
 	 */
 	{
 		method: 'GET',
@@ -414,7 +414,7 @@ export let loanRoute: ServerRoute[] = [
 		},
 	},
 	/**
-    * @description: update loan application
+	 * @description: user update loan aplication
 	 */
 	{
 		method: 'PATCH',
@@ -422,8 +422,7 @@ export let loanRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			try {
 				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload: LoanRequest.UpdateLoan = request.payload as any;
-
+				const payload: LoanRequest.AddLoan = request.payload as any;
 				const data = await LoanController.updateLoanApplication(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 				// return UniversalFunctions. (Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
@@ -639,6 +638,9 @@ export let loanRoute: ServerRoute[] = [
 			},
 		},
 	},
+	/**
+	 * @description shufffled banks list
+	 */
 	{
 		method: 'GET',
 		path: '/v1/banks/shuffle',
@@ -658,10 +660,6 @@ export let loanRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'shuffle', 'banks'],
 			auth: 'UserAuth',
 			validate: {
-				// payload: {
-
-				// 	},
-				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {

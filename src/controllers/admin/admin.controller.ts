@@ -21,8 +21,10 @@ export class AdminController {
 		return result[0];
 	}
 	/**
-	 *
-	 * @param payload
+	 * @function getProperty
+	 * @description get the proeprty list
+	 * @payload  AdminPropertyList
+	 * return [object]
 	 */
 	async getProperty(payload: AdminRequest.AdminPropertyList) {
 		try {
@@ -35,10 +37,11 @@ export class AdminController {
 			return Promise.reject(error);
 		}
 	}
-
 	/**
-	 * @param payload
-	 * @description This function is used to fetch property details using propertyId.
+	 * @function getPropertyById
+	 * @description proeprtyBY Id
+	 * @payload  PropertyDetail
+	 * return []
 	 */
 
 	async getPropertyById(payload: AdminRequest.PropertyDetail) {
@@ -51,6 +54,13 @@ export class AdminController {
 			return Promise.reject(error);
 		}
 	}
+
+	/**
+	 * @function updatePropertyStatus
+	 * @description admin accept or reject the property
+	 * @payload  UpdatePropertyStatus
+	 * return {}
+	 */
 
 	async updatePropertyStatus(payload: AdminRequest.UpdatePropertyStatus, adminData) {
 		try {
@@ -95,6 +105,12 @@ export class AdminController {
 		}
 	}
 
+	/**
+	 * @function dashboard
+	 * @description admin dashboard data
+	 * @payload  adminData:adminData
+	 * return {}
+	 */
 	async dashboard(adminData) {
 		try {
 			return await ENTITY.AdminE.adminDashboard(adminData);

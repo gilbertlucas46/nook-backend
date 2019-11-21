@@ -14,6 +14,12 @@ export class PropertyController {
 		});
 		return result[0];
 	}
+	/**
+	 * @function addProperty
+	 * @description  add property
+	 * @payload : PropertyData
+	 * return {}
+	 */
 
 	async addProperty(payload: PropertyRequest.PropertyData, userData: UserRequest.UserData) {
 		try {
@@ -121,7 +127,14 @@ export class PropertyController {
 			return Promise.reject(err);
 		}
 	}
-	async userPropertyByStatus(payload, userData: UserRequest.UserData) {
+	/**
+	 * @function userPropertyByStatus
+	 * @description  get userProperty by its status
+	 * @payload : PropertyData
+	 * return {}
+	 */
+
+	async userPropertyByStatus(payload: PropertyRequest.PropertyByStatus, userData: UserRequest.UserData) {
 		try {
 			const data = await ENTITY.UserPropertyE.getUserPropertyList(payload, userData);
 			return data;
@@ -130,8 +143,13 @@ export class PropertyController {
 			return Promise.reject(error);
 		}
 	}
-
-	async saveAsDraft(payload, userData: UserRequest.UserData) {
+	/**
+	 * @function saveAsDraft
+	 * @description user save property as a draft
+	 * @payload : PropertyData and userdata['_id']
+	 * return {}
+	 */
+	async saveAsDraft(payload: PropertyRequest.PropertyData, userData: UserRequest.UserData) {
 		try {
 			let result: any;
 			let propertyAction: any;
@@ -182,6 +200,12 @@ export class PropertyController {
 			return Promise.reject(error);
 		}
 	}
+	/**
+	 * @function updatePropertyStatus
+	 * @description user update his property sttaus as seeling or renting
+	 * @payload : PropertyData and userdata['_id']
+	 * return {}
+	 */
 
 	async updatePropertyStatus(payload: PropertyRequest.UpdatePropertyByAction, userData: UserRequest.UserData) {
 		try {

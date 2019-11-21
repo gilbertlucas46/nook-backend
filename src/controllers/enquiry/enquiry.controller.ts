@@ -12,9 +12,12 @@ import { MailManager } from '@src/lib/mail.manager';
 export class EnquiryController {
     constructor() { }
     /**
-     * @description A function to create enquiry regarding any property.
-     * @param payload
+     * @function createEnquiry
+     * @description function to create enquiry regarding any property.
+     * @payload  CreateEnquiry
+     * return send mail and success
      */
+
     async createEnquiry(payload: EnquiryRequest.CreateEnquiry, userData?) {
         try {
             let dataToSave;
@@ -72,12 +75,13 @@ export class EnquiryController {
             return Promise.reject(error);
         }
     }
-
     /**
+     * @function getEnquiryList
      * @description Get list of all enquiry for particular user.
-     * @param payload
-     * @param userData
+     * @payload  GetEnquiry and userData
+     * return []
      */
+
     async getEnquiryList(payload: EnquiryRequest.GetEnquiry, userData) {
         try {
             const propertyData = await ENTITY.EnquiryE.enquiryList(payload, userData);
@@ -87,12 +91,12 @@ export class EnquiryController {
             return Promise.reject(error);
         }
     }
-
     /**
-     * @description A function to get details of particular enquiry based on the Id
-     * @param payload
+     * @function getEnquiryById
+     * @description Get enquiry details.
+     * @payload  GetInquiryById
+     * return {}
      */
-
     async getEnquiryById(payload: EnquiryRequest.GetInquiryById) {
         try {
             const criteria = { _id: payload.enquiryId };

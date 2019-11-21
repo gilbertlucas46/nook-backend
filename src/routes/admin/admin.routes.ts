@@ -10,6 +10,7 @@ import { AdminRequest } from '@src/interfaces/admin.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import { AdminStaffEntity } from '@src/entity';
 import * as Hapi from 'hapi';
+import { LoanRequest } from '@src/interfaces/loan.interface';
 
 export let adminProfileRoute: ServerRoute[] = [
 	/**
@@ -264,7 +265,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request: Hapi.Request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: AdminRequest.AdminPropertyList = request.query as any ;
+				const payload: AdminRequest.AdminPropertyList = request.query as any;
 				utils.consolelog('This request is on', `${request.path}with parameters ${JSON.stringify(payload)}`, true);
 				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 					await AdminStaffEntity.checkPermission(payload.permissionType);
@@ -547,10 +548,10 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.params;
-				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await AdminStaffEntity.checkPermission(payload.permission);
-				}
+				const payload: AdminRequest.IUpdateLoanRequest = request.params as any;
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
 				const registerResponse = await LoanController.adminUpdateLoanStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -590,10 +591,10 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.params;
-				if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await AdminStaffEntity.checkPermission(payload.permission);
-				}
+				const payload: LoanRequest.LoanById = request.params as any;
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
 				const registerResponse = await LoanController.loanById(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {

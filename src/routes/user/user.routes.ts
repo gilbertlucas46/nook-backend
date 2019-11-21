@@ -8,6 +8,7 @@ import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 export let userRoute: ServerRoute[] = [
+
 	/**
 	 * @description: register user based on unique mail and userName
 	 */
