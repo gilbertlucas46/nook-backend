@@ -14,4 +14,4 @@ export { Bank } from './loan/banks.model';
 export { Userloancriteria } from './loan/userloancriteria.model';
 export { HelpCenterStatus } from './helpCentre/helpCenter.model';
 export { LoanReferral } from './referral/loan.referral.model';
-export { Payment } from './payments/payments.model';
+export { Transaction } from './transaction/transaction.model';

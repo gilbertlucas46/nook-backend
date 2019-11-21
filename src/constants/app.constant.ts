@@ -8,8 +8,8 @@ export let swaggerDefaultResponseMessages = [
 	{ code: 500, message: 'Internal Server Error' },
 ];
 export const PRIVILEGE = {
-    SUB_ADMIN_PRIVILEGE: [0, 1, 2],
-    SUB_MERCHANT_PRIVILEGE: [0, 1, 2],
+	SUB_ADMIN_PRIVILEGE: [0, 1, 2],
+	SUB_MERCHANT_PRIVILEGE: [0, 1, 2],
 };
 
 export const ENUM = {
@@ -546,6 +546,11 @@ export let DATABASE = {
 	DEEPLINK_REDIRECT_URL: {
 		APP: '/v1/deeplink?url=',
 	},
+	FEATURED_TYPE: {
+		PROFILE: "PROFILE",
+		PROPERTY: "PROPERTY",
+		HOMEPAGE: "HOMEPAGE"
+	}
 };
 
 export let STATUS_MSG = {
