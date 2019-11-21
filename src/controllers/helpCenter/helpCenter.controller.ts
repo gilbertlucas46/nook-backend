@@ -28,8 +28,7 @@ export class HelpCenter {
             payload['userId'] = adminData._id;
             payload['categoryType'] = result.TYPE;
             payload['userRole'] = adminData.type;
-            const data = await ENTITY.HelpCenterE.createOneEntity(payload);
-            return data;
+            return await ENTITY.HelpCenterE.createOneEntity(payload);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -47,8 +46,7 @@ export class HelpCenter {
             const criteria = {
                 _id: payload.id,
             };
-            const data = await ENTITY.HelpCenterE.getOneEntity(criteria, {});
-            return data;
+            return await ENTITY.HelpCenterE.getOneEntity(criteria, {});
         } catch (error) {
             return Promise.reject(error);
         }
@@ -66,7 +64,6 @@ export class HelpCenter {
                 _id: payload.id,
             };
             return await ENTITY.HelpCenterE.removeEntity(criteria);
-
         } catch (error) {
             return Promise.reject(error);
         }
@@ -105,8 +102,7 @@ export class HelpCenter {
                     actionTime: new Date().getTime(),
                 },
             };
-            const data = await ENTITY.HelpCenterE.updateOneEntity(criteria, dataToSet);
-            return data;
+            return await ENTITY.HelpCenterE.updateOneEntity(criteria, dataToSet);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -121,8 +117,7 @@ export class HelpCenter {
 
     async getHelpCenterCategoryBygroup() {
         try {
-            const data = await ENTITY.HelpCenterE.getHelpCenterCategoryBygroup();
-            return data;
+            return await ENTITY.HelpCenterE.getHelpCenterCategoryBygroup();
         } catch (error) {
             return Promise.reject(error);
         }
@@ -137,8 +132,7 @@ export class HelpCenter {
 
     async getHelpCenterByCategoryId(id: number) {
         try {
-            const data = await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
-            return data;
+            return await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -153,8 +147,7 @@ export class HelpCenter {
 
     async isArticleHelpful(payload: helpCenterRequest.IsHelpful, userData?) {
         try {
-            const data = await ENTITY.HelpfulE.createhelpfulStatus(payload);
-            return data;
+            return await ENTITY.HelpfulE.createhelpfulStatus(payload);
         } catch (error) {
             return Promise.reject(error);
         }

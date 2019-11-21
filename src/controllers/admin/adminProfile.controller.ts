@@ -56,8 +56,7 @@ export class AdminProfileController {
 	async profile(payload) {
 		try {
 			const criteria = { _id: payload._id };
-			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
-			return adminData;
+			return await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
 		} catch (err) {
 			return Promise.reject(err);
 		}
@@ -66,8 +65,7 @@ export class AdminProfileController {
 	async editProfile(payload: AdminRequest.ProfileUpdate, adminData) {
 		try {
 			const criteria = { _id: adminData._id };
-			const updateAdmin = await ENTITY.AdminE.updateOneEntity(criteria, payload);
-			return updateAdmin;
+			return  await ENTITY.AdminE.updateOneEntity(criteria, payload);
 		} catch (err) {
 			return Promise.reject(err);
 		}

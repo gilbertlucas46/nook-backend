@@ -140,7 +140,6 @@ export class UserController {
 				};
 				ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
 			}
-
 			/**
 			 *  push contract to salesforce
 			 */

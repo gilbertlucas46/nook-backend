@@ -96,8 +96,7 @@ class LoanControllers extends BaseEntity {
 
     async checkPreloanApplication(payload) {
         try {
-            const bankList = await LoanEntity.preloan(payload);
-            return bankList;
+            return await LoanEntity.preloan(payload);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -105,8 +104,7 @@ class LoanControllers extends BaseEntity {
 
     async userLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
-            const data = await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
-            return data;
+            return await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -114,16 +112,11 @@ class LoanControllers extends BaseEntity {
 
     async loanById(payload: LoanRequest.LoanById, userData) {
         try {
-            const criteria = {
-                _id: payload.loanId,
-            };
+            const criteria = { _id: payload.loanId };
             const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
+            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            else return data;
 
-            if (!data) {
-                return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
-            } else {
-                return data;
-            }
         } catch (error) {
             return Promise.reject(error);
         }
@@ -138,14 +131,9 @@ class LoanControllers extends BaseEntity {
 
     async adminUpdateLoanStatus(payload: AdminRequest.IUpdateLoanRequest, adminData) {
         try {
-            const criteria = {
-                _id: payload.loanId,
-            };
+            const criteria = { _id: payload.loanId };
             const dataToUpdate: any = {};
-            dataToUpdate.$set = {
-                applicationStatus: payload.status,
-            };
-
+            dataToUpdate.$set = { applicationStatus: payload.status };
             dataToUpdate.$push = {
                 approvedBy: {
                     adminId: adminData._id,
@@ -153,13 +141,9 @@ class LoanControllers extends BaseEntity {
                     approvedAt: new Date().getTime(),
                 },
             };
-
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
-            if (!data) {
-                return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
-            } else {
-                return data;
-            }
+            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            else return data;
         } catch (error) {
             return Promise.reject(error);
         }
@@ -176,7 +160,6 @@ class LoanControllers extends BaseEntity {
         try {
             const bankList = await this.DAOManager.findAll('Bank', {}, { bankName: 1, iconUrl: 1, bannerUrl: 1, logoUrl: 1 });
             bankList.sort(shufflefunc);
-
             function shufflefunc(a: {}, b: {}) {
                 return 0.5 - Math.random();
             }

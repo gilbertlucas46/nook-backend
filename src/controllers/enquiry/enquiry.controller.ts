@@ -62,8 +62,7 @@ export class EnquiryController {
             html = `<p> this user want an enquiry of your property | email: ${payload.email} |phoneNumber:${payload.phoneNumber} | propertyId:${payload.propertyId}    ...</p>`;
             mail = new MailManager(payload.propertyOwnerEmail, 'Enquiry', html);
             // mail.sendMail();
-            enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
-            return enquiryData;
+            return await ENTITY.EnquiryE.createOneEntity(dataToSave);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -78,8 +77,7 @@ export class EnquiryController {
 
     async getEnquiryList(payload: EnquiryRequest.GetEnquiry, userData) {
         try {
-            const propertyData = await ENTITY.EnquiryE.enquiryList(payload, userData);
-            return propertyData;
+            return await ENTITY.EnquiryE.enquiryList(payload, userData);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -94,9 +92,7 @@ export class EnquiryController {
     async getEnquiryById(payload: EnquiryRequest.GetInquiryById) {
         try {
             const criteria = { _id: payload.enquiryId };
-            const getData = await ENTITY.EnquiryE.getOneEntity(criteria, {});
-            return getData;
-
+            return await ENTITY.EnquiryE.getOneEntity(criteria, {});
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
