@@ -523,8 +523,8 @@ export let adminProfileRoute: ServerRoute[] = [
 					]),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
-					sortBy: Joi.string(),
-					sortType: Joi.string(),
+					// sortBy: Joi.string(),
+					// sortType: Joi.string(),
 					limit: Joi.number(),
 					page: Joi.number().min(1).default(1),
 					// type: Joi.string().valid('admin', 'user')
@@ -544,7 +544,7 @@ export let adminProfileRoute: ServerRoute[] = [
 	 */
 	{
 		method: 'PATCH',
-		path: '/v1/admin/loan/status/{loanId}/{status}',
+		path: '/v1/admin/loan/{loanId}/{status}',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
