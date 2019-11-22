@@ -423,11 +423,9 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/user/loan/application',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
-				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
 				const data = await LoanController.updateLoanApplication(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
-				// return UniversalFunctions. (Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));

@@ -11,8 +11,7 @@ class CityController {
 
     async popularCities(payload: PropertyRequest.IPaginate) {
         try {
-            const cities = await ENTITY.PropertyE.popularCities(payload);
-            return cities;
+            return await ENTITY.PropertyE.popularCities(payload);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -28,12 +27,9 @@ class CityController {
     }
     async cityData(payload) {
         try {
-            // return await ENTITY.cityEntity.getCityData(payload);
-            const data = await ENTITY.PropertyE.getPropertyViaCity(payload);
-            return data;
+            return await ENTITY.PropertyE.getPropertyViaCity(payload);
         } catch (error) {
-            // console.log('error', error);
-                  return Promise.reject(error);
+            return Promise.reject(error);
         }
     }
 }

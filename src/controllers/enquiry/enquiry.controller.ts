@@ -20,11 +20,11 @@ export class EnquiryController {
 
     async createEnquiry(payload: EnquiryRequest.CreateEnquiry, userData?) {
         try {
-            let dataToSave;
+            let dataToSave = {};
             let enquiryData = {};
             let html: any;
             let mail: any;
-            // foe the user=> agent
+            // for the user=> agent
             if (payload.agentEmail) {
                 dataToSave = {
                     email: payload.email,
@@ -33,22 +33,18 @@ export class EnquiryController {
                     message: payload.message,
                     phoneNumber: payload.phoneNumber,
                     propertyId: payload.propertyId,
-                    // enquiryFor:'Agent'
-                    // propertyOwnerId: payload.propertyOwnerId,
                     enquiryType: Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
                     agentId: payload.agentId,
                 };
-                if (userData._id) {
-                    dataToSave['userId'] = userData._id;
-                }
-                html = `<p> this user want to contact to you | email: ${payload.email} |phoneNumber:${payload.phoneNumber}...</p>`;
+
+                if (userData._id) dataToSave['userId'] = userData._id;
+                html = `<p> This user want to contact to you | email: ${payload.email} |phoneNumber:${payload.phoneNumber}...</p>`;
                 mail = new MailManager(payload.agentEmail, 'Enquiry', html);
                 // mail.sendMail();
                 enquiryData = ENTITY.EnquiryE.createOneEntity(dataToSave);
                 return {};
             }
-            // const propertyOwner = { _id: payload.propertyId };
-            // const propertyOnwerId = await ENTITY.PropertyE.getOneEntity(propertyOwner, ['property_added_by.userId', '_id']);
+
             dataToSave = {
                 email: payload.email,
                 userType: userData.type ? userData.type : '', // Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
@@ -56,20 +52,17 @@ export class EnquiryController {
                 message: payload.message,
                 phoneNumber: payload.phoneNumber,
                 propertyId: payload.propertyId,
-                // userId: userData._id ? userData._id : '',
-                // propertyOwnerId: propertyOnwerId.property_added_by.userId,
                 propertyOwnerId: payload.propertyOwnerId,
                 enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
-                // tytle: payload.title,
             };
+
             if (userData._id) {
                 dataToSave['userId'] = userData._id;
             }
             html = `<p> this user want an enquiry of your property | email: ${payload.email} |phoneNumber:${payload.phoneNumber} | propertyId:${payload.propertyId}    ...</p>`;
             mail = new MailManager(payload.propertyOwnerEmail, 'Enquiry', html);
             // mail.sendMail();
-            enquiryData = await ENTITY.EnquiryE.createOneEntity(dataToSave);
-            return enquiryData;
+            return await ENTITY.EnquiryE.createOneEntity(dataToSave);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -84,8 +77,7 @@ export class EnquiryController {
 
     async getEnquiryList(payload: EnquiryRequest.GetEnquiry, userData) {
         try {
-            const propertyData = await ENTITY.EnquiryE.enquiryList(payload, userData);
-            return propertyData;
+            return await ENTITY.EnquiryE.enquiryList(payload, userData);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -100,9 +92,7 @@ export class EnquiryController {
     async getEnquiryById(payload: EnquiryRequest.GetInquiryById) {
         try {
             const criteria = { _id: payload.enquiryId };
-            const getData = await ENTITY.EnquiryE.getOneEntity(criteria, {});
-            return getData;
-
+            return await ENTITY.EnquiryE.getOneEntity(criteria, {});
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

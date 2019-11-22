@@ -10,8 +10,6 @@ class PaymentController extends BaseEntity {
     async checkCustomer(payload, userData) {
         try {
             const data = await ENTITY.PaymentE.getOneEntity({ userId: userData._id }, { stripeCustomerId: 1 });
-            console.log('datadatadatadata', data);
-
             if (data) {
                 return data;
             } else {
@@ -30,7 +28,6 @@ class PaymentController extends BaseEntity {
 
     async addCustomerCard(payload: any, userData) {
         try {
-
             // await stripe.customers.createSource(userData.stripeCustomerId, { source: payload.source });
             const addCard: any = {};
             const cusData: any = await ENTITY.PaymentE.getOneEntity({ userId: userData._id }, {});
@@ -68,18 +65,13 @@ class PaymentController extends BaseEntity {
                     dataToUpdate.$push = {
                         cardDetail: cardInfo,
                     };
-                    console.log('dataToUpdatedataToUpdatedataToUpdatedataToUpdate', { $set: dataToUpdate });
-
                     const aaa = await ENTITY.PaymentE.updateOneEntity(criteria1, dataToUpdate);
-
                     const addCard1 = await stripe.customers.createSource(cusData.stripeCustomerId, { source: payload.cardToken });
-
                     return {};
                 }
             }
         }
         catch (error) {
-            console.log('errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', error);
             return Promise.reject(error);
         }
     }
@@ -114,7 +106,6 @@ class PaymentController extends BaseEntity {
 
             return charge;
         } catch (error) {
-            console.log('errorerrorerrorerror', error);
             return Promise.reject(error);
         }
     }

@@ -7,8 +7,6 @@ import * as config from 'config';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-import { PropertyRequest } from '@src/interfaces/property.interface';
-import { AdminStaffEntity } from '@src/entity';
 import * as Hapi from 'hapi';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 
