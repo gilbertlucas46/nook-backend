@@ -32,7 +32,6 @@ class AdminStaffControllers {
                     type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
                     permission: payload.permission,
                 };
-                console.log('datatoSavedatatoSavedatatoSave', payload);
                 await ENTITY.AdminStaffEntity.createOneEntity(datatoSave);
                 ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
@@ -46,19 +45,11 @@ class AdminStaffControllers {
 
     async addPermissions(payload: any) {
         try {
-            const dataToUpdate = { permission: payload.permission };
-
-            // case
-            const query = {
-                $match: { permission: payload.permission },
+            const dataToUpdate = {
+                $addToSet: { permission: payload.permission },
             };
-            // { $match: { _id: ObjectId("512e28984815cbfcb21646a7") } },
-            // { $unwind: '$list'},
-            // { $match: {'list.a': {$gt: 3}}},
-            // { $group: {_id: '$_id', list: {$push: '$list.a'}}}
-
-            const data = await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.adminId }, dataToUpdate);
-            return data;
+            await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.adminId }, dataToUpdate);
+            return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200, {});
         } catch (error) {
             return Promise.reject(error);
         }

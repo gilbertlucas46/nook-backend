@@ -77,11 +77,9 @@ export class PropertyController {
 
 				delete payload.propertyId;
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
-				// const [updateData, enquiryData] = await Promise.all(promiseArray);
 				return { updateData };
 			}
-			const propertyData = await ENTITY.PropertyE.createOneEntity(payload);
-			return propertyData;
+			return await ENTITY.PropertyE.createOneEntity(payload);
 
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -271,19 +269,16 @@ export class PropertyController {
 					},
 				};
 			}
-			const update = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true });
-			return update;
+			return await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true });
 		} catch (error) {
-			utils.consolelog('error', error, true);
+			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
 		}
 	}
 
 	async getCityBasedData(payload: UserRequest.RecentProperty) {
 		try {
-			const getPopularCityData = await ENTITY.PropertyE.getPropertyViaCity(payload);
-			// const getPropertyViaCity = await
-			return getPopularCityData;
+			return await ENTITY.PropertyE.getPropertyViaCity(payload);
 		} catch (error) {
 			return Promise.reject(error);
 		}

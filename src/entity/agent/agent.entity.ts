@@ -19,8 +19,7 @@ export class AgentClass extends BaseEntity {
             sortType = !sortType ? -1 : sortType;
             const matchObject: any = {};
             matchObject['type'] = 'AGENT';
-            let searchCriteria;
-
+            let searchCriteria: any;
             if (searchTerm) {
                 if (payload.searchBy === 'company') {
                     searchCriteria = {
@@ -319,9 +318,7 @@ export class AgentClass extends BaseEntity {
                     },
                 },
             ];
-            const agentInfo = await this.DAOManager.aggregateData(this.modelName, query);
-            return agentInfo;
-
+            return await this.DAOManager.aggregateData(this.modelName, query);
         } catch (err) {
             return Promise.reject(err);
         }

@@ -6,7 +6,7 @@
     "homePage": "https://nookstgangweb.appskeeper.com",
     "host": "https://nookstg.appskeeper.com",
     "adminInvalidUrl": "https://nookstgangadmin.appskeeper.com?error=",
-    "adminBaseUrl": "https://nookstgangadmin.appskeeper.com?reset=",
+    "adminBaseUrl": "https://nookstgangadmin.appskeeper.com/account/reset-password",
     "dbConfig": {
         "dbPwd": "Pw#ii@!#21",
         "dbUser": "nook_stgusr",
@@ -41,5 +41,7 @@
         "mailPassword": "12345Appinventiv",
         "mailEncryption": "tls",
         "mailFromAddress": "mailtestingappinventiv@gmail.com"
-    }
+    },
+    "zapier_enquiryUrl": "https://hooks.zapier.com/hooks/catch/4460154/o4xfoal/"
+
 }

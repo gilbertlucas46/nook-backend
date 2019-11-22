@@ -1,11 +1,16 @@
 {
-    "environment": "production",
-    "host": "http://appskeeper.com",
-    "port": 7314,
+    "environment": "staging",
+    "port": 7363,
+    "baseUrl": "https://nookstgangweb.appskeeper.com?reset=",
+    "invalidUrl": "https://nookstgangweb.appskeeper.com?error=",
+    "homePage": "https://nookstgangweb.appskeeper.com",
+    "host": "https://nookstg.appskeeper.com",
+    "adminInvalidUrl": "https://nookstgangadmin.appskeeper.com?error=",
+    "adminBaseUrl": "https://nookstgangadmin.appskeeper.com?reset=",
     "dbConfig": {
-        "dbPwd": "Iidjsi@#1!",
-        "dbUser": "nook_devusr",
-        "dbUrl": "mongodb://uchatstg_usr:98HQuCd3PMgGgEG2@db-node1:27017,db-node2:27017,db-node3:27017/uchatstg_db?replicaSet=rs0&readPreference=secondaryPreferred"
+        "dbPwd": "Pw#ii@!#21",
+        "dbUser": "nook_stgusr",
+        "dbUrl": "mongodb://@appskeeper.com:2798/nook_stgdb"
     },
     "cryptoSecret": "d6F3Efeq",
     "jwtSecret": "cgfhfj",
@@ -27,12 +32,15 @@
         "#FF00FF",
         "#800080"
     ],
-    "displayColors": true,
-    "mailDriver": "smtp",
-    "mailHost": "smtp.gmail.com",
-    "mailPort": 465,
-    "mailUserName": "do-not-reply@appinventiv.com",
-    "mailPassword": "Active!@#123",
-    "mailEncryption": "tls",
-    "mailFromAddress": "do-not-reply@appinventiv.com"
+    "smtp": {
+        "displayColors": true,
+        "mailDriver": "smtp",
+        "mailHost": "smtp.gmail.com",
+        "mailPort": 465,
+        "mailUserName": "mailtestingappinventiv@gmail.com",
+        "mailPassword": "12345Appinventiv",
+        "mailEncryption": "tls",
+        "mailFromAddress": "mailtestingappinventiv@gmail.com"
+    },
+    "zapier_enquiryUrl": "https://hooks.zapier.com/hooks/catch/4460154/o4xfoal/"
 }

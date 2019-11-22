@@ -26,9 +26,7 @@ export let paymentRoute: ServerRoute[] = [
                 payload: {
                     // userId: Joi.string(),
                     // userName: Joi.string(),
-
                     // source: Joi.string(),
-
                     // tokenData: Joi.string(),
                     // cardtokenDetail: Joi.string(),
                 },
@@ -42,8 +40,7 @@ export let paymentRoute: ServerRoute[] = [
             },
         },
     },
-    /**
-     */
+
     {
         method: 'POST',
         path: '/v1/card-token',

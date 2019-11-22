@@ -10,14 +10,11 @@ export class EnquiryClass extends BaseEntity {
     }
     async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
-            console.log('payload', payload, payload.category);
-
             const { fromDate, toDate, category, enquiryType } = payload;
             let { sortType, limit, page } = payload;
             sortType = !sortType ? -1 : sortType;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
-            const skip = (limit * (page - 1));
             const sortingType = {
                 createdAt: sortType,
             };
@@ -33,11 +30,11 @@ export class EnquiryClass extends BaseEntity {
                 query['enquiryType'] = payload.enquiryType;
             } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) {
                 // query['userId'] = userData._id;
-                query['agentId'] = userData._id; // payload.agentId;
+                query['agentId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
             } else {
                 console.log('else condition');
-                query['userId'] = userData._id; // payload.agentId;
+                query['userId'] = userData._id;
                 query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
             }
 
@@ -109,17 +106,8 @@ export class EnquiryClass extends BaseEntity {
                 },
                 { $sort: sortingType },
             ];
-            // const promiseArray = [];
-            // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
-            // promiseArray.push(this.DAOManager.count(this.modelName, query));
+            return await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
 
-            // const [data, total] = await Promise.all(promiseArray);
-            const enquiryList = await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
-            // return {
-            //     data,
-            //     total,
-            // };
-            return enquiryList;
         } catch (error) {
             return Promise.reject(error);
         }
