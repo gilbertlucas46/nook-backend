@@ -41,8 +41,7 @@ class ArticleController {
 
     async getCategoryWiseArticles(payload: ArticleRequest.GetArticle) {
         try {
-            const articleData = await ENTITY.ArticleE.allArticlesBasedOnCategory(payload);
-            return articleData;
+            return await ENTITY.ArticleE.allArticlesBasedOnCategory(payload);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -60,9 +59,7 @@ class ArticleController {
                 _id: payload.articleId,
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
-            if (!article) {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
-            }
+            if (!article)   return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             return article;
         } catch (error) {
             return Promise.reject(error);
@@ -77,8 +74,7 @@ class ArticleController {
 
     async getArticle(payload: ArticleRequest.GetArticle) {
         try {
-            const articleData = await ENTITY.ArticleE.getArticlelist(payload);
-            return articleData;
+            return await ENTITY.ArticleE.getArticlelist(payload);
         } catch (error) {
             return Promise.reject(error);
         }
