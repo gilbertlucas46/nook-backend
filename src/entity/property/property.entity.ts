@@ -563,7 +563,7 @@ export class PropertyClass extends BaseEntity {
 				// isFeaturedProfile: true,
 			};
 
-			promiseArray.push(this.DAOManager.findAll('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'specializingIn_property_category, type', 'specializingIn_property_category', 'serviceAreas'],
+			promiseArray.push(this.DAOManager.findAll('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'type', 'specializingIn_property_category', 'serviceAreas', 'specializingIn_property_type'],
 				{ limit, skip, $sort: { isFeaturedProfile: -1, createdAt: -1 } }));
 			// promiseArray.push(this.DAOManager.count('User', agentQuery));
 

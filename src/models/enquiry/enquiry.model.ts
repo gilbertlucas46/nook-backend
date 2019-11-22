@@ -52,7 +52,9 @@ const enquirySchema = new Schema({
 
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
-});
+}, {
+        versionKey: false,
+    });
 
 enquirySchema.index({ userId: 1, propertyId: 1 }, { unique: true });
 
