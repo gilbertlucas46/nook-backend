@@ -123,6 +123,8 @@ const bankSchema = new Schema({
     bannerUrl: { type: String },
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
-});
+}, {
+        versionKey: false,
+    });
 
 export const Bank = model('banks', bankSchema);

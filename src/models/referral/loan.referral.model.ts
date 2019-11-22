@@ -33,6 +33,9 @@ export const referralSchema = new Schema({
     }],
     createdAt: { type: Number, required: true, default: new Date().getTime() },
     updatedAt: { type: Number, required: true, default: new Date().getTime() },
-});
+}, {
+        versionKey: false,
+    },
+);
 
 export const LoanReferral: Model<LoanReferralDocument> = model('referral', referralSchema);

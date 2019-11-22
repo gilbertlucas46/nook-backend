@@ -72,6 +72,8 @@ const helpCenterSchema = new Schema({
     }],
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
-});
+}, {
+        versionKey: false,
+    });
 
 export let HelpCentre = model<IHelpCenter>('helpcenter', helpCenterSchema);

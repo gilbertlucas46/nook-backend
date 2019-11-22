@@ -16,6 +16,9 @@ const paymentSchema = new Schema({
     cardDetail: [{ type: Schema.Types.Mixed }],
     createdAt: { type: Number },
     updatedAt: { type: Number, required: true },
-});
+}, {
+        versionKey: false,
+    },
+);
 
 export let Payment = model<IPayment>('payment', paymentSchema);
