@@ -121,6 +121,7 @@ export namespace PropertyRequest {
 	export interface IPaginate {
 		page?: number;
 		limit?: number;
+		propertyType: string;
 	}
 
 	export interface PropertyByStatus {

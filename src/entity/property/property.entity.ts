@@ -437,6 +437,7 @@ export class PropertyClass extends BaseEntity {
 				{
 					$match: {
 						'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+						'property_basic_details.property_for_number': payload.propertyType,
 					},
 				},
 				{
@@ -585,14 +586,14 @@ export class PropertyClass extends BaseEntity {
 			const agentQuery =
 			{
 				type: 'AGENT', serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] },
-				isFeaturedProfile: true,
+				// isFeaturedProfile: true,
 			};
 
 			// async featuredList() {
 			// }
 
 			promiseArray.push(this.DAOManager.findAll('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'specializingIn_property_category, type', 'specializingIn_property_category', 'serviceAreas'],
-				{ limit, skip, $sort: { isFeaturedProfile: sortType } }));
+				{ limit, skip, $sort: { isFeaturedProfile: -1, createdAt: -1 } }));
 			// promiseArray.push(this.DAOManager.count('User', agentQuery));
 
 			promiseArray.push(this.DAOManager.findOne('City', { _id: cityId }, {}, {}));
