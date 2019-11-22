@@ -20,7 +20,7 @@ export let loanReferral: any = [
             }
         },
         options: {
-            description: 'home loan referral',
+            description: 'create home loan referral',
             tags: ['api', 'user', 'home', 'loan', 'referral'],
             auth: 'UserAuth',
             validate: {

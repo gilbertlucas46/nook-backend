@@ -74,7 +74,7 @@ export class UserClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-	
+
 	async createPasswordResetToken(userData) {
 		try {
 			const tokenToSend = Jwt.sign(userData.email, cert, { algorithm: 'HS256' });

@@ -15,7 +15,6 @@ class AdminStaffControllers {
 
     async createStaff(payload: any) {
         try {
-
             const email: string = payload.email;
             const checkEmail = await ENTITY.AdminStaffEntity.checkStaffEmail(email);
             if (!checkEmail) {
