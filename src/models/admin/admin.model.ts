@@ -86,6 +86,8 @@ export const AdminSchema = new Schema(
 			], index: true,
 			default: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 		},
+	}, {
+		versionKey: false,
 	},
 );
 
