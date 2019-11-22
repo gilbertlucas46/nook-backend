@@ -547,10 +547,33 @@ export let DATABASE = {
 		APP: '/v1/deeplink?url=',
 	},
 	FEATURED_TYPE: {
-		PROFILE: "PROFILE",
-		PROPERTY: "PROPERTY",
-		HOMEPAGE: "HOMEPAGE"
-	}
+		FREE: 'FREE',
+		PROFILE: 'PROFILE',
+		PROPERTY: 'PROPERTY',
+		HOMEPAGE: 'HOMEPAGE'
+	},
+	BILLING_TYPE: {
+		MONTHLY: 'MONTHLY',
+		YEARLY: 'YEARLY'
+	},
+	// type = YEARLY, MONTHLY
+	SUBSCRIPTION_TYPE: (type) => [{
+		type: 'FREE',
+		amount: 0,
+		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page'
+	}, {
+		type: 'FEATURED PROPERTY',
+		amount: type === 'MONTHLY' ? 890 : 990,
+		description: 'Featured Property Upgrade - Search Results'
+	}, {
+		type: 'FEATURED PROFILE',
+		amount: type === 'MONTHLY' ? 890 : 990,
+		description: 'Featured Profile Upgrade - Search Results'
+	}, {
+		type: 'HOMEPAGE FEATURE',
+		amount: type === 'MONTHLY' ? 890 : 1799,
+		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade'
+	}]
 };
 
 export let STATUS_MSG = {
@@ -892,6 +915,11 @@ export let STATUS_MSG = {
 				statusCode: 201,
 				type: 'CREATED',
 				message: 'Article Created',
+			},
+			PAYMENT_ADDED: {
+				statusCode: 201,
+				type: 'PAYMENT_ADDED',
+				message: 'Payment Added Successfully',
 			},
 		},
 	},
