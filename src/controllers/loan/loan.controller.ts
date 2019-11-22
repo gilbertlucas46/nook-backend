@@ -5,6 +5,8 @@ import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
+import * as request from 'request';
+import * as config from 'config';
 class LoanControllers extends BaseEntity {
 
     /**
@@ -34,7 +36,6 @@ class LoanControllers extends BaseEntity {
      */
     async addLoanApplication(payload: LoanRequest.AddLoan, userData) {
         try {
-
             const criteria = {
                 saveAsDraft: { $ne: true },
             };
@@ -64,6 +65,26 @@ class LoanControllers extends BaseEntity {
             }
 
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
+            /**
+             * Need to push data to salesforce
+             */
+
+            const salesforceData = {
+                firstName: data.personalInfo.firstName,
+                middleName: data.personalInfo.middleName || '',
+                lastName: data.personalInfo.lastName,
+                gender: data.personalInfo.gender,
+                phoneNumber: data.contactInfo.phoneNumber,
+                email: data.contactInfo.email,
+                mobileNumber: data.contactInfo.mobileNumber,
+                referenceId: data.referenceId,
+                createdAt: data.createdAt,
+            };
+
+            request.post({ url: config.get('zapier_loanUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
+                if (err) { return console.log(err); }
+                console.log('body ----', body);
+            });
             return data['referenceId'];
 
         } catch (error) {

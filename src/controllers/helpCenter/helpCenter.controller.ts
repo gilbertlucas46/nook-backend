@@ -43,9 +43,7 @@ export class HelpCenter {
 
     async getHelpCenter(payload: helpCenterRequest.GetHelpCenter) {
         try {
-            const criteria = {
-                _id: payload.id,
-            };
+            const criteria = { _id: payload.id };
             return await ENTITY.HelpCenterE.getOneEntity(criteria, {});
         } catch (error) {
             return Promise.reject(error);
