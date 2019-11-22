@@ -34,7 +34,6 @@ class LoanControllers extends BaseEntity {
      */
     async addLoanApplication(payload: LoanRequest.AddLoan, userData) {
         try {
-
             const criteria = {
                 saveAsDraft: { $ne: true },
             };

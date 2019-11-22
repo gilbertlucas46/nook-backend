@@ -80,7 +80,6 @@ export class PropertyController {
 				return { updateData };
 			}
 			return await ENTITY.PropertyE.createOneEntity(payload);
-
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -89,8 +88,7 @@ export class PropertyController {
 
 	async searchProperties(payload: PropertyRequest.SearchProperty) {
 		try {
-			const propertyData = await ENTITY.PropertyE.getPropertyList(payload);
-			return propertyData;
+			return await ENTITY.PropertyE.getPropertyList(payload);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -118,8 +116,7 @@ export class PropertyController {
 			//         }
 			//     }
 			// ]);
-			const propertyData = await ENTITY.PropertyE.getPropertyList(payload);
-			return propertyData;
+			return await ENTITY.PropertyE.getPropertyList(payload);
 		} catch (err) {
 			utils.consolelog('error', err, true);
 			return Promise.reject(err);
