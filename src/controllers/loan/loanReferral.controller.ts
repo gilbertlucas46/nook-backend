@@ -13,8 +13,7 @@ class Referal extends BaseEntity {
     async createReferral(payload: loanReferralRequest.CreateReferral, userData) {
         try {
             payload['userId'] = userData._id;
-            await ENTITY.ReferalE.createReferral(payload);
-            return;
+            return await ENTITY.ReferalE.createReferral(payload);
         } catch (error) {
             return Promise.reject(error);
         }

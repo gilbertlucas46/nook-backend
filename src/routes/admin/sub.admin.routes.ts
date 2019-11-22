@@ -6,6 +6,7 @@ import * as Constant from '../../constants';
 import * as CONSTANT from '../../constants';
 import { AdminStaffController } from '../../controllers';
 import { AdminProfileService } from '@src/controllers/admin/adminProfile.controller';
+import { AdminRequest } from '@src/interfaces/admin.interface';
 
 const objectSchema = Joi.object({
 	moduleName: Joi.string().min(1).valid([
@@ -29,7 +30,7 @@ export let subAdminRoutes: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.payload;
+				const payload: AdminRequest.IaddSubAdmin = request.payload as AdminRequest.IaddSubAdmin;
 				const registerResponse = await AdminStaffController.createStaff(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
@@ -164,9 +165,9 @@ export let subAdminRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: any = request.query;
-				if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
-					await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
-				}
+				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
+				// }
 				const registerResponse = await AdminStaffController.getStaffList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -182,9 +183,9 @@ export let subAdminRoutes: ServerRoute[] = [
 					page: Joi.number(),
 					limit: Joi.number(),
 					sortBy: Joi.string().allow('createdAt'),
-					permission: Joi.string().valid([
-						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
-					]).required(),
+					// permission: Joi.string().valid([
+					// 	CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+					// ]).required(),
 					sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
 					searchTerm: Joi.string(),
 					fromDate: Joi.number(),

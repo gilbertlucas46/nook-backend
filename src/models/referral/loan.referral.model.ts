@@ -13,6 +13,7 @@ export const referralSchema = new Schema({
     status: {
         type: String,
         enum: [
+            Constant.DATABASE.REFERRAL_STATUS.PENDING,
             Constant.DATABASE.REFERRAL_STATUS.ACKNOWLEDGE,
             Constant.DATABASE.REFERRAL_STATUS.CONTACTED,
         ],

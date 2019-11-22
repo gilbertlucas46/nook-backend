@@ -296,6 +296,7 @@ export class PropertyClass extends BaseEntity {
 					'_id': {
 						$ne: Types.ObjectId(payload.propertyId),
 					},
+					'property_basic_details.property_for_number': payload.propertyFor,
 				};
 			}
 
@@ -303,10 +304,11 @@ export class PropertyClass extends BaseEntity {
 				query = {
 					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-					'property_for.number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+					// 'property_for.number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 					'_id': {
 						$ne: Types.ObjectId(payload.propertyId),
 					},
+					// 'property_basic_details.property_for_number': payload.propertyFor,
 				};
 			}
 			else {
@@ -563,8 +565,82 @@ export class PropertyClass extends BaseEntity {
 				// isFeaturedProfile: true,
 			};
 
-			promiseArray.push(this.DAOManager.findAll('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'type', 'specializingIn_property_category', 'serviceAreas', 'specializingIn_property_type'],
-				{ limit, skip, $sort: { isFeaturedProfile: -1, createdAt: -1 } }));
+			const query1 = [
+				{ $match: agentQuery },
+				{ $sort: sortingType },
+				{ $skip: skip },
+				{ $limit: limit },
+				{
+					$unwind: {
+						path: '$serviceAreas',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$lookup: {
+						from: 'cities',
+						let: { cityId: cityId },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$cityId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'cityData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$cityData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$group: {
+						_id: '$_id',
+						firstName: { $first: '$firstName' },
+						userName: { $first: '$userName' },
+						email: { $first: '$email' },
+						middleName: { $first: '$middleName' },
+						createdAt: { $first: '$createdAt' },
+						phoneNumber: { $first: '$phoneNumber' },
+						type: { $first: '$type' },
+						title: { $first: '$title' },
+						license: { $first: '$license' },
+						taxNumber: { $first: '$taxNumber' },
+						faxNumber: { $first: '$faxNumber' },
+						companyName: { $first: '$companyName' },
+						address: { $first: '$address' },
+						aboutMe: { $first: '$aboutMe' },
+						profilePicUrl: { $first: '$profilePicUrl' },
+						backGroundImageUrl: { $first: '$backGroundImageUrl' },
+						specializingIn_property_type: { $first: '$specializingIn_property_type' },
+						specializingIn_property_category: { $first: '$specializingIn_property_category' },
+						isFeaturedProfile: { $first: '$isFeaturedProfile' },
+						lastName: { $first: '$lastName' },
+						city: {
+							$push: {
+								cityId: '$cityData._id',
+								cityName: '$cityData.name',
+							},
+						},
+					},
+				},
+			];
+			promiseArray.push(this.DAOManager.paginate('User', query1, limit, page));
+			// return agentList;
+
+			// promiseArray.push(this.DAOManager.findAll('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'type', 'specializingIn_property_category', 'serviceAreas', 'specializingIn_property_type'],
+			// 	{ limit, skip, $sort: { isFeaturedProfile: -1, createdAt: -1 } }));
 			// promiseArray.push(this.DAOManager.count('User', agentQuery));
 
 			promiseArray.push(this.DAOManager.findOne('City', { _id: cityId }, {}, {}));
@@ -572,7 +648,7 @@ export class PropertyClass extends BaseEntity {
 
 			return {
 				latestProperty,
-				agents,
+				agents: agents['data'],	//agents,
 				featuredCity,
 			};
 		}

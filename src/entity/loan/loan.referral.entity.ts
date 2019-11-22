@@ -10,6 +10,7 @@ class LoanReferral extends BaseEntity {
     async createReferral(payload) {
         try {
             const doc = await this.DAOManager.save<LoanReferralDocument>(this.modelName, payload);
+            console.log(';docdocdocdocdoc', doc);
             return doc;
         } catch (error) {
             console.log('Error in create Referral', error);

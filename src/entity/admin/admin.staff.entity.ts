@@ -51,7 +51,7 @@ class AdminStaffE extends BaseEntity {
             sortCondition[payload.sortBy] = parseInt(payload.sortType);
             pipeline.push({ $sort: sortCondition });
         }
-
+        matchCondition['type'] = CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE;
         if (fromDate || toDate) {
             matchCondition['createdAt'] = {};
             if (fromDate) matchCondition['createdAt']['$gte'] = moment(fromDate).startOf('day').toDate();

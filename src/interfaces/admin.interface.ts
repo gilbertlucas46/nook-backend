@@ -142,4 +142,16 @@ export namespace AdminRequest {
 		loanId: string;
 		status: string;
 	}
+
+	export interface Permisssion {
+		moduleName: string;
+		accessLevel: number;
+	}
+	export interface IaddSubAdmin {
+		email: string;
+		firstName: string;
+		lastName: string;
+		phoneNumber: string;
+		permission: Permisssion;
+	}
 }
