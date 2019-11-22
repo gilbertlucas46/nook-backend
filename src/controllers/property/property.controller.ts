@@ -88,6 +88,12 @@ export class PropertyController {
 			return Promise.reject(error);
 		}
 	}
+	/**
+	 * @function searchProperties
+	 * @description user search property
+	 * @payload : SearchProperty
+	 * return {}
+	 */
 
 	async searchProperties(payload: PropertyRequest.SearchProperty) {
 		try {
@@ -98,6 +104,12 @@ export class PropertyController {
 			return Promise.reject(error);
 		}
 	}
+	/**
+	 * @function nearbyProperties
+	 * @description near by property
+	 * @payload : SearchProperty
+	 * return []
+	 */
 
 	async nearbyProperties(payload: PropertyRequest.SearchProperty) {
 		try {

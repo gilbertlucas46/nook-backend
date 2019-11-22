@@ -108,8 +108,6 @@ class PaymentController extends BaseEntity {
                     source: payload.source,
                     description: payload.description,
                 });
-            console.log('chargechargecharge', charge);
-
             if (charge) {
                 const data = await ENTITY.TransactionE.createOneEntity(charge);
             }
