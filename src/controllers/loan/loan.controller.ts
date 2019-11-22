@@ -110,6 +110,12 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function userLoansList
+     * @description user loan list
+     * @payload : IGetUserLoanList
+     * return []
+     */
 
     async userLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
@@ -119,6 +125,12 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function loanById
+     * @description user loan by id
+     * @payload : LoanById
+     * return {}
+     */
 
     async loanById(payload: LoanRequest.LoanById, userData) {
         try {
