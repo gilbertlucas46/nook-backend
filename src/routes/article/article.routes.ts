@@ -220,7 +220,7 @@ export let articleRoutes: ServerRoute[] = [
                         Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
                         // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
                     ]).required(),
-                    isFeatured: Joi.boolean(),
+                    isFeatured: Joi.boolean().default(false),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

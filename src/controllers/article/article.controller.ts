@@ -59,7 +59,7 @@ class ArticleController {
                 _id: payload.articleId,
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
-            if (!article)   return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            if (!article) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             return article;
         } catch (error) {
             return Promise.reject(error);
@@ -92,7 +92,7 @@ class ArticleController {
                 _id: payload.articleId,
             };
             const dataToSet: any = {};
-            if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
+            // if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
             const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
             dataToSet.$set = {
                 title: payload.title,
@@ -102,6 +102,7 @@ class ArticleController {
                 userId: adminData._id,
                 userRole: adminData.type,
                 description: payload.description,
+                isFeatured: payload.isFeatured,
             };
             dataToSet.$push = {
                 articleAction: {
