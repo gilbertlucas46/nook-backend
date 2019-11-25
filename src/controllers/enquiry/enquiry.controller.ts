@@ -3,6 +3,8 @@ import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
 import { MailManager } from '@src/lib/mail.manager';
+import * as request from 'request';
+import * as config from 'config';
 
 /**
  * @author
@@ -62,7 +64,25 @@ export class EnquiryController {
             html = `<p> this user want an enquiry of your property | email: ${payload.email} |phoneNumber:${payload.phoneNumber} | propertyId:${payload.propertyId}    ...</p>`;
             mail = new MailManager(payload.propertyOwnerEmail, 'Enquiry', html);
             // mail.sendMail();
-            return await ENTITY.EnquiryE.createOneEntity(dataToSave);
+            await ENTITY.EnquiryE.createOneEntity(dataToSave);
+
+            // send lead to salesforce
+            const salesforceData = {
+                email: payload.email,
+                userType: userData.type ? userData.type : '',
+                name: payload.name,
+                message: payload.message,
+                phoneNumber: payload.phoneNumber,
+                propertyId: payload.propertyId,
+                propertyOwnerId: payload.propertyOwnerId,
+                enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
+            };
+
+            request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
+                if (err) { return console.log(err); }
+                console.log('body ----', body);
+            });
+            return;
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

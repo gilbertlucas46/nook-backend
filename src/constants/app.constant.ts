@@ -35,7 +35,6 @@ export let DATABASE = {
 		PAYMENT: 'payment',
 	},
 
-
 	LOAN_APPLICATION_STATUS: {
 		PENDING: 'pending',
 		REJECTED: 'rejected',
@@ -288,6 +287,7 @@ export let DATABASE = {
 			DISPLAY_NAME: 'IsFEATURED',
 		},
 	},
+
 	PERMISSION: {
 		TYPE: {
 			DASHBOARD: 'dashboard',
@@ -302,6 +302,7 @@ export let DATABASE = {
 			PROPERTY: 'property',
 		},
 	},
+
 	PROPERTY_LABEL: {
 		NONE: 'None',
 		FORECLOSURE: 'Foreclosure',
@@ -424,6 +425,7 @@ export let DATABASE = {
 		CONTACTED: 'Contact',
 		PENDING: 'Pending',
 	},
+
 	// ENQUIRY_TYPE: {
 	// 	GUEST: {
 	// 		NUMBER: 1,
@@ -436,10 +438,12 @@ export let DATABASE = {
 	// 		DISPLAY_NAME: 'Registered_User',
 	// 	},
 	// },
+
 	ENQUIRY_CATEGORY: {
 		SENT: 'sent',
 		RECEIVED: 'received',
 	},
+
 	ENQUIRY_TYPE: {
 		PROPERTY: 'property',
 		CONTACT: 'contact',
@@ -449,6 +453,7 @@ export let DATABASE = {
 		PENDING: 'PENDING',
 		RESOLVED: 'RESOLVED',
 	},
+
 	DEVICE_TYPES: {
 		IOS: 'IOS',
 		ANDROID: 'ANDROID',
@@ -497,8 +502,7 @@ export let DATABASE = {
 		},
 	},
 
-	ACTION:
-	{
+	ACTION: {
 		DEEPLINK: {
 			APP: 'APP',
 			RESET_PASSWORD: 'RESET_PASSWORD',
@@ -523,6 +527,7 @@ export let DATABASE = {
 			UPDATE_STATUS: 'UPDATE_STATUS',
 		},
 	},
+
 	RESEND_OTP_TYPE: {
 		REGISTER: 'REGISTER',
 		FORGOT: 'FORGOT',
