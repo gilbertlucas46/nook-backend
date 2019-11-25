@@ -15,11 +15,8 @@ export class PaymentClass extends BaseEntity {
             const isAnyMatched: boolean = cusData.cardDetail.some((doc): boolean => {
                 return doc.fingerprint === cardInfo['card']['fingerprint'];
             });
-            if (isAnyMatched) {
-                return isAnyMatched;
-            } else {
-                return cardInfo;
-            }
+            if (isAnyMatched) return isAnyMatched;
+            else return cardInfo;
         } catch (error) {
             return Promise.reject(error);
         }

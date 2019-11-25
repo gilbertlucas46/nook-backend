@@ -199,11 +199,9 @@ export class ArticleClass extends BaseEntity {
                 { $sort: sortingType },
             ];
 
-            const articleList = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-            return articleList;
-        }
+            return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 
-        catch (error) {
+        }catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
         }

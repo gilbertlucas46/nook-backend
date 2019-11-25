@@ -149,7 +149,6 @@ class LoanControllers extends BaseEntity {
             const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
             else return data;
-
         } catch (error) {
             return Promise.reject(error);
         }

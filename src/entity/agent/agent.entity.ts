@@ -158,9 +158,7 @@ export class AgentClass extends BaseEntity {
                     },
                 },
             ];
-            const agentList = await this.DAOManager.paginate(this.modelName, query, limit, page);
-            return agentList;
-
+            return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (err) {
             return Promise.reject(err);
         }
@@ -237,8 +235,7 @@ export class AgentClass extends BaseEntity {
                 },
                 { $sort: sortingType },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-            return data;
+            return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
         } catch (error) {
             return Promise.reject(error);
         }
