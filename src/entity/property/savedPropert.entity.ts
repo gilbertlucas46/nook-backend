@@ -85,8 +85,7 @@ export class SavedProperty extends BaseEntity {
                 { $replaceRoot: { newRoot: '$propertyData' } },
                 { $sort: sortingType },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, query, limit, page);
-            return data;
+            return await this.DAOManager.paginate(this.modelName, query, limit, page);
 
         } catch (error) {
             return Promise.reject(error);

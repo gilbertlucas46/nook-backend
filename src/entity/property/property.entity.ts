@@ -13,8 +13,7 @@ export class PropertyClass extends BaseEntity {
 
 	async PropertyList(pipeline) {
 		try {
-			const propertyList = await this.DAOManager.paginate(this.modelName, pipeline);
-			return propertyList;
+			return await this.DAOManager.paginate(this.modelName, pipeline);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -22,8 +21,7 @@ export class PropertyClass extends BaseEntity {
 
 	async PropertyByStatus(query) {
 		try {
-			const data = await this.DAOManager.paginate(this.modelName, query);
-			return data;
+			return await this.DAOManager.paginate(this.modelName, query);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -264,8 +262,7 @@ export class PropertyClass extends BaseEntity {
 					},
 				},
 			];
-			const propertyList = await this.DAOManager.paginate(this.modelName, query, limit, page);
-			return propertyList;
+			return await this.DAOManager.paginate(this.modelName, query, limit, page);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -413,8 +410,7 @@ export class PropertyClass extends BaseEntity {
 					},
 				},
 			];
-			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-			return data;
+			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -648,7 +644,7 @@ export class PropertyClass extends BaseEntity {
 
 			return {
 				latestProperty,
-				agents: agents['data'],	//agents,
+				agents: agents['data'],	// agents,
 				featuredCity,
 			};
 		}

@@ -143,8 +143,7 @@ export class PropertyController {
 
 	async userPropertyByStatus(payload: PropertyRequest.PropertyByStatus, userData: UserRequest.UserData) {
 		try {
-			const data = await ENTITY.UserPropertyE.getUserPropertyList(payload, userData);
-			return data;
+			return await ENTITY.UserPropertyE.getUserPropertyList(payload, userData);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -199,9 +198,7 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return updateData;
 			}
-
-			const propertyData = await ENTITY.PropertyE.createOneEntity(payload);
-			return propertyData;
+			return await ENTITY.PropertyE.createOneEntity(payload);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
