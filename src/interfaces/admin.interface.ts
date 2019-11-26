@@ -53,7 +53,6 @@ export namespace AdminRequest {
 		email: string;
 		password: string;
 	}
-
 	export interface ProfileUpdate {
 		_id?: string;
 		firstName?: string;
@@ -64,7 +63,6 @@ export namespace AdminRequest {
 		backGroundImageUrl?: string;
 		name?: string;
 	}
-
 	export interface TokenPayload {
 		adminId: string;
 		sessionId: string;
@@ -153,5 +151,11 @@ export namespace AdminRequest {
 		lastName: string;
 		phoneNumber: string;
 		permission: Permisssion;
+	}
+
+	export interface IadminUpdatePermission {
+		id: string;
+		permission: [object];
+		status: string;
 	}
 }

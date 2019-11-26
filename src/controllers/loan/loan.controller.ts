@@ -7,6 +7,7 @@ import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as request from 'request';
 import * as config from 'config';
+import * as Constant from '../../constants/app.constant';
 class LoanControllers extends BaseEntity {
 
     /**
@@ -101,6 +102,9 @@ class LoanControllers extends BaseEntity {
 
     async updateLoanApplication(payload: LoanRequest.AddLoan) {
         try {
+            if (payload.saveAsDraft) {
+                payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value;
+            }
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return data['referenceId'];
         } catch (error) {

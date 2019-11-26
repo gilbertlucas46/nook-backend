@@ -5,6 +5,8 @@ import * as utils from '../../utils/index';
 import * as UniversalFunctions from '@src/utils';
 import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
+import { AdminRequest } from '@src/interfaces/admin.interface';
+
 const cert: any = config.get('jwtSecret');
 
 /**
@@ -13,13 +15,13 @@ const cert: any = config.get('jwtSecret');
  */
 class AdminStaffControllers {
 
-    async createStaff(payload: any) {
+    async createStaff(payload: AdminRequest.IaddSubAdmin) {
         try {
             const email: string = payload.email;
             const checkEmail = await ENTITY.AdminStaffEntity.checkStaffEmail(email);
             if (!checkEmail) {
                 const generateString = generateRandomString(4);
-                const genCredentials = `${payload.firstName}_${generateString}`;
+                const genCredentials = `${(payload.firstName).replace(/ /g, '')}${generateString}`;
                 const hashPassword = await utils.cryptData(genCredentials);
                 const datatoSave = {
                     email: payload.email,
@@ -27,12 +29,12 @@ class AdminStaffControllers {
                     lastName: payload.lastName,
                     password: hashPassword,
                     phoneNumber: payload.phoneNumber,
-                    staffStatus: Constant.DATABASE.STATUS.USER.ACTIVE,
+                    // staffStatus: Constant.DATABASE.STATUS.ADMIN.  ,
                     type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
                     permission: payload.permission,
                 };
                 await ENTITY.AdminStaffEntity.createOneEntity(datatoSave);
-                ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
+                await ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
             } else {
                 return Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT;
@@ -42,13 +44,24 @@ class AdminStaffControllers {
         }
     }
 
-    async addPermissions(payload: any) {
+    async updateStaff(payload: AdminRequest.IadminUpdatePermission) {
         try {
-            const dataToUpdate = {
-                $addToSet: { permission: payload.permission },
-            };
-            await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.adminId }, dataToUpdate);
-            return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200, {});
+            console.log('payloadpayloadpayload', payload);
+
+            let dataToUpdate: any = {};
+            if (payload.permission) {
+                dataToUpdate = {
+                    $set: { permission: payload.permission },
+                };
+            }
+
+            if (payload.status) {
+                dataToUpdate = {
+                    $set: { staffStatus: payload.status },
+                };
+            }
+
+            return await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, dataToUpdate);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -68,7 +81,7 @@ class AdminStaffControllers {
                 const genCredentials = `${payload.firstName}_${generateString}`;
                 const hashPassword = await utils.cryptData(genCredentials);
                 await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.adminId }, { $set: { password: hashPassword } });
-                ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
+                // ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return {};
             }
         } catch (error) {
@@ -76,18 +89,18 @@ class AdminStaffControllers {
         }
     }
 
-    async deleteStaff(payload: any, adminData: any) {
-        try {
-            if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E401);
-            } else {
-                await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, { staffStatus: CONSTANT.DATABASE.STATUS.USER.DELETED });
-                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
-            }
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    }
+    // async deleteStaff(payload: any, adminData: any) {
+    //     try {
+    //         if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+    //             return Promise.reject(Constant.STATUS_MSG.ERROR.E401);
+    //         } else {
+    //             await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, { staffStatus: CONSTANT.DATABASE.STATUS.USER.DELETED });
+    //             return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
+    //         }
+    //     } catch (error) {
+    //         return Promise.reject(error);
+    //     }
+    // }
 
     async getStaffList(payload) {
         try {

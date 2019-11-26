@@ -23,7 +23,7 @@ export class EnquiryController {
             let dataToSave = {};
             let enquiryData = {};
             let html: any;
-            let mail: any;
+            // let mail: any;
             // for the user=> agent
             if (payload.agentEmail) {
                 dataToSave = {
@@ -39,7 +39,7 @@ export class EnquiryController {
 
                 if (userData._id) dataToSave['userId'] = userData._id;
                 html = `<p> This user want to contact to you | email: ${payload.email} |phoneNumber:${payload.phoneNumber}...</p>`;
-                mail = new MailManager(payload.agentEmail, 'Enquiry', html);
+                // mail = new MailManager(payload.agentEmail, 'Enquiry', html);
                 // mail.sendMail();
                 enquiryData = ENTITY.EnquiryE.createOneEntity(dataToSave);
                 return {};
@@ -60,7 +60,7 @@ export class EnquiryController {
                 dataToSave['userId'] = userData._id;
             }
             html = `<p> this user want an enquiry of your property | email: ${payload.email} |phoneNumber:${payload.phoneNumber} | propertyId:${payload.propertyId}    ...</p>`;
-            mail = new MailManager(payload.propertyOwnerEmail, 'Enquiry', html);
+            // mail = new MailManager(payload.propertyOwnerEmail, 'Enquiry', html);
             // mail.sendMail();
             return await ENTITY.EnquiryE.createOneEntity(dataToSave);
         } catch (error) {

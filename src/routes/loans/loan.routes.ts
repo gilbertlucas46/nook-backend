@@ -136,7 +136,7 @@ export let loanRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					// userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					saveAsDraft: Joi.boolean().required(),
+					// saveAsDraft: Joi.boolean().required(),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
