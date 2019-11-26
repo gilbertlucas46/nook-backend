@@ -349,6 +349,40 @@ export class AgentClass extends BaseEntity {
                         },
                     },
                 },
+                {
+                    $lookup: {
+                        from: 'subscriptions',
+                        let: { userId: '$_id' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $and: [{ $eq: ['$userId', '$$userId'] }, { "$in": ["$featuredType", [Constant.DATABASE.FEATURED_TYPE.PROFILE]] }]
+                                    }
+                                }
+                            },
+                            { $match: { $and: [{ startDate: { "$lte": new Date().getTime() } }, { endDate: { "$gte": new Date().getTime() } }] } },
+                            {
+                                $project: {
+                                    _id: 1
+                                }
+                            }
+                        ],
+                        as: 'subscriptions'
+                    }
+                },
+                {
+					$addFields: {
+						isFeaturedProfile: {
+							"$cond": { if: { "$eq": ["$subscriptions", []] }, then: false, else: true }
+						}
+					}
+				},
+				{
+					$project: {
+						subscriptions: 0
+					}
+                }
             ];
             return await this.DAOManager.aggregateData(this.modelName, query);
         } catch (err) {
