@@ -561,6 +561,10 @@ export let DATABASE = {
 		MONTHLY: 'MONTHLY',
 		YEARLY: 'YEARLY'
 	},
+	SCREEN_TYPE: {
+		HOMEPAGE: 'HOMEPAGE',
+		SEARCH: 'SEARCH'
+	},
 	// type = YEARLY, MONTHLY
 	SUBSCRIPTION_TYPE: (type) => [{
 		type: 'FREE',

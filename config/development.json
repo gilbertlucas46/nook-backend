@@ -1,6 +1,7 @@
 {
     "environment": "development",
     "port": 7361,
+    "protocol": "https",
     "baseUrl": "https://nookdevangweb.appskeeper.com?reset=",
     "invalidUrl": "https://nookdevangweb.appskeeper.com?error=",
     "homePage": "https://nookdevangweb.appskeeper.com",
