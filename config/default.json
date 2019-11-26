@@ -34,5 +34,6 @@
     "mailUserName": "do-not-reply@appinventiv.com",
     "mailPassword": "Active!@#123",
     "mailEncryption": "tls",
-    "mailFromAddress": "do-not-reply@appinventiv.com"
+    "mailFromAddress": "do-not-reply@appinventiv.com",
+    "stripeSecretKey": "sk_test_bczq2IIJNuLftIaA79Al1wrx00jgNAsPiU"
 }

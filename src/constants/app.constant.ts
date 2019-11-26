@@ -712,6 +712,11 @@ export let STATUS_MSG = {
 				type: 'DB_ERROR',
 				message: 'DB Error',
 			},
+			PAYMENT_ERROR: {
+				statusCode: 400,
+				type: 'PAYMENT_ERROR',
+				message: 'Something went wrong, pleasee try again later!',
+			},
 			DEFAULT: {
 				statusCode: 400,
 				type: 'DEFAULT',
