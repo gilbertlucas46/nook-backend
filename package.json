@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "start": "NODE_ENV=production ts-node -r tsconfig-paths/register app.ts --fast",
-    "dev": "NODE_ENV=development ts-node -r tsconfig-paths/register app.ts --fast",
+    "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register app.ts --fast",
     "test": "NODE_ENV=testing ts-node -r tsconfig-paths/register app.ts --fast",
     "stag": "NODE_ENV=staging ts-node -r tsconfig-paths/register app.ts --fast",
     "local": "NODE_ENV=default ts-node-dev -r tsconfig-paths/register app.ts",
