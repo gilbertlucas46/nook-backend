@@ -142,6 +142,7 @@ export let transactionRoute: ServerRoute[] = [
 						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
 						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE
 					]).required(),
+					description: Joi.string().max(35).default(""),
 					billingType: Joi.string().valid([
 						Constant.DATABASE.BILLING_TYPE.MONTHLY,
 						Constant.DATABASE.BILLING_TYPE.YEARLY
@@ -200,7 +201,7 @@ export let transactionRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			let payload = request.payload;
 			try {
-				const data =  await transactionController.webhook(payload);
+				const data = await transactionController.webhook(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
