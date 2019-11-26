@@ -4,6 +4,7 @@ import * as CONSTANT from '@src/constants/app.constant';
 
 export interface ISubscription extends Document {
 	featuredType: string;
+	subscriptionType: string;
 	propertyId?: Types.ObjectId;
 	userId: Types.ObjectId;
 	startDate: number;
@@ -20,7 +21,16 @@ const subscriptionSchema = new Schema({
 			CONSTANT.DATABASE.FEATURED_TYPE.PROFILE,
 			CONSTANT.DATABASE.FEATURED_TYPE.PROPERTY,
 			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE
-		]
+		],
+		required: true
+	},
+	subscriptionType: {
+		type: String,
+		enum: [
+			CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
+			CONSTANT.DATABASE.BILLING_TYPE.YEARLY
+		],
+		required: true
 	},
 	propertyId: { type: Schema.Types.ObjectId, ref: 'Property' },
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },

@@ -254,7 +254,7 @@ class TransactionController extends BaseEntity {
 		if (!transactioData.subscriptionId) {
 			let payload: any = {
 				featuredType: transactioData.featuredType,
-				billingType: transactioData.billingType,
+				subscriptionType: transactioData.billingType,
 				userId: transactioData.userId
 			};
 			const step1 = await ENTITY.SubscriptionE.addSubscrition(payload);
