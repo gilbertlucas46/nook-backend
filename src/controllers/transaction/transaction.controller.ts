@@ -278,7 +278,7 @@ class TransactionController extends BaseEntity {
 		console.log(payload, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		const step1 = await ENTITY.TransactionE.findTransactionById({ "transactionId": payload.data.object.balance_transaction });
 		try {
-			let event = JSON.parse(payload);
+			let event = payload;
 			const paymentIntent = event.data.object;
 			// Handle the event
 			switch (event.type) {
