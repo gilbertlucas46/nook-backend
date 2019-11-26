@@ -112,9 +112,9 @@ export namespace LoanRequest {
         };
     }
     export interface DependentsInfo {
-        name: string;
-        age: number;
-        relationship: string;
+        name?: string;
+        age?: number;
+        relationship?: string;
     }
     export interface PurchasePropertyInfo {
         address: string;
@@ -154,7 +154,6 @@ export namespace LoanRequest {
         minEmploymentTenure?: number;
     }
     export interface PropertySpecification {
-
         allowedPropertyType: string;
         allowedPropertyStatus: string;
         maxLoanDurationAllowed: number;

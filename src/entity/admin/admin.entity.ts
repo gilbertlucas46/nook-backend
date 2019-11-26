@@ -27,8 +27,8 @@ export class AdminClass extends BaseEntity {
 				phoneNumber: adminData.phoneNumber,
 				type: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 			};
-			const admin: UserRequest.Register = await this.createOneEntity(dataToInsert);
-			return admin;
+			return await this.createOneEntity(dataToInsert);
+
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -56,8 +56,7 @@ export class AdminClass extends BaseEntity {
 
 	async createToken(adminData: AdminRequest.TokenPayload) {
 		try {
-			const accessToken = Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type }, cert);
-			return accessToken;
+			return Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type }, cert);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -68,13 +67,13 @@ export class AdminClass extends BaseEntity {
 			const tokenToSend = Jwt.sign(adminData.email, cert, { algorithm: 'HS256' });
 			const expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 			const criteriaForUpdatePswd = { _id: adminData._id };
-
 			const dataToUpdateForPswd = {
 				passwordResetToken: tokenToSend,
 				passwordResetTokenExpirationTime: expirationTime,
 			};
 			await this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
 			return tokenToSend;
+
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -82,8 +81,7 @@ export class AdminClass extends BaseEntity {
 
 	async getData(criteria, ProjectData) {
 		try {
-			const data = await this.DAOManager.findOne(this.modelName, criteria, ProjectData);
-			return data;
+			return await this.DAOManager.findOne(this.modelName, criteria, ProjectData);
 		} catch (error) {
 			Promise.reject(error);
 		}
@@ -215,7 +213,7 @@ export class AdminClass extends BaseEntity {
 				resolve(this.DAOManager.count('User', totalUser));
 			});
 			const articlePromise = new Promise((resolve) => {
-				resolve(this.DAOManager.count('Article', totalArticles))
+				resolve(this.DAOManager.count('Article', totalArticles));
 			});
 			const enquiryPromise = new Promise((resolve) => {
 				resolve(this.DAOManager.count('Enquiry', {}));

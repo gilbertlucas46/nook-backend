@@ -217,9 +217,7 @@ class LoanEntities extends BaseEntity {
                 },
             );
 
-            const bankList = await this.DAOManager.aggregateData(this.modelName, queryPipeline);
-            return bankList;
-
+            return await this.DAOManager.aggregateData(this.modelName, queryPipeline);
         } catch (err) {
             return Promise.reject(err);
         }

@@ -10,7 +10,6 @@ class HelpfulHelpCentre extends BaseEntity {
             payload['createdAt'] = new Date().getTime();
             payload['updatedAt'] = new Date().getTime();
             return await this.DAOManager.findAndUpdate('HelpCenterStatus', criteria, payload, { new: true, upsert: true, lean: true });
-
         } catch (error) {
             return Promise.reject(error);
         }

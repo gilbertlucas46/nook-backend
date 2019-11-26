@@ -18,7 +18,7 @@ export let savedProperty: ServerRoute[] = [
                 const data = await SavedPropertyServices.saveProperty(payload, userData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
-                console.log('error', error);
+                console.log('Error', error);
                 return UniversalFunctions.sendError(error);
             }
         },

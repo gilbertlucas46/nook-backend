@@ -173,3 +173,7 @@ export let consolelog = (identifier: string, value: any, status: boolean) => {
 		return;
 	}
 };
+
+export let invoiceNumber = (value) => {
+	return "INV" + new Date().getFullYear() + ("00000000" + value).slice(-8);
+}

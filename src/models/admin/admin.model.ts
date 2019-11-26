@@ -61,7 +61,6 @@ export const AdminSchema = new Schema(
 			],
 			default: CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
 		},
-		// type: Schema.Types.Mixed
 		permission: [{
 			moduleName: {
 				type: String, enum: [
@@ -88,8 +87,8 @@ export const AdminSchema = new Schema(
 			default: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 		},
 	}, {
-		versionKey: false,
-	},
+	versionKey: false,
+},
 );
 
 export const Admin = model<IAdmin>('Admin', AdminSchema);
