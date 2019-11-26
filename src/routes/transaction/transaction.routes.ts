@@ -194,6 +194,22 @@ export let transactionRoute: ServerRoute[] = [
 				}
 			}
 		}
+	},
+	{
+		method: 'POST',
+		path: '/v1/transaction/webhook',
+		handler: async (request, h: ResponseToolkit) => {
+			let payload = request.payload;
+			try {
+				return await transactionController.webhook(payload);
+			} catch (error) {
+				return UniversalFunctions.sendError(error);
+			}
+		},
+		options: {
+			description: 'Webhook for stripe',
+			tags: ['api', 'transaction']
+		}
 	}
 
 	// transaction

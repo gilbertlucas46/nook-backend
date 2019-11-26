@@ -40,6 +40,7 @@ export class TransactionClass extends BaseEntity {
 
 			let query: any = {};
 			query.userId = Types.ObjectId(userData._id);
+			query.status = "succeeded";
 			if (featuredType) {
 				query.featuredType = featuredType;
 			}

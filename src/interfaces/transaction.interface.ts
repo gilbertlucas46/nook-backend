@@ -8,6 +8,7 @@ export namespace TransactionRequest {
 		featuredType: string;
 		billingType: string;
 		subscriptionId?: string;
+		idempotencyKey: string;
 	}
 
 	export interface InvoiceList {
