@@ -15,9 +15,10 @@ export class SubscriptionClass extends BaseEntity {
 		try {
 			return await this.DAOManager.saveData(this.modelName, {
 				featuredType: payload.featuredType,
+				subscriptionType: payload.subscriptionType,
 				userId: payload.userId,
 				startDate: new Date().getTime(),
-				endDate: payload.billingType === Constant.DATABASE.BILLING_TYPE.MONTHLY ? new Date().getTime() + 30 * 24 * 60 * 60 * 1000 : new Date().getTime() + 365 * 24 * 60 * 60 * 1000
+				endDate: payload.subscriptionType === Constant.DATABASE.BILLING_TYPE.MONTHLY ? new Date().getTime() + 30 * 24 * 60 * 60 * 1000 : new Date().getTime() + 365 * 24 * 60 * 60 * 1000
 			});
 		} catch (error) {
 			utils.consolelog('Error', error, true);
