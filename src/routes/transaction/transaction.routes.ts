@@ -200,9 +200,10 @@ export let transactionRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			let payload = request.payload;
 			try {
-				return await transactionController.webhook(payload);
+				const data =  await transactionController.webhook(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				return UniversalFunctions.sendError(error);
+				return (UniversalFunctions.sendError(error));
 			}
 		},
 		options: {

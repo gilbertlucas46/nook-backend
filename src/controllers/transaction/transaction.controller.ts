@@ -251,6 +251,7 @@ class TransactionController extends BaseEntity {
 
 	async webhook(payload) {
 		console.log(payload, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		return {};
 	}
 }
 
