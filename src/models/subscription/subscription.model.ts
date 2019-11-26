@@ -28,6 +28,8 @@ const subscriptionSchema = new Schema({
 	endDate: { type: Number },
 	createdAt: { type: Number, required: true },
 	updatedAt: { type: Number, required: true }
+}, {
+	versionKey: false
 });
 
 export const Subscription = model<ISubscription>('Subscription', subscriptionSchema);
