@@ -229,12 +229,13 @@ class TransactionController extends BaseEntity {
 				amount: payload.amount * 100,
 				currency: payload.currency,
 				source: payload.source,
-				description: payload.description,
+				description: JSON.stringify({ "userId": userData._id, "featuredType": payload.featuredType, "billingType": payload.billingType })
 			});
-			const step2 = await ENTITY.SubscriptionE.addSubscrition(payload, userData);
-			payload.subscriptionId = step2._id;
-			const step3 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
-			return step2;
+			return step1;
+			// const step2 = await ENTITY.SubscriptionE.addSubscrition(payload, userData);
+			// payload.subscriptionId = step2._id;
+			// const step3 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
+			// return step2;
 		} catch (error) {
 			return Promise.reject(error);
 		}

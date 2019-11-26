@@ -58,7 +58,6 @@ export const AdminSchema = new Schema(
 				CONSTANT.DATABASE.STATUS.USER.BLOCKED,
 			],
 		},
-		// type: Schema.Types.Mixed
 		permission: [{
 			moduleName: {
 				type: String, enum: [
@@ -86,7 +85,9 @@ export const AdminSchema = new Schema(
 			], index: true,
 			default: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 		},
-	},
+	}, {
+	versionKey: false,
+},
 );
 
 export const Admin = model<IAdmin>('Admin', AdminSchema);

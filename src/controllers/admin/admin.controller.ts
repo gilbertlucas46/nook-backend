@@ -3,7 +3,6 @@ import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { Types } from 'mongoose';
-import { PropertyRequest } from '@src/interfaces/property.interface';
 
 /**
  * @author
@@ -96,9 +95,7 @@ export class AdminController {
 					actionTime: new Date().getTime(),
 				},
 			};
-			const updateStatus = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet);
-			return updateStatus;
-
+			return await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);

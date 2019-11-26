@@ -19,8 +19,7 @@ export class AgentClass extends BaseEntity {
             sortType = !sortType ? -1 : sortType;
             const matchObject: any = {};
             matchObject['type'] = 'AGENT';
-            let searchCriteria;
-
+            let searchCriteria: any;
             if (searchTerm) {
                 if (payload.searchBy === 'company') {
                     searchCriteria = {
@@ -159,9 +158,7 @@ export class AgentClass extends BaseEntity {
                     },
                 },
             ];
-            const agentList = await this.DAOManager.paginate(this.modelName, query, limit, page);
-            return agentList;
-
+            return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (err) {
             return Promise.reject(err);
         }
@@ -238,8 +235,7 @@ export class AgentClass extends BaseEntity {
                 },
                 { $sort: sortingType },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-            return data;
+            return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -319,9 +315,7 @@ export class AgentClass extends BaseEntity {
                     },
                 },
             ];
-            const agentInfo = await this.DAOManager.aggregateData(this.modelName, query);
-            return agentInfo;
-
+            return await this.DAOManager.aggregateData(this.modelName, query);
         } catch (err) {
             return Promise.reject(err);
         }

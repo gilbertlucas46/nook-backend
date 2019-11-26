@@ -6,6 +6,7 @@ export namespace loanReferralRequest {
         email: string;
         phoneNumber: string;
         notes: string;
+        status?: string;
     }
 
     export interface GetReferral {

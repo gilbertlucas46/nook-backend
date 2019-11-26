@@ -3,11 +3,10 @@ import { Types } from 'mongoose';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
-import * as bankConstant from '@src/constants/banks.constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-import { setTimeout } from 'timers';
-
+import * as request from 'request';
+import * as config from 'config';
 class LoanControllers extends BaseEntity {
 
     /**
@@ -37,7 +36,6 @@ class LoanControllers extends BaseEntity {
      */
     async addLoanApplication(payload: LoanRequest.AddLoan, userData) {
         try {
-
             const criteria = {
                 saveAsDraft: { $ne: true },
             };
@@ -47,9 +45,7 @@ class LoanControllers extends BaseEntity {
             if (!referenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
                 const month = ('0' + (new Date(new Date().getTime()).getMonth() + 1)).slice(-2);
-                // const date = new Date(new Date(new Date()).getTime()).getDate();
                 const date = ('0' + (new Date(new Date().getTime()).getDate() + 1)).slice(-2);
-
                 const referenceId = 1;
                 const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + Contsant.SERVER.LOAN_PRE__ZEOS + referenceId;
                 payload['referenceId'] = formattedTime;
@@ -58,20 +54,37 @@ class LoanControllers extends BaseEntity {
                 const month = new Date(referenceNumber.createdAt).getMonth().toString().substr(-2);
                 const date = new Date(referenceNumber.createdAt).getDate().toString().substr(-2);
                 const id = referenceNumber['referenceId'].split('-')[2];
-
                 referenceNumber['referenceId']++;
                 let num = (parseInt(id) + 1).toString();
-                console.log('numnumnumnumnumnum', num);
                 const remainingChars = 4 - num.length;
                 for (let i = 0; i < remainingChars; i++) {
                     num = '0' + num;
                 }
                 const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + num;
-                console.log('formattedTimeformattedTimeformattedTimeformattedTime', formattedTime);
                 payload['referenceId'] = formattedTime;
             }
 
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
+            /**
+             * Need to push data to salesforce
+             */
+
+            const salesforceData = {
+                firstName: data.personalInfo.firstName,
+                middleName: data.personalInfo.middleName || '',
+                lastName: data.personalInfo.lastName,
+                gender: data.personalInfo.gender,
+                phoneNumber: data.contactInfo.phoneNumber,
+                email: data.contactInfo.email,
+                mobileNumber: data.contactInfo.mobileNumber,
+                referenceId: data.referenceId,
+                createdAt: data.createdAt,
+            };
+
+            request.post({ url: config.get('zapier_loanUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
+                if (err) { return console.log(err); }
+                console.log('body ----', body);
+            });
             return data['referenceId'];
 
         } catch (error) {
@@ -104,34 +117,38 @@ class LoanControllers extends BaseEntity {
 
     async checkPreloanApplication(payload) {
         try {
-            const bankList = await LoanEntity.preloan(payload);
-            return bankList;
+            return await LoanEntity.preloan(payload);
         } catch (error) {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function userLoansList
+     * @description user loan list
+     * @payload : IGetUserLoanList
+     * return []
+     */
 
     async userLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
-            const data = await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
-            return data;
+            return await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
         } catch (error) {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function loanById
+     * @description user loan by id
+     * @payload : LoanById
+     * return {}
+     */
 
     async loanById(payload: LoanRequest.LoanById, userData) {
         try {
-            const criteria = {
-                _id: payload.loanId,
-            };
+            const criteria = { _id: payload.loanId };
             const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
-
-            if (!data) {
-                return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
-            } else {
-                return data;
-            }
+            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            else return data;
         } catch (error) {
             return Promise.reject(error);
         }
@@ -146,14 +163,9 @@ class LoanControllers extends BaseEntity {
 
     async adminUpdateLoanStatus(payload: AdminRequest.IUpdateLoanRequest, adminData) {
         try {
-            const criteria = {
-                _id: payload.loanId,
-            };
+            const criteria = { _id: payload.loanId };
             const dataToUpdate: any = {};
-            dataToUpdate.$set = {
-                applicationStatus: payload.status,
-            };
-
+            dataToUpdate.$set = { applicationStatus: payload.status };
             dataToUpdate.$push = {
                 approvedBy: {
                     adminId: adminData._id,
@@ -161,13 +173,9 @@ class LoanControllers extends BaseEntity {
                     approvedAt: new Date().getTime(),
                 },
             };
-
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
-            if (!data) {
-                return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
-            } else {
-                return data;
-            }
+            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            else return data;
         } catch (error) {
             return Promise.reject(error);
         }
@@ -183,23 +191,7 @@ class LoanControllers extends BaseEntity {
     async loanShuffle() {
         try {
             const bankList = await this.DAOManager.findAll('Bank', {}, { bankName: 1, iconUrl: 1, bannerUrl: 1, logoUrl: 1 });
-
-            // const bankList = bankConstant.bankinsert.map(data => {
-            //     const rObj = {};
-            //     rObj['_id'] = data._id;
-            //     rObj['bankName'] = data.bankName;
-            //     rObj['iconUrl'] = data.iconUrl;
-            //     rObj['bannerUrl'] = data.bannerUrl;
-            //     rObj['logoUrl'] = data.logoUrl;
-            //     return rObj;
-            // },
-            // ).sort(shufflefunc);
             bankList.sort(shufflefunc);
-            // const shuffle = bankList.sort(shufflefunc ? : (a, b): this => {
-            //     return 0.5 - Math.random();
-            // }
-            // sort(compareFn?: (a: T, b: T) => number): this;
-            // Array<{}>.sort(compareFn?: (a: {}, b: {}) => number): {}[]
             function shufflefunc(a: {}, b: {}) {
                 return 0.5 - Math.random();
             }
@@ -209,12 +201,4 @@ class LoanControllers extends BaseEntity {
         }
     }
 }
-
-// const shortId: string = new Date(referenceNumber.createdAt).shortId();            // const id: string = `${a.getFullYear}`
-// Date.prototype.shortId = function(this: Date) {
-//     return `${this.getFullYear().toString().substr(-2)}${this.getMonth()}${this.getDate()}`;
-// };
-// return referenceNumber;
-// return data['referenceId'];
-
 export const LoanController = new LoanControllers();

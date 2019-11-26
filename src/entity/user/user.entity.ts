@@ -10,23 +10,35 @@ export class UserClass extends BaseEntity {
 	constructor() {
 		super('User');
 	}
-	async createUser(userData: UserRequest.UserData) {
-		try {
-			const dataToInsert = {
-				name: userData.userName,
-				email: userData.email,
-				// password:userData.password ,
-				firstName: userData.firstName,
-				lastName: userData.lastName,
-				phoneNumber: userData.phoneNumber,
-			};
-			const user: UserRequest.Register = await this.createOneEntity(dataToInsert);
-			return user;
-		} catch (error) {
-			return Promise.reject(error);
-		}
-	}
+	/**
+	 * @function createUser
+	 * @description function to create user
+	 * @payload  ProfileUpdate
+	 * return object
+	 */
+	// async createUser(userData: UserRequest.UserData) {
+	// 	try {
+	// 		const dataToInsert = {
+	// 			// name: userData.userName,
+	// 			email: userData.email,
+	// 			// password:userData.password ,
+	// 			firstName: userData.firstName,
+	// 			lastName: userData.lastName,
+	// 			phoneNumber: userData.phoneNumber,
+	// 		};
+	// 		const user: UserRequest.Register = await this.createOneEntity(dataToInsert);
+	// 		return user;
+	// 	} catch (error) {
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 
+	/**
+	 * @function createToken
+	 * @description function to create accessToken
+	 * @payload  ProfileUpdate
+	 * return object
+	 */
 	async createToken(payload, userData: UserRequest.UserData) {
 		try {
 			let sessionValid = {};
@@ -55,13 +67,14 @@ export class UserClass extends BaseEntity {
 			// }
 
 			const mergeData = { ...tokenData, ...sessionValid };
-			const accessToken: any = await TokenManager.setToken(mergeData);
+			const accessToken = await TokenManager.setToken(mergeData);
 			return accessToken.accessToken;
 
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
+
 	async createPasswordResetToken(userData) {
 		try {
 			const tokenToSend = Jwt.sign(userData.email, cert, { algorithm: 'HS256' });

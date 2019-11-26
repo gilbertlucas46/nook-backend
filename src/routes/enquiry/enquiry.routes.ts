@@ -89,6 +89,7 @@ export let enquiryRoutes: ServerRoute[] = [
 					limit: Joi.number(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
+					text: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

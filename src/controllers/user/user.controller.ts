@@ -9,6 +9,8 @@ const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import * as request from 'request';
+
 export class UserController {
 	/**
 	 * @function register
@@ -119,10 +121,7 @@ export class UserController {
 			if (payload.firstName && payload.lastName && payload.type) { payload.isProfileComplete = true; }
 			else { payload.isProfileComplete = false; }
 			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
-			console.log('payloadpayloadpayloadpayload', payload);
-
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
-			console.log('updateUserupdateUserupdateUserupdateUser', updateUser);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
 				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
@@ -141,6 +140,24 @@ export class UserController {
 				};
 				ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
 			}
+			/**
+			 *  push contract to salesforce
+			 */
+			const salesforceData = {
+				userName: updateUser.userName,
+				email: updateUser.email,
+				firstName: updateUser.firstName,
+				middleName: updateUser.middleName,
+				lastName: updateUser.lastName,
+				phoneNumber: updateUser.phoneNumber,
+				type: updateUser.type,
+			};
+
+			request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
+				if (err) { return console.log(err); }
+				console.log('body ----', body);
+			});
+
 			return updateUser;
 		} catch (error) {
 			return Promise.reject(error);
@@ -264,7 +281,7 @@ export class UserController {
 	 * @payload  UserProperty
 	 * return Array
 	 */
-	 async userProperty(payload: PropertyRequest.UserProperty) {
+	async userProperty(payload: PropertyRequest.UserProperty) {
 		try {
 			const data = await ENTITY.PropertyE.suggested_property(payload);
 			return data;

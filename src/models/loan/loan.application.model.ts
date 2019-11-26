@@ -241,9 +241,13 @@ const schema = new Schema({
     referenceId: { type: String, index: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },
-});
+},
+    {
+        versionKey: false,
+    },
+);
 
-schema.pre('save', function (this: any, next: () => void) {
+schema.pre('save', function(this: any, next: () => void) {
     if (!this.referenceId) {
         // this.referenceId = `USR${++global.counters.LoanApplication}`;
     }
