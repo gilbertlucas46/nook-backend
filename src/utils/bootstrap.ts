@@ -1,12 +1,15 @@
 import { Database } from '../databases';
 import { AdminE, regionEntity } from '@src/entity';
 import { LoanApplication } from '@src/models';
+import { Transaction } from '@src/models';
+
 export class Bootstrap {
 	private dataBaseService = new Database();
 	async bootstrap() {
 		await this.dataBaseService.connectDatabase();
 		await this.initRegions();
 		AdminE.adminAccountCreator();
+		await this.initCounters();
 	}
 	async initRegions() {
 		await regionEntity.bootstrap();
@@ -22,5 +25,17 @@ export class Bootstrap {
 		// global.counters = {
 		// 	LoanApplication: userCounter,
 		// };
+	}
+
+	async initCounters() {
+		const lastTransaction = await Transaction.findOne({}).sort({ createdAt: -1 }).select({ invoiceNo: 1, _id: 0 }).exec();
+		let transactionCounter = 0;
+		if (lastTransaction) {
+			const invoiceNo = lastTransaction['invoiceNo'] || 'INV' + new Date().getFullYear();
+			transactionCounter = parseInt(invoiceNo.substr(7));
+		}
+		global.counters = {
+			Transaction: transactionCounter
+		};
 	}
 }

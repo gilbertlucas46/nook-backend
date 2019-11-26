@@ -57,8 +57,7 @@ class CityEntity extends BaseEntity {
 				},
 			},
 		];
-		const result = this.DAOManager.aggregateData(this.modelName, pipeline, {});
-		return result;
+		return this.DAOManager.aggregateData(this.modelName, pipeline, {});
 	}
 	async isEmpty(): Promise<boolean> {
 		return !await this.DAOManager.count(this.modelName, {});

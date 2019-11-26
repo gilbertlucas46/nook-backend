@@ -26,9 +26,7 @@ class ArticleController {
             payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
             payload.userRole = userData.type;
-            const articleData = await ENTITY.ArticleE.createOneEntity(payload);
-            return articleData;
-
+            return await ENTITY.ArticleE.createOneEntity(payload);
         } catch (error) {
             return Promise.reject(error);
         }

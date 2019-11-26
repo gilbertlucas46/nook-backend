@@ -1,5 +1,4 @@
 import { Schema, Document, model } from 'mongoose';
-import * as Constant from '../../constants';
 
 export interface ISavedProperty extends Document {
     userId: string;

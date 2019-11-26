@@ -6,12 +6,9 @@ class LoanReferral extends BaseEntity {
     constructor() {
         super('LoanReferral');
     }
-
     async createReferral(payload) {
         try {
-            const doc = await this.DAOManager.save<LoanReferralDocument>(this.modelName, payload);
-            console.log(';docdocdocdocdoc', doc);
-            return doc;
+            return await this.DAOManager.save<LoanReferralDocument>(this.modelName, payload);
         } catch (error) {
             console.log('Error in create Referral', error);
             return Promise.reject(error);
@@ -20,8 +17,7 @@ class LoanReferral extends BaseEntity {
 
     async getReferral(payload) {
         try {
-            const doc = await this.DAOManager.getData1<LoanReferralDocument>(this.modelName, payload, {});
-            return doc;
+            return await this.DAOManager.getData1<LoanReferralDocument>(this.modelName, payload, {});
         } catch (error) {
             console.log('Error in get Referral', error);
             return Promise.reject(error);

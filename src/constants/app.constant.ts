@@ -315,6 +315,7 @@ export let DATABASE = {
 			DISPLAY_NAME: 'IsFEATURED',
 		},
 	},
+
 	PERMISSION: {
 		TYPE: {
 			DASHBOARD: 'dashboard',
@@ -326,6 +327,7 @@ export let DATABASE = {
 			PROPERTIES: 'properties',
 		},
 	},
+
 	PROPERTY_LABEL: {
 		NONE: 'None',
 		FORECLOSURE: 'Foreclosure',
@@ -442,6 +444,7 @@ export let DATABASE = {
 		CONTACTED: 'Contact',
 		PENDING: 'Pending',
 	},
+
 	// ENQUIRY_TYPE: {
 	// 	GUEST: {
 	// 		NUMBER: 1,
@@ -454,10 +457,12 @@ export let DATABASE = {
 	// 		DISPLAY_NAME: 'Registered_User',
 	// 	},
 	// },
+
 	ENQUIRY_CATEGORY: {
 		SENT: 'sent',
 		RECEIVED: 'received',
 	},
+
 	ENQUIRY_TYPE: {
 		PROPERTY: 'property',
 		CONTACT: 'contact',
@@ -467,6 +472,7 @@ export let DATABASE = {
 		PENDING: 'PENDING',
 		RESOLVED: 'RESOLVED',
 	},
+
 	DEVICE_TYPES: {
 		IOS: 'IOS',
 		ANDROID: 'ANDROID',
@@ -521,8 +527,7 @@ export let DATABASE = {
 		},
 	},
 
-	ACTION:
-	{
+	ACTION: {
 		DEEPLINK: {
 			APP: 'APP',
 			RESET_PASSWORD: 'RESET_PASSWORD',
@@ -547,6 +552,7 @@ export let DATABASE = {
 			UPDATE_STATUS: 'UPDATE_STATUS',
 		},
 	},
+
 	RESEND_OTP_TYPE: {
 		REGISTER: 'REGISTER',
 		FORGOT: 'FORGOT',
@@ -570,6 +576,34 @@ export let DATABASE = {
 	DEEPLINK_REDIRECT_URL: {
 		APP: '/v1/deeplink?url=',
 	},
+	FEATURED_TYPE: {
+		FREE: 'FREE',
+		PROFILE: 'PROFILE',
+		PROPERTY: 'PROPERTY',
+		HOMEPAGE: 'HOMEPAGE',
+	},
+	BILLING_TYPE: {
+		MONTHLY: 'MONTHLY',
+		YEARLY: 'YEARLY',
+	},
+	// type = YEARLY, MONTHLY
+	SUBSCRIPTION_TYPE: (type) => [{
+		type: 'FREE',
+		amount: 0,
+		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
+	}, {
+		type: 'FEATURED PROPERTY',
+		amount: type === 'MONTHLY' ? 890 : 990,
+		description: 'Featured Property Upgrade - Search Results',
+	}, {
+		type: 'FEATURED PROFILE',
+		amount: type === 'MONTHLY' ? 890 : 990,
+		description: 'Featured Profile Upgrade - Search Results',
+	}, {
+		type: 'HOMEPAGE FEATURE',
+		amount: type === 'MONTHLY' ? 890 : 1799,
+		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
+	}],
 };
 
 export const EMAIL_TEMPLATE = {
@@ -924,6 +958,11 @@ export let STATUS_MSG = {
 				statusCode: 201,
 				type: 'CREATED',
 				message: 'Article Created',
+			},
+			PAYMENT_ADDED: {
+				statusCode: 201,
+				type: 'PAYMENT_ADDED',
+				message: 'Payment Done Successfully',
 			},
 		},
 	},
