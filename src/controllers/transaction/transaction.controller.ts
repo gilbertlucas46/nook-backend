@@ -5,6 +5,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 // import * as Stripe from 'stripe';
 import { StripeManager } from '@src/lib/stripe.manager';
 import * as Constant from '@src/constants/app.constant';
+import * as utils from '../../utils';
 
 // const stripe = new Stripe('sk_test_bczq2IIJNuLftIaA79Al1wrx00jgNAsPiU');
 const stripeManager = new StripeManager();
@@ -277,7 +278,7 @@ class TransactionController extends BaseEntity {
 		console.log(payload, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		const step1 = await ENTITY.TransactionE.findTransactionById({ "transactionId": payload.data.object.balance_transaction });
 		try {
-			let event = JSON.parse(payload.body);
+			let event = JSON.parse(payload);
 			const paymentIntent = event.data.object;
 			// Handle the event
 			switch (event.type) {
@@ -298,6 +299,7 @@ class TransactionController extends BaseEntity {
 			return {};
 
 		} catch (error) {
+			utils.consolelog('StripeManager', error, false);
 			error.message = Constant.STATUS_MSG.ERROR.E400.WEBHOOK_ERROR(error).message;
 			return Promise.reject(error);
 		}

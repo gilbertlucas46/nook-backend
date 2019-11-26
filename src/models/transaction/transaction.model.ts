@@ -59,6 +59,8 @@ export const transactionSchema = new Schema({
 	paymentMethod: { type: String, required: true },
 	createdAt: { type: Number, required: true },
 	updatedAt: { type: Number, required: true }
+}, {
+	versionKey: false
 });
 
 transactionSchema.pre('save', function (this: any, next: () => void) {
