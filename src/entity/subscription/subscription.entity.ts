@@ -3,7 +3,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as utils from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { TransactionRequest } from '@src/interfaces/transaction.interface';
+import { SubscriptionRequest } from '@src/interfaces/subscription.interface';
 
 export class SubscriptionClass extends BaseEntity {
 
@@ -11,11 +11,11 @@ export class SubscriptionClass extends BaseEntity {
 		super('Subscription');
 	}
 
-	async addSubscrition(payload: TransactionRequest.CreateCharge, userData) {
+	async addSubscrition(payload: SubscriptionRequest.Add) {
 		try {
 			return await this.DAOManager.saveData(this.modelName, {
 				featuredType: payload.featuredType,
-				userId: userData._id,
+				userId: payload.userId,
 				startDate: new Date().getTime(),
 				endDate: payload.billingType === Constant.DATABASE.BILLING_TYPE.MONTHLY ? new Date().getTime() + 30 * 24 * 60 * 60 * 1000 : new Date().getTime() + 365 * 24 * 60 * 60 * 1000
 			});

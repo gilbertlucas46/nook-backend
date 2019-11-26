@@ -717,6 +717,13 @@ export let STATUS_MSG = {
 				type: 'PAYMENT_ERROR',
 				message: 'Something went wrong, please try again later!',
 			},
+			WEBHOOK_ERROR: (error: any) => {
+				return {
+					statusCode: 400,
+					message: `Webhook Error: ${error.message}`,
+					type: 'WEBHOOK_ERROR',
+				};
+			},
 			DEFAULT: {
 				statusCode: 400,
 				type: 'DEFAULT',
