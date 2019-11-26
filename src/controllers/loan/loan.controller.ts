@@ -74,9 +74,8 @@ class LoanControllers extends BaseEntity {
                 middleName: data.personalInfo.middleName || '',
                 lastName: data.personalInfo.lastName,
                 gender: data.personalInfo.gender,
-                phoneNumber: data.contactInfo.phoneNumber,
+                phoneNumber: data.contactInfo.mobileNumber,
                 email: data.contactInfo.email,
-                mobileNumber: data.contactInfo.mobileNumber,
                 referenceId: data.referenceId,
                 createdAt: data.createdAt,
             };
