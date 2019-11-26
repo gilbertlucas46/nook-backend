@@ -64,7 +64,7 @@ export namespace LoanRequest {
         coBorrowerFirstName: string;
         coBorrowerMiddleName: string;
         coBorrowerLastName: string;
-        relationship: string;
+        relationship?: string;
     }
     export interface BankInfo {
         iconUrl: string;
@@ -133,7 +133,7 @@ export namespace LoanRequest {
         purchasePropertyInfo: PurchasePropertyInfo;
         nookAgent: string;
     }
-    export interface AddLoan extends PropertyDocuments, EmploymentInfo, DependentsInfo, LoanDetails, ContactInfo, BankInfo, PersonalInfo {
+    export interface AddLoan extends PropertyDocuments, EmploymentInfo, DependentsInfo, LoanDetails,  PersonalInfo, ContactInfo, BankInfo {
         loanId?: string;
         saveAsDraft?: boolean;
         personalInfo?: PersonalInfo;
