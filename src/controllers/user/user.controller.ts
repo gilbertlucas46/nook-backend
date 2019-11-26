@@ -10,6 +10,7 @@ import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import * as request from 'request';
+const pswdCert: string = config.get('forgetPwdjwtSecret');
 
 export class UserController {
 	/**
@@ -41,9 +42,17 @@ export class UserController {
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
 					const userResponse = UniversalFunctions.formatUserData(User);
-					const html = `<html><head><title> Nook user Register | Thanx for Registering with us...</title></head></html>`;
-					const mail = new MailManager(payload.email, 'nook welcomes you', html);
-					mail.sendMail();
+					// const html = `<html><head><title> Nook user Register | Thanx for Registering with us...</title></head></html>`;
+					// const mail = new MailManager(payload.email, 'nook welcomes you', html);
+					// const mail = new MailManager(payload.email, 'nook welcomes you', html);
+					const mail = new MailManager();
+					// mail.sendMail({ receiverEmail: payload['email'], subject: 'nook welcomes you', html: html });
+					const sendObj = {
+						receiverEmail: payload.email,
+						subject: 'nook welcomes you',
+						userName: payload.userName,
+					};
+					mail.welcomeMail(sendObj);
 					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
 				}
 			}
@@ -172,14 +181,21 @@ export class UserController {
 	async forgetPassword(payload: UserRequest.ForgetPassword) {
 		try {
 			const criteria = { $or: [{ userName: payload.email }, { email: payload.email }] };
-			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id']);
+			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id', 'userName']);
 			if (!userData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
 				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
 				const url = config.get('host') + Constant.SERVER.FORGET_PASSWORD_URL + passwordResetToken;
-				const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
-				const mail = new MailManager(userData.email, 'forGet password', html);
-				mail.sendMail();
+				// const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
+				const sendObj = {
+					receiverEmail: payload.email,
+					subject: 'reset password Nook',
+					token: passwordResetToken,
+					url,
+					userName: userData.userName,
+				};
+				const mail = new MailManager();
+				mail.forgetPassword(sendObj);
 				return {};
 			}
 		} catch (error) {
@@ -217,7 +233,7 @@ export class UserController {
 	 */
 	async verifyLink(payload) {
 		try {
-			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			const result: any = Jwt.verify(payload.link, pswdCert, { algorithms: ['HS256'] });
 			const userData = await ENTITY.UserE.getOneEntity(result.email, {});
 			if (!userData) { return Constant.STATUS_MSG.ERROR.E400.INVALID_ID; } else {
 				const criteria = { email: result };
@@ -239,7 +255,7 @@ export class UserController {
 	 */
 	async verifyLinkForResetPwd(payload) {
 		try {
-			const result = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			const result = Jwt.verify(payload.link, pswdCert, { algorithms: ['HS256'] });
 			if (!result) { return Promise.reject(); }
 			const checkAlreadyUsedToken: any = await ENTITY.UserE.getOneEntity({ email: result }, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 			if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null) {

@@ -579,7 +579,7 @@ export class PropertyClass extends BaseEntity {
 				{
 					$lookup: {
 						from: 'cities',
-						let: { cityId: cityId },
+						let: { cityId },
 						pipeline: [
 							{
 								$match: {
@@ -648,7 +648,7 @@ export class PropertyClass extends BaseEntity {
 
 			return {
 				latestProperty,
-				agents: agents['data'],	//agents,
+				agents: agents['data'],	// agents,
 				featuredCity,
 			};
 		}

@@ -3,6 +3,7 @@ import * as config from 'config';
 import * as TokenManager from '@src/lib';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
+const pswdCert: string = config.get('forgetPwdjwtSecret');
 import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '@src/constants';
 
@@ -77,7 +78,7 @@ export class UserClass extends BaseEntity {
 
 	async createPasswordResetToken(userData) {
 		try {
-			const tokenToSend = Jwt.sign(userData.email, cert, { algorithm: 'HS256' });
+			const tokenToSend = Jwt.sign(userData.email, pswdCert, { algorithm: 'HS256' });
 			const expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 
 			const criteriaForUpdatePswd = { _id: userData._id };
@@ -85,7 +86,7 @@ export class UserClass extends BaseEntity {
 				passwordResetToken: tokenToSend,
 				passwordResetTokenExpirationTime: expirationTime,
 			};
-			await this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
+			this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
 			return tokenToSend;
 		} catch (error) {
 			return Promise.reject(error);

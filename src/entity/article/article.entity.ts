@@ -168,12 +168,12 @@ export class ArticleClass extends BaseEntity {
     async getArticlelist(payload: ArticleRequest.GetArticle) {
         try {
             let { page, limit, sortType } = payload;
-            const { articleId, sortBy } = payload;
+            const { articleId, sortBy, searchTerm, fromDate, toDate } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-            let query;
+            let query: any = {};
             sortingType = {
                 updatedAt: sortType,
             };
@@ -194,11 +194,18 @@ export class ArticleClass extends BaseEntity {
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
                 };
             }
+            if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
+            if (fromDate && !toDate) { query['createdAt'] = { $gte: fromDate }; }
+            if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
+
+            if (searchTerm) {
+                query['title'] = searchTerm;
+            }
+
             const pipeline = [
                 { $match: query },
                 { $sort: sortingType },
             ];
-
             const articleList = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
             return articleList;
         }

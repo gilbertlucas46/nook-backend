@@ -9,7 +9,7 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Hapi from 'hapi';
 import { LoanRequest } from '@src/interfaces/loan.interface';
-
+import * as ENTITY from '@src/entity';
 export let adminProfileRoute: ServerRoute[] = [
 	/**
 	 * @description:Login via mail
@@ -29,12 +29,13 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'login to application',
 			tags: ['api', 'anonymous', 'Admin', 'login'],
-			// auth: 'BasicAuth'
+			// auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					email: Joi.string().lowercase().email().trim().required(),
 					password: Joi.string().min(6).max(16).trim().required(),
 				},
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -64,11 +65,12 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'forget-password to admin',
 			tags: ['api', 'anonymous', 'admin', 'forget-password', 'link'],
-			// auth: 'AdminAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					email: Joi.string().lowercase().email().trim().required(),
 				},
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -295,10 +297,11 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 					]),
 					permissionType: Joi.string().valid([
-						Constant.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
-						Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-						Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-						Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
+						// Constant.DATABASE.PERMISSION.TYPE.LOAN,
+						// Constant.DATABASE.PERMISSION.TYPE.DASHBOARD,
+						// Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER,
+
 					]),
 					property_type: Joi.string().trim().valid([
 						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
@@ -351,10 +354,10 @@ export let adminProfileRoute: ServerRoute[] = [
 				params: {
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					permissionType: Joi.string().valid([
-						Constant.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
-						Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-						Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-						Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
+						// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+						// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+						// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
 					]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -405,10 +408,10 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 					]),
 					permissionType: Joi.string().valid([
-						Constant.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
-						Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-						Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-						Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+						Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
+						// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+						// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+						// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
 					]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -465,7 +468,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.DASHBOARD);
+				// 	await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.DASHBOARD);
 				// }
 				const registerResponse = await AdminService.dashboard(adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -500,7 +503,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: any = request.query;
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// 	await ENTITY.AdminStaffEntity.checkPermission(adminData.permission);
 				// }
 				const registerResponse = await LoanController.userLoansList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -515,10 +518,19 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				query: {
 					status: Joi.string().valid([
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
 					]),
+					amountFrom: Joi.number(),
+					amountTo: Joi.number(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
 					// sortBy: Joi.string(),
@@ -564,9 +576,16 @@ export let adminProfileRoute: ServerRoute[] = [
 				params: {
 					loanId: Joi.string(),
 					status: Joi.string().valid([
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
 					]),
 					// type: Joi.string().valid('admin', 'user')
 				},
