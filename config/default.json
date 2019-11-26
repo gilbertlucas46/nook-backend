@@ -1,6 +1,7 @@
 {
     "environment": "development",
     "host": "http://localhost:7361/",
+    "protocol": "http",
     "port": 7361,
     "dbConfig": {
         "dbPwd": "Iidjsi@#1!",

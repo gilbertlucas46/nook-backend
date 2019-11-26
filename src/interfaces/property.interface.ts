@@ -72,6 +72,8 @@ export namespace PropertyRequest {
 			property_for_displayName?: any;
 		};
 		isFeatured: boolean;
+		isHomePageFeatured: boolean;
+		subscriptionId?: string;
 		propertyImages: string[];
 	}
 
@@ -111,6 +113,7 @@ export namespace PropertyRequest {
 		property_features?: string[];
 		byRegion?: string;
 		byCity?: string;
+		screenType?: string;
 	}
 	export interface UpdatePropertyByAction {
 		propertyId: string;
