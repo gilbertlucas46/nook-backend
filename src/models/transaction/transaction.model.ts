@@ -38,7 +38,7 @@ export const transactionSchema = new Schema({
 		default: ""
 	},
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
-	invoiceNo: { type: String, required: true },
+	invoiceNo: { type: String },
 	featuredType: {
 		type: String,
 		enum: [
