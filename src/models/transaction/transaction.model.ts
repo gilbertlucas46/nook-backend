@@ -5,6 +5,7 @@ import { invoiceNumber } from '../../utils/index';
 
 export interface ITransaction extends Document {
 	transactionId: string;
+	idempotencyKey: string;
 	subscriptionId: Types.ObjectId;
 	amount: number;
 	currency: string;
@@ -23,12 +24,13 @@ export interface ITransaction extends Document {
 
 export const transactionSchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true, auto: true },
-	transactionId: { type: String, index: true, required: true }, // balance_transaction
-	subscriptionId: { type: Schema.Types.ObjectId, required: true, ref: 'Subscription' },
+	transactionId: { type: String, index: true }, // balance_transaction
+	idempotencyKey: { type: String, default: '' },
+	subscriptionId: { type: Schema.Types.ObjectId, ref: 'Subscription' },
 	amount: { type: Number, required: true },
 	currency: { type: String },
-	chargeId: { type: String, index: true, required: true },
-	cardId: { type: String, required: true },
+	chargeId: { type: String, index: true },
+	cardId: { type: String },
 	receiptUrl: { type: String },
 	description: { type: String },
 	status: {

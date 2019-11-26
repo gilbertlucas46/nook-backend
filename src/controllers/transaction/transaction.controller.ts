@@ -4,6 +4,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 // import * as Contsant from '@src/constants/app.constant';
 // import * as Stripe from 'stripe';
 import { StripeManager } from '@src/lib/stripe.manager';
+import { generateRandomString } from '@src/utils';
 
 // const stripe = new Stripe('sk_test_bczq2IIJNuLftIaA79Al1wrx00jgNAsPiU');
 const stripeManager = new StripeManager();
@@ -228,7 +229,7 @@ class TransactionController extends BaseEntity {
 				amount: payload.amount * 100,
 				currency: payload.currency,
 				source: payload.source,
-				description: payload.description
+				description: payload.description,
 			});
 			const step2 = await ENTITY.SubscriptionE.addSubscrition(payload, userData);
 			payload.subscriptionId = step2._id;
@@ -245,6 +246,10 @@ class TransactionController extends BaseEntity {
 		} catch (error) {
 			return Promise.reject(error);
 		}
+	}
+
+	async webhook(payload) {
+		console.log(payload, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
 }
 
