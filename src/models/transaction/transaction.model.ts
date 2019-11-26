@@ -1,5 +1,4 @@
 import { Schema, model, Types, Document } from 'mongoose';
-
 import * as CONSTANT from '@src/constants/app.constant';
 import { invoiceNumber } from '../../utils/index';
 
@@ -35,8 +34,8 @@ export const transactionSchema = new Schema({
 	description: { type: String },
 	status: {
 		type: String,
-		enum: ["succeeded"],
-		required: true
+		enum: ['succeeded'],
+		required: true,
 	},
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
 	invoiceNo: { type: String },
@@ -45,22 +44,22 @@ export const transactionSchema = new Schema({
 		enum: [
 			CONSTANT.DATABASE.FEATURED_TYPE.PROFILE,
 			CONSTANT.DATABASE.FEATURED_TYPE.PROPERTY,
-			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE
-		]
+			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE,
+		],
 	},
 	billingType: {
 		type: String,
 		enum: [
 			CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
-			CONSTANT.DATABASE.BILLING_TYPE.YEARLY
-		]
+			CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
+		],
 	},
 	paymentMethod: { type: String },
 	createdAt: { type: Number, required: true },
-	updatedAt: { type: Number, required: true }
+	updatedAt: { type: Number, required: true },
 });
 
-transactionSchema.pre('save', function (this: any, next: () => void) {
+transactionSchema.pre('save', function(this: any, next: () => void) {
 	if (!this.invoiceNo) {
 		this.invoiceNo = invoiceNumber(++global.counters.Transaction);
 	}
