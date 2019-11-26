@@ -12,8 +12,8 @@ export let cityRoutes: ServerRoute[] = [
         path: '/v1/cities/popular',
         handler: async (req: Request, h: ResponseToolkit) => {
             try {
-                const data_to_send = await CityService.popularCities(req.query as PropertyRequest.IPaginate);
-
+                const payload: PropertyRequest.IPaginate = req.query as any;
+                const data_to_send = await CityService.popularCities(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data_to_send));
             } catch (error) {
                 return (UniversalFunctions.sendError(error));
@@ -25,6 +25,7 @@ export let cityRoutes: ServerRoute[] = [
             auth: 'DoubleAuth',
             validate: {
                 query: {
+                    propertyType: Joi.number(),
                     page: Joi.number(),
                     limit: Joi.number(),
                 },

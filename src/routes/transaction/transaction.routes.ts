@@ -123,7 +123,7 @@ export let transactionRoute: ServerRoute[] = [
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: any = request.payload;
 				const data = await transactionController.createCharge(payload, userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PAYMENT_ADDED, data));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PAYMENT_ADDED, {}));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
@@ -137,7 +137,6 @@ export let transactionRoute: ServerRoute[] = [
 					amount: Joi.number(),
 					currency: Joi.string().valid('php'),
 					source: Joi.string().default("tok_visa"),
-					description: Joi.string().max(50),
 					featuredType: Joi.string().valid([
 						Constant.DATABASE.FEATURED_TYPE.PROFILE,
 						Constant.DATABASE.FEATURED_TYPE.PROPERTY,

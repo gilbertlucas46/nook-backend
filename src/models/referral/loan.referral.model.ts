@@ -13,6 +13,7 @@ export const referralSchema = new Schema({
     status: {
         type: String,
         enum: [
+            Constant.DATABASE.REFERRAL_STATUS.PENDING,
             Constant.DATABASE.REFERRAL_STATUS.ACKNOWLEDGE,
             Constant.DATABASE.REFERRAL_STATUS.CONTACTED,
         ],
@@ -33,6 +34,9 @@ export const referralSchema = new Schema({
     }],
     createdAt: { type: Number, required: true, default: new Date().getTime() },
     updatedAt: { type: Number, required: true, default: new Date().getTime() },
-});
+}, {
+        versionKey: false,
+    },
+);
 
 export const LoanReferral: Model<LoanReferralDocument> = model('referral', referralSchema);

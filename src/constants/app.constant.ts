@@ -35,7 +35,6 @@ export let DATABASE = {
 		PAYMENT: 'payment',
 	},
 
-
 	LOAN_APPLICATION_STATUS: {
 		PENDING: 'pending',
 		REJECTED: 'rejected',
@@ -288,6 +287,7 @@ export let DATABASE = {
 			DISPLAY_NAME: 'IsFEATURED',
 		},
 	},
+
 	PERMISSION: {
 		TYPE: {
 			DASHBOARD: 'dashboard',
@@ -302,6 +302,7 @@ export let DATABASE = {
 			PROPERTY: 'property',
 		},
 	},
+
 	PROPERTY_LABEL: {
 		NONE: 'None',
 		FORECLOSURE: 'Foreclosure',
@@ -424,6 +425,7 @@ export let DATABASE = {
 		CONTACTED: 'Contact',
 		PENDING: 'Pending',
 	},
+
 	// ENQUIRY_TYPE: {
 	// 	GUEST: {
 	// 		NUMBER: 1,
@@ -436,10 +438,12 @@ export let DATABASE = {
 	// 		DISPLAY_NAME: 'Registered_User',
 	// 	},
 	// },
+
 	ENQUIRY_CATEGORY: {
 		SENT: 'sent',
 		RECEIVED: 'received',
 	},
+
 	ENQUIRY_TYPE: {
 		PROPERTY: 'property',
 		CONTACT: 'contact',
@@ -449,6 +453,7 @@ export let DATABASE = {
 		PENDING: 'PENDING',
 		RESOLVED: 'RESOLVED',
 	},
+
 	DEVICE_TYPES: {
 		IOS: 'IOS',
 		ANDROID: 'ANDROID',
@@ -497,8 +502,7 @@ export let DATABASE = {
 		},
 	},
 
-	ACTION:
-	{
+	ACTION: {
 		DEEPLINK: {
 			APP: 'APP',
 			RESET_PASSWORD: 'RESET_PASSWORD',
@@ -523,6 +527,7 @@ export let DATABASE = {
 			UPDATE_STATUS: 'UPDATE_STATUS',
 		},
 	},
+
 	RESEND_OTP_TYPE: {
 		REGISTER: 'REGISTER',
 		FORGOT: 'FORGOT',
@@ -610,7 +615,7 @@ export let STATUS_MSG = {
 			INVALID_CURRENT_PASSWORD: {
 				statusCode: 400,
 				type: 'INVALID_CURRENT_PASSWORD',
-				message: 'Your Current Password did not match with new Password',
+				message: 'Password did not match with old Password',
 			},
 			USER_NAME_ALREDY_TAKEN: {
 				statusCode: 400,
@@ -919,7 +924,7 @@ export let STATUS_MSG = {
 			PAYMENT_ADDED: {
 				statusCode: 201,
 				type: 'PAYMENT_ADDED',
-				message: 'Payment Added Successfully',
+				message: 'Payment Done Successfully',
 			},
 		},
 	},

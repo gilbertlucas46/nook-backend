@@ -77,27 +77,35 @@ export class PropertyController {
 
 				delete payload.propertyId;
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
-				// const [updateData, enquiryData] = await Promise.all(promiseArray);
 				return { updateData };
 			}
-			const propertyData = await ENTITY.PropertyE.createOneEntity(payload);
-			return propertyData;
-
+			return await ENTITY.PropertyE.createOneEntity(payload);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
+	/**
+	 * @function searchProperties
+	 * @description user search property
+	 * @payload : SearchProperty
+	 * return {}
+	 */
 
 	async searchProperties(payload: PropertyRequest.SearchProperty) {
 		try {
-			const propertyData = await ENTITY.PropertyE.getPropertyList(payload);
-			return propertyData;
+			return await ENTITY.PropertyE.getPropertyList(payload);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
+	/**
+	 * @function nearbyProperties
+	 * @description near by property
+	 * @payload : SearchProperty
+	 * return []
+	 */
 
 	async nearbyProperties(payload: PropertyRequest.SearchProperty) {
 		try {
@@ -120,8 +128,7 @@ export class PropertyController {
 			//         }
 			//     }
 			// ]);
-			const propertyData = await ENTITY.PropertyE.getPropertyList(payload);
-			return propertyData;
+			return await ENTITY.PropertyE.getPropertyList(payload);
 		} catch (err) {
 			utils.consolelog('error', err, true);
 			return Promise.reject(err);
@@ -136,8 +143,7 @@ export class PropertyController {
 
 	async userPropertyByStatus(payload: PropertyRequest.PropertyByStatus, userData: UserRequest.UserData) {
 		try {
-			const data = await ENTITY.UserPropertyE.getUserPropertyList(payload, userData);
-			return data;
+			return await ENTITY.UserPropertyE.getUserPropertyList(payload, userData);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -192,9 +198,7 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return updateData;
 			}
-
-			const propertyData = await ENTITY.PropertyE.createOneEntity(payload);
-			return propertyData;
+			return await ENTITY.PropertyE.createOneEntity(payload);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -259,19 +263,16 @@ export class PropertyController {
 					},
 				};
 			}
-			const update = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true });
-			return update;
+			return await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true });
 		} catch (error) {
-			utils.consolelog('error', error, true);
+			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
 		}
 	}
 
 	async getCityBasedData(payload: UserRequest.RecentProperty) {
 		try {
-			const getPopularCityData = await ENTITY.PropertyE.getPropertyViaCity(payload);
-			// const getPropertyViaCity = await
-			return getPopularCityData;
+			return await ENTITY.PropertyE.getPropertyViaCity(payload);
 		} catch (error) {
 			return Promise.reject(error);
 		}

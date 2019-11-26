@@ -85,8 +85,7 @@ export class UserPropertyClass extends BaseEntity {
 				},
 				{ $sort: sortingType },
 			];
-			const propertyList = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-			return propertyList;
+			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 		} catch (error) {
 			return Promise.reject(error);
 		}

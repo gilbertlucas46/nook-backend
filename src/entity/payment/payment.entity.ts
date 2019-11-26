@@ -11,23 +11,12 @@ export class PaymentClass extends BaseEntity {
 
     async cardInfo(payload, cusData): Promise<any> {
         try {
-            console.log('cusDatacusDatacusDatacusDatacusDatacusData', cusData);
-
             const cardInfo = await stripe.tokens.retrieve(payload.cardToken);
-            console.log('cardInfocardInfocardInfo', cardInfo);
             const isAnyMatched: boolean = cusData.cardDetail.some((doc): boolean => {
-                console.log('docdocdocdocdoc', doc);
                 return doc.fingerprint === cardInfo['card']['fingerprint'];
             });
-            // data['fingerPrint'] =  ;
-            console.log('isAnyMatchedisAnyMatched/isAnyMatched', isAnyMatched);
-
-            // return isAnyMatched;
-            if (isAnyMatched) {
-                return isAnyMatched;
-            } else {
-                return cardInfo;
-            }
+            if (isAnyMatched) return isAnyMatched;
+            else return cardInfo;
         } catch (error) {
             return Promise.reject(error);
         }

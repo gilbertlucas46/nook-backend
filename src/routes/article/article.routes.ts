@@ -188,9 +188,9 @@ export let articleRoutes: ServerRoute[] = [
                     ...request.params,
                 };
 
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                }
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
                 const registerResponse = await ArticleService.updateArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200, registerResponse));
             } catch (error) {
@@ -220,7 +220,7 @@ export let articleRoutes: ServerRoute[] = [
                         Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
                         // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
                     ]).required(),
-                    isFeatured: Joi.boolean(),
+                    isFeatured: Joi.boolean().default(false),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -324,9 +324,9 @@ export let articleRoutes: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload: ArticleRequest.DeleteArticle = request.params as any;
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                }
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
                 const deletResponse = await ArticleService.deleteArticle(payload);
                 // { "acknowledged" : true, "deletedCount" : 7 }
                 if (deletResponse['acknowledged'] === true || deletResponse['deletedCount'] > 0) {

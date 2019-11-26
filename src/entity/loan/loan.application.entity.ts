@@ -34,7 +34,7 @@ class LoanApplicationE extends BaseEntity {
 
     async getUserLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
-            let { page, limit, sortType, sortBy } = payload;
+            let { page, limit, sortType, sortBy, status } = payload;
             const { fromDate, toDate } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
@@ -56,33 +56,29 @@ class LoanApplicationE extends BaseEntity {
             if (sortBy) {
                 // switch (sortBy) {
                 // case 'Date':
+                // sortBy = 'Date';
+                // sortingType = {
+                //     createdAt: sortType,
+                // };
+
+            } else {
                 sortBy = 'Date';
                 sortingType = {
                     createdAt: sortType,
                 };
-                // break;
-                // default:
-                //     sortBy = 'createdAt';
-                //     sortingType = {
-                //         updatedAt: sortType,
-                //     };
-                //     break;
-                // }
             }
 
-            // if (status) {
-            //     matchObject['applicationStatus'] = status;
-            // }
+            if (status) {
+                matchObject['applicationStatus'] = status;
+            }
 
-            // else {
-            //     matchObject.$match = {
-            //         $or: [
-            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED },
-            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING },
-            //             { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED },
-            //         ],
-            //     };
-            // }
+            else {
+                matchObject['$or'] = [
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED },
+                ];
+            }
 
             if (fromDate && toDate) {
                 matchObject['createdAt'] = {
@@ -101,7 +97,7 @@ class LoanApplicationE extends BaseEntity {
                 };
             }
 
-            promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit }));
+            promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit, sort: sortingType }));
             promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
             const [data, total] = await Promise.all(promiseArray);
             return {
@@ -109,6 +105,7 @@ class LoanApplicationE extends BaseEntity {
                 total,
             };
         } catch (error) {
+            console.log('Error', error);
             return Promise.reject(error);
         }
     }

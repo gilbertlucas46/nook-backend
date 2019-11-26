@@ -124,7 +124,7 @@ class LoanEntities extends BaseEntity {
                         loanDurationYearly: payload.loan.term,
                         loanApplicationFeeAmount: 0,
                         fixingPeriod: payload.loan.fixingPeriod,
-                        grossIncome : totalMonthlyIncome,
+                        grossIncome: totalMonthlyIncome,
                     },
                 },
                 {
@@ -172,7 +172,7 @@ class LoanEntities extends BaseEntity {
                         loanDurationMonthly: 1,
                         loanForCancelledCreditCard: 1,
                         fixingPeriod: 1,
-                        grossIncome :1,
+                        grossIncome: 1,
                     },
                 },
                 {
@@ -217,9 +217,7 @@ class LoanEntities extends BaseEntity {
                 },
             );
 
-            const bankList = await this.DAOManager.aggregateData(this.modelName, queryPipeline);
-            return bankList;
-
+            return await this.DAOManager.aggregateData(this.modelName, queryPipeline);
         } catch (err) {
             return Promise.reject(err);
         }

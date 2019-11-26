@@ -16,7 +16,6 @@ class ArticleController {
      * @function createArticle
      * @description admin creata the aticle
      * @payload  CreateArticle
-     * return {}
      */
 
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
@@ -25,9 +24,7 @@ class ArticleController {
             payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
             payload.userRole = userData.type;
-            const articleData = await ENTITY.ArticleE.createOneEntity(payload);
-            return articleData;
-
+            return await ENTITY.ArticleE.createOneEntity(payload);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -42,8 +39,7 @@ class ArticleController {
 
     async getCategoryWiseArticles(payload: ArticleRequest.GetArticle) {
         try {
-            const articleData = await ENTITY.ArticleE.allArticlesBasedOnCategory(payload);
-            return articleData;
+            return await ENTITY.ArticleE.allArticlesBasedOnCategory(payload);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -61,9 +57,7 @@ class ArticleController {
                 _id: payload.articleId,
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
-            if (!article) {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
-            }
+            if (!article) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             return article;
         } catch (error) {
             return Promise.reject(error);
@@ -78,8 +72,7 @@ class ArticleController {
 
     async getArticle(payload: ArticleRequest.GetArticle) {
         try {
-            const articleData = await ENTITY.ArticleE.getArticlelist(payload);
-            return articleData;
+            return await ENTITY.ArticleE.getArticlelist(payload);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -97,8 +90,8 @@ class ArticleController {
                 _id: payload.articleId,
             };
             const dataToSet: any = {};
+            // if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
             const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
-
             dataToSet.$set = {
                 title: payload.title,
                 categoryId: payload.categoryId,
@@ -107,8 +100,8 @@ class ArticleController {
                 userId: adminData._id,
                 userRole: adminData.type,
                 description: payload.description,
+                isFeatured: payload.isFeatured,
             };
-            if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
             dataToSet.$push = {
                 articleAction: {
                     userRole: adminData.type,
@@ -116,9 +109,7 @@ class ArticleController {
                     actionTime: new Date().getTime(),
                 },
             };
-            const updateStatus = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
-            return updateStatus;
-
+            return await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -137,7 +128,6 @@ class ArticleController {
                 _id: payload.articleId,
             };
             return await ENTITY.ArticleE.removeEntity(criteria);
-
         } catch (error) {
             return Promise.reject(error);
         }

@@ -69,12 +69,14 @@ const articleSchema = new Schema({
     },
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
-    isFeatured: { type: Boolean },
+    isFeatured: { type: Boolean, default: false },
     articleAction: [{
         userRole: { type: String },
         userId: { type: String },
         actionTime: { type: Number },
     }],
+}, {
+    versionKey: false,
 });
 
 export const Article = model<IEnquiry>('Article', articleSchema);

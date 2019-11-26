@@ -21,8 +21,7 @@ class RegionEntity extends BaseEntity {
 	 * @param data entity info
 	 */
 	async store(payload: IRegion[]): Promise<RegionDocument[]> {
-		const documents = await this.DAOManager.store<RegionDocument>(this.modelName, payload);
-		return documents;
+		return await this.DAOManager.store<RegionDocument>(this.modelName, payload);
 	}
 
 	async isEmpty(): Promise<boolean> {

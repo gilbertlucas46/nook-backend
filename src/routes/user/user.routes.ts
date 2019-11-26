@@ -371,7 +371,6 @@ export let userRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload = request.query;
 				const responseData = await UserService.dashboard(userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {

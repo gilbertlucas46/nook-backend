@@ -58,6 +58,8 @@ const citySchema = new Schema({
 	images: [String],
 	createdAt: { type: Number, required: true, default: new Date().getTime() },
 	updatedAt: { type: Number, required: true, default: new Date().getTime() },
-});
+}, {
+		versionKey: false,
+	});
 
 export const City: Model<CityDocument> = model('cities', citySchema);

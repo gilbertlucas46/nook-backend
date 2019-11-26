@@ -19,11 +19,8 @@ class AdminStaffE extends BaseEntity {
 
     async checkPermission(permission: string) {
         const data = await this.getOneEntity({ permission: { $in: permission } }, {});
-        if (!data) {
-            return Promise.reject(CONSTANT.STATUS_MSG.ERROR.E401);
-        } else {
-            return data;
-        }
+        if (!data) return Promise.reject(CONSTANT.STATUS_MSG.ERROR.E401);
+        else return data;
     }
 
     async fetchAdminEmail(id: string) {
@@ -51,7 +48,7 @@ class AdminStaffE extends BaseEntity {
             sortCondition[payload.sortBy] = parseInt(payload.sortType);
             pipeline.push({ $sort: sortCondition });
         }
-
+        matchCondition['type'] = CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE;
         if (fromDate || toDate) {
             matchCondition['createdAt'] = {};
             if (fromDate) matchCondition['createdAt']['$gte'] = moment(fromDate).startOf('day').toDate();

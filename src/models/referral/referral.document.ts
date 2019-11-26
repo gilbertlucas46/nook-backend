@@ -1,16 +1,4 @@
 import { Document, Types } from 'mongoose';
-// import { RegionDocument } from '../region';
-// import { Location } from '@src/interfaces/region.interface';
-
-// export interface ICity {
-// 	name: string;
-// 	region: Types.ObjectId;
-// 	location: Location.ILocationPoint;
-// 	images?: string[];
-// 	createdAt?: number;
-// 	updatedAt?: number;
-// }
-
 export interface ILoanReferral {
     firstName: string;
     lastName: string;
@@ -20,10 +8,7 @@ export interface ILoanReferral {
     createdAt: number;
     updatedAt: number;
     userId: Types.ObjectId;
+    status: string;
 }
-
-// export interface ICityRegion {
-// 	region: RegionDocument;
-// }
 
 export interface LoanReferralDocument extends Document, ILoanReferral { }
