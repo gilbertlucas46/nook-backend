@@ -11,7 +11,7 @@ class CityController {
 
     async popularCities(payload: PropertyRequest.IPaginate) {
         try {
-            return await ENTITY.PropertyE.popularCities(payload);
+            return await ENTITY.cityEntity.getPopularCity(payload);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
