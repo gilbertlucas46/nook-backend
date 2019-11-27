@@ -506,7 +506,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await ENTITY.AdminStaffEntity.checkPermission(adminData.permission);
 				// }
-				const registerResponse = await LoanController.userLoansList(payload, adminData);
+				const registerResponse = await LoanController.adminLoansList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));

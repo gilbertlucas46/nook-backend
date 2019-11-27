@@ -139,6 +139,22 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    /**
+    * @function adminLoansList
+    * @description admin loan list
+    * @payload : IGetUserLoanList
+    * return []
+    */
+
+    async adminLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
+        try {
+            return await ENTITY.LoanApplicationEntity.getAdminLoanList(payload, userData);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
     /**
      * @function loanById
      * @description user loan by id
