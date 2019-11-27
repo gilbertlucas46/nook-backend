@@ -181,8 +181,6 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
-							Constant.DATABASE.RELATIONSHIP.SON,
-							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
 					bankInfo: Joi.object().keys({
@@ -311,8 +309,6 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
-							Constant.DATABASE.RELATIONSHIP.SON,
-							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
 					propertyDocuments: Joi.object().keys({
@@ -471,15 +467,6 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.EDUCATION_BACKGROUND.COLLEGE,
 							Constant.DATABASE.EDUCATION_BACKGROUND.VOCATIONAL,
 						]),
-						applicationStatus: Joi.string().valid([
-							Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
-							Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
-							Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
-							Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
-							Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
-							Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
-							Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
-						]),
 						civilStatus: Joi.string().valid([
 							Constant.DATABASE.CIVIL_STATUS.SINGLE,
 							Constant.DATABASE.CIVIL_STATUS.WIDOW,
@@ -500,8 +487,6 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
-							Constant.DATABASE.RELATIONSHIP.SON,
-							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
 					bankInfo: Joi.object().keys({
@@ -630,8 +615,6 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
-							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
-							Constant.DATABASE.RELATIONSHIP.SON,
 						]),
 					}),
 					propertyDocuments: Joi.object().keys({
