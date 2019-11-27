@@ -6,6 +6,7 @@ import * as crypto from 'crypto';
 import * as randomstring from 'randomstring';
 import { isArray } from 'util';
 const displayColors = config.get('displayColors');
+import * as hasher from 'wordpress-hash-node';
 
 export let sendError = (data: any) => {
 	if (
@@ -78,6 +79,14 @@ export let deCryptData = async (stringToCheck: string, dbString: string) => {
 	const hmac = crypto.createHmac('sha256', config.get('cryptoSecret'));
 	const crypted = hmac.update(stringToCheck).digest('hex');
 	return (dbString === crypted) ? true : false;
+};
+
+export let encryptWordpressHashNode = async (stringToCrypt: string) => {
+	return await hasher.HashPassword(stringToCrypt);
+};
+
+export let decryptWordpressHashNode = async (stringToCheck: string, dbString: string) => {
+	return await hasher.CheckPassword(stringToCheck, dbString);
 };
 
 export let cipherText = async (text: string) => {
@@ -175,5 +184,5 @@ export let consolelog = (identifier: string, value: any, status: boolean) => {
 };
 
 export let invoiceNumber = (value) => {
-	return "INV" + new Date().getFullYear() + ("00000000" + value).slice(-8);
+	return 'INV' + new Date().getFullYear() + ('00000000' + value).slice(-8);
 }

@@ -21,8 +21,6 @@ class ArticleController {
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
             const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
-            console.log('resultresultresult', result);
-
             payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
             payload.userRole = userData.type;
