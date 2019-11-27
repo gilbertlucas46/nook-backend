@@ -332,13 +332,14 @@ export let articleRoutes: ServerRoute[] = [
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
+
                 const deletResponse = await ArticleService.deleteArticle(payload);
                 // { "acknowledged" : true, "deletedCount" : 7 }
-                if (deletResponse['acknowledged'] === true || deletResponse['deletedCount'] > 0) {
-                    return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
-                } else {
-                    return (UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E400.DEFAULT));
-                }
+                // if (deletResponse['acknowledged'] === true || deletResponse['deletedCount'] > 0) {
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
+                // } else {
+                // return (UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E400.DEFAULT));
+                // }
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
