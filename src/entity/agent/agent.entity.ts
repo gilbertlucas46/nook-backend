@@ -11,7 +11,7 @@ export class AgentClass extends BaseEntity {
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const { fromDate, toDate, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty } = payload;
+            const { cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty } = payload;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -50,31 +50,37 @@ export class AgentClass extends BaseEntity {
                     },
                 };
             }
-
             if (sortBy) {
-                switch (sortBy) {
-                    case 'date':
-                        sortBy = 'date';
-                        sortingType = {
-                            createdAt: sortType,
-                        };
-                        break;
-                    default:
-                        // sortBy = 'isFeaturedProfile';
-                        sortingType = {
-                            isFeaturedProfile: sortType,
-                        };
-                        break;
-                }
-            } else {
                 sortingType = {
-                    isFeaturedProfile: sortType,
+                    isFeaturedProfile: -1,
+                    createdAt: sortType,
                 };
             }
+            // if (sortBy) {
+            //     switch (sortBy) {
+            //         case 'date':
+            //             sortBy = 'date';
+            //             sortingType = {
+            //                 createdAt: sortType,
+            //             };
+            //             break;
+            //         default:
+            //             // sortBy = 'isFeaturedProfile';
+            //             sortingType = {
+            //                 isFeaturedProfile: -1,
+            //                 createdAt: sortType,
+            //             };
+            //             break;
+            //     }
+            // }
+            // if (specializingIn_property_type) {
+            //     matchObject['specializingIn_property_type'] =
+            //         specializingIn_property_type;
+            // }
 
             if (specializingIn_property_type) {
                 matchObject['specializingIn_property_type'] =
-                    specializingIn_property_type;
+                    { $eq: specializingIn_property_type };
             }
 
             if (specializingIn_property_category) {
