@@ -23,6 +23,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await AdminProfileService.login(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
+				utils.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
