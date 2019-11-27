@@ -8,6 +8,7 @@ import { AdminStaffController } from '../../controllers';
 import { AdminProfileService } from '@src/controllers/admin/adminProfile.controller';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { join } from 'path';
+import { Utils } from 'handlebars';
 
 const objectSchema = Joi.object({
 	moduleName: Joi.string().min(1).valid([
@@ -33,6 +34,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				const registerResponse = await AdminStaffController.createStaff(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true)
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -45,7 +47,7 @@ export let subAdminRoutes: ServerRoute[] = [
 					email: Joi.string().email().required(),
 					firstName: Joi.string().min(1).max(32).required(),
 					lastName: Joi.string().min(1).max(32).required(),
-					phoneNumber: Joi.string().min(10).max(15),
+					phoneNumber: Joi.string().min(7).max(15),
 					permission: Joi.array().items(objectSchema).min(1).unique(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,

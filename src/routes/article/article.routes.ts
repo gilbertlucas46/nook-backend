@@ -332,7 +332,6 @@ export let articleRoutes: ServerRoute[] = [
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
-
                 const deletResponse = await ArticleService.deleteArticle(payload);
                 // { "acknowledged" : true, "deletedCount" : 7 }
                 // if (deletResponse['acknowledged'] === true || deletResponse['deletedCount'] > 0) {
