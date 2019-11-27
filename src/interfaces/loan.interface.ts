@@ -133,7 +133,7 @@ export namespace LoanRequest {
         purchasePropertyInfo: PurchasePropertyInfo;
         nookAgent: string;
     }
-    export interface AddLoan extends PropertyDocuments, EmploymentInfo, DependentsInfo, LoanDetails,  PersonalInfo, ContactInfo, BankInfo {
+    export interface AddLoan extends PropertyDocuments, EmploymentInfo, DependentsInfo, LoanDetails, PersonalInfo, ContactInfo, BankInfo {
         loanId?: string;
         saveAsDraft?: boolean;
         personalInfo?: PersonalInfo;
