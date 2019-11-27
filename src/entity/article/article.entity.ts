@@ -71,7 +71,7 @@ export class ArticleClass extends BaseEntity {
                                 $limit: 1,
                             },
                         ],
-                        RECENT: [
+                        RECENT: [\
                             {
                                 $sort: {
                                     updatedAt: -1,
