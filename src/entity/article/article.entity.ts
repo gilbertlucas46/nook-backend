@@ -190,7 +190,7 @@ export class ArticleClass extends BaseEntity {
                 };
             }
             else {
-                query = {
+                query['status'] = {
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
                 };
             }
@@ -199,7 +199,12 @@ export class ArticleClass extends BaseEntity {
             if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
 
             if (searchTerm) {
-                query['title'] = searchTerm;
+                query = {
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
             }
 
             const pipeline = [
@@ -209,7 +214,7 @@ export class ArticleClass extends BaseEntity {
 
             return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 
-        }catch (error) {
+        } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
         }

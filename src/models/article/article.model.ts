@@ -76,7 +76,7 @@ const articleSchema = new Schema({
         actionTime: { type: Number },
     }],
 }, {
-    versionKey: false,
-});
+        versionKey: false,
+    });
 
 export const Article = model<IEnquiry>('Article', articleSchema);

@@ -10,7 +10,7 @@ export class EnquiryClass extends BaseEntity {
     }
     async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
-            const { fromDate, toDate, category, enquiryType } = payload;
+            const { fromDate, toDate, category, enquiryType, searchTerm } = payload;
             let { sortType, limit, page } = payload;
             sortType = !sortType ? -1 : sortType;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
@@ -32,10 +32,21 @@ export class EnquiryClass extends BaseEntity {
                 // query['userId'] = userData._id;
                 query['agentId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
-            } else {
+            }
+            else {
                 console.log('else condition');
                 query['userId'] = userData._id;
                 query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
+            }
+            if (searchTerm) {
+                query['userId'] = {
+                    userId: userData._id,
+                    $or: [
+                        { phoneNumber: { $regex: searchTerm, $options: 'i' } },
+                        { email: { $regex: searchTerm, $options: 'i' } },
+                        { name: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
             }
 
             if (fromDate && toDate) {

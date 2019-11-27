@@ -608,9 +608,9 @@ export let DATABASE = {
 
 export const EMAIL_TEMPLATE = {
 	SOCIAL_LINK: {
-		FB: 'https://www.facebook.com',
-		INSTAGRAM: 'https://www.instagram.com',
-		TWITTER: 'https://twitter.com',
+		FB: 'https://www.facebook.com/NookPhilippines/',
+		INSTAGRAM: 'https://www.instagram.com/nookphilippines/',
+		TWITTER: 'https://twitter.com/nookphilippines',
 	},
 	GSG_ADDRESS: 'Appinventiv Technologies Pvt. Ltd. B-25 Nr Thomson Reuters, Sector 58, Noida, Uttar Pradesh 201301, India',
 	SUBJECT: {

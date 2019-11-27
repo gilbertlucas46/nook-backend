@@ -1,6 +1,6 @@
 import * as nodemailer from 'nodemailer';
 import * as config from 'config';
-import { SERVER } from '@src/constants/app.constant';
+import { SERVER, EMAIL_TEMPLATE } from '@src/constants/app.constant';
 import * as utils from '../utils';
 import Mail = require('nodemailer/lib/mailer');
 import { TemplateUtil } from '@src/utils/template.util';
@@ -27,7 +27,7 @@ export class MailManager {
 	}
 	async sendMail(params) {
 		try {
-			console.log('paramsssssssssssss', params)
+			console.log('paramsssssssssssss', params);
 			// let senderEmail = this.senderEmail
 			const mailOptions: Mail.Options = {
 				from: config.get('smtp.mailHost'), // sender email
@@ -61,6 +61,9 @@ export class MailManager {
 					// url: url,
 					year: new Date().getFullYear(),
 					// projectName: 'Nook',
+					faceBookUrl: EMAIL_TEMPLATE.SOCIAL_LINK.FB,
+					instaUrl: EMAIL_TEMPLATE.SOCIAL_LINK.INSTAGRAM,
+					twitterUrl: EMAIL_TEMPLATE.SOCIAL_LINK.TWITTER,
 					userName: params.userName,
 				});
 			// console.log('mailContentmailContentmailContentmailContentmailContent', mailContent);
@@ -86,6 +89,7 @@ export class MailManager {
 					url: params.url,
 					year: new Date().getFullYear(),
 					// projectName: 'Nook',
+					GSG_ADDRESS: EMAIL_TEMPLATE.GSG_ADDRESS,
 					email: params.receiverEmail,
 					userName: params.userName,
 				});
