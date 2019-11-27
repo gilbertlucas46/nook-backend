@@ -10,12 +10,28 @@ export class ArticleClass extends BaseEntity {
 
     async allArticlesBasedOnCategory(payload: ArticleRequest.GetArticle) {
         try {
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
             let { page, limit, searchTerm } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
-            let query;
             const promise = [];
-            if (!searchTerm) {
+            let searchCriteria: any = {};
+            if (searchTerm) {
+                searchCriteria = {
+                    // $match: {
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                    // },
+                };
+            }
+            else {
+                searchCriteria = {
+                    // $match: {
+                    // },
+                };
+
                 const pipeline = [
                     {
                         $match: {
@@ -67,6 +83,7 @@ export class ArticleClass extends BaseEntity {
                                 {
                                     $match: {
                                         categoryId: Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                                        searchCriteria,
                                     },
                                 },
                                 {
@@ -82,6 +99,7 @@ export class ArticleClass extends BaseEntity {
                                 {
                                     $match: {
                                         categoryId: Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                                        searchCriteria,
                                     },
                                 },
                                 {
@@ -97,6 +115,7 @@ export class ArticleClass extends BaseEntity {
                                 {
                                     $match: {
                                         categoryId: Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                                        searchCriteria,
                                     },
                                 },
                                 {
@@ -112,6 +131,7 @@ export class ArticleClass extends BaseEntity {
                                 {
                                     $match: {
                                         categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                                        searchCriteria,
                                     },
                                 },
                                 {
@@ -127,6 +147,7 @@ export class ArticleClass extends BaseEntity {
                                 {
                                     $match: {
                                         categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                                        searchCriteria,
                                     },
                                 },
                                 {
@@ -142,6 +163,7 @@ export class ArticleClass extends BaseEntity {
                                 {
                                     $match: {
                                         categoryId: Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                                        searchCriteria,
                                     },
                                 },
                                 {
@@ -156,25 +178,26 @@ export class ArticleClass extends BaseEntity {
                         },
                     },
                 ];
+                console.log("------------------", pipeline);
                 const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
                 if (!data) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
                 return data;
-            } else if (searchTerm) {
-                query = {
-                    $or: [
-                        { title: { $regex: searchTerm, $options: 'i' } },
-                        { description: { $regex: searchTerm, $options: 'i' } },
-                    ],
-                };
-                promise.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, page }));
 
-                promise.push(this.DAOManager.count(this.modelName, query));
-                const [data, total] = await Promise.all(promise);
-                return {
-                    data, total,
-                };
+                // else if(searchTerm) {
+                //     searchCriteria = {
+                //         $or: [
+                //             { title: { $regex: searchTerm, $options: 'i' } },
+                //             { description: { $regex: searchTerm, $options: 'i' } },
+                //         ],
+                //     };
+                //     promise.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, page }));
+
+                //     promise.push(this.DAOManager.count(this.modelName, query));
+                //     const [data, total] = await Promise.all(promise);
+                //     return {
+                //         data, total,
+                //     };
             }
-
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
@@ -225,7 +248,6 @@ export class ArticleClass extends BaseEntity {
             return Promise.reject(error);
         }
     }
-
 }
 
 export const ArticleE = new ArticleClass();
