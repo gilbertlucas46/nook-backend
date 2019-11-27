@@ -181,6 +181,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
 					bankInfo: Joi.object().keys({
@@ -309,6 +311,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
 					propertyDocuments: Joi.object().keys({
@@ -496,6 +500,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
 					bankInfo: Joi.object().keys({
@@ -624,6 +630,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.SON,
 						]),
 					}),
 					propertyDocuments: Joi.object().keys({
