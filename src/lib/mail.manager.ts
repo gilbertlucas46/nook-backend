@@ -27,7 +27,6 @@ export class MailManager {
 	}
 	async sendMail(params) {
 		try {
-			console.log('paramsssssssssssss', params)
 			// let senderEmail = this.senderEmail
 			const mailOptions: Mail.Options = {
 				from: config.get('smtp.mailHost'), // sender email
@@ -38,7 +37,6 @@ export class MailManager {
 				// bcc: config.get('smtp.bccMail')
 				html: params.content,    // html body
 			};
-			console.log('mailOptionsmailOptionsmailOptionsmailOptions', mailOptions);
 			transporter.sendMail(mailOptions);
 		} catch (error) {
 			utils.consolelog('MailManager', error, false);
