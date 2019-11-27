@@ -72,34 +72,42 @@
                     <tr>
                         <td align="center" class="head"
                             style=" padding: 60px 0 10px; font-size: 30px;  font-weight: 600; color: #196192">Welcome to
+                            Nook
                         </td>
                     </tr>
                     <tr>
-                        <td align="center"><img src="images/logo.png" class="logo" width="120px"></td>
+                        <!-- <td align="center"><img src="images/logo.png" class="logo" width="120px"></td> -->
                     </tr>
                     <tr>
                         <td class="subhead"
-                            style="padding: 50px 0 0; font-size: 24px; font-weight: 600; color: #636161">Hello</td>
+                            style="padding: 50px 0 0; font-size: 24px; font-weight: 600; color: #636161">Hello
+                            {{userName}}!</td>
                     </tr>
                     <tr>
                         <td class="para"
                             style="font-size: 18px; font-weight: 500; line-height: 1.5; color: #797979; letter-spacing: 0.4px; padding: 30px 0;">
-                            Thanks for the signing up to keep in touch with Woomf. We are excited to have you get
-                            started. First, you need to confirm your account. Just press the button below.
+                            Thanks for the signing up to keep in touch with Nook. We are happt to see you here .
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <!-- <td>
                             <a class="invbtn" href="#"
                                 style="background: #fc6946; color: #ffffff; font-size: 20px; padding: 25px 55px;  border: none; text-transform: uppercase; letter-spacing: 0.5px; text-decoration: none; display: inline-block; border-radius: 4px">Accept
                                 Invitation</a>
-                        </td>
+                        </td> -->
                     </tr>
                     <tr>
-                        <td class="para"
+                        <!-- <td class="para"
                             style="font-size: 18px; font-weight: 500; line-height: 1.5; color: #797979; letter-spacing: 0.4px; padding: 30px 0;">
                             If you have any questions, just reply to this email- we’re always happy to help out.
-                        </td>
+                        </td> -->
+                        <td class="para"
+                            style="font-size: 18px; font-weight: 500; line-height: 1.5; color: #797979; letter-spacing: 0.4px; padding: 30px 0;">
+                            You
+                            can always reach out to us at <a href="hello@nook.com.ph" style="color: #aa3560">mail us</a>
+                            if you experience any problems.</td>
+
+
                     </tr>
                     <tr>
                         <td class="title"
@@ -107,7 +115,7 @@
                     </tr>
                     <tr>
                         <td class="title" style="padding: 0 0 10px; font-size: 20px; font-weight: 600; color: #636161">
-                            Blu Scooters Team </td>
+                            Nook Team </td>
                     </tr>
                 </table>
             </td>
@@ -118,17 +126,15 @@
                     style="width:100%; padding: 12px 25px; background: #eef8fb; ">
                     <tr>
                         <td class="copyrgt" style="font-size: 14px; color: #a0a9bd;">
-                            Copyright © 2019 Nook
+                            Copyright © {{year}} Nook
                         </td>
                         <td align="right">
-                            <a href=" javascript:void(0) " style="padding: 0 3px; display: inline-block "><img
-                                    src="images/facebook.png " alt=" "></a>
-                            <a href=" javascript:void(0) " style="padding: 0 3px; display: inline-block "><img
-                                    src="images/instagram.png " alt=" "></a>
-                            <a href=" javascript:void(0) " style="padding: 0 3px; display: inline-block "><img
-                                    src="images/twitter.png " alt=" "></a>
-                            <a href=" javascript:void(0) " style="padding: 0 3px; display: inline-block "><img
-                                    src="images/linkedin.png " alt=" "></a>
+                            <a href="{{faceBookUrl}}" style="padding: 0 3px; display: inline-block "><img
+                                    src="./images/facebook-2.png " alt="Facebook Logo"></a>
+                            <a href="{{instaUrl}}" style="padding: 0 3px; display: inline-block "><img
+                                    src="./images/instagram-2.png" alt="Instagram Logo "></a>
+                            <a href="{{twitterUrl}}" style="padding: 0 3px; display: inline-block "><img
+                                    src="./images/twitter-2.png" alt="Twitter Logo"></a>
                         </td>
                     </tr>
                 </table>

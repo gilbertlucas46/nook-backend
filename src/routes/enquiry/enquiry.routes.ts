@@ -30,13 +30,20 @@ export let enquiryRoutes: ServerRoute[] = [
 			validate: {
 				payload: {
 					name: Joi.string().required(),
-					email: Joi.string().email(),
+					email: Joi.string().email().required(),
 					phoneNumber: Joi.string().required(),
 					message: Joi.string().required(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					// type: Joi.string().valid('Agent'),
+					// type: Joi.string().valid('Enquiry', 'Contact'),
 					agentEmail: Joi.string().email(),
-					propertyOwnerId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					agentId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					propertyOwnerId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					enquiryType: Joi.string().valid([
+						Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
+						Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
+					]).required(),
+					propertyOwnerEmail: Joi.string().email(),
+					// title: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -55,6 +62,7 @@ export let enquiryRoutes: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: EnquiryRequest.GetEnquiry = request.query as any;
+
 				const registerResponse = await EnquiryService.getEnquiryList(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -67,10 +75,21 @@ export let enquiryRoutes: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				query: {
+					enquiryType: Joi.string().valid([
+						Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
+						Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
+					]),
+					category: Joi.string().valid([
+						Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED,
+						Constant.DATABASE.ENQUIRY_CATEGORY.SENT,
+					]),
+					// agentId: Joi.string(),
+					// getType: Joi.string().valid('sent'),
 					page: Joi.number(),
 					limit: Joi.number(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
+					searchTerm: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

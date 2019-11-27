@@ -7,16 +7,66 @@ export let swaggerDefaultResponseMessages = [
 	{ code: 404, message: 'Data Not Found' },
 	{ code: 500, message: 'Internal Server Error' },
 ];
+export const PRIVILEGE = {
+	SUB_ADMIN_PRIVILEGE: [0, 1, 2],
+	SUB_MERCHANT_PRIVILEGE: [0, 1, 2],
+};
 
 export const ENUM = {
 	SORT_TYPE: [1, -1],
 };
 
 export let DATABASE = {
+	SUB_ADMIN_ROLES: {
+		USER: 'users',
+		STORY: 'story',
+		ADMIN: 'admin',  // for the subAdmin roles constant
+		DASHBOARD: 'dashboard',
+	},
+	SUB_MERCHANT_ROLES: {
+		DASHBOARD: 'dashboard',
+		BUSINESS: 'business',
+		FAQ: 'faq',
+		DEV_CENTRE: 'devCenter',
+		MERCHANT_ASSISTANT: 'merchantAssistant',
+		CHAT_BOT: 'chatBot',
+		SUPPORT: 'support',
+		SUB_MERCHANT: 'subMerchant',
+		PAYMENT: 'payment',
+	},
+
 	LOAN_APPLICATION_STATUS: {
-		PENDING: 'pending',
-		REJECTED: 'rejected',
-		APPROVED: 'approved',
+		// PENDING: 'pending',
+		// REJECTED: 'rejected',
+		// APPROVED: 'approved',
+		DRAFT: {
+			label: 'Draft',
+			value: 'DRAFT',
+		},
+		NEW: {
+			label: 'New',
+			value: 'NEW',
+		},
+		NOOK_REVIEW: {
+			label: 'Nook Review',
+			value: 'NOOK_REVIEW',
+		},
+		REFERRED: {
+			label: 'Referred to Bank',
+			value: 'REERRED',
+		},
+		BANK_APPROVED: {
+			label: 'Bank Approved',
+			value: 'BANK_APPROVED',
+		},
+		BANK_DECLINED: {
+			label: 'Bank Declined',
+			value: 'BANK_DECLINED',
+		},
+		NOOK_DECLINED: {
+			label: 'Nook Declined',
+			value: 'NOOK_DECLINED',
+		},
 	},
 	EMPLOYMENT: {
 		TENURE: {
@@ -95,6 +145,8 @@ export let DATABASE = {
 		FATHER: 'father',
 		MOTHER: 'mother',
 		SPOUSE: 'spouse',
+		SON : 'son',
+		DAUGHTER : 'daughter',
 	},
 
 	CIVIL_STATUS: {
@@ -265,20 +317,19 @@ export let DATABASE = {
 			DISPLAY_NAME: 'IsFEATURED',
 		},
 	},
+
 	PERMISSION: {
 		TYPE: {
 			DASHBOARD: 'dashboard',
-			ALL_PROPERTIES: 'all-property',
-			ACTIVE_PROPERTIES: 'active-property',
-			PENDING_PROPERTIES: 'pending-property',
-			DECLINED_PROPERTIES: 'declined-property',
 			HELP_CENTER: 'help-center',
-			USERS: 'user',
-			STAFF: 'staff',
-			ARTICLE: 'article',
-			PROPERTY: 'property',
+			USERS: 'users',
+			STAFF: 'staffs',
+			ARTICLE: 'articles',
+			LOAN: 'loans',
+			PROPERTIES: 'properties',
 		},
 	},
+
 	PROPERTY_LABEL: {
 		NONE: 'None',
 		FORECLOSURE: 'Foreclosure',
@@ -293,11 +344,11 @@ export let DATABASE = {
 	},
 
 	ARTICLE_TYPE: {
-		FEATURED_ARTICLE: {
-			NUMBER: 1,
-			TYPE: 'FEATURED_ARTICLE',
-			DISPLAY_NAME: 'Featured Article',
-		},
+		// FEATURED_ARTICLE: {
+		// 	NUMBER: 1,
+		// 	TYPE: 'FEATURED_ARTICLE',
+		// 	DISPLAY_NAME: 'Featured Article',
+		// },
 		AGENTS: {
 			NUMBER: 2,
 			TYPE: 'AGENTS',
@@ -323,6 +374,12 @@ export let DATABASE = {
 			TYPE: 'SELLING',
 			DISPLAY_NAME: 'Selling',
 		},
+		NEWS: {
+			NUMBER: 7,
+			TYPE: 'NEWS',
+			DISPLAY_NAME: 'News',
+		},
+		// legal stuff, international news, domestic news, sports coverage, political news
 	},
 
 	ARTICLE_STATUS: {
@@ -384,23 +441,40 @@ export let DATABASE = {
 		YEARLY: 'yearly',
 	},
 
+	REFERRAL_STATUS: {
+		ACKNOWLEDGE: 'Acknowledge',
+		CONTACTED: 'Contact',
+		PENDING: 'Pending',
+	},
+
+	// ENQUIRY_TYPE: {
+	// 	GUEST: {
+	// 		NUMBER: 1,
+	// 		TYPE: 'GUEST',
+	// 		DISPLAY_NAME: 'GUEST',
+	// 	},
+	// 	REGISTERED_USER: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'REGISTERED_USER',
+	// 		DISPLAY_NAME: 'Registered_User',
+	// 	},
+	// },
+
+	ENQUIRY_CATEGORY: {
+		SENT: 'sent',
+		RECEIVED: 'received',
+	},
+
 	ENQUIRY_TYPE: {
-		GUEST: {
-			NUMBER: 1,
-			TYPE: 'GUEST',
-			DISPLAY_NAME: 'GUEST',
-		},
-		REGISTERED_USER: {
-			NUMBER: 2,
-			TYPE: 'REGISTERED_USER',
-			DISPLAY_NAME: 'Registered_User',
-		},
+		PROPERTY: 'property',
+		CONTACT: 'contact',
 	},
 
 	ENQUIRY_STATUS: {
 		PENDING: 'PENDING',
 		RESOLVED: 'RESOLVED',
 	},
+
 	DEVICE_TYPES: {
 		IOS: 'IOS',
 		ANDROID: 'ANDROID',
@@ -423,6 +497,12 @@ export let DATABASE = {
 			ACTIVE: 'ACTIVE',
 			BLOCKED: 'BLOCKED',
 			DELETED: 'DELETED',
+		},
+		ADMIN: {
+			ACTIVE: 'ACTIVE',
+			PENDING: 'PENDING',
+			BLOCKED: 'BLOCKED',
+			DELETE: 'DELETE',
 		},
 	},
 
@@ -449,8 +529,7 @@ export let DATABASE = {
 		},
 	},
 
-	ACTION:
-	{
+	ACTION: {
 		DEEPLINK: {
 			APP: 'APP',
 			RESET_PASSWORD: 'RESET_PASSWORD',
@@ -475,6 +554,7 @@ export let DATABASE = {
 			UPDATE_STATUS: 'UPDATE_STATUS',
 		},
 	},
+
 	RESEND_OTP_TYPE: {
 		REGISTER: 'REGISTER',
 		FORGOT: 'FORGOT',
@@ -498,8 +578,49 @@ export let DATABASE = {
 	DEEPLINK_REDIRECT_URL: {
 		APP: '/v1/deeplink?url=',
 	},
+	FEATURED_TYPE: {
+		FREE: 'FREE',
+		PROFILE: 'PROFILE',
+		PROPERTY: 'PROPERTY',
+		HOMEPAGE: 'HOMEPAGE',
+	},
+	BILLING_TYPE: {
+		MONTHLY: 'MONTHLY',
+		YEARLY: 'YEARLY',
+	},
+	// type = YEARLY, MONTHLY
+	SUBSCRIPTION_TYPE: (type) => [{
+		type: 'FREE',
+		amount: 0,
+		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
+	}, {
+		type: 'FEATURED PROPERTY',
+		amount: type === 'MONTHLY' ? 890 : 990,
+		description: 'Featured Property Upgrade - Search Results',
+	}, {
+		type: 'FEATURED PROFILE',
+		amount: type === 'MONTHLY' ? 890 : 990,
+		description: 'Featured Profile Upgrade - Search Results',
+	}, {
+		type: 'HOMEPAGE FEATURE',
+		amount: type === 'MONTHLY' ? 890 : 1799,
+		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
+	}],
 };
 
+export const EMAIL_TEMPLATE = {
+	SOCIAL_LINK: {
+		FB: 'https://www.facebook.com/NookPhilippines/',
+		INSTAGRAM: 'https://www.instagram.com/nookphilippines/',
+		TWITTER: 'https://twitter.com/nookphilippines',
+	},
+	GSG_ADDRESS: 'Appinventiv Technologies Pvt. Ltd. B-25 Nr Thomson Reuters, Sector 58, Noida, Uttar Pradesh 201301, India',
+	SUBJECT: {
+		FORGOT_PWD_EMAIL: 'Reset Password Request',
+		RESET_PASSWORD: 'Reset password link',
+		VERIFY_EMAIL: 'Verify e-mail address',
+	},
+};
 export let STATUS_MSG = {
 	ERROR: {
 		redirect: {
@@ -512,6 +633,11 @@ export let STATUS_MSG = {
 			statusCode: 400,
 			type: 'ALREADY_EXIST',
 			message: 'Already Exist ',
+		},
+		ENQUIRY_ALREADY_SENT: {
+			statusCode: 400,
+			type: 'ALREADY_SUBMITTED',
+			message: 'Request already beeen submitted',
 		},
 		E406: {
 			STAFF_ALREADY_LOGGED_IN: {
@@ -529,7 +655,7 @@ export let STATUS_MSG = {
 			INVALID_CURRENT_PASSWORD: {
 				statusCode: 400,
 				type: 'INVALID_CURRENT_PASSWORD',
-				message: 'Your Current Password did not match with new Password',
+				message: 'Password did not match with old Password',
 			},
 			USER_NAME_ALREDY_TAKEN: {
 				statusCode: 400,
@@ -835,6 +961,11 @@ export let STATUS_MSG = {
 				type: 'CREATED',
 				message: 'Article Created',
 			},
+			PAYMENT_ADDED: {
+				statusCode: 201,
+				type: 'PAYMENT_ADDED',
+				message: 'Payment Done Successfully',
+			},
 		},
 	},
 	S210: {
@@ -875,7 +1006,7 @@ export let SERVER = {
 		SHARE_CONTENT_MESSAGE: `Thank you for your interest in downloading Toki! We're constantly working on improving the way you can hangout with your closest friends :)`,
 		SHARE_CONTENT_LINK: config.get('host') + DATABASE.DEEPLINK_REDIRECT_URL.APP + 'http://nook.com' + '/' + DATABASE.ACTION.DEEPLINK.APP + '&ios=' + 'nook://' + DATABASE.ACTION.DEEPLINK.APP,
 	},
-	TEMPLATE_PATH: process.cwd() + '/views/',
+	TEMPLATE_PATH: process.cwd() + '/src/views/',
 	BY_PASS_OTP: '1212',
 	LISTNG_LIMIT: 10,
 	SYNC_LIMIT: undefined,

@@ -2,6 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanRequest } from './../../interfaces/loan.interface';
 import * as Constant from '@src/constants';
 import { NATIONALITY } from '@src/constants';
+import { Types } from 'mongoose';
 
 class LoanEntities extends BaseEntity {
     constructor() {
@@ -12,15 +13,20 @@ class LoanEntities extends BaseEntity {
         try {
             let totalMonthlyIncome = payload.work.income;
             let preLoanMonthlyAmount = 0;
-            if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome;
-            if (payload.other.coBorrower.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.coBorrower.coBorrowerMonthlyIncome;
-            if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome;
+            if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome; // If married need to add spouse income also to calculate debtToIncomeRatio
+            if (payload.other.coBorrower.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.coBorrower.coBorrowerMonthlyIncome; // If coborrower need to add coborrower income
+            if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome; // If any investment exists than that is also added in the income part.
             // if other loans exits
             if (payload.other.prevLoans.status) preLoanMonthlyAmount = payload.other.prevLoans.monthlyTotal;
-
             let localVisa = false;
+            let ageAtlastLoanPayment = 0;
             if (payload.other.nationality === NATIONALITY.FILIPINO.value) localVisa = true;
             if (payload.other.nationality === NATIONALITY.FOREIGNER.value && payload.other.localVisa === true) localVisa = true;
+
+            // age filters
+            if (payload.other.age) ageAtlastLoanPayment = payload.other.age + payload.loan.term;
+            if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+
             const queryPipeline = [];
             if (payload.other.creditCard.cancelled) {
                 queryPipeline.push(
@@ -28,7 +34,7 @@ class LoanEntities extends BaseEntity {
                         $match: {
                             loanForCancelledCreditCard: true,
                             loanMinAmount: { $lte: payload.property.value },
-                            minMonthlyIncomeRequired : {$lte : payload.work.income},
+                            minMonthlyIncomeRequired: { $lte: totalMonthlyIncome },
                             loanForForeignerMarriedLocal: localVisa,
                             propertySpecification: {
                                 $elemMatch: {
@@ -41,7 +47,8 @@ class LoanEntities extends BaseEntity {
                                 },
                             },
                         },
-                    });
+                    },
+                );
             } else {
                 queryPipeline.push(
                     {
@@ -49,7 +56,7 @@ class LoanEntities extends BaseEntity {
                             loanMinAmount: { $lte: payload.property.value },
                             minMonthlyIncomeRequired : {$lte : payload.work.income},
                             loanForForeignerMarriedLocal: localVisa,
-                            minMonthlyIncomeRequired : {$lte : payload.work.income},
+                            minMonthlyIncomeRequired: { $lte: totalMonthlyIncome },
                             propertySpecification: {
                                 $elemMatch: {
                                     $and: [
@@ -61,8 +68,11 @@ class LoanEntities extends BaseEntity {
                                 },
                             },
                         },
-                    });
+                    },
+                );
             }
+
+            if (payload.bankId) queryPipeline[0].$match._id = Types.ObjectId(payload.bankId);
 
             queryPipeline.push(
                 {
@@ -110,10 +120,12 @@ class LoanEntities extends BaseEntity {
                 },
                 {
                     $addFields: {
-                        interestRate: `$interestRateDetails.${payload.loan.term}`,
+                        interestRate: `$interestRateDetails.${payload.loan.fixingPeriod}`,
                         loanableAmount: payload.loan.amount,
                         loanDurationYearly: payload.loan.term,
                         loanApplicationFeeAmount: 0,
+                        fixingPeriod: payload.loan.fixingPeriod,
+                        grossIncome: totalMonthlyIncome,
                     },
                 },
                 {
@@ -144,7 +156,10 @@ class LoanEntities extends BaseEntity {
                         bankFeeAmount: 1,
                         loanApplicationFeePercent: 1,
                         loanApplicationFeeAmount: 1,
-                        bankImageLogoUrl: 1,
+                        // bankImageLogoUrl: 1,
+                        logoUrl: 1,
+                        iconUrl: 1,
+                        bannerUrl: 1,
                         processingTime: '5-7 working days',
                         interestRate: 1,
                         loanDuration: 1,
@@ -157,6 +172,8 @@ class LoanEntities extends BaseEntity {
                         loanDurationYearly: 1,
                         loanDurationMonthly: 1,
                         loanForCancelledCreditCard: 1,
+                        fixingPeriod: 1,
+                        grossIncome: 1,
                     },
                 },
                 {
@@ -179,6 +196,7 @@ class LoanEntities extends BaseEntity {
                 {
                     $addFields: {
                         debtIncomeRatio: '$propertySpecification.debtIncomeRatio',
+                        maxLoanDurationAllowed: '$propertySpecification.maxLoanDurationAllowed',
                     },
                 },
                 {
@@ -200,14 +218,11 @@ class LoanEntities extends BaseEntity {
                 },
             );
 
-            const bankList = await this.DAOManager.aggregateData(this.modelName, queryPipeline);
-            return bankList;
-
+            return await this.DAOManager.aggregateData(this.modelName, queryPipeline);
         } catch (err) {
             return Promise.reject(err);
         }
     }
-
 }
 
 export const LoanEntity = new LoanEntities();

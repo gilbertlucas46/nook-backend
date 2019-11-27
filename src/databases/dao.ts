@@ -43,8 +43,6 @@ export class DAOManager {
 		try {
 			const EntityModel: Model<T> = Models[model] as any;
 			return EntityModel.findOne(query, projection, options);
-			// const data = ModelName.find(query, projection, options);
-			// return docs;
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -53,8 +51,7 @@ export class DAOManager {
 	async getData(model: ModelNames, query: any, projection: any, options: any) {
 		try {
 			const ModelName: Model<any> = Models[model];
-			// const data = ModelName.find(query, projection, options);
-			// return data;
+			return ModelName.find(query, projection, options);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -78,7 +75,7 @@ export class DAOManager {
 		}
 	}
 
-	async findAll(model: ModelNames, query, projection, options) {
+	async findAll(model: ModelNames, query, projection = {}, options = {}) {
 		try {
 			const ModelName: Model<any> = Models[model];
 			return await ModelName.find(query, projection, options).exec();
@@ -177,8 +174,7 @@ export class DAOManager {
 		try {
 			const ModelName = Models[model];
 			const aggregate = await ModelName.aggregate(group);
-			const populate = await ModelName.populate(aggregate, populateOptions);
-			return populate;
+			return await ModelName.populate(aggregate, populateOptions);
 		} catch (error) {
 			return Promise.reject(error);
 		}

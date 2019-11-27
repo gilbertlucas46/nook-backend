@@ -26,10 +26,9 @@ export class AdminClass extends BaseEntity {
 				lastName: adminData.lastName,
 				phoneNumber: adminData.phoneNumber,
 				type: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
-
 			};
-			const admin: UserRequest.Register = await this.createOneEntity(dataToInsert);
-			return admin;
+			return await this.createOneEntity(dataToInsert);
+
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -44,7 +43,7 @@ export class AdminClass extends BaseEntity {
 		const toSave = {
 			name: 'Base Admin',
 			email: 'base_admin@yopmail.com',
-			password: await utils.cryptData('123456'),
+			password: await utils.encryptWordpressHashNode('123456'),
 			profilePicUrl: '',
 		};
 		const criteria = {
@@ -57,8 +56,7 @@ export class AdminClass extends BaseEntity {
 
 	async createToken(adminData: AdminRequest.TokenPayload) {
 		try {
-			const accessToken = Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type }, cert);
-			return accessToken;
+			return Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type }, cert);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -69,13 +67,13 @@ export class AdminClass extends BaseEntity {
 			const tokenToSend = Jwt.sign(adminData.email, cert, { algorithm: 'HS256' });
 			const expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 			const criteriaForUpdatePswd = { _id: adminData._id };
-
 			const dataToUpdateForPswd = {
 				passwordResetToken: tokenToSend,
 				passwordResetTokenExpirationTime: expirationTime,
 			};
 			await this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
 			return tokenToSend;
+
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -83,8 +81,7 @@ export class AdminClass extends BaseEntity {
 
 	async getData(criteria, ProjectData) {
 		try {
-			const data = await this.DAOManager.findOne(this.modelName, criteria, ProjectData);
-			return data;
+			return await this.DAOManager.findOne(this.modelName, criteria, ProjectData);
 		} catch (error) {
 			Promise.reject(error);
 		}
@@ -94,74 +91,140 @@ export class AdminClass extends BaseEntity {
 	 * @param adminData
 	 * @description : admin dashboard
 	 */
+	// async adminDashboard(adminData) {
+	// 	try {
+	// const pipeline = [
+	// {
+	// 	$facet: {
+	// 		adminTotalProperty: [
+	// 			{
+	// 				$match: {
+	// 					'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
+	// 				},
+	// 			},
+	// 			{ $count: 'Total' },
+	// 		],
+	// 		totalUser: [
+	// 			{
+	// 				$match: {
+	// 					status: {
+	// 						$or: [
+	// 							CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+	// 							CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+	// 						],
+	// 					},
+	// 				},
+	// 			},
+	// 			{ $count: 'Total' },
+	// 		],
+
+	// adminActiveProperty: [
+	// 	{
+	// 		$match: {
+	// 			'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+	// 		},
+	// 	},
+	// 	{ $count: 'Total' },
+	// ],
+
+	// adminDeclineProperty: [
+	// 	{
+	// 		$match: {
+	// 			'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
+	// 		},
+	// 	},
+	// 	{ $count: 'Total' },
+	// ],
+
+	// adminPendingProperty: [
+	// 	{
+	// 		$match: {
+	// 			'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+	// 		},
+	// 	},
+	// 	{ $count: 'Total' },
+	// ],
+	// },
+	// },
+	// {
+	// 	$project: {
+	// 		totalProperty: {
+	// 			$cond: { if: { $size: ['$adminTotalProperty'] }, then: { $arrayElemAt: ['$adminTotalProperty.Total', 0] }, else: 0 },
+	// 		},
+	// activeProperty: {
+	// 	$cond: { if: { $size: ['$adminActiveProperty'] }, then: { $arrayElemAt: ['$adminActiveProperty.Total', 0] }, else: 0 },
+	// },
+
+	// declineProperty: {
+	// 	$cond: { if: { $size: ['$adminDeclineProperty'] }, then: { $arrayElemAt: ['$adminDeclineProperty.Total', 0] }, else: 0 },
+	// },
+
+	// pendingProperty: {
+	// 	$cond: { if: { $size: ['$adminPendingProperty'] }, then: { $arrayElemAt: ['$adminPendingProperty.Total', 0] }, else: 0 },
+	// },
+	// 		},
+	// 	},
+	// ];
+	// 		const query = {
+	// 			$and: [
+	// 				{ propertyOwnerId: adminData._id },
+	// 				{ createdAt: { $gt: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+	// 			],
+	// 		};
+
+	// 		const data = await this.DAOManager.aggregateData('Property', pipeline);
+	// 		return {
+	// 			...data[0],
+	// 		};
+
+	// 	} catch (error) {
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 	async adminDashboard(adminData) {
 		try {
-			const pipeline = [
-				{
-					$facet: {
-						adminTotalProperty: [
-							{
-								$match: {
-									'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
-								},
-							},
-							{ $count: 'Total' },
-						],
-						adminActiveProperty: [
-							{
-								$match: {
-									'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-								},
-							},
-							{ $count: 'Total' },
-						],
-						adminDeclineProperty: [
-							{
-								$match: {
-									'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
-								},
-							},
-							{ $count: 'Total' },
-						],
-						adminPendingProperty: [
-							{
-								$match: {
-									'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
-								},
-							},
-							{ $count: 'Total' },
-						],
-					},
+			const propertyQuery = {
+				'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
+			};
+
+			const totalUser = {
+				$or: [{
+					status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+				}, {
+					status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
 				},
-				{
-					$project: {
-						totalProperty: {
-							$cond: { if: { $size: ['$adminTotalProperty'] }, then: { $arrayElemAt: ['$adminTotalProperty.Total', 0] }, else: 0 },
-						},
-						activeProperty: {
-							$cond: { if: { $size: ['$adminActiveProperty'] }, then: { $arrayElemAt: ['$adminActiveProperty.Total', 0] }, else: 0 },
-						},
-						declineProperty: {
-							$cond: { if: { $size: ['$adminDeclineProperty'] }, then: { $arrayElemAt: ['$adminDeclineProperty.Total', 0] }, else: 0 },
-						},
-						pendingProperty: {
-							$cond: { if: { $size: ['$adminPendingProperty'] }, then: { $arrayElemAt: ['$adminPendingProperty.Total', 0] }, else: 0 },
-						},
-					},
-				},
-			];
-			const query = {
-				$and: [
-					{ propertyOwnerId: adminData._id },
-					{ createdAt: { $gt: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
 				],
 			};
-
-			const data = await this.DAOManager.aggregateData('Property', pipeline);
-			return {
-				...data[0],
+			const totalArticles = {
+				status: {
+					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+				},
+			};
+			const loanQuery = {
+				saveAsDraft: {
+					$ne: false,
+				},
 			};
 
+			const propertPromise = new Promise((resolve) => {
+				resolve(this.DAOManager.count('Property', propertyQuery));
+			});
+			const userPromise = new Promise((resolve) => {
+				resolve(this.DAOManager.count('User', totalUser));
+			});
+			const articlePromise = new Promise((resolve) => {
+				resolve(this.DAOManager.count('Article', totalArticles));
+			});
+			const enquiryPromise = new Promise((resolve) => {
+				resolve(this.DAOManager.count('Enquiry', {}));
+			});
+			const loanPromsie = new Promise((resolve) => {
+				resolve(this.DAOManager.count('LoanApplication', loanQuery));
+			});
+			return Promise.all([propertPromise, userPromise, articlePromise, enquiryPromise, loanPromsie])
+				.then(([propertyCount, userCount, articleCount, enquiryCount, loanCount]) => {
+					return { propertyCount, userCount, articleCount, enquiryCount, loanCount };
+				});
 		} catch (error) {
 			return Promise.reject(error);
 		}

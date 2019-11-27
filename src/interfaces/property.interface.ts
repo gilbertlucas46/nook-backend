@@ -61,18 +61,18 @@ export namespace PropertyRequest {
 		property_basic_details: {
 			title?: string
 			description?: string
-			type: string
+			type?: string
 			property_for_number?: number
 			// property_for_type: Joi.string(),
 			label?: string
-			sale_rent_price: number,
-			price_currency: string,
-			price_label: string,
+			sale_rent_price?: number,
+			price_currency?: string,
+			price_label?: string,
 			property_for_string?: any,
 			property_for_displayName?: any;
 		};
-		isFeatured: boolean;
-		propertyImages: string[];
+		isFeatured?: boolean;
+		propertyImages?: string[];
 	}
 
 	export interface PropertyDetail {
@@ -121,12 +121,13 @@ export namespace PropertyRequest {
 	export interface IPaginate {
 		page?: number;
 		limit?: number;
+		propertyType: string;
 	}
 
 	export interface PropertyByStatus {
-		propertyType: string;
-		page?: number;
-		limit?: number;
+		propertyType?: number;
+		page: number;
+		limit: number;
 		sortType?: number;
 		sortBy?: string;
 	}

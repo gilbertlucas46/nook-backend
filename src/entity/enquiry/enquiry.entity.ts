@@ -10,22 +10,45 @@ export class EnquiryClass extends BaseEntity {
     }
     async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
-            const { fromDate, toDate } = payload;
+            const { fromDate, toDate, category, enquiryType, searchTerm } = payload;
             let { sortType, limit, page } = payload;
+            sortType = !sortType ? -1 : sortType;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
-            sortType = !sortType ? -1 : sortType;
-            sortType = !sortType ? -1 : 1;
             const sortingType = {
                 createdAt: sortType,
             };
-            const query: any = {};
-            if (userData.type) { // === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
+            let query: any = {};
+            if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.PROPERTY && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) {
                 query['userId'] = userData._id;
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
+            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.PROPERTY && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) {
+                query['propertyOwnerId'] = userData._id;
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
+            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) {
+                query['userId'] = userData._id;
+                query['enquiryType'] = payload.enquiryType;
+            } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) {
+                // query['userId'] = userData._id;
+                query['agentId'] = userData._id;
+                query['enquiryType'] = payload.enquiryType;
             }
-            // else {
-            //     query['propertyOwnerId'] = userData._id;
-            // }
+            else {
+                console.log('else condition');
+                query['userId'] = userData._id;
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
+            }
+            if (searchTerm) {
+                query = {
+                    userId: userData._id,
+                    $or: [
+                        { phoneNumber: { $regex: searchTerm, $options: 'i' } },
+                        { email: { $regex: searchTerm, $options: 'i' } },
+                        { name: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+            }
+
             if (fromDate && toDate) {
                 query['createdAt'] = {
                     $gte: fromDate,
@@ -94,9 +117,8 @@ export class EnquiryClass extends BaseEntity {
                 },
                 { $sort: sortingType },
             ];
+            return await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
 
-            const enquiryList = await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
-            return enquiryList;
         } catch (error) {
             return Promise.reject(error);
         }

@@ -64,7 +64,6 @@ export let plugin = {
 					return ({ isValid: true, credentials: { token: tokens, userData: {} } });
 				} else {
 					const tokenData = await verifyToken(token, 'USER', request);
-
 					if (!tokenData || !tokenData['userData']) {
 						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.TOKEN_ALREADY_EXPIRED));
 					} else {

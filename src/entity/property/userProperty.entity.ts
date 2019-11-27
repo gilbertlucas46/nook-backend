@@ -1,11 +1,12 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as Constant from '@src/constants/app.constant';
+import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export class UserPropertyClass extends BaseEntity {
 	constructor() {
 		super('Property');
 	}
-	async getUserPropertyList(payload, userData) {
+	async getUserPropertyList(payload: PropertyRequest.PropertyByStatus, userData) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
 			const propertyType = payload.propertyType;
@@ -84,8 +85,7 @@ export class UserPropertyClass extends BaseEntity {
 				},
 				{ $sort: sortingType },
 			];
-			const propertyList = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-			return propertyList;
+			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 		} catch (error) {
 			return Promise.reject(error);
 		}

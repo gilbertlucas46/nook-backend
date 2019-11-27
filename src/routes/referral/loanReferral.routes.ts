@@ -14,15 +14,15 @@ export let loanReferral: any = [
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials).userData;
                 const payload: loanReferralRequest.CreateReferral = request.payload;
                 const data = referralController.createReferral(payload, userData);
-                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.LOAN_REFERRAL, {});
+                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.LOAN_REFERRAL, data);
             } catch (error) {
                 return Promise.reject(error);
             }
         },
         options: {
-            description: 'home loan referral',
+            description: 'create home loan referral',
             tags: ['api', 'user', 'home', 'loan', 'referral'],
-            // Auth: 'UserAuth',
+            auth: 'UserAuth',
             validate: {
                 payload: {
                     lastName: Joi.string(),
@@ -57,7 +57,7 @@ export let loanReferral: any = [
         options: {
             description: 'home loan referral',
             tags: ['api', 'user', 'home', 'loan', 'referral'],
-            // Auth: 'UserAuth',
+            auth: 'UserAuth',
             validate: {
                 params: {
                     referralId: Joi.string(),
@@ -79,9 +79,9 @@ export let loanReferral: any = [
         handler: async (request, h: ResponseToolkit) => {
             try {
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials).userData;
-                const payload: loanReferralRequest.GetReferral = request.payload;
-                const data = referralController.getUserReferral(payload, userData);
-                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.LOAN_REFERRAL, {});
+                const payload: loanReferralRequest.IUserLoanRefferal = request.query;
+                const data = await referralController.getUserReferral(payload, userData);
+                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
                 return Promise.reject(error);
             }
@@ -89,11 +89,17 @@ export let loanReferral: any = [
         options: {
             description: 'home loan referral',
             tags: ['api', 'user', 'home', 'loan', 'referral'],
-            // Auth: 'UserAuth',
+            auth: 'UserAuth',
             validate: {
-                // param: {
-                //     userId: Joi.string(),
-                // },
+                query: {
+                    page: Joi.number(),
+                    limit: Joi.number(),
+                    // sortBy: Joi.string(),
+                    sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
+                    // searchTerm: Joi.string(),
+                    fromDate: Joi.number(),
+                    toDate: Joi.number(),
+                },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },

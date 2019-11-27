@@ -16,8 +16,7 @@ export class BaseEntity {
 		try {
 			saveData['createdAt'] = new Date().getTime();
 			saveData['updatedAt'] = new Date().getTime();
-			const data = await this.DAOManager.saveData(this.modelName, saveData);
-			return data;
+			return await this.DAOManager.saveData(this.modelName, saveData);
 		} catch (error) {
 			consolelog(`Error in Base Entity createOneEntity method ${this.modelName}`, error, true);
 			return Promise.reject(error);
@@ -26,8 +25,7 @@ export class BaseEntity {
 
 	async createMulti(saveData: any) {
 		try {
-			const data = await this.DAOManager.insertMany(this.modelName, saveData, {});
-			return data;
+			return await this.DAOManager.insertMany(this.modelName, saveData, {});
 		} catch (error) {
 			consolelog(`Error in Base Entity in MultipleEntity method ${this.modelName}`, error, true);
 			return Promise.reject(error);
@@ -36,8 +34,7 @@ export class BaseEntity {
 
 	async getOneEntity(criteria: object, projection: object) {
 		try {
-			const data = await this.DAOManager.findOne(this.modelName, criteria, projection, { lean: true });
-			return data;
+			return await this.DAOManager.findOne(this.modelName, criteria, projection, { lean: true });
 		} catch (error) {
 			consolelog(`Error in Base Entity in getOneEntity method ${this.modelName}`, error, true);
 			return Promise.reject(error);
@@ -46,8 +43,7 @@ export class BaseEntity {
 
 	async count(condition: object) {
 		try {
-			const data = await this.DAOManager.count(this.modelName, condition);
-			return data;
+			return await this.DAOManager.count(this.modelName, condition);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -71,8 +67,7 @@ export class BaseEntity {
 				};
 			}
 
-			const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate, option);
-			return data;
+			return await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate, option);
 		} catch (error) {
 			consolelog(`Error in Base Entity in updateOneEntity method ${this.modelName}`, error, true);
 			return Promise.reject(error);
@@ -82,8 +77,7 @@ export class BaseEntity {
 
 	async getById(id: string, projection: object) {
 		try {
-			const data = await this.DAOManager.findOne(this.modelName, { _id: id }, projection, { lean: true });
-			return data;
+			return await this.DAOManager.findOne(this.modelName, { _id: id }, projection, { lean: true });
 		} catch (error) {
 			consolelog(`Error in Base Entity in  getById method ${this.modelName}`, error, true);
 			return Promise.reject(error);
@@ -92,8 +86,7 @@ export class BaseEntity {
 
 	async getMultiple(criteria: object, projection: object) {
 		try {
-			const data = await this.DAOManager.getData(this.modelName, criteria, projection, { lean: true });
-			return data;
+			return await this.DAOManager.getData(this.modelName, criteria, projection, { lean: true });
 		} catch (error) {
 			consolelog(`Error in Base Entity in getMultiple method ${this.modelName}`, error, true);
 			return Promise.reject(error);
@@ -102,8 +95,7 @@ export class BaseEntity {
 
 	async getDistinct(key: string, criteria: object) {
 		try {
-			const data = await this.DAOManager.distinct(this.modelName, key, criteria);
-			return data;
+			return await this.DAOManager.distinct(this.modelName, key, criteria);
 		} catch (error) {
 			consolelog(`Error in Base Entity in getDistinct method ${this.modelName}`, error, true);
 			return Promise.reject(error);
@@ -126,8 +118,7 @@ export class BaseEntity {
 					updatedAt: new Date().getTime(),
 				};
 			}
-			const data = await this.DAOManager.updateMany(this.modelName, criteria, projection, option);
-			return data;
+			return await this.DAOManager.updateMany(this.modelName, criteria, projection, option);
 		} catch (error) {
 			consolelog(`Error in Base Entity in updateMultiple method ${this.modelName}`, error, true);
 			return Promise.reject(error);
@@ -149,8 +140,7 @@ export class BaseEntity {
 			if (!option) {
 				option = { lean: true };
 			}
-			const data = await this.DAOManager.aggregateData(this.modelName, pipeline, option);
-			return data;
+			return await this.DAOManager.aggregateData(this.modelName, pipeline, option);
 		} catch (error) {
 			consolelog(`Error in Base Entity in aggregate method ${this.modelName}`, error, true);
 			return Promise.reject(error);

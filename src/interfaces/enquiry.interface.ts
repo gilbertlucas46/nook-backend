@@ -8,18 +8,26 @@ export namespace EnquiryRequest {
 		message?: string;
 		// userId?: string;
 		propertyId: string;
-		type: string;
+		enquiryType: string;
 		propertyOwnerId: string;
 		agentEmail?: string;
+		// propertyOwnerEmail?: string;
+		agentId?: string;
+		propertyOwnerEmail?: string;
+		// title: string;
 	}
-
 	export interface GetEnquiry {
 		page?: number;
 		limit?: number;
-		fromDate: number;
-		toDate: number;
+		fromDate?: number;
+		toDate?: number;
 		sortType?: number;
+		enquiryType?: string;
+		category: string;
+		agentId?: string;
+		searchTerm?: string;
 	}
+
 	export interface GetInquiryById {
 		enquiryId: string;
 	}

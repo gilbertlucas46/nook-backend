@@ -9,10 +9,15 @@ const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import * as request from 'request';
+const pswdCert: string = config.get('forgetPwdjwtSecret');
+
 export class UserController {
 	/**
-	 *
-	 * @param payload user detail
+	 * @function register
+	 * @description function to register agent/owner/tenant
+	 * @payload payload :Register
+	 * return object and send mail
 	 */
 	async register(payload: UserRequest.Register) {
 		try {
@@ -26,7 +31,7 @@ export class UserController {
 				if (UserCheck && UserCheck._id) {
 					return Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN;
 				} else {
-					const makePassword = await utils.cryptData(payload.password);
+					const makePassword = await utils.encryptWordpressHashNode(payload.password);
 					const userData = {
 						userName: payload.userName.trim().toLowerCase(),
 						email: payload.email.trim().toLowerCase(),
@@ -37,9 +42,17 @@ export class UserController {
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
 					const userResponse = UniversalFunctions.formatUserData(User);
-					const html = `<html><head><title> Nook user Register | Thanx for Registering with us...</title></head></html>`;
-					const mail = new MailManager(payload.email, 'nook welcomes you', html);
-					mail.sendMail();
+					// const html = `<html><head><title> Nook user Register | Thanx for Registering with us...</title></head></html>`;
+					// const mail = new MailManager(payload.email, 'nook welcomes you', html);
+					// const mail = new MailManager(payload.email, 'nook welcomes you', html);
+					const mail = new MailManager();
+					// mail.sendMail({ receiverEmail: payload['email'], subject: 'nook welcomes you', html: html });
+					const sendObj = {
+						receiverEmail: payload.email,
+						subject: 'nook welcomes you',
+						userName: payload.userName,
+					};
+					mail.welcomeMail(sendObj);
 					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
 				}
 			}
@@ -48,8 +61,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload login via userName and email
+	 * @function login
+	 * @description function to login agent/owner/tenant
+	 * @payload payload :Login
+	 * return object with access token
 	 */
 	async login(payload: UserRequest.Login) {
 		try {
@@ -60,11 +75,11 @@ export class UserController {
 				return re.test(String(unique).toLowerCase());
 			};
 			if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
-			const checkData = { $or: [{ email: unique }, { userName: payload.email.trim().toLowerCase() }] };
+			const checkData = { $or: [{ email: unique }, { userName: payload.email }] };
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
-					if (!(await utils.deCryptData(payload.password, userData.password))) {
+					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
 						return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD;
 					} else {
 						const accessToken = await ENTITY.UserE.createToken(payload, userData);
@@ -86,8 +101,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload property detail by id
+	 * @function propertyDetail
+	 * @description function to get Detail of the property
+	 * @payload payload :PropertyDetail
+	 * return Proeperty Data
 	 */
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
@@ -102,8 +119,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload userProfile data to update
+	 * @function updateProfile
+	 * @description function to update the user profile
+	 * @payload  ProfileUpdate
+	 * return object
 	 */
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
@@ -130,26 +149,53 @@ export class UserController {
 				};
 				ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
 			}
+			/**
+			 *  push contract to salesforce
+			 */
+			const salesforceData = {
+				userName: updateUser.userName,
+				email: updateUser.email,
+				firstName: updateUser.firstName || '',
+				middleName: updateUser.middleName || '',
+				lastName: updateUser.lastName || '',
+				phoneNumber: updateUser.phoneNumber || '',
+				type: updateUser.type,
+			};
+
+			request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
+				if (err) { return console.log(err); }
+				console.log('body ----', body);
+			});
+
 			return updateUser;
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
 	/**
-	 *
-	 * @param payload forget password via email or userName
+	 * @function forgetPassword
+	 * @description function to send the email on the registered emailId
+	 * @payload  ForgetPassword
+	 * return send mail
 	 */
 	async forgetPassword(payload: UserRequest.ForgetPassword) {
 		try {
 			const criteria = { $or: [{ userName: payload.email }, { email: payload.email }] };
-			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id']);
+			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id', 'userName']);
 			if (!userData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
 				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
 				const url = config.get('host') + Constant.SERVER.FORGET_PASSWORD_URL + passwordResetToken;
-				const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
-				const mail = new MailManager(userData.email, 'forGet password', html);
-				mail.sendMail();
+				// const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
+				const sendObj = {
+					receiverEmail: payload.email,
+					subject: 'reset password Nook',
+					token: passwordResetToken,
+					url,
+					userName: userData.userName,
+				};
+				const mail = new MailManager();
+				mail.forgetPassword(sendObj);
 				return {};
 			}
 		} catch (error) {
@@ -158,29 +204,36 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload password to be update
-	 * @param userData user's _id
+	 * @function changePassword
+	 * @description chanage the password
+	 * @payload  ChangePassword and userData
+	 * return success
 	 */
 	async changePassword(payload: UserRequest.ChangePassword, userData: UserRequest.UserData) {
 		try {
 			const criteria = { _id: userData._id };
 			const password = await ENTITY.UserE.getOneEntity(criteria, ['password']);
-			if (!(await utils.deCryptData(payload.oldPassword, password.password))) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD); } else {
+			if (!(await utils.decryptWordpressHashNode(payload.oldPassword, password.password))) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD); } else {
 				const updatePswd = {
-					password: await utils.cryptData(payload.newPassword),
+					password: await utils.encryptWordpressHashNode(payload.newPassword),
 				};
 				const updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd);
-				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); } else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
+				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); }
+				else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
 			}
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
-
+	/**
+	 * @function verifyLink
+	 * @description verify the link of the forgerPassword and verify the expiration time
+	 * @payload  jwt link
+	 * return and redirect the another api if success
+	 */
 	async verifyLink(payload) {
 		try {
-			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			const result: any = Jwt.verify(payload.link, pswdCert, { algorithms: ['HS256'] });
 			const userData = await ENTITY.UserE.getOneEntity(result.email, {});
 			if (!userData) { return Constant.STATUS_MSG.ERROR.E400.INVALID_ID; } else {
 				const criteria = { email: result };
@@ -195,19 +248,21 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload verify link of the forget password e-mail
+	 * @function verifyLinkForResetPwd
+	 * @description verify the link of the user and
+	 * @payload  jwt link
+	 * return success
 	 */
 	async verifyLinkForResetPwd(payload) {
 		try {
-			const result = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			const result = Jwt.verify(payload.link, pswdCert, { algorithms: ['HS256'] });
 			if (!result) { return Promise.reject(); }
 			const checkAlreadyUsedToken: any = await ENTITY.UserE.getOneEntity({ email: result }, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 			if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null) {
 				return Promise.reject('Already_Changed');
 			} // send the error page that the already change the pssword in case of already changes fromthe browser
 			const updatePswd = {
-				password: await utils.cryptData(payload.password),
+				password: await utils.encryptWordpressHashNode(payload.password),
 				passwordResetTokenExpirationTime: null,
 				passwordResetToken: null,
 			};
@@ -224,8 +279,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param userData userId
+	 * @function dashboard
+	 * @description user dashboard accoordinf to user type
+	 * @payload  UserData
+	 * return Array
 	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
@@ -235,8 +292,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload user's suggested property except current
+	 * @function userProperty
+	 * @description property of the particular user
+	 * @payload  UserProperty
+	 * return Array
 	 */
 	async userProperty(payload: PropertyRequest.UserProperty) {
 		try {
@@ -247,9 +306,10 @@ export class UserController {
 		}
 	}
 	/**
-	 *
-	 * @param payload type to be update
-	 * @param userData
+	 * @function updateAccount
+	 * @description updayte user account to the agent/owner/guest
+	 * @payload  UserProperty
+	 * return object userdata with access token
 	 */
 	async updateAccount(payload: UserRequest.UpdateAccount, userData: UserRequest.UserData) {
 		try {
