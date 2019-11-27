@@ -27,7 +27,6 @@ export class MailManager {
 	}
 	async sendMail(params) {
 		try {
-			console.log('paramsssssssssssss', params);
 			// let senderEmail = this.senderEmail
 			const mailOptions: Mail.Options = {
 				from: config.get('smtp.mailHost'), // sender email
@@ -53,8 +52,6 @@ export class MailManager {
 			// } else {
 			// url = config.SERVER.USER_RESET_URL + `${params.accessToken}`;
 			// }
-			console.log('SERVER.TEMPLATE_PATH', SERVER.TEMPLATE_PATH);
-
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'welcome.html'))
 				.compileFile({
 					// url: url,
@@ -65,7 +62,6 @@ export class MailManager {
 					twitterUrl: EMAIL_TEMPLATE.SOCIAL_LINK.TWITTER,
 					userName: params.userName,
 				});
-			// console.log('mailContentmailContentmailContentmailContentmailContent', mailContent);
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'welcome template', content: mailContent });
 
 		} catch (error) {
@@ -81,8 +77,6 @@ export class MailManager {
 			// } else {
 			// url = config.SERVER.USER_RESET_URL + `${params.accessToken}`;
 			// }
-			console.log('SERVER.TEMPLATE_PATH', SERVER.TEMPLATE_PATH);
-
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'reset-password.html'))
 				.compileFile({
 					url: params.url,
