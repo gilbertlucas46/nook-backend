@@ -77,7 +77,7 @@ export namespace AdminRequest {
 	export interface UpdatePropertyStatus {
 		status: number;
 		propertyId: string;
-		permissionType: string;
+		permissionType?: string;
 	}
 
 	export interface Logout {
