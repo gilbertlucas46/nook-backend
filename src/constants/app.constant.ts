@@ -145,6 +145,8 @@ export let DATABASE = {
 		FATHER: 'father',
 		MOTHER: 'mother',
 		SPOUSE: 'spouse',
+		SON : 'son',
+		DAUGHTER : 'daughter',
 	},
 
 	CIVIL_STATUS: {
