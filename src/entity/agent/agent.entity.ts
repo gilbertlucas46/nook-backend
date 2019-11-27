@@ -50,37 +50,30 @@ export class AgentClass extends BaseEntity {
                     },
                 };
             }
+
             if (sortBy) {
+                switch (sortBy) {
+                    case 'date':
+                        sortBy = 'date';
+                        sortingType = {
+                            createdAt: sortType,
+                        };
+                        break;
+                    default:
+                        // sortBy = 'isFeaturedProfile';
+                        sortingType = {
+                            isFeaturedProfile: sortType,
+                        };
+                        break;
+                }
+            } else {
                 sortingType = {
-                    isFeaturedProfile: -1,
-                    createdAt: sortType,
+                    isFeaturedProfile: sortType,
                 };
             }
-            // if (sortBy) {
-            //     switch (sortBy) {
-            //         case 'date':
-            //             sortBy = 'date';
-            //             sortingType = {
-            //                 createdAt: sortType,
-            //             };
-            //             break;
-            //         default:
-            //             // sortBy = 'isFeaturedProfile';
-            //             sortingType = {
-            //                 isFeaturedProfile: -1,
-            //                 createdAt: sortType,
-            //             };
-            //             break;
-            //     }
-            // }
-            // if (specializingIn_property_type) {
-            //     matchObject['specializingIn_property_type'] =
-            //         specializingIn_property_type;
-            // }
-
             if (specializingIn_property_type) {
                 matchObject['specializingIn_property_type'] =
-                    { $eq: specializingIn_property_type };
+                    specializingIn_property_type;
             }
 
             if (specializingIn_property_category) {

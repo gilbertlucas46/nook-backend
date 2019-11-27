@@ -35,25 +35,26 @@ export let agentRoute: ServerRoute[] = [
                     type: Joi.string(),
                     label: Joi.array(),
                     propertyType: Joi.number(),
-                    sortBy: Joi.string().default('createdAt'),
+                    // sortBy: Joi.string().default('createdAt'),
+                    sortBy: Joi.number().valid(['date']),
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                     // fromDate: Joi.number(),
                     // toDate: Joi.number(),
                     cityId: Joi.string(),
                     userId: Joi.string(),
-                    specializingIn_property_type: Joi.array().items(
-                        Joi.number().valid(
-                            Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
-                            Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-                        ),
-                    ),
-                    // Joi.number().valid([
-                    //     Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
-                    //     Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-                    // ]),
-                    // soldProperty: Joi.number().valid(
-                    // Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
+                    // specializingIn_property_type: Joi.array().items(
+                    //     Joi.number().valid(
+                    //         Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+                    //         Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+                    //     ),
                     // ),
+                    specializingIn_property_type: Joi.number().valid([
+                        Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+                        Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+                    ]),
+                    soldProperty: Joi.number().valid(
+                        Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
+                    ),
                     propertyFor: Joi.number().valid(
                         Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
                     ),
