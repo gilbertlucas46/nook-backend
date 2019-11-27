@@ -88,7 +88,7 @@ export class AgentClass extends BaseEntity {
             // if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
             const query = [
                 { $match: matchObject },
-                { searchCriteria },
+                searchCriteria,
                 { $sort: sortingType },
                 { $skip: skip },
                 { $limit: limit },
