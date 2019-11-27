@@ -35,11 +35,11 @@ export const transactionSchema = new Schema({
 	description: { type: String },
 	status: {
 		type: String,
-		enum: [
-			CONSTANT.DATABASE.TRANSACTION_STATUS.SUCCEEDED,
-			CONSTANT.DATABASE.TRANSACTION_STATUS.PENDING,
-			CONSTANT.DATABASE.TRANSACTION_STATUS.FAILED,
-		],
+		// enum: [
+		// 	CONSTANT.DATABASE.TRANSACTION_STATUS.SUCCEEDED,
+		// 	CONSTANT.DATABASE.TRANSACTION_STATUS.PENDING,
+		// 	CONSTANT.DATABASE.TRANSACTION_STATUS.FAILED,
+		// ],
 		default: '',
 	},
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
