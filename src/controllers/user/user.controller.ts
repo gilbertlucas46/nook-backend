@@ -31,7 +31,7 @@ export class UserController {
 				if (UserCheck && UserCheck._id) {
 					return Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN;
 				} else {
-					const makePassword = await utils.cryptData(payload.password);
+					const makePassword = await utils.encryptWordpressHashNode(payload.password);
 					const userData = {
 						userName: payload.userName.trim().toLowerCase(),
 						email: payload.email.trim().toLowerCase(),
@@ -79,7 +79,7 @@ export class UserController {
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
-					if (!(await utils.deCryptData(payload.password, userData.password))) {
+					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
 						return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD;
 					} else {
 						const accessToken = await ENTITY.UserE.createToken(payload, userData);
@@ -213,9 +213,9 @@ export class UserController {
 		try {
 			const criteria = { _id: userData._id };
 			const password = await ENTITY.UserE.getOneEntity(criteria, ['password']);
-			if (!(await utils.deCryptData(payload.oldPassword, password.password))) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD); } else {
+			if (!(await utils.decryptWordpressHashNode(payload.oldPassword, password.password))) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD); } else {
 				const updatePswd = {
-					password: await utils.cryptData(payload.newPassword),
+					password: await utils.encryptWordpressHashNode(payload.newPassword),
 				};
 				const updatePassword = await ENTITY.UserE.updateOneEntity(criteria, updatePswd);
 				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); }
@@ -262,7 +262,7 @@ export class UserController {
 				return Promise.reject('Already_Changed');
 			} // send the error page that the already change the pssword in case of already changes fromthe browser
 			const updatePswd = {
-				password: await utils.cryptData(payload.password),
+				password: await utils.encryptWordpressHashNode(payload.password),
 				passwordResetTokenExpirationTime: null,
 				passwordResetToken: null,
 			};

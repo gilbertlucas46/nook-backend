@@ -22,7 +22,7 @@ class AdminStaffControllers {
             if (!checkEmail) {
                 const generateString = generateRandomString(4);
                 const genCredentials = `${(payload.firstName).replace(/ /g, '')}${generateString}`;
-                const hashPassword = await utils.cryptData(genCredentials);
+                const hashPassword = await utils.encryptWordpressHashNode(genCredentials);
                 const datatoSave = {
                     email: payload.email,
                     firstName: payload.firstName,
@@ -34,7 +34,7 @@ class AdminStaffControllers {
                     permission: payload.permission,
                 };
                 await ENTITY.AdminStaffEntity.createOneEntity(datatoSave);
-                await ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
+                ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
             } else {
                 return Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT;
@@ -46,21 +46,17 @@ class AdminStaffControllers {
 
     async updateStaff(payload: AdminRequest.IadminUpdatePermission) {
         try {
-            console.log('payloadpayloadpayload', payload);
-
             let dataToUpdate: any = {};
             if (payload.permission) {
                 dataToUpdate = {
                     $set: { permission: payload.permission },
                 };
             }
-
             if (payload.status) {
                 dataToUpdate = {
                     $set: { staffStatus: payload.status },
                 };
             }
-
             return await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, dataToUpdate);
         } catch (error) {
             return Promise.reject(error);
@@ -79,7 +75,7 @@ class AdminStaffControllers {
             } else {
                 const generateString = generateRandomString(4);
                 const genCredentials = `${payload.firstName}_${generateString}`;
-                const hashPassword = await utils.cryptData(genCredentials);
+                const hashPassword = await utils.encryptWordpressHashNode(genCredentials);
                 await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.adminId }, { $set: { password: hashPassword } });
                 // ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return {};
