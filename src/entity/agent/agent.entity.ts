@@ -21,18 +21,18 @@ export class AgentClass extends BaseEntity {
             matchObject['type'] = 'AGENT';
             let searchCriteria: any;
             if (searchTerm) {
-                if (payload.searchBy === 'company') {
+                if (searchBy === 'company') {
                     searchCriteria = {
                         $match:
                             { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
                 }
-                else if (payload.searchBy === 'location') {
+                else if (searchBy === 'location') {
                     searchCriteria = {
                         $match:
                             { address: new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
-                } else if (payload.searchBy === 'name') {
+                } else if (searchBy === 'name') {
                     searchCriteria = {
                         $match:
                         {

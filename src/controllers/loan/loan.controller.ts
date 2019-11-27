@@ -71,11 +71,11 @@ class LoanControllers extends BaseEntity {
              */
 
             const salesforceData = {
-                firstName: data.personalInfo.firstName,
+                firstName: data.personalInfo.firstName || '',
                 middleName: data.personalInfo.middleName || '',
-                lastName: data.personalInfo.lastName,
-                gender: data.personalInfo.gender,
-                phoneNumber: data.contactInfo.mobileNumber,
+                lastName: data.personalInfo.lastName || '',
+                gender: data.personalInfo.gender || '',
+                phoneNumber: data.contactInfo.mobileNumber || '',
                 email: data.contactInfo.email,
                 referenceId: data.referenceId,
                 createdAt: data.createdAt,
