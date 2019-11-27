@@ -14,6 +14,7 @@ export let cityRoutes: ServerRoute[] = [
             try {
                 const payload: PropertyRequest.IPaginate = req.query as any;
                 const data_to_send = await CityService.popularCities(payload);
+                console.log("-------------------",data_to_send);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data_to_send));
             } catch (error) {
                 return (UniversalFunctions.sendError(error));
@@ -22,16 +23,16 @@ export let cityRoutes: ServerRoute[] = [
         options: {
             description: 'Get most popular cities list',
             tags: ['api', 'anonymous', 'user', 'Cities'],
-            auth: 'DoubleAuth',
-            validate: {
-                query: {
-                    propertyType: Joi.number(),
-                    page: Joi.number(),
-                    limit: Joi.number(),
-                },
-                headers: UniversalFunctions.authorizationHeaderObj,
-                failAction: UniversalFunctions.failActionFunction,
-            },
+            // auth: 'DoubleAuth',
+            // validate: {
+            //     query: {
+            //         //  propertyType: Joi.number(),
+            //         page: Joi.number(),
+            //         limit: Joi.number(),
+            //     },
+            //     headers: UniversalFunctions.authorizationHeaderObj,
+            //     failAction: UniversalFunctions.failActionFunction,
+            // },
             plugins: {
                 'hapi-swagger': {
                     responseMessages: Constant.swaggerDefaultResponseMessages,

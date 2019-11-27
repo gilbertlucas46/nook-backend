@@ -49,6 +49,7 @@ export namespace LoanRequest {
             fixingPeriod: number;
         };
     }
+
     export interface PersonalInfo {
         firstName: string;
         lastName?: string;
@@ -88,6 +89,10 @@ export namespace LoanRequest {
         loanTerm: number;
         rate: number;
         monthlyRepayment: number;
+        loanType: string;
+        loanPercent: number;
+        loanAmount: number;
+        propertyValue: number;
     }
     export interface EmploymentInfo {
         tin: string;
