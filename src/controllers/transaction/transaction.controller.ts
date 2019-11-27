@@ -16,7 +16,7 @@ class TransactionController extends BaseEntity {
 				amount: payload.amount * 100,
 				currency: payload.currency,
 				source: payload.source,
-				description: payload.description
+				description: payload.description,
 			});
 			const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
 			return {};
@@ -35,10 +35,10 @@ class TransactionController extends BaseEntity {
 
 	async handleChargeSucceeded(transactioData, paymentIntent) {
 		if (!transactioData.subscriptionId) {
-			let payload: any = {
+			const payload: any = {
 				featuredType: transactioData.featuredType,
 				subscriptionType: transactioData.billingType,
-				userId: transactioData.userId
+				userId: transactioData.userId,
 			};
 			const step1 = await ENTITY.SubscriptionE.addSubscrition(payload);
 			transactioData.subscriptionId = step1._id;
@@ -58,10 +58,10 @@ class TransactionController extends BaseEntity {
 	}
 
 	async webhook(payload) {
-		console.log(payload, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		const step1 = await ENTITY.TransactionE.findTransactionById({ "transactionId": payload.data.object.balance_transaction });
+		console.log(payload, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+		const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
 		try {
-			let event = payload;
+			const event = payload;
 			const paymentIntent = event.data.object;
 			// Handle the event
 			switch (event.type) {
@@ -77,7 +77,7 @@ class TransactionController extends BaseEntity {
 				// ... handle other event types
 				default:
 					// Unexpected event type
-					console.log("default=====================>", event.type);
+					console.log('default=====================>', event.type);
 			}
 			return {};
 

@@ -12,7 +12,7 @@ export class AgentClass extends BaseEntity {
         try {
             let { page, limit, sortType, sortBy } = payload;
             const { fromDate, toDate, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
-            const featuredArray = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? [Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] : [Constant.DATABASE.FEATURED_TYPE.HOMEPAGE, Constant.DATABASE.FEATURED_TYPE.PROFILE];
+            const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? [Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] : Constant.DATABASE.FEATURED_TYPE.PROFILE;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -165,33 +165,33 @@ export class AgentClass extends BaseEntity {
                             {
                                 $match: {
                                     $expr: {
-                                        $and: [{ $eq: ['$userId', '$$userId'] }, { "$in": ["$featuredType", [Constant.DATABASE.FEATURED_TYPE.HOMEPAGE]] }] // add featured here
-                                    }
-                                }
+                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }], // add featuredType here
+                                    },
+                                },
                             },
-                            { $match: { $and: [{ startDate: { "$lte": new Date().getTime() } }, { endDate: { "$gte": new Date().getTime() } }] } },
+                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
                             {
                                 $project: {
-                                    _id: 1
-                                }
-                            }
+                                    _id: 1,
+                                },
+                            },
                         ],
-                        as: 'subscriptions'
-                    }
+                        as: 'subscriptions',
+                    },
                 },
                 {
-					$addFields: {
-						isFeaturedProfile: {
-							"$cond": { if: { "$eq": ["$subscriptions", []] }, then: false, else: true }
-						}
-					}
-				},
-				{
-					$project: {
-						subscriptions: 0
-					}
+                    $addFields: {
+                        isFeaturedProfile: {
+                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                        },
+                    },
                 },
-                { $sort: sortingType }
+                {
+                    $project: {
+                        subscriptions: 0,
+                    },
+                },
+                { $sort: sortingType },
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (err) {
@@ -357,32 +357,32 @@ export class AgentClass extends BaseEntity {
                             {
                                 $match: {
                                     $expr: {
-                                        $and: [{ $eq: ['$userId', '$$userId'] }, { "$in": ["$featuredType", [Constant.DATABASE.FEATURED_TYPE.PROFILE]] }]
-                                    }
-                                }
+                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROFILE] }],
+                                    },
+                                },
                             },
-                            { $match: { $and: [{ startDate: { "$lte": new Date().getTime() } }, { endDate: { "$gte": new Date().getTime() } }] } },
+                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
                             {
                                 $project: {
-                                    _id: 1
-                                }
-                            }
+                                    _id: 1,
+                                },
+                            },
                         ],
-                        as: 'subscriptions'
-                    }
+                        as: 'subscriptions',
+                    },
                 },
                 {
-					$addFields: {
-						isFeaturedProfile: {
-							"$cond": { if: { "$eq": ["$subscriptions", []] }, then: false, else: true }
-						}
-					}
-				},
-				{
-					$project: {
-						subscriptions: 0
-					}
-                }
+                    $addFields: {
+                        isFeaturedProfile: {
+                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                        },
+                    },
+                },
+                {
+                    $project: {
+                        subscriptions: 0,
+                    },
+                },
             ];
             return await this.DAOManager.aggregateData(this.modelName, query);
         } catch (err) {

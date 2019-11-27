@@ -29,17 +29,17 @@ export let propertyRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					isFeatured: Joi.boolean().optional(),
-					isHomePageFeatured: Joi.boolean().optional()
+					isHomePageFeatured: Joi.boolean().optional(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction
+				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
 				'hapi-swagger': {
 					responseMessages: Constant.swaggerDefaultResponseMessages,
-				}
-			}
-		}
+				},
+			},
+		},
 	},
 	{
 		method: 'POST',
@@ -218,8 +218,7 @@ export let propertyRoute: ServerRoute[] = [
 					minArea: Joi.number(),
 					maxArea: Joi.number(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					// screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]) // uncomment later
-					screenType: Joi.string().trim().optional().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]) // remove later
+					screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
