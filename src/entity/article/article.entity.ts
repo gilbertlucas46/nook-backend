@@ -190,8 +190,8 @@ export class ArticleClass extends BaseEntity {
                 };
             }
             else {
-                query = {
-                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                query['status'] = {
+                    $eq: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
                 };
             }
             if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
@@ -199,17 +199,25 @@ export class ArticleClass extends BaseEntity {
             if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
 
             if (searchTerm) {
-                query['title'] = searchTerm;
+                query = {
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
             }
 
             const pipeline = [
                 { $match: query },
                 { $sort: sortingType },
             ];
+            console.log('pipelinepipelinepipeline', pipeline);
 
-            return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+            const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+            console.log('datadatadatadatadatadata', data);
 
-        }catch (error) {
+            return data;
+        } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
         }
