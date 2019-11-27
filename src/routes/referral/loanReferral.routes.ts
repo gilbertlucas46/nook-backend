@@ -94,7 +94,7 @@ export let loanReferral: any = [
                 query: {
                     page: Joi.number(),
                     limit: Joi.number(),
-                    // sortBy: Joi.string(),
+                    sortBy: Joi.string().default('createdAt'),
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                     // searchTerm: Joi.string(),
                     fromDate: Joi.number(),
