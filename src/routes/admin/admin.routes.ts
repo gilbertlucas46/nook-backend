@@ -383,7 +383,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const payload: AdminRequest.UpdatePropertyStatus = {
 					status: (request.payload as any).status,
 					propertyId: request.params.propertyId,
-					permissionType: (request.payload as any).permissionType,
+					// permissionType: (request.payload as any).permissionType,
 				};
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await AdminStaffEntity.checkPermission(payload.permissionType);
@@ -408,12 +408,12 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 					]),
-					permissionType: Joi.string().valid([
-						Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-					]),
+					// permissionType: Joi.string().valid([
+					// 	Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+					// ]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
