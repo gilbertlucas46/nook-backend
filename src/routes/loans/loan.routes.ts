@@ -206,6 +206,10 @@ export let loanRoute: ServerRoute[] = [
 						rate: Joi.number().max(100),
 						monthlyRepayment: Joi.number(),
 						hasCoBorrower: Joi.boolean(),
+						loanType: Joi.string(),
+						loanPercent: Joi.number(),
+						loanAmount: Joi.number(),
+						propertyValue: Joi.number(),
 					}),
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
@@ -508,6 +512,10 @@ export let loanRoute: ServerRoute[] = [
 						rate: Joi.number().max(100),
 						monthlyRepayment: Joi.number(),
 						hasCoBorrower: Joi.boolean(),
+						loanType: Joi.string(),
+						loanPercent: Joi.number(),
+						loanAmount: Joi.number(),
+						propertyValue: Joi.number(),
 					}),
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
