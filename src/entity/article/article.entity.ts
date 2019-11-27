@@ -10,10 +10,23 @@ export class ArticleClass extends BaseEntity {
 
     async allArticlesBasedOnCategory(payload: ArticleRequest.GetArticle) {
         try {
-            let { page, limit } = payload;
+            let { page, limit, searchTerm } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
-
+            const promise = [];
+            let searchCriteria: any = {};
+            if (searchTerm) {
+                searchCriteria = {
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+            }
+            else {
+                searchCriteria = {
+                };
+            }
             const pipeline = [
                 {
                     $match: {
@@ -39,7 +52,14 @@ export class ArticleClass extends BaseEntity {
                         FEATURED_ARTICLE: [
                             {
                                 $match: {
-                                    isFeatured: true,
+
+                                    $and: [
+                                        {
+                                            isFeatured: true,
+                                        },
+                                        searchCriteria,
+                                    ],
+
                                 },
                             },
                             {
@@ -64,7 +84,13 @@ export class ArticleClass extends BaseEntity {
                         AGENTS: [
                             {
                                 $match: {
-                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                                    $and: [
+                                        {
+                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+
+                                        },
+                                        searchCriteria,
+                                    ],
                                 },
                             },
                             {
@@ -79,7 +105,13 @@ export class ArticleClass extends BaseEntity {
                         BUYING: [
                             {
                                 $match: {
-                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                                    $and: [
+                                        {
+                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+
+                                        },
+                                        searchCriteria,
+                                    ],
                                 },
                             },
                             {
@@ -94,7 +126,13 @@ export class ArticleClass extends BaseEntity {
                         HOME_LOANS: [
                             {
                                 $match: {
-                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                                    $and: [
+                                        {
+                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+
+                                        },
+                                        searchCriteria,
+                                    ],
                                 },
                             },
                             {
@@ -109,7 +147,15 @@ export class ArticleClass extends BaseEntity {
                         RENTING: [
                             {
                                 $match: {
-                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                                    $and: [
+                                        {
+                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+
+                                        },
+                                        searchCriteria,
+                                    ],
+                                    // categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                                    // searchCriteria,
                                 },
                             },
                             {
@@ -124,7 +170,15 @@ export class ArticleClass extends BaseEntity {
                         SELLING: [
                             {
                                 $match: {
-                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                                    //  categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                                    //  searchCriteria,
+                                    $and: [
+                                        {
+                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+
+                                        },
+                                        searchCriteria,
+                                    ],
                                 },
                             },
                             {
@@ -139,7 +193,13 @@ export class ArticleClass extends BaseEntity {
                         NEWS: [
                             {
                                 $match: {
-                                    categoryId: Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                                    $and: [
+                                        {
+                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+
+                                        },
+                                        searchCriteria,
+                                    ],
                                 },
                             },
                             {
@@ -154,11 +214,9 @@ export class ArticleClass extends BaseEntity {
                     },
                 },
             ];
-
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
             if (!data) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
             return data;
-
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
@@ -198,15 +256,6 @@ export class ArticleClass extends BaseEntity {
             if (fromDate && !toDate) { query['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
 
-            if (searchTerm) {
-                query = {
-                    $or: [
-                        { title: { $regex: searchTerm, $options: 'i' } },
-                        { description: { $regex: searchTerm, $options: 'i' } },
-                    ],
-                };
-            }
-
             const pipeline = [
                 { $match: query },
                 { $sort: sortingType },
@@ -218,7 +267,6 @@ export class ArticleClass extends BaseEntity {
             return Promise.reject(error);
         }
     }
-
 }
 
 export const ArticleE = new ArticleClass();

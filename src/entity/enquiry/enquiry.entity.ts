@@ -18,7 +18,7 @@ export class EnquiryClass extends BaseEntity {
             const sortingType = {
                 createdAt: sortType,
             };
-            const query: any = {};
+            let query: any = {};
             if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.PROPERTY && category === Constant.DATABASE.ENQUIRY_CATEGORY.SENT) {
                 query['userId'] = userData._id;
                 query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
@@ -39,7 +39,7 @@ export class EnquiryClass extends BaseEntity {
                 query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
             }
             if (searchTerm) {
-                query['userId'] = {
+                query = {
                     userId: userData._id,
                     $or: [
                         { phoneNumber: { $regex: searchTerm, $options: 'i' } },
