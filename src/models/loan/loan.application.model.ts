@@ -100,7 +100,10 @@ const schema = new Schema({
         rate: { type: Schema.Types.Number },
         monthlyRepayment: { type: Schema.Types.Number },
         hasCoBorrower: { type: Boolean },
-
+        loanType : {type: String},
+        loanPercent : {type: Number},
+        loanAmount : {type: Number},
+        propertyValue : {type : Number},
     },
     employmentInfo: {
         companyIndustry: {
