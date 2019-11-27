@@ -21,7 +21,7 @@ export namespace ArticleRequest {
         sortType?: number;
         categoryId?: number;
         articleId?: string;
-        searchTerm?: string;
+        searchTerm: string;
         fromDate?: number;
         toDate?: number;
         isFeatured?: boolean;

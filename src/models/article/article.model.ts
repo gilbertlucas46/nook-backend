@@ -45,6 +45,7 @@ const articleSchema = new Schema({
             Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.TYPE,
             Constant.DATABASE.ARTICLE_TYPE.RENTING.TYPE,
             Constant.DATABASE.ARTICLE_TYPE.SELLING.TYPE,
+            Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
         ], index: true,
     },
     imageUrl: { type: String },

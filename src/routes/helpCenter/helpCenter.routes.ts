@@ -235,7 +235,6 @@ export let helpCenterRoute: ServerRoute[] = [
             },
         },
     },
-
     {
         method: 'GET',
         path: '/v1/user/help-center-group/{id}',

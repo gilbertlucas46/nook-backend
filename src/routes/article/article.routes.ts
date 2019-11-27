@@ -98,7 +98,7 @@ export let articleRoutes: ServerRoute[] = [
                         // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
                     ]),
                     articleId: Joi.string(),
-                    searchTerm: Joi.string(),
+                    // searchTerm: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -133,6 +133,7 @@ export let articleRoutes: ServerRoute[] = [
                 query: {
                     limit: Joi.number(),
                     page: Joi.number(),
+                    searchTerm: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
