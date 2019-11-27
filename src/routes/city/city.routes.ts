@@ -14,7 +14,6 @@ export let cityRoutes: ServerRoute[] = [
             try {
                 const payload: PropertyRequest.IPaginate = req.query as any;
                 const data_to_send = await CityService.popularCities(payload);
-                console.log("-------------------",data_to_send);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data_to_send));
             } catch (error) {
                 return (UniversalFunctions.sendError(error));
