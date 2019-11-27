@@ -191,7 +191,7 @@ export class ArticleClass extends BaseEntity {
             }
             else {
                 query['status'] = {
-                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                    $eq: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
                 };
             }
             if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
@@ -211,9 +211,12 @@ export class ArticleClass extends BaseEntity {
                 { $match: query },
                 { $sort: sortingType },
             ];
+            console.log('pipelinepipelinepipeline', pipeline);
 
-            return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+            const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+            console.log('datadatadatadatadatadata', data);
 
+            return data;
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
