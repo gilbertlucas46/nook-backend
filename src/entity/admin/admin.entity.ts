@@ -43,7 +43,7 @@ export class AdminClass extends BaseEntity {
 		const toSave = {
 			name: 'Base Admin',
 			email: 'base_admin@yopmail.com',
-			password: await utils.cryptData('123456'),
+			password: await utils.encryptWordpressHashNode('123456'),
 			profilePicUrl: '',
 		};
 		const criteria = {

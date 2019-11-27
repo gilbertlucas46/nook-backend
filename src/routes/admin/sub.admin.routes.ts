@@ -68,11 +68,10 @@ export let subAdminRoutes: ServerRoute[] = [
 					...request.payload as any,
 					...request.params,
 				};
-				console.log('payloadpayloadpayload', payload);
 				const data = await AdminStaffController.updateStaff(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				console.log('errorerrorerrorerror', error);
+				console.log('Error', error);
 				return (UniversalFunctions.sendError(error));
 			}
 		},

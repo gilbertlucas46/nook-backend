@@ -213,6 +213,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
             } catch (error) {
+                console.log('Error', error);
                 return (UniversalFunction.sendError(error));
             }
         },
