@@ -236,7 +236,7 @@ export let articleRoutes: ServerRoute[] = [
 
     {
         method: 'GET',
-        path: '/v1/admin/articles',
+        path: '/v1/admin/article',
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
