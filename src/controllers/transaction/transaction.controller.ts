@@ -60,6 +60,7 @@ class TransactionController extends BaseEntity {
 	async webhook(payload) {
 		console.log(payload, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 		const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
+		const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: payload.data.object.balance_transaction, webhookObject: payload });
 		try {
 			const event = payload;
 			const paymentIntent = event.data.object;

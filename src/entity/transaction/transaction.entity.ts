@@ -38,6 +38,7 @@ export class TransactionClass extends BaseEntity {
 				featuredType: payload.featuredType,
 				billingType: payload.billingType,
 				paymentMethod: chargeData.payment_method_details.card.brand,
+				paymentObject: chargeData,
 			});
 		} catch (error) {
 			utils.consolelog('Error', error, true);
