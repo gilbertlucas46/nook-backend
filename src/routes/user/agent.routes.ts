@@ -15,7 +15,6 @@ export let agentRoute: ServerRoute[] = [
         handler: async (request, h: ResponseToolkit) => {
             try {
                 const reqObj: AgentRequest.SearchAgent = request.query;
-                console.log('reqObjreqObjreqObj', reqObj);
 
                 const agentList = await AgentService.searchAgent(reqObj);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, agentList));
@@ -38,9 +37,9 @@ export let agentRoute: ServerRoute[] = [
                     // sortBy: Joi.string().default('createdAt'),
                     sortBy: Joi.number().valid(['date']),
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
-                    // fromDate: Joi.number(),
+                    fromDate: Joi.number(),
                     // toDate: Joi.number(),
-                    cityId: Joi.string(),
+                    // cityId: Joi.string(),
                     userId: Joi.string(),
                     // specializingIn_property_type: Joi.array().items(
                     //     Joi.number().valid(
