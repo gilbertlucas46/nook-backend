@@ -555,34 +555,39 @@ export let DATABASE = {
 		FREE: 'FREE',
 		PROFILE: 'PROFILE',
 		PROPERTY: 'PROPERTY',
-		HOMEPAGE: 'HOMEPAGE'
+		HOMEPAGE: 'HOMEPAGE',
 	},
 	BILLING_TYPE: {
 		MONTHLY: 'MONTHLY',
-		YEARLY: 'YEARLY'
+		YEARLY: 'YEARLY',
 	},
 	SCREEN_TYPE: {
 		HOMEPAGE: 'HOMEPAGE',
-		SEARCH: 'SEARCH'
+		SEARCH: 'SEARCH',
 	},
 	// type = YEARLY, MONTHLY
 	SUBSCRIPTION_TYPE: (type) => [{
 		type: 'FREE',
 		amount: 0,
-		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page'
+		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
 	}, {
 		type: 'FEATURED PROPERTY',
 		amount: type === 'MONTHLY' ? 890 : 990,
-		description: 'Featured Property Upgrade - Search Results'
+		description: 'Featured Property Upgrade - Search Results',
 	}, {
 		type: 'FEATURED PROFILE',
 		amount: type === 'MONTHLY' ? 890 : 990,
-		description: 'Featured Profile Upgrade - Search Results'
+		description: 'Featured Profile Upgrade - Search Results',
 	}, {
 		type: 'HOMEPAGE FEATURE',
 		amount: type === 'MONTHLY' ? 890 : 1799,
-		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade'
-	}]
+		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
+	}],
+	TRANSACTION_STATUS: {
+		SUCCEEDED: 'succeeded',
+		PENDING: 'pending',
+		FAILED: 'failed',
+	},
 };
 
 export let STATUS_MSG = {

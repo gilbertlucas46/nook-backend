@@ -175,7 +175,7 @@ export class UserController {
 				payload.type === Constant.DATABASE.USER_TYPE.AGENT.TYPE ||
 				payload.type === Constant.DATABASE.USER_TYPE.OWNER.TYPE
 			) {
-				const step1 = await ENTITY.SubscriptionE.getSubscrition({ "userId": payload._id, "featuredType": [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] });
+				const step1 = await ENTITY.SubscriptionE.getSubscrition({ userId: payload._id, featuredType: [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] });
 				if (step1) {
 					payload.isFeaturedProfile = true;
 					payload.subscriptionexpirarionTime = step1.endDate;

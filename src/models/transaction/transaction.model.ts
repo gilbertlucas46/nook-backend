@@ -18,6 +18,7 @@ export interface ITransaction extends Document {
 	invoiceNo: string;
 	featuredType: string;
 	billingType: string;
+	paymentObject: any;
 	createdAt: number;
 	updatedAt: number;
 }
@@ -34,8 +35,12 @@ export const transactionSchema = new Schema({
 	description: { type: String },
 	status: {
 		type: String,
-		enum: ["succeeded", "pending", "failed"],
-		default: ""
+		enum: [
+			CONSTANT.DATABASE.TRANSACTION_STATUS.SUCCEEDED,
+			CONSTANT.DATABASE.TRANSACTION_STATUS.PENDING,
+			CONSTANT.DATABASE.TRANSACTION_STATUS.FAILED,
+		],
+		default: '',
 	},
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
 	invoiceNo: { type: String },
@@ -44,23 +49,24 @@ export const transactionSchema = new Schema({
 		enum: [
 			CONSTANT.DATABASE.FEATURED_TYPE.PROFILE,
 			CONSTANT.DATABASE.FEATURED_TYPE.PROPERTY,
-			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE
+			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE,
 		],
-		required: true
+		required: true,
 	},
 	billingType: {
 		type: String,
 		enum: [
 			CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
-			CONSTANT.DATABASE.BILLING_TYPE.YEARLY
+			CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
 		],
-		required: true
+		required: true,
 	},
 	paymentMethod: { type: String, required: true },
+	paymentObject: {},
 	createdAt: { type: Number, required: true },
-	updatedAt: { type: Number, required: true }
+	updatedAt: { type: Number, required: true },
 }, {
-	versionKey: false
+	versionKey: false,
 });
 
 transactionSchema.pre('save', function (this: any, next: () => void) {

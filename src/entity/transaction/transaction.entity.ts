@@ -14,7 +14,7 @@ export class TransactionClass extends BaseEntity {
 
 	async findTransactionById(payload) {
 		try {
-			let query: any = {};
+			const query: any = {};
 			query.transactionId = payload.transactionId;
 			return await this.DAOManager.findOne(this.modelName, query, {});
 		} catch (error) {
@@ -37,7 +37,7 @@ export class TransactionClass extends BaseEntity {
 				userId: userData._id,
 				featuredType: payload.featuredType,
 				billingType: payload.billingType,
-				paymentMethod: chargeData.payment_method_details.card.brand
+				paymentMethod: chargeData.payment_method_details.card.brand,
 			});
 		} catch (error) {
 			utils.consolelog('Error', error, true);
@@ -47,12 +47,12 @@ export class TransactionClass extends BaseEntity {
 
 	async updateTransactionStatus(payload, chargeData) {
 		try {
-			let query: any = {};
+			const query: any = {};
 			query._id = payload._id;
 
-			let set: any = {};
-			let update = {};
-			update["$set"] = set;
+			const set: any = {};
+			const update = {};
+			update['$set'] = set;
 			set.status = chargeData.status;
 			if (payload.subscriptionId) {
 				set.subscriptionId = payload.subscriptionId;
@@ -67,28 +67,28 @@ export class TransactionClass extends BaseEntity {
 
 	async invoiceList(payload: TransactionRequest.InvoiceList, userData) {
 		try {
-			let { page, limit, featuredType } = payload;
+			const { page, limit, featuredType } = payload;
 
-			let query: any = {};
+			const query: any = {};
 			query.userId = Types.ObjectId(userData._id);
-			query.status = "succeeded";
+			query.status = 'succeeded';
 			if (featuredType) {
 				query.featuredType = featuredType;
 			}
 
 			const pipeline = [
-				{ "$match": query },
+				{ $match: query },
 				{
-					"$project": {
+					$project: {
 						invoiceNo: 1,
 						createdAt: 1,
 						description: 1,
 						featuredType: 1,
 						billingType: 1,
 						paymentMethod: 1,
-						amount: 1
-					}
-				}
+						amount: 1,
+					},
+				},
 			];
 
 			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
