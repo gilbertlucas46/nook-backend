@@ -211,11 +211,9 @@ export class ArticleClass extends BaseEntity {
                 { $match: query },
                 { $sort: sortingType },
             ];
-            console.log('pipelinepipelinepipeline', pipeline);
-
+            // console.log('pipelinepipelinepipeline', pipeline);
             const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-            console.log('datadatadatadatadatadata', data);
-
+            // console.log('datadatadatadatadatadata', data);
             return data;
         } catch (error) {
             utils.consolelog('Error', error, true);

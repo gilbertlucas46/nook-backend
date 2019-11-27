@@ -28,13 +28,17 @@ class LoanReferral extends BaseEntity {
         try {
             const pipeline = [];
             let { page, limit, sortType } = payload;
+            const { sortBy } = payload;
+
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
-            const sortingType = {};
+            let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             const skip = (limit * (page - 1));
             const promiseArray = [];
-
+            sortingType = {
+                [sortBy]: sortType,
+            };
             const criteria = {
                 userId: userData._id,
             };
