@@ -155,10 +155,10 @@ export class UserController {
 			const salesforceData = {
 				userName: updateUser.userName,
 				email: updateUser.email,
-				firstName: updateUser.firstName,
-				middleName: updateUser.middleName,
-				lastName: updateUser.lastName,
-				phoneNumber: updateUser.phoneNumber,
+				firstName: updateUser.firstName || '',
+				middleName: updateUser.middleName || '',
+				lastName: updateUser.lastName || '',
+				phoneNumber: updateUser.phoneNumber || '',
 				type: updateUser.type,
 			};
 
