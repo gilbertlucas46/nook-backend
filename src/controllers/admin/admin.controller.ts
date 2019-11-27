@@ -3,7 +3,6 @@ import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { Types } from 'mongoose';
-import { PropertyRequest } from '@src/interfaces/property.interface';
 
 /**
  * @author
@@ -21,10 +20,12 @@ export class AdminController {
 		return result[0];
 	}
 	/**
-	 *
-	 * @param payload
+	 * @function getProperty
+	 * @description get the proeprty list
+	 * @payload  AdminPropertyList
+	 * return [object]
 	 */
-	async getProperty(payload: PropertyRequest.SearchProperty) {
+	async getProperty(payload: AdminRequest.AdminPropertyList) {
 		try {
 			// if (!payload.property_status) payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER;
 			const getPropertyData = await ENTITY.AdminE.getPropertyList(payload);
@@ -35,10 +36,11 @@ export class AdminController {
 			return Promise.reject(error);
 		}
 	}
-
 	/**
-	 * @param payload
-	 * @description This function is used to fetch property details using propertyId.
+	 * @function getPropertyById
+	 * @description proeprtyBY Id
+	 * @payload  PropertyDetail
+	 * return []
 	 */
 
 	async getPropertyById(payload: AdminRequest.PropertyDetail) {
@@ -51,6 +53,13 @@ export class AdminController {
 			return Promise.reject(error);
 		}
 	}
+
+	/**
+	 * @function updatePropertyStatus
+	 * @description admin accept or reject the property
+	 * @payload  UpdatePropertyStatus
+	 * return {}
+	 */
 
 	async updatePropertyStatus(payload: AdminRequest.UpdatePropertyStatus, adminData) {
 		try {
@@ -86,15 +95,19 @@ export class AdminController {
 					actionTime: new Date().getTime(),
 				},
 			};
-			const updateStatus = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet);
-			return updateStatus;
-
+			return await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
 
+	/**
+	 * @function dashboard
+	 * @description admin dashboard data
+	 * @payload  adminData:adminData
+	 * return {}
+	 */
 	async dashboard(adminData) {
 		try {
 			return await ENTITY.AdminE.adminDashboard(adminData);

@@ -96,9 +96,11 @@ const userSchema = new Schema({
 		],
 	}],
 	serviceAreas: [{
-		type: Schema.Types.ObjectId,
-		ref: 'City',  // Refer to city schema
+		type: Schema.Types.ObjectId, ref: 'City',  // Refer to city schema
 	}],
-});
+}, {
+		versionKey: false,
+	},
+);
 
 export let User = model<IUser>('User', userSchema);

@@ -13,4 +13,6 @@ export { LoanApplication } from './loan/loan.application.model';
 export { Bank } from './loan/banks.model';
 export { Userloancriteria } from './loan/userloancriteria.model';
 export { HelpCenterStatus } from './helpCentre/helpCenter.model';
-export { LoanReferral } from './referral';
+export { LoanReferral } from './referral/loan.referral.model';
+export { Subscription } from './subscription/subscription.model';
+export { Transaction } from './transaction/transaction.model';

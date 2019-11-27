@@ -12,11 +12,11 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/admin/help-center',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload: helpCenterRequest.CreateHelpCenter = request.payload as any;
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
-                }
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+                // }
                 const data = await HelpCenterService.createHelpCenter(payload, adminData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
             } catch (error) {
@@ -79,9 +79,9 @@ export let helpCenterRoute: ServerRoute[] = [
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload: helpCenterRequest.GetHelpCenter = request.params as any;
                 const data = await HelpCenterService.getHelpCenter(payload);
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
-                }
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+                // }
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
                 return (UniversalFunction.sendError(error));
@@ -108,9 +108,9 @@ export let helpCenterRoute: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
-                }
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+                // }
                 const data = await HelpCenterService.deleteHelpCenter(payload);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, data);
             } catch (error) {
@@ -138,14 +138,12 @@ export let helpCenterRoute: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload = {
-                    ...request.params,
-                    ...request.payload as object,
+                    ...request.params as any,
+                    ...request.payload as helpCenterRequest.IupdateHelpCenter,
                 };
-                console.log('payloadpayloadpayloadpayload', payload);
-
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
-                }
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+                // }
                 const data = await HelpCenterService.updateHelpCenter(payload, adminData);
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData);
@@ -185,9 +183,9 @@ export let helpCenterRoute: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
                 // const payload: helpCenterRequest.DeleteHelpCenter = request.params as any;
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
-                }
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+                // }
                 const data = await HelpCenterService.getHelpCenterCategoryBygroup();
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
@@ -205,7 +203,6 @@ export let helpCenterRoute: ServerRoute[] = [
             },
         },
     },
-
     {
         method: 'GET',
         path: '/v1/admin/help-center-group/{id}',
@@ -216,6 +213,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
             } catch (error) {
+                console.log('Error', error);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -237,7 +235,6 @@ export let helpCenterRoute: ServerRoute[] = [
             },
         },
     },
-
     {
         method: 'GET',
         path: '/v1/user/help-center-group/{id}',
@@ -272,6 +269,7 @@ export let helpCenterRoute: ServerRoute[] = [
 
     /**
      * @description: was this article helpful or not
+     * maintaining by ipaddress
      */
     {
         method: 'POST',

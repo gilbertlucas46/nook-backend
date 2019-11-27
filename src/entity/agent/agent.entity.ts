@@ -11,7 +11,7 @@ export class AgentClass extends BaseEntity {
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const { fromDate, toDate, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty } = payload;
+            const { cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty } = payload;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -19,21 +19,20 @@ export class AgentClass extends BaseEntity {
             sortType = !sortType ? -1 : sortType;
             const matchObject: any = {};
             matchObject['type'] = 'AGENT';
-            let searchCriteria;
-
+            let searchCriteria: any;
             if (searchTerm) {
-                if (payload.searchBy === 'company') {
+                if (searchBy === 'company') {
                     searchCriteria = {
                         $match:
                             { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
                 }
-                else if (payload.searchBy === 'location') {
+                else if (searchBy === 'location') {
                     searchCriteria = {
                         $match:
                             { address: new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
-                } else if (payload.searchBy === 'name') {
+                } else if (searchBy === 'name') {
                     searchCriteria = {
                         $match:
                         {
@@ -72,7 +71,6 @@ export class AgentClass extends BaseEntity {
                     isFeaturedProfile: sortType,
                 };
             }
-
             if (specializingIn_property_type) {
                 matchObject['specializingIn_property_type'] =
                     specializingIn_property_type;
@@ -159,9 +157,7 @@ export class AgentClass extends BaseEntity {
                     },
                 },
             ];
-            const agentList = await this.DAOManager.paginate(this.modelName, query, limit, page);
-            return agentList;
-
+            return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (err) {
             return Promise.reject(err);
         }
@@ -238,8 +234,7 @@ export class AgentClass extends BaseEntity {
                 },
                 { $sort: sortingType },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-            return data;
+            return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -319,9 +314,7 @@ export class AgentClass extends BaseEntity {
                     },
                 },
             ];
-            const agentInfo = await this.DAOManager.aggregateData(this.modelName, query);
-            return agentInfo;
-
+            return await this.DAOManager.aggregateData(this.modelName, query);
         } catch (err) {
             return Promise.reject(err);
         }

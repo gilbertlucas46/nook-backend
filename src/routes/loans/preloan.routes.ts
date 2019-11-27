@@ -2,7 +2,7 @@ import { ServerRoute, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, CREDIT_CARD_STATUS, EMPLOYMENT_TENURE ,NATIONALITY} from '@src/constants';
+import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, CREDIT_CARD_STATUS, EMPLOYMENT_TENURE, NATIONALITY } from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import { LoanController } from '@src/controllers/loan/loan.controller';
 
@@ -13,6 +13,7 @@ export let preloanRoute: ServerRoute[] = [
     handler: async (request, h: ResponseToolkit) => {
       try {
         const payload: LoanRequest.PreLoan = request.payload as LoanRequest.PreLoan;
+        if (request.query.bankId) payload.bankId = request.query.bankId as string;
         const bankData = await LoanController.checkPreloanApplication(payload);
         return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, bankData));
       } catch (error) {
@@ -24,6 +25,9 @@ export let preloanRoute: ServerRoute[] = [
       tags: ['api', 'anonymous', 'loan'],
       // auth: 'UserAuth',
       validate: {
+        query: {
+          bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+        },
         payload: {
           property: Joi.object().keys({
             value: Joi.number().min(50000),
@@ -84,7 +88,7 @@ export let preloanRoute: ServerRoute[] = [
 
           other: Joi.object().keys({
             age: Joi.number().min(21).max(65),
-            nationality:  Joi.string().valid([
+            nationality: Joi.string().valid([
               NATIONALITY.FILIPINO.value,
               NATIONALITY.FOREIGNER.value,
             ]),
@@ -122,6 +126,7 @@ export let preloanRoute: ServerRoute[] = [
             term: Joi.number(),
             percent: Joi.number(),
             amount: Joi.number(),
+            fixingPeriod: Joi.number(),
           }),
         },
         // headers: UniversalFunctions.authorizationHeaderObj,

@@ -11,10 +11,24 @@ class CityController {
 
     async popularCities(payload: PropertyRequest.IPaginate) {
         try {
-            const cities = await ENTITY.PropertyE.popularCities(payload);
-            return cities;
+            return await ENTITY.cityEntity.getPopularCity(payload);
         } catch (error) {
             utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+    async featuredCities() {
+        try {
+            return await ENTITY.cityEntity.featuredList();
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+    async cityData(payload) {
+        try {
+            return await ENTITY.PropertyE.getPropertyViaCity(payload);
+        } catch (error) {
             return Promise.reject(error);
         }
     }

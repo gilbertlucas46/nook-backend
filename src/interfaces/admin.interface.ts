@@ -53,7 +53,6 @@ export namespace AdminRequest {
 		email: string;
 		password: string;
 	}
-
 	export interface ProfileUpdate {
 		_id?: string;
 		firstName?: string;
@@ -62,8 +61,8 @@ export namespace AdminRequest {
 		fullPhoneNumber?: string;
 		profilePicUrl?: string;
 		backGroundImageUrl?: string;
+		name?: string;
 	}
-
 	export interface TokenPayload {
 		adminId: string;
 		sessionId: string;
@@ -78,7 +77,7 @@ export namespace AdminRequest {
 	export interface UpdatePropertyStatus {
 		status: number;
 		propertyId: string;
-		permissionType: string;
+		permissionType?: string;
 	}
 
 	export interface Logout {
@@ -109,5 +108,54 @@ export namespace AdminRequest {
 		property_features?: string[];
 		byRegion?: string;
 		byCity?: string;
+	}
+
+	// export interface VerifyLink {
+	// 	link: string;
+	// }
+
+	export interface ResetPassword {
+		token: string;
+		password: string;
+	}
+
+	export interface AdminPropertyList {
+		page: number;
+		limit: number;
+		sortBy?: string;
+		sortType?: number;
+		searchTerm?: string;
+		fromDate?: number;
+		toDate?: number;
+		property_status?: number;
+		permissionType?: string;
+		property_type?: string;
+		// label?: [];
+		minPrice?: number;
+		maxPrice?: number;
+		byCity?: string;
+		byRegion?: string;
+	}
+	export interface IUpdateLoanRequest {
+		loanId: string;
+		status: string;
+	}
+
+	export interface Permisssion {
+		moduleName: string;
+		accessLevel: number;
+	}
+	export interface IaddSubAdmin {
+		email: string;
+		firstName: string;
+		lastName: string;
+		phoneNumber: string;
+		permission: Permisssion;
+	}
+
+	export interface IadminUpdatePermission {
+		id: string;
+		permission: [object];
+		status: string;
 	}
 }

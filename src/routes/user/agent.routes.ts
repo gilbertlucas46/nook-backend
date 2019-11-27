@@ -15,6 +15,7 @@ export let agentRoute: ServerRoute[] = [
         handler: async (request, h: ResponseToolkit) => {
             try {
                 const reqObj: AgentRequest.SearchAgent = request.query;
+
                 const agentList = await AgentService.searchAgent(reqObj);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, agentList));
             } catch (error) {
@@ -33,19 +34,26 @@ export let agentRoute: ServerRoute[] = [
                     type: Joi.string(),
                     label: Joi.array(),
                     propertyType: Joi.number(),
+                    // sortBy: Joi.string().default('createdAt'),
                     sortBy: Joi.number().valid(['date']),
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                     fromDate: Joi.number(),
-                    toDate: Joi.number(),
-                    cityId: Joi.string(),
+                    // toDate: Joi.number(),
+                    // cityId: Joi.string(),
                     userId: Joi.string(),
+                    // specializingIn_property_type: Joi.array().items(
+                    //     Joi.number().valid(
+                    //         Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+                    //         Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+                    //     ),
+                    // ),
                     specializingIn_property_type: Joi.number().valid([
                         Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
                         Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
                     ]),
-                    // soldProperty: Joi.number().valid(
-                    // Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
-                    // ),
+                    soldProperty: Joi.number().valid(
+                        Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
+                    ),
                     propertyFor: Joi.number().valid(
                         Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER ,
                     ),

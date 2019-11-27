@@ -89,7 +89,7 @@ const bankSchema = new Schema({
         type: Boolean,
         default: true,
     },
-    loanForCancelledCreditCard : {
+    loanForCancelledCreditCard: {
         type: Boolean,
     },
     minAgeRequiredForLoan: {
@@ -117,9 +117,14 @@ const bankSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    bankImageLogoUrl: { type: String },
+    // bankImageLogoUrl: { type: String },
+    logoUrl: { type: String },
+    iconUrl: { type: String },
+    bannerUrl: { type: String },
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
-});
+}, {
+        versionKey: false,
+    });
 
 export const Bank = model('banks', bankSchema);

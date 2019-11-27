@@ -1,8 +1,7 @@
 import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
-import { request } from 'http';
-import { date } from 'joi';
+
 export class HelpCenter {
 
     getTypeAndDisplayName(findObj, num) {
@@ -14,6 +13,12 @@ export class HelpCenter {
         return result[0];
     }
 
+    /**
+     * @function createHelpCenter
+     * @description create helpcenter by admin
+     * @payload  CreateHelpCenter
+     * return {}
+     */
     async createHelpCenter(payload: helpCenterRequest.CreateHelpCenter, adminData) {
         try {
             let result: any;
@@ -23,24 +28,33 @@ export class HelpCenter {
             payload['userId'] = adminData._id;
             payload['categoryType'] = result.TYPE;
             payload['userRole'] = adminData.type;
-            const data = await ENTITY.HelpCenterE.createOneEntity(payload);
-            return data;
+            return await ENTITY.HelpCenterE.createOneEntity(payload);
         } catch (error) {
             return Promise.reject(error);
         }
     }
 
+    /**
+     * @function getHelpCenter
+     * @description getgelpcenter
+     * @payload  GetHelpCenter
+     * return {}
+     */
+
     async getHelpCenter(payload: helpCenterRequest.GetHelpCenter) {
         try {
-            const criteria = {
-                _id: payload.id,
-            };
-            const data = await ENTITY.HelpCenterE.getOneEntity(criteria, {});
-            return data;
+            const criteria = { _id: payload.id };
+            return await ENTITY.HelpCenterE.getOneEntity(criteria, {});
         } catch (error) {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function deleteHelpCenter
+     * @description delete helpcenter hard delete
+     * @payload  DeleteHelpCenter
+     * return {}
+     */
 
     async deleteHelpCenter(payload: helpCenterRequest.DeleteHelpCenter) {
         try {
@@ -48,13 +62,18 @@ export class HelpCenter {
                 _id: payload.id,
             };
             return await ENTITY.HelpCenterE.removeEntity(criteria);
-
         } catch (error) {
             return Promise.reject(error);
         }
     }
+    /**
+     * @function updateHelpCenter
+     * @description update helpcenter
+     * @payload  IupdateHelpCenter
+     * return {}
+     */
 
-    async updateHelpCenter(payload, adminData) {
+    async updateHelpCenter(payload: helpCenterRequest.IupdateHelpCenter, adminData) {
         try {
             let result;
             const dataToSet: any = {};
@@ -68,7 +87,7 @@ export class HelpCenter {
             dataToSet.$set = {
                 categoryId: payload.categoryId,
                 categoryType: result.TYPE,
-                videoUrl: payload.imageUrl,
+                videoUrl: payload.videoUrl,
                 userId: adminData._id,
                 userRole: adminData.type,
                 description: payload.description,
@@ -81,35 +100,52 @@ export class HelpCenter {
                     actionTime: new Date().getTime(),
                 },
             };
-            const data = await ENTITY.HelpCenterE.updateOneEntity(criteria, dataToSet);
-            return data;
+            return await ENTITY.HelpCenterE.updateOneEntity(criteria, dataToSet);
         } catch (error) {
             return Promise.reject(error);
         }
     }
+
+    /**
+     * @function getHelpCenterCategoryBygroup
+     * @description helpcenter categories
+     * @payload
+     * return
+     */
 
     async getHelpCenterCategoryBygroup() {
         try {
-            const data = await ENTITY.HelpCenterE.getHelpCenterCategoryBygroup();
-            return data;
+            return await ENTITY.HelpCenterE.getHelpCenterCategoryBygroup();
         } catch (error) {
             return Promise.reject(error);
         }
     }
+
+    /**
+     * @function getHelpCenterByCategoryId
+     * @description helpcenter by categoryId
+     * @payload :id of category
+     * return
+     */
 
     async getHelpCenterByCategoryId(id: number) {
         try {
-            const data = await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
-            return data;
+            return await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
         } catch (error) {
             return Promise.reject(error);
         }
     }
 
+    /**
+     * @function isArticleHelpful
+     * @description article helpful by user on the basis of userip address
+     * @payload :IsHelpful
+     * return {} / success
+     */
+
     async isArticleHelpful(payload: helpCenterRequest.IsHelpful, userData?) {
         try {
-            const data = await ENTITY.HelpfulE.createhelpfulStatus(payload);
-            return data;
+            return await ENTITY.HelpfulE.createhelpfulStatus(payload);
         } catch (error) {
             return Promise.reject(error);
         }

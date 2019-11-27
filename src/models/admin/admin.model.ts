@@ -1,5 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 import * as CONSTANT from '../../constants';
+// import * as SCHEMA_VALIDATOR from '../revalidator';
 export interface IAdmin extends Document {
 	_id: string;
 	name: string;
@@ -23,6 +24,8 @@ export interface IAdmin extends Document {
 	isPhoneVerified?: boolean;
 	passwordResetToken?: string;
 	passwordResetTokenExpirationTime?: Date;
+	permisssion: [object];
+	staffStatus: string;
 }
 
 export const AdminSchema = new Schema(
@@ -51,24 +54,28 @@ export const AdminSchema = new Schema(
 		staffLoggedIn: { type: Schema.Types.Boolean, default: false },
 		staffStatus: {
 			type: String, enum: [
-				CONSTANT.DATABASE.STATUS.USER.ACTIVE,
-				CONSTANT.DATABASE.STATUS.USER.DELETED,
-				CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+				CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
+				// CONSTANT.DATABASE.STATUS.ADMIN.PENDING,
+				CONSTANT.DATABASE.STATUS.ADMIN.DELETE,
+				CONSTANT.DATABASE.STATUS.ADMIN.BLOCKED,
 			],
+			default: CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
 		},
-		permission: {
-			type: [Schema.Types.String], enum: [
-				CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
-				CONSTANT.DATABASE.PERMISSION.TYPE.ALL_PROPERTIES,
-				CONSTANT.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-				CONSTANT.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-				CONSTANT.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-				CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-				CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
-				CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-				CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTY,
-			],
-		},
+		permission: [{
+			moduleName: {
+				type: String, enum: [
+					CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
+					CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
+					CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
+					CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
+					CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTIES,
+					CONSTANT.DATABASE.PERMISSION.TYPE.LOAN,
+					CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+				],
+			},
+			accessLevel: { type: Number, enum: [CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE] },
+
+		}],
 		createdAt: { type: Number, required: true },
 		updatedAt: { type: Number, required: true },
 		type: {
@@ -79,7 +86,9 @@ export const AdminSchema = new Schema(
 			], index: true,
 			default: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 		},
-	},
+	}, {
+	versionKey: false,
+},
 );
 
 export const Admin = model<IAdmin>('Admin', AdminSchema);

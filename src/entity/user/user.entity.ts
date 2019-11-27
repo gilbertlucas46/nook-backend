@@ -3,6 +3,7 @@ import * as config from 'config';
 import * as TokenManager from '@src/lib';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
+const pswdCert: string = config.get('forgetPwdjwtSecret');
 import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '@src/constants';
 
@@ -10,23 +11,35 @@ export class UserClass extends BaseEntity {
 	constructor() {
 		super('User');
 	}
-	async createUser(userData: UserRequest.UserData) {
-		try {
-			const dataToInsert = {
-				name: userData.userName,
-				email: userData.email,
-				// password:userData.password ,
-				firstName: userData.firstName,
-				lastName: userData.lastName,
-				phoneNumber: userData.phoneNumber,
-			};
-			const user: UserRequest.Register = await this.createOneEntity(dataToInsert);
-			return user;
-		} catch (error) {
-			return Promise.reject(error);
-		}
-	}
+	/**
+	 * @function createUser
+	 * @description function to create user
+	 * @payload  ProfileUpdate
+	 * return object
+	 */
+	// async createUser(userData: UserRequest.UserData) {
+	// 	try {
+	// 		const dataToInsert = {
+	// 			// name: userData.userName,
+	// 			email: userData.email,
+	// 			// password:userData.password ,
+	// 			firstName: userData.firstName,
+	// 			lastName: userData.lastName,
+	// 			phoneNumber: userData.phoneNumber,
+	// 		};
+	// 		const user: UserRequest.Register = await this.createOneEntity(dataToInsert);
+	// 		return user;
+	// 	} catch (error) {
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 
+	/**
+	 * @function createToken
+	 * @description function to create accessToken
+	 * @payload  ProfileUpdate
+	 * return object
+	 */
 	async createToken(payload, userData: UserRequest.UserData) {
 		try {
 			let sessionValid = {};
@@ -55,16 +68,17 @@ export class UserClass extends BaseEntity {
 			// }
 
 			const mergeData = { ...tokenData, ...sessionValid };
-			const accessToken: any = await TokenManager.setToken(mergeData);
+			const accessToken = await TokenManager.setToken(mergeData);
 			return accessToken.accessToken;
 
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
+
 	async createPasswordResetToken(userData) {
 		try {
-			const tokenToSend = Jwt.sign(userData.email, cert, { algorithm: 'HS256' });
+			const tokenToSend = Jwt.sign(userData.email, pswdCert, { algorithm: 'HS256' });
 			const expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 
 			const criteriaForUpdatePswd = { _id: userData._id };
@@ -72,7 +86,7 @@ export class UserClass extends BaseEntity {
 				passwordResetToken: tokenToSend,
 				passwordResetTokenExpirationTime: expirationTime,
 			};
-			await this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
+			this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
 			return tokenToSend;
 		} catch (error) {
 			return Promise.reject(error);
@@ -90,7 +104,7 @@ export class UserClass extends BaseEntity {
 	async userDashboad(userData: UserRequest.UserData) {
 		try {
 			const promise = [];
-			if (userData.type === Constant.DATABASE.USER_TYPE.TENANT.TYPE || Constant.DATABASE.USER_TYPE.TENANT.DISPLAY_NAME) {
+			if (userData.type === Constant.DATABASE.USER_TYPE.TENANT.TYPE) {
 				const query = {
 					$and: [
 						{ userId: userData._id },

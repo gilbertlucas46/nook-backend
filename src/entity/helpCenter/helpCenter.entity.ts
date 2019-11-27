@@ -23,8 +23,7 @@ export class HelpCenterEntity extends BaseEntity {
                     },
                 },
             ];
-            const result = await this.DAOManager.aggregateData(this.modelName, pipeline, {});
-            return result;
+            return await this.DAOManager.aggregateData(this.modelName, pipeline, {});
         } catch (error) {
             return Promise.reject(error);
         }
@@ -45,9 +44,9 @@ export class HelpCenterEntity extends BaseEntity {
                     },
                 },
             ];
-            const result = await this.DAOManager.aggregateData(this.modelName, pipeline, {});
-            return result;
+            return await this.DAOManager.aggregateData(this.modelName, pipeline, {});
         } catch (error) {
+            console.log('Error', error);
             return Promise.reject(error);
         }
     }

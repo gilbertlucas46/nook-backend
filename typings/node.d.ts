@@ -5,7 +5,8 @@ declare namespace NodeJS {
 	 * It is used to store couting number of documents so that a unique id can added to the documents.
 	 */
 	export interface Counters {
-		LoanApplication: number;
+		LoanApplication?: number;
+		Transaction?: number;
 	}
 
 

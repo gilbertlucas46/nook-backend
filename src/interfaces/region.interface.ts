@@ -14,9 +14,29 @@ export namespace Location {
 		createdAt: Date;
 		updated: Date;
 	}
+	export interface DirectoryPlace {
+		name: string;
+		address: string;
+		email: string;
+		website: string;
+		telephone: string;
+		locationUrl: string;
+		imageUrl: string;
+	}
+	export interface CityDirectory {
+		medical: DirectoryPlace[];
+		shopping: DirectoryPlace[];
+		others: DirectoryPlace[];
+	}
 	export interface City {
 		name: string;
 		location: ILocationPoint;
+		subTitle?: string;
+		isFeatured?: boolean;
+		mapUrl?: string;
+		description?: string;
+		images?: string[];
+		directory?: CityDirectory;
 	}
 	export interface CityData extends City {
 		region: Types.ObjectId | RegionDocument;

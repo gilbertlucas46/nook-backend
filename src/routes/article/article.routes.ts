@@ -1,12 +1,13 @@
 'use strict';
 import * as Joi from 'joi';
+import { ServerRoute } from 'hapi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
 import { ArticleService } from '@src/controllers';
 import * as ENTITY from '../../entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 
-export let articleRoutes = [
+export let articleRoutes: ServerRoute[] = [
     /**
      * @description:admin add the article
      */
@@ -15,13 +16,13 @@ export let articleRoutes = [
         path: '/v1/admin/article',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
-                const payload: ArticleRequest.CreateArticle = request.payload;
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                }
-                await ArticleService.createArticle(payload, adminData);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, {}));
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload = request.payload as ArticleRequest.CreateArticle;
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
+                const data = await ArticleService.createArticle(payload, adminData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, data));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
@@ -40,10 +41,12 @@ export let articleRoutes = [
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                        // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                        // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
                     ]),
                     isFeatured: Joi.boolean(),
                 },
@@ -66,7 +69,7 @@ export let articleRoutes = [
         handler: async (request, h) => {
             try {
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                const payload: ArticleRequest.GetArticle = request.query;
+                const payload: ArticleRequest.GetArticle = request.query as any;
                 const registerResponse = await ArticleService.getArticle(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
@@ -87,12 +90,15 @@ export let articleRoutes = [
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                        // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                        // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
                     ]),
                     articleId: Joi.string(),
+                    // searchTerm: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -111,7 +117,7 @@ export let articleRoutes = [
         path: '/v1/articles/home',
         handler: async (request, h) => {
             try {
-                const payload: ArticleRequest.GetArticle = request.query;
+                const payload: ArticleRequest.GetArticle = request.query as any;
                 const registerResponse = await ArticleService.getCategoryWiseArticles(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
@@ -127,7 +133,9 @@ export let articleRoutes = [
                 query: {
                     limit: Joi.number(),
                     page: Joi.number(),
+                    searchTerm: Joi.string(),
                 },
+                headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
             plugins: {
@@ -144,7 +152,7 @@ export let articleRoutes = [
         path: '/v1/articles/{articleId}',
         handler: async (request, h) => {
             try {
-                const payload: ArticleRequest.GetArticleById = request.params;
+                const payload: ArticleRequest.GetArticleById = request.params as any;
                 const registerResponse = await ArticleService.getArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
@@ -173,18 +181,18 @@ export let articleRoutes = [
     /** */
     {
         method: 'PATCH',
-        path: '/v1/admin/articles/{articleId}',
+        path: '/v1/admin/article/{articleId}',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload = {
-                    ...request.payload,
+                    ...request.payload as ArticleRequest.UpdateArticle,
                     ...request.params,
                 };
 
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                }
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
                 const registerResponse = await ArticleService.updateArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200, registerResponse));
             } catch (error) {
@@ -207,12 +215,14 @@ export let articleRoutes = [
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                        // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                        // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
                     ]).required(),
-                    isFeatured: Joi.boolean(),
+                    isFeatured: Joi.boolean().default(false),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -227,14 +237,14 @@ export let articleRoutes = [
 
     {
         method: 'GET',
-        path: '/v1/admin/articles',
+        path: '/v1/admin/article',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
-                const payload: ArticleRequest.GetArticle = request.query;
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                }
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload: ArticleRequest.GetArticle = request.query as any;
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
                 const registerResponse = await ArticleService.getArticle(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
@@ -255,11 +265,17 @@ export let articleRoutes = [
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                        // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
                         Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                        Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                        // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
                     ]),
+                    isFeatured: Joi.boolean(),
+                    fromDate: Joi.number(),
+                    toDate: Joi.number(),
+                    searchTerm: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -273,15 +289,15 @@ export let articleRoutes = [
     },
     {
         method: 'GET',
-        path: '/v1/admin/articles/{articleId}',
+        path: '/v1/admin/article/{articleId}',
         handler: async (request, h) => {
             try {
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
-                const payload: ArticleRequest.GetArticleById = request.params;
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                }
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload: ArticleRequest.GetArticleById = request.params as any;
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
                 const registerResponse = await ArticleService.getArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
@@ -309,16 +325,21 @@ export let articleRoutes = [
     },
     {
         method: 'DELETE',
-        path: '/v1/admin/articles/{articleId}',
+        path: '/v1/admin/article/{articleId}',
         handler: async (request, h) => {
             try {
-                const adminData = request.auth && request.auth.credentials && request.auth.credentials.adminData;
-                const payload: ArticleRequest.DeleteArticle = request.params;
-                if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                    await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                }
-                const registerResponse = await ArticleService.deleteArticle(payload);
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload: ArticleRequest.DeleteArticle = request.params as any;
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
+                const deletResponse = await ArticleService.deleteArticle(payload);
+                // { "acknowledged" : true, "deletedCount" : 7 }
+                // if (deletResponse['acknowledged'] === true || deletResponse['deletedCount'] > 0) {
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
+                // } else {
+                // return (UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E400.DEFAULT));
+                // }
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
