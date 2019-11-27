@@ -21,8 +21,8 @@ export let articleRoutes: ServerRoute[] = [
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
-                await ArticleService.createArticle(payload, adminData);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, {}));
+                const data = await ArticleService.createArticle(payload, adminData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, data));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
@@ -180,7 +180,7 @@ export let articleRoutes: ServerRoute[] = [
     /** */
     {
         method: 'PATCH',
-        path: '/v1/admin/articles/{articleId}',
+        path: '/v1/admin/article/{articleId}',
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
@@ -236,7 +236,7 @@ export let articleRoutes: ServerRoute[] = [
 
     {
         method: 'GET',
-        path: '/v1/admin/articles',
+        path: '/v1/admin/article',
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
@@ -288,7 +288,7 @@ export let articleRoutes: ServerRoute[] = [
     },
     {
         method: 'GET',
-        path: '/v1/admin/articles/{articleId}',
+        path: '/v1/admin/article/{articleId}',
         handler: async (request, h) => {
             try {
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
@@ -324,7 +324,7 @@ export let articleRoutes: ServerRoute[] = [
     },
     {
         method: 'DELETE',
-        path: '/v1/admin/articles/{articleId}',
+        path: '/v1/admin/article/{articleId}',
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
@@ -332,13 +332,14 @@ export let articleRoutes: ServerRoute[] = [
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
+
                 const deletResponse = await ArticleService.deleteArticle(payload);
                 // { "acknowledged" : true, "deletedCount" : 7 }
-                if (deletResponse['acknowledged'] === true || deletResponse['deletedCount'] > 0) {
-                    return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
-                } else {
-                    return (UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E400.DEFAULT));
-                }
+                // if (deletResponse['acknowledged'] === true || deletResponse['deletedCount'] > 0) {
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
+                // } else {
+                // return (UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E400.DEFAULT));
+                // }
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));

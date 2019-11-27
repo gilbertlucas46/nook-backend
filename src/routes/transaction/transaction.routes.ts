@@ -136,26 +136,26 @@ export let transactionRoute: ServerRoute[] = [
 				payload: {
 					amount: Joi.number(),
 					currency: Joi.string().valid('php'),
-					source: Joi.string().default("tok_visa"),
+					source: Joi.string().default('tok_visa'),
 					featuredType: Joi.string().valid([
 						Constant.DATABASE.FEATURED_TYPE.PROFILE,
 						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
 					]).required(),
 					billingType: Joi.string().valid([
 						Constant.DATABASE.BILLING_TYPE.MONTHLY,
-						Constant.DATABASE.BILLING_TYPE.YEARLY
-					]).required()
+						Constant.DATABASE.BILLING_TYPE.YEARLY,
+					]).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction
+				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
 				'hapi-swagger': {
-					responseMessages: Constant.swaggerDefaultResponseMessages
-				}
-			}
-		}
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
 	},
 	{
 		method: 'GET',
@@ -181,24 +181,24 @@ export let transactionRoute: ServerRoute[] = [
 					featuredType: Joi.string().valid([
 						Constant.DATABASE.FEATURED_TYPE.PROFILE,
 						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE
-					]).optional()
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+					]).optional(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction
+				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
 				'hapi-swagger': {
-					responseMessages: Constant.swaggerDefaultResponseMessages
-				}
-			}
-		}
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
 	},
 	{
 		method: 'POST',
 		path: '/v1/transaction/webhook',
 		handler: async (request, h: ResponseToolkit) => {
-			let payload = request.payload;
+			const payload = request.payload;
 			try {
 				return await transactionController.webhook(payload);
 			} catch (error) {
@@ -207,9 +207,9 @@ export let transactionRoute: ServerRoute[] = [
 		},
 		options: {
 			description: 'Webhook for stripe',
-			tags: ['api', 'transaction']
-		}
-	}
+			tags: ['api', 'transaction'],
+		},
+	},
 
 	// transaction
 
