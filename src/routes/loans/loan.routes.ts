@@ -136,7 +136,7 @@ export let loanRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					// userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					saveAsDraft: Joi.boolean().required(),
+					// saveAsDraft: Joi.boolean().required(),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
@@ -172,8 +172,19 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
+					applicationStatus: Joi.string().valid([
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+					]),
 					bankInfo: Joi.object().keys({
 						iconUrl: Joi.string(),
 						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
@@ -206,6 +217,10 @@ export let loanRoute: ServerRoute[] = [
 						rate: Joi.number().max(100),
 						monthlyRepayment: Joi.number(),
 						hasCoBorrower: Joi.boolean(),
+						loanType: Joi.string(),
+						loanPercent: Joi.number(),
+						loanAmount: Joi.number(),
+						propertyValue: Joi.number(),
 					}),
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
@@ -296,6 +311,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
 					propertyDocuments: Joi.object().keys({
@@ -474,6 +491,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
 					bankInfo: Joi.object().keys({
@@ -508,6 +527,10 @@ export let loanRoute: ServerRoute[] = [
 						rate: Joi.number().max(100),
 						monthlyRepayment: Joi.number(),
 						hasCoBorrower: Joi.boolean(),
+						loanType: Joi.string(),
+						loanPercent: Joi.number(),
+						loanAmount: Joi.number(),
+						propertyValue: Joi.number(),
 					}),
 					employmentInfo: Joi.object().keys({
 						tin: Joi.string(),
@@ -598,6 +621,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.MOTHER,
 							Constant.DATABASE.RELATIONSHIP.SISTER,
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
 					propertyDocuments: Joi.object().keys({

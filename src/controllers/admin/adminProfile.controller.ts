@@ -28,7 +28,7 @@ export class AdminProfileController {
 			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
 			}
-			if (!(await utils.deCryptData(payload.password, adminData.password))) {
+			if (!(await utils.decryptWordpressHashNode(payload.password, adminData.password))) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
 			}
 			const sessionData = { adminId: adminData._id };
@@ -65,7 +65,7 @@ export class AdminProfileController {
 	async editProfile(payload: AdminRequest.ProfileUpdate, adminData) {
 		try {
 			const criteria = { _id: adminData._id };
-			return  await ENTITY.AdminE.updateOneEntity(criteria, payload);
+			return await ENTITY.AdminE.updateOneEntity(criteria, payload);
 		} catch (err) {
 			return Promise.reject(err);
 		}
@@ -82,9 +82,9 @@ export class AdminProfileController {
 			else {
 				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
 				const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
-				const html = `<html><head><title> Nook Admin | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
-				const mail = new MailManager(payload.email, 'forget password', html);
-				mail.sendMail();
+				// const html = `<html><head><title> Nook Admin | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
+				// const mail = new MailManager(payload.email, 'forget password', html);
+				// mail.sendMail();
 				return {};
 			}
 		} catch (error) {
@@ -100,11 +100,11 @@ export class AdminProfileController {
 		try {
 			const criteria = { _id: adminData._id };
 			const password = await ENTITY.AdminE.getOneEntity(criteria, ['password']);
-			if (!(await utils.deCryptData(payload.oldPassword, password.password))) {
+			if (!(await utils.decryptWordpressHashNode(payload.oldPassword, password.password))) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_CURRENT_PASSWORD);
 			} else {
 				const updatePswd = {
-					password: await utils.cryptData(payload.newPassword),
+					password: await utils.encryptWordpressHashNode(payload.newPassword),
 				};
 				const updatePassword = await ENTITY.AdminE.updateOneEntity(criteria, updatePswd);
 				if (!updatePassword) return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR);
@@ -128,7 +128,7 @@ export class AdminProfileController {
 				return Promise.reject('Already_Changed');
 			}
 			const updatePswd = {
-				password: await utils.cryptData(payload.password),
+				password: await utils.encryptWordpressHashNode(payload.password),
 				passwordResetTokenExpirationTime: null,
 				passwordResetToken: null,
 			};

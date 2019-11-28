@@ -56,8 +56,5 @@ const enquirySchema = new Schema({
         versionKey: false,
     });
 
-enquirySchema.index({ userId: 1, propertyId: 1 }, { unique: true });
-
-// enquirySchema.plugin(require('mongoose-beautiful-unique-validation'));
-
+// enquirySchema.index({ userId: 1, propertyId: 1 }, { unique: true });
 export let Enquiry = model<IEnquiry>('Enquiry', enquirySchema);

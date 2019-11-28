@@ -36,9 +36,37 @@ export let DATABASE = {
 	},
 
 	LOAN_APPLICATION_STATUS: {
-		PENDING: 'pending',
-		REJECTED: 'rejected',
-		APPROVED: 'approved',
+		// PENDING: 'pending',
+		// REJECTED: 'rejected',
+		// APPROVED: 'approved',
+		DRAFT: {
+			label: 'Draft',
+			value: 'DRAFT',
+		},
+		NEW: {
+			label: 'New',
+			value: 'NEW',
+		},
+		NOOK_REVIEW: {
+			label: 'Nook Review',
+			value: 'NOOK_REVIEW',
+		},
+		REFERRED: {
+			label: 'Referred to Bank',
+			value: 'REERRED',
+		},
+		BANK_APPROVED: {
+			label: 'Bank Approved',
+			value: 'BANK_APPROVED',
+		},
+		BANK_DECLINED: {
+			label: 'Bank Declined',
+			value: 'BANK_DECLINED',
+		},
+		NOOK_DECLINED: {
+			label: 'Nook Declined',
+			value: 'NOOK_DECLINED',
+		},
 	},
 	EMPLOYMENT: {
 		TENURE: {
@@ -117,6 +145,8 @@ export let DATABASE = {
 		FATHER: 'father',
 		MOTHER: 'mother',
 		SPOUSE: 'spouse',
+		SON : 'son',
+		DAUGHTER : 'daughter',
 	},
 
 	CIVIL_STATUS: {
@@ -291,15 +321,12 @@ export let DATABASE = {
 	PERMISSION: {
 		TYPE: {
 			DASHBOARD: 'dashboard',
-			ALL_PROPERTIES: 'all-property',
-			ACTIVE_PROPERTIES: 'active-property',
-			PENDING_PROPERTIES: 'pending-property',
-			DECLINED_PROPERTIES: 'declined-property',
 			HELP_CENTER: 'help-center',
-			USERS: 'user',
-			STAFF: 'staff',
-			ARTICLE: 'article',
-			PROPERTY: 'property',
+			USERS: 'users',
+			STAFF: 'staffs',
+			ARTICLE: 'articles',
+			LOAN: 'loans',
+			PROPERTIES: 'properties',
 		},
 	},
 
@@ -317,11 +344,11 @@ export let DATABASE = {
 	},
 
 	ARTICLE_TYPE: {
-		FEATURED_ARTICLE: {
-			NUMBER: 1,
-			TYPE: 'FEATURED_ARTICLE',
-			DISPLAY_NAME: 'Featured Article',
-		},
+		// FEATURED_ARTICLE: {
+		// 	NUMBER: 1,
+		// 	TYPE: 'FEATURED_ARTICLE',
+		// 	DISPLAY_NAME: 'Featured Article',
+		// },
 		AGENTS: {
 			NUMBER: 2,
 			TYPE: 'AGENTS',
@@ -352,13 +379,7 @@ export let DATABASE = {
 			TYPE: 'NEWS',
 			DISPLAY_NAME: 'News',
 		},
-		// DOMESTIC_NEWS: {
-		// 	NUMBER: 8,
-		// 	TYPE: 'DOMESTIC',
-		// 	DISPLAY_NAME: 'Domestic',
-		// },
 		// legal stuff, international news, domestic news, sports coverage, political news
-
 	},
 
 	ARTICLE_STATUS: {
@@ -477,6 +498,12 @@ export let DATABASE = {
 			BLOCKED: 'BLOCKED',
 			DELETED: 'DELETED',
 		},
+		ADMIN: {
+			ACTIVE: 'ACTIVE',
+			PENDING: 'PENDING',
+			BLOCKED: 'BLOCKED',
+			DELETE: 'DELETE',
+		},
 	},
 
 	AGENT_SPECIALIZING: {
@@ -590,6 +617,19 @@ export let DATABASE = {
 	},
 };
 
+export const EMAIL_TEMPLATE = {
+	SOCIAL_LINK: {
+		FB: 'https://www.facebook.com/NookPhilippines/',
+		INSTAGRAM: 'https://www.instagram.com/nookphilippines/',
+		TWITTER: 'https://twitter.com/nookphilippines',
+	},
+	GSG_ADDRESS: 'Appinventiv Technologies Pvt. Ltd. B-25 Nr Thomson Reuters, Sector 58, Noida, Uttar Pradesh 201301, India',
+	SUBJECT: {
+		FORGOT_PWD_EMAIL: 'Reset Password Request',
+		RESET_PASSWORD: 'Reset password link',
+		VERIFY_EMAIL: 'Verify e-mail address',
+	},
+};
 export let STATUS_MSG = {
 	ERROR: {
 		redirect: {
@@ -987,7 +1027,7 @@ export let SERVER = {
 		SHARE_CONTENT_MESSAGE: `Thank you for your interest in downloading Toki! We're constantly working on improving the way you can hangout with your closest friends :)`,
 		SHARE_CONTENT_LINK: config.get('host') + DATABASE.DEEPLINK_REDIRECT_URL.APP + 'http://nook.com' + '/' + DATABASE.ACTION.DEEPLINK.APP + '&ios=' + 'nook://' + DATABASE.ACTION.DEEPLINK.APP,
 	},
-	TEMPLATE_PATH: process.cwd() + '/views/',
+	TEMPLATE_PATH: process.cwd() + '/src/views/',
 	BY_PASS_OTP: '1212',
 	LISTNG_LIMIT: 10,
 	SYNC_LIMIT: undefined,

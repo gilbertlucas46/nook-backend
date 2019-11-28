@@ -22,16 +22,16 @@ export let cityRoutes: ServerRoute[] = [
         options: {
             description: 'Get most popular cities list',
             tags: ['api', 'anonymous', 'user', 'Cities'],
-            auth: 'DoubleAuth',
-            validate: {
-                query: {
-                    propertyType: Joi.number(),
-                    page: Joi.number(),
-                    limit: Joi.number(),
-                },
-                headers: UniversalFunctions.authorizationHeaderObj,
-                failAction: UniversalFunctions.failActionFunction,
-            },
+            // auth: 'DoubleAuth',
+            // validate: {
+            //     query: {
+            //         //  propertyType: Joi.number(),
+            //         page: Joi.number(),
+            //         limit: Joi.number(),
+            //     },
+            //     headers: UniversalFunctions.authorizationHeaderObj,
+            //     failAction: UniversalFunctions.failActionFunction,
+            // },
             plugins: {
                 'hapi-swagger': {
                     responseMessages: Constant.swaggerDefaultResponseMessages,

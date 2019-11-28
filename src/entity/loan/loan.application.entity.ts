@@ -34,8 +34,8 @@ class LoanApplicationE extends BaseEntity {
 
     async getUserLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
-            let { page, limit, sortType, sortBy, status } = payload;
-            const { fromDate, toDate } = payload;
+            let { page, limit, sortType, sortBy } = payload;
+            const { fromDate, toDate, status } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -50,6 +50,7 @@ class LoanApplicationE extends BaseEntity {
             }
             else {
                 matchObject['saveAsDraft'] = false;
+                matchObject['applicationStatus'] = { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
                 // saveAsDraft: false,
             }
 
@@ -74,9 +75,96 @@ class LoanApplicationE extends BaseEntity {
 
             else {
                 matchObject['$or'] = [
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value },
+                ];
+            }
+
+            if (fromDate && toDate) {
+                matchObject['createdAt'] = {
+                    $gte: fromDate,
+                    $lte: toDate,
+                };
+            }
+            else if (toDate) {
+                matchObject['createdAt'] = {
+                    $lte: toDate,
+                };
+            } else if (fromDate) {
+                matchObject['createdAt'] = {
+                    $gte: fromDate,
+                    $lte: new Date().getTime(),
+                };
+            }
+
+            promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit, sort: sortingType }));
+            promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
+            const [data, total] = await Promise.all(promiseArray);
+            return {
+                data,
+                total,
+            };
+        } catch (error) {
+            console.log('Error', error);
+            return Promise.reject(error);
+        }
+    }
+
+    async getAdminLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
+        try {
+            let { page, limit, sortType, sortBy } = payload;
+            const { fromDate, toDate, status } = payload;
+            if (!limit) { limit = Constant.SERVER.LIMIT; }
+            if (!page) { page = 1; }
+            const skip = (limit * (page - 1));
+            sortType = !sortType ? -1 : sortType;
+            let sortingType = {};
+            const promiseArray = [];
+            let matchObject: any = {};
+            if (userData.type === 'TENANT' || userData.type === 'OWNER' || userData.type === 'AGENT') {
+                matchObject = {
+                    userId: userData._id,
+                };
+            }
+            else {
+                matchObject['saveAsDraft'] = false;
+                matchObject['applicationStatus'] = { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
+                // saveAsDraft: false,
+            }
+
+            if (sortBy) {
+                // switch (sortBy) {
+                // case 'Date':
+                // sortBy = 'Date';
+                // sortingType = {
+                //     createdAt: sortType,
+                // };
+
+            } else {
+                sortBy = 'Date';
+                sortingType = {
+                    createdAt: sortType,
+                };
+            }
+
+            if (status) {
+                matchObject['applicationStatus'] = status;
+            }
+
+            else {
+                matchObject['$or'] = [
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value },
+                    // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value },
+                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value },
                 ];
             }
 

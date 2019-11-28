@@ -49,6 +49,7 @@ export namespace LoanRequest {
             fixingPeriod: number;
         };
     }
+
     export interface PersonalInfo {
         firstName: string;
         lastName?: string;
@@ -64,7 +65,7 @@ export namespace LoanRequest {
         coBorrowerFirstName: string;
         coBorrowerMiddleName: string;
         coBorrowerLastName: string;
-        relationship: string;
+        relationship?: string;
     }
     export interface BankInfo {
         iconUrl: string;
@@ -88,6 +89,10 @@ export namespace LoanRequest {
         loanTerm: number;
         rate: number;
         monthlyRepayment: number;
+        loanType: string;
+        loanPercent: number;
+        loanAmount: number;
+        propertyValue: number;
     }
     export interface EmploymentInfo {
         tin: string;
@@ -112,9 +117,9 @@ export namespace LoanRequest {
         };
     }
     export interface DependentsInfo {
-        name: string;
-        age: number;
-        relationship: string;
+        name?: string;
+        age?: number;
+        relationship?: string;
     }
     export interface PurchasePropertyInfo {
         address: string;
@@ -133,7 +138,7 @@ export namespace LoanRequest {
         purchasePropertyInfo: PurchasePropertyInfo;
         nookAgent: string;
     }
-    export interface AddLoan extends PropertyDocuments, EmploymentInfo, DependentsInfo, LoanDetails, ContactInfo, BankInfo, PersonalInfo {
+    export interface AddLoan extends PropertyDocuments, EmploymentInfo, DependentsInfo, LoanDetails, PersonalInfo, ContactInfo, BankInfo {
         loanId?: string;
         saveAsDraft?: boolean;
         personalInfo?: PersonalInfo;
@@ -154,7 +159,6 @@ export namespace LoanRequest {
         minEmploymentTenure?: number;
     }
     export interface PropertySpecification {
-
         allowedPropertyType: string;
         allowedPropertyStatus: string;
         maxLoanDurationAllowed: number;

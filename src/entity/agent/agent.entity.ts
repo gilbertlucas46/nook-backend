@@ -11,7 +11,9 @@ export class AgentClass extends BaseEntity {
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const { fromDate, toDate, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
+            const {
+                // fromDate, toDate,
+                cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
             const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? [Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] : Constant.DATABASE.FEATURED_TYPE.PROFILE;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
@@ -22,18 +24,18 @@ export class AgentClass extends BaseEntity {
             matchObject['type'] = 'AGENT';
             let searchCriteria: any;
             if (searchTerm) {
-                if (payload.searchBy === 'company') {
+                if (searchBy === 'company') {
                     searchCriteria = {
                         $match:
                             { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
                 }
-                else if (payload.searchBy === 'location') {
+                else if (searchBy === 'location') {
                     searchCriteria = {
                         $match:
                             { address: new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
-                } else if (payload.searchBy === 'name') {
+                } else if (searchBy === 'name') {
                     searchCriteria = {
                         $match:
                         {
@@ -72,7 +74,6 @@ export class AgentClass extends BaseEntity {
                     isFeaturedProfile: sortType,
                 };
             }
-
             if (specializingIn_property_type) {
                 matchObject['specializingIn_property_type'] =
                     specializingIn_property_type;

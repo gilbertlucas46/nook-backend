@@ -1,5 +1,4 @@
 import { Schema, model, Types, Document } from 'mongoose';
-
 import * as CONSTANT from '@src/constants/app.constant';
 import { invoiceNumber } from '../../utils/index';
 
@@ -69,7 +68,7 @@ export const transactionSchema = new Schema({
 	versionKey: false,
 });
 
-transactionSchema.pre('save', function (this: any, next: () => void) {
+transactionSchema.pre('save', function(this: any, next: () => void) {
 	if (!this.invoiceNo) {
 		this.invoiceNo = invoiceNumber(++global.counters.Transaction);
 	}

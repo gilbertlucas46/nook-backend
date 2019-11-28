@@ -8,11 +8,18 @@ const schema = new Schema({
     saveAsDraft: { type: Schema.Types.Boolean, default: false },
     applicationStatus: {
         type: Schema.Types.String, enum: [
-            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
-            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
+            // CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
+            // CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
+            // CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
+            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+            CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
         ],
-        default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
+        default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
     },
     personalInfo: {
         firstName: { type: Schema.Types.String, trim: true },
@@ -56,6 +63,8 @@ const schema = new Schema({
                 CONSTANT.DATABASE.RELATIONSHIP.MOTHER,
                 CONSTANT.DATABASE.RELATIONSHIP.SISTER,
                 CONSTANT.DATABASE.RELATIONSHIP.SPOUSE,
+                CONSTANT.DATABASE.RELATIONSHIP.SON,
+                CONSTANT.DATABASE.RELATIONSHIP.DAUGHTER,
             ],
         },
     },
@@ -93,7 +102,10 @@ const schema = new Schema({
         rate: { type: Schema.Types.Number },
         monthlyRepayment: { type: Schema.Types.Number },
         hasCoBorrower: { type: Boolean },
-
+        loanType : {type: String},
+        loanPercent : {type: Number},
+        loanAmount : {type: Number},
+        propertyValue : {type : Number},
     },
     employmentInfo: {
         companyIndustry: {
@@ -196,6 +208,8 @@ const schema = new Schema({
                     CONSTANT.DATABASE.RELATIONSHIP.MOTHER,
                     CONSTANT.DATABASE.RELATIONSHIP.SISTER,
                     CONSTANT.DATABASE.RELATIONSHIP.SPOUSE,
+                    CONSTANT.DATABASE.RELATIONSHIP.SON,
+                    CONSTANT.DATABASE.RELATIONSHIP.DAUGHTER,
                 ],
             },
         },

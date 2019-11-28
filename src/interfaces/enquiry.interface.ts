@@ -25,6 +25,7 @@ export namespace EnquiryRequest {
 		enquiryType?: string;
 		category: string;
 		agentId?: string;
+		searchTerm?: string;
 	}
 
 	export interface GetInquiryById {
