@@ -25,7 +25,7 @@ export interface IUser extends Document {
 	passwordResetToken?: string;
 	passwordResetTokenExpirationTime?: Date;
 	backGroundImageUrl: string;
-	isFeaturedProfile: boolean;
+	// isFeaturedProfile: boolean;
 	specializingIn_property_type?: number[];
 	specializingIn_property_category?: string[];
 	serviceAreas?: Types.ObjectId[];
@@ -77,7 +77,7 @@ const userSchema = new Schema({
 	isProfileComplete: { type: Boolean, default: false },
 	passwordResetToken: { type: String },
 	passwordResetTokenExpirationTime: { type: Date },
-	isFeaturedProfile: { type: Boolean, default: false },
+	// isFeaturedProfile: { type: Boolean, default: false },
 	specializingIn_property_type: [{
 		type: Number,
 		enum: [
