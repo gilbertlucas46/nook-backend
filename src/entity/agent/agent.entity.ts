@@ -166,7 +166,7 @@ export class AgentClass extends BaseEntity {
                             {
                                 $match: {
                                     $expr: {
-                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }], // add featuredType here
+                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }],
                                     },
                                 },
                             },
