@@ -120,16 +120,6 @@ export let DATABASE = {
 			},
 		},
 	},
-	INDUSTRY: {
-		AGRI_FOREST_FISH: 'agriculture',
-		ACCOMOD_FOOD_SERVICES: 'accomodation',
-		ARTS_ENTERTAINMENT_RECREATION: 'arts',
-		COMMUNICATION: 'communication',
-		CONSTRUCTION: 'construction',
-		EDUCATION: 'education',
-		IT: 'it',
-		OTHERS: 'others',
-	},
 
 	HOME_OWNERSHIP: {
 		OWNED: 'owned',
@@ -145,8 +135,8 @@ export let DATABASE = {
 		FATHER: 'father',
 		MOTHER: 'mother',
 		SPOUSE: 'spouse',
-		SON : 'son',
-		DAUGHTER : 'daughter',
+		SON: 'son',
+		DAUGHTER: 'daughter',
 	},
 
 	CIVIL_STATUS: {
