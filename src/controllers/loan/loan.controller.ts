@@ -141,11 +141,11 @@ class LoanControllers extends BaseEntity {
     }
 
     /**
-    * @function adminLoansList
-    * @description admin loan list
-    * @payload : IGetUserLoanList
-    * return []
-    */
+     * @function adminLoansList
+     * @description admin loan list
+     * @payload : IGetUserLoanList
+     * return []
+     */
 
     async adminLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
