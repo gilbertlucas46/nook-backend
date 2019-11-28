@@ -34,7 +34,7 @@ export let transactionRoute: ServerRoute[] = [
 						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
 						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
 					]).required(),
-					description: Joi.string().max(35).default(''),
+					description: Joi.string().optional().default('').max(35),
 					billingType: Joi.string().valid([
 						Constant.DATABASE.BILLING_TYPE.MONTHLY,
 						Constant.DATABASE.BILLING_TYPE.YEARLY,

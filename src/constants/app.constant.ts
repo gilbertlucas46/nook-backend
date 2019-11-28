@@ -585,18 +585,22 @@ export let DATABASE = {
 	// type = YEARLY, MONTHLY
 	SUBSCRIPTION_TYPE: (type) => [{
 		type: 'FREE',
+		featuredType: 'FREE',
 		amount: 0,
 		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
 	}, {
 		type: 'FEATURED PROPERTY',
+		featuredType: 'PROPERTY',
 		amount: type === 'MONTHLY' ? 890 : 990,
 		description: 'Featured Property Upgrade - Search Results',
 	}, {
 		type: 'FEATURED PROFILE',
+		featuredType: 'PROFILE',
 		amount: type === 'MONTHLY' ? 890 : 990,
 		description: 'Featured Profile Upgrade - Search Results',
 	}, {
 		type: 'HOMEPAGE FEATURE',
+		featuredType: 'HOMEPAGE',
 		amount: type === 'MONTHLY' ? 890 : 1799,
 		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
 	}],
