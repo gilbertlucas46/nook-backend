@@ -54,8 +54,8 @@ class LoanEntities extends BaseEntity {
                     {
                         $match: {
                             loanMinAmount: { $lte: payload.property.value },
+                            minMonthlyIncomeRequired : {$lte : payload.work.income},
                             loanForForeignerMarriedLocal: localVisa,
-                            minMonthlyIncomeRequired: { $lte: totalMonthlyIncome },
                             propertySpecification: {
                                 $elemMatch: {
                                     $and: [

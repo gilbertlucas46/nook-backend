@@ -16,7 +16,7 @@ export namespace loanReferralRequest {
     export interface IUserLoanRefferal {
         page: number;
         limit: number;
-        // sortBy: string;
+        sortBy?: string;
         sortType?: number;
         // searchTerm: string;
         fromDate?: number;

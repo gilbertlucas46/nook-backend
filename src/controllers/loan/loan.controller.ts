@@ -7,6 +7,7 @@ import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as request from 'request';
 import * as config from 'config';
+import * as Constant from '../../constants/app.constant';
 class LoanControllers extends BaseEntity {
 
     /**
@@ -69,22 +70,21 @@ class LoanControllers extends BaseEntity {
              * Need to push data to salesforce
              */
 
-            const salesforceData = {
-                firstName: data.personalInfo.firstName,
-                middleName: data.personalInfo.middleName || '',
-                lastName: data.personalInfo.lastName,
-                gender: data.personalInfo.gender,
-                phoneNumber: data.contactInfo.phoneNumber,
-                email: data.contactInfo.email,
-                mobileNumber: data.contactInfo.mobileNumber,
-                referenceId: data.referenceId,
-                createdAt: data.createdAt,
-            };
+            // const salesforceData = {
+            //     firstName: data.personalInfo.firstName || '',
+            //     middleName: data.personalInfo.middleName || '',
+            //     lastName: data.personalInfo.lastName || '',
+            //     gender: data.personalInfo.gender || '',
+            //     phoneNumber: data.contactInfo.mobileNumber || '',
+            //     email: data.contactInfo.email,
+            //     referenceId: data.referenceId,
+            //     createdAt: data.createdAt,
+            // };
 
-            request.post({ url: config.get('zapier_loanUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
-                if (err) { return console.log(err); }
-                console.log('body ----', body);
-            });
+            // request.post({ url: config.get('zapier_loanUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
+            //     if (err) { return console.log(err); }
+            //     console.log('body ----', body);
+            // });
             return data['referenceId'];
 
         } catch (error) {
@@ -101,6 +101,9 @@ class LoanControllers extends BaseEntity {
 
     async updateLoanApplication(payload: LoanRequest.AddLoan) {
         try {
+            if (payload.saveAsDraft) {
+                payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value;
+            }
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return data['referenceId'];
         } catch (error) {
@@ -136,6 +139,22 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    /**
+     * @function adminLoansList
+     * @description admin loan list
+     * @payload : IGetUserLoanList
+     * return []
+     */
+
+    async adminLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
+        try {
+            return await ENTITY.LoanApplicationEntity.getAdminLoanList(payload, userData);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
     /**
      * @function loanById
      * @description user loan by id

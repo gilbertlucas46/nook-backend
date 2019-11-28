@@ -758,7 +758,7 @@ export class PropertyClass extends BaseEntity {
 				{
 					$lookup: {
 						from: 'cities',
-						let: { cityId: cityId },
+						let: { cityId },
 						pipeline: [
 							{
 								$match: {

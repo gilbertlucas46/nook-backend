@@ -15,6 +15,7 @@
     },
     "cryptoSecret": "d6F3Efeq",
     "jwtSecret": "cgfhfj",
+    "forgetPwdjwtSecret": "shubham",
     "color": [
         "#FFFFFF",
         "#C0C0C0",

@@ -46,6 +46,7 @@ export class HelpCenterEntity extends BaseEntity {
             ];
             return await this.DAOManager.aggregateData(this.modelName, pipeline, {});
         } catch (error) {
+            console.log('Error', error);
             return Promise.reject(error);
         }
     }

@@ -13,6 +13,7 @@
         "dbUrl": "mongodb://@appskeeper.com:2798/nook_stgdb"
     },
     "cryptoSecret": "d6F3Efeq",
+    "forgetPwdjwtSecret": "shubham",
     "jwtSecret": "cgfhfj",
     "color": [
         "#FFFFFF",
