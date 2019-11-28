@@ -15,12 +15,36 @@ export class PropertyController {
 		return result[0];
 	}
 	/**
+	 * @function checkSubscription
+	 * @description check subscription is exist
+	 * @payload : boolean
+	 * return {}
+	 */
+	async checkSubscriptionExist(payload: PropertyRequest.PropertyData, userData: UserRequest.UserData) {
+		if (payload.isFeatured) {
+			const step1 = await ENTITY.SubscriptionE.getSubscrition({ userId: userData._id, featuredType: [Constant.DATABASE.FEATURED_TYPE.PROPERTY], propertyId: true });
+			if (step1) {
+				return { isFeatured: true, subscriptionId: step1._id };
+			} else {
+				return { isFeatured: false };
+			}
+		} else if (payload.isHomePageFeatured) {
+			const step1 = await ENTITY.SubscriptionE.getSubscrition({ userId: userData._id, featuredType: [Constant.DATABASE.FEATURED_TYPE.HOMEPAGE], propertyId: true });
+			if (step1) {
+				return { isHomePageFeatured: true, subscriptionId: step1._id };
+			} else {
+				return { isHomePageFeatured: false };
+			}
+		} else {
+			return {};
+		}
+	}
+	/**
 	 * @function addProperty
 	 * @description  add property
 	 * @payload : PropertyData
 	 * return {}
 	 */
-
 	async addProperty(payload: PropertyRequest.PropertyData, userData: UserRequest.UserData) {
 		try {
 			let result;
@@ -77,9 +101,17 @@ export class PropertyController {
 
 				delete payload.propertyId;
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
+				if (payload.subscriptionId) {
+					await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
+				}
 				return { updateData };
+			} else {
+				const data = await ENTITY.PropertyE.createOneEntity(payload);
+				if (payload.subscriptionId) {
+					await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
+				}
+				return data;
 			}
-			return await ENTITY.PropertyE.createOneEntity(payload);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);

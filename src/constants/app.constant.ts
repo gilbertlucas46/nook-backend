@@ -578,6 +578,10 @@ export let DATABASE = {
 		MONTHLY: 'MONTHLY',
 		YEARLY: 'YEARLY',
 	},
+	SCREEN_TYPE: {
+		HOMEPAGE: 'HOMEPAGE',
+		SEARCH: 'SEARCH',
+	},
 	// type = YEARLY, MONTHLY
 	SUBSCRIPTION_TYPE: (type) => [{
 		type: 'FREE',
@@ -596,6 +600,11 @@ export let DATABASE = {
 		amount: type === 'MONTHLY' ? 890 : 1799,
 		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
 	}],
+	TRANSACTION_STATUS: {
+		SUCCEEDED: 'succeeded',
+		PENDING: 'pending',
+		FAILED: 'failed',
+	},
 };
 
 export const EMAIL_TEMPLATE = {
@@ -741,6 +750,18 @@ export let STATUS_MSG = {
 				statusCode: 400,
 				type: 'DB_ERROR',
 				message: 'DB Error',
+			},
+			PAYMENT_ERROR: {
+				statusCode: 400,
+				type: 'PAYMENT_ERROR',
+				message: 'Something went wrong, please try again later!',
+			},
+			WEBHOOK_ERROR: (error: any) => {
+				return {
+					statusCode: 400,
+					message: `Webhook Error: ${error.message}`,
+					type: 'WEBHOOK_ERROR',
+				};
 			},
 			DEFAULT: {
 				statusCode: 400,

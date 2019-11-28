@@ -173,6 +173,33 @@ export class UserController {
 		}
 	}
 	/**
+	 * @function getProfile
+	 * @description function to get user profile
+	 * @payload  UserData
+	 * return object
+	 */
+	async getProfile(payload: UserRequest.UserData) {
+		try {
+			if (
+				payload.type === Constant.DATABASE.USER_TYPE.AGENT.TYPE ||
+				payload.type === Constant.DATABASE.USER_TYPE.OWNER.TYPE
+			) {
+				const step1 = await ENTITY.SubscriptionE.getSubscrition({ userId: payload._id, featuredType: [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] });
+				if (step1) {
+					payload.isFeaturedProfile = true;
+					payload.subscriptionexpirarionTime = step1.endDate;
+				} else {
+					payload.isFeaturedProfile = false;
+				}
+			} else {
+				payload.isFeaturedProfile = false;
+			}
+			return payload;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+	/**
 	 * @function forgetPassword
 	 * @description function to send the email on the registered emailId
 	 * @payload  ForgetPassword
