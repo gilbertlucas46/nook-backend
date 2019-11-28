@@ -1,6 +1,7 @@
 {
     "environment": "development",
     "host": "http://localhost:7361/",
+    "protocol": "http",
     "port": 7361,
     "dbConfig": {
         "dbPwd": "Iidjsi@#1!",
@@ -27,12 +28,17 @@
         "#FF00FF",
         "#800080"
     ],
+    "smtp": {
+        "displayColors": true,
+        "mailDriver": "smtp",
+        "mailHost": "smtp.gmail.com",
+        "mailPort": 465,
+        "mailUserName": "do-not-reply@appinventiv.com",
+        "mailPassword": "Active!@#123",
+        "mailEncryption": "tls",
+        "mailFromAddress": "do-not-reply@appinventiv.com"
+    },
     "displayColors": true,
-    "mailDriver": "smtp",
-    "mailHost": "smtp.gmail.com",
-    "mailPort": 465,
-    "mailUserName": "do-not-reply@appinventiv.com",
-    "mailPassword": "Active!@#123",
-    "mailEncryption": "tls",
-    "mailFromAddress": "do-not-reply@appinventiv.com"
+    "forgetPwdjwtSecret": "shubham",
+    "stripeSecretKey": "sk_test_bczq2IIJNuLftIaA79Al1wrx00jgNAsPiU"
 }

@@ -7,8 +7,40 @@ import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export let propertyRoute: ServerRoute[] = [
 	/**
-	 * @description: user add property
+	 * @description: check subscription is exist
 	 */
+	{
+		method: 'POST',
+		path: '/v1/user/property/check-subscription',
+		handler: async (request, h: ResponseToolkit) => {
+			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const payload: PropertyRequest.PropertyData = request.payload as any;
+				const data = await PropertyService.checkSubscriptionExist(payload, userData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Check Subscription',
+			tags: ['api', 'user', 'check-subscription'],
+			auth: 'UserAuth',
+			validate: {
+				payload: {
+					isFeatured: Joi.boolean().optional(),
+					isHomePageFeatured: Joi.boolean().optional(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
 	{
 		method: 'POST',
 		path: '/v1/user/property',
@@ -29,6 +61,7 @@ export let propertyRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					propertyId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/),
+					subscriptionId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).optional(),
 					property_features: {
 						storeys_2: Joi.boolean().default(false),
 						security_24hr: Joi.boolean().default(false),
@@ -126,6 +159,7 @@ export let propertyRoute: ServerRoute[] = [
 						]),
 					},
 					isFeatured: Joi.boolean().default(false),
+					isHomePageFeatured: Joi.boolean().default(false),
 					propertyImages: Joi.array(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -184,6 +218,7 @@ export let propertyRoute: ServerRoute[] = [
 					minArea: Joi.number(),
 					maxArea: Joi.number(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

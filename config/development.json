@@ -1,6 +1,7 @@
 {
     "environment": "development",
     "port": 7361,
+    "protocol": "https",
     "baseUrl": "https://nookdevangweb.appskeeper.com?reset=",
     "invalidUrl": "https://nookdevangweb.appskeeper.com?error=",
     "homePage": "https://nookdevangweb.appskeeper.com",
@@ -44,5 +45,6 @@
         "mailFromAddress": "mailtestingappinventiv@gmail.com"
     },
     "zapier_enquiryUrl": "https://hooks.zapier.com/hooks/catch/4460154/o4xfoal/",
-    "zapier_loanUrl": "https://hooks.zapier.com/hooks/catch/4460154/o4nc6ms/"
+    "zapier_loanUrl": "https://hooks.zapier.com/hooks/catch/4460154/o4nc6ms/",
+    "stripeSecretKey": "sk_test_bczq2IIJNuLftIaA79Al1wrx00jgNAsPiU"
 }
