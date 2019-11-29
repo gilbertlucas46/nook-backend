@@ -588,21 +588,25 @@ export let DATABASE = {
 		featuredType: 'FREE',
 		amount: 0,
 		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
+		details: 'Finally a property portal that is completely free to use for all brokers, agents and property owners. List an unlimited number of properties; receive an unlimited number of property enquiries from potential tenants and buyers; and have your own profile page to promote yourself in order to find new clients who want you to sell or lease their property. There is no trial period needed, Nook is free forever. Just create an account and start posting your property listings for free.',
 	}, {
 		type: 'FEATURED PROPERTY',
 		featuredType: 'PROPERTY',
 		amount: type === 'MONTHLY' ? 890 : 990,
 		description: 'Featured Property Upgrade - Search Results',
+		details: 'Have a property for sale or lease that you want to feature more prominently? Want more people to view your property and send more enquiries? Want to sell or lease faster? Then upgrade your property to a Featured Property for a small fee to have it appear at the top of search results for your chosen location.',
 	}, {
 		type: 'FEATURED PROFILE',
 		featuredType: 'PROFILE',
 		amount: type === 'MONTHLY' ? 890 : 990,
 		description: 'Featured Profile Upgrade - Search Results',
+		details: 'Would you like more clients to be giving you more properties to sell or lease out? Want an easier way for these new clients to find you? Simply upgrade your broker/agent profile page for a small fee to a Featured Profile and have it appear at the top of search results for your chosen location. Have the clients come to you.',
 	}, {
 		type: 'HOMEPAGE FEATURE',
 		featuredType: 'HOMEPAGE',
 		amount: type === 'MONTHLY' ? 890 : 1799,
 		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
+		details: 'Would you like the maximum level of exposure for your property or your broker/agent profile page? Would you like a high number of people enquiring so you sell/lease faster and find new clients easier? Upgrade your property or broker/agent profile to a Homepage Feature for a small fee and get the most amount of website traffic now.',
 	}],
 	TRANSACTION_STATUS: {
 		SUCCEEDED: 'succeeded',
