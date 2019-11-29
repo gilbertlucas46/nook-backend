@@ -186,15 +186,15 @@ export class UserController {
 				payload.type === Constant.DATABASE.USER_TYPE.AGENT.TYPE ||
 				payload.type === Constant.DATABASE.USER_TYPE.OWNER.TYPE
 			) {
-				const step1 = await ENTITY.SubscriptionE.getSubscrition({ userId: payload._id, featuredType: [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] });
-				if (step1) {
-					payload.isFeaturedProfile = true;
-					payload.subscriptionexpirarionTime = step1.endDate;
+				const step1 = await ENTITY.SubscriptionE.getAllSubscritions({ userId: payload._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
+				if (step1.length) {
+					payload.isHomePageFeatured = true;
+					payload.subscriptionexpirarionTime = step1[0].endDate;
 				} else {
-					payload.isFeaturedProfile = false;
+					payload.isHomePageFeatured = false;
 				}
 			} else {
-				payload.isFeaturedProfile = false;
+				payload.isHomePageFeatured = false;
 			}
 			return payload;
 		} catch (error) {

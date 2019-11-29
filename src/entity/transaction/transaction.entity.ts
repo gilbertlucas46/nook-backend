@@ -35,6 +35,8 @@ export class TransactionClass extends BaseEntity {
 				description: chargeData.description,
 				status: chargeData.status,
 				userId: userData._id,
+				name: payload.name,
+				address: payload.address,
 				featuredType: payload.featuredType,
 				billingType: payload.billingType,
 				paymentMethod: chargeData.payment_method_details.card.brand,
@@ -107,10 +109,10 @@ export class TransactionClass extends BaseEntity {
 			const query: any = {};
 			query._id = payload.transactionId;
 
-			let projection = { amount: 1, userId: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
+			let projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
 			let response = await this.DAOManager.findOne(this.modelName, query, projection);
 			let populateQuery = [
-				{ path: 'userId', model: 'User', select: '_id firstName middleName lastName email address' },
+				{ path: 'userId', model: 'User', select: 'email' },
 			];
 			return await this.DAOManager.populateDataOnAggregate(this.modelName, response, populateQuery);
 		} catch (error) {
