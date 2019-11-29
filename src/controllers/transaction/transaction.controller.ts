@@ -33,6 +33,14 @@ class TransactionController extends BaseEntity {
 		}
 	}
 
+	async invoiceDetails(payload: TransactionRequest.Id) {
+		try {
+			return await ENTITY.TransactionE.invoiceDetails(payload);
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 	async handleChargeSucceeded(transactioData, paymentIntent) {
 		if (!transactioData.subscriptionId) {
 			const payload: any = {
