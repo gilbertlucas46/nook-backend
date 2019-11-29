@@ -76,10 +76,10 @@ export class AgentClass extends BaseEntity {
                     specializingIn_property_type;
             }
 
-            if (specializingIn_property_category) {
-                matchObject['specializingIn_property_category'] =
-                    { $in: specializingIn_property_category };
-            }
+            // if (specializingIn_property_category) {
+            //     matchObject['specializingIn_property_category'] =
+            //         { $in: specializingIn_property_category };
+            // }
 
             if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
             // // Date filters
@@ -159,6 +159,7 @@ export class AgentClass extends BaseEntity {
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (err) {
+            console.log('Error',err);
             return Promise.reject(err);
         }
     }
