@@ -317,6 +317,14 @@ export class AdminClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+
+	async subscriptionList(adminData) {
+		try {
+
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
 }
 
 export const AdminE = new AdminClass();
