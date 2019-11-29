@@ -762,7 +762,7 @@ export let STATUS_MSG = {
 			PAYMENT_ERROR: {
 				statusCode: 400,
 				type: 'PAYMENT_ERROR',
-				message: 'Something went wrong, please try again later!',
+				message: 'Payment failed, please try again later!',
 			},
 			WEBHOOK_ERROR: (error: any) => {
 				return {
