@@ -27,7 +27,7 @@ export let subscriptionRoute: ServerRoute[] = [
 					type: Joi.string().valid([
 						Constant.DATABASE.BILLING_TYPE.MONTHLY,
 						Constant.DATABASE.BILLING_TYPE.YEARLY,
-					]).required()
+					]).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

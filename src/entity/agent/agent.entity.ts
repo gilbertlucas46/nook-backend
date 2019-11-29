@@ -13,7 +13,7 @@ export class AgentClass extends BaseEntity {
             let { page, limit, sortType, sortBy } = payload;
             const {
                 // fromDate, toDate,
-                cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
+                byCity, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
             const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? [Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] : Constant.DATABASE.FEATURED_TYPE.PROFILE;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
@@ -86,6 +86,9 @@ export class AgentClass extends BaseEntity {
             // }
 
             if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
+            if (byCity) {
+                matchObject['serviceAreas'] = { $in: [Types.ObjectId(cityId)] };
+            }
             // // Date filters
             // if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             // if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }

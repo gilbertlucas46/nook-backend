@@ -640,41 +640,126 @@ export let adminProfileRoute: ServerRoute[] = [
 	/**
 	 * @description subscription list
 	 */
-	// {
-	// 	method: 'POST',
-	// 	path: '/v1/admin/subscriptionList',
-	// 	handler: async (request, h) => {
-	// 		try {
-	// 			const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-	// 			const payload: LoanRequest.LoanById = request.params as any;
-	// 			// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-	// 			// 	await AdminStaffEntity.checkPermission(payload.permission);
-	// 			// }
-	// 			const data = await AdminService.subscriptionList(payload);
-	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
-	// 		} catch (error) {
-	// 			return (UniversalFunctions.sendError(error));
-	// 		}
-	// 	},
-	// 	options: {
-	// 		description: 'Admin update loan status',
-	// 		tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
-	// 		auth: 'AdminAuth',
-	// 		validate: {
-	// 			payload: {
-	// 				featuredType: Joi.string(),
-	// 				subscriptionType: Joi.string(),
-	// 				amount: Joi.number(),
-	// 				description: Joi.string(),
-	// 			},
-	// 			headers: UniversalFunctions.authorizationHeaderObj,
-	// 			failAction: UniversalFunctions.failActionFunction,
-	// 		},
-	// 		plugins: {
-	// 			'hapi-swagger': {
-	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
-	// 			},
-	// 		},
-	// 	},
-	// },
+	{
+		method: 'POST',
+		path: '/v1/admin/subscriptionList',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = request.payload as any;
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
+				const data = await AdminService.subscriptionList(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				console.log('errorerrorerrorerror', error);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Admin update loan status',
+			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
+			auth: 'AdminAuth',
+			validate: {
+				payload: {
+					featuredType: Joi.string(),
+					subscriptionType: Joi.string(),
+					amount: Joi.number(),
+					description: Joi.string(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
+	{
+		method: 'GET',
+		path: '/v1/admin/subscriptionList',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = request.payload as any;
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
+				const data = await AdminService.getSubscriptionList();
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				console.log('errorerrorerrorerror', error);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Admin update loan status',
+			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
+			auth: 'AdminAuth',
+			validate: {
+				// payload: {
+				// },
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
+	/**
+	 * @description update the description list
+     */
+
+	{
+		method: 'PATCH',
+		path: '/v1/admin/subscriptionList/{id}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = {
+					...request.params as any,
+					...request.params as any,
+				};
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
+				const data = await AdminService.updateSubscription(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				console.log('errorerrorerrorerror', error);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Admin update loan status',
+			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					id: Joi.string(),
+				},
+				payload: {
+					amount: Joi.number(),
+					description: Joi.string(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
+
 ];
