@@ -171,6 +171,8 @@ export class UserController {
 
 			return updateUser;
 		} catch (error) {
+			console.log(error, "gggggggggggggggggggggggggggggggggg");
+			
 			return Promise.reject(error);
 		}
 	}
