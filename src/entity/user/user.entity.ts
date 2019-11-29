@@ -132,7 +132,7 @@ export class UserClass extends BaseEntity {
 									$match: {
 										$and: [
 											{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
-											{ usFeaturederId: userData._id }],
+											{ userId: userData._id }],
 									},
 								},
 								{ $count: 'Total' },
