@@ -133,7 +133,8 @@ export class UserController {
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
-				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
+				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber
+				|| getUser.type !== updateUser.type) {
 
 				const propertyCriteria = { userId: updateUser._id };
 				const updatePropertyData = {
@@ -144,6 +145,7 @@ export class UserController {
 						profilePicUrl: updateUser.profilePicUrl,
 						firstName: updateUser.firstName,
 						lastName: updateUser.lastName,
+						userType: updateUser.type,
 					},
 					isProfileComplete: true,
 				};

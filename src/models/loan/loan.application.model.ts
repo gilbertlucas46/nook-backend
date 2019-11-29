@@ -102,10 +102,10 @@ const schema = new Schema({
         rate: { type: Schema.Types.Number },
         monthlyRepayment: { type: Schema.Types.Number },
         hasCoBorrower: { type: Boolean },
-        loanType : {type: String},
-        loanPercent : {type: Number},
-        loanAmount : {type: Number},
-        propertyValue : {type : Number},
+        loanType: { type: String },
+        loanPercent: { type: Number },
+        loanAmount: { type: Number },
+        propertyValue: { type: Number },
     },
     employmentInfo: {
         companyIndustry: {
@@ -263,7 +263,7 @@ const schema = new Schema({
 
 schema.pre('save', function(this: any, next: () => void) {
     if (!this.referenceId) {
-        // this.referenceId = `USR${++global.counters.LoanApplication}`;
+        this.referenceId = `USR${++global.counters.LoanApplication}`;
     }
     next();
 });
