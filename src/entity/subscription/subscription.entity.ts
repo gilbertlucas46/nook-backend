@@ -15,12 +15,28 @@ export class SubscriptionClass extends BaseEntity {
 		try {
 			const query: any = {};
 			query.userId = payload.userId;
-			query.featuredType = { $in: payload.featuredType };
+			query.featuredType = payload.featuredType;
 			query['$and'] = [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }];
-			if (payload.propertyId) {
-				query.propertyId = { $exists: false };
-			}
+			query.propertyId = { $exists: false };
 			return await this.DAOManager.findOne(this.modelName, query, {});
+		} catch (error) {
+			utils.consolelog('Error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async getAllSubscritions(payload: SubscriptionRequest.Get) {
+		try {
+			const query: any = {};
+			query.userId = payload.userId;
+			query.featuredType = payload.featuredType;
+			query['$and'] = [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }];
+
+			let projection = { _id: 1, endDate: 1 };
+
+			let sort = { endDate: -1 };
+			let response = await this.DAOManager.findAllWithSort(this.modelName, query, projection, sort);
+			return response.length ? response : [];
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);

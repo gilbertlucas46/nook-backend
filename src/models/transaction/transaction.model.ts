@@ -14,6 +14,8 @@ export interface ITransaction extends Document {
 	description: string;
 	status: string;
 	userId: Types.ObjectId;
+	name: string;
+	address: string;
 	invoiceNo: string;
 	featuredType: string;
 	billingType: string;
@@ -42,6 +44,8 @@ export const transactionSchema = new Schema({
 		default: '',
 	},
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+	name: { type: String, required: true },
+	address: { type: String, required: true },
 	invoiceNo: { type: String },
 	featuredType: {
 		type: String,
@@ -68,7 +72,7 @@ export const transactionSchema = new Schema({
 	versionKey: false,
 });
 
-transactionSchema.pre('save', function(this: any, next: () => void) {
+transactionSchema.pre('save', function (this: any, next: () => void) {
 	if (!this.invoiceNo) {
 		this.invoiceNo = invoiceNumber(++global.counters.Transaction);
 	}

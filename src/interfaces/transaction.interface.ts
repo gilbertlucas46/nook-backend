@@ -13,6 +13,8 @@ export namespace TransactionRequest {
 		billingType: string;
 		subscriptionId: string;
 		userId: string;
+		name: string;
+		address: string;
 	}
 
 	export interface InvoiceList {

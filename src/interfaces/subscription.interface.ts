@@ -1,7 +1,7 @@
 export namespace SubscriptionRequest {
 
     export interface Get {
-        featuredType: string[];
+        featuredType: string;
         userId: string;
         propertyId?: boolean;
     }

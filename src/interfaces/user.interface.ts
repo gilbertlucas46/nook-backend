@@ -30,6 +30,7 @@ export namespace UserRequest {
 		specializingIn_property_category?: string[];
 		serviceAreas?: string[];
 		subscriptionexpirarionTime?: number;
+		isHomePageFeatured?: boolean;
 	}
 
 	export interface Register {
