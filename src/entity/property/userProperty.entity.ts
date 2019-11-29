@@ -139,10 +139,10 @@ export class UserPropertyClass extends BaseEntity {
 				{
 					$addFields: {
 						'isFeatured': {
-							$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { if: { $eq: ['$subscriptions.featuredProperties', []] }, then: false, else: true } },
+							$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.featuredProperties', []] }, then: false, else: true } } },
 						},
 						'isHomePageFeatured': {
-							$cond: { if: { $eq: ['$isHomePageFeatured', false] }, then: false, else: { if: { $eq: ['$subscriptions.homepageFeaturedProperties', []] }, then: false, else: true } },
+							$cond: { if: { $eq: ['$isHomePageFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.homepageFeaturedProperties', []] }, then: false, else: true } } },
 						},
 						'property_added_by.isFeaturedProfile': {
 							$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
