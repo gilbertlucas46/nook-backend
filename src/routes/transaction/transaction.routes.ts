@@ -40,6 +40,8 @@ export let transactionRoute: ServerRoute[] = [
 						Constant.DATABASE.BILLING_TYPE.MONTHLY,
 						Constant.DATABASE.BILLING_TYPE.YEARLY,
 					]).required(),
+					name: Joi.string().required(),
+					address: Joi.string().required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
