@@ -17,7 +17,13 @@ export let propertyRoute: ServerRoute[] = [
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: PropertyRequest.PropertyData = request.payload as any;
 				const data = await PropertyService.checkSubscriptionExist(payload, userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				if (data.isFeatured) {
+					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_EXIST, data));
+				} else if (data.isHomePageFeatured) {
+					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_EXIST, data));
+				} else {
+					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_NOT_EXIST, data));
+				}
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
