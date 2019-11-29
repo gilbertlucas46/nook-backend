@@ -1,5 +1,9 @@
 export namespace TransactionRequest {
 
+	export interface Id {
+		transactionId: string;
+	}
+
 	export interface CreateCharge {
 		amount: number;
 		currency: string;
@@ -15,5 +19,7 @@ export namespace TransactionRequest {
 		limit: number;
 		page: number;
 		featuredType?: string;
+		fromDate?: number;
+		toDate?: number;
 	}
 }
