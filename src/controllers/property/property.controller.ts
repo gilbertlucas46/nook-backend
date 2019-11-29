@@ -22,14 +22,14 @@ export class PropertyController {
 	 */
 	async checkSubscriptionExist(payload: PropertyRequest.PropertyData, userData: UserRequest.UserData) {
 		if (payload.isFeatured) {
-			const step1 = await ENTITY.SubscriptionE.getSubscrition({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY, propertyId: true });
+			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
 			if (step1) {
 				return { isFeatured: true, subscriptionId: step1._id };
 			} else {
 				return { isFeatured: false };
 			}
 		} else if (payload.isHomePageFeatured) {
-			const step1 = await ENTITY.SubscriptionE.getSubscrition({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE, propertyId: true });
+			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
 			if (step1) {
 				return { isHomePageFeatured: true, subscriptionId: step1._id };
 			} else {

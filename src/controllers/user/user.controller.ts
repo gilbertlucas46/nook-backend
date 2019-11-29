@@ -186,7 +186,7 @@ export class UserController {
 				payload.type === Constant.DATABASE.USER_TYPE.AGENT.TYPE ||
 				payload.type === Constant.DATABASE.USER_TYPE.OWNER.TYPE
 			) {
-				const step1 = await ENTITY.SubscriptionE.getAllSubscritions({ userId: payload._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
+				const step1 = await ENTITY.SubscriptionE.getAllHomepageSubscritions({ userId: payload._id });
 				if (step1.length) {
 					payload.isHomePageFeatured = true;
 					payload.subscriptionexpirarionTime = step1[0].endDate;
@@ -315,7 +315,10 @@ export class UserController {
 	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
-			return await ENTITY.UserE.userDashboad(userData);
+			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
+			let step2 = await ENTITY.UserE.userDashboad(userData);
+			step2.isFeaturedProfile = step1 ? true : false;
+			return step2;
 		} catch (error) {
 			return Promise.reject(error);
 		}

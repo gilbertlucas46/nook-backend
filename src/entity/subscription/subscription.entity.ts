@@ -11,7 +11,7 @@ export class SubscriptionClass extends BaseEntity {
 		super('Subscription');
 	}
 
-	async getSubscrition(payload: SubscriptionRequest.Get) {
+	async checkSubscriptionExist(payload: SubscriptionRequest.Get) {
 		try {
 			const query: any = {};
 			query.userId = payload.userId;
@@ -25,11 +25,11 @@ export class SubscriptionClass extends BaseEntity {
 		}
 	}
 
-	async getAllSubscritions(payload: SubscriptionRequest.Get) {
+	async getAllHomepageSubscritions(payload: SubscriptionRequest.Get) {
 		try {
 			const query: any = {};
 			query.userId = payload.userId;
-			query.featuredType = payload.featuredType;
+			query.featuredType = Constant.DATABASE.FEATURED_TYPE.HOMEPAGE;
 			query['$and'] = [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }];
 
 			let projection = { _id: 1, endDate: 1 };
