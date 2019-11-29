@@ -225,8 +225,7 @@ export let propertyRoute: ServerRoute[] = [
 					minArea: Joi.number(),
 					maxArea: Joi.number(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					// screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE), // uncomment later
-					screenType: Joi.string().trim().optional().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE), // remove later
+					screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE), // uncomment later
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -288,6 +287,7 @@ export let propertyRoute: ServerRoute[] = [
 					]),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					property_features: Joi.array(),
+					screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.SEARCH]),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},

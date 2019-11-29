@@ -103,6 +103,7 @@ export class PropertyController {
 				delete payload.propertyId;
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				if (payload.subscriptionId) {
+					console.log(payload.subscriptionId, payload.propertyId, "gggggggggggggggggggggggggggg");
 					await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
 				}
 				return { updateData };
