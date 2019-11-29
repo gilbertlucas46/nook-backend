@@ -37,6 +37,7 @@ export class AgentClass extends BaseEntity {
                         $match:
                         {
                             $or: [
+                                { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
                             ],

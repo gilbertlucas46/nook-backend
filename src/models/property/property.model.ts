@@ -265,6 +265,7 @@ const propertySchema = new Schema({
 		middleName: { type: String },
 		lastName: { type: String },
 		email: { type: String },
+		userType: { type: String },
 	},
 	property_status: {
 		number: {
