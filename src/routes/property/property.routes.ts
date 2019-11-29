@@ -198,6 +198,7 @@ export let propertyRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				query: {
+					cityId: Joi.string(),
 					page: Joi.number(),
 					limit: Joi.number(),
 					searchTerm: Joi.string(),
@@ -257,6 +258,7 @@ export let propertyRoute: ServerRoute[] = [
 			//  auth: 'UserAuth',
 			validate: {
 				query: {
+					byCity: Joi.string(),
 					page: Joi.number(),
 					limit: Joi.number(),
 					searchTerm: Joi.string(),
