@@ -137,7 +137,7 @@ export class PropertyClass extends BaseEntity {
 			if (screenType === Constant.DATABASE.SCREEN_TYPE.SEARCH) {
 				addFields = {
 					'isFeatured': {
-						$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { $conf: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } } },
+						$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } } },
 					},
 					'property_added_by.isFeaturedProfile': {
 						$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
