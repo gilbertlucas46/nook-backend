@@ -100,18 +100,32 @@ export class PropertyController {
 				// };
 				// // promiseArray.push(ENTITY.EnquiryE.updateOneEntity(criteria, enquiryDataToUpdate));
 
-				delete payload.propertyId;
-				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
+				let step1;
 				if (payload.subscriptionId) {
-					console.log(payload.subscriptionId, payload.propertyId, "gggggggggggggggggggggggggggg");
-					await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
+					step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
 				}
+				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+					payload.isFeatured = true;
+				}
+				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+					payload.isHomePageFeatured = true;
+				}
+				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
+				delete payload.propertyId;
 				return { updateData };
 			} else {
 				const data = await ENTITY.PropertyE.createOneEntity(payload);
+				let step1;
 				if (payload.subscriptionId) {
-					await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
+					step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
 				}
+				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+					payload.isFeatured = true;
+				}
+				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+					payload.isHomePageFeatured = true;
+				}
+				const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
 				return data;
 			}
 		} catch (error) {
