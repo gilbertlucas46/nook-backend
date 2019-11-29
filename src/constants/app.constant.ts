@@ -948,6 +948,16 @@ export let STATUS_MSG = {
 				};
 				return body;
 			},
+			SUBSCRIPTION_EXIST: {
+				statusCode: 200,
+				type: 'SUBSCRIPTION_EXIST',
+				message: 'You have successfully got one of the subscription plan.',
+			},
+			SUBSCRIPTION_NOT_EXIST: {
+				statusCode: 200,
+				type: 'SUBSCRIPTION_NOT_EXIST',
+				message: 'You do not have any subscription plan.',
+			},
 		},
 		S201: {
 			CREATED: {

@@ -135,22 +135,30 @@ export class PropertyClass extends BaseEntity {
 			const featuredType = (screenType === Constant.DATABASE.SCREEN_TYPE.SEARCH) ? Constant.DATABASE.FEATURED_TYPE.PROPERTY : Constant.DATABASE.FEATURED_TYPE.HOMEPAGE;
 			let addFields;
 			if (screenType === Constant.DATABASE.SCREEN_TYPE.SEARCH) {
+				// addFields = {
+				// 	'isFeatured': {
+				// 		$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } },
+				// 	},
+				// 	'property_added_by.isFeaturedProfile': {
+				// 		$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
+				// 	},
+				// };
 				addFields = {
-					'isFeatured': {
-						$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } },
-					},
-					'property_added_by.isFeaturedProfile': {
-						$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
-					},
+					'isFeatured': false,
+					'property_added_by.isFeaturedProfile': false,
 				};
 			} else { // Constant.DATABASE.SCREEN_TYPE.HOMEPAGE
+				// addFields = {
+				// 	'isFeatured': {
+				// 		$cond: { if: { $eq: ['$isHomePageFeatured', false] }, then: false, else: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } },
+				// 	},
+				// 	'property_added_by.isFeaturedProfile': {
+				// 		$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
+				// 	},
+				// };
 				addFields = {
-					'isFeatured': {
-						$cond: { if: { $eq: ['$isHomePageFeatured', false] }, then: false, else: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } },
-					},
-					'property_added_by.isFeaturedProfile': {
-						$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
-					},
+					'isFeatured': false,
+					'property_added_by.isFeaturedProfile': true,
 				};
 			}
 			if (!limit) { limit = Constant.SERVER.LIMIT; }
