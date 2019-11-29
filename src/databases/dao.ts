@@ -84,6 +84,15 @@ export class DAOManager {
 		}
 	}
 
+	async findAllWithSort(model: ModelNames, query, projection = {}, sort = {}, options = {}) {
+		try {
+			const ModelName: Model<any> = Models[model];
+			return await ModelName.find(query, projection, options).sort(sort).exec();
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 	async findAndUpdate(model: ModelNames, conditions, update, options?) {
 		try {
 			update['updatedAt'] = new Date().getTime();
