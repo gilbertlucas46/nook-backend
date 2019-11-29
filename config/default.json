@@ -40,5 +40,6 @@
     },
     "displayColors": true,
     "forgetPwdjwtSecret": "shubham",
-    "stripeSecretKey": "sk_test_bczq2IIJNuLftIaA79Al1wrx00jgNAsPiU"
+    "stripeSecretKey": "sk_test_bczq2IIJNuLftIaA79Al1wrx00jgNAsPiU",
+    "zapier_enquiryUrl": "https://hooks.zapier.com/hooks/catch/4460154/o4xfoal/"
 }
