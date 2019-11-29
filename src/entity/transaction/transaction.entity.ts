@@ -68,7 +68,7 @@ export class TransactionClass extends BaseEntity {
 
 	async invoiceList(payload: TransactionRequest.InvoiceList, userData) {
 		try {
-			const { page, limit, featuredType } = payload;
+			const { page, limit, featuredType, fromDate, toDate } = payload;
 
 			const query: any = {};
 			query.userId = Types.ObjectId(userData._id);
@@ -76,6 +76,9 @@ export class TransactionClass extends BaseEntity {
 			if (featuredType) {
 				query.featuredType = featuredType;
 			}
+			if (fromDate && toDate) { query.createdAt = { $gte: fromDate, $lte: toDate }; }
+			if (fromDate && !toDate) { query.createdAt = { $gte: fromDate }; }
+			if (!fromDate && toDate) { query.createdAt = { $lte: toDate }; }
 
 			const pipeline = [
 				{ $match: query },
@@ -93,6 +96,23 @@ export class TransactionClass extends BaseEntity {
 			];
 
 			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+		} catch (error) {
+			utils.consolelog('Error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async invoiceDetails(payload: TransactionRequest.Id) {
+		try {
+			const query: any = {};
+			query._id = payload.transactionId;
+
+			let projection = { amount: 1, userId: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
+			let response = await this.DAOManager.findOne(this.modelName, query, projection);
+			let populateQuery = [
+				{ path: 'userId', model: 'User', select: '_id firstName middleName lastName email address' },
+			];
+			return await this.DAOManager.populateDataOnAggregate(this.modelName, response, populateQuery);
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);

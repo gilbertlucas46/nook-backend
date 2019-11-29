@@ -1,19 +1,20 @@
 import * as Joi from 'joi';
-import { ServerRoute, ResponseToolkit } from 'hapi';
+import { ServerRoute, Request, ResponseToolkit } from 'hapi';
 
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
 import { transactionController } from '@src/controllers';
+import { TransactionRequest } from '@src/interfaces/transaction.interface';
 
 export let transactionRoute: ServerRoute[] = [
 	// for the charge  // check the minimum transaction history
 	{
 		method: 'POST',
 		path: '/v1/transaction/charge',
-		handler: async (request, h: ResponseToolkit) => {
+		handler: async (request: any, h: ResponseToolkit) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload: any = request.payload;
+				const payload: TransactionRequest.CreateCharge = request.payload;
 				const data = await transactionController.createCharge(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PAYMENT_ADDED, {}));
 			} catch (error) {
@@ -53,10 +54,10 @@ export let transactionRoute: ServerRoute[] = [
 	{
 		method: 'GET',
 		path: '/v1/transaction',
-		handler: async (request, h: ResponseToolkit) => {
+		handler: async (request: any, h: ResponseToolkit) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const query: any = request.query;
+				const query: TransactionRequest.InvoiceList = request.query;
 				const data = await transactionController.invoiceList(query, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -76,6 +77,39 @@ export let transactionRoute: ServerRoute[] = [
 						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
 						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
 					]).optional(),
+					fromDate: Joi.number().optional(),
+					toDate: Joi.number().optional(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	{
+		method: 'GET',
+		path: '/v1/transaction/details',
+		handler: async (request: any, h: ResponseToolkit) => {
+			try {
+				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const query: TransactionRequest.Id = request.query;
+				const data = await transactionController.invoiceDetails(query);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'invoice details',
+			tags: ['api', 'transaction'],
+			auth: 'UserAuth',
+			validate: {
+				query: {
+					transactionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
