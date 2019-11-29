@@ -39,7 +39,8 @@ export let agentRoute: ServerRoute[] = [
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                     fromDate: Joi.number(),
                     // toDate: Joi.number(),
-                    // cityId: Joi.string(),
+                    cityId: Joi.string(),
+                    byCity: Joi.string(),
                     userId: Joi.string(),
                     // specializingIn_property_type: Joi.array().items(
                     //     Joi.number().valid(

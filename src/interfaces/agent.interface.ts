@@ -19,6 +19,7 @@ export namespace AgentRequest {
         soldProperty?: number;
         userId?: string;
         screenType?: string;
+        byCity?: string;
     }
 
     export interface UserProperty {
