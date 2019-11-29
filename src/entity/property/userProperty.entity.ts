@@ -1,6 +1,8 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as Constant from '@src/constants/app.constant';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import * as utils from '@src/utils';
+import { UserRequest } from '@src/interfaces/user.interface';
 
 export class UserPropertyClass extends BaseEntity {
 	constructor() {
@@ -96,7 +98,7 @@ export class UserPropertyClass extends BaseEntity {
 										{
 											$match: {
 												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
+													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
 												},
 											},
 										},
@@ -107,7 +109,7 @@ export class UserPropertyClass extends BaseEntity {
 										{
 											$match: {
 												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] }],
+													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] }],
 												},
 											},
 										},
@@ -155,6 +157,28 @@ export class UserPropertyClass extends BaseEntity {
 			];
 			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
+	async updateFeaturedPropertyStatus(payload: PropertyRequest.PropertyData) {
+		try {
+			const query: any = {};
+			query._id = payload.propertyId;
+
+			const set: any = {};
+			const update = {};
+			update['$set'] = set;
+			if (payload.isFeatured) {
+				set.isFeatured = true;
+			}
+			if (payload.isHomePageFeatured) {
+				set.isHomePageFeatured = true;
+			}
+
+			return await this.DAOManager.findAndUpdate(this.modelName, query, update);
+		} catch (error) {
+			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
 		}
 	}
