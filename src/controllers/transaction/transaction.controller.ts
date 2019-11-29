@@ -75,13 +75,13 @@ class TransactionController extends BaseEntity {
 			// Handle the event
 			switch (event.type) {
 				case 'charge.succeeded':
-					this.handleChargeSucceeded(step1, paymentIntent);
+					await this.handleChargeSucceeded(step1, paymentIntent);
 					break;
 				case 'charge.pending':
-					this.handleChargePending(step1, paymentIntent);
+					await this.handleChargePending(step1, paymentIntent);
 					break;
 				case 'charge.failed':
-					this.handleChargeFailed(step1, paymentIntent);
+					await this.handleChargeFailed(step1, paymentIntent);
 					break;
 				// ... handle other event types
 				default:
