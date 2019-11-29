@@ -26,15 +26,15 @@ export let subscriptionRoute: ServerRoute[] = [
 				query: {
 					type: Joi.string().valid([
 						Constant.DATABASE.BILLING_TYPE.MONTHLY,
-						Constant.DATABASE.BILLING_TYPE.YEARLY
+						Constant.DATABASE.BILLING_TYPE.YEARLY,
 					]).required()
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction
+				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
 				'hapi-swagger': {
-					responseMessages: Constant.swaggerDefaultResponseMessages
+					responseMessages: Constant.swaggerDefaultResponseMessages,
 				}
 			}
 		}
