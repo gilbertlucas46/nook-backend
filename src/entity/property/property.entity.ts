@@ -309,6 +309,7 @@ export class PropertyClass extends BaseEntity {
 						property_added_by: 1,
 						propertyImages: 1,
 						isFeatured: 1,
+						isHomePageFeatured: 1,
 						property_status: 1,
 					},
 				},
@@ -365,7 +366,7 @@ export class PropertyClass extends BaseEntity {
 										{
 											$match: {
 												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$featuredType', featuredType] }], // add featuredType here
+													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }],
 												},
 											},
 										},
