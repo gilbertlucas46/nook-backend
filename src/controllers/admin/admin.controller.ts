@@ -119,8 +119,8 @@ export class AdminController {
 
 	async subscriptionList(payload) {
 		try {
-			const data = await ENTITY.AdminSubscriptionService.createOneEntity(payload);
-			return data;
+			// const data = await ENTITY.AdminSubscriptionService.createOneEntity(payload);
+			// return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
