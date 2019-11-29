@@ -1,7 +1,10 @@
 import * as Stripe from 'stripe';
 
+import * as Constant from '@src/constants/app.constant';
+import * as config from 'config';
 import * as utils from '../utils';
-const stripe = new Stripe('sk_test_bczq2IIJNuLftIaA79Al1wrx00jgNAsPiU');
+
+const stripe = new Stripe(config.get('stripeSecretKey'));
 
 export class StripeManager {
 	// private stripeKey: string = config.get('MAIL_FROM_ADDRESS')
@@ -38,6 +41,7 @@ export class StripeManager {
 			return await stripe.charges.create(payload);
 		} catch (error) {
 			utils.consolelog('StripeManager', error, false);
+			error.message = Constant.STATUS_MSG.ERROR.E400.PAYMENT_ERROR.message;
 			return Promise.reject(error);
 		}
 	}
@@ -54,6 +58,7 @@ export class StripeManager {
 			});
 		} catch (error) {
 			utils.consolelog('StripeManager', error, false);
+			error.message = Constant.STATUS_MSG.ERROR.E400.PAYMENT_ERROR.message;
 			return Promise.reject(error);
 		}
 	}

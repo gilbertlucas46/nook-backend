@@ -120,16 +120,6 @@ export let DATABASE = {
 			},
 		},
 	},
-	INDUSTRY: {
-		AGRI_FOREST_FISH: 'agriculture',
-		ACCOMOD_FOOD_SERVICES: 'accomodation',
-		ARTS_ENTERTAINMENT_RECREATION: 'arts',
-		COMMUNICATION: 'communication',
-		CONSTRUCTION: 'construction',
-		EDUCATION: 'education',
-		IT: 'it',
-		OTHERS: 'others',
-	},
 
 	HOME_OWNERSHIP: {
 		OWNED: 'owned',
@@ -145,8 +135,8 @@ export let DATABASE = {
 		FATHER: 'father',
 		MOTHER: 'mother',
 		SPOUSE: 'spouse',
-		SON : 'son',
-		DAUGHTER : 'daughter',
+		SON: 'son',
+		DAUGHTER: 'daughter',
 	},
 
 	CIVIL_STATUS: {
@@ -588,24 +578,37 @@ export let DATABASE = {
 		MONTHLY: 'MONTHLY',
 		YEARLY: 'YEARLY',
 	},
+	SCREEN_TYPE: {
+		HOMEPAGE: 'HOMEPAGE',
+		SEARCH: 'SEARCH',
+	},
 	// type = YEARLY, MONTHLY
 	SUBSCRIPTION_TYPE: (type) => [{
 		type: 'FREE',
+		featuredType: 'FREE',
 		amount: 0,
 		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
 	}, {
 		type: 'FEATURED PROPERTY',
+		featuredType: 'PROPERTY',
 		amount: type === 'MONTHLY' ? 890 : 990,
 		description: 'Featured Property Upgrade - Search Results',
 	}, {
 		type: 'FEATURED PROFILE',
+		featuredType: 'PROFILE',
 		amount: type === 'MONTHLY' ? 890 : 990,
 		description: 'Featured Profile Upgrade - Search Results',
 	}, {
 		type: 'HOMEPAGE FEATURE',
+		featuredType: 'HOMEPAGE',
 		amount: type === 'MONTHLY' ? 890 : 1799,
 		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
 	}],
+	TRANSACTION_STATUS: {
+		SUCCEEDED: 'succeeded',
+		PENDING: 'pending',
+		FAILED: 'failed',
+	},
 };
 
 export const EMAIL_TEMPLATE = {
@@ -751,6 +754,18 @@ export let STATUS_MSG = {
 				statusCode: 400,
 				type: 'DB_ERROR',
 				message: 'DB Error',
+			},
+			PAYMENT_ERROR: {
+				statusCode: 400,
+				type: 'PAYMENT_ERROR',
+				message: 'Something went wrong, please try again later!',
+			},
+			WEBHOOK_ERROR: (error: any) => {
+				return {
+					statusCode: 400,
+					message: `Webhook Error: ${error.message}`,
+					type: 'WEBHOOK_ERROR',
+				};
 			},
 			DEFAULT: {
 				statusCode: 400,

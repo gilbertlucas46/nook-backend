@@ -29,6 +29,7 @@ export namespace UserRequest {
 		specializingIn_property_type?: number[];
 		specializingIn_property_category?: string[];
 		serviceAreas?: string[];
+		subscriptionexpirarionTime?: number;
 	}
 
 	export interface Register {

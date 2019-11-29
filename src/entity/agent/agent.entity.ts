@@ -11,7 +11,10 @@ export class AgentClass extends BaseEntity {
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const { cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty } = payload;
+            const {
+                // fromDate, toDate,
+                cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
+            const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? [Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] : Constant.DATABASE.FEATURED_TYPE.PROFILE;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -89,8 +92,6 @@ export class AgentClass extends BaseEntity {
             // if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
             const query = [
                 { $match: matchObject },
-                searchCriteria,
-                { $sort: sortingType },
                 { $skip: skip },
                 { $limit: limit },
                 {
@@ -158,6 +159,41 @@ export class AgentClass extends BaseEntity {
                         },
                     },
                 },
+                {
+                    $lookup: {
+                        from: 'subscriptions',
+                        let: { userId: '$_id' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }],
+                                    },
+                                },
+                            },
+                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+                            {
+                                $project: {
+                                    _id: 1,
+                                },
+                            },
+                        ],
+                        as: 'subscriptions',
+                    },
+                },
+                {
+                    $addFields: {
+                        isFeaturedProfile: {
+                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                        },
+                    },
+                },
+                {
+                    $project: {
+                        subscriptions: 0,
+                    },
+                },
+                { $sort: sortingType },
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (err) {
@@ -313,6 +349,40 @@ export class AgentClass extends BaseEntity {
                                 cityName: '$cityData.name',
                             },
                         },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'subscriptions',
+                        let: { userId: '$_id' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROFILE] }],
+                                    },
+                                },
+                            },
+                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+                            {
+                                $project: {
+                                    _id: 1,
+                                },
+                            },
+                        ],
+                        as: 'subscriptions',
+                    },
+                },
+                {
+                    $addFields: {
+                        isFeaturedProfile: {
+                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                        },
+                    },
+                },
+                {
+                    $project: {
+                        subscriptions: 0,
                     },
                 },
             ];
