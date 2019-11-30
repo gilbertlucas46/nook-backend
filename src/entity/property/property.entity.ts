@@ -37,6 +37,7 @@ export class PropertyClass extends BaseEntity {
 				},
 				{
 					$project: {
+						_id: 1,
 						property_features: 1,
 						updatedAt: 1,
 						createdAt: 1,
@@ -49,6 +50,7 @@ export class PropertyClass extends BaseEntity {
 						property_added_by: 1,
 						propertyImages: 1,
 						isFeatured: 1,
+						isHomePageFeatured: 1,
 						property_status: 1,
 					},
 				},
@@ -63,7 +65,7 @@ export class PropertyClass extends BaseEntity {
 										{
 											$match: {
 												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
+													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
 												},
 											},
 										},
@@ -74,7 +76,7 @@ export class PropertyClass extends BaseEntity {
 										{
 											$match: {
 												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] }],
+													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] }],
 												},
 											},
 										},
@@ -289,6 +291,7 @@ export class PropertyClass extends BaseEntity {
 				searchCriteria,
 				{
 					$project: {
+						_id: 1,
 						property_features: 1,
 						updatedAt: 1,
 						createdAt: 1,
@@ -482,6 +485,7 @@ export class PropertyClass extends BaseEntity {
 				},
 				{
 					$project: {
+						_id: 1,
 						property_features: 1,
 						updatedAt: 1,
 						createdAt: 1,
@@ -550,7 +554,7 @@ export class PropertyClass extends BaseEntity {
 										{
 											$match: {
 												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
+													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
 												},
 											},
 										},

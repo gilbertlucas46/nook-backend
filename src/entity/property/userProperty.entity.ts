@@ -70,6 +70,7 @@ export class UserPropertyClass extends BaseEntity {
 				criteria,
 				{
 					$project: {
+						_id: 1,
 						property_features: 1,
 						updatedAt: 1,
 						createdAt: 1,

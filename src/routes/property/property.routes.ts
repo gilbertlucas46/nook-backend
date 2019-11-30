@@ -225,7 +225,7 @@ export let propertyRoute: ServerRoute[] = [
 					minArea: Joi.number(),
 					maxArea: Joi.number(),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE), // uncomment later
+					screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -493,7 +493,11 @@ export let propertyRoute: ServerRoute[] = [
 					upgradeToFeature: (request.payload as any).upgradeToFeature,
 				};
 				const data = await PropertyService.updatePropertyStatus(payload, userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				if (data.upgradeToFeature || data.upgradeToHomePageFeatured) {
+					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_EXIST, data));
+				} else {
+					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				}
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
@@ -513,6 +517,7 @@ export let propertyRoute: ServerRoute[] = [
 							Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						]),
 					upgradeToFeature: Joi.boolean(),
+					upgradeToHomePageFeatured: Joi.boolean()
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
