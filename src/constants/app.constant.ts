@@ -573,7 +573,7 @@ export let DATABASE = {
 		PROFILE: 'PROFILE',
 		PROPERTY: 'PROPERTY',
 		HOMEPAGE: 'HOMEPAGE',
- 	},
+	},
 	BILLING_TYPE: {
 		MONTHLY: 'MONTHLY',
 		YEARLY: 'YEARLY',
@@ -789,6 +789,14 @@ export let STATUS_MSG = {
 					message: err,
 					type: 'VALIDATION_ERROR',
 				};
+			},
+			SUBSCRIPTION_NOT_EXIST: (data: any) => {
+				return {
+					statusCode: 400,
+					type: 'SUBSCRIPTION_NOT_EXIST',
+					message: 'You do not have any subscription plan.',
+					data: data,
+				}
 			},
 		},
 		E401: {

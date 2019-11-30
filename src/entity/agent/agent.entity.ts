@@ -14,7 +14,7 @@ export class AgentClass extends BaseEntity {
             const {
                 // fromDate, toDate,
                 byCity, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
-            const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? [Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] : Constant.DATABASE.FEATURED_TYPE.PROFILE;
+            const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? Constant.DATABASE.FEATURED_TYPE.HOMEPAGE : Constant.DATABASE.FEATURED_TYPE.PROFILE;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
