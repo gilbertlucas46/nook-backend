@@ -119,6 +119,7 @@ export namespace PropertyRequest {
 		propertyId: string;
 		status?: string;
 		upgradeToFeature?: boolean;
+		upgradeToHomePageFeatured?: boolean;
 	}
 
 	export interface IPaginate {
