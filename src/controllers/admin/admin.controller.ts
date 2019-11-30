@@ -116,6 +116,69 @@ export class AdminController {
 			return Promise.reject(error);
 		}
 	}
+
+	async subscriptionList(payload) {
+		try {
+			console.log('apyload?>>>>>>>>>>>>>>>>>>>>?', payload);
+			const data = await ENTITY.AdminSubscriptionService.createOneEntity(payload);
+			console.log('daytaaaaaaaaaaaaaa', data);
+
+			return data;
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async getSubscriptionList() {
+		try {
+			return ENTITY.AdminSubscriptionService.adminSubscription();
+		} catch (error) {
+			console.log('errorerrorerrorerror', error);
+
+			return Promise.reject(error);
+		}
+	}
+
+	async updateSubscription(payload) {
+		try {
+			const criteria = {
+				_id: payload.id,
+			};
+			const dataToUpdate = {
+				amount: payload.amount,
+
+			}
+
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
 }
 
 export let AdminService = new AdminController();
+
+		// 	$facet: {
+				// 		FEATURED_ARTICLE: [
+				// 			{
+				// 				$match: {
+
+				// 					$and: [
+				// 						{
+				// 							isFeatured: true,
+				// 						},
+				// 					],
+
+				// 				},
+				// 			},
+				// 			{
+				// 				$sort: {
+				// 					endDa: -1,
+				// 				},
+				// 			},
+				// 			{
+				// 				$limit: 1,
+				// 			},
+				// 		],
+				// 	},
+				// },

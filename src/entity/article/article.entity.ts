@@ -73,6 +73,11 @@ export class ArticleClass extends BaseEntity {
                         ],
                         RECENT: [
                             {
+                                $match: {
+                                        searchCriteria,
+                                },
+                            },
+                            {
                                 $sort: {
                                     updatedAt: -1,
                                 },
