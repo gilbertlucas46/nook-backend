@@ -133,7 +133,8 @@ export class UserController {
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
-				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
+				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber
+				|| getUser.type !== updateUser.type) {
 
 				const propertyCriteria = { userId: updateUser._id };
 				const updatePropertyData = {
@@ -144,6 +145,7 @@ export class UserController {
 						profilePicUrl: updateUser.profilePicUrl,
 						firstName: updateUser.firstName,
 						lastName: updateUser.lastName,
+						userType: updateUser.type,
 					},
 					isProfileComplete: true,
 				};
@@ -168,6 +170,33 @@ export class UserController {
 			});
 
 			return updateUser;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+	/**
+	 * @function getProfile
+	 * @description function to get user profile
+	 * @payload  UserData
+	 * return object
+	 */
+	async getProfile(payload: UserRequest.UserData) {
+		try {
+			if (
+				payload.type === Constant.DATABASE.USER_TYPE.AGENT.TYPE ||
+				payload.type === Constant.DATABASE.USER_TYPE.OWNER.TYPE
+			) {
+				const step1 = await ENTITY.SubscriptionE.getAllHomepageSubscritions({ userId: payload._id });
+				if (step1.length) {
+					payload.isHomePageFeatured = true;
+					payload.subscriptionexpirarionTime = step1[0].endDate;
+				} else {
+					payload.isHomePageFeatured = false;
+				}
+			} else {
+				payload.isHomePageFeatured = false;
+			}
+			return payload;
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -286,7 +315,10 @@ export class UserController {
 	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
-			return await ENTITY.UserE.userDashboad(userData);
+			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
+			let step2 = await ENTITY.UserE.userDashboad(userData);
+			step2.isFeaturedProfile = step1 ? true : false;
+			return step2;
 		} catch (error) {
 			return Promise.reject(error);
 		}

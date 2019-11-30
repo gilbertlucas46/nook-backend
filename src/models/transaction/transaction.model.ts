@@ -14,30 +14,38 @@ export interface ITransaction extends Document {
 	description: string;
 	status: string;
 	userId: Types.ObjectId;
+	name: string;
+	address: string;
 	invoiceNo: string;
 	featuredType: string;
 	billingType: string;
+	paymentObject: any;
 	createdAt: number;
 	updatedAt: number;
 }
 
 export const transactionSchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true, auto: true },
-	transactionId: { type: String, index: true }, // balance_transaction
-	idempotencyKey: { type: String, default: '' },
+	transactionId: { type: String, index: true, required: true }, // balance_transaction
 	subscriptionId: { type: Schema.Types.ObjectId, ref: 'Subscription' },
 	amount: { type: Number, required: true },
-	currency: { type: String },
-	chargeId: { type: String, index: true },
-	cardId: { type: String },
-	receiptUrl: { type: String },
+	currency: { type: String, required: true },
+	chargeId: { type: String, index: true, required: true },
+	cardId: { type: String, required: true },
+	receiptUrl: { type: String, required: true },
 	description: { type: String },
 	status: {
 		type: String,
-		enum: ['succeeded'],
-		required: true,
+		// enum: [
+		// 	CONSTANT.DATABASE.TRANSACTION_STATUS.SUCCEEDED,
+		// 	CONSTANT.DATABASE.TRANSACTION_STATUS.PENDING,
+		// 	CONSTANT.DATABASE.TRANSACTION_STATUS.FAILED,
+		// ],
+		default: '',
 	},
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+	name: { type: String, required: true },
+	address: { type: String, required: true },
 	invoiceNo: { type: String },
 	featuredType: {
 		type: String,
@@ -46,6 +54,7 @@ export const transactionSchema = new Schema({
 			CONSTANT.DATABASE.FEATURED_TYPE.PROPERTY,
 			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE,
 		],
+		required: true,
 	},
 	billingType: {
 		type: String,
@@ -53,13 +62,17 @@ export const transactionSchema = new Schema({
 			CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
 			CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
 		],
+		required: true,
 	},
-	paymentMethod: { type: String },
+	paymentMethod: { type: String, required: true },
+	paymentObject: {},
 	createdAt: { type: Number, required: true },
 	updatedAt: { type: Number, required: true },
+}, {
+	versionKey: false,
 });
 
-transactionSchema.pre('save', function(this: any, next: () => void) {
+transactionSchema.pre('save', function (this: any, next: () => void) {
 	if (!this.invoiceNo) {
 		this.invoiceNo = invoiceNumber(++global.counters.Transaction);
 	}

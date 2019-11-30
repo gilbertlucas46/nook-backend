@@ -110,6 +110,7 @@ export interface IProperty extends Document {
 	};
 	propertyImages: string[];
 	isFeatured: boolean;
+	isHomePageFeatured: boolean;
 	property_status: {
 		number: number;
 		status?: string;
@@ -265,6 +266,7 @@ const propertySchema = new Schema({
 		middleName: { type: String },
 		lastName: { type: String },
 		email: { type: String },
+		userType: { type: String },
 	},
 	property_status: {
 		number: {
@@ -334,6 +336,7 @@ const propertySchema = new Schema({
 	},
 	approvedAt: { type: Number },
 	isFeatured: { type: Boolean, default: false },
+	isHomePageFeatured: { type: Boolean, default: false },
 	propertyActions: [
 		{
 			actionNumber: {

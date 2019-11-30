@@ -16,3 +16,5 @@ export { HelpCenterStatus } from './helpCentre/helpCenter.model';
 export { LoanReferral } from './referral/loan.referral.model';
 export { Subscription } from './subscription/subscription.model';
 export { Transaction } from './transaction/transaction.model';
+export { Webhook } from './webhook/webhook.model';
+export { AdminSubscription } from './subscription/admin.subscription.model';

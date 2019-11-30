@@ -11,7 +11,10 @@ export class AgentClass extends BaseEntity {
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const { cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty } = payload;
+            const {
+                // fromDate, toDate,
+                byCity, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
+            const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? Constant.DATABASE.FEATURED_TYPE.HOMEPAGE : Constant.DATABASE.FEATURED_TYPE.PROFILE;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -37,6 +40,7 @@ export class AgentClass extends BaseEntity {
                         $match:
                         {
                             $or: [
+                                { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
                             ],
@@ -76,19 +80,21 @@ export class AgentClass extends BaseEntity {
                     specializingIn_property_type;
             }
 
-            if (specializingIn_property_category) {
-                matchObject['specializingIn_property_category'] =
-                    { $in: specializingIn_property_category };
-            }
+            // if (specializingIn_property_category) {
+            //     matchObject['specializingIn_property_category'] =
+            //         { $in: specializingIn_property_category };
+            // }
 
             if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
+            if (byCity) {
+                matchObject['serviceAreas'] = { $in: [Types.ObjectId(cityId)] };
+            }
             // // Date filters
             // if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             // if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
             // if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
             const query = [
                 { $match: matchObject },
-                { $sort: sortingType },
                 { $skip: skip },
                 { $limit: limit },
                 {
@@ -156,6 +162,41 @@ export class AgentClass extends BaseEntity {
                         },
                     },
                 },
+                {
+                    $lookup: {
+                        from: 'subscriptions',
+                        let: { userId: '$_id' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }],
+                                    },
+                                },
+                            },
+                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+                            {
+                                $project: {
+                                    _id: 1,
+                                },
+                            },
+                        ],
+                        as: 'subscriptions',
+                    },
+                },
+                {
+                    $addFields: {
+                        isFeaturedProfile: {
+                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                        },
+                    },
+                },
+                {
+                    $project: {
+                        subscriptions: 0,
+                    },
+                },
+                { $sort: sortingType },
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (err) {
@@ -311,6 +352,40 @@ export class AgentClass extends BaseEntity {
                                 cityName: '$cityData.name',
                             },
                         },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'subscriptions',
+                        let: { userId: '$_id' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROFILE] }],
+                                    },
+                                },
+                            },
+                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+                            {
+                                $project: {
+                                    _id: 1,
+                                },
+                            },
+                        ],
+                        as: 'subscriptions',
+                    },
+                },
+                {
+                    $addFields: {
+                        isFeaturedProfile: {
+                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                        },
+                    },
+                },
+                {
+                    $project: {
+                        subscriptions: 0,
                     },
                 },
             ];
