@@ -216,7 +216,7 @@ export class ArticleClass extends BaseEntity {
             ];
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
             if (!data) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
-            return data;
+            return data[0];
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
