@@ -52,7 +52,6 @@ export class ArticleClass extends BaseEntity {
                         FEATURED_ARTICLE: [
                             {
                                 $match: {
-
                                     $and: [
                                         {
                                             isFeatured: true,
@@ -73,9 +72,7 @@ export class ArticleClass extends BaseEntity {
                         ],
                         RECENT: [
                             {
-                                $match: {
-                                        searchCriteria,
-                                },
+                                $match: searchCriteria,
                             },
                             {
                                 $sort: {
@@ -160,7 +157,6 @@ export class ArticleClass extends BaseEntity {
                                         searchCriteria,
                                     ],
                                     // categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                                    // searchCriteria,
                                 },
                             },
                             {
@@ -176,7 +172,6 @@ export class ArticleClass extends BaseEntity {
                             {
                                 $match: {
                                     //  categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                                    //  searchCriteria,
                                     $and: [
                                         {
                                             categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
