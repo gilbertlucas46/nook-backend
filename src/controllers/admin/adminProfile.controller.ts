@@ -79,12 +79,28 @@ export class AdminProfileController {
 			const criteria = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id']);
 			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
+			// else {
+			// 	const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
+			// const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
+			// const html = `<html><head><title> Nook Admin | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
+			// const mail = new MailManager(payload.email, 'forget password', html);
+			// mail.sendMail();
+			// const criteria = { $or: [{ userName: payload.email }, { email: payload.email }] };
+			// const userData = await ENTITY.UserE.getData(criteria, ['email', '_id', 'userName']);
+			// if (!userData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
-				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
-				const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
-				// const html = `<html><head><title> Nook Admin | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
-				// const mail = new MailManager(payload.email, 'forget password', html);
-				// mail.sendMail();
+				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(adminData);
+				const url = config.get('host') + Constant.SERVER.FORGET_PASSWORD_URL + passwordResetToken;
+				// const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
+				const sendObj = {
+					receiverEmail: payload.email,
+					subject: 'Admin reset password Nook',
+					token: passwordResetToken,
+					url,
+					userName: adminData.firstName,
+				};
+				const mail = new MailManager();
+				mail.forgetPassword(sendObj);
 				return {};
 			}
 		} catch (error) {
