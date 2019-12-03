@@ -160,7 +160,7 @@ export let adminProfileRoute: ServerRoute[] = [
 
 				const payload = request.params;
 				const data = await AdminProfileService.verifyLink(payload);
-				return h.redirect(config.get('baseUrl') + payload.link);
+				return h.redirect(config.get('adminBaseUrl') + payload.link);
 			} catch (error) {
 				if (error.JsonWebTokenError) {
 					return h.redirect(config.get('adminInvalidUrl') + 'invalid url');
