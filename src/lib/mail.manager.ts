@@ -71,6 +71,8 @@ export class MailManager {
 
 	async forgetPassword(params) {
 		try {
+			console.log('paramsparamsparams', params);
+
 			// let url;
 			// if (params.platform && params.platform == config.CONSTANT.PLATFORM_TYPE.WEBSITE) {
 			// url = config.SERVER.WEBSITE_USER_REST_URL + `${params.accessToken}`;
@@ -82,6 +84,7 @@ export class MailManager {
 					url: params.url,
 					year: new Date().getFullYear(),
 					// projectName: 'Nook',
+					// subject: params.subject,
 					GSG_ADDRESS: EMAIL_TEMPLATE.GSG_ADDRESS,
 					email: params.receiverEmail,
 					userName: params.userName,

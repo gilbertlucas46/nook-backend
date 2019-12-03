@@ -760,6 +760,4 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-
-
 ];
