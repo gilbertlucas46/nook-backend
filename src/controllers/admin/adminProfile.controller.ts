@@ -6,6 +6,8 @@ import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { AdminRequest } from '@src/interfaces/admin.interface';
+const pswdCert: string = config.get('forgetPwdjwtSecret');
+
 /**
  * @author
  * @description this controller contains actions for admin's account related activities
@@ -127,7 +129,7 @@ export class AdminProfileController {
 	 */
 	async verifyLinkForResetPwd(payload) {
 		try {
-			const result = Jwt.verify(payload.token, cert, { algorithms: ['HS256'] });
+			const result = Jwt.verify(payload.token, pswdCert, { algorithms: ['HS256'] });
 			if (!result) { return Promise.reject(); }
 			const checkAlreadyUsedToken: any = await ENTITY.AdminE.getOneEntity({ email: result }, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 			if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null) {
@@ -161,7 +163,7 @@ export class AdminProfileController {
 	 */
 	async verifyLink(payload) {
 		try {
-			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
+			const result: any = Jwt.verify(payload.link, pswdCert, { algorithms: ['HS256'] });
 			const adminData = await ENTITY.AdminE.getOneEntity(result.email, {});
 			if (!adminData) {
 				return Promise.reject('error'); // error page will be open here
