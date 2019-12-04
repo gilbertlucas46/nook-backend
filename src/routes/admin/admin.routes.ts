@@ -10,6 +10,15 @@ import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Hapi from 'hapi';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import * as ENTITY from '@src/entity';
+
+const objectSchema = Joi.object({
+	billingType: Joi.string().valid([
+		Constant.DATABASE.BILLING_TYPE.YEARLY,
+		Constant.DATABASE.BILLING_TYPE.MONTHLY,
+	]),
+	amount: Joi.number(),
+});
+
 export let adminProfileRoute: ServerRoute[] = [
 	/**
 	 * @description:Login via mail
@@ -161,9 +170,15 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 
 				const payload = request.params;
+				console.log('payloadpayloadpayload', payload);
+
 				const data = await AdminProfileService.verifyLink(payload);
+				console.log('datadatadatadata', data);
+
 				return h.redirect(config.get('adminBaseUrl') + payload.link);
 			} catch (error) {
+				console.log('errorerrorerrorerror', error);
+
 				if (error.JsonWebTokenError) {
 					return h.redirect(config.get('adminInvalidUrl') + 'invalid url');
 				} else if (error === 'LinkExpired') {
@@ -674,9 +689,13 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					featuredType: Joi.string(),
-					subscriptionType: Joi.string(),
-					amount: Joi.number(),
+					featuredType: Joi.string().valid([
+						Constant.DATABASE.FEATURED_TYPE.FREE,
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+						Constant.DATABASE.FEATURED_TYPE.PROFILE,
+						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					]),
+					plans: Joi.array().items(objectSchema),
 					description: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -727,7 +746,7 @@ export let adminProfileRoute: ServerRoute[] = [
 
 	/**
 	 * @description update the description list
-     */
+	 */
 	{
 		method: 'PATCH',
 		path: '/v1/admin/subscriptionList/{id}',
@@ -736,7 +755,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = {
 					...request.params as any,
-					...request.params as any,
+					...request.payload as any,
 				};
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await AdminStaffEntity.checkPermission(payload.permission);
@@ -757,8 +776,14 @@ export let adminProfileRoute: ServerRoute[] = [
 					id: Joi.string(),
 				},
 				payload: {
-					amount: Joi.number(),
+					featuredType: Joi.string().valid([
+						Constant.DATABASE.FEATURED_TYPE.FREE,
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+						Constant.DATABASE.FEATURED_TYPE.PROFILE,
+						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					]),
 					description: Joi.string(),
+					plans: Joi.array().items(objectSchema),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
