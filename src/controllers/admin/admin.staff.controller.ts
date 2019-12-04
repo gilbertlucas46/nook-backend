@@ -40,6 +40,7 @@ class AdminStaffControllers {
                 return Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT;
             }
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -59,6 +60,7 @@ class AdminStaffControllers {
             }
             return await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, dataToUpdate);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -81,6 +83,7 @@ class AdminStaffControllers {
                 return {};
             }
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -103,6 +106,7 @@ class AdminStaffControllers {
             const staffList = await ENTITY.AdminStaffEntity.staffListing(payload);
             return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, staffList);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

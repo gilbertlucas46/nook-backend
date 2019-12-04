@@ -119,11 +119,7 @@ export class AdminController {
 
 	async subscriptionList(payload) {
 		try {
-			console.log('apyload?>>>>>>>>>>>>>>>>>>>>?', payload);
-			const data = await ENTITY.AdminSubscriptionService.createOneEntity(payload);
-			console.log('daytaaaaaaaaaaaaaa', data);
-
-			return data;
+			return await ENTITY.AdminSubscriptionService.createOneEntity(payload);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -132,10 +128,9 @@ export class AdminController {
 
 	async getSubscriptionList() {
 		try {
-			return ENTITY.AdminSubscriptionService.adminSubscription();
+			return await ENTITY.AdminSubscriptionService.adminSubscription();
 		} catch (error) {
-			console.log('errorerrorerrorerror', error);
-
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -148,8 +143,7 @@ export class AdminController {
 			const dataToUpdate = {
 				amount: payload.amount,
 
-			}
-
+			};
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -157,28 +151,3 @@ export class AdminController {
 }
 
 export let AdminService = new AdminController();
-
-		// 	$facet: {
-				// 		FEATURED_ARTICLE: [
-				// 			{
-				// 				$match: {
-
-				// 					$and: [
-				// 						{
-				// 							isFeatured: true,
-				// 						},
-				// 					],
-
-				// 				},
-				// 			},
-				// 			{
-				// 				$sort: {
-				// 					endDa: -1,
-				// 				},
-				// 			},
-				// 			{
-				// 				$limit: 1,
-				// 			},
-				// 		],
-				// 	},
-				// },

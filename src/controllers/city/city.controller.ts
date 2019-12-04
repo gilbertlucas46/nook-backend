@@ -29,6 +29,7 @@ class CityController {
         try {
             return await ENTITY.PropertyE.getPropertyViaCity(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

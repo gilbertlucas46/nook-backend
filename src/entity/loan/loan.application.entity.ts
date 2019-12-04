@@ -2,6 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
+import * as utils from '@src/utils';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -15,7 +16,7 @@ class LoanApplicationE extends BaseEntity {
         try {
             return await this.createOneEntity(payload);
         } catch (error) {
-            console.log('Error in saving loan data ', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -24,12 +25,22 @@ class LoanApplicationE extends BaseEntity {
      * @param payload
      */
     async updateLoanApplication(payload) {
-        return this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
+        try {
+            return this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
     }
 
     async getReferenceId(criteria) {
-        const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { sort: { _id: - 1 }, limit: 1 });
-        return data[0];
+        try {
+            const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { sort: { _id: - 1 }, limit: 1 });
+            return data[0];
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
     }
 
     async getUserLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
@@ -110,7 +121,7 @@ class LoanApplicationE extends BaseEntity {
                 total,
             };
         } catch (error) {
-            console.log('Error', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -193,7 +204,7 @@ class LoanApplicationE extends BaseEntity {
                 total,
             };
         } catch (error) {
-            console.log('Error', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

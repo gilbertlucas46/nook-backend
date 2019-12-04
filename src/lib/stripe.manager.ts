@@ -53,8 +53,8 @@ export class StripeManager {
 					number: '4242424242424242',
 					exp_month: 11,
 					exp_year: 2020,
-					cvc: '314'
-				}
+					cvc: '314',
+				},
 			});
 		} catch (error) {
 			utils.consolelog('StripeManager', error, false);

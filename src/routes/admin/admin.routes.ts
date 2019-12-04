@@ -23,7 +23,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await AdminProfileService.login(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
-				utils.consolelog('error', error, true);
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -94,6 +94,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminProfileService.editProfile(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -131,6 +132,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, adminData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -202,6 +204,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminProfileService.changePassword(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -236,6 +239,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -274,6 +278,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminService.getProperty(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -344,6 +349,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminService.getPropertyById(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -438,6 +444,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await AdminProfileService.logout(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -474,6 +481,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await AdminService.dashboard(adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -509,6 +517,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await LoanController.adminLoansList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -566,6 +575,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await LoanController.adminUpdateLoanStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -616,6 +626,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await LoanController.loanById(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -653,7 +664,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const data = await AdminService.subscriptionList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				console.log('errorerrorerrorerror', error);
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -692,7 +703,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const data = await AdminService.getSubscriptionList();
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				console.log('errorerrorerrorerror', error);
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -717,7 +728,6 @@ export let adminProfileRoute: ServerRoute[] = [
 	/**
 	 * @description update the description list
      */
-
 	{
 		method: 'PATCH',
 		path: '/v1/admin/subscriptionList/{id}',
@@ -734,7 +744,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const data = await AdminService.updateSubscription(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				console.log('errorerrorerrorerror', error);
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},

@@ -1,8 +1,7 @@
 import * as ENTITY from '@src/entity';
 import { BaseEntity } from '@src/entity/base/base.entity';
-import * as Contsant from '@src/constants/app.constant';
 import * as Stripe from 'stripe';
-
+import * as utils from '@src/utils';
 const stripe = new Stripe('sk_test_bczq2IIJNuLftIaA79Al1wrx00jgNAsPiU');
 
 class PaymentController extends BaseEntity {
@@ -22,6 +21,7 @@ class PaymentController extends BaseEntity {
                 return data1;
             }
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -72,6 +72,7 @@ class PaymentController extends BaseEntity {
             }
         }
         catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -86,7 +87,7 @@ class PaymentController extends BaseEntity {
             // asynchronously called
             return data;
         } catch (error) {
-
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -106,6 +107,7 @@ class PaymentController extends BaseEntity {
 
             return charge;
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

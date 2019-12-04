@@ -1,6 +1,7 @@
 import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
+import * as utils from '@src/utils';
 
 export class HelpCenter {
 
@@ -30,6 +31,7 @@ export class HelpCenter {
             payload['userRole'] = adminData.type;
             return await ENTITY.HelpCenterE.createOneEntity(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -46,6 +48,7 @@ export class HelpCenter {
             const criteria = { _id: payload.id };
             return await ENTITY.HelpCenterE.getOneEntity(criteria, {});
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -63,6 +66,7 @@ export class HelpCenter {
             };
             return await ENTITY.HelpCenterE.removeEntity(criteria);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -102,6 +106,7 @@ export class HelpCenter {
             };
             return await ENTITY.HelpCenterE.updateOneEntity(criteria, dataToSet);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -117,6 +122,7 @@ export class HelpCenter {
         try {
             return await ENTITY.HelpCenterE.getHelpCenterCategoryBygroup();
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -132,6 +138,7 @@ export class HelpCenter {
         try {
             return await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -147,6 +154,7 @@ export class HelpCenter {
         try {
             return await ENTITY.HelpfulE.createhelpfulStatus(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

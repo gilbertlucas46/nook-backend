@@ -26,6 +26,7 @@ class ArticleController {
             payload.userRole = userData.type;
             return await ENTITY.ArticleE.createOneEntity(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -41,6 +42,7 @@ class ArticleController {
         try {
             return await ENTITY.ArticleE.allArticlesBasedOnCategory(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -60,6 +62,7 @@ class ArticleController {
             if (!article) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             return article;
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -74,6 +77,7 @@ class ArticleController {
         try {
             return await ENTITY.ArticleE.getArticlelist(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -129,6 +133,7 @@ class ArticleController {
             };
             return await ENTITY.ArticleE.removeEntity(criteria);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

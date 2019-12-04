@@ -31,11 +31,9 @@ export class SubscriptionClass extends BaseEntity {
 			query.userId = payload.userId;
 			query.featuredType = Constant.DATABASE.FEATURED_TYPE.HOMEPAGE;
 			query['$and'] = [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }];
-
-			let projection = { _id: 1, endDate: 1 };
-
-			let sort = { endDate: -1 };
-			let response = await this.DAOManager.findAllWithSort(this.modelName, query, projection, sort);
+			const projection = { _id: 1, endDate: 1 };
+			const sort = { endDate: -1 };
+			const response = await this.DAOManager.findAllWithSort(this.modelName, query, projection, sort);
 			return response.length ? response : [];
 		} catch (error) {
 			utils.consolelog('Error', error, true);
@@ -62,7 +60,6 @@ export class SubscriptionClass extends BaseEntity {
 		try {
 			const query: any = {};
 			query._id = payload.subscriptionId;
-
 			const update = {};
 			update['$set'] = {
 				propertyId: payload.propertyId,

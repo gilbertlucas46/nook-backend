@@ -3,6 +3,7 @@ import * as Models from '@src/models';
 import { Types, Model, Document } from 'mongoose';
 import { SERVER } from '@src/constants';
 import { ModelNames } from '@src/interfaces/model.interface';
+import * as utils from 'src/utils';
 
 export class DAOManager {
 	constructor() { }
@@ -14,6 +15,7 @@ export class DAOManager {
 			data.updatedAt = new Date().getTime();
 			return await new ModelName(data).save();
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -44,6 +46,7 @@ export class DAOManager {
 			const EntityModel: Model<T> = Models[model] as any;
 			return EntityModel.findOne(query, projection, options);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -53,6 +56,7 @@ export class DAOManager {
 			const ModelName: Model<any> = Models[model];
 			return ModelName.find(query, projection, options);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -62,6 +66,7 @@ export class DAOManager {
 			const ModelName = Models[model];
 			return await ModelName.distinct(path, query);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -71,6 +76,7 @@ export class DAOManager {
 			const ModelName: Model<any> = Models[model];
 			return await ModelName.findOne(query, projection, options).exec();
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -80,6 +86,7 @@ export class DAOManager {
 			const ModelName: Model<any> = Models[model];
 			return await ModelName.find(query, projection, options).exec();
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -89,6 +96,7 @@ export class DAOManager {
 			const ModelName: Model<any> = Models[model];
 			return await ModelName.find(query, projection, options).sort(sort).exec();
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -99,6 +107,7 @@ export class DAOManager {
 			const ModelName: Model<any> = Models[model];
 			return ModelName.findOneAndUpdate(conditions, update, options);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -108,6 +117,7 @@ export class DAOManager {
 			const ModelName: Model<any> = Models[model];
 			return ModelName.findOneAndRemove(conditions, options);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -118,6 +128,7 @@ export class DAOManager {
 			const ModelName = Models[model];
 			return await ModelName.updateMany(conditions, update, options);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -127,6 +138,7 @@ export class DAOManager {
 			const ModelName = Models[model];
 			return await ModelName.remove(condition);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -136,6 +148,7 @@ export class DAOManager {
 			const ModelName: Model<any> = Models[model];
 			return await ModelName.find(query, projection, options).populate(collectionOptions).exec();
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -145,6 +158,7 @@ export class DAOManager {
 			const ModelName = Models[model];
 			return await ModelName.count(condition);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -155,6 +169,7 @@ export class DAOManager {
 			const aggregation = ModelName.aggregate(aggregateArray);
 			return await aggregation.exec();
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -166,6 +181,7 @@ export class DAOManager {
 			await obj.save();
 			return obj;
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -175,6 +191,7 @@ export class DAOManager {
 			const ModelName: Model<any> = Models[model];
 			return await ModelName.insertMany(data, options);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -185,6 +202,7 @@ export class DAOManager {
 			const aggregate = await ModelName.aggregate(group);
 			return await ModelName.populate(aggregate, populateOptions);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -194,6 +212,7 @@ export class DAOManager {
 			const ModelName = Models[model];
 			return await ModelName.populate(aggregate, populateOptions);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -202,6 +221,7 @@ export class DAOManager {
 		try {
 			return await bulk.find(query).upsert().update(update, options);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -210,6 +230,7 @@ export class DAOManager {
 		try {
 			return await bulk.find(query).upsert().updateOne(update, options);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -242,8 +263,9 @@ export class DAOManager {
 				page: pageToSend,
 				limit,
 			};
-		} catch (err) {
-			throw new Error(err);
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			throw new Error(error);
 		}
 	}
 

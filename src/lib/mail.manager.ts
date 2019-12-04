@@ -7,10 +7,10 @@ import { TemplateUtil } from '@src/utils/template.util';
 
 const transporter = nodemailer.createTransport({
 
-	host: config.get('smtp.mailHost'),         // 'smtp.gmail.com',
+	host: config.get('smtp.mailHost'),
 	port: config.get('smtp.mailPort'),
 	// bcc: config.get('smtp.bccMail')
-	secure: true,                              // upgrade later with STARTTLS
+	secure: true,
 	auth: {
 		user: config.get('smtp.mailUserName'), // config.get('MAIL_USERNAME'),
 		pass: config.get('smtp.mailPassword'), // '12345Appinventiv'
@@ -71,8 +71,6 @@ export class MailManager {
 
 	async forgetPassword(params) {
 		try {
-			console.log('paramsparamsparams', params);
-
 			// let url;
 			// if (params.platform && params.platform == config.CONSTANT.PLATFORM_TYPE.WEBSITE) {
 			// url = config.SERVER.WEBSITE_USER_REST_URL + `${params.accessToken}`;
