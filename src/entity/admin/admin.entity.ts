@@ -66,8 +66,6 @@ export class AdminClass extends BaseEntity {
 	async createPasswordResetToken(adminData) {
 		try {
 			const tokenToSend = Jwt.sign(adminData.email, pswdCert, { algorithm: 'HS256' });
-			console.log('tokenToSendtokenToSendtokenToSend', tokenToSend);
-
 			const expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 			const criteriaForUpdatePswd = { _id: adminData._id };
 			const dataToUpdateForPswd = {
