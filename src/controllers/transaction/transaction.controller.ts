@@ -86,8 +86,7 @@ class TransactionController extends BaseEntity {
 					break;
 				// ... handle other event types
 				default:
-					// Unexpected event type
-					console.log('default=====================>', event.type);
+					console.log('Unexpected Event', event.type);
 			}
 			return {};
 

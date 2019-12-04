@@ -167,17 +167,10 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/verifyLink/{link}',
 		handler: async (request, h) => {
 			try {
-
 				const payload = request.params;
-				console.log('payloadpayloadpayload', payload);
-
 				const data = await AdminProfileService.verifyLink(payload);
-				console.log('datadatadatadata', data);
-
 				return h.redirect(config.get('adminBaseUrl') + payload.link);
 			} catch (error) {
-				console.log('errorerrorerrorerror', error);
-
 				if (error.JsonWebTokenError) {
 					return h.redirect(config.get('adminInvalidUrl') + 'invalid url');
 				} else if (error === 'LinkExpired') {
