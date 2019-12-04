@@ -6,8 +6,6 @@ export interface ISession extends Document {
 	deviceToken: string;
 	deviceType: string;
 	source: string;
-	deviceModel: string;
-	appVersion?: string;
 	createdAt?: number;
 	updatedAt?: number;
 }
@@ -19,8 +17,6 @@ const sessionSchema = new Schema({
 	ipAddress: { type: String },
 	deviceToken: { type: String },
 	source: { type: String },
-	// deviceModel: { type: String },
-	// appVersion: { type: String, required: true },
 	loginStatus: { type: Boolean, required: true, default: true },
 	lastActivityTime: { type: Number },
 	createdAt: { type: Number, required: true },

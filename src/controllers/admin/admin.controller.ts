@@ -128,7 +128,7 @@ export class AdminController {
 
 	async getSubscriptionList() {
 		try {
-			return ENTITY.AdminSubscriptionService.getMultiple({}, {});
+			return await ENTITY.AdminSubscriptionService.getMultiple({}, {});
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -137,15 +137,11 @@ export class AdminController {
 
 	async updateSubscription(payload) {
 		try {
-			console.log('payloadpayloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
-
 			const criteria = {
 				_id: payload.id,
 			};
 
 			delete payload['id'];
-			console.log('payloadpayloadpayload', payload);
-
 			// const dataToUpdate = {
 			// 	featuredType: Joi.string().valid([
 			// 		Constant.DATABASE.FEATURED_TYPE.FREE,
@@ -160,10 +156,7 @@ export class AdminController {
 
 			// 	amount: payload.amount,
 
-			const data = await ENTITY.AdminSubscriptionService.updateOneEntity(criteria, payload);
-			console.log('datadatadatadatadatadatadatadata', data);
-			return data;
-
+			return await ENTITY.AdminSubscriptionService.updateOneEntity(criteria, payload);
 		} catch (error) {
 			return Promise.reject(error);
 		}

@@ -30,9 +30,9 @@ export class MailManager {
 			// let senderEmail = this.senderEmail
 			const mailOptions: Mail.Options = {
 				from: config.get('smtp.mailHost'), // sender email
-				to: params.receiverEmail, // || this.receiverEmail,            // list of receivers
-				subject: params.subject, // || this.subject,             // Subject line
-				// 	text: 'params.content', // || this.content,                // plain text body
+				to: params.receiverEmail, // || this.receiverEmail,
+				subject: params.subject, // || this.subject,
+				// 	text: 'params.content', // || this.content,
 				// html: `<b>${this.content}</b>`,    // html body
 				// bcc: config.get('smtp.bccMail')
 				html: params.content,    // html body

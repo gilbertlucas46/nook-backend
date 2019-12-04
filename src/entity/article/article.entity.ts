@@ -10,7 +10,8 @@ export class ArticleClass extends BaseEntity {
 
     async allArticlesBasedOnCategory(payload: ArticleRequest.GetArticle) {
         try {
-            let { page, limit, searchTerm } = payload;
+            let { page, limit } = payload;
+            const { searchTerm } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const promise = [];
