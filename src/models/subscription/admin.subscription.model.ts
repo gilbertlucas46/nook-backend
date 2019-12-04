@@ -37,12 +37,11 @@ const adminSubcription = new Schema({
     ],
     description: { type: String },
     status: { type: String },
-    // startDate: { type: Number }, // for the admin
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
 }, {
 
         versionKey: false,
     });
-// adminSubcription.index({ featuredType: 1, subscriptionType: 1 }, { unique: true });
+
 export const AdminSubscription = model<IAdminSubscription>('AdminSubscription', adminSubcription);

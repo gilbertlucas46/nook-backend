@@ -6,7 +6,6 @@ import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-import { finished } from 'stream';
 const pswdCert: string = config.get('forgetPwdjwtSecret');
 
 /**
@@ -23,7 +22,6 @@ export class AdminProfileController {
 	async login(payload: AdminRequest.Login) {
 		try {
 			const email: string = payload.email;
-			// if (email) { email = email.trim().toLowerCase(); }
 			const checkData = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
 			// check email
@@ -84,12 +82,10 @@ export class AdminProfileController {
 		try {
 			const criteria = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'firstName']);
-			console.log('adminDataadminDataadminData', adminData);
 			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
 				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
 				const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
-				// const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
 				const sendObj = {
 					receiverEmail: payload.email,
 					subject: 'Admin reset password Nook',
@@ -176,7 +172,6 @@ export class AdminProfileController {
 			const adminData = await ENTITY.AdminE.getOneEntity(findByEmail, {});
 			if (!adminData) {
 				return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
-				// return Promise.reject('error'); // error page will be open here
 			} else {
 				const criteria = { email: result };
 				const userExirationTime: any = await ENTITY.AdminE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);

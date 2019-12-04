@@ -36,9 +36,6 @@ export let DATABASE = {
 	},
 
 	LOAN_APPLICATION_STATUS: {
-		// PENDING: 'pending',
-		// REJECTED: 'rejected',
-		// APPROVED: 'approved',
 		DRAFT: {
 			label: 'Draft',
 			value: 'DRAFT',
@@ -334,11 +331,6 @@ export let DATABASE = {
 	},
 
 	ARTICLE_TYPE: {
-		// FEATURED_ARTICLE: {
-		// 	NUMBER: 1,
-		// 	TYPE: 'FEATURED_ARTICLE',
-		// 	DISPLAY_NAME: 'Featured Article',
-		// },
 		AGENTS: {
 			NUMBER: 2,
 			TYPE: 'AGENTS',
@@ -369,7 +361,6 @@ export let DATABASE = {
 			TYPE: 'NEWS',
 			DISPLAY_NAME: 'News',
 		},
-		// legal stuff, international news, domestic news, sports coverage, political news
 	},
 
 	ARTICLE_STATUS: {
@@ -795,8 +786,8 @@ export let STATUS_MSG = {
 					statusCode: 400,
 					type: 'SUBSCRIPTION_NOT_EXIST',
 					message: 'You do not have any subscription plan.',
-					data: data,
-				}
+					data,
+				};
 			},
 		},
 		E401: {

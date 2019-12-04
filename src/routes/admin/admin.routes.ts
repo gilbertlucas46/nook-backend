@@ -9,7 +9,6 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Hapi from 'hapi';
 import { LoanRequest } from '@src/interfaces/loan.interface';
-import * as ENTITY from '@src/entity';
 
 const objectSchema = Joi.object({
 	billingType: Joi.string().valid([
