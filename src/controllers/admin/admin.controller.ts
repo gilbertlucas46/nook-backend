@@ -132,7 +132,7 @@ export class AdminController {
 
 	async getSubscriptionList() {
 		try {
-			return ENTITY.AdminSubscriptionService.adminSubscription();
+			return ENTITY.AdminSubscriptionService.getMultiple({}, {});   //adminSubscription();
 		} catch (error) {
 			console.log('errorerrorerrorerror', error);
 
@@ -142,13 +142,32 @@ export class AdminController {
 
 	async updateSubscription(payload) {
 		try {
+			console.log('payloadpayloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
+
 			const criteria = {
 				_id: payload.id,
 			};
-			const dataToUpdate = {
-				amount: payload.amount,
 
-			}
+			delete payload['id'];
+			console.log('payloadpayloadpayload', payload);
+
+			// const dataToUpdate = {
+			// 	featuredType: Joi.string().valid([
+			// 		Constant.DATABASE.FEATURED_TYPE.FREE,
+			// 		Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+			// 		Constant.DATABASE.FEATURED_TYPE.PROFILE,
+			// 		Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+			// 	]),
+			// 	description: Joi.string(),
+			// 	plan: Joi.array().items(objectSchema),
+			// 	// id: Joi.number().required(),
+			// 	name: Joi.string().required(),
+
+			// 	amount: payload.amount,
+
+			const data = await ENTITY.AdminSubscriptionService.updateOneEntity(criteria, payload);
+			console.log('datadatadatadatadatadatadatadata', data);
+			return data;
 
 		} catch (error) {
 			return Promise.reject(error);
