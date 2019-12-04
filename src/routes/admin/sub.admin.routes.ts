@@ -1,6 +1,5 @@
 import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
-import * as ENTITY from '../../entity';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as CONSTANT from '../../constants';
@@ -71,7 +70,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				const data = await AdminStaffController.updateStaff(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				console.log('Error', error);
+				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -112,6 +111,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				await AdminStaffController.systemGeneratedMail(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
 			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -187,6 +187,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				const registerResponse = await AdminStaffController.getStaffList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -248,6 +249,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				const registerResponse = await AdminProfileService.profile(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},

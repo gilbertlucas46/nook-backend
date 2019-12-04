@@ -5,9 +5,8 @@ import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-import * as request from 'request';
-import * as config from 'config';
 import * as Constant from '../../constants/app.constant';
+import * as utils from 'src/utils';
 class LoanControllers extends BaseEntity {
 
     /**
@@ -26,6 +25,7 @@ class LoanControllers extends BaseEntity {
             }
             return;
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -88,7 +88,7 @@ class LoanControllers extends BaseEntity {
             return data['referenceId'];
 
         } catch (error) {
-            console.log('Error ', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -107,7 +107,7 @@ class LoanControllers extends BaseEntity {
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return data['referenceId'];
         } catch (error) {
-            console.log('Error ', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -122,6 +122,7 @@ class LoanControllers extends BaseEntity {
         try {
             return await LoanEntity.preloan(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -136,6 +137,7 @@ class LoanControllers extends BaseEntity {
         try {
             return await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -151,6 +153,7 @@ class LoanControllers extends BaseEntity {
         try {
             return await ENTITY.LoanApplicationEntity.getAdminLoanList(payload, userData);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -169,6 +172,7 @@ class LoanControllers extends BaseEntity {
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
             else return data;
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -196,6 +200,7 @@ class LoanControllers extends BaseEntity {
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
             else return data;
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -216,6 +221,7 @@ class LoanControllers extends BaseEntity {
             }
             return bankList;
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

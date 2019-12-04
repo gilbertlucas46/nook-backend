@@ -1,10 +1,6 @@
 'use strict';
 
 import { BaseEntity } from '@src/entity/base/base.entity';
-import * as utils from '@src/utils';
-import * as Constant from '@src/constants/app.constant';
-import { SubscriptionRequest } from '@src/interfaces/subscription.interface';
-
 export class SubscriptionClass extends BaseEntity {
 
     constructor() {
@@ -34,12 +30,7 @@ export class SubscriptionClass extends BaseEntity {
             { $unwind: '$data' },
             { $project: { _id: 0 } },
             ];
-            console.log('pipelinepipelinepipelinepipeline', JSON.stringify(pipeline))
-            const data = await this.DAOManager.aggregateData('AdminSubscription', pipeline, {});
-            // const data = ENTITY.AdminE.aggregate('AdminSubscription', pipeline);
-            console.log('data>>>>>>>>>>>>>>>>>>>>>>', data);
-            return data;
-
+            return await this.DAOManager.aggregateData('AdminSubscription', pipeline, {});
         } catch (error) {
             return Promise.reject(error);
         }

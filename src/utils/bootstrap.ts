@@ -17,15 +17,10 @@ export class Bootstrap {
 
 	async bootstrapCounters() {
 		const lastUser: any = await LoanApplication.findOne({}).sort({ uniqueId: -1 }).select({ uniqueId: 1, _id: 0 }).exec();
-		console.log('lastUserlastUser', lastUser);
-
 		let userCounter = 0;
 		if (lastUser) {
 			const userId = lastUser.referenceId || 'USR0';
-			console.log('userIduserIduserIduserId', userId);
 			userCounter = parseInt(userId.substr(3), 10);
-			console.log('userCounteruserCounteruserCounter', userCounter);
-
 		}
 		global.counters = {
 			LoanApplication: userCounter,

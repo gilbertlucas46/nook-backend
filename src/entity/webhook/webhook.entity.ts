@@ -1,6 +1,4 @@
 'use strict';
-
-
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as utils from '@src/utils';
 import { WebhookRequest } from '@src/interfaces/webhook.interface';

@@ -300,7 +300,7 @@ export class PropertyController {
 				const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
 				if (step1) {
 					dataToSet.$set = {
-						isFeatured: true
+						isFeatured: true,
 					};
 					dataToSet.$push = {
 						propertyActions: {
@@ -327,7 +327,7 @@ export class PropertyController {
 				if (step1) {
 					if (step1) {
 						dataToSet.$set = {
-							isHomePageFeatured: true
+							isHomePageFeatured: true,
 						};
 						dataToSet.$push = {
 							propertyActions: {
@@ -361,6 +361,7 @@ export class PropertyController {
 		try {
 			return await ENTITY.PropertyE.getPropertyViaCity(payload);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}

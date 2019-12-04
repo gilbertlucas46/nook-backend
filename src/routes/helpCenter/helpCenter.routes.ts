@@ -2,7 +2,6 @@ import { ServerRoute } from 'hapi';
 import * as UniversalFunction from '../../utils';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import { HelpCenterService } from '@src/controllers/helpCenter/helpCenter.controller';
-import * as ENTITY from '../../entity';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as Joi from 'joi';
@@ -213,7 +212,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
             } catch (error) {
-                console.log('Error', error);
+                UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunction.sendError(error));
             }
         },

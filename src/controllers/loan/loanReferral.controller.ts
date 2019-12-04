@@ -1,6 +1,7 @@
 import * as ENTITY from '@src/entity';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { loanReferralRequest } from '@src/interfaces/loanReferral.interface';
+import * as utils from '@src/utils';
 class Referal extends BaseEntity {
     // constructor() { }
     /**
@@ -15,6 +16,7 @@ class Referal extends BaseEntity {
             payload['userId'] = userData._id;
             return await ENTITY.ReferalE.createReferral(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -31,6 +33,7 @@ class Referal extends BaseEntity {
             await ENTITY.ReferalE.getReferral(payload);
             return;
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -44,6 +47,7 @@ class Referal extends BaseEntity {
         try {
             return await ENTITY.ReferalE.getUserReferral(payload, userData);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

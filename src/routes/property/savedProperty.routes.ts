@@ -18,7 +18,7 @@ export let savedProperty: ServerRoute[] = [
                 const data = await SavedPropertyServices.saveProperty(payload, userData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
-                console.log('Error', error);
+                UniversalFunctions.consolelog('error', error, true);
                 return UniversalFunctions.sendError(error);
             }
         },
@@ -52,6 +52,7 @@ export let savedProperty: ServerRoute[] = [
                 const data = await SavedPropertyServices.savePropertyList(payload, userData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
                 return UniversalFunctions.sendError(error);
             }
         },

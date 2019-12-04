@@ -3,6 +3,7 @@ import { AgentRequest } from '@src/interfaces/agent.interface';
 import { SERVER } from '@src/constants/app.constant';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
+import * as utils from '@src/utils';
 export class AgentClass extends BaseEntity {
     constructor() {
         super('User');
@@ -199,8 +200,9 @@ export class AgentClass extends BaseEntity {
                 { $sort: sortingType },
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
-        } catch (err) {
-            return Promise.reject(err);
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
         }
     }
 

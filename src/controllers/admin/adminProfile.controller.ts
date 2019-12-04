@@ -46,8 +46,9 @@ export class AdminProfileController {
 			}
 			const accessToken = await ENTITY.AdminE.createToken(tokenObj);
 			return { formatedData: adminData, accessToken };
-		} catch (err) {
-			return Promise.reject(err);
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
 		}
 	}
 	/**
@@ -59,8 +60,9 @@ export class AdminProfileController {
 		try {
 			const criteria = { _id: payload._id };
 			return await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
-		} catch (err) {
-			return Promise.reject(err);
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
 		}
 	}
 
@@ -68,8 +70,9 @@ export class AdminProfileController {
 		try {
 			const criteria = { _id: adminData._id };
 			return await ENTITY.AdminE.updateOneEntity(criteria, payload);
-		} catch (err) {
-			return Promise.reject(err);
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
 		}
 	}
 	/**
@@ -120,6 +123,7 @@ export class AdminProfileController {
 				else return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT;
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
