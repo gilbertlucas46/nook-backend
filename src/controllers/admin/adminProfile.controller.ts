@@ -6,6 +6,7 @@ import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { AdminRequest } from '@src/interfaces/admin.interface';
+import { finished } from 'stream';
 const pswdCert: string = config.get('forgetPwdjwtSecret');
 
 /**
@@ -80,9 +81,10 @@ export class AdminProfileController {
 		try {
 			const criteria = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'firstName']);
+			console.log('adminDataadminDataadminData', adminData);
 			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
-				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(adminData);
+				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
 				const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
 				// const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
 				const sendObj = {
@@ -164,9 +166,13 @@ export class AdminProfileController {
 	async verifyLink(payload) {
 		try {
 			const result: any = Jwt.verify(payload.link, pswdCert, { algorithms: ['HS256'] });
-			const adminData = await ENTITY.AdminE.getOneEntity(result.email, {});
+			const findByEmail = {
+				email: result,
+			};
+			const adminData = await ENTITY.AdminE.getOneEntity(findByEmail, {});
 			if (!adminData) {
-				return Promise.reject('error'); // error page will be open here
+				return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
+				// return Promise.reject('error'); // error page will be open here
 			} else {
 				const criteria = { email: result };
 				const userExirationTime: any = await ENTITY.AdminE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
@@ -174,8 +180,9 @@ export class AdminProfileController {
 				const diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
 				const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 				if (diffMins > 0) { return Promise.reject('LinkExpired'); }
-				return {}; // success
+				else { return {}; } // success
 			}
+
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
