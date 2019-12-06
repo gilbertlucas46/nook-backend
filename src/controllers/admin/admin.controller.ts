@@ -129,7 +129,7 @@ export class AdminController {
 
 	async getSubscriptionList() {
 		try {
-			return ENTITY.SubscriptionPlanEntity.getMultiple({}, {});
+			return await ENTITY.SubscriptionPlanEntity.getMultiple({}, {});
 		} catch (error) {
 			return Promise.reject(error);
 		}

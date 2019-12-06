@@ -3,6 +3,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
 import * as utils from '@src/utils';
+import { Types, Schema } from 'mongoose';
 export class ArticleClass extends BaseEntity {
     constructor() {
         super('Article');
@@ -148,9 +149,10 @@ export class ArticleClass extends BaseEntity {
     async getArticlelist(payload: ArticleRequest.GetArticle) {
         try {
             let { page, limit, sortType } = payload;
-            const { articleId, sortBy, searchTerm, fromDate, toDate, categoryId } = payload;
+            const { articleId, sortBy, searchTerm, fromDate, toDate, categoryId, status } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
+            const skip = (limit * (page - 1));
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             let query: any = {};
@@ -160,18 +162,18 @@ export class ArticleClass extends BaseEntity {
 
             if (categoryId) {
                 query = {
-                    categoryId,
-                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                    categoryId: Types.ObjectId(categoryId),
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                     _id: {
                         $ne: {
-                            articleId,
+                            articleId: Types.ObjectId(articleId),
                         },
                     },
                 };
             }
             else {
                 query['status'] = {
-                    $eq: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                    $eq: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 };
             }
             if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
@@ -180,9 +182,45 @@ export class ArticleClass extends BaseEntity {
 
             const pipeline = [
                 { $match: query },
+                { $skip: skip },
+                { $limit: limit },
+                {
+                    $lookup: {
+                        from: 'articleCategory',
+                        let: { categoryId: '$_id' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$categoryId'],
+                                    },
+                                },
+                            },
+                        ],
+                        as: 'articles',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$article',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $project: {
+                        status: 1,
+                        categoryName: '$article.name',
+                        isFeatured: 1,
+                        title: 1,
+                        imageUrl: 1,
+                        categoryType: 1,
+                        categoryId: 1,
+                        
+                    },
+                },
                 { $sort: sortingType },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+            const data = await this.DAOManager.paginate(this.modelName, pipeline);
             console.log('datadatadatadatadata', data);
             return data;
         } catch (error) {

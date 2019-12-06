@@ -57,6 +57,9 @@ export class CategoryClass extends BaseEntity {
                         articles: {
                             $size: '$articles',
                         },
+                        createdAt: 1,
+                        updatedAt: 1,
+                        status: 1,
                     },
                 },
             ];
@@ -72,12 +75,19 @@ export class CategoryClass extends BaseEntity {
             const criteria = {
                 _id: payload.id,
             };
-            const updateData = {
-                status: payload.status,
-                name: payload.name,
+            delete payload['id'];
+            const articleStatusCriteria = {
+                categoryId: payload.id,
             };
-            const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, updateData);
-            return data;
+            if (payload.name) {
+                const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, { name: payload.name });
+                return data;
+            } else if (payload.status) {
+                const statusData = await this.DAOManager.findAndUpdate(this.modelName, criteria, { status: payload.status });
+                const updateData = this.DAOManager.updateMany('Article', articleStatusCriteria, { status: payload.status }, {});
+                return statusData;
+            }
+
         } catch (error) {
             return Promise.reject(error);
         }
