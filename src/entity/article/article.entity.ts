@@ -101,6 +101,11 @@ export class ArticleClass extends BaseEntity {
                         as: 'CATEGORIES',
                         pipeline: [
                             {
+                                $match: {
+                                    status: Constant.DATABASE.ArticleCategoryStatus.ACTIVE,
+                                },
+                            },
+                            {
                                 $project: {
                                     name: 1,
                                     articles: {
