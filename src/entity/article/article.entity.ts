@@ -20,6 +20,8 @@ export class ArticleClass extends BaseEntity {
                     $or: [
                         { title: { $regex: searchTerm, $options: 'i' } },
                         { description: { $regex: searchTerm, $options: 'i' } },
+                        // { title: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        // { description: new RegExp('.*' + searchTerm + '.*', 'i') },
                     ],
                 };
             }
@@ -29,188 +31,102 @@ export class ArticleClass extends BaseEntity {
             }
             const pipeline = [
                 {
-                    $match: {
-                        status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                    $match: searchCriteria,
+                },
+                {
+                    $group: {
+                        _id: null,
+                        list: {
+                            $push: '$$ROOT',
+                        },
                     },
                 },
                 {
                     $project: {
-                        title: 1,
-                        categoryId: 1,
-                        categoryType: 1,
-                        description: 1,
-                        viewCount: 1,
-                        shareCount: 1,
-                        createdAt: 1,
-                        updatedAt: 1,
-                        imageUrl: 1,
-                        isFeatured: 1,
+                        results: {
+                            $reduce: {
+                                input: '$list',
+                                initialValue: {
+                                    FEATURED: [],
+                                    LATEST: [],
+                                    LIST: [],
+                                },
+                                in: {
+                                    $cond: {
+                                        if: {
+                                            $and: [
+                                                {
+                                                    $ne: [{ $size: '$$value.FEATURED' }, 1],
+                                                },
+                                                {
+                                                    $eq: ['$$this.isFeatured', true],
+                                                },
+                                            ],
+                                        },
+                                        then: {
+                                            $mergeObjects: ['$$value', { FEATURED: ['$$this'] }],
+                                        },
+                                        else: {
+                                            $cond: {
+                                                if: {
+                                                    $ne: [{ $size: '$$value.LATEST' }, 3],
+                                                },
+                                                then: {
+                                                    $mergeObjects: ['$$value', { LATEST: { $concatArrays: ['$$value.LATEST', ['$$this']] } }],
+                                                },
+                                                else: {
+                                                    $mergeObjects: ['$$value', { LIST: { $concatArrays: ['$$value.LIST', ['$$this']] } }],
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
                 {
-                    $facet: {
-                        FEATURED_ARTICLE: [
+                    $project: {
+                        _id: 0,
+                        LATEST: '$results.LATEST',
+                        FEATURED: '$results.FEATURED',
+                        LIST: '$results.LIST',
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'articlecategories',
+                        let: { list: '$LIST' },
+                        as: 'CATEGORIES',
+                        pipeline: [
                             {
-                                $match: {
-                                    $and: [
-                                        {
-                                            isFeatured: true,
+                                $project: {
+                                    name: 1,
+                                    articles: {
+                                        $filter: {
+                                            input: '$$list',
+                                            as: 'article',
+                                            cond: {
+                                                $eq: ['$_id', '$$article.categoryId'],
+                                            },
                                         },
-                                        searchCriteria,
-                                    ],
-
+                                    },
                                 },
                             },
                             {
-                                $sort: {
-                                    updatedAt: -1,
+                                $project: {
+                                    name: 1,
+                                    articles: {
+                                        $slice: ['$articles', 3],
+                                    },
                                 },
-                            },
-                            {
-                                $limit: 1,
                             },
                         ],
-                        RECENT: [
-                            {
-                                $match: searchCriteria,
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        AGENTS: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        BUYING: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: 3,
-                            },
-                        ],
-                        HOME_LOANS: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        RENTING: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                    // categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        SELLING: [
-                            {
-                                $match: {
-                                    //  categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        NEWS: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
+                    },
+                },
+                {
+                    $project: {
+                        LIST: 0,
                     },
                 },
             ];
@@ -226,7 +142,7 @@ export class ArticleClass extends BaseEntity {
     async getArticlelist(payload: ArticleRequest.GetArticle) {
         try {
             let { page, limit, sortType } = payload;
-            const { articleId, sortBy, searchTerm, fromDate, toDate } = payload;
+            const { articleId, sortBy, searchTerm, fromDate, toDate, categoryId } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             let sortingType = {};
@@ -236,9 +152,9 @@ export class ArticleClass extends BaseEntity {
                 updatedAt: sortType,
             };
 
-            if (payload.categoryId) {
+            if (categoryId) {
                 query = {
-                    categoryId: payload.categoryId,
+                    categoryId,
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
                     _id: {
                         $ne: {
@@ -261,9 +177,40 @@ export class ArticleClass extends BaseEntity {
                 { $sort: sortingType },
             ];
             const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+            console.log('datadatadatadatadata', data);
             return data;
         } catch (error) {
             utils.consolelog('Error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    async getUserArticle(payload) {
+        try {
+            let { page, limit, searchTerm } = payload;
+            if (!limit) { limit = Constant.SERVER.LIMIT; }
+            if (!page) { page = 1; }
+            const promise = [];
+            let searchCriteria: any = {};
+            if (searchTerm) {
+                searchCriteria = {
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                        // { title: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        // { description: new RegExp('.*' + searchTerm + '.*', 'i') },
+                    ],
+                };
+            }
+            else {
+                searchCriteria = {
+                };
+            }
+            const pipeline = [
+
+            ];
+
+        } catch (error) {
             return Promise.reject(error);
         }
     }

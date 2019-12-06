@@ -18,3 +18,4 @@ export { Subscription } from './subscription/subscription.model';
 export { Transaction } from './transaction/transaction.model';
 export { Webhook } from './webhook/webhook.model';
 export { AdminSubscription } from './subscription/admin.subscription.model';
+export { ArticleCategories } from './article/article.category.model';

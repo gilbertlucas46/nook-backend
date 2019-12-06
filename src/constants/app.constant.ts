@@ -333,44 +333,44 @@ export let DATABASE = {
 		WAREHOUSE: 'Warehouse',
 	},
 
-	ARTICLE_TYPE: {
-		// FEATURED_ARTICLE: {
-		// 	NUMBER: 1,
-		// 	TYPE: 'FEATURED_ARTICLE',
-		// 	DISPLAY_NAME: 'Featured Article',
-		// },
-		AGENTS: {
-			NUMBER: 2,
-			TYPE: 'AGENTS',
-			DISPLAY_NAME: 'Agent',
-		},
-		BUYING: {
-			NUMBER: 3,
-			TYPE: 'BUYING',
-			DISPLAY_NAME: 'Buying',
-		},
-		HOME_LOANS: {
-			NUMBER: 4,
-			TYPE: 'HOME_LOANS',
-			DISPLAY_NAME: 'Home Loans',
-		},
-		RENTING: {
-			NUMBER: 5,
-			TYPE: 'RENTING',
-			DISPLAY_NAME: 'Renting',
-		},
-		SELLING: {
-			NUMBER: 6,
-			TYPE: 'SELLING',
-			DISPLAY_NAME: 'Selling',
-		},
-		NEWS: {
-			NUMBER: 7,
-			TYPE: 'NEWS',
-			DISPLAY_NAME: 'News',
-		},
-		// legal stuff, international news, domestic news, sports coverage, political news
-	},
+	// ARTICLE_TYPE: {
+	// 	// FEATURED_ARTICLE: {
+	// 	// 	NUMBER: 1,
+	// 	// 	TYPE: 'FEATURED_ARTICLE',
+	// 	// 	DISPLAY_NAME: 'Featured Article',
+	// 	// },
+	// 	AGENTS: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'AGENTS',
+	// 		DISPLAY_NAME: 'Agent',
+	// 	},
+	// 	BUYING: {
+	// 		NUMBER: 3,
+	// 		TYPE: 'BUYING',
+	// 		DISPLAY_NAME: 'Buying',
+	// 	},
+	// 	HOME_LOANS: {
+	// 		NUMBER: 4,
+	// 		TYPE: 'HOME_LOANS',
+	// 		DISPLAY_NAME: 'Home Loans',
+	// 	},
+	// 	RENTING: {
+	// 		NUMBER: 5,
+	// 		TYPE: 'RENTING',
+	// 		DISPLAY_NAME: 'Renting',
+	// 	},
+	// 	SELLING: {
+	// 		NUMBER: 6,
+	// 		TYPE: 'SELLING',
+	// 		DISPLAY_NAME: 'Selling',
+	// 	},
+	// 	NEWS: {
+	// 		NUMBER: 7,
+	// 		TYPE: 'NEWS',
+	// 		DISPLAY_NAME: 'News',
+	// 	},
+	// legal stuff, international news, domestic news, sports coverage, political news
+	// },
 
 	ARTICLE_STATUS: {
 		PENDING: {

@@ -119,7 +119,8 @@ export class AdminController {
 
 	async subscriptionList(payload) {
 		try {
-			return await ENTITY.AdminSubscriptionService.createOneEntity(payload);
+			return await ENTITY.SubscriptionPlanEntity.createOneEntity(payload);
+
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -128,40 +129,19 @@ export class AdminController {
 
 	async getSubscriptionList() {
 		try {
-			return ENTITY.AdminSubscriptionService.getMultiple({}, {});
+			return ENTITY.SubscriptionPlanEntity.getMultiple({}, {});
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
 
 	async updateSubscription(payload) {
 		try {
-			console.log('payloadpayloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
-
 			const criteria = {
 				_id: payload.id,
 			};
-
 			delete payload['id'];
-			console.log('payloadpayloadpayload', payload);
-
-			// const dataToUpdate = {
-			// 	featuredType: Joi.string().valid([
-			// 		Constant.DATABASE.FEATURED_TYPE.FREE,
-			// 		Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
-			// 		Constant.DATABASE.FEATURED_TYPE.PROFILE,
-			// 		Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-			// 	]),
-			// 	description: Joi.string(),
-			// 	plan: Joi.array().items(objectSchema),
-			// 	// id: Joi.number().required(),
-			// 	name: Joi.string().required(),
-
-			// 	amount: payload.amount,
-
-			const data = await ENTITY.AdminSubscriptionService.updateOneEntity(criteria, payload);
-			console.log('datadatadatadatadatadatadatadata', data);
+			const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
 			return data;
 
 		} catch (error) {
@@ -169,5 +149,4 @@ export class AdminController {
 		}
 	}
 }
-
 export let AdminService = new AdminController();

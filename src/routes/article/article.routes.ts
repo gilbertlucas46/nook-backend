@@ -9,6 +9,126 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 
 export let articleRoutes: ServerRoute[] = [
     /**
+     * @description:admin add the article name
+     */
+    {
+        method: 'POST',
+        path: '/v1/admin/categories',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload = request.payload;
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
+                const data = await ArticleService.addArticleName(payload, adminData);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, data));
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'create article categories',
+            tags: ['api', 'anonymous', 'user', 'admin', 'articleName', 'add'],
+            auth: 'AdminAuth',
+            validate: {
+                payload: {
+                    name: Joi.string(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
+    /**
+     * @description category list in admin
+     */
+    {
+        method: 'GET',
+        path: '/v1/admin/categories',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload = request.query;
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
+                const data = await ArticleService.getCategoryList(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'create article categories',
+            tags: ['api', 'anonymous', 'user', 'admin', 'articleName', 'add'],
+            auth: 'AdminAuth',
+            validate: {
+                query: {
+                    limit: Joi.number(),
+                    page: Joi.number(),
+                    sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
+
+    /**
+     * @description admin update article Category
+     */
+    {
+        method: 'PATCH',
+        path: '/v1/admin/categories/{id}',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload = {
+                    ...request.params as any,
+                    ...request.payload as any,
+                };
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
+                const data = await ArticleService.updateCategoryList(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'create article categories',
+            tags: ['api', 'anonymous', 'user', 'admin', 'articleName', 'add'],
+            auth: 'AdminAuth',
+            validate: {
+                payload: {
+                    name: Joi.string(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
+    /**
      * @description:admin add the article
      */
     {
@@ -38,16 +158,9 @@ export let articleRoutes: ServerRoute[] = [
                     description: Joi.string().required(),
                     // viewCount: Joi.number(),
                     imageUrl: Joi.string().required(),
-                    categoryId: Joi.number().valid([
-                        Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                        // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-                        // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
-                    ]),
+                    // articleCategoryId: Joi.string(),
+                    categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+
                     isFeatured: Joi.boolean(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -87,16 +200,16 @@ export let articleRoutes: ServerRoute[] = [
                     page: Joi.number(),
                     sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
                     sortBy: Joi.string(),
-                    categoryId: Joi.number().valid([
-                        Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                        // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-                        // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
-                    ]),
+                    // categoryId: Joi.number().valid([
+                    //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                    //     // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                    //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
+                    // ]),
                     articleId: Joi.string(),
                     // searchTerm: Joi.string(),
                 },
@@ -212,16 +325,16 @@ export let articleRoutes: ServerRoute[] = [
                     title: Joi.string().required(),
                     description: Joi.string().required(),
                     imageUrl: Joi.string().required(),
-                    categoryId: Joi.number().valid([
-                        Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                        // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-                        // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
-                    ]).required(),
+                    // categoryId: Joi.number().valid([
+                    //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                    //     // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                    //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
+                    // ]).required(),
                     isFeatured: Joi.boolean().default(false),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -262,16 +375,17 @@ export let articleRoutes: ServerRoute[] = [
                     page: Joi.number(),
                     sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
                     sortBy: Joi.string(),
-                    categoryId: Joi.number().valid([
-                        Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                        // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                        Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-                        // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
-                    ]),
+                    // categoryId: Joi.number().valid([
+                    //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                    //     // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                    //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
+                    // ]),
+                    categoryId: Joi.string(),
                     isFeatured: Joi.boolean(),
                     fromDate: Joi.number(),
                     toDate: Joi.number(),
@@ -363,4 +477,57 @@ export let articleRoutes: ServerRoute[] = [
             },
         },
     },
+
+    /**
+     * @description user get articles
+     */
+    {
+        method: 'GET',
+        path: '/v1/user/articles',
+        handler: async (request, h) => {
+            try {
+                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+                const payload: ArticleRequest.GetArticle = request.query as any;
+                const registerResponse = await ArticleService.getUserArticle(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'get articles for user application',
+            tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+            auth: 'DoubleAuth',
+            validate: {
+                query: {
+                    limit: Joi.number(),
+                    page: Joi.number(),
+                    sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+                    sortBy: Joi.string(),
+                    // categoryId: Joi.number().valid([
+                    //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
+                    //     // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
+                    //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
+                    //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
+                    // ]),
+                    articleId: Joi.string(),
+                    // searchTerm: Joi.string(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
+
+
 ];
