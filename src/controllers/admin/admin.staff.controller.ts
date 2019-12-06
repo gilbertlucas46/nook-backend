@@ -6,7 +6,6 @@ import * as UniversalFunctions from '@src/utils';
 import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-
 const cert: any = config.get('jwtSecret');
 
 /**

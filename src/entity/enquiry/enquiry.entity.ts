@@ -29,7 +29,6 @@ export class EnquiryClass extends BaseEntity {
                 query['userId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
             } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) {
-                // query['userId'] = userData._id;
                 query['agentId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
             }

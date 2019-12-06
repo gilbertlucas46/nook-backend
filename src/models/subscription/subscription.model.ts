@@ -1,5 +1,4 @@
 import { Schema, Document, Types, model } from 'mongoose';
-
 import * as CONSTANT from '@src/constants/app.constant';
 
 export interface ISubscription extends Document {

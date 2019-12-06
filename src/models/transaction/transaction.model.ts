@@ -72,7 +72,7 @@ export const transactionSchema = new Schema({
 	versionKey: false,
 });
 
-transactionSchema.pre('save', function (this: any, next: () => void) {
+transactionSchema.pre('save', function(this: any, next: () => void) {
 	if (!this.invoiceNo) {
 		this.invoiceNo = invoiceNumber(++global.counters.Transaction);
 	}
