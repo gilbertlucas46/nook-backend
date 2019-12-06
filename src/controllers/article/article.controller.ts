@@ -12,6 +12,16 @@ class ArticleController {
         });
         return result[0];
     }
+
+    async addArticleName(payload, adminData) {
+        try {
+            return await ENTITY.ArticleCategoryE.addArticleName(payload);
+        } catch (error) {
+            console.log('errrrrororooroorooorooror', error);
+            return Promise.reject(error);
+        }
+    }
+
     /**
      * @function createArticle
      * @description admin creata the aticle
@@ -20,8 +30,8 @@ class ArticleController {
 
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
-            const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
-            payload.categoryType = result['TYPE'];
+            // const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
+            // payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
             payload.userRole = userData.type;
             return await ENTITY.ArticleE.createOneEntity(payload);
@@ -95,11 +105,11 @@ class ArticleController {
             };
             const dataToSet: any = {};
             // if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
-            const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
+            // const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
             dataToSet.$set = {
                 title: payload.title,
                 categoryId: payload.categoryId,
-                categoryType: result['TYPE'],
+                // categoryType: result['TYPE'],
                 imageUrl: payload.imageUrl,
                 userId: adminData._id,
                 userRole: adminData.type,
@@ -134,6 +144,29 @@ class ArticleController {
             return await ENTITY.ArticleE.removeEntity(criteria);
         } catch (error) {
             utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+    async getCategoryList(payload) {
+        try {
+            return await ENTITY.ArticleCategoryE.getCategoryList(payload);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getUserArticle(payload) {
+        try {
+            const data = await ENTITY.ArticleE.getUserArticle(payload);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async updateCategoryList(payload) {
+        try {
+            return await ENTITY.ArticleCategoryE.updateCategoryList(payload);
+        } catch (error) {
             return Promise.reject(error);
         }
     }

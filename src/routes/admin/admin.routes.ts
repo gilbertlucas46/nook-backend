@@ -672,7 +672,11 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				console.log('adminDataadminDataadminData', adminData);
+
 				const payload = request.payload as any;
+				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
+
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await AdminStaffEntity.checkPermission(payload.permission);
 				// }

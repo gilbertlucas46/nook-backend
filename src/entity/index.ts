@@ -21,4 +21,5 @@ export { PaymentE } from './payment/payment.entity';
 export { TransactionE } from './transaction/transaction.entity';
 export { SubscriptionE } from './subscription/subscription.entity';
 export { WebhookE } from './webhook/webhook.entity';
-export { AdminSubscriptionService } from './subscription/admin.subscription.entity';
+export { SubscriptionPlanEntity } from './subscription/admin.subscription.entity';
+export { ArticleCategoryE } from './article/admiArticle.entity';
