@@ -170,6 +170,15 @@ class ArticleController {
             return Promise.reject(error);
         }
     }
+    async deleteCategory(payload) {
+        try {
+            const criteria = {
+                _id: payload.id,
+            }
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 
 export const ArticleService = new ArticleController();

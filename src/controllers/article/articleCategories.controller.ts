@@ -3,7 +3,7 @@ import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
 import * as utils from '@src/utils';
 
-class ArticleController {
+class CategoryController {
     // getTypeAndDisplayName(findObj, num: number) {
     //     const obj = findObj;
     //     const data = Object.values(obj);
@@ -24,6 +24,18 @@ class ArticleController {
     //     }
     // }
 
+    async deleteCategory(payload) {
+        try {
+            const criteria = {
+                _id: payload.id,
+            };
+            const data = await ENTITY.ArticleCategoryE.removeEntity(criteria);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 }
 
-export const ArticleService = new ArticleController();
+export const CategoryService = new CategoryController();
