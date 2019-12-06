@@ -1037,7 +1037,7 @@ export let SERVER = {
 	TEMPLATE_PATH: process.cwd() + '/src/views/',
 	BY_PASS_OTP: '1212',
 	LISTNG_LIMIT: 10,
-	SYNC_LIMIT: undefined,
+	SYNC_LIMIT: 100000,
 	CONTACT_SYNC_LIMIT: 2000,
 	THUMB_WIDTH: 10,
 	THUMB_HEIGHT: 10,
