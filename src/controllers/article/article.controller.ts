@@ -2,6 +2,7 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
 import * as utils from '@src/utils';
+import { Enquiry } from '@src/models';
 
 class ArticleController {
     getTypeAndDisplayName(findObj, num: number) {
@@ -34,6 +35,7 @@ class ArticleController {
             // payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
             payload.userRole = userData.type;
+            payload.addedBy = userData.type;
             return await ENTITY.ArticleE.createOneEntity(payload);
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -115,6 +117,7 @@ class ArticleController {
                 userRole: adminData.type,
                 description: payload.description,
                 isFeatured: payload.isFeatured,
+                status: payload.status,
             };
             dataToSet.$push = {
                 articleAction: {
@@ -166,15 +169,6 @@ class ArticleController {
     async updateCategoryList(payload) {
         try {
             return await ENTITY.ArticleCategoryE.updateCategoryList(payload);
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    }
-    async deleteCategory(payload) {
-        try {
-            const criteria = {
-                _id: payload.id,
-            }
         } catch (error) {
             return Promise.reject(error);
         }

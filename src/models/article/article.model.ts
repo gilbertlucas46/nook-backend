@@ -23,6 +23,7 @@ export interface IArticle extends Document {
     imageUrl: string;
     isFeatured: boolean;
     articleAction: [IArticleAction];
+    addedBy: string;
 }
 
 const articleSchema = new Schema({
@@ -41,6 +42,7 @@ const articleSchema = new Schema({
         // ], index: true,
         type: Schema.Types.ObjectId, required: true,
     },
+    addedBy: { type: String },
     categoryType: {
         type: String,
         // enum: [
@@ -67,11 +69,11 @@ const articleSchema = new Schema({
     shareCount: { type: Number },
     status: {
         type: Number, enum: [
-            Constant.DATABASE.ARTICLE_STATUS.PENDING.NUMBER,
-            Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
-            Constant.DATABASE.ARTICLE_STATUS.BLOCKED.NUMBER,
+            Constant.DATABASE.ARTICLE_STATUS.PENDING,
+            Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+            Constant.DATABASE.ARTICLE_STATUS.BLOCK,
         ], index: true,
-        default: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+        default: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
     },
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },

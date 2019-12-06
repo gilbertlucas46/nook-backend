@@ -373,21 +373,24 @@ export let DATABASE = {
 	// legal stuff, international news, domestic news, sports coverage, political news
 	// },
 	ARTICLE_STATUS: {
-		PENDING: {
-			NUMBER: 1,
-			TYPE: 'PENDING',
-			DISPLAY_NAME: 'Pending',
-		},
-		ACTIVE: {
-			NUMBER: 2,
-			TYPE: 'ACTIVE',
-			DISPLAY_NAME: 'Active',
-		},
-		BLOCKED: {
-			NUMBER: 3,
-			TYPE: 'BLOCKED',
-			DISPLAY_NAME: 'Blocked',
-		},
+		PENDING: 'Pending',
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
+		// PENDING: {
+		// 	// NUMBER: 1,
+		// 	// TYPE: 'PENDING',
+		// 	DISPLAY_NAME: 'Pending',
+		// },
+		// ACTIVE: {
+		// 	NUMBER: 2,
+		// 	TYPE: 'ACTIVE',
+		// 	DISPLAY_NAME: 'Active',
+		// },
+		// BLOCKED: {
+		// 	NUMBER: 3,
+		// 	TYPE: 'BLOCKED',
+		// 	DISPLAY_NAME: 'Blocked',
+		// },
 	},
 
 	HELP_CENTER_TYPE: {

@@ -378,6 +378,11 @@ export let articleRoutes: ServerRoute[] = [
                     //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
                     //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
                     // ]).required(),
+                    status: Joi.string().valid([
+                        Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                        Constant.DATABASE.ARTICLE_STATUS.PENDING,
+                        Constant.DATABASE.ARTICLE_STATUS.BLOCK,
+                    ]),
                     isFeatured: Joi.boolean().default(false),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -418,6 +423,7 @@ export let articleRoutes: ServerRoute[] = [
                     page: Joi.number(),
                     sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
                     sortBy: Joi.string(),
+                    articleId: Joi.string(),
                     // categoryId: Joi.number().valid([
                     //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
                     //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
@@ -428,6 +434,11 @@ export let articleRoutes: ServerRoute[] = [
                     //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
                     //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
                     // ]),
+                    status: Joi.string().valid([
+                        Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                        Constant.DATABASE.ARTICLE_STATUS.BLOCK,
+                        Constant.DATABASE.ARTICLE_STATUS.PENDING,
+                    ]),
                     categoryId: Joi.string(),
                     isFeatured: Joi.boolean(),
                     fromDate: Joi.number(),

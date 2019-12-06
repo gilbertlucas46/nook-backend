@@ -198,7 +198,7 @@ export class AdminClass extends BaseEntity {
 			};
 			const totalArticles = {
 				status: {
-					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
 				},
 			};
 			const loanQuery = {
