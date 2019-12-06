@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 import { ServerRoute } from 'hapi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { ArticleService } from '@src/controllers';
+import { ArticleService, CategoryService } from '@src/controllers';
 import * as ENTITY from '../../entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 
@@ -117,6 +117,10 @@ export let articleRoutes: ServerRoute[] = [
             validate: {
                 payload: {
                     name: Joi.string(),
+                    status: Joi.string().valid([
+                        Constant.DATABASE.ArticleCategoryStatus.ACTIVE,
+                        Constant.DATABASE.ArticleCategoryStatus.BLOCK,
+                    ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -128,6 +132,45 @@ export let articleRoutes: ServerRoute[] = [
             },
         },
     },
+    /**
+     * @description delete categories
+     */
+    {
+        method: 'DELETE',
+        path: '/v1/admin/categories/{id}',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload = request.params;
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                // }
+                const data = await CategoryService.deleteCategory(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'delete article categories',
+            tags: ['api', 'anonymous', 'user', 'admin', 'category', 'delete'],
+            auth: 'AdminAuth',
+            validate: {
+                params: {
+                    id: Joi.string(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
+
     /**
      * @description:admin add the article
      */

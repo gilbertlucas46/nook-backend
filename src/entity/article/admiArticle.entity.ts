@@ -27,18 +27,41 @@ export class CategoryClass extends BaseEntity {
                 createdAt: sortType,
             };
             const promise = [];
-            // sortingType = {
-            //     [sortBy]: sortType,
-            // };
-            // const criteria = {
-            //     userId: userData._id,
-            // };
-            // promiseArray.push(this.DAOManager.findAll(this.modelName, criteria, {}, { limit, skip, sort: sortingType }));
+            const query = {
+                status: Constant.DATABASE.ArticleCategoryStatus.ACTIVE,
+            };
 
-            promise.push(this.DAOManager.findAll(this.modelName, {}, {}, { limit, skip, sort: sortingType }));
-            promise.push(this.DAOManager.count(this.modelName, {}));
-            const [data, total] = await Promise.all(promise);
-            return { data, total };
+            const pipeline = [
+                { $match: query },
+                { $skip: skip },
+                { $limit: limit },
+                {
+                    $lookup: {
+                        from: 'articles',
+                        let: { categoryId: '$_id' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$categoryId', '$$categoryId'],
+                                    },
+                                },
+                            },
+                        ],
+                        as: 'articles',
+                    },
+                },
+                {
+                    $project: {
+                        name: 1,
+                        articles: {
+                            $size: '$articles',
+                        },
+                    },
+                },
+            ];
+            const data = await this.DAOManager.paginate(this.modelName, pipeline);
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }
@@ -46,7 +69,15 @@ export class CategoryClass extends BaseEntity {
 
     async updateCategoryList(payload) {
         try {
-            return await this.DAOManager.findAndUpdate(this.modelName, { _id: payload.id }, { name: payload.name });
+            const criteria = {
+                _id: payload.id,
+            };
+            const updateData = {
+                status: payload.status,
+                name: payload.name,
+            };
+            const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, updateData);
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }

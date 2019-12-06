@@ -330,6 +330,10 @@ export let DATABASE = {
 		WAREHOUSE: 'Warehouse',
 	},
 
+	ArticleCategoryStatus: {
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
+	},
 	// ARTICLE_TYPE: {
 	// 	// FEATURED_ARTICLE: {
 	// 	// 	NUMBER: 1,
@@ -368,7 +372,6 @@ export let DATABASE = {
 	// 	},
 	// legal stuff, international news, domestic news, sports coverage, political news
 	// },
-
 	ARTICLE_STATUS: {
 		PENDING: {
 			NUMBER: 1,
