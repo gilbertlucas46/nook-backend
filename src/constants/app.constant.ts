@@ -682,6 +682,11 @@ export let STATUS_MSG = {
 				type: 'REQUEST_ALREADY_SENT',
 				message: 'Request has already been sent to the entered email',
 			},
+			DELETE_ARTICLE_FIRST: {
+				statusCode: 400,
+				type: 'Delete Category',
+				message: 'first delete the Articles',
+			},
 			NOT_VERIFIED: {
 				statusCode: 400,
 				type: 'NOT_VERIFIED',

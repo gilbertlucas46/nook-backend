@@ -68,7 +68,7 @@ const articleSchema = new Schema({
     viewCount: { type: Number },
     shareCount: { type: Number },
     status: {
-        type: Number, enum: [
+        type: String, enum: [
             Constant.DATABASE.ARTICLE_STATUS.PENDING,
             Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
             Constant.DATABASE.ARTICLE_STATUS.BLOCK,
@@ -79,7 +79,7 @@ const articleSchema = new Schema({
     updatedAt: { type: Number, required: true },
     isFeatured: { type: Boolean, default: false },
     articleAction: [{
-        userRole: { type: String },
+        addedBy: { type: String },
         userId: { type: String },
         actionTime: { type: Number },
     }],

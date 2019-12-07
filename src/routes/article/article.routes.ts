@@ -365,9 +365,9 @@ export let articleRoutes: ServerRoute[] = [
                     articleId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                 },
                 payload: {
-                    title: Joi.string().required(),
-                    description: Joi.string().required(),
-                    imageUrl: Joi.string().required(),
+                    title: Joi.string(),
+                    description: Joi.string(),
+                    imageUrl: Joi.string(),
                     // categoryId: Joi.number().valid([
                     //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
                     //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
@@ -380,7 +380,6 @@ export let articleRoutes: ServerRoute[] = [
                     // ]).required(),
                     status: Joi.string().valid([
                         Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-                        Constant.DATABASE.ARTICLE_STATUS.PENDING,
                         Constant.DATABASE.ARTICLE_STATUS.BLOCK,
                     ]),
                     isFeatured: Joi.boolean().default(false),
@@ -467,6 +466,8 @@ export let articleRoutes: ServerRoute[] = [
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
                 const registerResponse = await ArticleService.getArticleById(payload);
+                console.log('registerResponseregisterResponseregisterResponse', registerResponse);
+
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);

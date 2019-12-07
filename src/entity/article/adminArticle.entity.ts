@@ -28,7 +28,10 @@ export class CategoryClass extends BaseEntity {
             };
             const promise = [];
             const query = {
-                status: Constant.DATABASE.ArticleCategoryStatus.ACTIVE,
+                $or: [
+                    { status: Constant.DATABASE.ArticleCategoryStatus.ACTIVE },
+                    { status: Constant.DATABASE.ArticleCategoryStatus.BLOCK },
+                ],
             };
 
             const pipeline = [
@@ -64,6 +67,8 @@ export class CategoryClass extends BaseEntity {
                 },
             ];
             const data = await this.DAOManager.paginate(this.modelName, pipeline);
+            console.log('datadatadatadatadatadata', data);
+
             return data;
         } catch (error) {
             return Promise.reject(error);
