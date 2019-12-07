@@ -163,17 +163,31 @@ export class ArticleClass extends BaseEntity {
             if (categoryId) {
                 query = {
                     categoryId: Types.ObjectId(categoryId),
-                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-                    _id: {
-                        $ne: {
-                            articleId: Types.ObjectId(articleId),
-                        },
-                    },
+                    $or: [{
+                        status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                    }, {
+                        status: Constant.DATABASE.ARTICLE_STATUS.BLOCK,
+                    }],
+                    // _id: {
+                    //     $ne: {
+                    //         articleId: Types.ObjectId(articleId),
+                    //     },
+                    // },
                 };
             }
             else {
-                query['status'] = {
-                    $eq: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                query['$or'] = [
+                    { status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE },
+                    { status: Constant.DATABASE.ARTICLE_STATUS.BLOCK },
+                ];
+            }
+
+            if (searchTerm) {
+                query = {
+                    $or: [
+                        { title: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        { description: new RegExp('.*' + searchTerm + '.*', 'i') },
+                    ],
                 };
             }
             if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
@@ -186,8 +200,8 @@ export class ArticleClass extends BaseEntity {
                 { $limit: limit },
                 {
                     $lookup: {
-                        from: 'articleCategory',
-                        let: { categoryId: '$_id' },
+                        from: 'articlecategories',
+                        let: { categoryId: '$categoryId' },
                         pipeline: [
                             {
                                 $match: {
@@ -197,7 +211,7 @@ export class ArticleClass extends BaseEntity {
                                 },
                             },
                         ],
-                        as: 'articles',
+                        as: 'article',
                     },
                 },
                 {
@@ -215,7 +229,10 @@ export class ArticleClass extends BaseEntity {
                         imageUrl: 1,
                         categoryType: 1,
                         categoryId: 1,
-                        
+                        createdAt: 1,
+                        updatedAt: 1,
+                        addedBy: 1,
+
                     },
                 },
                 { $sort: sortingType },

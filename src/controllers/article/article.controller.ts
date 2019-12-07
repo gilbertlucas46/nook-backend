@@ -109,24 +109,20 @@ class ArticleController {
             // if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
             // const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
             dataToSet.$set = {
-                title: payload.title,
-                categoryId: payload.categoryId,
-                // categoryType: result['TYPE'],
-                imageUrl: payload.imageUrl,
+                ...payload,
                 userId: adminData._id,
-                userRole: adminData.type,
-                description: payload.description,
-                isFeatured: payload.isFeatured,
-                status: payload.status,
+                addedBy: adminData.type,
             };
             dataToSet.$push = {
                 articleAction: {
-                    userRole: adminData.type,
+                    addedBy: adminData.type,
                     userId: adminData._id,
                     actionTime: new Date().getTime(),
                 },
             };
-            return await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
+            const data = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
+            console.log('dayaaaaaaaaaaaaaaaaaaaa,', data);
+            return data;
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
