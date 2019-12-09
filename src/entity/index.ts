@@ -21,3 +21,4 @@ export { TransactionE } from './transaction/transaction.entity';
 export { SubscriptionE } from './subscription/subscription.entity';
 export { WebhookE } from './webhook/webhook.entity';
 export { AdminSubscriptionService } from './subscription/admin.subscription.entity';
+export { AdminUserEntity } from './admin/admin.user.entity';
