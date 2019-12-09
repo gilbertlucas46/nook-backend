@@ -158,4 +158,28 @@ export namespace AdminRequest {
 		permission: [object];
 		status: string;
 	}
+
+	export interface IcreateUser {
+		_id?: string;
+		email: string;
+		firstName?: string;
+		lastName?: string;
+		phoneNumber?: string;
+		type?: string;
+		userName: string;
+	}
+
+	export interface IsearchUser {
+		page?: number;
+		limit?: number;
+		sortBy?: string;
+		searchTerm?: string;
+		sortType?: number;
+		fromDate?: number;
+		toDate?: number;
+		propertyType?: number;
+		userId?: string;
+		type?: string;
+		status?: string;
+	}
 }
