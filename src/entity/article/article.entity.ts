@@ -238,7 +238,6 @@ export class ArticleClass extends BaseEntity {
                 { $sort: sortingType },
             ];
             const data = await this.DAOManager.paginate(this.modelName, pipeline);
-            console.log('datadatadatadatadata', data);
             return data;
         } catch (error) {
             utils.consolelog('Error', error, true);
@@ -248,11 +247,19 @@ export class ArticleClass extends BaseEntity {
 
     async getUserArticle(payload) {
         try {
-            let { page, limit, searchTerm } = payload;
-            if (!limit) { limit = Constant.SERVER.LIMIT; }
-            if (!page) { page = 1; }
-            const promise = [];
+            let { sortType } = payload;
+            const { categoryId, searchTerm } = payload;
+            // if (!limit) { limit = Constant.SERVER.LIMIT; }
+            // if (!page) { page = 1; }
+            let sortingType = {};
+            let query: any = {};
             let searchCriteria: any = {};
+            sortType = !sortType ? -1 : sortType;
+            sortingType = {
+                isFeatured: sortType,
+                updatedAt: sortType,
+            };
+
             if (searchTerm) {
                 searchCriteria = {
                     $or: [
@@ -267,10 +274,67 @@ export class ArticleClass extends BaseEntity {
                 searchCriteria = {
                 };
             }
+
+            query = {
+                categoryId: Types.ObjectId(categoryId),
+                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+            };
+
             const pipeline = [
+                {
+                    $match: query,
+                },
+                {
+                    $match: searchCriteria,
+                },
 
+                { $sort: sortingType },
+                { $limit: 7 },
+                // {
+                //     $project: {
+                //         results: {
+                //             $reduce: {
+                //                 input: '$list',
+                //                 initialValue: {
+                //                     FEATURED: [],
+                //                     // LATEST: [],
+                //                     LIST: [],
+                //                 },
+                //                 in: {
+                //                     $cond: {
+                //                         if: {
+                //                             $and: [
+                //                                 {
+                //                                     $ne: [{ $size: '$$value.FEATURED' }, 1],
+                //                                 },
+                //                                 {
+                //                                     $eq: ['$$this.isFeatured', true],
+                //                                 },
+                //                             ]
+                //                         }, then: {
+                //                             $mergeObjects: ['$$value', { FEATURED: ['$$this'] }],
+                //                         }, else: {
+                //                             $cond: {
+                //                                 if: {
+                //                                     $ne: [{ $size: '$$value.LIST' }, 6],
+                //                                 },
+                //                                 then: {
+                //                                     $mergeObjects: ['$$value', { LIST: { $concatArrays: ['$$value.LIST', ['$$this']] } }],
+                //                                 },
+                //                                 else: {
+                //                                     $mergeObjects: ['$$value', { LIST: { $concatArrays: ['$$value.LIST', ['$$this']] } }],
+                //                                 },
+                //                             },
+                //                         },
+                //                     },
+                //                 },
+                //             },
+                //         },
+                //     },
+                // },
             ];
-
+            const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }

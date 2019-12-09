@@ -17,7 +17,7 @@ export let articleRoutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-                const payload = request.payload;
+                const payload = request.payload as ArticleRequest.AddCategoriesName;
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
@@ -350,7 +350,7 @@ export let articleRoutes: ServerRoute[] = [
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
                 const registerResponse = await ArticleService.updateArticle(payload, adminData);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200, registerResponse));
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
@@ -556,22 +556,13 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'DoubleAuth',
             validate: {
                 query: {
-                    limit: Joi.number(),
-                    page: Joi.number(),
-                    sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
-                    sortBy: Joi.string(),
-                    // categoryId: Joi.number().valid([
-                    //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                    //     // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-                    //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
-                    // ]),
-                    articleId: Joi.string(),
-                    // searchTerm: Joi.string(),
+                    // limit: Joi.number(),
+                    // page: Joi.number(),
+                    // sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+                    // sortBy: Joi.string(),
+                    categoryId: Joi.string().required(),
+                    // articleId: Joi.string(),
+                    searchTerm: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

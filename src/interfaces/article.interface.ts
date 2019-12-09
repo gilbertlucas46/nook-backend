@@ -45,4 +45,8 @@ export namespace ArticleRequest {
         articleId: string;
     }
 
+    export interface AddCategoriesName {
+        name: string;
+    }
+
 }

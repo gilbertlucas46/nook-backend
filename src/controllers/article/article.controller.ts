@@ -14,7 +14,7 @@ class ArticleController {
         return result[0];
     }
 
-    async addArticleName(payload, adminData) {
+    async addArticleName(payload: ArticleRequest.AddCategoriesName, adminData) {
         try {
             return await ENTITY.ArticleCategoryE.addArticleName(payload);
         } catch (error) {
@@ -121,7 +121,6 @@ class ArticleController {
                 },
             };
             const data = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
-            console.log('dayaaaaaaaaaaaaaaaaaaaa,', data);
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -157,6 +156,7 @@ class ArticleController {
     async getUserArticle(payload) {
         try {
             const data = await ENTITY.ArticleE.getUserArticle(payload);
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }
