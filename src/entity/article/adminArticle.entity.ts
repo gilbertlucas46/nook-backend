@@ -8,15 +8,16 @@ export class CategoryClass extends BaseEntity {
         super('ArticleCategories');
     }
 
-    async addArticleName(payload) {
-        console.log('payloadpayloadpayloadpayload', payload);
-        console.log('this.modelNamethis.modelNamethis.modelNamethis.modelName', this.modelName);
-        return await this.DAOManager.insert(this.modelName, payload);
+    async addArticleName(payload: ArticleRequest.AddCategoriesName) {
+        const criteria = {
+            name: payload.name,
+        };
+        return await this.DAOManager.insert(this.modelName, criteria);
     }
 
     async getCategoryList(payload) {
         try {
-            let { page, limit, searchTerm, sortType } = payload;
+            let { page, limit, sortType } = payload;
 
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
@@ -67,8 +68,6 @@ export class CategoryClass extends BaseEntity {
                 },
             ];
             const data = await this.DAOManager.paginate(this.modelName, pipeline);
-            console.log('datadatadatadatadatadata', data);
-
             return data;
         } catch (error) {
             return Promise.reject(error);
@@ -89,7 +88,7 @@ export class CategoryClass extends BaseEntity {
                 return data;
             } else if (payload.status) {
                 const statusData = await this.DAOManager.findAndUpdate(this.modelName, criteria, { status: payload.status });
-                const updateData = this.DAOManager.updateMany('Article', articleStatusCriteria, { status: payload.status }, {});
+                this.DAOManager.updateMany('Article', articleStatusCriteria, { status: payload.status }, {});
                 return statusData;
             }
 
