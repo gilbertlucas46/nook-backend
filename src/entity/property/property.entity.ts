@@ -719,7 +719,9 @@ export class PropertyClass extends BaseEntity {
 			if (!limit) { limit = 4; }
 			if (!page) { page = 1; }
 			const skip = (limit * (page - 1));
-
+			sortingType = {
+				approvedAt: sortType,
+			};
 			if (sortBy) {
 				switch (sortBy) {
 					case 'price':
@@ -733,11 +735,12 @@ export class PropertyClass extends BaseEntity {
 							createdAt: sortType,
 						};
 				}
-			} else {
-				sortingType = {
-					approvedAt: sortType,
-				};
 			}
+			//  else {
+			// 	sortingType = {
+			// 		approvedAt: sortType,
+			// 	};
+			// }
 			query = {
 				'property_address.cityId': mongoose.Types.ObjectId(cityId),
 				'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,

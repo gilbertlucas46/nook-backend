@@ -2,6 +2,7 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
 import * as utils from '@src/utils';
+import { Enquiry } from '@src/models';
 
 class ArticleController {
     getTypeAndDisplayName(findObj, num: number) {
@@ -12,6 +13,16 @@ class ArticleController {
         });
         return result[0];
     }
+
+    async addArticleName(payload: ArticleRequest.AddCategoriesName, adminData) {
+        try {
+            return await ENTITY.ArticleCategoryE.addArticleName(payload);
+        } catch (error) {
+            console.log('errrrrororooroorooorooror', error);
+            return Promise.reject(error);
+        }
+    }
+
     /**
      * @function createArticle
      * @description admin creata the aticle
@@ -20,10 +31,11 @@ class ArticleController {
 
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
-            const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
-            payload.categoryType = result['TYPE'];
+            // const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
+            // payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
             payload.userRole = userData.type;
+            payload.addedBy = userData.type;
             return await ENTITY.ArticleE.createOneEntity(payload);
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -95,25 +107,21 @@ class ArticleController {
             };
             const dataToSet: any = {};
             // if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
-            const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
+            // const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
             dataToSet.$set = {
-                title: payload.title,
-                categoryId: payload.categoryId,
-                categoryType: result['TYPE'],
-                imageUrl: payload.imageUrl,
+                ...payload,
                 userId: adminData._id,
-                userRole: adminData.type,
-                description: payload.description,
-                isFeatured: payload.isFeatured,
+                addedBy: adminData.type,
             };
             dataToSet.$push = {
                 articleAction: {
-                    userRole: adminData.type,
+                    addedBy: adminData.type,
                     userId: adminData._id,
                     actionTime: new Date().getTime(),
                 },
             };
-            return await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
+            const data = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
+            return data;
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -134,6 +142,30 @@ class ArticleController {
             return await ENTITY.ArticleE.removeEntity(criteria);
         } catch (error) {
             utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+    async getCategoryList(payload) {
+        try {
+            return await ENTITY.ArticleCategoryE.getCategoryList(payload);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getUserArticle(payload) {
+        try {
+            const data = await ENTITY.ArticleE.getUserArticle(payload);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async updateCategoryList(payload) {
+        try {
+            return await ENTITY.ArticleCategoryE.updateCategoryList(payload);
+        } catch (error) {
             return Promise.reject(error);
         }
     }
