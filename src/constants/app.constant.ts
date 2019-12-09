@@ -330,55 +330,67 @@ export let DATABASE = {
 		WAREHOUSE: 'Warehouse',
 	},
 
-	ARTICLE_TYPE: {
-		AGENTS: {
-			NUMBER: 2,
-			TYPE: 'AGENTS',
-			DISPLAY_NAME: 'Agent',
-		},
-		BUYING: {
-			NUMBER: 3,
-			TYPE: 'BUYING',
-			DISPLAY_NAME: 'Buying',
-		},
-		HOME_LOANS: {
-			NUMBER: 4,
-			TYPE: 'HOME_LOANS',
-			DISPLAY_NAME: 'Home Loans',
-		},
-		RENTING: {
-			NUMBER: 5,
-			TYPE: 'RENTING',
-			DISPLAY_NAME: 'Renting',
-		},
-		SELLING: {
-			NUMBER: 6,
-			TYPE: 'SELLING',
-			DISPLAY_NAME: 'Selling',
-		},
-		NEWS: {
-			NUMBER: 7,
-			TYPE: 'NEWS',
-			DISPLAY_NAME: 'News',
-		},
+	ArticleCategoryStatus: {
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
 	},
-
+	// ARTICLE_TYPE: {
+	// 	// FEATURED_ARTICLE: {
+	// 	// 	NUMBER: 1,
+	// 	// 	TYPE: 'FEATURED_ARTICLE',
+	// 	// 	DISPLAY_NAME: 'Featured Article',
+	// 	// },
+	// 	AGENTS: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'AGENTS',
+	// 		DISPLAY_NAME: 'Agent',
+	// 	},
+	// 	BUYING: {
+	// 		NUMBER: 3,
+	// 		TYPE: 'BUYING',
+	// 		DISPLAY_NAME: 'Buying',
+	// 	},
+	// 	HOME_LOANS: {
+	// 		NUMBER: 4,
+	// 		TYPE: 'HOME_LOANS',
+	// 		DISPLAY_NAME: 'Home Loans',
+	// 	},
+	// 	RENTING: {
+	// 		NUMBER: 5,
+	// 		TYPE: 'RENTING',
+	// 		DISPLAY_NAME: 'Renting',
+	// 	},
+	// 	SELLING: {
+	// 		NUMBER: 6,
+	// 		TYPE: 'SELLING',
+	// 		DISPLAY_NAME: 'Selling',
+	// 	},
+	// 	NEWS: {
+	// 		NUMBER: 7,
+	// 		TYPE: 'NEWS',
+	// 		DISPLAY_NAME: 'News',
+	// 	},
+	// legal stuff, international news, domestic news, sports coverage, political news
+	// },
 	ARTICLE_STATUS: {
-		PENDING: {
-			NUMBER: 1,
-			TYPE: 'PENDING',
-			DISPLAY_NAME: 'Pending',
-		},
-		ACTIVE: {
-			NUMBER: 2,
-			TYPE: 'ACTIVE',
-			DISPLAY_NAME: 'Active',
-		},
-		BLOCKED: {
-			NUMBER: 3,
-			TYPE: 'BLOCKED',
-			DISPLAY_NAME: 'Blocked',
-		},
+		PENDING: 'Pending',
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
+		// PENDING: {
+		// 	// NUMBER: 1,
+		// 	// TYPE: 'PENDING',
+		// 	DISPLAY_NAME: 'Pending',
+		// },
+		// ACTIVE: {
+		// 	NUMBER: 2,
+		// 	TYPE: 'ACTIVE',
+		// 	DISPLAY_NAME: 'Active',
+		// },
+		// BLOCKED: {
+		// 	NUMBER: 3,
+		// 	TYPE: 'BLOCKED',
+		// 	DISPLAY_NAME: 'Blocked',
+		// },
 	},
 
 	HELP_CENTER_TYPE: {
@@ -669,6 +681,11 @@ export let STATUS_MSG = {
 				statusCode: 400,
 				type: 'REQUEST_ALREADY_SENT',
 				message: 'Request has already been sent to the entered email',
+			},
+			DELETE_ARTICLE_FIRST: {
+				statusCode: 400,
+				type: 'Delete Category',
+				message: 'first delete the Articles',
 			},
 			NOT_VERIFIED: {
 				statusCode: 400,

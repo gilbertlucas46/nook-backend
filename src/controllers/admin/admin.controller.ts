@@ -119,7 +119,8 @@ export class AdminController {
 
 	async subscriptionList(payload) {
 		try {
-			return await ENTITY.AdminSubscriptionService.createOneEntity(payload);
+			return await ENTITY.SubscriptionPlanEntity.createOneEntity(payload);
+
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -128,9 +129,8 @@ export class AdminController {
 
 	async getSubscriptionList() {
 		try {
-			return await ENTITY.AdminSubscriptionService.getMultiple({}, {});
+			return await ENTITY.SubscriptionPlanEntity.getMultiple({}, {});
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -140,27 +140,13 @@ export class AdminController {
 			const criteria = {
 				_id: payload.id,
 			};
-
 			delete payload['id'];
-			// const dataToUpdate = {
-			// 	featuredType: Joi.string().valid([
-			// 		Constant.DATABASE.FEATURED_TYPE.FREE,
-			// 		Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
-			// 		Constant.DATABASE.FEATURED_TYPE.PROFILE,
-			// 		Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-			// 	]),
-			// 	description: Joi.string(),
-			// 	plan: Joi.array().items(objectSchema),
-			// 	// id: Joi.number().required(),
-			// 	name: Joi.string().required(),
+			const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+			return data;
 
-			// 	amount: payload.amount,
-
-			return await ENTITY.AdminSubscriptionService.updateOneEntity(criteria, payload);
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
 }
-
 export let AdminService = new AdminController();

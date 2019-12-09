@@ -4,6 +4,7 @@ import * as config from 'config';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import * as utils from '@src/utils';
+import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
 const pswdCert: string = config.get('forgetPwdjwtSecret');
@@ -28,8 +29,8 @@ export class AdminClass extends BaseEntity {
 				type: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 			};
 			return await this.createOneEntity(dataToInsert);
+
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -58,7 +59,6 @@ export class AdminClass extends BaseEntity {
 		try {
 			return Jwt.sign({ sessionId: adminData.sessionId, timestamp: Date.now(), _id: adminData.adminId, type: adminData.type }, cert);
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -74,8 +74,8 @@ export class AdminClass extends BaseEntity {
 			};
 			await this.updateOneEntity(criteriaForUpdatePswd, dataToUpdateForPswd);
 			return tokenToSend;
+
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -84,11 +84,104 @@ export class AdminClass extends BaseEntity {
 		try {
 			return await this.DAOManager.findOne(this.modelName, criteria, ProjectData);
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			Promise.reject(error);
 		}
 	}
+	/**
+	 *
+	 * @param adminData
+	 * @description : admin dashboard
+	 */
+	// async adminDashboard(adminData) {
+	// 	try {
+	// const pipeline = [
+	// {
+	// 	$facet: {
+	// 		adminTotalProperty: [
+	// 			{
+	// 				$match: {
+	// 					'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
+	// 				},
+	// 			},
+	// 			{ $count: 'Total' },
+	// 		],
+	// 		totalUser: [
+	// 			{
+	// 				$match: {
+	// 					status: {
+	// 						$or: [
+	// 							CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+	// 							CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+	// 						],
+	// 					},
+	// 				},
+	// 			},
+	// 			{ $count: 'Total' },
+	// 		],
 
+	// adminActiveProperty: [
+	// 	{
+	// 		$match: {
+	// 			'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+	// 		},
+	// 	},
+	// 	{ $count: 'Total' },
+	// ],
+
+	// adminDeclineProperty: [
+	// 	{
+	// 		$match: {
+	// 			'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
+	// 		},
+	// 	},
+	// 	{ $count: 'Total' },
+	// ],
+
+	// adminPendingProperty: [
+	// 	{
+	// 		$match: {
+	// 			'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+	// 		},
+	// 	},
+	// 	{ $count: 'Total' },
+	// ],
+	// },
+	// },
+	// {
+	// 	$project: {
+	// 		totalProperty: {
+	// 			$cond: { if: { $size: ['$adminTotalProperty'] }, then: { $arrayElemAt: ['$adminTotalProperty.Total', 0] }, else: 0 },
+	// 		},
+	// activeProperty: {
+	// 	$cond: { if: { $size: ['$adminActiveProperty'] }, then: { $arrayElemAt: ['$adminActiveProperty.Total', 0] }, else: 0 },
+	// },
+
+	// declineProperty: {
+	// 	$cond: { if: { $size: ['$adminDeclineProperty'] }, then: { $arrayElemAt: ['$adminDeclineProperty.Total', 0] }, else: 0 },
+	// },
+
+	// pendingProperty: {
+	// 	$cond: { if: { $size: ['$adminPendingProperty'] }, then: { $arrayElemAt: ['$adminPendingProperty.Total', 0] }, else: 0 },
+	// },
+	// 		},
+	// 	},
+	// ];
+	// 		const query = {
+	// 			$and: [
+	// 				{ propertyOwnerId: adminData._id },
+	// 				{ createdAt: { $gt: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+	// 			],
+	// 		};
+
+	// 		const data = await this.DAOManager.aggregateData('Property', pipeline);
+	// 		return {
+	// 			...data[0],
+	// 		};
+
+	// 	} catch (error) {
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 	async adminDashboard(adminData) {
 		try {
 			const propertyQuery = {
@@ -105,7 +198,7 @@ export class AdminClass extends BaseEntity {
 			};
 			const totalArticles = {
 				status: {
-					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
 				},
 			};
 			const loanQuery = {
@@ -134,7 +227,6 @@ export class AdminClass extends BaseEntity {
 					return { propertyCount, userCount, articleCount, enquiryCount, loanCount };
 				});
 		} catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
