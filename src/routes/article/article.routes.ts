@@ -22,7 +22,7 @@ export let articleRoutes: ServerRoute[] = [
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
                 const data = await ArticleService.addArticleName(payload, adminData);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, data));
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CATEGORY_CREATED, data));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
@@ -574,6 +574,4 @@ export let articleRoutes: ServerRoute[] = [
             },
         },
     },
-
-
 ];

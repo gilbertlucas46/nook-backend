@@ -17,28 +17,27 @@ export class CategoryClass extends BaseEntity {
 
     async getCategoryList(payload) {
         try {
-            let { page, limit, sortType } = payload;
-
-            if (!limit) { limit = Constant.SERVER.LIMIT; }
-            if (!page) { page = 1; }
-            let sortingType = {};
-            sortType = !sortType ? -1 : sortType;
-            const skip = (limit * (page - 1));
-            sortingType = {
+            const { page, limit, sortType = -1 } = payload;
+            const paginateOptions = {
+                page: page || 1,
+                limit: limit || Constant.SERVER.LIMIT,
+            };
+            const sortingType = {
                 createdAt: sortType,
             };
-            const promise = [];
             const query = {
                 $or: [
                     { status: Constant.DATABASE.ArticleCategoryStatus.ACTIVE },
                     { status: Constant.DATABASE.ArticleCategoryStatus.BLOCK },
                 ],
             };
-
-            const pipeline = [
+            const matchPipeline = [
                 { $match: query },
-                { $skip: skip },
-                { $limit: limit },
+                {
+                    $sort: sortingType,
+                },
+            ];
+            const pipeline = [
                 {
                     $lookup: {
                         from: 'articles',
@@ -67,7 +66,9 @@ export class CategoryClass extends BaseEntity {
                     },
                 },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, pipeline);
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
+            console.log('datadatadatadatadatadata', data);
+
             return data;
         } catch (error) {
             return Promise.reject(error);
