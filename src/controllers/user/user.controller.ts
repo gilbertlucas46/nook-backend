@@ -76,6 +76,12 @@ export class UserController {
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
+					if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
+						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
+					}
+					if (userData.status === Constant.DATABASE.STATUS.USER.DELETED) {
+						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
+					}
 					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
 						return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD;
 					} else {
