@@ -752,6 +752,11 @@ export let STATUS_MSG = {
 				type: 'INVALID_PROPERTY_STATUS',
 				message: 'Invalid Property Status ',
 			},
+			INVALID__STATUS: {
+				statusCode: 400,
+				type: 'INVALID__STATUS',
+				message: 'Invalid Status ',
+			},
 			PROPERTY_SOLD: {
 				statusCode: 400,
 				type: 'PROPERTY_SOLD',
@@ -1005,6 +1010,11 @@ export let STATUS_MSG = {
 				statusCode: 201,
 				type: 'CREATED',
 				message: 'Article Created',
+			},
+			CATEGORY_CREATED: {
+				statusCode: 201,
+				type: 'CREATED',
+				message: 'Category Created',
 			},
 			PAYMENT_ADDED: {
 				statusCode: 201,

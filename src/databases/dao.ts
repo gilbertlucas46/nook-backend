@@ -283,4 +283,41 @@ export class DAOManager {
 		});
 		return q;
 	}
+
+	paginatePipeline(matchPipeline: object[], options: { page: number, limit: number }, pipeline: object[]) {
+		const aggrPipeline = [
+			...matchPipeline,
+			{
+				$facet: {
+					data: [
+						{
+							$skip: (options.page - 1) * options.limit,
+						}, {
+							$limit: options.limit,
+						},
+						...pipeline,
+					],
+					meta: [
+						{ $count: 'total' },
+					],
+				},
+			}, {
+				$project: {
+					data: 1,
+					total: {
+						$arrayElemAt: ['$meta.total', 0],
+					},
+				},
+			},
+		];
+		return {
+			pipeline: aggrPipeline,
+			async aggregate<T extends Document = any>(model: string) {
+				const CollectionModel: Model<T> = Models[model];
+				const result = await CollectionModel.aggregate(aggrPipeline).exec(); return result[0];
+			},
+		};
+	}
+
+
 }
