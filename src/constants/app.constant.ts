@@ -314,6 +314,8 @@ export let DATABASE = {
 			ARTICLE: 'articles',
 			LOAN: 'loans',
 			PROPERTIES: 'properties',
+			Article_Category: 'article-categories',
+			Subscriptions: 'subscriptions',
 		},
 	},
 

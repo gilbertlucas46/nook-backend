@@ -148,7 +148,84 @@ export class ArticleClass extends BaseEntity {
                         LIST: 0,
                     },
                 },
+                {
+                    $unwind: {
+                        path: '$FEATURED',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'articlecategories',
+                        localField: 'FEATURED.categoryId',
+                        foreignField: '_id',
+                        as: 'FEATURED.category',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$FEATURED.category',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $group: {
+                        _id: '$_id',
+                        FEATURED: {
+                            $push: '$FEATURED',
+                        },
+                        LATEST: {
+                            $first: '$LATEST',
+                        },
+                        CATEGORIES: {
+                            $first: '$CATEGORIES',
+                        },
+
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$LATEST',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'articlecategories',
+                        localField: 'LATEST.categoryId',
+                        foreignField: '_id',
+                        as: 'LATEST.category',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$LATEST.category',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $group: {
+                        _id: '$_id',
+                        FEATURED: {
+                            $first: '$FEATURED',
+                        },
+                        LATEST: {
+                            $push: '$LATEST',
+                        },
+                        CATEGORIES: {
+                            $first: '$CATEGORIES',
+                        },
+
+                    },
+                },
+                // {
+                //     $project: {
+                //     'articleAction': 0,
+                //     },
+                // },
             ];
+            console.log('pipelinepipelinepipeline', JSON.stringify(pipeline));
+
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
             if (!data) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
             return data[0];
@@ -175,16 +252,18 @@ export class ArticleClass extends BaseEntity {
             if (categoryId) {
                 query = {
                     categoryId: Types.ObjectId(categoryId),
-                    $or: [{
-                        status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-                    }, {
-                        status: Constant.DATABASE.ARTICLE_STATUS.BLOCK,
+                    $and: [{
+                        $or: [{
+                            status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                        }, {
+                            status: Constant.DATABASE.ARTICLE_STATUS.BLOCK,
+                        }],
+                        _id: {
+                            $ne: {
+                                articleId: Types.ObjectId(articleId),
+                            },
+                        },
                     }],
-                    // _id: {
-                    //     $ne: {
-                    //         articleId: Types.ObjectId(articleId),
-                    //     },
-                    // },
                 };
             }
             else {
