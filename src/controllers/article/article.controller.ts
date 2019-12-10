@@ -85,9 +85,9 @@ class ArticleController {
      * return []
      */
 
-    async getArticle(payload: ArticleRequest.GetArticle) {
+    async getArticle(payload: ArticleRequest.GetArticle, userData?) {
         try {
-            return await ENTITY.ArticleE.getArticlelist(payload);
+        return await ENTITY.ArticleE.getArticlelist(payload, userData);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

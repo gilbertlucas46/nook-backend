@@ -34,8 +34,6 @@ export let adminUserRoutes: ServerRoute[] = [
 					phoneNumber: Joi.string().min(7).max(15).trim().required(),
 					type: Joi.string().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
-						// Constant.DATABASE.USER_TYPE.OWNER.TYPE,
-						// Constant.DATABASE.USER_TYPE.TENANT.TYPE,
 					]),
 					faxNumber: Joi.string().allow(''),
 					language: Joi.string().allow(''),
@@ -89,7 +87,6 @@ export let adminUserRoutes: ServerRoute[] = [
 					status: Joi.string().valid([
 						Constant.DATABASE.STATUS.ADMIN.ACTIVE,
 						Constant.DATABASE.STATUS.ADMIN.BLOCKED,
-						// Constant.DATABASE.STATUS.ADMIN.PENDING,
 						Constant.DATABASE.STATUS.ADMIN.DELETE,
 					]),
 					type: Joi.string().valid([
@@ -148,7 +145,6 @@ export let adminUserRoutes: ServerRoute[] = [
 					status: Joi.string().valid([
 						Constant.DATABASE.STATUS.USER.ACTIVE,
 						Constant.DATABASE.STATUS.USER.BLOCKED,
-						// Constant.DATABASE.STATUS.USER.PENDING,
 						Constant.DATABASE.STATUS.USER.DELETED,
 					]),
 				},
