@@ -176,8 +176,6 @@ export class DAOManager {
 
 	async insert(model: ModelNames, data, options = {}) {
 		try {
-			console.log('model', model);
-
 			const ModelName: Model<any> = Models[model];
 			const obj = new ModelName(data);
 			await obj.save();
