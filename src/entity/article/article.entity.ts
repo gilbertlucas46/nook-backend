@@ -235,8 +235,9 @@ export class ArticleClass extends BaseEntity {
         }
     }
 
-    async getArticlelist(payload: ArticleRequest.GetArticle) {
+    async getArticlelist(payload: ArticleRequest.GetArticle, Admindata) {
         try {
+            console.log('userORAdmindatauserORAdmindatauserORAdmindata', Admindata);
             let { page, limit, sortType } = payload;
             const { articleId, sortBy, searchTerm, fromDate, toDate, categoryId, status } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
@@ -249,29 +250,42 @@ export class ArticleClass extends BaseEntity {
                 updatedAt: sortType,
             };
 
-            if (categoryId) {
-                query = {
-                    categoryId: Types.ObjectId(categoryId),
-                    $and: [{
-                        $or: [{
-                            status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-                        }, {
-                            status: Constant.DATABASE.ARTICLE_STATUS.BLOCK,
-                        }],
-                        _id: {
-                            $ne: {
-                                articleId: Types.ObjectId(articleId),
-                            },
-                        },
-                    }],
-                };
-            }
-            else {
+            if (Admindata && !status) {
                 query['$or'] = [
                     { status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE },
                     { status: Constant.DATABASE.ARTICLE_STATUS.BLOCK },
                 ];
+            } else if (status) {
+                query = {
+                    status,
+                };
+            } else {
+                query = {
+                    categoryId: Types.ObjectId(categoryId),
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                    _id: {
+                        $ne: Types.ObjectId(articleId),
+                    },
+                };
             }
+
+            // if (categoryId) {
+            //     query = {
+            //         categoryId: Types.ObjectId(categoryId),
+            //         $and: [{
+            //             $or: [{
+            //                 status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+            //             }, {
+            //                 status: Constant.DATABASE.ARTICLE_STATUS.BLOCK,
+            //             }],
+            //             _id: {
+            //                 $ne: {
+            //                     articleId: Types.ObjectId(articleId),
+            //                 },
+            //             },
+            //         }],
+            //     };
+            // }
 
             if (searchTerm) {
                 query = {
@@ -328,6 +342,8 @@ export class ArticleClass extends BaseEntity {
                 },
                 { $sort: sortingType },
             ];
+            console.log('pipelinepipelinepipelinepipelinepipeline', pipeline);
+
             const data = await this.DAOManager.paginate(this.modelName, pipeline);
             return data;
         } catch (error) {

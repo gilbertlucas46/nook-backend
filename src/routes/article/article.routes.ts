@@ -396,7 +396,7 @@ export let articleRoutes: ServerRoute[] = [
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
-                const registerResponse = await ArticleService.getArticle(payload);
+                const registerResponse = await ArticleService.getArticle(payload,adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
