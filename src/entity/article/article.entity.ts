@@ -4,6 +4,7 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
 import * as utils from '@src/utils';
 import { Types, Schema } from 'mongoose';
+import { ObjectId } from 'bson';
 export class ArticleClass extends BaseEntity {
     constructor() {
         super('Article');
@@ -298,53 +299,29 @@ export class ArticleClass extends BaseEntity {
                 {
                     $match: searchCriteria,
                 },
-
                 { $sort: sortingType },
                 { $limit: 7 },
-                // {
-                //     $project: {
-                //         results: {
-                //             $reduce: {
-                //                 input: '$list',
-                //                 initialValue: {
-                //                     FEATURED: [],
-                //                     // LATEST: [],
-                //                     LIST: [],
-                //                 },
-                //                 in: {
-                //                     $cond: {
-                //                         if: {
-                //                             $and: [
-                //                                 {
-                //                                     $ne: [{ $size: '$$value.FEATURED' }, 1],
-                //                                 },
-                //                                 {
-                //                                     $eq: ['$$this.isFeatured', true],
-                //                                 },
-                //                             ]
-                //                         }, then: {
-                //                             $mergeObjects: ['$$value', { FEATURED: ['$$this'] }],
-                //                         }, else: {
-                //                             $cond: {
-                //                                 if: {
-                //                                     $ne: [{ $size: '$$value.LIST' }, 6],
-                //                                 },
-                //                                 then: {
-                //                                     $mergeObjects: ['$$value', { LIST: { $concatArrays: ['$$value.LIST', ['$$this']] } }],
-                //                                 },
-                //                                 else: {
-                //                                     $mergeObjects: ['$$value', { LIST: { $concatArrays: ['$$value.LIST', ['$$this']] } }],
-                //                                 },
-                //                             },
-                //                         },
-                //                     },
-                //                 },
-                //             },
-                //         },
-                //     },
-                // },
+                {
+                    $project: {
+                        articleAction: 0,
+                    },
+                },
             ];
-            const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
+            const cateogryPipeline = [
+                {
+                    $match: {
+                        _id: new Types.ObjectId(categoryId),
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'articles',
+                        pipeline,
+                        as: 'articles',
+                    },
+                },
+            ];
+            const data = await this.DAOManager.aggregateData('ArticleCategories', cateogryPipeline);
             return data;
         } catch (error) {
             return Promise.reject(error);
