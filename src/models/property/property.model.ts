@@ -118,6 +118,7 @@ export interface IProperty extends Document {
 	};
 	propertyActions: IPropertyActions[];
 	sold_rent_time: number;
+	isUserBlockedByAdmin: boolean;
 }
 
 const propertySchema = new Schema({
@@ -308,6 +309,7 @@ const propertySchema = new Schema({
 	},
 	sold_rent_time: { type: Number },
 	property_expiry_time: { type: Number },
+	isUserBlockedByAdmin: { type: Boolean },  // is blocked by Admin
 	actions_performed_by_admin: {
 		number: {
 			type: Number,

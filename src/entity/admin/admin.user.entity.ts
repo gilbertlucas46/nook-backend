@@ -13,7 +13,7 @@ class AdminUserE extends BaseEntity {
         super('User');
     }
 
-    async getUserList(payload: AdminRequest.IsearchUser) {
+    async getUserList(payload: AdminRequest.IGetUSerList) {
         try {
             let { page, limit, sortBy, sortType } = payload;
             const { searchTerm, userId, type, status, fromDate, toDate } = payload;
@@ -23,6 +23,9 @@ class AdminUserE extends BaseEntity {
             sortType = !sortType ? -1 : sortType;
             const matchObject: any = { $match: {} };
             let searchCriteria = {};
+            sortingType = {
+                createdAt: sortType,
+            };
             if (searchTerm) {
                 // for filtration
                 searchCriteria = {
@@ -92,10 +95,21 @@ class AdminUserE extends BaseEntity {
                         };
                         break;
                 }
-            } else {
-                sortBy = 'updatedAt';
-                sortingType = {
-                    updatedAt: sortType,
+            }
+            // else {
+            //     sortBy = 'updatedAt';
+            //     sortingType = {
+            //         createdAt: sortType,
+            //     };
+            // }
+            if (!status) {
+                matchObject.$match = {
+                    $or: [{
+                        status: Constant.DATABASE.STATUS.USER.ACTIVE,
+                    }, {
+                        status: Constant.DATABASE.STATUS.USER.BLOCKED,
+                    },
+                    ],
                 };
             }
 
@@ -112,20 +126,29 @@ class AdminUserE extends BaseEntity {
                 matchObject,
                 searchCriteria,
                 {
+                    $sort: sortingType,
+                },
+                {
                     $project: {
                         _id: 1,
+                        fullName: 1,
+                        type: 1,
                         userName: 1,
                         updatedAt: 1,
                         createdAt: 1,
                         email: 1,
+                        phoneNumber: 1,
                         firstName: 1,
                         middleName: 1,
-                        userId: '$_id',
+                        // userId: '$_id',
                         status: 1,
                     },
                 },
             ];
-            return await this.DAOManager.paginate(this.modelName, query, limit, page);
+            const data = await this.DAOManager.paginate(this.modelName, query, limit, page);
+            console.log('datadatadatadatadatadatadata', data);
+            return data;
+
         } catch (error) {
             return Promise.reject(error);
         }
@@ -141,7 +164,7 @@ class AdminUserE extends BaseEntity {
 
         const sendObj = {
             receiverEmail: payload,
-            subject: 'User Login Credentials',
+            subject: 'agent Login Credentials',
             content: html,
         };
 

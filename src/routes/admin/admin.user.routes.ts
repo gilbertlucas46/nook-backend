@@ -2,50 +2,48 @@ import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
-import * as CONSTANT from '../../constants';
-import { AdminStaffController } from '../../controllers';
-import { AdminProfileService } from '@src/controllers/admin/adminProfile.controller';
+import { AdminUserController, AdminStaffController } from '../../controllers';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 
-const objectSchema = Joi.object({
-	moduleName: Joi.string().min(1).valid([
-		CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
-		CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTIES,
-		CONSTANT.DATABASE.PERMISSION.TYPE.LOAN,
-		CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-		CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
-		CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-		CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
-	]).required(),
-	accessLevel: Joi.number().valid([CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE]).default(2),
-});
-
-export let subAdminRoutes: ServerRoute[] = [
-    {
+export let adminUserRoutes: ServerRoute[] = [
+	{
 		method: 'POST',
-		path: '/v1/admin/staff',
+		path: '/v1/admin/users',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: AdminRequest.IaddSubAdmin = request.payload as AdminRequest.IaddSubAdmin;
-				const registerResponse = await AdminStaffController.createStaff(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
+				const payload = request.payload as AdminRequest.IAddUser;
+				const registerResponse = await AdminUserController.addUser(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
 		options: {
-			description: 'Create staff member',
-			tags: ['api', 'anonymous', 'Admin', 'staff_member'],
+			description: 'Create user',
+			tags: ['api', 'anonymous', 'Admin', 'user'],
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					email: Joi.string().email().required(),
-					firstName: Joi.string().min(1).max(32).required(),
-					lastName: Joi.string().min(1).max(32).required(),
-					phoneNumber: Joi.string().min(7).max(15),
-					permission: Joi.array().items(objectSchema).min(1).unique(),
+					email: Joi.string().lowercase().email().trim().required(),
+					userName: Joi.string().lowercase().trim().required(),
+					firstName: Joi.string().min(3).max(30).trim().required(),
+					middleName: Joi.string().trim().allow('').required(),
+					lastName: Joi.string().min(3).max(30).trim().required(),
+					phoneNumber: Joi.string().min(7).max(15).trim().required(),
+					type: Joi.string().valid([
+						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+						// Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+						// Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+					]),
+					faxNumber: Joi.string().allow(''),
+					language: Joi.string().allow(''),
+					title: Joi.string().allow(''),
+					license: Joi.string().allow(''),
+					companyName: Joi.string().allow(''),
+					address: Joi.string().allow(''),
+					aboutMe: Joi.string().allow(''),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -56,23 +54,23 @@ export let subAdminRoutes: ServerRoute[] = [
 				},
 			},
 		},
-    },
+	},
 
-    /**
-     * @description This Api is used to get list of all user based on filters.
-     */
+	/**
+	 * @description This Api is used to get list of all user based on filters.
+	 */
 
-    {
+	{
 		method: 'GET',
-		path: '/v1/admin/userlist',
+		path: '/v1/admin/users',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.query;
+				const payload: AdminRequest.IGetUSerList = request.query as any;
 				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
 				// }
-				const registerResponse = await AdminStaffController.getStaffList(payload);
+				const registerResponse = await AdminUserController.getUserList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
@@ -87,24 +85,17 @@ export let subAdminRoutes: ServerRoute[] = [
 				query: {
 					page: Joi.number(),
 					limit: Joi.number(),
-					sortBy: Joi.string().allow('createdAt'),
-					// permission: Joi.string().valid([
-					// 	CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
-					// ]).required(),
-					permissionType: Joi.string().valid([
-						CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
-						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTIES,
-						CONSTANT.DATABASE.PERMISSION.TYPE.LOAN,
-						CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
-						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
-						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
-					]),
+					sortBy: Joi.string(), // allow('createdAt'),
 					status: Joi.string().valid([
-						CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
-						CONSTANT.DATABASE.STATUS.ADMIN.BLOCKED,
-						// CONSTANT.DATABASE.STATUS.ADMIN.PENDING,
-						CONSTANT.DATABASE.STATUS.ADMIN.DELETE,
+						Constant.DATABASE.STATUS.ADMIN.ACTIVE,
+						Constant.DATABASE.STATUS.ADMIN.BLOCKED,
+						// Constant.DATABASE.STATUS.ADMIN.PENDING,
+						Constant.DATABASE.STATUS.ADMIN.DELETE,
+					]),
+					type: Joi.string().valid([
+						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
 					]),
 					sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
 					searchTerm: Joi.string(),
@@ -121,4 +112,54 @@ export let subAdminRoutes: ServerRoute[] = [
 			},
 		},
 	},
-]
+	/**
+	 * @description update user
+	 */
+
+	{
+		method: 'Patch',
+		path: '/v1/admin/users/{userId}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = {
+					...request.params,
+					...request.payload as any,
+				};
+				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
+				// }
+				const registerResponse = await AdminUserController.updateUser(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Get Admin Profile',
+			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					userId: Joi.string(),
+				},
+				payload: {
+					status: Joi.string().valid([
+						Constant.DATABASE.STATUS.USER.ACTIVE,
+						Constant.DATABASE.STATUS.USER.BLOCKED,
+						// Constant.DATABASE.STATUS.USER.PENDING,
+						Constant.DATABASE.STATUS.USER.DELETED,
+					]),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+];

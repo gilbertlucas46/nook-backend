@@ -11,11 +11,19 @@ export class ArticleClass extends BaseEntity {
 
     async allArticlesBasedOnCategory(payload: ArticleRequest.GetArticle) {
         try {
-            let { page, limit } = payload;
+            let { page, limit, sortType } = payload;
             const { searchTerm } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
-            const promise = [];
+
+            sortType = !sortType ? -1 : sortType;
+            let sortingType = {};
+
+            sortingType = {
+                updatedAt: sortType,
+                isFeatured: sortType,
+            };
+
             let searchCriteria: any = {};
             if (searchTerm) {
                 searchCriteria = {
@@ -34,6 +42,9 @@ export class ArticleClass extends BaseEntity {
             const pipeline = [
                 {
                     $match: searchCriteria,
+                },
+                {
+                    $sort: sortingType,
                 },
                 {
                     $group: {
