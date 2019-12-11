@@ -52,10 +52,8 @@ export let Routes: ServerRoute[] = [
 	// 		// 	return Promise.reject('Fuckity fuck, this resource isn’t available.');
 	// 		// }
 	// 		if (arr[0].includes([accept])) {
-	// 			console.log('LLLLLLLLLLLLLLLLLLLLLLLLLLLLll');
 	// 			return;
 	// 		} else {
-	// 			console.log('>>>>>>>>>>>>>');
 	// 			return Promise.reject('Fuckity fuck, this resource isn’t available.');
 	// 		}
 	// 		// if (accept && accept.match(arr[0])) {
