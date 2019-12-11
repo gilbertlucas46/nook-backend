@@ -12,29 +12,6 @@ export class UserClass extends BaseEntity {
 		super('User');
 	}
 	/**
-	 * @function createUser
-	 * @description function to create user
-	 * @payload  ProfileUpdate
-	 * return object
-	 */
-	// async createUser(userData: UserRequest.UserData) {
-	// 	try {
-	// 		const dataToInsert = {
-	// 			// name: userData.userName,
-	// 			email: userData.email,
-	// 			// password:userData.password ,
-	// 			firstName: userData.firstName,
-	// 			lastName: userData.lastName,
-	// 			phoneNumber: userData.phoneNumber,
-	// 		};
-	// 		const user: UserRequest.Register = await this.createOneEntity(dataToInsert);
-	// 		return user;
-	// 	} catch (error) {
-	// 		return Promise.reject(error);
-	// 	}
-	// }
-
-	/**
 	 * @function createToken
 	 * @description function to create accessToken
 	 * @payload  ProfileUpdate
@@ -139,14 +116,25 @@ export class UserClass extends BaseEntity {
 							],
 							Featured: [
 								{
-									$match: {
-										$and: [
-											{ isFeatured: true },
-											{ userId: userData._id },
+									$lookup: {
+										from: 'subscriptions',
+										let: { propertyId: '$_id' },
+										pipeline: [
+											{
+												$match: {
+													$expr: {
+														$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
+													},
+												},
+											},
+											{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+											{ $project: { _id: 1 } },
 										],
+										as: 'subscriptions',
 									},
 								},
-								{ $count: 'Total' },
+								{ $project: { subscriptions: { $size: '$subscriptions' } } },
+								{ $match: { subscriptions: { $gt: 0 } } },
 							],
 							soldPropertyLast30Days: [
 								{
@@ -181,9 +169,10 @@ export class UserClass extends BaseEntity {
 							Active: {
 								$cond: { if: { $size: '$Active' }, then: { $arrayElemAt: ['$Active.Total', 0] }, else: 0 },
 							},
-							Featured: {
-								$cond: { if: { $size: ['$Featured'] }, then: { $arrayElemAt: ['$Featured.Total', 0] }, else: 0 },
-							},
+							Featured: { $size: '$Featured.subscriptions' },
+							// Featured: {
+							// 	$cond: { if: { $size: ['$Featured'] }, then: { $arrayElemAt: ['$Featured.Total', 0] }, else: 0 },
+							// },
 							soldPropertyLast30Days: {
 								$cond: { if: { $size: ['$soldPropertyLast30Days'] }, then: { $arrayElemAt: ['$soldPropertyLast30Days.Total', 0] }, else: 0 },
 							},
@@ -203,7 +192,7 @@ export class UserClass extends BaseEntity {
 				const data = await this.DAOManager.aggregateData('Property', pipeline);
 				return {
 					...data[0],
-					isFeaturedProfile: !!userData.isFeaturedProfile,
+					// isFeaturedProfile: !!userData.isFeaturedProfile,
 					enquiryLast30Day: enquiryLast30Days,
 				};
 			}

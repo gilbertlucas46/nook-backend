@@ -1,4 +1,5 @@
 import * as Constant from '@src/constants/app.constant';
+import * as utils from '@src/utils';
 
 class SubscriptionController {
 
@@ -6,6 +7,7 @@ class SubscriptionController {
 		try {
 			return Constant.DATABASE.SUBSCRIPTION_TYPE(payload.type);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}

@@ -99,8 +99,7 @@ class AdminStaffE extends BaseEntity {
                     staffStatus: 1,
                 },
             });
-        const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-        return data;
+        return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
     }
 
     sendInvitationMail(payload: any, genCredentials: string) {

@@ -2,6 +2,8 @@ import * as HapiSwagger from 'hapi-swagger';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
 
+import * as config from 'config';
+
 // Register Swagger Plugin
 export let plugin = {
 	name: 'swagger-plugin',
@@ -11,7 +13,7 @@ export let plugin = {
 				title: 'NOOK_APP API 1.0',
 				version: 'v1',
 			},
-			schemes: ['http'],
+			schemes: [config.get('protocol')],
 			securityDefinitions: {
 				api_key: {
 					type: 'apiKey',

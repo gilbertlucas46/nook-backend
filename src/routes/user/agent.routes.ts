@@ -40,7 +40,8 @@ export let agentRoute: ServerRoute[] = [
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                     fromDate: Joi.number(),
                     // toDate: Joi.number(),
-                    // cityId: Joi.string(),
+                    cityId: Joi.string(),
+                    byCity: Joi.string(),
                     userId: Joi.string(),
                     // specializingIn_property_type: Joi.array().items(
                     //     Joi.number().valid(
@@ -70,6 +71,7 @@ export let agentRoute: ServerRoute[] = [
                             ),
                         ),
                     searchBy: Joi.string().valid('company', 'name', 'location').default('location'),
+                    screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE)
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
