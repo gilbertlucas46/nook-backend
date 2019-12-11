@@ -19,7 +19,7 @@ export let agentRoute: ServerRoute[] = [
                 const agentList = await AgentService.searchAgent(reqObj);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, agentList));
             } catch (error) {
-                console.log('Error', error);
+                UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
             }
         },

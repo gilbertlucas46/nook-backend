@@ -4,7 +4,6 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
 import * as utils from '@src/utils';
 import { Types, Schema } from 'mongoose';
-import { ObjectId } from 'bson';
 export class ArticleClass extends BaseEntity {
     constructor() {
         super('Article');
@@ -31,8 +30,6 @@ export class ArticleClass extends BaseEntity {
                     $or: [
                         { title: { $regex: searchTerm, $options: 'i' } },
                         { description: { $regex: searchTerm, $options: 'i' } },
-                        // { title: new RegExp('.*' + searchTerm + '.*', 'i') },
-                        // { description: new RegExp('.*' + searchTerm + '.*', 'i') },
                     ],
                 };
             }
@@ -218,13 +215,7 @@ export class ArticleClass extends BaseEntity {
 
                     },
                 },
-                // {
-                //     $project: {
-                //     'articleAction': 0,
-                //     },
-                // },
             ];
-            console.log('pipelinepipelinepipeline', JSON.stringify(pipeline));
 
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
             if (!data) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
@@ -237,7 +228,6 @@ export class ArticleClass extends BaseEntity {
 
     async getArticlelist(payload: ArticleRequest.GetArticle, Admindata) {
         try {
-            console.log('userORAdmindatauserORAdmindatauserORAdmindata', Admindata);
             let { page, limit, sortType } = payload;
             const { articleId, sortBy, searchTerm, fromDate, toDate, categoryId, status } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
@@ -342,8 +332,6 @@ export class ArticleClass extends BaseEntity {
                 },
                 { $sort: sortingType },
             ];
-            console.log('pipelinepipelinepipelinepipelinepipeline', pipeline);
-
             const data = await this.DAOManager.paginate(this.modelName, pipeline);
             return data;
         } catch (error) {
@@ -372,8 +360,6 @@ export class ArticleClass extends BaseEntity {
                     $or: [
                         { title: { $regex: searchTerm, $options: 'i' } },
                         { description: { $regex: searchTerm, $options: 'i' } },
-                        // { title: new RegExp('.*' + searchTerm + '.*', 'i') },
-                        // { description: new RegExp('.*' + searchTerm + '.*', 'i') },
                     ],
                 };
             }
