@@ -134,5 +134,6 @@ export namespace PropertyRequest {
 		limit: number;
 		sortType?: number;
 		sortBy?: string;
+		searchTerm?: string;
 	}
 }
