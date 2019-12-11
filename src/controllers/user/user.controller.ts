@@ -42,11 +42,7 @@ export class UserController {
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
 					const userResponse = UniversalFunctions.formatUserData(User);
-					// const html = `<html><head><title> Nook user Register | Thanx for Registering with us...</title></head></html>`;
-					// const mail = new MailManager(payload.email, 'nook welcomes you', html);
-					// const mail = new MailManager(payload.email, 'nook welcomes you', html);
 					const mail = new MailManager();
-					// mail.sendMail({ receiverEmail: payload['email'], subject: 'nook welcomes you', html: html });
 					const sendObj = {
 						receiverEmail: payload.email,
 						subject: 'nook welcomes you',
@@ -57,6 +53,7 @@ export class UserController {
 				}
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -79,6 +76,12 @@ export class UserController {
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
+					if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
+						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
+					}
+					if (userData.status === Constant.DATABASE.STATUS.USER.DELETED) {
+						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
+					}
 					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
 						return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD;
 					} else {
@@ -97,6 +100,7 @@ export class UserController {
 				return Constant.STATUS_MSG.ERROR.E400.INVALID_LOGIN;
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -115,6 +119,7 @@ export class UserController {
 			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
 			return getPropertyData;
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -133,7 +138,8 @@ export class UserController {
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
-				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber) {
+				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber
+				|| getUser.type !== updateUser.type) {
 
 				const propertyCriteria = { userId: updateUser._id };
 				const updatePropertyData = {
@@ -144,6 +150,7 @@ export class UserController {
 						profilePicUrl: updateUser.profilePicUrl,
 						firstName: updateUser.firstName,
 						lastName: updateUser.lastName,
+						userType: updateUser.type,
 					},
 					isProfileComplete: true,
 				};
@@ -169,6 +176,35 @@ export class UserController {
 
 			return updateUser;
 		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+	/**
+	 * @function getProfile
+	 * @description function to get user profile
+	 * @payload  UserData
+	 * return object
+	 */
+	async getProfile(payload: UserRequest.UserData) {
+		try {
+			if (
+				payload.type === Constant.DATABASE.USER_TYPE.AGENT.TYPE ||
+				payload.type === Constant.DATABASE.USER_TYPE.OWNER.TYPE
+			) {
+				const step1 = await ENTITY.SubscriptionE.getAllHomepageSubscritions({ userId: payload._id });
+				if (step1.length) {
+					payload.isHomePageFeatured = true;
+					payload.subscriptionexpirarionTime = step1[0].endDate;
+				} else {
+					payload.isHomePageFeatured = false;
+				}
+			} else {
+				payload.isHomePageFeatured = false;
+			}
+			return payload;
+		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -222,6 +258,7 @@ export class UserController {
 				else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -244,6 +281,7 @@ export class UserController {
 				if (diffMins > 0) { return Promise.reject('LinkExpired'); } else { return {}; } // success
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -275,6 +313,7 @@ export class UserController {
 				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); } else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -286,8 +325,12 @@ export class UserController {
 	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
-			return await ENTITY.UserE.userDashboad(userData);
+			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
+			const step2 = await ENTITY.UserE.userDashboad(userData);
+			step2.isFeaturedProfile = step1 ? true : false;
+			return step2;
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -299,9 +342,9 @@ export class UserController {
 	 */
 	async userProperty(payload: PropertyRequest.UserProperty) {
 		try {
-			const data = await ENTITY.PropertyE.suggested_property(payload);
-			return data;
+			return await ENTITY.PropertyE.suggested_property(payload);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -322,6 +365,7 @@ export class UserController {
 			return { formatedData, accessToken };
 		}
 		catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}

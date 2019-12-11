@@ -26,6 +26,7 @@ export interface IUser extends Document {
 	passwordResetTokenExpirationTime?: Date;
 	backGroundImageUrl: string;
 	isFeaturedProfile: boolean;
+	isHomePageFeatured: boolean;
 	specializingIn_property_type?: number[];
 	specializingIn_property_category?: string[];
 	serviceAreas?: Types.ObjectId[];
@@ -78,6 +79,7 @@ const userSchema = new Schema({
 	passwordResetToken: { type: String },
 	passwordResetTokenExpirationTime: { type: Date },
 	isFeaturedProfile: { type: Boolean, default: false },
+	isHomePageFeatured: { type: Boolean, default: false },
 	specializingIn_property_type: [{
 		type: Number,
 		enum: [
@@ -99,8 +101,8 @@ const userSchema = new Schema({
 		type: Schema.Types.ObjectId, ref: 'City',  // Refer to city schema
 	}],
 }, {
-		versionKey: false,
-	},
+	versionKey: false,
+},
 );
 
 export let User = model<IUser>('User', userSchema);

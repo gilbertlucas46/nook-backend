@@ -1,5 +1,5 @@
 import { Database } from '../databases';
-import { AdminE, regionEntity } from '@src/entity';
+import { AdminE, regionEntity, SubscriptionPlanEntity } from '@src/entity';
 import { LoanApplication } from '@src/models';
 import { Transaction } from '@src/models';
 
@@ -10,6 +10,8 @@ export class Bootstrap {
 		await this.initRegions();
 		AdminE.adminAccountCreator();
 		await this.initCounters();
+		await this.subscriptionPlan();
+		// await this.bootstrapCounters();
 	}
 	async initRegions() {
 		await regionEntity.bootstrap();
@@ -22,9 +24,9 @@ export class Bootstrap {
 			const userId = lastUser.referenceId || 'USR0';
 			userCounter = parseInt(userId.substr(3), 10);
 		}
-		// global.counters = {
-		// 	LoanApplication: userCounter,
-		// };
+		global.counters = {
+			LoanApplication: userCounter,
+		};
 	}
 
 	async initCounters() {
@@ -35,7 +37,11 @@ export class Bootstrap {
 			transactionCounter = parseInt(invoiceNo.substr(7));
 		}
 		global.counters = {
-			Transaction: transactionCounter
+			Transaction: transactionCounter,
 		};
+	}
+
+	async subscriptionPlan() {
+		await SubscriptionPlanEntity.bootstrap();
 	}
 }

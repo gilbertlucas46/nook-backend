@@ -1,4 +1,5 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
+import * as utils from '@src/utils';
 
 export class HelpCenterEntity extends BaseEntity {
     constructor() {
@@ -25,6 +26,7 @@ export class HelpCenterEntity extends BaseEntity {
             ];
             return await this.DAOManager.aggregateData(this.modelName, pipeline, {});
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -46,7 +48,7 @@ export class HelpCenterEntity extends BaseEntity {
             ];
             return await this.DAOManager.aggregateData(this.modelName, pipeline, {});
         } catch (error) {
-            console.log('Error', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

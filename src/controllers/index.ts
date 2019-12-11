@@ -12,3 +12,5 @@ export { LoanController } from './loan/loan.controller';
 export { transactionController } from './transaction/transaction.controller';
 export { searchController } from './search.controller';
 export { subscriptionController } from './subscription/subscription.controller';
+export { AdminUserController } from './admin/admin.user.controller';
+export { CategoryService } from './article/articleCategories.controller';

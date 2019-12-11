@@ -36,9 +36,6 @@ export let DATABASE = {
 	},
 
 	LOAN_APPLICATION_STATUS: {
-		// PENDING: 'pending',
-		// REJECTED: 'rejected',
-		// APPROVED: 'approved',
 		DRAFT: {
 			label: 'Draft',
 			value: 'DRAFT',
@@ -120,16 +117,6 @@ export let DATABASE = {
 			},
 		},
 	},
-	INDUSTRY: {
-		AGRI_FOREST_FISH: 'agriculture',
-		ACCOMOD_FOOD_SERVICES: 'accomodation',
-		ARTS_ENTERTAINMENT_RECREATION: 'arts',
-		COMMUNICATION: 'communication',
-		CONSTRUCTION: 'construction',
-		EDUCATION: 'education',
-		IT: 'it',
-		OTHERS: 'others',
-	},
 
 	HOME_OWNERSHIP: {
 		OWNED: 'owned',
@@ -145,8 +132,8 @@ export let DATABASE = {
 		FATHER: 'father',
 		MOTHER: 'mother',
 		SPOUSE: 'spouse',
-		SON : 'son',
-		DAUGHTER : 'daughter',
+		SON: 'son',
+		DAUGHTER: 'daughter',
 	},
 
 	CIVIL_STATUS: {
@@ -327,6 +314,8 @@ export let DATABASE = {
 			ARTICLE: 'articles',
 			LOAN: 'loans',
 			PROPERTIES: 'properties',
+			Article_Category: 'article-categories',
+			Subscriptions: 'subscriptions',
 		},
 	},
 
@@ -343,61 +332,67 @@ export let DATABASE = {
 		WAREHOUSE: 'Warehouse',
 	},
 
-	ARTICLE_TYPE: {
-		// FEATURED_ARTICLE: {
-		// 	NUMBER: 1,
-		// 	TYPE: 'FEATURED_ARTICLE',
-		// 	DISPLAY_NAME: 'Featured Article',
-		// },
-		AGENTS: {
-			NUMBER: 2,
-			TYPE: 'AGENTS',
-			DISPLAY_NAME: 'Agent',
-		},
-		BUYING: {
-			NUMBER: 3,
-			TYPE: 'BUYING',
-			DISPLAY_NAME: 'Buying',
-		},
-		HOME_LOANS: {
-			NUMBER: 4,
-			TYPE: 'HOME_LOANS',
-			DISPLAY_NAME: 'Home Loans',
-		},
-		RENTING: {
-			NUMBER: 5,
-			TYPE: 'RENTING',
-			DISPLAY_NAME: 'Renting',
-		},
-		SELLING: {
-			NUMBER: 6,
-			TYPE: 'SELLING',
-			DISPLAY_NAME: 'Selling',
-		},
-		NEWS: {
-			NUMBER: 7,
-			TYPE: 'NEWS',
-			DISPLAY_NAME: 'News',
-		},
-		// legal stuff, international news, domestic news, sports coverage, political news
+	ArticleCategoryStatus: {
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
 	},
-
+	// ARTICLE_TYPE: {
+	// 	// FEATURED_ARTICLE: {
+	// 	// 	NUMBER: 1,
+	// 	// 	TYPE: 'FEATURED_ARTICLE',
+	// 	// 	DISPLAY_NAME: 'Featured Article',
+	// 	// },
+	// 	AGENTS: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'AGENTS',
+	// 		DISPLAY_NAME: 'Agent',
+	// 	},
+	// 	BUYING: {
+	// 		NUMBER: 3,
+	// 		TYPE: 'BUYING',
+	// 		DISPLAY_NAME: 'Buying',
+	// 	},
+	// 	HOME_LOANS: {
+	// 		NUMBER: 4,
+	// 		TYPE: 'HOME_LOANS',
+	// 		DISPLAY_NAME: 'Home Loans',
+	// 	},
+	// 	RENTING: {
+	// 		NUMBER: 5,
+	// 		TYPE: 'RENTING',
+	// 		DISPLAY_NAME: 'Renting',
+	// 	},
+	// 	SELLING: {
+	// 		NUMBER: 6,
+	// 		TYPE: 'SELLING',
+	// 		DISPLAY_NAME: 'Selling',
+	// 	},
+	// 	NEWS: {
+	// 		NUMBER: 7,
+	// 		TYPE: 'NEWS',
+	// 		DISPLAY_NAME: 'News',
+	// 	},
+	// legal stuff, international news, domestic news, sports coverage, political news
+	// },
 	ARTICLE_STATUS: {
-		PENDING: {
-			NUMBER: 1,
-			TYPE: 'PENDING',
-			DISPLAY_NAME: 'Pending',
-		},
-		ACTIVE: {
-			NUMBER: 2,
-			TYPE: 'ACTIVE',
-			DISPLAY_NAME: 'Active',
-		},
-		BLOCKED: {
-			NUMBER: 3,
-			TYPE: 'BLOCKED',
-			DISPLAY_NAME: 'Blocked',
-		},
+		PENDING: 'Pending',
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
+		// PENDING: {
+		// 	// NUMBER: 1,
+		// 	// TYPE: 'PENDING',
+		// 	DISPLAY_NAME: 'Pending',
+		// },
+		// ACTIVE: {
+		// 	NUMBER: 2,
+		// 	TYPE: 'ACTIVE',
+		// 	DISPLAY_NAME: 'Active',
+		// },
+		// BLOCKED: {
+		// 	NUMBER: 3,
+		// 	TYPE: 'BLOCKED',
+		// 	DISPLAY_NAME: 'Blocked',
+		// },
 	},
 
 	HELP_CENTER_TYPE: {
@@ -588,24 +583,41 @@ export let DATABASE = {
 		MONTHLY: 'MONTHLY',
 		YEARLY: 'YEARLY',
 	},
+	SCREEN_TYPE: {
+		HOMEPAGE: 'HOMEPAGE',
+		SEARCH: 'SEARCH',
+	},
 	// type = YEARLY, MONTHLY
 	SUBSCRIPTION_TYPE: (type) => [{
 		type: 'FREE',
+		featuredType: 'FREE',
 		amount: 0,
 		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
+		details: 'Finally a property portal that is completely free to use for all brokers, agents and property owners. List an unlimited number of properties; receive an unlimited number of property enquiries from potential tenants and buyers; and have your own profile page to promote yourself in order to find new clients who want you to sell or lease their property. There is no trial period needed, Nook is free forever. Just create an account and start posting your property listings for free.',
 	}, {
 		type: 'FEATURED PROPERTY',
+		featuredType: 'PROPERTY',
 		amount: type === 'MONTHLY' ? 890 : 990,
 		description: 'Featured Property Upgrade - Search Results',
+		details: 'Have a property for sale or lease that you want to feature more prominently? Want more people to view your property and send more enquiries? Want to sell or lease faster? Then upgrade your property to a Featured Property for a small fee to have it appear at the top of search results for your chosen location.',
 	}, {
 		type: 'FEATURED PROFILE',
+		featuredType: 'PROFILE',
 		amount: type === 'MONTHLY' ? 890 : 990,
 		description: 'Featured Profile Upgrade - Search Results',
+		details: 'Would you like more clients to be giving you more properties to sell or lease out? Want an easier way for these new clients to find you? Simply upgrade your broker/agent profile page for a small fee to a Featured Profile and have it appear at the top of search results for your chosen location. Have the clients come to you.',
 	}, {
 		type: 'HOMEPAGE FEATURE',
+		featuredType: 'HOMEPAGE',
 		amount: type === 'MONTHLY' ? 890 : 1799,
 		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
+		details: 'Would you like the maximum level of exposure for your property or your broker/agent profile page? Would you like a high number of people enquiring so you sell/lease faster and find new clients easier? Upgrade your property or broker/agent profile to a Homepage Feature for a small fee and get the most amount of website traffic now.',
 	}],
+	TRANSACTION_STATUS: {
+		SUCCEEDED: 'succeeded',
+		PENDING: 'pending',
+		FAILED: 'failed',
+	},
 };
 
 export const EMAIL_TEMPLATE = {
@@ -672,6 +684,11 @@ export let STATUS_MSG = {
 				type: 'REQUEST_ALREADY_SENT',
 				message: 'Request has already been sent to the entered email',
 			},
+			DELETE_ARTICLE_FIRST: {
+				statusCode: 400,
+				type: 'Delete Category',
+				message: 'first delete the Articles',
+			},
 			NOT_VERIFIED: {
 				statusCode: 400,
 				type: 'NOT_VERIFIED',
@@ -737,6 +754,11 @@ export let STATUS_MSG = {
 				type: 'INVALID_PROPERTY_STATUS',
 				message: 'Invalid Property Status ',
 			},
+			INVALID__STATUS: {
+				statusCode: 400,
+				type: 'INVALID__STATUS',
+				message: 'Invalid Status ',
+			},
 			PROPERTY_SOLD: {
 				statusCode: 400,
 				type: 'PROPERTY_SOLD',
@@ -751,6 +773,18 @@ export let STATUS_MSG = {
 				statusCode: 400,
 				type: 'DB_ERROR',
 				message: 'DB Error',
+			},
+			PAYMENT_ERROR: {
+				statusCode: 400,
+				type: 'PAYMENT_ERROR',
+				message: 'Payment failed, please try again later!',
+			},
+			WEBHOOK_ERROR: (error: any) => {
+				return {
+					statusCode: 400,
+					message: `Webhook Error: ${error.message}`,
+					type: 'WEBHOOK_ERROR',
+				};
 			},
 			DEFAULT: {
 				statusCode: 400,
@@ -769,6 +803,14 @@ export let STATUS_MSG = {
 					statusCode: 400,
 					message: err,
 					type: 'VALIDATION_ERROR',
+				};
+			},
+			SUBSCRIPTION_NOT_EXIST: (data: any) => {
+				return {
+					statusCode: 400,
+					type: 'SUBSCRIPTION_NOT_EXIST',
+					message: 'You do not have any subscription plan.',
+					data,
 				};
 			},
 		},
@@ -806,12 +848,12 @@ export let STATUS_MSG = {
 			ADMIN_DELETED: {
 				statusCode: 401,
 				type: 'ADMIN_DELETED',
-				message: 'You are blocked by Admin',
+				message: 'Please use another email to regiter',
 			},
 			ADMIN_BLOCKED: {
 				statusCode: 401,
 				type: 'ADMIN_BLOCKED',
-				message: 'You are blocked by Admin',
+				message: 'Please contact Admin you are blocked',
 			},
 			UNAUTHORIZED: {
 				statusCode: 401,
@@ -929,6 +971,16 @@ export let STATUS_MSG = {
 				};
 				return body;
 			},
+			SUBSCRIPTION_EXIST: {
+				statusCode: 200,
+				type: 'SUBSCRIPTION_EXIST',
+				message: 'You have successfully got one of the subscription plan.',
+			},
+			SUBSCRIPTION_NOT_EXIST: {
+				statusCode: 200,
+				type: 'SUBSCRIPTION_NOT_EXIST',
+				message: 'You do not have any subscription plan.',
+			},
 		},
 		S201: {
 			CREATED: {
@@ -960,6 +1012,11 @@ export let STATUS_MSG = {
 				statusCode: 201,
 				type: 'CREATED',
 				message: 'Article Created',
+			},
+			CATEGORY_CREATED: {
+				statusCode: 201,
+				type: 'CREATED',
+				message: 'Category Created',
 			},
 			PAYMENT_ADDED: {
 				statusCode: 201,
@@ -1009,7 +1066,7 @@ export let SERVER = {
 	TEMPLATE_PATH: process.cwd() + '/src/views/',
 	BY_PASS_OTP: '1212',
 	LISTNG_LIMIT: 10,
-	SYNC_LIMIT: undefined,
+	SYNC_LIMIT: 100000,
 	CONTACT_SYNC_LIMIT: 2000,
 	THUMB_WIDTH: 10,
 	THUMB_HEIGHT: 10,

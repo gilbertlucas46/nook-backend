@@ -3,7 +3,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
 import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '@src/constants';
-
+import * as utils from '@src/utils';
 export class EnquiryClass extends BaseEntity {
     constructor() {
         super('Enquiry');
@@ -29,7 +29,6 @@ export class EnquiryClass extends BaseEntity {
                 query['userId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
             } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) {
-                // query['userId'] = userData._id;
                 query['agentId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
             }
@@ -120,6 +119,7 @@ export class EnquiryClass extends BaseEntity {
             return await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
 
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

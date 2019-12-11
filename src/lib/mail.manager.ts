@@ -7,10 +7,10 @@ import { TemplateUtil } from '@src/utils/template.util';
 
 const transporter = nodemailer.createTransport({
 
-	host: config.get('smtp.mailHost'),         // 'smtp.gmail.com',
+	host: config.get('smtp.mailHost'),
 	port: config.get('smtp.mailPort'),
 	// bcc: config.get('smtp.bccMail')
-	secure: true,                              // upgrade later with STARTTLS
+	secure: true,
 	auth: {
 		user: config.get('smtp.mailUserName'), // config.get('MAIL_USERNAME'),
 		pass: config.get('smtp.mailPassword'), // '12345Appinventiv'
@@ -30,9 +30,9 @@ export class MailManager {
 			// let senderEmail = this.senderEmail
 			const mailOptions: Mail.Options = {
 				from: config.get('smtp.mailHost'), // sender email
-				to: params.receiverEmail, // || this.receiverEmail,            // list of receivers
-				subject: params.subject, // || this.subject,             // Subject line
-				// 	text: 'params.content', // || this.content,                // plain text body
+				to: params.receiverEmail, // || this.receiverEmail,
+				subject: params.subject, // || this.subject,
+				// 	text: 'params.content', // || this.content,
 				// html: `<b>${this.content}</b>`,    // html body
 				// bcc: config.get('smtp.bccMail')
 				html: params.content,    // html body
@@ -82,6 +82,7 @@ export class MailManager {
 					url: params.url,
 					year: new Date().getFullYear(),
 					// projectName: 'Nook',
+					// subject: params.subject,
 					GSG_ADDRESS: EMAIL_TEMPLATE.GSG_ADDRESS,
 					email: params.receiverEmail,
 					userName: params.userName,

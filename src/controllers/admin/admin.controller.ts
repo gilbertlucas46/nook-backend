@@ -116,6 +116,37 @@ export class AdminController {
 			return Promise.reject(error);
 		}
 	}
-}
 
+	async subscriptionList(payload) {
+		try {
+			return await ENTITY.SubscriptionPlanEntity.createOneEntity(payload);
+
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async getSubscriptionList() {
+		try {
+			return await ENTITY.SubscriptionPlanEntity.getMultiple({}, {});
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
+	async updateSubscription(payload) {
+		try {
+			const criteria = {
+				_id: payload.id,
+			};
+			delete payload['id'];
+			const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+			return data;
+
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+}
 export let AdminService = new AdminController();

@@ -25,6 +25,7 @@ export class AgentController {
 		try {
 			return await AgentE.getAgentInfo(userName);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}

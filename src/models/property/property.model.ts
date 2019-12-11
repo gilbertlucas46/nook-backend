@@ -110,6 +110,7 @@ export interface IProperty extends Document {
 	};
 	propertyImages: string[];
 	isFeatured: boolean;
+	isHomePageFeatured: boolean;
 	property_status: {
 		number: number;
 		status?: string;
@@ -117,6 +118,7 @@ export interface IProperty extends Document {
 	};
 	propertyActions: IPropertyActions[];
 	sold_rent_time: number;
+	isUserBlockedByAdmin: boolean;
 }
 
 const propertySchema = new Schema({
@@ -265,6 +267,7 @@ const propertySchema = new Schema({
 		middleName: { type: String },
 		lastName: { type: String },
 		email: { type: String },
+		userType: { type: String },
 	},
 	property_status: {
 		number: {
@@ -306,6 +309,7 @@ const propertySchema = new Schema({
 	},
 	sold_rent_time: { type: Number },
 	property_expiry_time: { type: Number },
+	isUserBlockedByAdmin: { type: Boolean },  // is blocked by Admin
 	actions_performed_by_admin: {
 		number: {
 			type: Number,
@@ -334,6 +338,7 @@ const propertySchema = new Schema({
 	},
 	approvedAt: { type: Number },
 	isFeatured: { type: Boolean, default: false },
+	isHomePageFeatured: { type: Boolean, default: false },
 	propertyActions: [
 		{
 			actionNumber: {

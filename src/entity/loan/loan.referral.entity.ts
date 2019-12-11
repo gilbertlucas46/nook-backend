@@ -2,6 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanReferralDocument } from '@src/models/referral';
 import * as Constant from '@src/constants';
 import { loanReferralRequest } from '@src/interfaces/loanReferral.interface';
+import * as utils from 'src/utils';
 class LoanReferral extends BaseEntity {
     constructor() {
         super('LoanReferral');
@@ -10,7 +11,7 @@ class LoanReferral extends BaseEntity {
         try {
             return await this.DAOManager.save<LoanReferralDocument>(this.modelName, payload);
         } catch (error) {
-            console.log('Error in create Referral', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -19,7 +20,7 @@ class LoanReferral extends BaseEntity {
         try {
             return await this.DAOManager.getData1<LoanReferralDocument>(this.modelName, payload, {});
         } catch (error) {
-            console.log('Error in get Referral', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -50,6 +51,7 @@ class LoanReferral extends BaseEntity {
                 data, total,
             };
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

@@ -7,6 +7,7 @@ import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
+const pswdCert: string = config.get('forgetPwdjwtSecret');
 
 /**
  * @author
@@ -64,7 +65,7 @@ export class AdminClass extends BaseEntity {
 
 	async createPasswordResetToken(adminData) {
 		try {
-			const tokenToSend = Jwt.sign(adminData.email, cert, { algorithm: 'HS256' });
+			const tokenToSend = Jwt.sign(adminData.email, pswdCert, { algorithm: 'HS256' });
 			const expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 			const criteriaForUpdatePswd = { _id: adminData._id };
 			const dataToUpdateForPswd = {
@@ -197,7 +198,7 @@ export class AdminClass extends BaseEntity {
 			};
 			const totalArticles = {
 				status: {
-					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
 				},
 			};
 			const loanQuery = {

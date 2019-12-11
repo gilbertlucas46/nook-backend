@@ -71,8 +71,10 @@ export namespace PropertyRequest {
 			property_for_string?: any,
 			property_for_displayName?: any;
 		};
-		isFeatured?: boolean;
-		propertyImages?: string[];
+		isFeatured: boolean;
+		isHomePageFeatured: boolean;
+		subscriptionId?: string;
+		propertyImages: string[];
 	}
 
 	export interface PropertyDetail {
@@ -111,11 +113,13 @@ export namespace PropertyRequest {
 		property_features?: string[];
 		byRegion?: string;
 		byCity?: string;
+		screenType?: string;
 	}
 	export interface UpdatePropertyByAction {
 		propertyId: string;
 		status?: string;
 		upgradeToFeature?: boolean;
+		upgradeToHomePageFeatured?: boolean;
 	}
 
 	export interface IPaginate {

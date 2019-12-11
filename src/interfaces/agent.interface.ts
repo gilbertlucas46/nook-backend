@@ -18,6 +18,8 @@ export namespace AgentRequest {
         // specializingIn_property_category?: any;
         soldProperty?: number;
         userId?: string;
+        screenType?: string;
+        byCity?: string;
     }
 
     export interface UserProperty {

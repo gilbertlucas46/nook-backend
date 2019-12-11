@@ -12,6 +12,17 @@ export class TransactionClass extends BaseEntity {
 		super('Transaction');
 	}
 
+	async findTransactionById(payload) {
+		try {
+			const query: any = {};
+			query.transactionId = payload.transactionId;
+			return await this.DAOManager.findOne(this.modelName, query, {});
+		} catch (error) {
+			utils.consolelog('Error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
 	async addTransaction(payload: TransactionRequest.CreateCharge, userData, chargeData) {
 		try {
 			return await this.DAOManager.saveData(this.modelName, {
@@ -24,10 +35,32 @@ export class TransactionClass extends BaseEntity {
 				description: chargeData.description,
 				status: chargeData.status,
 				userId: userData._id,
+				name: payload.name,
+				address: payload.address,
 				featuredType: payload.featuredType,
 				billingType: payload.billingType,
-				paymentMethod: chargeData.payment_method_details.card.brand
+				paymentMethod: chargeData.payment_method_details.card.brand,
+				paymentObject: chargeData,
 			});
+		} catch (error) {
+			utils.consolelog('Error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async updateTransactionStatus(payload, chargeData) {
+		try {
+			const query: any = {};
+			query._id = payload._id;
+
+			const set: any = {};
+			const update = {};
+			update['$set'] = set;
+			set.status = chargeData.status;
+			if (payload.subscriptionId) {
+				set.subscriptionId = payload.subscriptionId;
+			}
+			return await this.DAOManager.findAndUpdate(this.modelName, query, update);
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
@@ -36,31 +69,50 @@ export class TransactionClass extends BaseEntity {
 
 	async invoiceList(payload: TransactionRequest.InvoiceList, userData) {
 		try {
-			let { page, limit, featuredType } = payload;
+			const { page, limit, featuredType, fromDate, toDate } = payload;
 
-			let query: any = {};
+			const query: any = {};
 			query.userId = Types.ObjectId(userData._id);
-			query.status = "succeeded";
+			query.status = 'succeeded';
 			if (featuredType) {
 				query.featuredType = featuredType;
 			}
+			if (fromDate && toDate) { query.createdAt = { $gte: fromDate, $lte: toDate }; }
+			if (fromDate && !toDate) { query.createdAt = { $gte: fromDate }; }
+			if (!fromDate && toDate) { query.createdAt = { $lte: toDate }; }
 
 			const pipeline = [
-				{ "$match": query },
+				{ $match: query },
 				{
-					"$project": {
+					$project: {
 						invoiceNo: 1,
 						createdAt: 1,
 						description: 1,
 						featuredType: 1,
 						billingType: 1,
 						paymentMethod: 1,
-						amount: 1
-					}
-				}
+						amount: 1,
+					},
+				},
 			];
 
 			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+		} catch (error) {
+			utils.consolelog('Error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async invoiceDetails(payload: TransactionRequest.Id) {
+		try {
+			const query: any = {};
+			query._id = payload.transactionId;
+			const projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
+			const response = await this.DAOManager.findOne(this.modelName, query, projection);
+			const populateQuery = [
+				{ path: 'userId', model: 'User', select: 'email' },
+			];
+			return await this.DAOManager.populateDataOnAggregate(this.modelName, response, populateQuery);
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
