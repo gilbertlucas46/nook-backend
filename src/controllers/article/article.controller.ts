@@ -18,7 +18,6 @@ class ArticleController {
         try {
             return await ENTITY.ArticleCategoryE.addArticleName(payload);
         } catch (error) {
-            console.log('errrrrororooroorooorooror', error);
             return Promise.reject(error);
         }
     }

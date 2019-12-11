@@ -16,7 +16,6 @@ class CategoryController {
     // async addArticleName(payload, adminData) {
     //     try {
     //         const data = ENTITY.ArticleE.addArticleName(payload);
-    //         console.log(' return data; return data; return data;', data);
     //         return data;
 
     //     } catch (error) {
