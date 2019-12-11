@@ -334,6 +334,7 @@ export let propertyRoute: ServerRoute[] = [
 						Constant.ENUM.SORT_TYPE,
 					]),
 					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']),
+					searchTerm: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

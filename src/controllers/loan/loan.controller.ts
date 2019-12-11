@@ -42,7 +42,20 @@ class LoanControllers extends BaseEntity {
             };
             payload['userId'] = userData._id;
 
+            const start = new Date();
+            start.setHours(0, 0, 0, 0);
+            const end = new Date();
+            end.setHours(23, 59, 59, 999);
+            const criteria1 = {
+                createdAt: {
+                    $gt: start,
+                    $lt: end,
+                },
+            }
+
             const referenceNumber = await ENTITY.LoanApplicationEntity.getReferenceId(criteria);
+            console.log('referenceNumberreferenceNumber', referenceNumber);
+
             if (!referenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
                 const month = ('0' + (new Date(new Date().getTime()).getMonth() + 1)).slice(-2);

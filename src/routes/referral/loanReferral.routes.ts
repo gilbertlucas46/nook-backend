@@ -99,6 +99,7 @@ export let loanReferral: any = [
                     // searchTerm: Joi.string(),
                     fromDate: Joi.number(),
                     toDate: Joi.number(),
+                    searchTerm: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
