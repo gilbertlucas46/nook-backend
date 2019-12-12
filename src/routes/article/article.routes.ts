@@ -218,6 +218,7 @@ export let articleRoutes: ServerRoute[] = [
     },
     /**
      * related Article
+     * not in use check it
      */
     {
         method: 'GET',

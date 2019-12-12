@@ -221,7 +221,7 @@ export class ArticleClass extends BaseEntity {
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
 
             if (!data || data.length === 0)
-                return data;
+                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {});
             else
                 // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {}));
                 return data[0];
@@ -233,16 +233,17 @@ export class ArticleClass extends BaseEntity {
 
     async getArticlelist(payload: ArticleRequest.GetArticle, Admindata) {
         try {
-            let { page, limit, sortType } = payload;
-            const { articleId, sortBy, searchTerm, fromDate, toDate, categoryId, status } = payload;
-            if (!limit) { limit = Constant.SERVER.LIMIT; }
-            if (!page) { page = 1; }
-            const skip = (limit * (page - 1));
+            let { sortType } = payload;
+            const { articleId, searchTerm, fromDate, toDate, categoryId, status, page, limit } = payload;
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             let query: any = {};
             sortingType = {
                 updatedAt: sortType,
+            };
+            const paginateOptions = {
+                page: page || 1,
+                limit: limit || Constant.SERVER.LIMIT,
             };
 
             if (Admindata && !status) {
@@ -294,10 +295,16 @@ export class ArticleClass extends BaseEntity {
             if (fromDate && !toDate) { query['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
 
-            const pipeline = [
+            const matchPipeline = [
                 { $match: query },
-                { $skip: skip },
-                { $limit: limit },
+                {
+                    $sort: sortingType,
+                },
+            ];
+            const pipeline = [
+                // { $match: query },
+                // { $skip: skip },
+                // { $limit: limit },
                 {
                     $lookup: {
                         from: 'articlecategories',
@@ -337,7 +344,7 @@ export class ArticleClass extends BaseEntity {
                 },
                 { $sort: sortingType },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, pipeline);
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
             return data;
         } catch (error) {
             utils.consolelog('Error', error, true);
