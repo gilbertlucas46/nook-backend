@@ -50,6 +50,13 @@ export namespace LoanRequest {
         };
     }
 
+    export interface PropertyInfo {
+        value: number;
+        type: string;
+        status: string;
+        developer?: string;
+    }
+
     export interface PersonalInfo {
         firstName: string;
         lastName?: string;
@@ -57,16 +64,29 @@ export namespace LoanRequest {
         gender: string;
         educationBackground: string;
         civilStatus: string;
-        spouseFirstName: string;
-        spouseMiddleName: string;
-        spouseLastName: string;
-        motherMaidenName: string;
         birthDate: number;
-        coBorrowerFirstName: string;
-        coBorrowerMiddleName: string;
-        coBorrowerLastName: string;
-        relationship?: string;
+        motherMaidenName?: string;
+        monthlyIncome: number;
+        otherIncome: number;
+        spouseInfo?: {
+            firstName?: string,
+            lastName?: string,
+            middleName?: string,
+            birthDate?: number,
+            monthlyIncome?: number,
+            isCoborrower?: boolean,
+        };
+        coBorrowerInfo?: {
+            firstName?: string
+            lastName?: string,
+            middleName?: string,
+            birthDate?: string,
+            monthlyIncome?: number,
+            isCoborrower?: boolean
+            relationship?: string,
+        };
     }
+
     export interface BankInfo {
         iconUrl: string;
         bankId: string;
@@ -92,7 +112,6 @@ export namespace LoanRequest {
         loanType: string;
         loanPercent: number;
         loanAmount: number;
-        propertyValue: number;
     }
     export interface EmploymentInfo {
         tin: string;
@@ -102,13 +121,12 @@ export namespace LoanRequest {
         officeEmail: string;
         officeAddress: string;
         companyIndustry: string;
-        coBorrowerInfo: {
+        coBorrowerInfo?: {
             employmentType: string;
             tin: string;
             companyName: string;
             sss: string,
             employmentRank: string;
-            // employmentTenure: Joi.string().valid(Object.keys(EMPLOYMENT_TENURE)),
             employmentTenure: string;
             companyIndustry: string;
             officePhone: number,
@@ -130,7 +148,6 @@ export namespace LoanRequest {
         docUrl: string;
     }
     export interface PropertyDocuments extends PurchasePropertyInfo {
-        //  borrowerValidDocIds: Joi.array().items(Joi.string()),
         borrowerValidDocIds: string[];
         coBorrowerValidId: string[];
         latestITR: string;
@@ -138,10 +155,11 @@ export namespace LoanRequest {
         purchasePropertyInfo: PurchasePropertyInfo;
         nookAgent: string;
     }
-    export interface AddLoan extends PropertyDocuments, EmploymentInfo, DependentsInfo, LoanDetails, PersonalInfo, ContactInfo, BankInfo {
+    export interface AddLoan {
         loanId?: string;
         saveAsDraft?: boolean;
         personalInfo?: PersonalInfo;
+        propertyInfo: PropertyInfo;
         bankInfo?: BankInfo;
         contactInfo?: ContactInfo;
         loanDetails?: LoanDetails;
