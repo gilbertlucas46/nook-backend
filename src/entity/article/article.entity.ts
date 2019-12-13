@@ -239,6 +239,7 @@ export class ArticleClass extends BaseEntity {
             sortType = !sortType ? -1 : sortType;
             let query: any = {};
             sortingType = {
+                isFeatured: sortType,
                 updatedAt: sortType,
             };
             const paginateOptions = {
@@ -255,13 +256,18 @@ export class ArticleClass extends BaseEntity {
                 query = {
                     status,
                 };
-            } else {
+            } else if (articleId && categoryId) {
                 query = {
-                    categoryId: Types.ObjectId(categoryId),
+                    categoryId,
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                     _id: {
-                        $ne: Types.ObjectId(articleId),
+                        $ne: articleId,
                     },
+                };
+            }
+            else {
+                query = {
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 };
             }
 
@@ -302,10 +308,11 @@ export class ArticleClass extends BaseEntity {
                 },
             ];
             const pipeline = [
-                // { $match: query },
-                // { $skip: skip },
-                // { $limit: limit },
                 {
+                    // { $match: query },
+                    // { $skip: 0 },
+                    // { $limit: 10 },
+                    // {
                     $lookup: {
                         from: 'articlecategories',
                         let: { categoryId: '$categoryId' },
@@ -342,9 +349,10 @@ export class ArticleClass extends BaseEntity {
 
                     },
                 },
-                { $sort: sortingType },
+                // { $sort: sortingType },
             ];
             const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
+            // const data = await this.DAOManager.paginate(this.modelName, pipeline)
             return data;
         } catch (error) {
             utils.consolelog('Error', error, true);
