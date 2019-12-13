@@ -267,6 +267,7 @@ export class ArticleClass extends BaseEntity {
             }
             else {
                 query = {
+                    isFeatured: true,
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 };
             }
