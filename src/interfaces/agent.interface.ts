@@ -6,8 +6,8 @@ export namespace AgentRequest {
         sortBy?: string;
         searchTerm?: string;
         sortType?: number;
-        // fromDate?: number;
-        // toDate?: number;
+        fromDate?: number;
+        toDate?: number;
         propertyType?: number;
         type?: string;
         label?: string[];
