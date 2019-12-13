@@ -113,10 +113,12 @@ export class UserController {
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
 			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
-			if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
+			// if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
+			// 	return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
+			// }
+			if (!getPropertyData) {
+				return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE {});
 			}
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
 			return getPropertyData;
 		} catch (error) {
 			utils.consolelog('error', error, true);
