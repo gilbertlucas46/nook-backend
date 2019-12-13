@@ -162,9 +162,9 @@ class LoanControllers extends BaseEntity {
      * return []
      */
 
-    async adminLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
+    async adminLoansList(payload: LoanRequest.IGetAdminLoanList, adminData) {
         try {
-            return await ENTITY.LoanApplicationEntity.getAdminLoanList(payload, userData);
+            return await ENTITY.LoanApplicationEntity.getAdminLoanList(payload, adminData);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

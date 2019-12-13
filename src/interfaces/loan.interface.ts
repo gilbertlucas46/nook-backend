@@ -205,4 +205,17 @@ export namespace LoanRequest {
         toDate?: number;
         status?: string;
     }
+
+    export interface IGetAdminLoanList {
+        limit: number;
+        page: number;
+        sortType?: number;
+        sortBy?: string;
+        fromDate?: number;
+        toDate?: number;
+        status?: string;
+        amountFrom?: number;
+        amountTo?: number;
+        searchTerm?: string;
+    }
 }

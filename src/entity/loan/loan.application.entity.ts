@@ -128,10 +128,10 @@ class LoanApplicationE extends BaseEntity {
         }
     }
 
-    async getAdminLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
+    async getAdminLoanList(payload: LoanRequest.IGetAdminLoanList, userData) {
         try {
             let { page, limit, sortType } = payload;
-            const { fromDate, toDate, status, sortBy } = payload;
+            const { fromDate, toDate, status, sortBy, amountFrom, amountTo, searchTerm } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -156,6 +156,13 @@ class LoanApplicationE extends BaseEntity {
                 matchObject['applicationStatus'] =
                     { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
             }
+
+            if (amountFrom && amountTo) {
+                matchObject['loanDetails']['loanAmount'] = {
+                    $gt: amountFrom,
+                    $lt: amountTo,
+                };
+            }
             // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value },
             // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value },
             // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value },
@@ -165,6 +172,15 @@ class LoanApplicationE extends BaseEntity {
 
             // ];
             // }
+            if (searchTerm) {
+                matchObject['$or'] = [
+                    { 'personalInfo.firstName': { $regex: searchTerm, $options: 'i' } },
+                    { 'personalInfo.middleName': { $regex: searchTerm, $options: 'i' } },
+                    { 'contactInfo.phoneNumber': { $regex: searchTerm, $options: 'i' } },
+                    { 'contactInfo.email': { $regex: searchTerm, $options: 'i' } },
+                    { 'contactInfo.mobileNumber': { $regex: searchTerm, $options: 'i' } },
+                ];
+            }
 
             if (fromDate && toDate) {
                 matchObject['createdAt'] = {

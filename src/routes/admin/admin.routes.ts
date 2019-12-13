@@ -554,6 +554,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					limit: Joi.number(),
 					page: Joi.number().min(1).default(1),
 					// type: Joi.string().valid('admin', 'user')
+					searchTerm: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
