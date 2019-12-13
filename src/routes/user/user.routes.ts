@@ -21,6 +21,7 @@ export let userRoute: ServerRoute[] = [
 				const registerResponse = await UserService.register(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -62,6 +63,7 @@ export let userRoute: ServerRoute[] = [
 				const registerResponse = await UserService.login(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -127,6 +129,7 @@ export let userRoute: ServerRoute[] = [
 				// let url = config.get('host1') + ':' + config.get('port') + '/v1/user/verifyLink/' + forgetPasswordResponse
 				return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.FORGET_PASSWORD_EMAIL, {});
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return UniversalFunctions.sendError(error);
 			}
 		},
@@ -161,6 +164,7 @@ export let userRoute: ServerRoute[] = [
 				const responseData = await UserService.updateProfile(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -229,6 +233,7 @@ export let userRoute: ServerRoute[] = [
 				const responseData = await UserService.getProfile(userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -300,6 +305,7 @@ export let userRoute: ServerRoute[] = [
 				const responseData = await UserService.changePassword(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -375,6 +381,7 @@ export let userRoute: ServerRoute[] = [
 				const responseData = await UserService.dashboard(userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return UniversalFunctions.sendError(error);
 			}
 		},
@@ -401,11 +408,11 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/suggested-property',
 		async handler(request, h) {
 			try {
-				// const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
 				const payload: PropertyRequest.UserProperty = request.query as any;
 				const propertyDetail = await UserService.userProperty(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -461,6 +468,7 @@ export let userRoute: ServerRoute[] = [
 				const userResponse = UniversalFunctions.formatUserData(propertyDetail);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -494,13 +502,13 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/city-based',
 		async handler(request, h) {
 			try {
-				//
 				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
 				const payload: UserRequest.RecentProperty = request.query as any;
 				const cityBasedData = await PropertyService.getCityBasedData(payload);
 				const userResponse = UniversalFunctions.formatUserData(cityBasedData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},

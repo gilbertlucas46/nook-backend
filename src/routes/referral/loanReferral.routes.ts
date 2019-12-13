@@ -16,6 +16,7 @@ export let loanReferral: any = [
                 const data = referralController.createReferral(payload, userData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.LOAN_REFERRAL, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunctions.sendError(error));
             }
         },
@@ -48,9 +49,10 @@ export let loanReferral: any = [
             try {
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials).userData;
                 const payload: loanReferralRequest.GetReferral = request.params.referralId;
-                const data = referralController.getReferral(payload);
+                referralController.getReferral(payload);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.LOAN_REFERRAL, {});
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunctions.sendError(error));
             }
         },
@@ -81,10 +83,9 @@ export let loanReferral: any = [
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials).userData;
                 const payload: loanReferralRequest.IUserLoanRefferal = request.query;
                 const data = await referralController.getUserReferral(payload, userData);
-                console.log('datadatadatadatadata', data);
-
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunctions.sendError(error));
             }
         },
@@ -121,10 +122,9 @@ export let loanReferral: any = [
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials).userData;
                 const payload: loanReferralRequest.IAdminLoanReferral = request.query;
                 const data = await referralController.getAdminReferral(payload, adminData);
-                console.log('datadatadatadatadata', data);
-
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunctions.sendError(error));
             }
         },
@@ -168,11 +168,11 @@ export let loanReferral: any = [
                     ...request.payload,
                     ...request.params,
                 };
-                // loanReferralRequest.IAdminLoanReferral
                 const data = await referralController.updateReferral(payload, adminData);
                 console.log('datadatadatadatadata', data);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunctions.sendError(error));
             }
         },

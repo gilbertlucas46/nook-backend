@@ -17,6 +17,7 @@ export let preloanRoute: ServerRoute[] = [
         const bankData = await LoanController.checkPreloanApplication(payload);
         return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, bankData));
       } catch (error) {
+        UniversalFunctions.consolelog(error, 'error', true);
         return (UniversalFunctions.sendError(error));
       }
     },

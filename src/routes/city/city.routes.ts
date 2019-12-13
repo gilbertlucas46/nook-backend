@@ -12,7 +12,7 @@ export let cityRoutes: ServerRoute[] = [
         path: '/v1/cities/popular',
         handler: async (req: Request, h: ResponseToolkit) => {
             try {
-                const payload: PropertyRequest.IPaginate = req.query as any;
+                const payload: PropertyRequest.PopularCity = req.query as any;
                 const data_to_send = await CityService.popularCities(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data_to_send));
             } catch (error) {
@@ -22,16 +22,15 @@ export let cityRoutes: ServerRoute[] = [
         options: {
             description: 'Get most popular cities list',
             tags: ['api', 'anonymous', 'user', 'Cities'],
-            // auth: 'DoubleAuth',
-            // validate: {
-            //     query: {
-            //         //  propertyType: Joi.number(),
-            //         page: Joi.number(),
-            //         limit: Joi.number(),
-            //     },
-            //     headers: UniversalFunctions.authorizationHeaderObj,
-            //     failAction: UniversalFunctions.failActionFunction,
-            // },
+            auth: 'DoubleAuth',
+            validate: {
+                query: {
+                    propertyType: Joi.number().required(),
+                    limit: Joi.number(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
             plugins: {
                 'hapi-swagger': {
                     responseMessages: Constant.swaggerDefaultResponseMessages,
@@ -55,8 +54,6 @@ export let cityRoutes: ServerRoute[] = [
             tags: ['api', 'anonymous', 'user', 'Cities'],
             auth: 'DoubleAuth',
             validate: {
-                // query: {
-                // },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
