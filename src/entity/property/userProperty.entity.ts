@@ -2,7 +2,6 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import * as Constant from '@src/constants/app.constant';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import * as utils from '@src/utils';
-import { UserRequest } from '@src/interfaces/user.interface';
 
 export class UserPropertyClass extends BaseEntity {
 	constructor() {
@@ -10,7 +9,8 @@ export class UserPropertyClass extends BaseEntity {
 	}
 	async getUserPropertyList(payload: PropertyRequest.PropertyByStatus, userData) {
 		try {
-			let { page, limit, sortBy, sortType, searchTerm } = payload;
+			let { page, limit, sortBy, sortType } = payload;
+			const { searchTerm } = payload;
 			const propertyType = payload.propertyType;
 			if (!limit) { limit = Constant.SERVER.LIMIT; }
 			if (!page) { page = 1; }
@@ -184,7 +184,6 @@ export class UserPropertyClass extends BaseEntity {
 		try {
 			const query: any = {};
 			query._id = payload.propertyId;
-
 			const set: any = {};
 			const update = {};
 			update['$set'] = set;

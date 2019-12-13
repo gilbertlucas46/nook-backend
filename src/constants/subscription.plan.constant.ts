@@ -1,6 +1,6 @@
 import { Subscription } from '../interfaces/subscription.plan.constant';
 
-export const PLANS: Subscription.Plan[] = [{  // Subscription.AdminSubscription
+export const PLANS: Subscription.Plan[] = [{
     featuredType: 'HOMEPAGE',
     plans: [
         {
@@ -12,9 +12,7 @@ export const PLANS: Subscription.Plan[] = [{  // Subscription.AdminSubscription
             amount: 2000,
         },
     ],
-    description: 'cdercrefcerfdre',
-    // createdAt: 1575453444343.0,
-    // updatedAt: 1575453444343.0,
+    description: 'HOMEPAGE',
 },
 {
     featuredType: 'FREE',
@@ -28,9 +26,7 @@ export const PLANS: Subscription.Plan[] = [{  // Subscription.AdminSubscription
             amount: 0,
         },
     ],
-    description: 'cdercrefcerfdre',
-    // createdAt: 1575453515172.0,
-    // updatedAt: 1575453515172.0
+    description: 'FREE',
 },
 {
     featuredType: 'PROFILE',
@@ -44,9 +40,7 @@ export const PLANS: Subscription.Plan[] = [{  // Subscription.AdminSubscription
             amount: 2120,
         },
     ],
-    description: 'cdercrefcerfdre',
-    // createdAt: 1575453565647.0,
-    // updatedAt: 1575453565647.0
+    description: 'PROFILE',
 },
 {
     featuredType: 'PROPERTY',
@@ -60,8 +54,6 @@ export const PLANS: Subscription.Plan[] = [{  // Subscription.AdminSubscription
             amount: 1234,
         },
     ],
-    description: 'cdercrefcerfdre',
-    // createdAt: 1575453585839.0,
-    // updatedAt: 1575453585839.0
+    description: 'PROPERTY',
 },
 ];

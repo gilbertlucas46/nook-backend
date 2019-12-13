@@ -10,15 +10,14 @@ export interface IPayment extends Document {
 }
 
 const paymentSchema = new Schema({
-    // _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     userId: { type: Schema.Types.ObjectId },
     stripeCustomerId: { type: Schema.Types.String },
     cardDetail: [{ type: Schema.Types.Mixed }],
     createdAt: { type: Number },
     updatedAt: { type: Number, required: true },
 }, {
-        versionKey: false,
-    },
+    versionKey: false,
+},
 );
 
 export let Payment = model<IPayment>('payment', paymentSchema);

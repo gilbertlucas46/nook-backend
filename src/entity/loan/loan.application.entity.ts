@@ -145,7 +145,6 @@ class LoanApplicationE extends BaseEntity {
             else {
                 matchObject['saveAsDraft'] = false;
                 matchObject['applicationStatus'] = { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
-                // saveAsDraft: false,
             }
 
             if (sortBy) {
@@ -171,7 +170,6 @@ class LoanApplicationE extends BaseEntity {
                 matchObject['$or'] = [
                     { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value },
                     { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value },
-                    // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value },
                     { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value },
                     { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value },
                     { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value },

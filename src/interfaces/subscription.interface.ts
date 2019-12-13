@@ -4,7 +4,6 @@ export namespace SubscriptionRequest {
         featuredType?: string;
         userId: string;
     }
-
     export interface Add {
         featuredType: string;
         userId: string;
