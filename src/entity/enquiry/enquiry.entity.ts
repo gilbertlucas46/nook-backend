@@ -10,11 +10,14 @@ export class EnquiryClass extends BaseEntity {
     }
     async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
-            const { fromDate, toDate, category, enquiryType, searchTerm } = payload;
-            let { sortType, limit, page } = payload;
+            const { fromDate, toDate, category, enquiryType, searchTerm, limit } = payload;
+            let { sortType, page } = payload;
             sortType = !sortType ? -1 : sortType;
-            if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
+            const paginateOptions = {
+                page: page || 1,
+                limit: limit || Constant.SERVER.LIMIT,
+            };
             const sortingType = {
                 createdAt: sortType,
             };
@@ -64,10 +67,19 @@ export class EnquiryClass extends BaseEntity {
                 };
             }
 
-            const pipeLine = [
+            const matchPipeline = [
                 {
                     $match: query,
                 },
+                {
+                    $sort: sortingType,
+                },
+            ];
+
+            const pipeLine = [
+                // {
+                //     $match: query,
+                // },
                 {
                     $lookup: {
                         from: 'properties',
@@ -114,9 +126,9 @@ export class EnquiryClass extends BaseEntity {
                         title: '$propertyData.property_basic_details.title',
                     },
                 },
-                { $sort: sortingType },
             ];
-            return await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
+            return await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeLine).aggregate(this.modelName);
+            // return await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
 
         } catch (error) {
             utils.consolelog('error', error, true);
