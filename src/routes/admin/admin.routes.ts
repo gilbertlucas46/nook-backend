@@ -722,8 +722,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
 			auth: 'UserAuth',
 			validate: {
-				// payload: {
-				// },
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
