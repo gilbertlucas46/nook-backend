@@ -1,5 +1,4 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
-import * as moment from 'moment';
 import * as CONSTANT from '../../constants';
 import { Types } from 'mongoose';
 import { MailManager } from '@src/lib';

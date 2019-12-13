@@ -27,17 +27,9 @@ class LoanReferral extends BaseEntity {
 
     async getUserReferral(payload: loanReferralRequest.IUserLoanRefferal, userData) {
         try {
-            console.log('userDatauserDatauserDatauserData', userData);
-
             let { page, limit, sortType } = payload;
             const { sortBy, searchTerm } = payload;
             let query: any = {};
-
-            // if (!searchTerm) {
-            //     query = {
-            //         userId: userData._id,
-            //     };
-            // }
             query['userId'] = userData._id;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
@@ -75,12 +67,9 @@ class LoanReferral extends BaseEntity {
 
     async getAdminData(payload, adminData) {
         try {
-            console.log('userDatauserDatauserDatauserData', adminData);
-
             let { page, limit, sortType } = payload;
             const { sortBy, searchTerm, fromDate, toDate } = payload;
             let query: any = {};
-
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             let sortingType = {};
@@ -88,15 +77,9 @@ class LoanReferral extends BaseEntity {
             const skip = (limit * (page - 1));
             const promiseArray = [];
             sortingType = {
-                sortBy: sortType,
+                [sortBy]: sortType,
             };
-            // query['userId'] = adminData._id;
-            // if (!searchTerm) {
-            //     query = {
-            //         userId: adminData._id,
-            //     };
-            // }
-            // query['userId'] = adminData._id;
+
             if (searchTerm) {
                 query = {
                     $or: [
@@ -122,8 +105,6 @@ class LoanReferral extends BaseEntity {
             return Promise.reject(error);
         }
     }
-
-
 }
 
 export const ReferalE = new LoanReferral();

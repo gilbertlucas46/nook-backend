@@ -127,8 +127,7 @@ export class BaseEntity {
 
 	async removeEntity(criteria: object) {
 		try {
-			const data = await this.DAOManager.findAndRemove(this.modelName, criteria);
-			return data;
+			return await this.DAOManager.findAndRemove(this.modelName, criteria);
 		} catch (error) {
 			consolelog('Base entity removeEntity', error, false);
 			return Promise.reject(error);

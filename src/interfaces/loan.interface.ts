@@ -130,7 +130,6 @@ export namespace LoanRequest {
         docUrl: string;
     }
     export interface PropertyDocuments extends PurchasePropertyInfo {
-        //  borrowerValidDocIds: Joi.array().items(Joi.string()),
         borrowerValidDocIds: string[];
         coBorrowerValidId: string[];
         latestITR: string;
@@ -195,7 +194,6 @@ export namespace LoanRequest {
         missedLoanPaymentAllowance?: boolean;
         bankImageLogoUrl?: string;
         loanForEmploymentType: [LoanForEmploymentType];
-
     }
 
     export interface IGetUserLoanList {

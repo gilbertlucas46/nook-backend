@@ -3,9 +3,6 @@ export namespace Subscription {
 
     export interface SubscriptionPlan {
         featuredType: string;
-        // subscriptionType: string;
-        // plans: Plan1[];
-        // object[ ];
         description: string;
     }
 

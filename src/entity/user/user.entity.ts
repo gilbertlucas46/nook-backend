@@ -25,24 +25,12 @@ export class UserClass extends BaseEntity {
 					session: userData.session,
 				};
 			}
-			let tokenData;
-			// if (!userData.type) {
-			//     tokenData = {
-			//         id: userData._id,
-			//         deviceId: payload.deviceId,
-			//         deviceToken: payload.deviceToken,
-			//         tokenType: "TENANT",
-			//         timestamp: new Date().getTime(),
-			//         session: userData.session
-			//     }
-			// } else {
-			tokenData = {
+			const tokenData = {
 				id: userData._id,
 				tokenType: userData.type,
 				timestamp: new Date().getTime(),
 				session: userData.session,
 			};
-			// }
 
 			const mergeData = { ...tokenData, ...sessionValid };
 			const accessToken = await TokenManager.setToken(mergeData);
@@ -170,9 +158,6 @@ export class UserClass extends BaseEntity {
 								$cond: { if: { $size: '$Active' }, then: { $arrayElemAt: ['$Active.Total', 0] }, else: 0 },
 							},
 							Featured: { $size: '$Featured.subscriptions' },
-							// Featured: {
-							// 	$cond: { if: { $size: ['$Featured'] }, then: { $arrayElemAt: ['$Featured.Total', 0] }, else: 0 },
-							// },
 							soldPropertyLast30Days: {
 								$cond: { if: { $size: ['$soldPropertyLast30Days'] }, then: { $arrayElemAt: ['$soldPropertyLast30Days.Total', 0] }, else: 0 },
 							},
