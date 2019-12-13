@@ -50,7 +50,7 @@ export let DATABASE = {
 		},
 		REFERRED: {
 			label: 'Referred to Bank',
-			value: 'REERRED',
+			value: 'REFERRED',
 		},
 		BANK_APPROVED: {
 			label: 'Bank Approved',
