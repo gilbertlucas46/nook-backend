@@ -203,7 +203,7 @@ export class AdminClass extends BaseEntity {
 			};
 			const loanQuery = {
 				saveAsDraft: {
-					$ne: false,
+					$ne: true,
 				},
 			};
 
