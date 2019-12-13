@@ -19,6 +19,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const data = await HelpCenterService.createHelpCenter(payload, adminData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -83,6 +84,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 // }
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -113,6 +115,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const data = await HelpCenterService.deleteHelpCenter(payload);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -147,6 +150,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -244,6 +248,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -278,9 +283,10 @@ export let helpCenterRoute: ServerRoute[] = [
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
                 const payload: helpCenterRequest.IsHelpful = request.payload as any;
                 payload['ipAddress'] = request.info.remoteAddress;
-                const data = await HelpCenterService.isArticleHelpful(payload, userData);
+                await HelpCenterService.isArticleHelpful(payload, userData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },

@@ -95,6 +95,7 @@ export let agentRoute: ServerRoute[] = [
                 const agentData = await AgentService.agentInfo(userName);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, agentData[0]));
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunctions.sendError(error));
             }
         },

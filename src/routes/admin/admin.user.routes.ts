@@ -2,7 +2,7 @@ import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
-import { AdminUserController, AdminStaffController } from '../../controllers';
+import { AdminUserController } from '../../controllers';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 
 export let adminUserRoutes: ServerRoute[] = [
@@ -83,7 +83,7 @@ export let adminUserRoutes: ServerRoute[] = [
 				query: {
 					page: Joi.number(),
 					limit: Joi.number(),
-					sortBy: Joi.string(), // allow('createdAt'),
+					sortBy: Joi.string(),
 					status: Joi.string().valid([
 						Constant.DATABASE.STATUS.ADMIN.ACTIVE,
 						Constant.DATABASE.STATUS.ADMIN.BLOCKED,

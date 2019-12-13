@@ -136,4 +136,9 @@ export namespace PropertyRequest {
 		sortBy?: string;
 		searchTerm?: string;
 	}
+
+	export interface PopularCity {
+		limit?: number;
+		propertyType: number;
+	}
 }
