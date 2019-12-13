@@ -258,10 +258,10 @@ export class ArticleClass extends BaseEntity {
                 };
             } else if (articleId && categoryId) {
                 query = {
-                    categoryId,
+                    categoryId: Types.ObjectId(categoryId),
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                     _id: {
-                        $ne: articleId,
+                        $ne: Types.ObjectId(articleId),
                     },
                 };
             }
