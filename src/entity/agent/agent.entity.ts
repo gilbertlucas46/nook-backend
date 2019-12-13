@@ -12,9 +12,7 @@ export class AgentClass extends BaseEntity {
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const {
-                // fromDate, toDate,
-                byCity, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
+            const { fromDate, toDate, byCity, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
             const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? Constant.DATABASE.FEATURED_TYPE.HOMEPAGE : Constant.DATABASE.FEATURED_TYPE.PROFILE;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
@@ -23,29 +21,44 @@ export class AgentClass extends BaseEntity {
             sortType = !sortType ? -1 : sortType;
             const matchObject: any = {};
             matchObject['type'] = 'AGENT';
-            let searchCriteria: any;
+            let searchCriteria = {};
             if (searchTerm) {
                 if (searchBy === 'company') {
                     searchCriteria = {
-                        $match:
-                            { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        $match: { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
                 }
                 else if (searchBy === 'location') {
                     searchCriteria = {
-                        $match:
-                            { address: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        $match: { address: new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
                 } else if (searchBy === 'name') {
                     searchCriteria = {
-                        $match:
-                        {
+                        $match: {
                             $or: [
                                 { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
                             ],
                         },
+                    };
+                } else {
+                    searchCriteria = {
+                        $match: {
+                            $or: [
+                                { email: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { address: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { title: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { license: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { taxNumber: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { faxNumber: new RegExp('.*' + searchTerm + '.*', 'i') },
+                                { aboutMe: new RegExp('.*' + searchTerm + '.*', 'i') },
+                            ],
+                        },
+
                     };
                 }
             }
@@ -76,28 +89,18 @@ export class AgentClass extends BaseEntity {
                     isFeaturedProfile: sortType,
                 };
             }
-            if (specializingIn_property_type) {
-                matchObject['specializingIn_property_type'] =
-                    specializingIn_property_type;
-            }
-
-            // if (specializingIn_property_category) {
-            //     matchObject['specializingIn_property_category'] =
-            //         { $in: specializingIn_property_category };
-            // }
-
+            if (specializingIn_property_type) matchObject['specializingIn_property_type'] = specializingIn_property_type;
+            if (specializingIn_property_category) matchObject['specializingIn_property_category'] = { $in: specializingIn_property_category };
             if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
-            if (byCity) {
-                matchObject['serviceAreas'] = { $in: [Types.ObjectId(cityId)] };
-            }
-            // // Date filters
-            // if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
-            // if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
-            // if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
+            if (byCity) matchObject['serviceAreas'] = { $in: [Types.ObjectId(cityId)] };
+
+            // Date filters
+            if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
+            if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
+            if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
             const query = [
                 { $match: matchObject },
-                { $skip: skip },
-                { $limit: limit },
+                searchCriteria,
                 {
                     $unwind: {
                         path: '$serviceAreas',
