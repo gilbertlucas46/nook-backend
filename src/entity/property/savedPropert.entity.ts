@@ -60,8 +60,7 @@ export class SavedProperty extends BaseEntity {
                                     $expr: {
                                         $and: [
                                             { $eq: ['$_id', '$$propertyId'] },
-                                            { $eq: ['$property_status.number', 3] },
-                                            // { $eq: ['$property_status.number', 1 || '$property_status.status', 'ACTIVE'] },
+                                            { $eq: ['$property_status.number', Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER] },
                                         ],
                                     },
                                 },

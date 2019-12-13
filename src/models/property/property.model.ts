@@ -402,14 +402,9 @@ const propertySchema = new Schema({
 	propertyImages: { type: [String] },
 });
 
-// /* Create 2dsphere index */
+/* Create 2dsphere index */
 propertySchema.index({
 	'property_address.location': '2dsphere',
 });
-
-// propertySchema.index({
-// 	property_address.address: 'text', property_address['cityName']: 'text', property_address['regionName']: 'text',
-// 	property_basic_details['title']: text, property_basic_details['description']: text, property_basic_details['type']: text
-// });
 
 export let Property = model<IProperty>('properties', propertySchema);

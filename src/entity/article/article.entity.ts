@@ -3,7 +3,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
 import * as utils from '@src/utils';
-import { Types, Schema } from 'mongoose';
+import { Types } from 'mongoose';
 import * as UniversalFunctions from '../../utils';
 export class ArticleClass extends BaseEntity {
     constructor() {
@@ -219,12 +219,9 @@ export class ArticleClass extends BaseEntity {
             ];
 
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
+            if (!data || data.length === 0) return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {});
+            else return data[0];
 
-            if (!data || data.length === 0)
-                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {});
-            else
-                // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {}));
-                return data[0];
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
@@ -304,16 +301,10 @@ export class ArticleClass extends BaseEntity {
 
             const matchPipeline = [
                 { $match: query },
-                {
-                    $sort: sortingType,
-                },
+                { $sort: sortingType },
             ];
             const pipeline = [
                 {
-                    // { $match: query },
-                    // { $skip: 0 },
-                    // { $limit: 10 },
-                    // {
                     $lookup: {
                         from: 'articlecategories',
                         let: { categoryId: '$categoryId' },
@@ -350,11 +341,8 @@ export class ArticleClass extends BaseEntity {
 
                     },
                 },
-                // { $sort: sortingType },
             ];
-            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
-            // const data = await this.DAOManager.paginate(this.modelName, pipeline)
-            return data;
+            return await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
@@ -423,8 +411,7 @@ export class ArticleClass extends BaseEntity {
                     },
                 },
             ];
-            const data = await this.DAOManager.aggregateData('ArticleCategories', cateogryPipeline);
-            return data;
+            return await this.DAOManager.aggregateData('ArticleCategories', cateogryPipeline);
         } catch (error) {
             return Promise.reject(error);
         }
