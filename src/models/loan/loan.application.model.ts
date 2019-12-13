@@ -1,16 +1,12 @@
 import { Schema, Document, model, Types } from 'mongoose';
 import * as CONSTANT from './../../constants';
 import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../constants';
-// import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from '@src/constants';
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     saveAsDraft: { type: Schema.Types.Boolean, default: false },
     applicationStatus: {
         type: Schema.Types.String, enum: [
-            // CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
-            // CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-            // CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,

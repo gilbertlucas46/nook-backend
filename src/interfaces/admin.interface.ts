@@ -203,7 +203,7 @@ export namespace AdminRequest {
 	export interface IGetUSerList {
 		page: number;
 		limit: number;
-		sortBy: string; // allow('createdAt'),
+		sortBy: string;
 		status: string;
 		type: string;
 		sortType: number;

@@ -7,6 +7,7 @@ import * as ENTITY from '../entity';
 import * as UniversalFunctions from '../utils';
 const cert: any = config.get('jwtSecret');
 import * as utils from '../utils';
+
 export let setToken = async (tokenData: any) => {
 	if (!tokenData.id || !tokenData.tokenType) {
 		return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);

@@ -4,7 +4,6 @@ import * as config from 'config';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import * as utils from '@src/utils';
-import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
 const pswdCert: string = config.get('forgetPwdjwtSecret');
@@ -243,7 +242,6 @@ export class AdminClass extends BaseEntity {
 			let matchObject: any = {};
 			const skip = (limit * (page - 1));
 			if (property_status === CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {  // for active
-				// sortBy = 'approvedAt';
 				sortingType = {
 					updatedAt: sortType,
 				};

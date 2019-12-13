@@ -68,12 +68,8 @@ export class EnquiryClass extends BaseEntity {
             }
 
             const matchPipeline = [
-                {
-                    $match: query,
-                },
-                {
-                    $sort: sortingType,
-                },
+                { $match: query },
+                { $sort: sortingType },
             ];
 
             const pipeLine = [
@@ -128,8 +124,6 @@ export class EnquiryClass extends BaseEntity {
                 },
             ];
             return await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeLine).aggregate(this.modelName);
-            // return await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
-
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

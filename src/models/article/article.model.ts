@@ -10,7 +10,6 @@ export interface IArticleAction {
 export interface IArticle extends Document {
     title: string;
     userId: string;
-    // categoryId: number;
     categoryId: string;
     categoryType: string;
     description: string;
@@ -29,32 +28,9 @@ export interface IArticle extends Document {
 const articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     title: { type: String },
-    categoryId: {
-        // type: Number, enum: [
-        //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-        //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-        //     // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-        //     Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-        //     Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-        //     Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-        //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-
-        // ], index: true,
-        type: Schema.Types.ObjectId, required: true,
-    },
+    categoryId: { type: Schema.Types.ObjectId, required: true },
     addedBy: { type: String },
-    categoryType: {
-        type: String,
-        // enum: [
-        // Constant.DATABASE.ARTICLE_TYPE.AGENTS.TYPE,
-        // Constant.DATABASE.ARTICLE_TYPE.BUYING.TYPE,
-        // // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.TYPE,
-        // Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.TYPE,
-        // Constant.DATABASE.ARTICLE_TYPE.RENTING.TYPE,
-        // Constant.DATABASE.ARTICLE_TYPE.SELLING.TYPE,
-        // Constant.DATABASE.ARTICLE_TYPE.NEWS.TYPE,
-        // ], index: true,
-    },
+    categoryType: { type: String },
     imageUrl: { type: String },
     userId: { type: Schema.Types.ObjectId, required: true, index: true },
     userRole: {
@@ -84,6 +60,6 @@ const articleSchema = new Schema({
         actionTime: { type: Number },
     }],
 }, {
-        versionKey: false,
-    });
+    versionKey: false,
+});
 export const Article = model<IArticle>('Article', articleSchema);

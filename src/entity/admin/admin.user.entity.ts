@@ -96,12 +96,6 @@ class AdminUserE extends BaseEntity {
                         break;
                 }
             }
-            // else {
-            //     sortBy = 'updatedAt';
-            //     sortingType = {
-            //         createdAt: sortType,
-            //     };
-            // }
             if (!status) {
                 matchObject.$match = {
                     $or: [{

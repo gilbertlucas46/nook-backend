@@ -435,11 +435,9 @@ export class PropertyClass extends BaseEntity {
 				query = {
 					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-					// 'property_for.number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 					'_id': {
 						$ne: Types.ObjectId(payload.propertyId),
 					},
-					// 'property_basic_details.property_for_number': payload.propertyFor,
 				};
 			}
 			else {
@@ -736,19 +734,15 @@ export class PropertyClass extends BaseEntity {
 						};
 				}
 			}
-			//  else {
-			// 	sortingType = {
-			// 		approvedAt: sortType,
-			// 	};
-			// }
+
 			query = {
 				'property_address.cityId': mongoose.Types.ObjectId(cityId),
 				'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 			};
 			promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
-			const agentQuery =
-			{
-				type: 'AGENT', serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] },
+			const agentQuery = {
+				type: 'AGENT',
+				serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] },
 				// isFeaturedProfile: true,
 			};
 
@@ -824,18 +818,12 @@ export class PropertyClass extends BaseEntity {
 				},
 			];
 			promiseArray.push(this.DAOManager.paginate('User', query1, limit, page));
-			// return agentList;
-
-			// promise	Array.push(this.DAOManager.findAll('User', agentQuery, ['profilePicUrl', '_id', ' userName', 'email', 'type', 'specializingIn_property_category', 'serviceAreas', 'specializingIn_property_type'],
-			// 	{ limit, skip, $sort: { isFeaturedProfile: -1, createdAt: -1 } }));
-			// promiseArray.push(this.DAOManager.count('User', agentQuery));
-
 			promiseArray.push(this.DAOManager.findOne('City', { _id: cityId }, {}, {}));
 			[latestProperty, agents, featuredCity] = await Promise.all(promiseArray);
 
 			return {
 				latestProperty,
-				agents: agents['data'],	// agents,
+				agents: agents['data'],
 				featuredCity,
 			};
 		}
