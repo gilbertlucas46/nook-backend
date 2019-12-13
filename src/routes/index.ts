@@ -51,10 +51,10 @@ export let Routes: ServerRoute[] = [
 	// 		if (arr[0].includes([accept])) {
 	// 			return;
 	// 		} else {
-	// 			return Promise.reject('Fuckity fuck, this resource isn’t available.');
+	// 			return Promise.reject(' this resource isn’t available.');
 	// 		}
 	// 		// if (accept && accept.match(arr[0])) {
-	// 		// 	return Promise.reject('Fuckity fuck, this resource isn’t available.');
+	// 		// 	return Promise.reject(' this resource isn’t available.');
 	// 		// }
 	// 		return;
 	// 	},

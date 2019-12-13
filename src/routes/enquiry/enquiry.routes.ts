@@ -15,10 +15,11 @@ export let enquiryRoutes: ServerRoute[] = [
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: EnquiryRequest.CreateEnquiry = request.payload as any;
 				const registerResponse = await EnquiryService.createEnquiry(payload, userData);
+
 				if (registerResponse === {}) {
 					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.ENQUIRY_SENT_AGENT, registerResponse));
 				}
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.ENQUIRY_SENT, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.ENQUIRY_SENT, {}));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
