@@ -706,11 +706,6 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/user/subscriptionList',
 		handler: async (request, h) => {
 			try {
-				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload = request.payload as any;
-				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(payload.permission);
-				// }
 				const data = await AdminService.getSubscriptionList();
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -721,7 +716,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'Admin update loan status',
 			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
-			auth: 'UserAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
