@@ -129,7 +129,7 @@ export namespace AdminRequest {
 		toDate?: number;
 		property_status?: number;
 		permissionType?: string;
-		property_type?: string;
+		propertyType?: any;
 		// label?: [];
 		minPrice?: number;
 		maxPrice?: number;
@@ -157,5 +157,59 @@ export namespace AdminRequest {
 		id: string;
 		permission: [object];
 		status: string;
+	}
+
+	export interface IcreateUser {
+		_id?: string;
+		email: string;
+		firstName?: string;
+		lastName?: string;
+		phoneNumber?: string;
+		type?: string;
+		userName: string;
+	}
+
+	export interface IsearchUser {
+		page?: number;
+		limit?: number;
+		sortBy?: string;
+		searchTerm?: string;
+		sortType?: number;
+		fromDate?: number;
+		toDate?: number;
+		propertyType: number;
+		userId?: string;
+		type?: string;
+		status?: string;
+	}
+
+	export interface IAddUser {
+		_id: string;
+		email: string;
+		userName: string;
+		firstName: string;
+		middleName: string;
+		lastName: string;
+		phoneNumber: string;
+		type?: string;
+		language?: string;
+		title?: string;
+		license?: string;
+		companyName?: string;
+		address?: string;
+		aboutMe?: string;
+	}
+
+	export interface IGetUSerList {
+		page: number;
+		limit: number;
+		sortBy: string;
+		status: string;
+		type: string;
+		sortType: number;
+		searchTerm: string;
+		fromDate: number;
+		toDate: number;
+		userId?: string;
 	}
 }

@@ -9,7 +9,15 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Hapi from 'hapi';
 import { LoanRequest } from '@src/interfaces/loan.interface';
-import * as ENTITY from '@src/entity';
+
+const objectSchema = Joi.object({
+	billingType: Joi.string().valid([
+		Constant.DATABASE.BILLING_TYPE.YEARLY,
+		Constant.DATABASE.BILLING_TYPE.MONTHLY,
+	]),
+	amount: Joi.number(),
+});
+
 export let adminProfileRoute: ServerRoute[] = [
 	/**
 	 * @description:Login via mail
@@ -23,20 +31,20 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await AdminProfileService.login(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
-				utils.consolelog('error', error, true);
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
 		options: {
 			description: 'login to application',
 			tags: ['api', 'anonymous', 'Admin', 'login'],
-			// auth: 'DoubleAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					email: Joi.string().lowercase().email().trim().required(),
 					password: Joi.string().min(6).max(16).trim().required(),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -94,6 +102,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminProfileService.editProfile(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -103,12 +112,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					// _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					name: Joi.string().min(1).max(20).trim(),
-					// lastName: Joi.string().min(1).max(20).trim(),
-					// phoneNumber: Joi.string().min(7).max(15).trim(),
 					profilePicUrl: Joi.string().allow(''),
-					// email: Joi.string().email({ minDomainAtoms: 2 }),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -131,6 +136,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, adminData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -157,7 +163,6 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/verifyLink/{link}',
 		handler: async (request, h) => {
 			try {
-
 				const payload = request.params;
 				const data = await AdminProfileService.verifyLink(payload);
 				return h.redirect(config.get('adminBaseUrl') + payload.link);
@@ -202,6 +207,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminProfileService.changePassword(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -236,11 +242,12 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminProfileService.verifyLinkForResetPwd(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
 		options: {
-			description: 'Get Admin Profile',
+			description: 'update admin reset password',
 			tags: ['api', 'anonymous', 'admin', 'reset'],
 			validate: {
 				payload: {
@@ -274,6 +281,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminService.getProperty(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -297,14 +305,13 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 					]),
-					permissionType: Joi.string().valid([
-						Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.LOAN,
-						// Constant.DATABASE.PERMISSION.TYPE.DASHBOARD,
-						// Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-
-					]),
-					property_type: Joi.string().trim().valid([
+					// permissionType: Joi.string().valid([
+					// 	Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.LOAN,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.DASHBOARD,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER,
+					// ]),
+					propertyType: Joi.string().trim().valid([
 						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
 						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
 						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
@@ -344,6 +351,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const responseData = await AdminService.getPropertyById(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -354,12 +362,12 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				params: {
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					permissionType: Joi.string().valid([
-						Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-					]),
+					// permissionType: Joi.string().valid([
+					// 	Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+					// ]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -438,6 +446,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await AdminProfileService.logout(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -474,6 +483,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await AdminService.dashboard(adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -509,6 +519,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await LoanController.adminLoansList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -525,7 +536,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
@@ -534,11 +545,12 @@ export let adminProfileRoute: ServerRoute[] = [
 					amountTo: Joi.number(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
-					// sortBy: Joi.string(),
+					sortBy: Joi.string().default('createdAt'),
 					// sortType: Joi.string(),
 					limit: Joi.number(),
 					page: Joi.number().min(1).default(1),
 					// type: Joi.string().valid('admin', 'user')
+					searchTerm: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -566,6 +578,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await LoanController.adminUpdateLoanStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -616,6 +629,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await LoanController.loanById(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -653,7 +667,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const data = await AdminService.subscriptionList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				console.log('errorerrorerrorerror', error);
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -663,9 +677,13 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					featuredType: Joi.string(),
-					subscriptionType: Joi.string(),
-					amount: Joi.number(),
+					featuredType: Joi.string().valid([
+						Constant.DATABASE.FEATURED_TYPE.FREE,
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+						Constant.DATABASE.FEATURED_TYPE.PROFILE,
+						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					]),
+					plans: Joi.array().items(objectSchema),
 					description: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -681,28 +699,21 @@ export let adminProfileRoute: ServerRoute[] = [
 
 	{
 		method: 'GET',
-		path: '/v1/admin/subscriptionList',
+		path: '/v1/user/subscriptionList',
 		handler: async (request, h) => {
 			try {
-				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload = request.payload as any;
-				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(payload.permission);
-				// }
 				const data = await AdminService.getSubscriptionList();
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				console.log('errorerrorerrorerror', error);
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
 		options: {
 			description: 'Admin update loan status',
 			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
-			auth: 'AdminAuth',
+			auth: 'DoubleAuth',
 			validate: {
-				// payload: {
-				// },
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -716,8 +727,7 @@ export let adminProfileRoute: ServerRoute[] = [
 
 	/**
 	 * @description update the description list
-     */
-
+	 */
 	{
 		method: 'PATCH',
 		path: '/v1/admin/subscriptionList/{id}',
@@ -726,7 +736,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = {
 					...request.params as any,
-					...request.params as any,
+					...request.payload as any,
 				};
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await AdminStaffEntity.checkPermission(payload.permission);
@@ -734,7 +744,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const data = await AdminService.updateSubscription(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				console.log('errorerrorerrorerror', error);
+				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -747,8 +757,14 @@ export let adminProfileRoute: ServerRoute[] = [
 					id: Joi.string(),
 				},
 				payload: {
-					amount: Joi.number(),
+					featuredType: Joi.string().valid([
+						Constant.DATABASE.FEATURED_TYPE.FREE,
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+						Constant.DATABASE.FEATURED_TYPE.PROFILE,
+						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					]),
 					description: Joi.string(),
+					plans: Joi.array().items(objectSchema),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -760,6 +776,4 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-
-
 ];

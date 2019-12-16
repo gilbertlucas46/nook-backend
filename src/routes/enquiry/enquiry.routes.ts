@@ -15,11 +15,13 @@ export let enquiryRoutes: ServerRoute[] = [
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: EnquiryRequest.CreateEnquiry = request.payload as any;
 				const registerResponse = await EnquiryService.createEnquiry(payload, userData);
+
 				if (registerResponse === {}) {
 					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.ENQUIRY_SENT_AGENT, registerResponse));
 				}
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.ENQUIRY_SENT, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.ENQUIRY_SENT, {}));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -62,10 +64,10 @@ export let enquiryRoutes: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: EnquiryRequest.GetEnquiry = request.query as any;
-
 				const registerResponse = await EnquiryService.getEnquiryList(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -111,6 +113,7 @@ export let enquiryRoutes: ServerRoute[] = [
 				const registerResponse = await EnquiryService.getEnquiryById(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},

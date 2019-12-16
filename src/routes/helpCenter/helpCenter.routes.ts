@@ -2,7 +2,6 @@ import { ServerRoute } from 'hapi';
 import * as UniversalFunction from '../../utils';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import { HelpCenterService } from '@src/controllers/helpCenter/helpCenter.controller';
-import * as ENTITY from '../../entity';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as Joi from 'joi';
@@ -20,6 +19,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const data = await HelpCenterService.createHelpCenter(payload, adminData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -84,6 +84,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 // }
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -114,6 +115,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const data = await HelpCenterService.deleteHelpCenter(payload);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, data);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -148,6 +150,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -213,7 +216,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
             } catch (error) {
-                console.log('Error', error);
+                UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -245,6 +248,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -279,9 +283,10 @@ export let helpCenterRoute: ServerRoute[] = [
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
                 const payload: helpCenterRequest.IsHelpful = request.payload as any;
                 payload['ipAddress'] = request.info.remoteAddress;
-                const data = await HelpCenterService.isArticleHelpful(payload, userData);
+                await HelpCenterService.isArticleHelpful(payload, userData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -293,6 +298,44 @@ export let helpCenterRoute: ServerRoute[] = [
                 payload: {
                     helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     isHelpful: Joi.boolean(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+
+    /**
+     *
+     */
+    {
+        method: 'GET',
+        path: '/v1/user/helpcenter',
+        handler: async (request, h) => {
+            try {
+                const userData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
+                const payload = request.query as any;
+                const data = await HelpCenterService.getUserHelpCenter(payload, userData);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'get article User',
+            tags: ['api', 'anonymous', 'user', 'helpcenter-article-helpful'],
+            auth: 'DoubleAuth',
+            validate: {
+                query: {
+                    // helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    categoryId: Joi.number().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                    ]),
+                    searchTerm: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

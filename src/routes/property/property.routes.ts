@@ -25,6 +25,7 @@ export let propertyRoute: ServerRoute[] = [
 					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_NOT_EXIST, data));
 				}
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -195,6 +196,7 @@ export let propertyRoute: ServerRoute[] = [
 				const propertyList = await PropertyService.searchProperties(request.query);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -254,6 +256,7 @@ export let propertyRoute: ServerRoute[] = [
 				const data = await PropertyService.nearbyProperties(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -311,6 +314,7 @@ export let propertyRoute: ServerRoute[] = [
 				const data = await PropertyService.userPropertyByStatus(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -334,6 +338,7 @@ export let propertyRoute: ServerRoute[] = [
 						Constant.ENUM.SORT_TYPE,
 					]),
 					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']),
+					searchTerm: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -358,6 +363,7 @@ export let propertyRoute: ServerRoute[] = [
 				const registerResponse = await PropertyService.saveAsDraft(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PROPERTY_SAVE_AS_DRAFT, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -499,6 +505,7 @@ export let propertyRoute: ServerRoute[] = [
 					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 				}
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},

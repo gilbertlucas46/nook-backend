@@ -1,5 +1,4 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
-import * as moment from 'moment';
 import * as CONSTANT from '../../constants';
 import { Types } from 'mongoose';
 import { MailManager } from '@src/lib';
@@ -99,8 +98,7 @@ class AdminStaffE extends BaseEntity {
                     staffStatus: 1,
                 },
             });
-        const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-        return data;
+        return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
     }
 
     sendInvitationMail(payload: any, genCredentials: string) {

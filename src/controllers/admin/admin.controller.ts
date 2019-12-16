@@ -3,6 +3,7 @@ import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { Types } from 'mongoose';
+import { sendSuccess } from '../../utils';
 
 /**
  * @author
@@ -29,8 +30,10 @@ export class AdminController {
 		try {
 			// if (!payload.property_status) payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER;
 			const getPropertyData = await ENTITY.AdminE.getPropertyList(payload);
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
-			return getPropertyData;
+			if (!getPropertyData)
+				return sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, getPropertyData);
+			else
+				return getPropertyData;
 		} catch (error) {
 			utils.consolelog(error, 'error', true);
 			return Promise.reject(error);
@@ -70,7 +73,7 @@ export class AdminController {
 			if (payload.status === Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
 				result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
 			} else if (payload.status === Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER) {
-				result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER);
+				result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER);
 			} else {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
 			}
@@ -119,11 +122,8 @@ export class AdminController {
 
 	async subscriptionList(payload) {
 		try {
-			console.log('apyload?>>>>>>>>>>>>>>>>>>>>?', payload);
-			const data = await ENTITY.AdminSubscriptionService.createOneEntity(payload);
-			console.log('daytaaaaaaaaaaaaaa', data);
+			return await ENTITY.SubscriptionPlanEntity.createOneEntity(payload);
 
-			return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -132,10 +132,8 @@ export class AdminController {
 
 	async getSubscriptionList() {
 		try {
-			return ENTITY.AdminSubscriptionService.adminSubscription();
+			return await ENTITY.SubscriptionPlanEntity.getMultiple({}, {});
 		} catch (error) {
-			console.log('errorerrorerrorerror', error);
-
 			return Promise.reject(error);
 		}
 	}
@@ -145,40 +143,13 @@ export class AdminController {
 			const criteria = {
 				_id: payload.id,
 			};
-			const dataToUpdate = {
-				amount: payload.amount,
-
-			}
+			delete payload['id'];
+			const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+			return data;
 
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
 }
-
 export let AdminService = new AdminController();
-
-		// 	$facet: {
-				// 		FEATURED_ARTICLE: [
-				// 			{
-				// 				$match: {
-
-				// 					$and: [
-				// 						{
-				// 							isFeatured: true,
-				// 						},
-				// 					],
-
-				// 				},
-				// 			},
-				// 			{
-				// 				$sort: {
-				// 					endDa: -1,
-				// 				},
-				// 			},
-				// 			{
-				// 				$limit: 1,
-				// 			},
-				// 		],
-				// 	},
-				// },

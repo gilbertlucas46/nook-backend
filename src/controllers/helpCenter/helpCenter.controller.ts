@@ -1,6 +1,9 @@
 import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
+import * as utils from '@src/utils';
+import { describe } from 'joi';
+import { pipeline } from 'stream';
 
 export class HelpCenter {
 
@@ -30,6 +33,7 @@ export class HelpCenter {
             payload['userRole'] = adminData.type;
             return await ENTITY.HelpCenterE.createOneEntity(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -46,6 +50,7 @@ export class HelpCenter {
             const criteria = { _id: payload.id };
             return await ENTITY.HelpCenterE.getOneEntity(criteria, {});
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -63,6 +68,7 @@ export class HelpCenter {
             };
             return await ENTITY.HelpCenterE.removeEntity(criteria);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -85,23 +91,29 @@ export class HelpCenter {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
             }
             dataToSet.$set = {
-                categoryId: payload.categoryId,
+                ...payload,
+                // categoryId: payload.categoryId,
                 categoryType: result.TYPE,
-                videoUrl: payload.videoUrl,
+                // videoUrl: payload.videoUrl,
                 userId: adminData._id,
-                userRole: adminData.type,
-                description: payload.description,
+                firstName: adminData.firstName,
+                name: adminData.name || '',
+                // userRole: adminData.type,
+                // description: payload.description,
             };
 
             dataToSet.$push = {
                 actions: {
                     userRole: adminData.type,
+                    name: adminData.name,
+                    firstName: adminData.firstName,
                     userId: adminData._id,
                     actionTime: new Date().getTime(),
                 },
             };
             return await ENTITY.HelpCenterE.updateOneEntity(criteria, dataToSet);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -117,6 +129,7 @@ export class HelpCenter {
         try {
             return await ENTITY.HelpCenterE.getHelpCenterCategoryBygroup();
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -132,6 +145,7 @@ export class HelpCenter {
         try {
             return await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -146,6 +160,95 @@ export class HelpCenter {
     async isArticleHelpful(payload: helpCenterRequest.IsHelpful, userData?) {
         try {
             return await ENTITY.HelpfulE.createhelpfulStatus(payload);
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    async getUserHelpCenter(payload, userData) {
+        try {
+            const { searchTerm, categoryId } = payload;
+            let query: object = {};
+            let pipeline: any;
+            if (searchTerm) {
+                query = {
+                    // $and:{status:}
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                        { categoryType: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+                // const data = await ENTITY.HelpCenterE.getMultiple(query, {});
+                // return data;
+
+            } else if (categoryId) {
+                query = {
+                    categoryId,
+                };
+                const data = ENTITY.HelpCenterE.getMultiple(query, {});
+                return data;
+            } else {
+                query = {
+                };
+            }
+            // else {
+            // return Constant.DATABASE.HELP_CENTER_TYPE;
+            pipeline = [
+                {
+                    $facet: {
+                        PROPERTIES: [
+                            {
+                                $match: {
+
+                                    categoryType: 'PROPERTIES',
+                                    $or: [
+                                        query,
+                                    ],
+                                },
+                            },
+                            { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        ],
+                        ACCOUNT: [{
+                            $match: {
+                                categoryType: 'ACCOUNT',
+                                $or: [
+                                    query,
+                                ],
+                            },
+                        },
+                        { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        ],
+                        BILLING: [{
+                            $match: {
+                                categoryType: 'BILLING',
+                                $or: [
+                                    query,
+                                ],
+                            },
+                        },
+                        { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        ],
+                        HOME_LOANS: [{
+                            $match: {
+                                categoryType: 'HOME_LOANS',
+                                $or: [
+                                    query,
+                                ],
+                            },
+                        },
+                        { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        ],
+
+                    },
+                },
+            ];
+            const data = await ENTITY.HelpCenterE.aggregate(pipeline);
+            console.log('categoryTypecategoryTypecategoryType', data);
+            return data[0];
+            // }
+
         } catch (error) {
             return Promise.reject(error);
         }

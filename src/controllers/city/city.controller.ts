@@ -9,7 +9,7 @@ class CityController {
      * @param payload
      */
 
-    async popularCities(payload: PropertyRequest.IPaginate) {
+    async popularCities(payload: PropertyRequest.PopularCity)  {
         try {
             return await ENTITY.cityEntity.getPopularCity(payload);
         } catch (error) {
@@ -29,6 +29,7 @@ class CityController {
         try {
             return await ENTITY.PropertyE.getPropertyViaCity(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

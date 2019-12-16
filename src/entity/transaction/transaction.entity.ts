@@ -60,7 +60,6 @@ export class TransactionClass extends BaseEntity {
 			if (payload.subscriptionId) {
 				set.subscriptionId = payload.subscriptionId;
 			}
-
 			return await this.DAOManager.findAndUpdate(this.modelName, query, update);
 		} catch (error) {
 			utils.consolelog('Error', error, true);
@@ -108,10 +107,9 @@ export class TransactionClass extends BaseEntity {
 		try {
 			const query: any = {};
 			query._id = payload.transactionId;
-
-			let projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
-			let response = await this.DAOManager.findOne(this.modelName, query, projection);
-			let populateQuery = [
+			const projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
+			const response = await this.DAOManager.findOne(this.modelName, query, projection);
+			const populateQuery = [
 				{ path: 'userId', model: 'User', select: 'email' },
 			];
 			return await this.DAOManager.populateDataOnAggregate(this.modelName, response, populateQuery);

@@ -1,16 +1,12 @@
 import { Schema, Document, model, Types } from 'mongoose';
 import * as CONSTANT from './../../constants';
 import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../constants';
-// import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from '@src/constants';
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     saveAsDraft: { type: Schema.Types.Boolean, default: false },
     applicationStatus: {
         type: Schema.Types.String, enum: [
-            // CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
-            // CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-            // CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
@@ -72,6 +68,7 @@ const schema = new Schema({
         bankId: { type: Schema.Types.ObjectId },
         bankName: { type: Schema.Types.String },
         abbrevation: { type: Schema.Types.String },
+        iconUrl: { type: String },
     },
     contactInfo: {
         phoneNumber: { type: Schema.Types.String, trim: true },
@@ -278,7 +275,7 @@ const schema = new Schema({
         adminName: { type: String },
         approvedAt: { type: Number },
     }],
-    referenceId: { type: String, index: true },
+    referenceId: { type: String, index: true, unique: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },
 },
@@ -287,11 +284,11 @@ const schema = new Schema({
     },
 );
 
-schema.pre('save', function (this: any, next: () => void) {
-    if (!this.referenceId) {
-        this.referenceId = `USR${++global.counters.LoanApplication}`;
-    }
-    next();
-});
+// schema.pre('save', function (this: any, next: () => void) {
+//     if (!this.referenceId) {
+//         this.referenceId = `USR${++global.counters.LoanApplication}`;
+//     }
+//     next();
+// });
 
 export const LoanApplication = model('loanapplications', schema);

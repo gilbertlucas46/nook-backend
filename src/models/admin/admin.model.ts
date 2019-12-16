@@ -71,6 +71,9 @@ export const AdminSchema = new Schema(
 					CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTIES,
 					CONSTANT.DATABASE.PERMISSION.TYPE.LOAN,
 					CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+					CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
+					CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
+					CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
 				],
 			},
 			accessLevel: { type: Number, enum: [CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE] },
@@ -87,8 +90,8 @@ export const AdminSchema = new Schema(
 			default: CONSTANT.DATABASE.USER_TYPE.ADMIN.TYPE,
 		},
 	}, {
-	versionKey: false,
-},
+		versionKey: false,
+	},
 );
 
 export const Admin = model<IAdmin>('Admin', AdminSchema);

@@ -17,5 +17,6 @@ export type ModelNames = 'User' |
     'Payment' |
     'LoanReferral' |
     'Transaction' |
-    'AdminSubscription'
+    'AdminSubscription' |
+    'ArticleCategories'
     ;

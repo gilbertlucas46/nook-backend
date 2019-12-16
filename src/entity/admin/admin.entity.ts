@@ -4,9 +4,9 @@ import * as config from 'config';
 import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import * as utils from '@src/utils';
-import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
+const pswdCert: string = config.get('forgetPwdjwtSecret');
 
 /**
  * @author
@@ -45,7 +45,56 @@ export class AdminClass extends BaseEntity {
 			email: 'base_admin@yopmail.com',
 			password: await utils.encryptWordpressHashNode('123456'),
 			profilePicUrl: '',
+			permission: [
+				{
+					moduleName: 'dashboard',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'properties',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'articles',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'help-center',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'staffs',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'loans',
+					accessLevel: 2,
+				},
+				{
+					moduleName: 'help-center',
+					accessLevel: 2,
+				}, {
+					moduleName: 'users',
+					accessLevel: 2,
+				},
+				{
+					moduleName: 'loan-referrals',
+					accessLevel: 2,
+				},
+				{
+					moduleName: 'subscriptions',
+					accessLevel: 2,
+
+				},
+			],
 		};
+
+		console.log('toSavetoSavetoSavetoSavetoSavetoSavetoSave', toSave);
 		const criteria = {
 			email: 'base_admin@yopmail.com',
 		};
@@ -64,7 +113,7 @@ export class AdminClass extends BaseEntity {
 
 	async createPasswordResetToken(adminData) {
 		try {
-			const tokenToSend = Jwt.sign(adminData.email, cert, { algorithm: 'HS256' });
+			const tokenToSend = Jwt.sign(adminData.email, pswdCert, { algorithm: 'HS256' });
 			const expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000);
 			const criteriaForUpdatePswd = { _id: adminData._id };
 			const dataToUpdateForPswd = {
@@ -197,12 +246,12 @@ export class AdminClass extends BaseEntity {
 			};
 			const totalArticles = {
 				status: {
-					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
 				},
 			};
 			const loanQuery = {
 				saveAsDraft: {
-					$ne: false,
+					$ne: true,
 				},
 			};
 
@@ -230,17 +279,26 @@ export class AdminClass extends BaseEntity {
 		}
 	}
 
-	async getPropertyList(payload: AdminRequest.SearchProperty) {
+	async getPropertyList(payload: AdminRequest.AdminPropertyList) {
 		try {
 			const pipeline = [];
 			let { page, limit, sortBy, sortType } = payload;
-			const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, property_type } = payload;
+			const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, propertyType } = payload;
 			if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
 			if (!page) { page = 1; }
 			let sortingType = {};
 			sortType = !sortType ? -1 : sortType;
 			let matchObject: any = {};
 			const skip = (limit * (page - 1));
+			if (property_status === CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {  // for active
+				sortingType = {
+					updatedAt: sortType,
+				};
+			} else {
+				sortingType = {
+					createdAt: sortType,
+				};
+			}
 
 			if (sortBy) {
 				switch (sortBy) {
@@ -263,11 +321,6 @@ export class AdminClass extends BaseEntity {
 						};
 						break;
 				}
-			} else {
-				sortBy = 'approvedAt';
-				sortingType = {
-					updatedAt: sortType,
-				};
 			}
 
 			if (searchTerm) {
@@ -297,9 +350,9 @@ export class AdminClass extends BaseEntity {
 			if (property_status) {
 				matchObject['property_status.number'] = payload.property_status;
 			}
-			if (property_type) matchObject['property_basic_details.type'] = payload.property_type;
-			if (byCity) { matchObject.$match['cityId'] = byCity; }
-			if (byRegion) { matchObject.$match['regionId'] = byRegion; }
+			if (propertyType) matchObject['property_basic_details.type'] = payload.propertyType;
+			if (byCity) { matchObject['cityId'] = byCity; }
+			if (byRegion) { matchObject['regionId'] = byRegion; }
 
 			// Date filters
 			if (fromDate && toDate) { matchObject['createdAt'] = { $gte: fromDate, $lte: toDate }; }
@@ -313,14 +366,6 @@ export class AdminClass extends BaseEntity {
 				data,
 				total,
 			};
-		} catch (error) {
-			return Promise.reject(error);
-		}
-	}
-
-	async subscriptionList(adminData) {
-		try {
-
 		} catch (error) {
 			return Promise.reject(error);
 		}

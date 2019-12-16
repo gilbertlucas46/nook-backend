@@ -1,6 +1,5 @@
 import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
-import * as ENTITY from '../../entity';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as CONSTANT from '../../constants';
@@ -17,6 +16,9 @@ const objectSchema = Joi.object({
 		CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 		CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 		CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+		CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
+		CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
+		CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
 	]).required(),
 	accessLevel: Joi.number().valid([CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE]).default(2),
 });
@@ -29,6 +31,8 @@ export let subAdminRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: AdminRequest.IaddSubAdmin = request.payload as AdminRequest.IaddSubAdmin;
+				//   if(adminData['permission']  )
+
 				const registerResponse = await AdminStaffController.createStaff(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
 			} catch (error) {
@@ -71,7 +75,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				const data = await AdminStaffController.updateStaff(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				console.log('Error', error);
+				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -112,6 +116,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				await AdminStaffController.systemGeneratedMail(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
 			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -187,6 +192,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				const registerResponse = await AdminStaffController.getStaffList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -210,6 +216,7 @@ export let subAdminRoutes: ServerRoute[] = [
 						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+						CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
 					]),
 					status: Joi.string().valid([
 						CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
@@ -248,6 +255,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				const registerResponse = await AdminProfileService.profile(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},

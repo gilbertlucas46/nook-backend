@@ -1,6 +1,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as mongoose from 'mongoose';
 import { AdminRequest } from '@src/interfaces/admin.interface';
+import * as utils from '@src/utils';
 
 export class AdminSessionClass extends BaseEntity {
 	constructor() {
@@ -20,6 +21,7 @@ export class AdminSessionClass extends BaseEntity {
 			if (session && session._id) { return session; }
 
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}

@@ -24,7 +24,6 @@ export let sendError = (data: any) => {
 		if (typeof data === 'object') {
 			if (data.name === 'MongoError') {
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + CONSTANT.STATUS_MSG.ERROR.ENQUIRY_ALREADY_SENT;
-				// errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + data.errmsg;
 			} else if (data.name === 'ApplicationError') {
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.APP_ERROR.message + ' : ';
 			} else if (data.name === 'ValidationError') {

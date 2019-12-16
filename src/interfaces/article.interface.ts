@@ -12,6 +12,7 @@ export namespace ArticleRequest {
         createdAt: number;
         updatedAt: number;
         isFeatured: boolean;
+        addedBy: string;
     }
 
     export interface GetArticle {
@@ -25,6 +26,8 @@ export namespace ArticleRequest {
         fromDate?: number;
         toDate?: number;
         isFeatured?: boolean;
+        status?: string;
+        type?: string;
 
     }
     export interface GetArticleById {
@@ -36,10 +39,15 @@ export namespace ArticleRequest {
         title: string;
         description: string;
         articleId: string;
+        status?: string;
         isFeatured?: boolean;
     }
     export interface DeleteArticle {
         articleId: string;
+    }
+
+    export interface AddCategoriesName {
+        name: string;
     }
 
 }

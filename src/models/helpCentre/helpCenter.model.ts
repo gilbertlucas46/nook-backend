@@ -11,6 +11,7 @@ export interface IHelpCenter extends Document {
     imageUrl: string;
     categoryId: number;
     categoryType: string;
+    action: object[];
 }
 
 export interface IHelpFulHelpCenter extends Document {
@@ -36,7 +37,7 @@ export let HelpCenterStatus = model<IHelpFulHelpCenter>('helpcenterStatus', Help
 
 const helpCenterSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-    title: { type: String },
+    title: { type: String, index: true },
     videoUrl: { type: String, allow: '' },
     userId: { type: Schema.Types.ObjectId, required: true },
     userRole: {
@@ -46,7 +47,7 @@ const helpCenterSchema = new Schema({
             Constant.DATABASE.USER_TYPE.STAFF.TYPE,
         ],
     },
-    description: { type: String },
+    description: { type: String, index: true },
     categoryId: {
         type: Number,
         enum: [
@@ -64,10 +65,13 @@ const helpCenterSchema = new Schema({
             Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.TYPE,
             Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.TYPE,
         ],
+        index: true,
     },
     actions: [{
         userRole: { type: String },
         userId: { type: String },
+        name: { type: String },
+        firstName: { type: String },
         actionTime: { type: Number },
     }],
     createdAt: { type: Number, required: true },

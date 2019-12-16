@@ -26,7 +26,7 @@ export class Database {
 					reconnectInterval: 6000,
 					useCreateIndex: true,
 					useNewUrlParser: true,
-					useFindAndModify: false
+					useFindAndModify: false,
 				});
 				break;
 			}

@@ -1,10 +1,7 @@
 'use strict';
-
 import { BaseEntity } from '@src/entity/base/base.entity';
-import * as utils from '@src/utils';
-import * as Constant from '@src/constants/app.constant';
-import { SubscriptionRequest } from '@src/interfaces/subscription.interface';
-
+import { SubscriptionPlan, ISubscriptionPlan } from '@src/models/subscription';
+import { PLANS } from '@src/constants/subscription.plan.constant';
 export class SubscriptionClass extends BaseEntity {
 
     constructor() {
@@ -13,37 +10,33 @@ export class SubscriptionClass extends BaseEntity {
 
     async adminSubscription() {
         try {
-            // featuredType: string;
-            // subscriptionType: string;
-            // amount: number;
-            // description: string;
-
-            const pipeline: any[] = [{
-                $group: {
-                    _id: '$featuredType',
-                    data: {
-                        $push: {
-                            _id: '$_id',
-                            amount: '$amount',
-                            description: '$description',
-                            featuredType: '$featuredType',
-                        },
-                    },
-                },
-            },
-            { $unwind: '$data' },
-            { $project: { _id: 0 } },
-            ];
-            console.log('pipelinepipelinepipelinepipeline', JSON.stringify(pipeline))
-            const data = await this.DAOManager.aggregateData('AdminSubscription', pipeline, {});
-            // const data = ENTITY.AdminE.aggregate('AdminSubscription', pipeline);
-            console.log('data>>>>>>>>>>>>>>>>>>>>>>', data);
-            return data;
-
+            return await this.DAOManager.getData('AdminSubscription', {}, {}, {});
         } catch (error) {
             return Promise.reject(error);
         }
     }
+
+    /**
+     * @description A function to insert multiple documents into collection.
+     * @param data entity info
+     */
+    async store(payload: ISubscriptionPlan[]): Promise<SubscriptionPlan[]> {
+        return await this.DAOManager.store<SubscriptionPlan>('AdminSubscription', payload);
+    }
+
+    async isEmpty(): Promise<boolean> {
+        return !await this.DAOManager.count(this.modelName, {});
+    }
+    async bootstrap() {
+        if (await this.isEmpty()) {
+            const planData: any = PLANS;
+            await this.store(planData);
+        }
+    }
+
+    async clear() {
+        await this.DAOManager.remove(this.modelName, {});
+    }
 }
 
-export const AdminSubscriptionService = new SubscriptionClass();
+export const SubscriptionPlanEntity = new SubscriptionClass();

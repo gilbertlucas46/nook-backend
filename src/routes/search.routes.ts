@@ -17,6 +17,7 @@ export let searchRoutes: ServerRoute[] = [
                 const registerResponse = await searchController.search(payload, userData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
             } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunctions.sendError(error));
             }
         },
