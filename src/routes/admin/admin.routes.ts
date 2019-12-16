@@ -38,13 +38,13 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'login to application',
 			tags: ['api', 'anonymous', 'Admin', 'login'],
-			// auth: 'DoubleAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					email: Joi.string().lowercase().email().trim().required(),
 					password: Joi.string().min(6).max(16).trim().required(),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -112,12 +112,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					// _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					name: Joi.string().min(1).max(20).trim(),
-					// lastName: Joi.string().min(1).max(20).trim(),
-					// phoneNumber: Joi.string().min(7).max(15).trim(),
 					profilePicUrl: Joi.string().allow(''),
-					// email: Joi.string().email({ minDomainAtoms: 2 }),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -251,7 +247,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Get Admin Profile',
+			description: 'update admin reset password',
 			tags: ['api', 'anonymous', 'admin', 'reset'],
 			validate: {
 				payload: {
@@ -366,12 +362,12 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				params: {
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					permissionType: Joi.string().valid([
-						Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-					]),
+					// permissionType: Joi.string().valid([
+					// 	Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+					// ]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -540,7 +536,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
@@ -549,11 +545,12 @@ export let adminProfileRoute: ServerRoute[] = [
 					amountTo: Joi.number(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
-					// sortBy: Joi.string(),
+					sortBy: Joi.string().default('createdAt'),
 					// sortType: Joi.string(),
 					limit: Joi.number(),
 					page: Joi.number().min(1).default(1),
 					// type: Joi.string().valid('admin', 'user')
+					searchTerm: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -705,11 +702,6 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/user/subscriptionList',
 		handler: async (request, h) => {
 			try {
-				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload = request.payload as any;
-				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(payload.permission);
-				// }
 				const data = await AdminService.getSubscriptionList();
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -720,7 +712,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'Admin update loan status',
 			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
-			auth: 'UserAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

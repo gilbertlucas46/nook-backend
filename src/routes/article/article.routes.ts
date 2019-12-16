@@ -34,7 +34,7 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 payload: {
-                    name: Joi.string(),
+                    name: Joi.string().uppercase(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -218,7 +218,7 @@ export let articleRoutes: ServerRoute[] = [
     },
     /**
      * related Article
-     * not in use check it
+     *
      */
     {
         method: 'GET',
@@ -553,7 +553,8 @@ export let articleRoutes: ServerRoute[] = [
                     // page: Joi.number(),
                     // sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
                     // sortBy: Joi.string(),
-                    categoryId: Joi.string().required(),
+                    type: Joi.string().lowercase().valid('selling'),
+                    categoryId: Joi.string().when('type', { is: '', then: Joi.string().required() }),
                     // articleId: Joi.string(),
                     searchTerm: Joi.string(),
                 },

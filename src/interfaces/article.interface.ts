@@ -27,6 +27,7 @@ export namespace ArticleRequest {
         toDate?: number;
         isFeatured?: boolean;
         status?: string;
+        type?: string;
 
     }
     export interface GetArticleById {

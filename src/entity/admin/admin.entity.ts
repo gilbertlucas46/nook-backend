@@ -45,7 +45,56 @@ export class AdminClass extends BaseEntity {
 			email: 'base_admin@yopmail.com',
 			password: await utils.encryptWordpressHashNode('123456'),
 			profilePicUrl: '',
+			permission: [
+				{
+					moduleName: 'dashboard',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'properties',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'articles',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'help-center',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'staffs',
+					accessLevel: 2,
+				},
+				{
+
+					moduleName: 'loans',
+					accessLevel: 2,
+				},
+				{
+					moduleName: 'help-center',
+					accessLevel: 2,
+				}, {
+					moduleName: 'users',
+					accessLevel: 2,
+				},
+				{
+					moduleName: 'loan-referrals',
+					accessLevel: 2,
+				},
+				{
+					moduleName: 'subscriptions',
+					accessLevel: 2,
+
+				},
+			],
 		};
+
+		console.log('toSavetoSavetoSavetoSavetoSavetoSavetoSave', toSave);
 		const criteria = {
 			email: 'base_admin@yopmail.com',
 		};
