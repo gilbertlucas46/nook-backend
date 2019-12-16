@@ -554,7 +554,7 @@ export let articleRoutes: ServerRoute[] = [
                     // sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
                     // sortBy: Joi.string(),
                     type: Joi.string().lowercase().valid('selling'),
-                    categoryId: Joi.string().required(),
+                    categoryId: Joi.string().when('type', { is: '', then: Joi.string().required() }),
                     // articleId: Joi.string(),
                     searchTerm: Joi.string(),
                 },

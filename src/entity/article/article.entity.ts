@@ -354,6 +354,7 @@ export class ArticleClass extends BaseEntity {
             let { sortType } = payload;
             const { categoryId, searchTerm, type } = payload;
             // if (!limit) { limit = Constant.SERVER.LIMIT; }
+            let limit = 7;
             // if (!page) { page = 1; }
             let sortingType = {};
             let query: any = {};
@@ -377,9 +378,11 @@ export class ArticleClass extends BaseEntity {
                 };
             }
             if (type) {
+                limit = 3;
                 query = {
                     categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+
                 };
             } else {
                 query = {
@@ -397,7 +400,7 @@ export class ArticleClass extends BaseEntity {
                     $match: searchCriteria,
                 },
                 { $sort: sortingType },
-                { $limit: 7 },
+                { $limit: limit },
                 {
                     $project: {
                         articleAction: 0,
