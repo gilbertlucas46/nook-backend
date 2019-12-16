@@ -377,6 +377,8 @@ export class ArticleClass extends BaseEntity {
                 searchCriteria = {
                 };
             }
+            console.log('typetypetypetypetype', type);
+
             if (type) {
                 limit = 3;
                 query = {
