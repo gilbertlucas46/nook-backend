@@ -352,7 +352,7 @@ export class ArticleClass extends BaseEntity {
     async getUserArticle(payload) {
         try {
             let { sortType } = payload;
-            const { categoryId, searchTerm } = payload;
+            const { categoryId, searchTerm, type } = payload;
             // if (!limit) { limit = Constant.SERVER.LIMIT; }
             // if (!page) { page = 1; }
             let sortingType = {};
@@ -376,11 +376,18 @@ export class ArticleClass extends BaseEntity {
                 searchCriteria = {
                 };
             }
+            if (type) {
+                query = {
+                    categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                };
+            } else {
+                query = {
+                    categoryId: Types.ObjectId(categoryId),
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                };
+            }
 
-            query = {
-                categoryId: Types.ObjectId(categoryId),
-                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-            };
 
             const pipeline = [
                 {

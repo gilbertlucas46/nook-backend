@@ -13,6 +13,9 @@ export let adminUserRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = request.payload as AdminRequest.IAddUser;
+
+
+
 				const registerResponse = await AdminUserController.addUser(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
 			} catch (error) {
