@@ -111,6 +111,7 @@ export class CategoryClass extends BaseEntity {
                     status: 'Active',
                 },
             };
+            // this.DAOManager.
             this.DAOManager.findAndUpdate(this.modelName, criteria, insert, { upsert: true });
             return;
         } catch (error) {

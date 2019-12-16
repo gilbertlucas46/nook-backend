@@ -29,8 +29,9 @@ export class AgentClass extends BaseEntity {
                     };
                 }
                 else if (searchBy === 'location') {
+                    // db call
                     searchCriteria = {
-                        $match: { address: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        $match: { 'cityData.name' : new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
                 } else if (searchBy === 'name') {
                     searchCriteria = {
@@ -50,7 +51,6 @@ export class AgentClass extends BaseEntity {
                                 { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { address: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { title: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { license: new RegExp('.*' + searchTerm + '.*', 'i') },
                                 { taxNumber: new RegExp('.*' + searchTerm + '.*', 'i') },
@@ -100,7 +100,6 @@ export class AgentClass extends BaseEntity {
             if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
             const query = [
                 { $match: matchObject },
-                searchCriteria,
                 {
                     $unwind: {
                         path: '$serviceAreas',
@@ -135,6 +134,8 @@ export class AgentClass extends BaseEntity {
                         preserveNullAndEmptyArrays: true,
                     },
                 },
+                searchCriteria,
+
                 {
                     $group: {
                         _id: '$_id',
