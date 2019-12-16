@@ -2,6 +2,8 @@ import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
 import * as utils from '@src/utils';
+import { describe } from 'joi';
+import { pipeline } from 'stream';
 
 export class HelpCenter {
 
@@ -160,6 +162,78 @@ export class HelpCenter {
             return await ENTITY.HelpfulE.createhelpfulStatus(payload);
         } catch (error) {
             utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    async getUserHelpCenter(payload, userData) {
+        try {
+            const { searchTerm, categoryId } = payload;
+            let query: object = {};
+            // let pipeline: any;
+            if (searchTerm) {
+                query = {
+                    // $and:{status:}
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                        { categoryType: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+                const data = await ENTITY.HelpCenterE.getMultiple(query, {});
+                return data;
+
+            } else if (categoryId) {
+                query = {
+                    categoryId,
+                };
+                const data = ENTITY.HelpCenterE.getMultiple(query, {});
+                return data;
+            } else {
+                // return Constant.DATABASE.HELP_CENTER_TYPE;
+                query = [
+                    {
+                        $facet: {
+                            PROPERTIES: [
+                                {
+                                    $match: {
+                                        categoryType: 'PROPERTIES',
+                                    },
+                                },
+                                { $project: { _id: 1, title: 1, categoryId: 1 } },
+                            ],
+                            ACCOUNT: [{
+                                $match: {
+                                    categoryType: 'ACCOUNT',
+                                },
+                            },
+                            { $project: { _id: 1, title: 1, categoryId: 1 } },
+                            ],
+                            BILLING: [{
+                                $match: {
+                                    categoryType: 'BILLING',
+
+                                },
+                            },
+                            { $project: { _id: 1, title: 1, categoryId: 1 } },
+                            ],
+                            HOME_LOANS: [{
+                                $match: {
+                                    categoryType: 'HOME_LOANS',
+                                },
+                            },
+                            { $project: { _id: 1, title: 1, categoryId: 1 } },
+                            ],
+
+                        },
+                    },
+                ];
+                const data = await ENTITY.HelpCenterE.aggregate(query);
+                console.log('categoryTypecategoryTypecategoryType', data);
+                return data[0];
+            }
+
+        } catch (error) {
             return Promise.reject(error);
         }
     }
