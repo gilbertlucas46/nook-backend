@@ -352,7 +352,7 @@ export class ArticleClass extends BaseEntity {
     async getUserArticle(payload) {
         try {
             let { sortType } = payload;
-            const { categoryId, searchTerm, type } = payload;
+            const { categoryId, searchTerm } = payload;
             // if (!limit) { limit = Constant.SERVER.LIMIT; }
             let limit = 7;
             // if (!page) { page = 1; }
@@ -377,22 +377,11 @@ export class ArticleClass extends BaseEntity {
                 searchCriteria = {
                 };
             }
-            console.log('typetypetypetypetype', type);
 
-            if (type) {
-                limit = 3;
-                query = {
-                    categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
-                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-
-                };
-            } else {
-                query = {
-                    categoryId: Types.ObjectId(categoryId),
-                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-                };
-            }
-
+            query = {
+                categoryId: Types.ObjectId(categoryId),
+                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+            };
 
             const pipeline = [
                 {
@@ -426,6 +415,22 @@ export class ArticleClass extends BaseEntity {
             return await this.DAOManager.aggregateData('ArticleCategories', cateogryPipeline);
         } catch (error) {
             return Promise.reject(error);
+        }
+    }
+
+    async sellingArticle() {
+        try {
+            const criteria = {
+                categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+            };
+            const sortingType = {
+                createdAt: -1,
+            }
+            // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+            return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
+        } catch (error) {
+
         }
     }
 }
