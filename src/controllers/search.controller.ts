@@ -1,8 +1,8 @@
 
 import * as config from 'config';
-import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 const cert: any = config.get('jwtSecret');
+import * as utils from '@src/utils';
 export class SearchController {
 	/**
 	 * @function search
@@ -46,6 +46,7 @@ export class SearchController {
             return { propertyData, propertyTotal, enquiryData, enquiryTotal };
         }
         catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

@@ -3,6 +3,7 @@ import { LoanRequest } from './../../interfaces/loan.interface';
 import * as Constant from '@src/constants';
 import { NATIONALITY } from '@src/constants';
 import { Types } from 'mongoose';
+import * as utils from '@src/utils';
 
 class LoanEntities extends BaseEntity {
     constructor() {
@@ -54,7 +55,7 @@ class LoanEntities extends BaseEntity {
                     {
                         $match: {
                             loanMinAmount: { $lte: payload.property.value },
-                            minMonthlyIncomeRequired : {$lte : payload.work.income},
+                            minMonthlyIncomeRequired: { $lte: payload.work.income },
                             loanForForeignerMarriedLocal: localVisa,
                             propertySpecification: {
                                 $elemMatch: {
@@ -218,8 +219,9 @@ class LoanEntities extends BaseEntity {
             );
 
             return await this.DAOManager.aggregateData(this.modelName, queryPipeline);
-        } catch (err) {
-            return Promise.reject(err);
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
         }
     }
 }

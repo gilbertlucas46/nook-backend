@@ -130,7 +130,6 @@ export namespace LoanRequest {
         docUrl: string;
     }
     export interface PropertyDocuments extends PurchasePropertyInfo {
-        //  borrowerValidDocIds: Joi.array().items(Joi.string()),
         borrowerValidDocIds: string[];
         coBorrowerValidId: string[];
         latestITR: string;
@@ -195,7 +194,6 @@ export namespace LoanRequest {
         missedLoanPaymentAllowance?: boolean;
         bankImageLogoUrl?: string;
         loanForEmploymentType: [LoanForEmploymentType];
-
     }
 
     export interface IGetUserLoanList {
@@ -206,5 +204,18 @@ export namespace LoanRequest {
         fromDate?: number;
         toDate?: number;
         status?: string;
+    }
+
+    export interface IGetAdminLoanList {
+        limit: number;
+        page: number;
+        sortType?: number;
+        sortBy?: string;
+        fromDate?: number;
+        toDate?: number;
+        status?: string;
+        amountFrom?: number;
+        amountTo?: number;
+        searchTerm?: string;
     }
 }

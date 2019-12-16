@@ -21,7 +21,7 @@ export namespace helpCenterRequest {
     }
 
     export interface IupdateHelpCenter {
-        id?: string; // in the params
+        id?: string;
         title?: string;
         videoUrl?: string;
         description?: string;

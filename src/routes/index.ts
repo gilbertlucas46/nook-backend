@@ -17,7 +17,8 @@ import { transactionRoute } from './transaction/transaction.routes';
 import { loanReferral } from './referral/loanReferral.routes';
 import { searchRoutes } from './search.routes';
 import { subscriptionRoute } from './subscription/subscription.routes';
-
+import { adminUserRoutes } from './admin/admin.user.routes';
+// const arr = [];
 export let Routes: ServerRoute[] = [
 	...userRoute,
 	...propertyRoute,
@@ -35,5 +36,27 @@ export let Routes: ServerRoute[] = [
 	...transactionRoute,
 	...loanReferral,
 	...searchRoutes,
-	...subscriptionRoute
+	...subscriptionRoute,
+	...adminUserRoutes,
+	// {
+	// 	method: ['*'],
+	// 	path: '/{any*}',
+	// 	handler: (request, h) => {
+	// 		const accept = request.url.pathname;
+	// 		let arr = [];
+	// 		arr.push(Routes.map(data => data.path));
+	// 		// if (arr[0].match(accept)) {
+	// 		// 	return Promise.reject('This resource isn’t available.');
+	// 		// }
+	// 		if (arr[0].includes([accept])) {
+	// 			return;
+	// 		} else {
+	// 			return Promise.reject(' this resource isn’t available.');
+	// 		}
+	// 		// if (accept && accept.match(arr[0])) {
+	// 		// 	return Promise.reject(' this resource isn’t available.');
+	// 		// }
+	// 		return;
+	// 	},
+	// },
 ];

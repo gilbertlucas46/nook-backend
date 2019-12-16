@@ -1,6 +1,7 @@
 import * as ENTITY from '@src/entity';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { loanReferralRequest } from '@src/interfaces/loanReferral.interface';
+import * as utils from '@src/utils';
 class Referal extends BaseEntity {
     // constructor() { }
     /**
@@ -15,6 +16,7 @@ class Referal extends BaseEntity {
             payload['userId'] = userData._id;
             return await ENTITY.ReferalE.createReferral(payload);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -31,6 +33,7 @@ class Referal extends BaseEntity {
             await ENTITY.ReferalE.getReferral(payload);
             return;
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -43,6 +46,40 @@ class Referal extends BaseEntity {
     async getUserReferral(payload: loanReferralRequest.IUserLoanRefferal, userData) {
         try {
             return await ENTITY.ReferalE.getUserReferral(payload, userData);
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    async getAdminReferral(payload, adminData) {
+        try {
+            const data = await ENTITY.ReferalE.getAdminData(payload, adminData);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async updateReferral(payload, adminData) {
+        try {
+            const criteria = {
+                _id: payload.id,
+            };
+            const dataToSet: any = {};
+            dataToSet.$set = {
+                ...payload,
+            };
+            dataToSet.$push = {
+                status: payload.staffStatus,
+                staffId: adminData._id,
+                seenAt: new Date().getTime(),
+                stafName: adminData.firstName,
+                message: payload.message || '',
+            };
+            // const [message] = payload;
+            const data = await ENTITY.ReferalE.updateOneEntity(criteria, dataToSet);
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }

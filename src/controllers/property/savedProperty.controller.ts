@@ -1,5 +1,6 @@
 import * as ENTITY from '@src/entity';
 import { SavePropertyRequest } from '@src/interfaces/saveProperty.interface';
+import * as utils from '@src/utils';
 export class SavedProperty {
     async saveProperty(payload: SavePropertyRequest.SaveProperty, userData) {
         try {
@@ -16,6 +17,7 @@ export class SavedProperty {
             else { data = await ENTITY.SavedPropertyE.removeEntity(dataToSave); }
             return data;
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -24,6 +26,7 @@ export class SavedProperty {
         try {
             return await ENTITY.SavedPropertyE.getList(payload, userData);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

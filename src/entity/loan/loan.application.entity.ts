@@ -2,6 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
+import * as utils from '@src/utils';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -15,7 +16,7 @@ class LoanApplicationE extends BaseEntity {
         try {
             return await this.createOneEntity(payload);
         } catch (error) {
-            console.log('Error in saving loan data ', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -24,12 +25,22 @@ class LoanApplicationE extends BaseEntity {
      * @param payload
      */
     async updateLoanApplication(payload) {
-        return this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
+        try {
+            return this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
     }
 
     async getReferenceId(criteria) {
-        const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { sort: { _id: - 1 }, limit: 1 });
-        return data[0];
+        try {
+            const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { sort: { _id: - 1 }, limit: 1 });
+            return data[0];
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
     }
 
     async getUserLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
@@ -48,26 +59,28 @@ class LoanApplicationE extends BaseEntity {
                     userId: userData._id,
                 };
             }
-            else {
-                matchObject['saveAsDraft'] = false;
-                matchObject['applicationStatus'] = { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
-                // saveAsDraft: false,
-            }
+            // else {
+            //     matchObject['saveAsDraft'] = false;
+            //     matchObject['applicationStatus'] = { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
+            //     // saveAsDraft: false,
+            // }
 
-            if (sortBy) {
-                // switch (sortBy) {
-                // case 'Date':
-                // sortBy = 'Date';
-                // sortingType = {
-                //     createdAt: sortType,
-                // };
+            sortingType = {
+                [sortBy]: sortType,
+            };
+            // switch (sortBy) {
+            // case 'Date':
+            // sortBy = 'Date';
+            // sortingType = {
+            //     createdAt: sortType,
+            // };
 
-            } else {
-                sortBy = 'Date';
-                sortingType = {
-                    createdAt: sortType,
-                };
-            }
+            //  else {
+            //     sortBy = 'Date';
+            //     sortingType = {
+            //         createdAt: sortType,
+            //     };
+            // }
 
             if (status) {
                 matchObject['applicationStatus'] = status;
@@ -110,61 +123,62 @@ class LoanApplicationE extends BaseEntity {
                 total,
             };
         } catch (error) {
-            console.log('Error', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
 
-    async getAdminLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
+    async getAdminLoanList(payload: LoanRequest.IGetAdminLoanList, userData) {
         try {
-            let { page, limit, sortType, sortBy } = payload;
-            const { fromDate, toDate, status } = payload;
+            let { page, limit, sortType } = payload;
+            const { fromDate, toDate, status, sortBy, amountFrom, amountTo, searchTerm } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
             sortType = !sortType ? -1 : sortType;
             let sortingType = {};
             const promiseArray = [];
-            let matchObject: any = {};
-            if (userData.type === 'TENANT' || userData.type === 'OWNER' || userData.type === 'AGENT') {
-                matchObject = {
-                    userId: userData._id,
-                };
-            }
-            else {
-                matchObject['saveAsDraft'] = false;
-                matchObject['applicationStatus'] = { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
-                // saveAsDraft: false,
-            }
+            const matchObject: any = {};
+
+            // if (userData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE || userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE) {
+            matchObject['saveAsDraft'] = false;
+            // }
 
             if (sortBy) {
-                // switch (sortBy) {
-                // case 'Date':
-                // sortBy = 'Date';
-                // sortingType = {
-                //     createdAt: sortType,
-                // };
-
-            } else {
-                sortBy = 'Date';
                 sortingType = {
-                    createdAt: sortType,
+                    [sortBy]: sortType,
                 };
             }
-
             if (status) {
                 matchObject['applicationStatus'] = status;
             }
-
             else {
+                matchObject['applicationStatus'] =
+                    { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
+            }
+
+            if (amountFrom && amountTo) {
+                matchObject['loanDetails']['loanAmount'] = {
+                    $gt: amountFrom,
+                    $lt: amountTo,
+                };
+            }
+            // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value },
+            // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value },
+            // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value },
+            // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value },
+            // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value },
+            // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value },
+
+            // ];
+            // }
+            if (searchTerm) {
                 matchObject['$or'] = [
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value },
-                    // { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value },
+                    { 'personalInfo.firstName': { $regex: searchTerm, $options: 'i' } },
+                    { 'personalInfo.middleName': { $regex: searchTerm, $options: 'i' } },
+                    { 'contactInfo.phoneNumber': { $regex: searchTerm, $options: 'i' } },
+                    { 'contactInfo.email': { $regex: searchTerm, $options: 'i' } },
+                    { 'contactInfo.mobileNumber': { $regex: searchTerm, $options: 'i' } },
                 ];
             }
 
@@ -193,7 +207,7 @@ class LoanApplicationE extends BaseEntity {
                 total,
             };
         } catch (error) {
-            console.log('Error', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

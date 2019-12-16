@@ -2,7 +2,6 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import * as Constant from '@src/constants/app.constant';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import * as utils from '@src/utils';
-import { UserRequest } from '@src/interfaces/user.interface';
 
 export class UserPropertyClass extends BaseEntity {
 	constructor() {
@@ -11,15 +10,33 @@ export class UserPropertyClass extends BaseEntity {
 	async getUserPropertyList(payload: PropertyRequest.PropertyByStatus, userData) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
+			const { searchTerm } = payload;
 			const propertyType = payload.propertyType;
 			if (!limit) { limit = Constant.SERVER.LIMIT; }
 			if (!page) { page = 1; }
 			let sortingType = {};
+			let searchCriteria: any = {};
 			sortType = !sortType ? -1 : sortType;
 			let criteria;
 			sortingType = {
 				updatedAt: sortType,
 			};
+			if (searchTerm) {
+				searchCriteria = {
+					$match: {
+						$or: [
+							{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
+							{ 'property_address.barangay': new RegExp('.*' + searchTerm + '.*', 'i') },
+							{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
+						],
+					},
+				};
+			} else {
+				searchCriteria = {
+					$match: {
+					},
+				};
+			}
 
 			if (sortBy) {
 				switch (sortBy) {
@@ -68,6 +85,7 @@ export class UserPropertyClass extends BaseEntity {
 
 			const pipeline = [
 				criteria,
+				searchCriteria,
 				{
 					$project: {
 						_id: 1,
@@ -166,7 +184,6 @@ export class UserPropertyClass extends BaseEntity {
 		try {
 			const query: any = {};
 			query._id = payload.propertyId;
-
 			const set: any = {};
 			const update = {};
 			update['$set'] = set;

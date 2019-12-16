@@ -42,11 +42,7 @@ export class UserController {
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
 					const userResponse = UniversalFunctions.formatUserData(User);
-					// const html = `<html><head><title> Nook user Register | Thanx for Registering with us...</title></head></html>`;
-					// const mail = new MailManager(payload.email, 'nook welcomes you', html);
-					// const mail = new MailManager(payload.email, 'nook welcomes you', html);
 					const mail = new MailManager();
-					// mail.sendMail({ receiverEmail: payload['email'], subject: 'nook welcomes you', html: html });
 					const sendObj = {
 						receiverEmail: payload.email,
 						subject: 'nook welcomes you',
@@ -57,6 +53,7 @@ export class UserController {
 				}
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -79,6 +76,12 @@ export class UserController {
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
+					if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
+						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
+					}
+					if (userData.status === Constant.DATABASE.STATUS.USER.DELETED) {
+						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
+					}
 					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
 						return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD;
 					} else {
@@ -97,6 +100,7 @@ export class UserController {
 				return Constant.STATUS_MSG.ERROR.E400.INVALID_LOGIN;
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -109,12 +113,13 @@ export class UserController {
 	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
 		try {
 			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
-			if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
-			}
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
+			// if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
+			// 	return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
+			// }
+			if (!getPropertyData) { return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {}); }
 			return getPropertyData;
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -171,6 +176,7 @@ export class UserController {
 
 			return updateUser;
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -198,6 +204,7 @@ export class UserController {
 			}
 			return payload;
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -251,6 +258,7 @@ export class UserController {
 				else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -273,6 +281,7 @@ export class UserController {
 				if (diffMins > 0) { return Promise.reject('LinkExpired'); } else { return {}; } // success
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -304,6 +313,7 @@ export class UserController {
 				if (!updatePassword) { return Promise.reject(Constant.STATUS_MSG.ERROR.E500.IMP_ERROR); } else { return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT; }
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -316,10 +326,11 @@ export class UserController {
 	async dashboard(userData: UserRequest.UserData) {
 		try {
 			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
-			let step2 = await ENTITY.UserE.userDashboad(userData);
+			const step2 = await ENTITY.UserE.userDashboad(userData);
 			step2.isFeaturedProfile = step1 ? true : false;
 			return step2;
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -331,9 +342,9 @@ export class UserController {
 	 */
 	async userProperty(payload: PropertyRequest.UserProperty) {
 		try {
-			const data = await ENTITY.PropertyE.suggested_property(payload);
-			return data;
+			return await ENTITY.PropertyE.suggested_property(payload);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -354,6 +365,7 @@ export class UserController {
 			return { formatedData, accessToken };
 		}
 		catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}

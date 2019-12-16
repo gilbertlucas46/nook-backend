@@ -6,6 +6,8 @@ import * as Jwt from 'jsonwebtoken';
 const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { AdminRequest } from '@src/interfaces/admin.interface';
+const pswdCert: string = config.get('forgetPwdjwtSecret');
+
 /**
  * @author
  * @description this controller contains actions for admin's account related activities
@@ -20,13 +22,15 @@ export class AdminProfileController {
 	async login(payload: AdminRequest.Login) {
 		try {
 			const email: string = payload.email;
-			// if (email) { email = email.trim().toLowerCase(); }
 			const checkData = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
 			// check email
 			if (!adminData) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
 			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
+			}
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.BLOCKED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
 			}
 			if (!(await utils.decryptWordpressHashNode(payload.password, adminData.password))) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
@@ -44,8 +48,9 @@ export class AdminProfileController {
 			}
 			const accessToken = await ENTITY.AdminE.createToken(tokenObj);
 			return { formatedData: adminData, accessToken };
-		} catch (err) {
-			return Promise.reject(err);
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
 		}
 	}
 	/**
@@ -57,8 +62,9 @@ export class AdminProfileController {
 		try {
 			const criteria = { _id: payload._id };
 			return await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
-		} catch (err) {
-			return Promise.reject(err);
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
 		}
 	}
 
@@ -66,8 +72,9 @@ export class AdminProfileController {
 		try {
 			const criteria = { _id: adminData._id };
 			return await ENTITY.AdminE.updateOneEntity(criteria, payload);
-		} catch (err) {
-			return Promise.reject(err);
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
 		}
 	}
 	/**
@@ -77,14 +84,20 @@ export class AdminProfileController {
 	async forgetPassword(payload: AdminRequest.ForgetPassword) {
 		try {
 			const criteria = { email: payload.email };
-			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id']);
+			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'firstName']);
 			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
 				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
 				const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
-				// const html = `<html><head><title> Nook Admin | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
-				// const mail = new MailManager(payload.email, 'forget password', html);
-				// mail.sendMail();
+				const sendObj = {
+					receiverEmail: payload.email,
+					subject: 'Admin reset password Nook',
+					token: passwordResetToken,
+					url,
+					userName: adminData.firstName,
+				};
+				const mail = new MailManager();
+				mail.forgetPassword(sendObj);
 				return {};
 			}
 		} catch (error) {
@@ -111,6 +124,7 @@ export class AdminProfileController {
 				else return Constant.STATUS_MSG.SUCCESS.S200.DEFAULT;
 			}
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -120,7 +134,7 @@ export class AdminProfileController {
 	 */
 	async verifyLinkForResetPwd(payload) {
 		try {
-			const result = Jwt.verify(payload.token, cert, { algorithms: ['HS256'] });
+			const result = Jwt.verify(payload.token, pswdCert, { algorithms: ['HS256'] });
 			if (!result) { return Promise.reject(); }
 			const checkAlreadyUsedToken: any = await ENTITY.AdminE.getOneEntity({ email: result }, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 			if (checkAlreadyUsedToken.passwordResetTokenExpirationTime == null && !checkAlreadyUsedToken.passwordResetToken == null) {
@@ -154,10 +168,13 @@ export class AdminProfileController {
 	 */
 	async verifyLink(payload) {
 		try {
-			const result: any = Jwt.verify(payload.link, cert, { algorithms: ['HS256'] });
-			const adminData = await ENTITY.AdminE.getOneEntity(result.email, {});
+			const result: any = Jwt.verify(payload.link, pswdCert, { algorithms: ['HS256'] });
+			const findByEmail = {
+				email: result,
+			};
+			const adminData = await ENTITY.AdminE.getOneEntity(findByEmail, {});
 			if (!adminData) {
-				return Promise.reject('error'); // error page will be open here
+				return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
 			} else {
 				const criteria = { email: result };
 				const userExirationTime: any = await ENTITY.AdminE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
@@ -165,8 +182,9 @@ export class AdminProfileController {
 				const diffMs = (today - userExirationTime.passwordResetTokenExpirationTime);
 				const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 				if (diffMins > 0) { return Promise.reject('LinkExpired'); }
-				return {}; // success
+				else { return {}; } // success
 			}
+
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);

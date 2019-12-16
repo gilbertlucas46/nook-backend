@@ -1,5 +1,4 @@
 import * as Stripe from 'stripe';
-
 import * as Constant from '@src/constants/app.constant';
 import * as config from 'config';
 import * as utils from '../utils';
@@ -7,8 +6,6 @@ import * as utils from '../utils';
 const stripe = new Stripe(config.get('stripeSecretKey'));
 
 export class StripeManager {
-	// private stripeKey: string = config.get('MAIL_FROM_ADDRESS')
-
 	async createCustomers(payload) {
 		try {
 			return await stripe.customers.create(payload);
@@ -53,8 +50,8 @@ export class StripeManager {
 					number: '4242424242424242',
 					exp_month: 11,
 					exp_year: 2020,
-					cvc: '314'
-				}
+					cvc: '314',
+				},
 			});
 		} catch (error) {
 			utils.consolelog('StripeManager', error, false);

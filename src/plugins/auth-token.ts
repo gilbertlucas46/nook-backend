@@ -19,7 +19,13 @@ export let plugin = {
 				if (!tokenData || !tokenData.adminData) {
 					return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED));
 				} else {
-					return ({ isValid: true, credentials: { token, adminData: tokenData.adminData } });
+					if (tokenData.adminData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
+						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED));
+					} else if (tokenData.adminData.status === Constant.DATABASE.STATUS.USER.DELETED) {
+						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED));
+					} else {
+						return ({ isValid: true, credentials: { token, adminData: tokenData.adminData } });
+					}
 				}
 			},
 		});

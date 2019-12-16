@@ -36,9 +36,6 @@ export let DATABASE = {
 	},
 
 	LOAN_APPLICATION_STATUS: {
-		// PENDING: 'pending',
-		// REJECTED: 'rejected',
-		// APPROVED: 'approved',
 		DRAFT: {
 			label: 'Draft',
 			value: 'DRAFT',
@@ -53,7 +50,7 @@ export let DATABASE = {
 		},
 		REFERRED: {
 			label: 'Referred to Bank',
-			value: 'REERRED',
+			value: 'REFERRED',
 		},
 		BANK_APPROVED: {
 			label: 'Bank Approved',
@@ -317,6 +314,9 @@ export let DATABASE = {
 			ARTICLE: 'articles',
 			LOAN: 'loans',
 			PROPERTIES: 'properties',
+			Article_Category: 'article-categories',
+			Subscriptions: 'subscriptions',
+			loanReferrals: 'loan-referrals',
 		},
 	},
 
@@ -333,61 +333,67 @@ export let DATABASE = {
 		WAREHOUSE: 'Warehouse',
 	},
 
-	ARTICLE_TYPE: {
-		// FEATURED_ARTICLE: {
-		// 	NUMBER: 1,
-		// 	TYPE: 'FEATURED_ARTICLE',
-		// 	DISPLAY_NAME: 'Featured Article',
-		// },
-		AGENTS: {
-			NUMBER: 2,
-			TYPE: 'AGENTS',
-			DISPLAY_NAME: 'Agent',
-		},
-		BUYING: {
-			NUMBER: 3,
-			TYPE: 'BUYING',
-			DISPLAY_NAME: 'Buying',
-		},
-		HOME_LOANS: {
-			NUMBER: 4,
-			TYPE: 'HOME_LOANS',
-			DISPLAY_NAME: 'Home Loans',
-		},
-		RENTING: {
-			NUMBER: 5,
-			TYPE: 'RENTING',
-			DISPLAY_NAME: 'Renting',
-		},
-		SELLING: {
-			NUMBER: 6,
-			TYPE: 'SELLING',
-			DISPLAY_NAME: 'Selling',
-		},
-		NEWS: {
-			NUMBER: 7,
-			TYPE: 'NEWS',
-			DISPLAY_NAME: 'News',
-		},
-		// legal stuff, international news, domestic news, sports coverage, political news
+	ArticleCategoryStatus: {
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
 	},
-
+	// ARTICLE_TYPE: {
+	// 	// FEATURED_ARTICLE: {
+	// 	// 	NUMBER: 1,
+	// 	// 	TYPE: 'FEATURED_ARTICLE',
+	// 	// 	DISPLAY_NAME: 'Featured Article',
+	// 	// },
+	// 	AGENTS: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'AGENTS',
+	// 		DISPLAY_NAME: 'Agent',
+	// 	},
+	// 	BUYING: {
+	// 		NUMBER: 3,
+	// 		TYPE: 'BUYING',
+	// 		DISPLAY_NAME: 'Buying',
+	// 	},
+	// 	HOME_LOANS: {
+	// 		NUMBER: 4,
+	// 		TYPE: 'HOME_LOANS',
+	// 		DISPLAY_NAME: 'Home Loans',
+	// 	},
+	// 	RENTING: {
+	// 		NUMBER: 5,
+	// 		TYPE: 'RENTING',
+	// 		DISPLAY_NAME: 'Renting',
+	// 	},
+	// 	SELLING: {
+	// 		NUMBER: 6,
+	// 		TYPE: 'SELLING',
+	// 		DISPLAY_NAME: 'Selling',
+	// 	},
+	// 	NEWS: {
+	// 		NUMBER: 7,
+	// 		TYPE: 'NEWS',
+	// 		DISPLAY_NAME: 'News',
+	// 	},
+	// legal stuff, international news, domestic news, sports coverage, political news
+	// },
 	ARTICLE_STATUS: {
-		PENDING: {
-			NUMBER: 1,
-			TYPE: 'PENDING',
-			DISPLAY_NAME: 'Pending',
-		},
-		ACTIVE: {
-			NUMBER: 2,
-			TYPE: 'ACTIVE',
-			DISPLAY_NAME: 'Active',
-		},
-		BLOCKED: {
-			NUMBER: 3,
-			TYPE: 'BLOCKED',
-			DISPLAY_NAME: 'Blocked',
-		},
+		PENDING: 'Pending',
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
+		// PENDING: {
+		// 	// NUMBER: 1,
+		// 	// TYPE: 'PENDING',
+		// 	DISPLAY_NAME: 'Pending',
+		// },
+		// ACTIVE: {
+		// 	NUMBER: 2,
+		// 	TYPE: 'ACTIVE',
+		// 	DISPLAY_NAME: 'Active',
+		// },
+		// BLOCKED: {
+		// 	NUMBER: 3,
+		// 	TYPE: 'BLOCKED',
+		// 	DISPLAY_NAME: 'Blocked',
+		// },
 	},
 
 	HELP_CENTER_TYPE: {
@@ -679,6 +685,11 @@ export let STATUS_MSG = {
 				type: 'REQUEST_ALREADY_SENT',
 				message: 'Request has already been sent to the entered email',
 			},
+			DELETE_ARTICLE_FIRST: {
+				statusCode: 400,
+				type: 'Delete Category',
+				message: 'first delete the Articles',
+			},
 			NOT_VERIFIED: {
 				statusCode: 400,
 				type: 'NOT_VERIFIED',
@@ -744,6 +755,11 @@ export let STATUS_MSG = {
 				type: 'INVALID_PROPERTY_STATUS',
 				message: 'Invalid Property Status ',
 			},
+			INVALID__STATUS: {
+				statusCode: 400,
+				type: 'INVALID__STATUS',
+				message: 'Invalid Status ',
+			},
 			PROPERTY_SOLD: {
 				statusCode: 400,
 				type: 'PROPERTY_SOLD',
@@ -795,8 +811,8 @@ export let STATUS_MSG = {
 					statusCode: 400,
 					type: 'SUBSCRIPTION_NOT_EXIST',
 					message: 'You do not have any subscription plan.',
-					data: data,
-				}
+					data,
+				};
 			},
 		},
 		E401: {
@@ -833,12 +849,12 @@ export let STATUS_MSG = {
 			ADMIN_DELETED: {
 				statusCode: 401,
 				type: 'ADMIN_DELETED',
-				message: 'You are blocked by Admin',
+				message: 'Please use another email to regiter',
 			},
 			ADMIN_BLOCKED: {
 				statusCode: 401,
 				type: 'ADMIN_BLOCKED',
-				message: 'You are blocked by Admin',
+				message: 'Please contact Admin you are blocked',
 			},
 			UNAUTHORIZED: {
 				statusCode: 401,
@@ -998,13 +1014,26 @@ export let STATUS_MSG = {
 				type: 'CREATED',
 				message: 'Article Created',
 			},
+			CATEGORY_CREATED: {
+				statusCode: 201,
+				type: 'CREATED',
+				message: 'Category Created',
+			},
 			PAYMENT_ADDED: {
 				statusCode: 201,
 				type: 'PAYMENT_ADDED',
 				message: 'Payment Done Successfully',
 			},
 		},
+		S204: {
+			NO_CONTENT_AVAILABLE: {
+				statusCode: 204,
+				type: 'DEFAULT',
+				message: 'No Data found',
+			},
+		},
 	},
+
 	S210: {
 		FORGET_PASSWORD_PHONE_NUMBER: {
 			statusCode: 210,
@@ -1027,6 +1056,7 @@ export let STATUS_MSG = {
 };
 
 export let SERVER = {
+	SELLING_ARTICLE_ID: '5df7515fd72c62a525cc9333',
 	DOMAIN_NAME: 'http://localhost:7313/',
 	IOS_URL: 'nook://',
 	ANDROID_URL: 'http://nook.com',
@@ -1046,7 +1076,7 @@ export let SERVER = {
 	TEMPLATE_PATH: process.cwd() + '/src/views/',
 	BY_PASS_OTP: '1212',
 	LISTNG_LIMIT: 10,
-	SYNC_LIMIT: undefined,
+	SYNC_LIMIT: 100000,
 	CONTACT_SYNC_LIMIT: 2000,
 	THUMB_WIDTH: 10,
 	THUMB_HEIGHT: 10,

@@ -3,18 +3,21 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { EnquiryRequest } from '@src/interfaces/enquiry.interface';
 import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '@src/constants';
-
+import * as utils from '@src/utils';
 export class EnquiryClass extends BaseEntity {
     constructor() {
         super('Enquiry');
     }
     async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
-            const { fromDate, toDate, category, enquiryType, searchTerm } = payload;
-            let { sortType, limit, page } = payload;
+            const { fromDate, toDate, category, enquiryType, searchTerm, limit } = payload;
+            let { sortType, page } = payload;
             sortType = !sortType ? -1 : sortType;
-            if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
+            const paginateOptions = {
+                page: page || 1,
+                limit: limit || Constant.SERVER.LIMIT,
+            };
             const sortingType = {
                 createdAt: sortType,
             };
@@ -29,7 +32,6 @@ export class EnquiryClass extends BaseEntity {
                 query['userId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
             } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) {
-                // query['userId'] = userData._id;
                 query['agentId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
             }
@@ -65,10 +67,15 @@ export class EnquiryClass extends BaseEntity {
                 };
             }
 
+            const matchPipeline = [
+                { $match: query },
+                { $sort: sortingType },
+            ];
+
             const pipeLine = [
-                {
-                    $match: query,
-                },
+                // {
+                //     $match: query,
+                // },
                 {
                     $lookup: {
                         from: 'properties',
@@ -115,11 +122,10 @@ export class EnquiryClass extends BaseEntity {
                         title: '$propertyData.property_basic_details.title',
                     },
                 },
-                { $sort: sortingType },
             ];
-            return await this.DAOManager.paginate(this.modelName, pipeLine, limit, page);
-
+            return await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeLine).aggregate(this.modelName);
         } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

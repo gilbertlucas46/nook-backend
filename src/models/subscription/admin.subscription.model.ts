@@ -1,16 +1,7 @@
 import { Schema, Document, Types, model } from 'mongoose';
 
 import * as CONSTANT from '@src/constants/app.constant';
-
-export interface IAdminSubscription extends Document {
-    featuredType: string;
-    subscriptionType: string;
-    amount: number;
-    description: string;
-    startDate: number;
-    createdAt: number;
-    updatedAt: number;
-}
+import { SubscriptionPlan } from './admin.subscription.document';
 
 const adminSubcription = new Schema({
     featuredType: {
@@ -21,18 +12,24 @@ const adminSubcription = new Schema({
             CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE,
             CONSTANT.DATABASE.FEATURED_TYPE.FREE,
         ],
-        unique: true,
-        required: true,
     },
-    subscriptionType: { type: String, enum: ['Monthly', 'Yearly'] },
-    amount: { type: Number, default: 900 },
+    plans: [
+        {
+            billingType: {
+                type: String, enum: [
+                    CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
+                    CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
+                ],
+            },
+            amount: {
+                type: Number,
+            },
+        },
+    ],
     description: { type: String },
-    status: { type: String },
-    startDate: { type: Number }, // for the admin
-    createdAt: { type: Number, required: true },
-    updatedAt: { type: Number, required: true },
+    createdAt: { type: Number, required: true, default: new Date().getTime() },
+    updatedAt: { type: Number, required: true, default: new Date().getTime() },
 }, {
         versionKey: false,
     });
-
-export const AdminSubscription = model<IAdminSubscription>('AdminSubscription', adminSubcription);
+export const AdminSubscription = model<SubscriptionPlan>('AdminSubscription', adminSubcription);

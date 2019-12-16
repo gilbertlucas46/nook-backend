@@ -126,6 +126,7 @@ export let loanRoute: ServerRoute[] = [
 				const data = await LoanController.addLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},

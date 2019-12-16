@@ -3,6 +3,8 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
 import * as utils from '@src/utils';
+import { Types } from 'mongoose';
+import * as UniversalFunctions from '../../utils';
 export class ArticleClass extends BaseEntity {
     constructor() {
         super('Article');
@@ -10,10 +12,19 @@ export class ArticleClass extends BaseEntity {
 
     async allArticlesBasedOnCategory(payload: ArticleRequest.GetArticle) {
         try {
-            let { page, limit, searchTerm } = payload;
+            let { page, limit, sortType } = payload;
+            const { searchTerm } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
-            const promise = [];
+
+            sortType = !sortType ? -1 : sortType;
+            let sortingType = {};
+
+            sortingType = {
+                updatedAt: sortType,
+                isFeatured: sortType,
+            };
+
             let searchCriteria: any = {};
             if (searchTerm) {
                 searchCriteria = {
@@ -29,242 +40,397 @@ export class ArticleClass extends BaseEntity {
             }
             const pipeline = [
                 {
-                    $match: {
-                        status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                    $match: searchCriteria,
+                },
+                {
+                    $sort: sortingType,
+                },
+                {
+                    $group: {
+                        _id: null,
+                        list: {
+                            $push: '$$ROOT',
+                        },
                     },
                 },
                 {
                     $project: {
-                        title: 1,
-                        categoryId: 1,
-                        categoryType: 1,
-                        description: 1,
-                        viewCount: 1,
-                        shareCount: 1,
-                        createdAt: 1,
-                        updatedAt: 1,
-                        imageUrl: 1,
-                        isFeatured: 1,
+                        results: {
+                            $reduce: {
+                                input: '$list',
+                                initialValue: {
+                                    FEATURED: [],
+                                    LATEST: [],
+                                    LIST: [],
+                                },
+                                in: {
+                                    $cond: {
+                                        if: {
+                                            $and: [
+                                                {
+                                                    $ne: [{ $size: '$$value.FEATURED' }, 1],
+                                                },
+                                                {
+                                                    $eq: ['$$this.isFeatured', true],
+                                                },
+                                            ],
+                                        },
+                                        then: {
+                                            $mergeObjects: ['$$value', { FEATURED: ['$$this'] }],
+                                        },
+                                        else: {
+                                            $cond: {
+                                                if: {
+                                                    $ne: [{ $size: '$$value.LATEST' }, 3],
+                                                },
+                                                then: {
+                                                    $mergeObjects: ['$$value', { LATEST: { $concatArrays: ['$$value.LATEST', ['$$this']] } }],
+                                                },
+                                                else: {
+                                                    $mergeObjects: ['$$value', { LIST: { $concatArrays: ['$$value.LIST', ['$$this']] } }],
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
                 {
-                    $facet: {
-                        FEATURED_ARTICLE: [
+                    $project: {
+                        _id: 0,
+                        LATEST: '$results.LATEST',
+                        FEATURED: '$results.FEATURED',
+                        LIST: '$results.LIST',
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'articlecategories',
+                        let: { list: '$LIST' },
+                        as: 'CATEGORIES',
+                        pipeline: [
                             {
                                 $match: {
-                                    $and: [
-                                        {
-                                            isFeatured: true,
+                                    status: Constant.DATABASE.ArticleCategoryStatus.ACTIVE,
+                                },
+                            },
+                            {
+                                $project: {
+                                    name: 1,
+                                    articles: {
+                                        $filter: {
+                                            input: '$$list',
+                                            as: 'article',
+                                            cond: {
+                                                $eq: ['$_id', '$$article.categoryId'],
+                                            },
                                         },
-                                        searchCriteria,
-                                    ],
-
+                                    },
                                 },
                             },
                             {
-                                $sort: {
-                                    updatedAt: -1,
+                                $project: {
+                                    name: 1,
+                                    articles: {
+                                        $slice: ['$articles', 3],
+                                    },
                                 },
-                            },
-                            {
-                                $limit: 1,
-                            },
-                        ],
-                        RECENT: [
-                            {
-                                $match: searchCriteria,
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        AGENTS: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        BUYING: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: 3,
-                            },
-                        ],
-                        HOME_LOANS: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        RENTING: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                    // categoryId: Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        SELLING: [
-                            {
-                                $match: {
-                                    //  categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
-                            },
-                        ],
-                        NEWS: [
-                            {
-                                $match: {
-                                    $and: [
-                                        {
-                                            categoryId: Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-
-                                        },
-                                        searchCriteria,
-                                    ],
-                                },
-                            },
-                            {
-                                $sort: {
-                                    updatedAt: -1,
-                                },
-                            },
-                            {
-                                $limit: limit,
                             },
                         ],
                     },
                 },
+                {
+                    $project: {
+                        LIST: 0,
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$FEATURED',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'articlecategories',
+                        localField: 'FEATURED.categoryId',
+                        foreignField: '_id',
+                        as: 'FEATURED.category',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$FEATURED.category',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $group: {
+                        _id: '$_id',
+                        FEATURED: {
+                            $push: '$FEATURED',
+                        },
+                        LATEST: {
+                            $first: '$LATEST',
+                        },
+                        CATEGORIES: {
+                            $first: '$CATEGORIES',
+                        },
+
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$LATEST',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'articlecategories',
+                        localField: 'LATEST.categoryId',
+                        foreignField: '_id',
+                        as: 'LATEST.category',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$LATEST.category',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $group: {
+                        _id: '$_id',
+                        FEATURED: {
+                            $first: '$FEATURED',
+                        },
+                        LATEST: {
+                            $push: '$LATEST',
+                        },
+                        CATEGORIES: {
+                            $first: '$CATEGORIES',
+                        },
+
+                    },
+                },
             ];
+
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
-            if (!data) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
-            return data[0];
+            if (!data || data.length === 0) return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {});
+            else return data[0];
+
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
         }
     }
 
-    async getArticlelist(payload: ArticleRequest.GetArticle) {
+    async getArticlelist(payload: ArticleRequest.GetArticle, Admindata) {
         try {
-            let { page, limit, sortType } = payload;
-            const { articleId, sortBy, searchTerm, fromDate, toDate } = payload;
-            if (!limit) { limit = Constant.SERVER.LIMIT; }
-            if (!page) { page = 1; }
+            let { sortType } = payload;
+            const { articleId, searchTerm, fromDate, toDate, categoryId, status, page, limit } = payload;
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             let query: any = {};
             sortingType = {
+                isFeatured: sortType,
                 updatedAt: sortType,
             };
+            const paginateOptions = {
+                page: page || 1,
+                limit: limit || Constant.SERVER.LIMIT,
+            };
 
-            if (payload.categoryId) {
+            if (Admindata && !status) {
+                query['$or'] = [
+                    { status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE },
+                    { status: Constant.DATABASE.ARTICLE_STATUS.BLOCK },
+                ];
+            } else if (status) {
                 query = {
-                    categoryId: payload.categoryId,
-                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                    status,
+                };
+            } else if (articleId && categoryId) {
+                query = {
+                    categoryId: Types.ObjectId(categoryId),
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                     _id: {
-                        $ne: {
-                            articleId,
-                        },
+                        $ne: Types.ObjectId(articleId),
                     },
                 };
             }
             else {
-                query['status'] = {
-                    $eq: Constant.DATABASE.ARTICLE_STATUS.ACTIVE.NUMBER,
+                query = {
+                    isFeatured: true,
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                };
+            }
+
+            // if (categoryId) {
+            //     query = {
+            //         categoryId: Types.ObjectId(categoryId),
+            //         $and: [{
+            //             $or: [{
+            //                 status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+            //             }, {
+            //                 status: Constant.DATABASE.ARTICLE_STATUS.BLOCK,
+            //             }],
+            //             _id: {
+            //                 $ne: {
+            //                     articleId: Types.ObjectId(articleId),
+            //                 },
+            //             },
+            //         }],
+            //     };
+            // }
+
+            if (searchTerm) {
+                query = {
+                    $or: [
+                        { title: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        { description: new RegExp('.*' + searchTerm + '.*', 'i') },
+                    ],
                 };
             }
             if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             if (fromDate && !toDate) { query['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
 
-            const pipeline = [
+            const matchPipeline = [
                 { $match: query },
                 { $sort: sortingType },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-            return data;
+            const pipeline = [
+                {
+                    $lookup: {
+                        from: 'articlecategories',
+                        let: { categoryId: '$categoryId' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$categoryId'],
+                                    },
+                                },
+                            },
+                        ],
+                        as: 'article',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$article',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $project: {
+                        status: 1,
+                        categoryName: '$article.name',
+                        isFeatured: 1,
+                        title: 1,
+                        imageUrl: 1,
+                        categoryType: 1,
+                        categoryId: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                        addedBy: 1,
+
+                    },
+                },
+            ];
+            return await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
+        }
+    }
+
+    async getUserArticle(payload) {
+        try {
+            let { sortType } = payload;
+            const { categoryId, searchTerm } = payload;
+            // if (!limit) { limit = Constant.SERVER.LIMIT; }
+            let limit = 7;
+            // if (!page) { page = 1; }
+            let sortingType = {};
+            let query: any = {};
+            let searchCriteria: any = {};
+            sortType = !sortType ? -1 : sortType;
+            sortingType = {
+                isFeatured: sortType,
+                updatedAt: sortType,
+            };
+
+            if (searchTerm) {
+                searchCriteria = {
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+            }
+            else {
+                searchCriteria = {
+                };
+            }
+
+            query = {
+                categoryId: Types.ObjectId(categoryId),
+                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+            };
+
+            const pipeline = [
+                {
+                    $match: query,
+                },
+                {
+                    $match: searchCriteria,
+                },
+                { $sort: sortingType },
+                { $limit: limit },
+                {
+                    $project: {
+                        articleAction: 0,
+                    },
+                },
+            ];
+            const cateogryPipeline = [
+                {
+                    $match: {
+                        _id: new Types.ObjectId(categoryId),
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'articles',
+                        pipeline,
+                        as: 'articles',
+                    },
+                },
+            ];
+            return await this.DAOManager.aggregateData('ArticleCategories', cateogryPipeline);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async sellingArticle() {
+        try {
+            const criteria = {
+                categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+            };
+            const sortingType = {
+                createdAt: -1,
+            }
+            // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+            return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
+        } catch (error) {
+
         }
     }
 }

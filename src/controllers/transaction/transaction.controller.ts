@@ -4,7 +4,6 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { StripeManager } from '@src/lib/stripe.manager';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../../utils';
-
 const stripeManager = new StripeManager();
 
 class TransactionController extends BaseEntity {
@@ -21,6 +20,7 @@ class TransactionController extends BaseEntity {
 			const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
 			return {};
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -29,6 +29,7 @@ class TransactionController extends BaseEntity {
 		try {
 			return await ENTITY.TransactionE.invoiceList(payload, userData);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -37,6 +38,7 @@ class TransactionController extends BaseEntity {
 		try {
 			return await ENTITY.TransactionE.invoiceDetails(payload);
 		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -56,17 +58,16 @@ class TransactionController extends BaseEntity {
 	}
 
 	async handleChargePending(transactioData, paymentIntent) {
-		const step1 = await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
+		await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
 		return {};
 	}
 
 	async handleChargeFailed(transactioData, paymentIntent) {
-		const step1 = await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
+		await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
 		return {};
 	}
 
 	async webhook(payload) {
-		console.log(payload, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 		const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
 		const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: step1._id, webhookObject: payload });
 		try {
@@ -85,13 +86,12 @@ class TransactionController extends BaseEntity {
 					break;
 				// ... handle other event types
 				default:
-					// Unexpected event type
-					console.log('default=====================>', event.type);
+					console.log('Unexpected Event', event.type);
 			}
 			return {};
 
 		} catch (error) {
-			utils.consolelog('StripeManager', error, false);
+			utils.consolelog('error', error, true);
 			error.message = Constant.STATUS_MSG.ERROR.E400.WEBHOOK_ERROR(error).message;
 			return Promise.reject(error);
 		}
