@@ -1,5 +1,5 @@
 import { Database } from '../databases';
-import { AdminE, regionEntity, SubscriptionPlanEntity } from '@src/entity';
+import { AdminE, regionEntity, SubscriptionPlanEntity, ArticleCategoryE } from '@src/entity';
 import { LoanApplication } from '@src/models';
 import { Transaction } from '@src/models';
 
@@ -12,6 +12,7 @@ export class Bootstrap {
 		await this.initCounters();
 		await this.subscriptionPlan();
 		// await this.bootstrapCounters();
+		ArticleCategoryE.addSellingArticle();
 	}
 	async initRegions() {
 		await regionEntity.bootstrap();

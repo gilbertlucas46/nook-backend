@@ -168,9 +168,9 @@ export class HelpCenter {
 
     async getUserHelpCenter(payload, userData) {
         try {
-            const { searchTerm } = payload;
+            const { searchTerm, categoryId } = payload;
             let query: object = {};
-            let pipeline: any;
+            // let pipeline: any;
             if (searchTerm) {
                 query = {
                     // $and:{status:}
@@ -183,9 +183,15 @@ export class HelpCenter {
                 const data = await ENTITY.HelpCenterE.getMultiple(query, {});
                 return data;
 
+            } else if (categoryId) {
+                query = {
+                    categoryId,
+                };
+                const data = ENTITY.HelpCenterE.getMultiple(query, {});
+                return data;
             } else {
                 // return Constant.DATABASE.HELP_CENTER_TYPE;
-                pipeline = [
+                query = [
                     {
                         $facet: {
                             PROPERTIES: [
@@ -222,7 +228,7 @@ export class HelpCenter {
                         },
                     },
                 ];
-                const data = await ENTITY.HelpCenterE.aggregate(pipeline);
+                const data = await ENTITY.HelpCenterE.aggregate(query);
                 console.log('categoryTypecategoryTypecategoryType', data);
                 return data;
             }

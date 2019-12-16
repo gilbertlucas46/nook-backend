@@ -34,7 +34,7 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 payload: {
-                    name: Joi.string(),
+                    name: Joi.string().uppercase(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -218,7 +218,7 @@ export let articleRoutes: ServerRoute[] = [
     },
     /**
      * related Article
-     * not in use check it
+     *
      */
     {
         method: 'GET',

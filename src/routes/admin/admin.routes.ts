@@ -38,13 +38,13 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'login to application',
 			tags: ['api', 'anonymous', 'Admin', 'login'],
-			// auth: 'DoubleAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					email: Joi.string().lowercase().email().trim().required(),
 					password: Joi.string().min(6).max(16).trim().required(),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -112,12 +112,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					// _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					name: Joi.string().min(1).max(20).trim(),
-					// lastName: Joi.string().min(1).max(20).trim(),
-					// phoneNumber: Joi.string().min(7).max(15).trim(),
 					profilePicUrl: Joi.string().allow(''),
-					// email: Joi.string().email({ minDomainAtoms: 2 }),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -251,7 +247,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Get Admin Profile',
+			description: 'update admin reset password',
 			tags: ['api', 'anonymous', 'admin', 'reset'],
 			validate: {
 				payload: {
@@ -366,12 +362,12 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				params: {
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					permissionType: Joi.string().valid([
-						Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-						// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-					]),
+					// permissionType: Joi.string().valid([
+					// 	Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
+					// 	// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
+					// ]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
