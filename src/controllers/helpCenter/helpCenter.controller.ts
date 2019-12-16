@@ -202,7 +202,7 @@ export class HelpCenter {
                                 },
                                 { $project: { _id: 1, title: 1, categoryId: 1 } },
                             ],
-                            Account: [{
+                            ACCOUNT: [{
                                 $match: {
                                     categoryType: 'ACCOUNT',
                                 },
@@ -230,7 +230,7 @@ export class HelpCenter {
                 ];
                 const data = await ENTITY.HelpCenterE.aggregate(query);
                 console.log('categoryTypecategoryTypecategoryType', data);
-                return data;
+                return data[0];
             }
 
         } catch (error) {
