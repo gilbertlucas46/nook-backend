@@ -21,7 +21,7 @@ export class SavedProperty extends BaseEntity {
                 switch (sortBy) {
                     case 'price':
                         sortingType = {
-                            'property_basic_details.price': sortType,
+                            'property_basic_details.sale_rent_price': sortType,
                         };
                         break;
                     case 'date':
