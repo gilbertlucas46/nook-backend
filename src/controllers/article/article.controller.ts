@@ -2,7 +2,7 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
 import * as utils from '@src/utils';
-import { Enquiry } from '@src/models';
+import { Types } from 'mongoose';
 
 class ArticleController {
     getTypeAndDisplayName(findObj, num: number) {
@@ -86,7 +86,7 @@ class ArticleController {
 
     async getArticle(payload: ArticleRequest.GetArticle, userData?) {
         try {
-        return await ENTITY.ArticleE.getArticlelist(payload, userData);
+            return await ENTITY.ArticleE.getArticlelist(payload, userData);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -164,6 +164,14 @@ class ArticleController {
     async updateCategoryList(payload) {
         try {
             return await ENTITY.ArticleCategoryE.updateCategoryList(payload);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async  getSellingArticle() {
+        try {
+            return await ENTITY.ArticleE.sellingArticle();
         } catch (error) {
             return Promise.reject(error);
         }
