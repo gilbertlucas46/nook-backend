@@ -170,7 +170,7 @@ export class HelpCenter {
         try {
             const { searchTerm, categoryId } = payload;
             let query: object = {};
-            // let pipeline: any;
+            let pipeline: any;
             if (searchTerm) {
                 query = {
                     // $and:{status:}
@@ -180,8 +180,8 @@ export class HelpCenter {
                         { categoryType: { $regex: searchTerm, $options: 'i' } },
                     ],
                 };
-                const data = await ENTITY.HelpCenterE.getMultiple(query, {});
-                return data;
+                // const data = await ENTITY.HelpCenterE.getMultiple(query, {});
+                // return data;
 
             } else if (categoryId) {
                 query = {
@@ -190,48 +190,64 @@ export class HelpCenter {
                 const data = ENTITY.HelpCenterE.getMultiple(query, {});
                 return data;
             } else {
-                // return Constant.DATABASE.HELP_CENTER_TYPE;
-                query = [
-                    {
-                        $facet: {
-                            PROPERTIES: [
-                                {
-                                    $match: {
-                                        categoryType: 'PROPERTIES',
-                                    },
-                                },
-                                { $project: { _id: 1, title: 1, categoryId: 1 } },
-                            ],
-                            ACCOUNT: [{
-                                $match: {
-                                    categoryType: 'ACCOUNT',
-                                },
-                            },
-                            { $project: { _id: 1, title: 1, categoryId: 1 } },
-                            ],
-                            BILLING: [{
-                                $match: {
-                                    categoryType: 'BILLING',
-
-                                },
-                            },
-                            { $project: { _id: 1, title: 1, categoryId: 1 } },
-                            ],
-                            HOME_LOANS: [{
-                                $match: {
-                                    categoryType: 'HOME_LOANS',
-                                },
-                            },
-                            { $project: { _id: 1, title: 1, categoryId: 1 } },
-                            ],
-
-                        },
-                    },
-                ];
-                const data = await ENTITY.HelpCenterE.aggregate(query);
-                console.log('categoryTypecategoryTypecategoryType', data);
-                return data[0];
+                query = {
+                };
             }
+            // else {
+            // return Constant.DATABASE.HELP_CENTER_TYPE;
+            pipeline = [
+                {
+                    $facet: {
+                        PROPERTIES: [
+                            {
+                                $match: {
+
+                                    categoryType: 'PROPERTIES',
+                                    $or: [
+                                        query,
+                                    ],
+                                },
+                            },
+                            { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        ],
+                        ACCOUNT: [{
+                            $match: {
+                                categoryType: 'ACCOUNT',
+                                $or: [
+                                    query,
+                                ],
+                            },
+                        },
+                        { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        ],
+                        BILLING: [{
+                            $match: {
+                                categoryType: 'BILLING',
+                                $or: [
+                                    query,
+                                ],
+                            },
+                        },
+                        { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        ],
+                        HOME_LOANS: [{
+                            $match: {
+                                categoryType: 'HOME_LOANS',
+                                $or: [
+                                    query,
+                                ],
+                            },
+                        },
+                        { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        ],
+
+                    },
+                },
+            ];
+            const data = await ENTITY.HelpCenterE.aggregate(pipeline);
+            console.log('categoryTypecategoryTypecategoryType', data);
+            return data[0];
+            // }
 
         } catch (error) {
             return Promise.reject(error);
