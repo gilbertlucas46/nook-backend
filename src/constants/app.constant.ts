@@ -1056,6 +1056,7 @@ export let STATUS_MSG = {
 };
 
 export let SERVER = {
+	SELLING_ARTICLE_ID: '5df7515fd72c62a525cc9333',
 	DOMAIN_NAME: 'http://localhost:7313/',
 	IOS_URL: 'nook://',
 	ANDROID_URL: 'http://nook.com',

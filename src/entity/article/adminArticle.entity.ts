@@ -3,6 +3,8 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
 import * as utils from '@src/utils';
+import { ObjectId, ObjectID } from 'bson';
+import { Types } from 'mongoose';
 export class CategoryClass extends BaseEntity {
     constructor() {
         super('ArticleCategories');
@@ -98,12 +100,18 @@ export class CategoryClass extends BaseEntity {
 
     async addSellingArticle() {
         try {
-            const insert = {
+            const criteria = {
                 name: 'SELLING',
-                createdAt: new Date().getTime(),
-                status: 'Active',
             };
-            await this.DAOManager.findAndUpdate(this.modelName, insert, insert, { upsert: true });
+            const insert = {
+                $set: {
+                    _id: Types.ObjectId('5df7515fd72c62a525cc9333'),
+                    name: 'SELLING',
+                    createdAt: new Date().getTime(),
+                    status: 'Active',
+                },
+            };
+            this.DAOManager.findAndUpdate(this.modelName, criteria, insert, { upsert: true });
             return;
         } catch (error) {
             return Promise.reject(error);
