@@ -849,12 +849,12 @@ export let STATUS_MSG = {
 			ADMIN_DELETED: {
 				statusCode: 401,
 				type: 'ADMIN_DELETED',
-				message: 'Please use another email to regiter',
+				message: 'Please contact admin regarding technical issues with your account.',
 			},
 			ADMIN_BLOCKED: {
 				statusCode: 401,
 				type: 'ADMIN_BLOCKED',
-				message: 'Please contact Admin you are blocked',
+				message: 'Please contact admin regarding technical issues with your account.',
 			},
 			UNAUTHORIZED: {
 				statusCode: 401,
