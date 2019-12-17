@@ -361,16 +361,6 @@ export let articleRoutes: ServerRoute[] = [
                     title: Joi.string(),
                     description: Joi.string(),
                     imageUrl: Joi.string(),
-                    // categoryId: Joi.number().valid([
-                    //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                    //     // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-                    //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
-                    // ]).required(),
                     status: Joi.string().valid([
                         Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                         Constant.DATABASE.ARTICLE_STATUS.BLOCK,
