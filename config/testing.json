@@ -5,8 +5,8 @@
     "invalidUrl": "https://nookqaangweb.appskeeper.com?error=",
     "homePage": "https://nookqaangweb.appskeeper.com",
     "host": "https://nookqa.appskeeper.com",
-    "adminInvalidUrl": "https://nookdevangadmin.appskeeper.com?error=",
-    "adminBaseUrl": "https://nookdevangadmin.appskeeper.com/public/reset/",
+    "adminInvalidUrl": "https://nookqaangadmin.appskeeper.com?error=",
+    "adminBaseUrl": "https://nookqaangadmin.appskeeper.com/public/reset/",
     "dbConfig": {
         "dbPwd": "Oimi@#$!12",
         "dbUser": "nook_qausr",

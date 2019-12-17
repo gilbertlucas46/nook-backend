@@ -4,6 +4,9 @@ import { plugins } from './src/plugins';
 import * as Bootstrap from './src/utils/bootstrap';
 import * as config from 'config';
 
+import * as cron from 'node-cron';
+import * as ENTITY from './src/entity';
+
 // let env = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'default';
 
 const originArray: string[] = [
@@ -72,3 +75,21 @@ init().then(_ => {
 	console.error(err);
 	process.exit(0);
 });
+
+
+const job = cron.schedule('0 */1 * * * *', async () => {
+	const compareTime = new Date().setFullYear(new Date().getFullYear() - 1); // 1 year a
+	const compare = new Date().getTime() - 24 * 60 * 60 * 1000;
+	const expireCriteria = {
+		//  updated at aaj ke ek saaal se jyada nhi hna chahiye
+
+		updatedAt: { $lt: compare },   // 31556926 are 1 year second
+	};
+
+	const data = await ENTITY.PropertyE.count(expireCriteria);
+	console.log('datadatadatadata', data);
+
+	console.log('expireCriteriaexpireCriteriaexpireCriteria', expireCriteria);
+
+});
+job.start();

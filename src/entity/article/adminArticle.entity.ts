@@ -104,15 +104,18 @@ export class CategoryClass extends BaseEntity {
                 name: 'SELLING',
             };
             const insert = {
-                $set: {
-                    _id: Types.ObjectId('5df7515fd72c62a525cc9333'),
-                    name: 'SELLING',
-                    createdAt: new Date().getTime(),
-                    status: 'Active',
-                },
+                // $set: {
+                _id: Types.ObjectId('5df7515fd72c62a525cc9333'),
+                name: 'SELLING',
+                status: 'Active',
+                // },
             };
+            const checkData = await this.DAOManager.findOne(this.modelName, criteria, {});
             // this.DAOManager.
-            this.DAOManager.findAndUpdate(this.modelName, criteria, insert, { upsert: true });
+            if (!checkData) {
+                this.DAOManager.save(this.modelName, insert);
+                return;
+            }
             return;
         } catch (error) {
             return Promise.reject(error);
