@@ -4,6 +4,7 @@ import * as Constant from '../../constants';
 import * as utils from '@src/utils';
 import { describe } from 'joi';
 import { pipeline } from 'stream';
+import { Types } from 'mongoose';
 
 export class HelpCenter {
 
@@ -248,6 +249,57 @@ export class HelpCenter {
             console.log('categoryTypecategoryTypecategoryType', data);
             return data[0];
             // }
+
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getRelatedArticles(payload, userData) {
+        try {
+            const { searchTerm, categoryId, id } = payload;
+            let query: any = {};
+            let seacrhObject = {};
+
+            query['categoryId'] = categoryId;
+
+            if (id) {
+                query['_id'] = {
+                    $ne: Types.ObjectId(id),
+                };
+            }
+            if (searchTerm) {
+                seacrhObject = {
+                    // $and:{status:}
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                        { categoryType: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+                // const data = await ENTITY.HelpCenterE.getMultiple(query, {});
+                // return data;
+
+            } else {
+                seacrhObject = {
+
+                };
+            }
+
+
+            const pipeline = [
+                {
+                    $match: query,
+                },
+                {
+                    $match: seacrhObject,
+                },
+            ]
+
+
+            const data = await ENTITY.HelpCenterE.aggregate(pipeline);
+            console.log('categoryTypecategoryTypecategoryType', data);
+            return data;
 
         } catch (error) {
             return Promise.reject(error);
