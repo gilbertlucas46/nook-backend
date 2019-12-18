@@ -158,8 +158,16 @@ class LoanApplicationE extends BaseEntity {
             }
 
             if (amountFrom && amountTo) {
-                matchObject['loanDetails']['loanAmount'] = {
+                matchObject['loanDetails.loanAmount'] = {
                     $gt: amountFrom,
+                    $lt: amountTo,
+                };
+            } else if (amountFrom && !amountTo) {
+                matchObject['loanDetails.loanAmount'] = {
+                    $gt: amountFrom,
+                };
+            } else if (amountTo && !amountFrom) {
+                matchObject['loanDetails.loanAmount'] = {
                     $lt: amountTo,
                 };
             }

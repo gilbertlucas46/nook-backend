@@ -168,14 +168,6 @@ class ArticleController {
             return Promise.reject(error);
         }
     }
-
-    async  getSellingArticle() {
-        try {
-            return await ENTITY.ArticleE.sellingArticle();
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    }
 }
 
 export const ArticleService = new ArticleController();

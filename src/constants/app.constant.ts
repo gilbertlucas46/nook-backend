@@ -432,7 +432,7 @@ export let DATABASE = {
 		DAILY: 'daily',
 		WEEKLY: 'weekly',
 		MONTHLY: 'monthly',
-		QUATERLY: 'quaterly',
+		QUATERLY: 'quarterly',
 		HALFYEARLY: 'half yearly',
 		YEARLY: 'yearly',
 	},
