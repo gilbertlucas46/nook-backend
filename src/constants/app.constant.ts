@@ -492,7 +492,7 @@ export let DATABASE = {
 		USER: {
 			ACTIVE: 'ACTIVE',
 			BLOCKED: 'BLOCKED',
-			DELETED: 'DELETED',
+			DELETE: 'DELETE',
 		},
 		ADMIN: {
 			ACTIVE: 'ACTIVE',

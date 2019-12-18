@@ -26,7 +26,7 @@ export class AdminProfileController {
 			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
 			// check email
 			if (!adminData) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
-			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETE && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
 			}
 			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.BLOCKED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {

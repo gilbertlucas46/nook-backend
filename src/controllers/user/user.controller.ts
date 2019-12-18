@@ -79,7 +79,7 @@ export class UserController {
 					if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
 						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
 					}
-					if (userData.status === Constant.DATABASE.STATUS.USER.DELETED) {
+					if (userData.status === Constant.DATABASE.STATUS.USER.DELETE) {
 						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
 					}
 					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {

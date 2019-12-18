@@ -148,7 +148,7 @@ export let adminUserRoutes: ServerRoute[] = [
 					status: Joi.string().valid([
 						Constant.DATABASE.STATUS.USER.ACTIVE,
 						Constant.DATABASE.STATUS.USER.BLOCKED,
-						Constant.DATABASE.STATUS.USER.DELETED,
+						Constant.DATABASE.STATUS.USER.DELETE,
 					]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
