@@ -352,7 +352,7 @@ export class ArticleClass extends BaseEntity {
     async getUserArticle(payload) {
         try {
             let { sortType } = payload;
-            const { categoryId, searchTerm } = payload;
+            const { categoryId, searchTerm, type } = payload;
             // if (!limit) { limit = Constant.SERVER.LIMIT; }
             let limit = 7;
             // if (!page) { page = 1; }
@@ -364,19 +364,30 @@ export class ArticleClass extends BaseEntity {
                 isFeatured: sortType,
                 updatedAt: sortType,
             };
-
-            if (searchTerm) {
-                searchCriteria = {
-                    $or: [
-                        { title: { $regex: searchTerm, $options: 'i' } },
-                        { description: { $regex: searchTerm, $options: 'i' } },
-                    ],
+            if (type) {
+                const criteria = {
+                    categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 };
+                sortingType = {
+                    updatedAt: -1,
+                }
+                return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
             }
-            else {
-                searchCriteria = {
-                };
-            }
+            // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+            else
+                if (searchTerm) {
+                    searchCriteria = {
+                        $or: [
+                            { title: { $regex: searchTerm, $options: 'i' } },
+                            { description: { $regex: searchTerm, $options: 'i' } },
+                        ],
+                    };
+                }
+                else {
+                    searchCriteria = {
+                    };
+                }
 
             query = {
                 categoryId: Types.ObjectId(categoryId),
@@ -418,21 +429,21 @@ export class ArticleClass extends BaseEntity {
         }
     }
 
-    async sellingArticle() {
-        try {
-            const criteria = {
-                categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
-                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-            };
-            const sortingType = {
-                createdAt: -1,
-            }
-            // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
-            return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
-        } catch (error) {
+    // async sellingArticle() {
+    //     try {
+    //         const criteria = {
+    //             categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+    //             status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+    //         };
+    //         const sortingType = {
+    //             createdAt: -1,
+    //         }
+    //         // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+    //         return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
+    //     } catch (error) {
 
-        }
-    }
+    //     }
+    // }
 }
 
 export const ArticleE = new ArticleClass();

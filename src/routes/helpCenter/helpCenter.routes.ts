@@ -370,7 +370,7 @@ export let helpCenterRoute: ServerRoute[] = [
                         Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
                     ]).required(),
                     searchTerm: Joi.string(),
-                    id: Joi.string(),
+                    id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

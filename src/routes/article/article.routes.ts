@@ -559,39 +559,5 @@ export let articleRoutes: ServerRoute[] = [
             },
         },
     },
-    /**
-     * 
-     */
-    {
-        method: 'GET',
-        path: '/v1/user/articleSelling',
-        handler: async (request, h) => {
-            try {
-                // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
-                // const payload: ArticleRequest.GetArticle = request.query as any;
-                const registerResponse = await ArticleService.getSellingArticle();
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
-            } catch (error) {
-                UniversalFunctions.consolelog('error', error, true);
-                return (UniversalFunctions.sendError(error));
-            }
-        },
-        options: {
-            description: 'get selling article of user',
-            tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-            auth: 'DoubleAuth',
-            validate: {
-                // query: {
-                //     type: Joi.string().lowercase().valid('selling'),
-                // },
-                headers: UniversalFunctions.authorizationHeaderObj,
-                failAction: UniversalFunctions.failActionFunction,
-            },
-            plugins: {
-                'hapi-swagger': {
-                    responseMessages: Constant.swaggerDefaultResponseMessages,
-                },
-            },
-        },
-    },
+
 ];
