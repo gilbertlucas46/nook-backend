@@ -55,7 +55,7 @@ class LoanEntities extends BaseEntity {
                     {
                         $match: {
                             loanMinAmount: { $lte: payload.property.value },
-                            minMonthlyIncomeRequired: { $lte: payload.work.income },
+                            minMonthlyIncomeRequired: { $lte: totalMonthlyIncome },
                             loanForForeignerMarriedLocal: localVisa,
                             propertySpecification: {
                                 $elemMatch: {
@@ -227,3 +227,7 @@ class LoanEntities extends BaseEntity {
 }
 
 export const LoanEntity = new LoanEntities();
+
+
+
+
