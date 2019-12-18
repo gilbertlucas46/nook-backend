@@ -88,6 +88,9 @@ export let subAdminRoutes: ServerRoute[] = [
 					id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				payload: {
+					firstName: Joi.string().min(1).max(32).required(),
+					lastName: Joi.string().min(1).max(32).required(),
+					phoneNumber: Joi.string().min(7).max(15),
 					permission: Joi.array().items(objectSchema).min(1).unique(),
 					status: Joi.string().valid([
 						CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
