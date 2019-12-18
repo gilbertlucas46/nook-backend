@@ -34,7 +34,7 @@ export let subAdminRoutes: ServerRoute[] = [
 				//   if(adminData['permission']  )
 
 				const registerResponse = await AdminStaffController.createStaff(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {}));
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
@@ -50,7 +50,7 @@ export let subAdminRoutes: ServerRoute[] = [
 					firstName: Joi.string().min(1).max(32).required(),
 					lastName: Joi.string().min(1).max(32).required(),
 					phoneNumber: Joi.string().min(7).max(15),
-					permission: Joi.array().items(objectSchema).min(1).unique().required(),
+					permission: Joi.array().items(objectSchema).min(1).unique(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

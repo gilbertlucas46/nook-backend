@@ -36,9 +36,9 @@ class AdminStaffControllers {
                 };
                 await ENTITY.AdminStaffEntity.createOneEntity(datatoSave);
                 ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
-                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
+                return;
             } else {
-                return Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT;
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT);
             }
         } catch (error) {
             utils.consolelog('error', error, true);
