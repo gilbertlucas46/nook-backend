@@ -188,8 +188,7 @@ export class HelpCenter {
                 query = {
                     categoryId,
                 };
-                const data = ENTITY.HelpCenterE.getMultiple(query, {});
-                return data;
+                return ENTITY.HelpCenterE.getMultiple(query, {});
             } else {
                 query = {
                 };
@@ -286,7 +285,6 @@ export class HelpCenter {
                 };
             }
 
-
             const pipeline = [
                 {
                     $match: query,
@@ -295,7 +293,6 @@ export class HelpCenter {
                     $match: seacrhObject,
                 },
             ]
-
 
             const data = await ENTITY.HelpCenterE.aggregate(pipeline);
             console.log('categoryTypecategoryTypecategoryType', data);
