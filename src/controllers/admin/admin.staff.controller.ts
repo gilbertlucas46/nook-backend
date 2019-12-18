@@ -18,6 +18,8 @@ class AdminStaffControllers {
         try {
             const email: string = payload.email;
             const checkEmail = await ENTITY.AdminStaffEntity.checkStaffEmail(email);
+            console.log('checkEmailcheckEmailcheckEmailcheckEmail', checkEmail);
+
             if (!checkEmail) {
                 const generateString = generateRandomString(4);
                 const genCredentials = `${(payload.firstName).replace(/ /g, '')}${generateString}`;

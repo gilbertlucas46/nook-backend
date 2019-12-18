@@ -50,7 +50,7 @@ export let subAdminRoutes: ServerRoute[] = [
 					firstName: Joi.string().min(1).max(32).required(),
 					lastName: Joi.string().min(1).max(32).required(),
 					phoneNumber: Joi.string().min(7).max(15),
-					permission: Joi.array().items(objectSchema).min(1).unique(),
+					permission: Joi.array().items(objectSchema).min(1).unique().required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
