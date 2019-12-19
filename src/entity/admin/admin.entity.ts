@@ -230,7 +230,7 @@ export class AdminClass extends BaseEntity {
 	// 		return Promise.reject(error);
 	// 	}
 	// }
-	adminDashboard(adminData) {
+	async adminDashboard(adminData) {
 		try {
 			const propertyQuery = {
 				'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
@@ -322,14 +322,29 @@ export class AdminClass extends BaseEntity {
 						break;
 				}
 			}
-
+			function hasWhiteSpace(s) {
+				return s.indexOf(' ') >= 0;
+			}
+			let firstname;
+			let lastname;
 			if (searchTerm) {
+				const check = hasWhiteSpace(searchTerm);
+				if (check) {
+					firstname = searchTerm.split[' '][0];
+					lastname = searchTerm.split[' '][1];
+				} else {
+					firstname = searchTerm;
+					lastname = searchTerm;
+				}
 				matchObject = {
 					$or: [
 						{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
 						{ 'property_address.cityName': new RegExp('.*' + searchTerm + '.*', 'i') },
 						{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
 						{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
+						{ propertyId: new RegExp('.*' + searchTerm + '.*', 'i') },
+						{ 'property_added_by.firstName': new RegExp('.*' + firstname + '.*', 'i') },
+						{ 'property_added_by.lastName': new RegExp('.*' + lastname + '.*', 'i') },
 					],
 				};
 			}
