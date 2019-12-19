@@ -13,9 +13,6 @@ export let adminUserRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = request.payload as AdminRequest.IAddUser;
-
-
-
 				const registerResponse = await AdminUserController.addUser(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
 			} catch (error) {
@@ -37,6 +34,8 @@ export let adminUserRoutes: ServerRoute[] = [
 					phoneNumber: Joi.string().min(7).max(15).trim().required(),
 					type: Joi.string().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 					]),
 					faxNumber: Joi.string().allow(''),
 					language: Joi.string().allow(''),

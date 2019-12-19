@@ -306,7 +306,10 @@ export class UserController {
 			};
 			const today: any = new Date();
 			const diffMs = (today - checkAlreadyUsedToken.passwordResetTokenExpirationTime);
+			console.log('diffMinsdiffMins', diffMs);
 			const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes in negative minus
+			console.log('diffMinsdiffMinsdiffMins', diffMins);
+
 			if (diffMins > 0) { return Promise.reject('Time_Expired'); }
 			else {
 				const updatePassword = await ENTITY.UserE.updateOneEntity({ email: result }, updatePswd);

@@ -47,54 +47,54 @@ export class AdminClass extends BaseEntity {
 			profilePicUrl: '',
 			permission: [
 				{
-					moduleName: 'dashboard',
-					accessLevel: 2,
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
 				},
 				{
 
-					moduleName: 'properties',
-					accessLevel: 2,
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTIES,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
 				},
 				{
 
-					moduleName: 'articles',
-					accessLevel: 2,
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
 				},
 				{
 
-					moduleName: 'help-center',
-					accessLevel: 2,
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
 				},
 				{
 
-					moduleName: 'staffs',
-					accessLevel: 2,
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
 				},
 				{
 
-					moduleName: 'loans',
-					accessLevel: 2,
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.LOAN,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
 				},
 				{
-					moduleName: 'help-center',
-					accessLevel: 2,
-				}, {
-					moduleName: 'users',
-					accessLevel: 2,
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
 				},
 				{
-					moduleName: 'loan-referrals',
-					accessLevel: 2,
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
 				},
 				{
-					moduleName: 'subscriptions',
-					accessLevel: 2,
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
+				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE,
 
 				},
 			],
 		};
 
-		console.log('toSavetoSavetoSavetoSavetoSavetoSavetoSave', toSave);
 		const criteria = {
 			email: 'base_admin@yopmail.com',
 		};
@@ -230,7 +230,7 @@ export class AdminClass extends BaseEntity {
 	// 		return Promise.reject(error);
 	// 	}
 	// }
-	async adminDashboard(adminData) {
+	adminDashboard(adminData) {
 		try {
 			const propertyQuery = {
 				'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
