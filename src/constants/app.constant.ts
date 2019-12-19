@@ -492,7 +492,7 @@ export let DATABASE = {
 		USER: {
 			ACTIVE: 'ACTIVE',
 			BLOCKED: 'BLOCKED',
-			DELETED: 'DELETED',
+			DELETE: 'DELETE',
 		},
 		ADMIN: {
 			ACTIVE: 'ACTIVE',
@@ -683,7 +683,7 @@ export let STATUS_MSG = {
 			REQUEST_ALREADY_SENT: {
 				statusCode: 400,
 				type: 'REQUEST_ALREADY_SENT',
-				message: 'Request has already been sent to the entered email',
+				message: 'Staff with same email already exist!.',
 			},
 			DELETE_ARTICLE_FIRST: {
 				statusCode: 400,

@@ -155,8 +155,11 @@ export namespace AdminRequest {
 
 	export interface IadminUpdatePermission {
 		id: string;
-		permission: [object];
-		status: string;
+		permission?: [object];
+		status?: string;
+		firstName?: string;
+		lastName?: string;
+		phoneNumber?: string;
 	}
 
 	export interface IcreateUser {
