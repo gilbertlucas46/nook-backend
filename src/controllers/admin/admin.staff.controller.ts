@@ -50,12 +50,11 @@ class AdminStaffControllers {
         try {
             const dataToUpdate: any = {};
             if (payload.status) {
-                payload['staffStatus'] = payload.status,
+                payload['staffStatus'] = payload.status;
             }
             dataToUpdate.$set = {
                 ...payload,
-                staffStatus: payload.status,
-            }
+            };
             console.log('dataToUpdatedataToUpdatedataToUpdatedataToUpdate', dataToUpdate);
 
             return await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, dataToUpdate);
@@ -101,7 +100,7 @@ class AdminStaffControllers {
     //     }
     // }
 
-    async staffListing(payload) {
+    async getStaffList(payload) {
         try {
             const staffList = await ENTITY.AdminStaffEntity.staffListing(payload);
             return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, staffList);
