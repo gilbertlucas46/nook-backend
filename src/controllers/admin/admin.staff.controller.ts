@@ -48,8 +48,10 @@ class AdminStaffControllers {
 
     async updateStaff(payload: AdminRequest.IadminUpdatePermission) {
         try {
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>.');
             const dataToUpdate: any = {};
+            if (payload.status) {
+                payload['staffStatus'] = payload.status,
+            }
             dataToUpdate.$set = {
                 ...payload,
                 staffStatus: payload.status,
@@ -99,7 +101,7 @@ class AdminStaffControllers {
     //     }
     // }
 
-    async getStaffList(payload) {
+    async staffListing(payload) {
         try {
             const staffList = await ENTITY.AdminStaffEntity.staffListing(payload);
             return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, staffList);
