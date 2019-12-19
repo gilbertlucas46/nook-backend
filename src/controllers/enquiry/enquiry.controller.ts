@@ -77,6 +77,8 @@ export class EnquiryController {
                     _id: payload.propertyId,
                 };
                 const propertyData = await ENTITY.PropertyE.getOneEntity(criteria, { 'property_added_by.userId': 1, 'property_added_by.email': 1, 'propertyId': 1, 'property_basic_details.title': 1 });
+                console.log('propertyDatapropertyDatapropertyDatapropertyData', propertyData);
+
                 const mail = new MailManager();
                 const sendObj = {
                     receiverEmail: propertyData['property_added_by']['email'],
