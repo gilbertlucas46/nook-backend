@@ -342,7 +342,7 @@ export class AdminClass extends BaseEntity {
 						{ 'property_address.cityName': new RegExp('.*' + searchTerm + '.*', 'i') },
 						{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
 						{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ propertyId: new RegExp('.*' + searchTerm + '.*', 'i') },
+						{ propertyId: new RegExp('.*' + 'P-' + searchTerm + '.*', 'i') },
 						{ 'property_added_by.firstName': new RegExp('.*' + firstname + '.*', 'i') },
 						{ 'property_added_by.lastName': new RegExp('.*' + lastname + '.*', 'i') },
 					],
