@@ -48,9 +48,8 @@ class AdminStaffControllers {
 
     async updateStaff(payload: AdminRequest.IadminUpdatePermission) {
         try {
-            const dataToUpdate: any = {};
-            dataToUpdate.$set = {
-                payload,
+            const dataToUpdate = {
+                $set: payload,
             };
 
             return await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, dataToUpdate);
