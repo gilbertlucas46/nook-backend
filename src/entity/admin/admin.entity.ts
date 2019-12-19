@@ -6,6 +6,7 @@ const cert: any = config.get('jwtSecret');
 import * as utils from '@src/utils';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
+import { promises } from 'fs';
 const pswdCert: string = config.get('forgetPwdjwtSecret');
 
 /**
@@ -236,96 +237,226 @@ export class AdminClass extends BaseEntity {
 				'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
 			};
 
-			const totalUser = {
-				$or: [{
-					status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
-				}, {
-					status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
-				},
-				],
-			};
+			// const totalUser = {
+			// 	$or: [{
+			// 		status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+			// 	}, {
+			// 		status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+			// 	},
+			// 	],
+			// };
 			const totalArticles = {
 				status: {
 					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
 				},
 			};
-			const loanQuery = {
-				saveAsDraft: {
-					$ne: true,
-				},
-			};
-
-			const propertPromise = new Promise((resolve) => {
-				resolve(this.DAOManager.count('Property', propertyQuery));
-			});
-			const userPromise = new Promise((resolve) => {
-				resolve(this.DAOManager.count('User', totalUser));
-			});
-			const articlePromise = new Promise((resolve) => {
-				resolve(this.DAOManager.count('Article', totalArticles));
-			});
-			const enquiryPromise = new Promise((resolve) => {
-				resolve(this.DAOManager.count('Enquiry', {}));
-			});
-			const loanPromsie = new Promise((resolve) => {
-				resolve(this.DAOManager.count('LoanApplication', loanQuery));
-			});
-			return Promise.all([propertPromise, userPromise, articlePromise, enquiryPromise, loanPromsie])
-				.then(([propertyCount, userCount, articleCount, enquiryCount, loanCount]) => {
-					return { propertyCount, userCount, articleCount, enquiryCount, loanCount };
-				});
-
-			// db.getCollection('properties').aggregate([
-			// 	{
-			// 		"$facet": {
-			// 			DECLINED: [
-			// 				{
-			// 					$match: {
-			// 						"property_status.number": 4,
-			// 						"property_status.status": "DECLINED"
-			// 					}
-			// 				}
-			// 			],
-			// 			PENDING: [{
-			// 				$match: {
-			// 					"property_status.number": 2
-			// 				}
-			// 			}],
-			// 			ACTIVE: [{
-			// 				$match: {
-			// 					"property_status.number": 3
-			// 				}
-			// 			}],
-			// 			EXPIRED: [{
-			// 				$match: {
-			// 					"property_status.number": 6
-			// 				}
-			// 			}],
-			// 			SOLD_RENTED: [{
-			// 				$match: {
-			// 					"property_status.number.number": 5
-			// 				}
-			// 			}],
-			// 			FEATURED: [{
-			// 				$match: {
-			// 					"isFeatured": true
-			// 				}
-			// 			}]
-			// 		}
+			// };
+			// const loanQuery = {
+			// 	saveAsDraft: {
+			// 		$ne: true,
 			// 	},
-			// 	{
-			// 		$project: {
-			// 			DECLINED: { $size: '$DECLINED' },
-			// 			PENDING: { $size: '$PENDING' },
-			// 			ACTIVE: { $size: '$ACTIVE' },
-			// 			EXPIRED: { $size: '$EXPIRED' },
-			// 			SOLD_RENTED: { $size: '$SOLD_RENTED' },
-			// 			FEATURED: { $size: '$FEATURED' }
-			// 		}
-			// 	}
-			// ])
+			// };
+
+			// const propertPromise = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('Property', propertyQuery));
+			// });
+			// const userPromise = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('User', totalUser));
+			// });
+			// const articlePromise = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('Article', totalArticles));
+			// });
+			// const enquiryPromise = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('Enquiry', {}));
+			// });
+			// const loanPromsie = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('LoanApplication', loanQuery));
+			// });
+			// return Promise.all([propertPromise, userPromise, articlePromise, enquiryPromise, loanPromsie])
+			// 	.then(([propertyCount, userCount, articleCount, enquiryCount, loanCount]) => {
+			// 		return { propertyCount, userCount, articleCount, enquiryCount, loanCount };
+			// 	});
+			const totalNookStaff = {
+				type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
+				$or: [{
+					staffStatus: CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
+				}, {
+					staffStatus: CONSTANT.DATABASE.STATUS.ADMIN.BLOCKED,
+				},
+				],
+			};
+			let pipeline = [];
+			const Allproperty = [
+				{
+					$facet: {
+						DECLINED: [
+							{
+								$match: {
+									'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
+								},
+							},
+						],
+						PENDING: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+							},
+						}],
+						ACTIVE: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+							},
+						}],
+						EXPIRED: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
+							},
+						}],
+						SOLD_RENTED: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+							},
+						}],
+						FEATURED: [{
+							$match: {
+								isFeatured: true,
+							},
+						}],
+						DRAFT: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
+							},
+						}],
+					},
+				},
+				{
+					$project: {
+						DECLINED: { $size: '$DECLINED' },
+						PENDING: { $size: '$PENDING' },
+						ACTIVE: { $size: '$ACTIVE' },
+						EXPIRED: { $size: '$EXPIRED' },
+						SOLD_RENTED: { $size: '$SOLD_RENTED' },
+						FEATURED: { $size: '$FEATURED' },
+						DRAFT: { $size: '$DRAFT' },
+					},
+				},
+			];
+
+			const UsersList = [
+				{
+					$facet: {
+						TENANT: [{
+							$match: {
+								type: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
+								$or: [{
+									status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+								}, {
+									status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+								},
+								],
+							},
+						}],
+						OWNER: [{
+							$match: {
+								type: CONSTANT.DATABASE.USER_TYPE.OWNER.TYPE,
+								$or: [{
+									status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+								}, {
+									status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+								},
+								],
+							},
+						}],
+						AGENT: [{
+							$match: {
+								type: CONSTANT.DATABASE.USER_TYPE.AGENT.TYPE,
+								$or: [{
+									status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+								}, {
+									status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+								},
+								],
+							},
+						}],
+					},
+				},
+				{
+					$project: {
+						TENANT: { $size: '$TENANT' },
+						OWNER: { $size: '$OWNER' },
+						AGENT: { $size: '$AGENT' },
+					},
+				},
+			]
+
+			const LoanList = [{
+				$facet: {
+					NEW: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						},
+					}],
+					REFERRED_TO_BANK: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+						},
+					}],
+					BANK_APPROVED: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+						},
+					}],
+					BANK_DECLINED: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+						},
+					}],
+					NOOK_DECLINED: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+
+						},
+					}],
+					NOOK_REVIEW: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+
+						},
+					}],
+					DRAFT: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						},
+					}],
+				},
+			},
+			{
+				$project: {
+					NEW: { $size: '$NEW' },
+					REFERRED_TO_BANK: { $size: '$REFERRED_TO_BANK' },
+					BANK_APPROVED: { $size: '$BANK_APPROVED' },
+					BANK_DECLINED: { $size: '$BANK_DECLINED' },
+					NOOK_DECLINED: { $size: '$NOOK_DECLINED' },
+					NOOK_REVIEW: { $size: '$NOOK_REVIEW' },
+					DRAFT: { $size: '$DRAFT' },
+				},
+			}];
+			pipeline.push(this.DAOManager.aggregateData('Property', Allproperty));
+			pipeline.push(this.DAOManager.aggregateData('User', UsersList));
+			pipeline.push(this.DAOManager.aggregateData('LoanApplication', LoanList));
+			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
+			pipeline.push(this.DAOManager.count('Article', totalArticles));
+			pipeline.push(this.DAOManager.count('LoanReferral', {}));
 
 
+			const [propertyCount, userCount, loanCount, staffcount, articleCount, referralCount] = await Promise.all(pipeline);
+			return {
+				propertyCount: propertyCount[0],
+				userCount: userCount[0],
+				loanCount: loanCount[0],
+				staffcount,
+				articleCount,
+				referralCount,
+			}
 
 		} catch (error) {
 			return Promise.reject(error);
