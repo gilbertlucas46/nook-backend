@@ -151,6 +151,7 @@ export class UserController {
 						firstName: updateUser.firstName,
 						lastName: updateUser.lastName,
 						userType: updateUser.type,
+						email: getUser.email,
 					},
 					isProfileComplete: true,
 				};
