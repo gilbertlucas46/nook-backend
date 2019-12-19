@@ -7,7 +7,7 @@ import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Constant from '../../constants/app.constant';
 import * as utils from 'src/utils';
-import { add } from 'winston';
+
 class LoanControllers extends BaseEntity {
 
     /**
@@ -228,11 +228,7 @@ class LoanControllers extends BaseEntity {
     async loanShuffle() {
         try {
             const bankList = await this.DAOManager.findAll('Bank', {}, { bankName: 1, iconUrl: 1, bannerUrl: 1, logoUrl: 1 });
-            bankList.sort(shufflefunc);
-            function shufflefunc(a: {}, b: {}) {
-                return 0.5 - Math.random();
-            }
-            return bankList;
+            return bankList.sort(() => 0.5 - Math.random());
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

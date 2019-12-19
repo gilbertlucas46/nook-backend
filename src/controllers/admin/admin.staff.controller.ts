@@ -18,6 +18,8 @@ class AdminStaffControllers {
         try {
             const email: string = payload.email;
             const checkEmail = await ENTITY.AdminStaffEntity.checkStaffEmail(email);
+            console.log('checkEmailcheckEmailcheckEmailcheckEmail', checkEmail);
+
             if (!checkEmail) {
                 const generateString = generateRandomString(4);
                 const genCredentials = `${(payload.firstName).replace(/ /g, '')}${generateString}`;
@@ -34,9 +36,9 @@ class AdminStaffControllers {
                 };
                 await ENTITY.AdminStaffEntity.createOneEntity(datatoSave);
                 ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
-                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
+                return;
             } else {
-                return Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT;
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT);
             }
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -46,17 +48,11 @@ class AdminStaffControllers {
 
     async updateStaff(payload: AdminRequest.IadminUpdatePermission) {
         try {
-            let dataToUpdate: any = {};
-            if (payload.permission) {
-                dataToUpdate = {
-                    $set: { permission: payload.permission },
-                };
-            }
-            if (payload.status) {
-                dataToUpdate = {
-                    $set: { staffStatus: payload.status },
-                };
-            }
+            let dataToUpdate: any;
+            dataToUpdate = {
+                $set: payload,
+            };
+
             return await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, dataToUpdate);
         } catch (error) {
             utils.consolelog('error', error, true);

@@ -21,7 +21,7 @@ export let plugin = {
 				} else {
 					if (tokenData.adminData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
 						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED));
-					} else if (tokenData.adminData.status === Constant.DATABASE.STATUS.USER.DELETED) {
+					} else if (tokenData.adminData.status === Constant.DATABASE.STATUS.USER.DELETE) {
 						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED));
 					} else {
 						return ({ isValid: true, credentials: { token, adminData: tokenData.adminData } });
@@ -45,7 +45,7 @@ export let plugin = {
 				} else {
 					if (tokenData.userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
 						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED));
-					} else if (tokenData.userData.status === Constant.DATABASE.STATUS.USER.DELETED) {
+					} else if (tokenData.userData.status === Constant.DATABASE.STATUS.USER.DELETE) {
 						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED));
 					} else {
 						return ({ isValid: true, credentials: { token, userData: tokenData.userData } });
@@ -75,7 +75,7 @@ export let plugin = {
 					} else {
 						if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.BLOCKED) {
 							return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED));
-						} else if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.DELETED) {
+						} else if (tokenData['userData']['status'] === Constant.DATABASE.STATUS.USER.DELETE) {
 							return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED));
 						} else {
 							return ({ isValid: true, credentials: { token: tokens, userData: tokenData['userData'] } });

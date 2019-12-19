@@ -4,6 +4,7 @@ import { SERVER, EMAIL_TEMPLATE } from '@src/constants/app.constant';
 import * as utils from '../utils';
 import Mail = require('nodemailer/lib/mailer');
 import { TemplateUtil } from '@src/utils/template.util';
+import { CategoryClass } from '@src/entity/article/adminArticle.entity';
 
 const transporter = nodemailer.createTransport({
 
@@ -91,6 +92,26 @@ export class MailManager {
 
 		} catch (error) {
 			return {};
+		}
+	}
+
+	async contactEmail(params) {
+		try {
+			console.log('paramsparamsparamsparams', params);
+
+			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
+				.compileFile({
+					name: params.name,
+					address: params.address,
+					description: params.description,
+					phone: params.phone,
+					Id: params.propertyId, // shortId
+					title: params.title,
+				});
+			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'contact', content: mailContent });
+		} catch (error) {
+			console.log('error>>>>>>>>>>>>>>>>>>>>>>>', error);
+			return Promise.reject(error);
 		}
 	}
 }
