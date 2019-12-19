@@ -27,10 +27,10 @@ export class AdminProfileController {
 			// check email
 			console.log('adminData', adminData);
 			if (!adminData) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
-			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETE && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETE && adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
 			}
-			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.BLOCKED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.BLOCKED && adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
 			}
 			if (!(await utils.decryptWordpressHashNode(payload.password, adminData.password))) {
@@ -87,6 +87,12 @@ export class AdminProfileController {
 			const criteria = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'firstName']);
 			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETE && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
+			}
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.BLOCKED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
+			}
 			else {
 				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
 				const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;
