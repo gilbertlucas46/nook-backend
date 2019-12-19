@@ -51,8 +51,7 @@ export class EnquiryController {
 
                 enquiryData = ENTITY.EnquiryE.createOneEntity(dataToSave);
 
-                const propertyData = await ENTITY.PropertyE.getOneEntity(criteria, { 'property_added_by.userId': 1, 'property_added_by.email': 1, 'propertyId': 1, 'title': 1 });
-                console.log('propertyOwnerIdpropertyOwnerIdpropertyOwnerIdpropertyOwnerId', propertyOwnerId);
+                const propertyData = await ENTITY.PropertyE.getOneEntity(criteria, { 'property_added_by.userId': 1, 'property_added_by.email': 1, 'propertyId': 1, 'property_basic_details.title': 1 });
 
                 const mail = new MailManager();
                 const sendObj = {
