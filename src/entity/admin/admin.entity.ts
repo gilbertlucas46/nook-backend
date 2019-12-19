@@ -274,6 +274,59 @@ export class AdminClass extends BaseEntity {
 				.then(([propertyCount, userCount, articleCount, enquiryCount, loanCount]) => {
 					return { propertyCount, userCount, articleCount, enquiryCount, loanCount };
 				});
+
+			// db.getCollection('properties').aggregate([
+			// 	{
+			// 		"$facet": {
+			// 			DECLINED: [
+			// 				{
+			// 					$match: {
+			// 						"property_status.number": 4,
+			// 						"property_status.status": "DECLINED"
+			// 					}
+			// 				}
+			// 			],
+			// 			PENDING: [{
+			// 				$match: {
+			// 					"property_status.number": 2
+			// 				}
+			// 			}],
+			// 			ACTIVE: [{
+			// 				$match: {
+			// 					"property_status.number": 3
+			// 				}
+			// 			}],
+			// 			EXPIRED: [{
+			// 				$match: {
+			// 					"property_status.number": 6
+			// 				}
+			// 			}],
+			// 			SOLD_RENTED: [{
+			// 				$match: {
+			// 					"property_status.number.number": 5
+			// 				}
+			// 			}],
+			// 			FEATURED: [{
+			// 				$match: {
+			// 					"isFeatured": true
+			// 				}
+			// 			}]
+			// 		}
+			// 	},
+			// 	{
+			// 		$project: {
+			// 			DECLINED: { $size: '$DECLINED' },
+			// 			PENDING: { $size: '$PENDING' },
+			// 			ACTIVE: { $size: '$ACTIVE' },
+			// 			EXPIRED: { $size: '$EXPIRED' },
+			// 			SOLD_RENTED: { $size: '$SOLD_RENTED' },
+			// 			FEATURED: { $size: '$FEATURED' }
+			// 		}
+			// 	}
+			// ])
+
+
+
 		} catch (error) {
 			return Promise.reject(error);
 		}

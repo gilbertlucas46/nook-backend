@@ -43,10 +43,10 @@ class AdminStaffE extends BaseEntity {
         if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
         if (!page) page = 1;
         if (!sortType) sortType = 1;
-        if (payload.sortBy) {
-            sortCondition[payload.sortBy] = parseInt(payload.sortType);
-            pipeline.push({ $sort: sortCondition });
-        }
+        // if (payload.sortBy) {
+        //     sortCondition[payload.sortBy] = parseInt(payload.sortType);
+        //     pipeline.push({ $sort: sortCondition });
+        // }
         if (!status) {
             matchCondition = {
                 $or: [
@@ -96,6 +96,11 @@ class AdminStaffE extends BaseEntity {
                     createdAt: 1,
                     permission: 1,
                     staffStatus: 1,
+                },
+            },
+            {
+                $sort: {
+                    updatedAt: sortType,
                 },
             });
         return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
