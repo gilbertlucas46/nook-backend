@@ -98,8 +98,26 @@ export class MailManager {
 	async contactEmail(params) {
 		try {
 			console.log('paramsparamsparamsparams', params);
-
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
+				.compileFile({
+					name: params.name,
+					address: params.address,
+					description: params.description,
+					phone: params.phone,
+					// Id: params.propertyId, // shortId
+					title: params.title,
+				});
+			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
+		} catch (error) {
+			console.log('error>>>>>>>>>>>>>>>>>>>>>>>', error);
+			return Promise.reject(error);
+		}
+	}
+
+	async enquiryEmail(params) {
+		try {
+			console.log('paramsparamsparamsparams', params);
+			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + ''))
 				.compileFile({
 					name: params.name,
 					address: params.address,
@@ -108,7 +126,7 @@ export class MailManager {
 					Id: params.propertyId, // shortId
 					title: params.title,
 				});
-			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'contact', content: mailContent });
+			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
 		} catch (error) {
 			console.log('error>>>>>>>>>>>>>>>>>>>>>>>', error);
 			return Promise.reject(error);

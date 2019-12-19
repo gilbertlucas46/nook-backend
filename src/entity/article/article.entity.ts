@@ -354,7 +354,7 @@ export class ArticleClass extends BaseEntity {
             let { sortType } = payload;
             const { categoryId, searchTerm, type } = payload;
             // if (!limit) { limit = Constant.SERVER.LIMIT; }
-            let limit = 7;
+            const limit = 7;
             // if (!page) { page = 1; }
             let sortingType = {};
             let query: any = {};
@@ -371,7 +371,7 @@ export class ArticleClass extends BaseEntity {
                 };
                 sortingType = {
                     updatedAt: -1,
-                }
+                };
                 return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
             }
             // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));

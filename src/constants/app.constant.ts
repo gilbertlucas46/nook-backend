@@ -8,8 +8,7 @@ export let swaggerDefaultResponseMessages = [
 	{ code: 500, message: 'Internal Server Error' },
 ];
 export const PRIVILEGE = {
-	SUB_ADMIN_PRIVILEGE: [0, 1, 2],
-	SUB_MERCHANT_PRIVILEGE: [0, 1, 2],
+	SUB_ADMIN_PRIVILEGE: [2],  // 0, 1,   for read and write not need right now
 };
 
 export const ENUM = {
@@ -337,63 +336,10 @@ export let DATABASE = {
 		ACTIVE: 'Active',
 		BLOCK: 'Block',
 	},
-	// ARTICLE_TYPE: {
-	// 	// FEATURED_ARTICLE: {
-	// 	// 	NUMBER: 1,
-	// 	// 	TYPE: 'FEATURED_ARTICLE',
-	// 	// 	DISPLAY_NAME: 'Featured Article',
-	// 	// },
-	// 	AGENTS: {
-	// 		NUMBER: 2,
-	// 		TYPE: 'AGENTS',
-	// 		DISPLAY_NAME: 'Agent',
-	// 	},
-	// 	BUYING: {
-	// 		NUMBER: 3,
-	// 		TYPE: 'BUYING',
-	// 		DISPLAY_NAME: 'Buying',
-	// 	},
-	// 	HOME_LOANS: {
-	// 		NUMBER: 4,
-	// 		TYPE: 'HOME_LOANS',
-	// 		DISPLAY_NAME: 'Home Loans',
-	// 	},
-	// 	RENTING: {
-	// 		NUMBER: 5,
-	// 		TYPE: 'RENTING',
-	// 		DISPLAY_NAME: 'Renting',
-	// 	},
-	// 	SELLING: {
-	// 		NUMBER: 6,
-	// 		TYPE: 'SELLING',
-	// 		DISPLAY_NAME: 'Selling',
-	// 	},
-	// 	NEWS: {
-	// 		NUMBER: 7,
-	// 		TYPE: 'NEWS',
-	// 		DISPLAY_NAME: 'News',
-	// 	},
-	// legal stuff, international news, domestic news, sports coverage, political news
-	// },
 	ARTICLE_STATUS: {
 		PENDING: 'Pending',
 		ACTIVE: 'Active',
 		BLOCK: 'Block',
-		// PENDING: {
-		// 	// NUMBER: 1,
-		// 	// TYPE: 'PENDING',
-		// 	DISPLAY_NAME: 'Pending',
-		// },
-		// ACTIVE: {
-		// 	NUMBER: 2,
-		// 	TYPE: 'ACTIVE',
-		// 	DISPLAY_NAME: 'Active',
-		// },
-		// BLOCKED: {
-		// 	NUMBER: 3,
-		// 	TYPE: 'BLOCKED',
-		// 	DISPLAY_NAME: 'Blocked',
-		// },
 	},
 
 	HELP_CENTER_TYPE: {
@@ -443,19 +389,6 @@ export let DATABASE = {
 		PENDING: 'Pending',
 	},
 
-	// ENQUIRY_TYPE: {
-	// 	GUEST: {
-	// 		NUMBER: 1,
-	// 		TYPE: 'GUEST',
-	// 		DISPLAY_NAME: 'GUEST',
-	// 	},
-	// 	REGISTERED_USER: {
-	// 		NUMBER: 2,
-	// 		TYPE: 'REGISTERED_USER',
-	// 		DISPLAY_NAME: 'Registered_User',
-	// 	},
-	// },
-
 	ENQUIRY_CATEGORY: {
 		SENT: 'sent',
 		RECEIVED: 'received',
@@ -471,11 +404,11 @@ export let DATABASE = {
 		RESOLVED: 'RESOLVED',
 	},
 
-	DEVICE_TYPES: {
-		IOS: 'IOS',
-		ANDROID: 'ANDROID',
-		WEB: 'WEB',
-	},
+	// DEVICE_TYPES: {
+	// 	IOS: 'IOS',
+	// 	ANDROID: 'ANDROID',
+	// 	WEB: 'WEB',
+	// },
 
 	GENDER: {
 		MALE: 'MALE',
@@ -555,25 +488,7 @@ export let DATABASE = {
 		REGISTER: 'REGISTER',
 		FORGOT: 'FORGOT',
 	},
-	MIME_TYPE: {
-		DEFAULT: 'default',
-		IMAGE: 'image',
-		VIDEO: 'video',
-		AUDIO: 'audio',
-		GIF: 'gif',
-		PDF: 'pdf',
-		DOC: 'doc',
-		DOCX: 'docx',
-		XLSX: 'xlsx',
-		XLS: 'xls',
-		CSV: 'csv',
-		TXT: 'txt',
-		PPTX: 'pptx',
-	},
-	DEEPLINK_URL: config.get('host') + '/deeplink/',
-	DEEPLINK_REDIRECT_URL: {
-		APP: '/v1/deeplink?url=',
-	},
+
 	FEATURED_TYPE: {
 		FREE: 'FREE',
 		PROFILE: 'PROFILE',
@@ -632,6 +547,8 @@ export const EMAIL_TEMPLATE = {
 		FORGOT_PWD_EMAIL: 'Reset Password Request',
 		RESET_PASSWORD: 'Reset password link',
 		VERIFY_EMAIL: 'Verify e-mail address',
+		Contact: 'Contact',
+		Enquiry: 'Enquiry',
 	},
 };
 export let STATUS_MSG = {
@@ -715,11 +632,11 @@ export let STATUS_MSG = {
 				type: 'INVALID_LOGIN',
 				message: 'Entered username/email is not registered with us!',
 			},
-			PROPERTY_NOT_REGISTERED: {
-				statusCode: 400,
-				type: 'PROPERTY_NOT_REGISTERED',
-				message: 'PROPERTY does not exist.',
-			},
+			// PROPERTY_NOT_REGISTERED: {
+			// 	statusCode: 400,
+			// 	type: 'PROPERTY_NOT_REGISTERED',
+			// 	message: 'PROPERTY does not exist.',
+			// },
 			USER_NOT_REGISTERED: {
 				statusCode: 400,
 				type: 'USER_NOT_REGISTERED',
@@ -730,16 +647,16 @@ export let STATUS_MSG = {
 				type: 'USER_ALREADY_EXIST',
 				message: 'User already exist, please login.',
 			},
-			INVALID_OTP: {
-				statusCode: 400,
-				type: 'INVALID_OTP',
-				message: 'Invalid OTP',
-			},
-			APP_VERSION_ERROR: {
-				statusCode: 400,
-				type: 'APP_VERSION_ERROR',
-				message: 'One of the latest version or updated version value must be present',
-			},
+			// INVALID_OTP: {
+			// 	statusCode: 400,
+			// 	type: 'INVALID_OTP',
+			// 	message: 'Invalid OTP',
+			// },
+			// APP_VERSION_ERROR: {
+			// 	statusCode: 400,
+			// 	type: 'APP_VERSION_ERROR',
+			// 	message: 'One of the latest version or updated version value must be present',
+			// },
 			VALIDATION_ERROR: {
 				statusCode: 400,
 				type: 'VALIDATION_ERROR',
@@ -799,13 +716,13 @@ export let STATUS_MSG = {
 					type: 'CUSTOM_DEFAULT',
 				};
 			},
-			CUSTOM_VALIDATION_ERROR: (err: any) => {
-				return {
-					statusCode: 400,
-					message: err,
-					type: 'VALIDATION_ERROR',
-				};
-			},
+			// CUSTOM_VALIDATION_ERROR: (err: any) => {
+			// 	return {
+			// 		statusCode: 400,
+			// 		message: err,
+			// 		type: 'VALIDATION_ERROR',
+			// 	};
+			// },
 			SUBSCRIPTION_NOT_EXIST: (data: any) => {
 				return {
 					statusCode: 400,
@@ -816,16 +733,16 @@ export let STATUS_MSG = {
 			},
 		},
 		E401: {
-			RESET_PASSWORD_EXPIRED: {
-				statusCode: 401,
-				type: 'TOKEN_EXPIRED',
-				message: 'Your reset password token is expired!',
-			},
-			INVALID_LINK: {
-				statusCode: 401,
-				type: 'INVALID_LINK',
-				message: 'Link is no more valid.',
-			},
+			// RESET_PASSWORD_EXPIRED: {
+			// 	statusCode: 401,
+			// 	type: 'TOKEN_EXPIRED',
+			// 	message: 'Your reset password token is expired!',
+			// },
+			// INVALID_LINK: {
+			// 	statusCode: 401,
+			// 	type: 'INVALID_LINK',
+			// 	message: 'Link is no more valid.',
+			// },
 			EMAIL_FORGET_PWD_LINK: {
 				statusCode: 401,
 				type: 'EMAIL_FORGET_PWD_LINK',
@@ -861,13 +778,13 @@ export let STATUS_MSG = {
 				type: 'UNAUTHORIZED',
 				message: 'You are not authorized to perform this action',
 			},
-			MISSINING_AUTHENTICATION: (tokenType: any) => {
-				return {
-					statusCode: 401,
-					message: 'Missing authentication ' + tokenType,
-					type: 'MISSINING_AUTHENTICATION',
-				};
-			},
+			// MISSINING_AUTHENTICATION: (tokenType: any) => {
+			// 	return {
+			// 		statusCode: 401,
+			// 		message: 'Missing authentication ' + tokenType,
+			// 		type: 'MISSINING_AUTHENTICATION',
+			// 	};
+			// },
 		},
 		E404: {
 			DATA_NOT_FOUND: {
@@ -914,11 +831,11 @@ export let STATUS_MSG = {
 				type: 'FORGET_PASSWORD',
 				message: 'Forget password successfully.',
 			},
-			UPLOAD: {
-				statusCode: 200,
-				type: 'UPLOAD',
-				message: 'File uploaded successfully.',
-			},
+			// UPLOAD: {
+			// 	statusCode: 200,
+			// 	type: 'UPLOAD',
+			// 	message: 'File uploaded successfully.',
+			// },
 			UPDATED: {
 				statusCode: 200,
 				type: 'UPDATED',
@@ -964,14 +881,14 @@ export let STATUS_MSG = {
 				type: 'ENQUIRY_SENT',
 				message: 'Enquiry Sent To Agent',
 			},
-			LOGIN_TEST: (language: any) => {
-				const body = {
-					statusCode: 200,
-					message: (language === DATABASE.LANGUAGE.EN) ? 'Logged In Successfully' : 'Амжилтанд хүрсэн',
-					type: 'LOGIN',
-				};
-				return body;
-			},
+			// LOGIN_TEST: (language: any) => {
+			// 	const body = {
+			// 		statusCode: 200,
+			// 		message: (language === DATABASE.LANGUAGE.EN) ? 'Logged In Successfully' : 'Амжилтанд хүрсэн',
+			// 		type: 'LOGIN',
+			// 	};
+			// 	return body;
+			// },
 			SUBSCRIPTION_EXIST: {
 				statusCode: 200,
 				type: 'SUBSCRIPTION_EXIST',
@@ -1041,18 +958,18 @@ export let STATUS_MSG = {
 			message: 'Reset otp sent to registered phone number.',
 		},
 	},
-	S304: {
-		GROUP_ALLREADY_EXISTS: {
-			statusCode: 304,
-			type: 'GROUP_ALLREADY_EXISTS',
-			message: 'Similar unused group exists.',
-		},
-		REQUEST_EXISTS: {
-			statusCode: 304,
-			message: 'Friend request already Exists',
-			type: 'REQUEST_EXISTS',
-		},
-	},
+	// S304: {
+	// 	GROUP_ALLREADY_EXISTS: {
+	// 		statusCode: 304,
+	// 		type: 'GROUP_ALLREADY_EXISTS',
+	// 		message: 'Similar unused group exists.',
+	// 	},
+	// 	REQUEST_EXISTS: {
+	// 		statusCode: 304,
+	// 		message: 'Friend request already Exists',
+	// 		type: 'REQUEST_EXISTS',
+	// 	},
+	// },
 };
 
 export let SERVER = {
@@ -1069,17 +986,17 @@ export let SERVER = {
 		TERMS_COND: '',
 		PRIVACY: config.get('host') + '/privacy_policy/',
 	},
-	SHARE_CONTENT: {
-		SHARE_CONTENT_MESSAGE: `Thank you for your interest in downloading Toki! We're constantly working on improving the way you can hangout with your closest friends :)`,
-		SHARE_CONTENT_LINK: config.get('host') + DATABASE.DEEPLINK_REDIRECT_URL.APP + 'http://nook.com' + '/' + DATABASE.ACTION.DEEPLINK.APP + '&ios=' + 'nook://' + DATABASE.ACTION.DEEPLINK.APP,
-	},
+	// SHARE_CONTENT: {
+	// 	SHARE_CONTENT_MESSAGE: `Thank you for your interest in downloading Toki! We're constantly working on improving the way you can hangout with your closest friends :)`,
+	// 	SHARE_CONTENT_LINK: config.get('host') + DATABASE.DEEPLINK_REDIRECT_URL.APP + 'http://nook.com' + '/' + DATABASE.ACTION.DEEPLINK.APP + '&ios=' + 'nook://' + DATABASE.ACTION.DEEPLINK.APP,
+	// },
 	TEMPLATE_PATH: process.cwd() + '/src/views/',
-	BY_PASS_OTP: '1212',
-	LISTNG_LIMIT: 10,
-	SYNC_LIMIT: 100000,
-	CONTACT_SYNC_LIMIT: 2000,
-	THUMB_WIDTH: 10,
-	THUMB_HEIGHT: 10,
+	// BY_PASS_OTP: '1212',
+	// LISTNG_LIMIT: 10,
+	// SYNC_LIMIT: 100000,
+	// CONTACT_SYNC_LIMIT: 2000,
+	// THUMB_WIDTH: 10,
+	// THUMB_HEIGHT: 10,
 	GIF_THUMB_WIDTH: 100,
 	GIFTHUMB_HEIGHT: 100,
 	CHUNK_SIZE: 100,

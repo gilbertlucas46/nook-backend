@@ -533,7 +533,7 @@ export const REGIONS: Location.RegionLocation[] = [
 				location: { type: 'Point', coordinates: [0, 0] },
 			},
 			{
-				name: 'Parañaque',
+				name: 'Parañaque City',
 				images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQA9EKl0ayBD5dZ93IPz01dESu9-3QofSy88U8jXIkKVkVx6x9d',
 					'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRv_wSaTY8lvQrf42tzceLMa1iPP01VfEbFcDNvOmfFKRVDC0t9',
 					'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR7m3toPejIri5M9B61luStIBMz9_RCPzJoNYL_DInBnYUUEWjj',
@@ -688,7 +688,7 @@ export const REGIONS: Location.RegionLocation[] = [
 				},
 			},
 			{
-				name: 'Pasay',
+				name: 'Pasay City',
 				location: { type: 'Point', coordinates: [0, 0] },
 				images: ['https://explore.traveloka.com/wp-v1/wp-content/uploads/2017/05/Star-City-Facade-Design.jpg',
 					'https://3.bp.blogspot.com/-KayQnEOLksg/XJERwyWKWEI/AAAAAAABPoM/SjpIFv6lysobAYsqofW1FGJU7-rQV2o4gCLcBGAs/s1600/star%2Bcity.jpg',
@@ -842,7 +842,7 @@ export const REGIONS: Location.RegionLocation[] = [
 				},
 			},
 			{
-				name: 'Pasig',
+				name: 'Pasig City',
 				location: { type: 'Point', coordinates: [0, 0] },
 				subTitle: 'The Green City',
 				isFeatured: true,
@@ -1174,7 +1174,7 @@ export const REGIONS: Location.RegionLocation[] = [
 				location: { type: 'Point', coordinates: [0, 0] },
 			},
 			{
-				name: 'Taguig',
+				name: 'Taguig City',
 				location: { type: 'Point', coordinates: [0, 0] },
 				subTitle: 'Metro Manila\'s ProbinSyudad',
 				isFeatured: true,
