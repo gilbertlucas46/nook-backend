@@ -112,8 +112,8 @@ export class PropertyController {
 				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
 					payload.isHomePageFeatured = true;
 				}
-				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				delete payload.propertyId;
+				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
 				const data = await ENTITY.PropertyE.createOneEntity(payload);
