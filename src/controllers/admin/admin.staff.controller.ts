@@ -50,7 +50,9 @@ class AdminStaffControllers {
         try {
             let dataToUpdate: any;
             dataToUpdate = {
-                $set: payload,
+                $set: {
+                    ...payload,
+                },
             };
 
             return await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, dataToUpdate);
