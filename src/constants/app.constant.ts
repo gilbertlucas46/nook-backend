@@ -683,7 +683,7 @@ export let STATUS_MSG = {
 			REQUEST_ALREADY_SENT: {
 				statusCode: 400,
 				type: 'REQUEST_ALREADY_SENT',
-				message: 'Staff with same email id already exist!.',
+				message: 'Staff with same email already exist!.',
 			},
 			DELETE_ARTICLE_FIRST: {
 				statusCode: 400,

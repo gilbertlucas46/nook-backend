@@ -40,10 +40,31 @@ export class EnquiryController {
                 };
 
                 if (userData._id) dataToSave['userId'] = userData._id;
-                html = `<p> This user want to contact to you | email: ${payload.email} |phoneNumber:${payload.phoneNumber}...</p>`;
+                // html = `<p> This user want to contact to you | email: ${payload.email} |phoneNumber:${payload.phoneNumber}...</p>`;
                 // mail = new MailManager(payload.agentEmail, 'Enquiry', html);
                 // mail.sendMail();
+
+                // get the email of the property owner by propertyId
+                const criteria = {
+                    _id: payload.propertyId,
+                };
+
                 enquiryData = ENTITY.EnquiryE.createOneEntity(dataToSave);
+
+                const propertyData = await ENTITY.PropertyE.getOneEntity(criteria, { 'property_added_by.userId': 1, 'property_added_by.email': 1, 'propertyId': 1, 'title': 1 });
+                console.log('propertyOwnerIdpropertyOwnerIdpropertyOwnerIdpropertyOwnerId', propertyOwnerId);
+
+                const mail = new MailManager();
+                const sendObj = {
+                    receiverEmail: propertyData['property_added_by']['email'],
+                    subject: 'Contact',
+                    propertyId: propertyData.propertyId,
+                    name: payload.name,
+                    message: payload.message,
+                    title: propertyData.title,
+                };
+                mail.contactEmail(sendObj);
+                // return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
                 return {};
             }
 

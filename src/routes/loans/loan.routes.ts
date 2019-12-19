@@ -737,7 +737,7 @@ export let loanRoute: ServerRoute[] = [
 		options: {
 			description: 'get abnk images data shufedl',
 			tags: ['api', 'anonymous', 'user', 'shuffle', 'banks'],
-			auth: 'UserAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				failAction: UniversalFunctions.failActionFunction,
 			},
