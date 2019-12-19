@@ -86,7 +86,7 @@ export class EnquiryController {
                     propertyId: propertyData.propertyId,
                     name: payload.name,
                     message: payload.message,
-                    title: propertyData.title,
+                    title: propertyData['property_basic_details:']['title'],
                     email: payload.email,
                 };
                 mail.enquiryEmail(sendObj);
