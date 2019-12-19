@@ -304,6 +304,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
+						// Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 					]),
 					// permissionType: Joi.string().valid([
 					// 	Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
