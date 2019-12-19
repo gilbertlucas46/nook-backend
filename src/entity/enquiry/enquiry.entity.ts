@@ -10,6 +10,8 @@ export class EnquiryClass extends BaseEntity {
     }
     async enquiryList(payload: EnquiryRequest.GetEnquiry, userData: UserRequest.UserData) {
         try {
+            console.log('userDatauserDatauserData', userData);
+
             const { fromDate, toDate, category, enquiryType, searchTerm, limit } = payload;
             let { sortType, page } = payload;
             sortType = !sortType ? -1 : sortType;
@@ -34,6 +36,9 @@ export class EnquiryClass extends BaseEntity {
             } else if (userData.type && enquiryType === Constant.DATABASE.ENQUIRY_TYPE.CONTACT && category === Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED) {
                 query['agentId'] = userData._id;
                 query['enquiryType'] = payload.enquiryType;
+            }
+            else if (userData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE || userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE) {
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
             }
             else {
                 console.log('else condition');
