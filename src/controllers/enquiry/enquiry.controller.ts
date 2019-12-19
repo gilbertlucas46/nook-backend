@@ -48,6 +48,7 @@ export class EnquiryController {
                     name: payload.name,
                     message: payload.message,
                     phone: payload.phoneNumber,
+                    email: payload.email,
                 };
                 mail.contactEmail(sendObj);
                 // return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
@@ -84,6 +85,7 @@ export class EnquiryController {
                     name: payload.name,
                     message: payload.message,
                     title: propertyData.title,
+                    email: payload.email,
                 };
                 mail.enquiryEmail(sendObj);
 

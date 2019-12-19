@@ -105,6 +105,7 @@ export class MailManager {
 					description: params.description,
 					phone: params.phone,
 					// Id: params.propertyId, // shortId
+					email: params.email,
 					title: params.title,
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
@@ -123,6 +124,7 @@ export class MailManager {
 					address: params.address,
 					description: params.description,
 					phone: params.phone,
+					email: params.email,
 					Id: params.propertyId, // shortId
 					title: params.title,
 				});
