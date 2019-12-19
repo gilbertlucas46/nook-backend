@@ -292,34 +292,38 @@ export class AdminClass extends BaseEntity {
 						DECLINED: [
 							{
 								$match: {
-									'property_status.number': 4,
-									'property_status.status': 'DECLINED',
+									'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 								},
 							},
 						],
 						PENDING: [{
 							$match: {
-								'property_status.number': 2,
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 							},
 						}],
 						ACTIVE: [{
 							$match: {
-								'property_status.number': 3,
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 							},
 						}],
 						EXPIRED: [{
 							$match: {
-								'property_status.number': 6,
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 							},
 						}],
 						SOLD_RENTED: [{
 							$match: {
-								'property_status.number.number': 5,
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 							},
 						}],
 						FEATURED: [{
 							$match: {
 								isFeatured: true,
+							},
+						}],
+						DRAFT: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
 							},
 						}],
 					},
@@ -332,6 +336,7 @@ export class AdminClass extends BaseEntity {
 						EXPIRED: { $size: '$EXPIRED' },
 						SOLD_RENTED: { $size: '$SOLD_RENTED' },
 						FEATURED: { $size: '$FEATURED' },
+						DRAFT: { $size: '$DRAFT' },
 					},
 				},
 			];
@@ -442,8 +447,8 @@ export class AdminClass extends BaseEntity {
 			pipeline.push(this.DAOManager.count('Article', totalArticles));
 			pipeline.push(this.DAOManager.count('LoanReferral', {}));
 
-			let propertyCount, userCount, loanCount, staffcount, articleCount, referralCount;
-			[propertyCount, userCount, loanCount, staffcount, articleCount, referralCount] = await Promise.all(pipeline);
+
+			const [propertyCount, userCount, loanCount, staffcount, articleCount, referralCount] = await Promise.all(pipeline);
 			return {
 				propertyCount: propertyCount[0],
 				userCount: userCount[0],
