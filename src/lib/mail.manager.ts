@@ -102,7 +102,7 @@ export class MailManager {
 				.compileFile({
 					name: params.name,
 					address: params.address,
-					description: params.description,
+					description: params.message,
 					phone: params.phone,
 					// Id: params.propertyId, // shortId
 					email: params.email,
@@ -122,7 +122,7 @@ export class MailManager {
 				.compileFile({
 					name: params.name,
 					address: params.address,
-					description: params.description,
+					description: params.message,
 					phone: params.phone,
 					email: params.email,
 					Id: params.propertyId, // shortId
