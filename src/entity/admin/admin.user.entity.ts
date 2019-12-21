@@ -16,7 +16,7 @@ class AdminUserE extends BaseEntity {
     async getUserList(payload: AdminRequest.IGetUSerList) {
         try {
             let { page, limit, sortBy, sortType } = payload;
-            const { searchTerm, userId, type, status, fromDate, toDate } = payload;
+            const { searchTerm, userId, type, status, fromDate, toDate, isByAdmin } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             let sortingType = {};
@@ -109,6 +109,9 @@ class AdminUserE extends BaseEntity {
 
             if (userId) { matchObject.$match._id = Types.ObjectId(userId); }
             if (type) { matchObject.$match['type'] = type; }
+            if (isByAdmin) {
+                matchObject.$match['type'] = { $ne: Constant.DATABASE.USER_TYPE.TENANT.TYPE };
+            }
             if (status) { matchObject.$match['status'] = status; }
 
             // Date filters
