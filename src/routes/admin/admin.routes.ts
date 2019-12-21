@@ -41,7 +41,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			// auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					email: Joi.string().lowercase().email().trim().required(),
+					email: Joi.string().email().lowercase().trim().required(),
 					password: Joi.string().min(6).max(16).trim().required(),
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
@@ -74,10 +74,10 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'forget-password to admin',
 			tags: ['api', 'anonymous', 'admin', 'forget-password', 'link'],
-			auth: 'DoubleAuth',
+			// auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					email: Joi.string().lowercase().email().trim().required(),
+					email: Joi.string().email().lowercase().trim().required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
