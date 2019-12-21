@@ -84,10 +84,11 @@ export class EnquiryController {
                     receiverEmail: propertyData['property_added_by']['email'],
                     subject: Constant.EMAIL_TEMPLATE.SUBJECT.Enquiry,
                     propertyId: propertyData.propertyId,
-                    name: payload.name,
+                    name: payload.name || '',
                     message: payload.message,
                     title: propertyData['property_basic_details']['title'],
-                    email: payload.email,
+                    email: payload.email || '',
+                    phone: payload.phoneNumber || '',
                 };
                 mail.enquiryEmail(sendObj);
 

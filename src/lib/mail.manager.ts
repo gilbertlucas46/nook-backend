@@ -121,7 +121,7 @@ export class MailManager {
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + ''))
 				.compileFile({
 					name: params.name,
-					address: params.address,
+					// address: params.address,
 					description: params.message,
 					phone: params.phone,
 					email: params.email,
