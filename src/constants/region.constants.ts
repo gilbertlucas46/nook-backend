@@ -29,6 +29,306 @@ export const REGIONS: Location.RegionLocation[] = [
 				name: 'Tabuk City',
 				location: { type: 'Point', coordinates: [0, 0] },
 			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bangued',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Boliney',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bucay',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bucloc',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Daguioman',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Danglas',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Dolores',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'La Paz',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lacub',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lagangilang',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lagayan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Langiden',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Licuan-Baay (Licuan)',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Luba',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Malibcong',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Manabo',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Peñarrubia',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pidigan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pilar',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sallapadan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'San Isidro',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'San Juan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'San Quintin',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tayum',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tineg',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tubo',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Villaviciosa',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Calanasan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Conner',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Flora',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kabugao',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Luna',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pudtol',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Santa Marcela',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Atok',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bakun',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bokod',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Buguias',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Itogon',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kabayan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kapangan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kibungan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'La Trinidad',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Mankayan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sablan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tuba',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tublay',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aguinaldo',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alfonso Lista (Potia)',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Asipulo',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Banaue',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Hingyon',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Hungduan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kiangan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lagawe',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lamut',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Mayoyao',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tinoc',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Balbalan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lubuagan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pasil',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pinukpuk',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Rizal (Liwan)',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tanudan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tinglayan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Barlig',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bauko',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Besao',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bontoc',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Natonin',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Paracelis',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sabangan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sadanga',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sagada',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tadian',
+			},
 		],
 	},
 	{
