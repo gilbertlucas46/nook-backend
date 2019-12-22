@@ -222,7 +222,17 @@ export namespace AdminRequest {
 		createdAt?: number;
 		updatedAt?: number;
 		userId?: string;
-		property_added_by?: object;
+		property_added_by: {
+			userName: string;
+			phoneNumber: string;
+			userId: string;
+			profilePicUrl?: string;
+			firstName?: string;
+			lastName?: string;
+			email: string,
+			middleName?: string;
+			userType?: string
+		};
 		property_status?: object;
 		propertyActions?: object[];
 		property_features: {

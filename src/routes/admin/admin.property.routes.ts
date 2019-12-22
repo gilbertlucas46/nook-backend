@@ -13,12 +13,12 @@ export let adminProperty: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload = request.payload as AdminRequest.IaddProperty;
-                const checkPermission = adminData['permission'].some(data => {
-                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.PROPERTIES;
-                });
-                if (!checkPermission) {
-                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404)
-                }
+                // const checkPermission = adminData['permission'].some(data => {
+                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.PROPERTIES;
+                // });
+                // if (!checkPermission) {
+                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+                // }
                 console.log('payloadpayloadpayloadpayloadpayload', payload);
 
                 const responseData = await PropertyService.adminAddProperty(payload, adminData);
@@ -135,6 +135,8 @@ export let adminProperty: ServerRoute[] = [
                     },
                     // userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
                     property_added_by: {
+                        userName: Joi.string(),
+                        phoneNumber: Joi.string(),
                         userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
                         profilePicUrl: Joi.string().allow(''),
                         firstName: Joi.string().allow(''),

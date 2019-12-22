@@ -3,6 +3,7 @@ import * as Constant from '@src/constants/app.constant';
 import { Types } from 'mongoose';
 import { MailManager } from '@src/lib';
 import { AdminRequest } from '@src/interfaces/admin.interface';
+import { Utils } from 'handlebars';
 
 /**
  * @author
@@ -36,13 +37,17 @@ class AdminUserE extends BaseEntity {
                             { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
                             { middleName: new RegExp('.*' + searchTerm + '.*', 'i') },
                             { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { title: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { phoneNumber: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { aboutMe: new RegExp('.*' + searchTerm + '.*', 'i') },
                         ],
                     },
                 };
+                if (!isByAdmin) {
+                    searchCriteria['$match']['$or'].push(
+                        { title: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        { phoneNumber: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        { aboutMe: new RegExp('.*' + searchTerm + '.*', 'i') },
+                    );
+                }
             } else {
                 searchCriteria = {
                     $match: {
@@ -138,12 +143,14 @@ class AdminUserE extends BaseEntity {
                         firstName: 1,
                         middleName: 1,
                         // userId: '$_id',
+                        lastName: 1,
                         status: 1,
                     },
                 },
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (error) {
+            console.log('errorerrorerrorerror', error)
             return Promise.reject(error);
         }
     }
