@@ -40,9 +40,9 @@ export let agentRoute: ServerRoute[] = [
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                     fromDate: Joi.number(),
                     // toDate: Joi.number(),
-                    cityId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    cityId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
                     byCity: Joi.string().trim(),
-                    userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
                     // specializingIn_property_type: Joi.array().items(
                     //     Joi.number().valid(
                     //         Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
