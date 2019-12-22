@@ -32,9 +32,9 @@ export let userRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					userName: Joi.string().min(3).max(32).trim().required(),
-					email: Joi.string().email(),
+					email: Joi.string().trim().email(),
 					password: Joi.string().min(6).max(16).trim().required(),
-					type: Joi.string().valid([
+					type: Joi.string().trim().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
@@ -73,8 +73,8 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					email: Joi.string().min(4).max(100).trim(),
-					password: Joi.string().min(6).max(16).trim().required(),
+					email: Joi.string().trim().min(4).max(100),
+					password: Joi.string().trim().min(6).max(16).required(),
 					deviceToken: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -108,7 +108,7 @@ export let userRoute: ServerRoute[] = [
 			// auth: 'DoubleAuth',
 			validate: {
 				params: {
-					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					_id: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -175,11 +175,11 @@ export let userRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					firstName: Joi.string().min(3).max(30).trim(),
+					firstName: Joi.string().trim().min(3).max(30),
 					middleName: Joi.string().trim().allow(''),
-					lastName: Joi.string().min(3).max(30).trim(),
-					phoneNumber: Joi.string().min(7).max(15).trim(),
-					type: Joi.string().valid([
+					lastName: Joi.string().trim().min(3).max(30),
+					phoneNumber: Joi.string().trim().min(7).max(15),
+					type: Joi.string().trim().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
@@ -281,7 +281,7 @@ export let userRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'Detail'],
 			validate: {
 				params: {
-					link: Joi.string(),
+					link: Joi.string().trim(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -315,8 +315,8 @@ export let userRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					oldPassword: Joi.string().min(6).max(16),
-					newPassword: Joi.string().min(6).max(16),
+					oldPassword: Joi.string().trim().min(6).max(16),
+					newPassword: Joi.string().trim().min(6).max(16),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -357,8 +357,8 @@ export let userRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'reset'],
 			validate: {
 				payload: {
-					link: Joi.string(),
-					password: Joi.string().min(6).max(16),
+					link: Joi.string().trim(),
+					password: Joi.string().trim().min(6).max(16),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -440,8 +440,8 @@ export let userRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 					]),
 					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']),
-					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					propertyId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
+					userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
 				},
 
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -478,7 +478,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					userType: Joi.string().valid([
+					userType: Joi.string().trim().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
 						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
@@ -518,7 +518,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				query: {
-					propertyType: Joi.string().valid([
+					propertyType: Joi.string().trim().valid([
 						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
 						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
 						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,

@@ -117,11 +117,11 @@ export class MailManager {
 
 	async enquiryEmail(params) {
 		try {
-			console.log('paramsparamsparamsparams', params);
-			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + ''))
+			console.log('paramsparamsparamsparams>>>>>>>>>>>>>>', params);
+			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
 				.compileFile({
 					name: params.name,
-					address: params.address,
+					// address: params.address,
 					description: params.message,
 					phone: params.phone,
 					email: params.email,

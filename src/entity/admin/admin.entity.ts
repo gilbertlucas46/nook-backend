@@ -276,6 +276,11 @@ export class AdminClass extends BaseEntity {
 			// 	.then(([propertyCount, userCount, articleCount, enquiryCount, loanCount]) => {
 			// 		return { propertyCount, userCount, articleCount, enquiryCount, loanCount };
 			// 	});
+
+			const totalEnquiry = {
+				enquiryType: CONSTANT.DATABASE.ENQUIRY_TYPE.PROPERTY,
+			};
+
 			const totalNookStaff = {
 				type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
 				$or: [{
@@ -446,9 +451,8 @@ export class AdminClass extends BaseEntity {
 			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
 			pipeline.push(this.DAOManager.count('Article', totalArticles));
 			pipeline.push(this.DAOManager.count('LoanReferral', {}));
-
-
-			const [propertyCount, userCount, loanCount, staffcount, articleCount, referralCount] = await Promise.all(pipeline);
+			pipeline.push(this.DAOManager.count('Enquiry', totalEnquiry));
+			const [propertyCount, userCount, loanCount, staffcount, articleCount, referralCount, enquiryCount] = await Promise.all(pipeline);
 			return {
 				propertyCount: propertyCount[0],
 				userCount: userCount[0],
@@ -456,7 +460,8 @@ export class AdminClass extends BaseEntity {
 				staffcount,
 				articleCount,
 				referralCount,
-			}
+				enquiryCount,
+			};
 
 		} catch (error) {
 			return Promise.reject(error);

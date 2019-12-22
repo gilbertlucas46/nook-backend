@@ -100,6 +100,7 @@ export let adminUserRoutes: ServerRoute[] = [
 					searchTerm: Joi.string(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
+					isByAdmin: Joi.boolean(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
