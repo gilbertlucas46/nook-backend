@@ -304,4 +304,11 @@ export namespace AdminRequest {
 		subscriptionId?: string;
 		propertyImages: string[];
 	}
+
+	export interface ISubscriptionList {
+		id?: string;
+		featuredType?: string;
+		plans?: object[];
+		description?: string;
+	}
 }

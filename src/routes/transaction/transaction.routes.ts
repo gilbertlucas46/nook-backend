@@ -27,7 +27,7 @@ export let transactionRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					amount: Joi.number().min(40),
+					// amount: Joi.number().min(40),
 					currency: Joi.string().valid('php'),
 					source: Joi.string().default('tok_visa'),
 					featuredType: Joi.string().valid([

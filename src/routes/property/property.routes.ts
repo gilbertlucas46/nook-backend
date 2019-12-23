@@ -331,6 +331,7 @@ export let propertyRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 						Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 					]),
 					page: Joi.number(),
 					limit: Joi.number(),
