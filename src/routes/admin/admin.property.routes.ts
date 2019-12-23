@@ -13,13 +13,12 @@ export let adminProperty: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload = request.payload as AdminRequest.IaddProperty;
-                // const checkPermission = adminData['permission'].some(data => {
-                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.PROPERTIES;
-                // });
-                // if (!checkPermission) {
-                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
-                // }
-                console.log('payloadpayloadpayloadpayloadpayload', payload);
+                const checkPermission = adminData['permission'].some(data => {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.PROPERTIES;
+                });
+                if (checkPermission === false) {
+                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+                }
 
                 const responseData = await PropertyService.adminAddProperty(payload, adminData);
                 // const registerResponse = await AdminUserController.addUser(payload);
@@ -31,7 +30,7 @@ export let adminProperty: ServerRoute[] = [
         },
         options: {
             description: 'admin add property',
-            tags: ['api', 'anonymous', 'Admin', 'property'],
+            tags: ['api', 'anonymous', 'Admin', 'property', 'add'],
             auth: 'AdminAuth',
             validate: {
                 payload: {

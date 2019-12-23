@@ -67,9 +67,12 @@ export let adminUserRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: AdminRequest.IGetUSerList = request.query as any;
-				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
-				// }
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.USERS;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+				}
 				const registerResponse = await AdminUserController.getUserList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -78,8 +81,8 @@ export let adminUserRoutes: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Get Admin Profile',
-			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			description: 'Get Admin user',
+			tags: ['api', 'anonymous', 'admin', 'user'],
 			auth: 'AdminAuth',
 			validate: {
 				query: {
