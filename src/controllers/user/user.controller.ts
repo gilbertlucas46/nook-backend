@@ -5,12 +5,11 @@ import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
 import * as Jwt from 'jsonwebtoken';
-const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import * as request from 'request';
-const pswdCert: string = config.get('forgetPwdjwtSecret');
+const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 
 export class UserController {
 	/**
@@ -363,7 +362,7 @@ export class UserController {
 			const criteria = { _id: userData._id };
 			const dataToUpdate = { type: payload.userType };
 			const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
-			
+
 			const accessToken = await ENTITY.UserE.createToken(payload, data);
 			// await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
 			const formatedData = utils.formatUserData(data);

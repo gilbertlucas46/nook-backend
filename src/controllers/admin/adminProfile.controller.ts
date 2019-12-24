@@ -3,10 +3,9 @@ import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
 import * as Jwt from 'jsonwebtoken';
-const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-const pswdCert: string = config.get('forgetPwdjwtSecret');
+const pswdCert: string = config.get('jwtSecret.admin.forgotToken');
 
 /**
  * @author
