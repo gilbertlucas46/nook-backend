@@ -363,6 +363,7 @@ export class UserController {
 			const criteria = { _id: userData._id };
 			const dataToUpdate = { type: payload.userType };
 			const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
+			
 			const accessToken = await ENTITY.UserE.createToken(payload, data);
 			// await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
 			const formatedData = utils.formatUserData(data);
