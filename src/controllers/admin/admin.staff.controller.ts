@@ -6,10 +6,9 @@ import * as UniversalFunctions from '@src/utils';
 import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-const cert: any = config.get('jwtSecret');
 
 /**
- * @author Ashish Jain
+ * @author shubham
  * @description this controller contains actions for admin's staff related activities
  */
 class AdminStaffControllers {
