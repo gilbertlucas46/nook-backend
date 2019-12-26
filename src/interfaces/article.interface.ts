@@ -50,4 +50,17 @@ export namespace ArticleRequest {
         name: string;
     }
 
+    export interface CategoryList {
+        limit: number;
+        page: number;
+        sortType?: number;
+    }
+
+    export interface CategoryId {
+        id?: string;
+    }
+    export interface CategoryUpdate extends CategoryId {
+        name?: string;
+        status?: string;
+    }
 }

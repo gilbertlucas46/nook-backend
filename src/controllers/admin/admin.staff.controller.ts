@@ -6,10 +6,9 @@ import * as UniversalFunctions from '@src/utils';
 import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-const cert: any = config.get('jwtSecret');
 
 /**
- * @author Ashish Jain
+ * @author shubham
  * @description this controller contains actions for admin's staff related activities
  */
 class AdminStaffControllers {
@@ -48,10 +47,14 @@ class AdminStaffControllers {
 
     async updateStaff(payload: AdminRequest.IadminUpdatePermission) {
         try {
-            let dataToUpdate: any;
-            dataToUpdate = {
-                $set: payload,
+            const dataToUpdate: any = {};
+            if (payload.status) {
+                payload['staffStatus'] = payload.status;
+            }
+            dataToUpdate.$set = {
+                ...payload,
             };
+            console.log('dataToUpdatedataToUpdatedataToUpdatedataToUpdate', dataToUpdate);
 
             return await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, dataToUpdate);
         } catch (error) {

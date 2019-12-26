@@ -161,7 +161,7 @@ class ArticleController {
         }
     }
 
-    async updateCategoryList(payload) {
+    async updateCategoryList(payload: ArticleRequest.CategoryUpdate) {
         try {
             return await ENTITY.ArticleCategoryE.updateCategoryList(payload);
         } catch (error) {

@@ -135,4 +135,46 @@ export let enquiryRoutes: ServerRoute[] = [
 			},
 		},
 	},
+
+	{
+		method: 'GET',
+		path: '/v1/admin/enquiry',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload: EnquiryRequest.GetEnquiry = request.query as any;
+				const registerResponse = await EnquiryService.getEnquiryList(payload, adminData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'create Enquiry application',
+			tags: ['api', 'anonymous', 'user', 'Enquiry'],
+			auth: 'AdminAuth',
+			validate: {
+				query: {
+					enquiryType: Joi.string().valid([
+						Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
+					]),
+					page: Joi.number(),
+					limit: Joi.number(),
+					fromDate: Joi.number(),
+					toDate: Joi.number(),
+					searchTerm: Joi.string(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
+
 ];

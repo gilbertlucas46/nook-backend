@@ -2,8 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import * as config from 'config';
 import * as TokenManager from '@src/lib';
 import * as Jwt from 'jsonwebtoken';
-const cert: any = config.get('jwtSecret');
-const pswdCert: string = config.get('forgetPwdjwtSecret');
+const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '@src/constants';
 
