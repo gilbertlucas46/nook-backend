@@ -30,6 +30,7 @@ export interface IUser extends Document {
 	specializingIn_property_type?: number[];
 	specializingIn_property_category?: string[];
 	serviceAreas?: Types.ObjectId[];
+	stripeId?: string;
 }
 
 const userSchema = new Schema({
@@ -71,7 +72,7 @@ const userSchema = new Schema({
 			CONSTANT.DATABASE.USER_TYPE.AGENT.TYPE,
 			CONSTANT.DATABASE.USER_TYPE.OWNER.TYPE,
 			CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
-			CONSTANT.DATABASE.USER_TYPE.GUEST.TYPE,
+			// CONSTANT.DATABASE.USER_TYPE.GUEST.TYPE,
 		],
 		default: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
 	},
@@ -87,6 +88,7 @@ const userSchema = new Schema({
 			CONSTANT.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 		],
 	}],
+	stripeId: { type: String },
 	specializingIn_property_category: [{
 		type: String,
 		enum: [
@@ -101,8 +103,8 @@ const userSchema = new Schema({
 		type: Schema.Types.ObjectId, ref: 'City',  // Refer to city schema
 	}],
 }, {
-	versionKey: false,
-},
+		versionKey: false,
+	},
 );
 
 export let User = model<IUser>('User', userSchema);

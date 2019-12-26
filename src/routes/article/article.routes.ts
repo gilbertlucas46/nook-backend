@@ -55,7 +55,7 @@ export let articleRoutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-                const payload = request.query;
+                const payload: ArticleRequest.CategoryList = request.query as any;
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
@@ -67,8 +67,8 @@ export let articleRoutes: ServerRoute[] = [
             }
         },
         options: {
-            description: 'create article categories',
-            tags: ['api', 'anonymous', 'user', 'admin', 'articleName', 'add'],
+            description: 'get article categories',
+            tags: ['api', 'anonymous', 'user', 'admin', 'category', 'list'],
             auth: 'AdminAuth',
             validate: {
                 query: {
@@ -96,13 +96,16 @@ export let articleRoutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-                const payload = {
+                const payload: ArticleRequest.CategoryUpdate = {
                     ...request.params as any,
-                    ...request.payload as any,
+                    ...request.payload as ArticleRequest.CategoryUpdate,
                 };
-                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                // }
+                const checkPermission = adminData['permission'].some(data => {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.Article_Category;
+                });
+                if (checkPermission === false) {
+                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+                }
                 const data = await ArticleService.updateCategoryList(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
             } catch (error) {
@@ -111,10 +114,13 @@ export let articleRoutes: ServerRoute[] = [
             }
         },
         options: {
-            description: 'create article categories',
-            tags: ['api', 'anonymous', 'user', 'admin', 'articleName', 'add'],
+            description: 'update article categories',
+            tags: ['api', 'anonymous', 'admin', 'category', 'update'],
             auth: 'AdminAuth',
             validate: {
+                query: {
+                    id: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).required(),
+                },
                 payload: {
                     name: Joi.string(),
                     status: Joi.string().valid([
@@ -141,7 +147,7 @@ export let articleRoutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-                const payload = request.params;
+                const payload: ArticleRequest.CategoryId = request.params as ArticleRequest.CategoryId;
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }

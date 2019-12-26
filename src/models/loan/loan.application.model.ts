@@ -4,7 +4,7 @@ import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../con
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
-    saveAsDraft: { type: Schema.Types.Boolean, default: false },
+    // saveAsDraft: { type: Schema.Types.Boolean, default: false },
     applicationStatus: {
         type: Schema.Types.String, enum: [
             CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,

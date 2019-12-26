@@ -13,9 +13,6 @@ export let adminUserRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = request.payload as AdminRequest.IAddUser;
-
-
-
 				const registerResponse = await AdminUserController.addUser(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
 			} catch (error) {
@@ -37,6 +34,8 @@ export let adminUserRoutes: ServerRoute[] = [
 					phoneNumber: Joi.string().min(7).max(15).trim().required(),
 					type: Joi.string().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 					]),
 					faxNumber: Joi.string().allow(''),
 					language: Joi.string().allow(''),
@@ -68,9 +67,12 @@ export let adminUserRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: AdminRequest.IGetUSerList = request.query as any;
-				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
-				// }
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.USERS;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+				}
 				const registerResponse = await AdminUserController.getUserList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -79,8 +81,8 @@ export let adminUserRoutes: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Get Admin Profile',
-			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			description: 'Get Admin user',
+			tags: ['api', 'anonymous', 'admin', 'user'],
 			auth: 'AdminAuth',
 			validate: {
 				query: {
@@ -101,6 +103,7 @@ export let adminUserRoutes: ServerRoute[] = [
 					searchTerm: Joi.string(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
+					isByAdmin: Joi.boolean(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
