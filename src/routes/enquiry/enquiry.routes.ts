@@ -159,12 +159,6 @@ export let enquiryRoutes: ServerRoute[] = [
 					enquiryType: Joi.string().valid([
 						Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
 					]),
-					// category: Joi.string().valid([
-					// 	Constant.DATABASE.ENQUIRY_CATEGORY.RECEIVED,
-					// 	Constant.DATABASE.ENQUIRY_CATEGORY.SENT,
-					// ]),
-					// agentId: Joi.string(),
-					// getType: Joi.string().valid('sent'),
 					page: Joi.number(),
 					limit: Joi.number(),
 					fromDate: Joi.number(),

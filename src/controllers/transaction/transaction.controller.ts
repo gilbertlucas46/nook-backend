@@ -10,13 +10,58 @@ class TransactionController extends BaseEntity {
 
 	async createCharge(payload: TransactionRequest.CreateCharge, userData) {
 		try {
+			const { featuredType, billingType } = payload;
+			// const criteria = {
+			// 	featuredType: payload.featuredType,
+			// 	plans: [{
+			// 		billingType: payload.billingType,
+			// 	}]
+			// }
+			console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
+
+			const pipeline = [
+				{
+					$match: {
+						'featuredType': featuredType,
+						'plans.billingType': billingType,
+					},
+				},
+				{
+					$project: {
+						plans: {
+							$filter: {
+								input: '$plans',
+								as: 'plans',
+								cond: { $eq: ['$$plans.billingType', billingType] },
+							},
+						},
+					},
+				},
+				{
+					$unwind: {
+						path: '$plans',
+					},
+				},
+				{
+					$project: {
+						amount: '$plans.amount',
+					},
+				},
+			];
+			console.log('pipelinepipelinepipeline', pipeline);
+
+			const amount = await ENTITY.SubscriptionPlanEntity.findAmount(pipeline);
+			console.log('amountamountamountamount', amount);
+
 			const step1 = await stripeManager.createCharges({
 				// amount: payload.amount * (0.01967 * 100),
-				amount: payload.amount * 100,
+				amount: amount * 100,
 				currency: payload.currency,
 				source: payload.source,
 				description: payload.description,
 			});
+			console.log('step1step1step1', step1);
+
 			const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
 			return {};
 		} catch (error) {

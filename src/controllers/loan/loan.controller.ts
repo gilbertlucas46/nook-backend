@@ -114,11 +114,11 @@ class LoanControllers extends BaseEntity {
 
     async updateLoanApplication(payload: LoanRequest.AddLoan) {
         try {
-            if (payload.saveAsDraft) {
-                payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value;
-            } else {
-                payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value;
-            }
+            // if (payload.saveAsDraft) {
+            //     payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value;
+            // } else {
+            //     payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value;
+            // }
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return data['referenceId'];
         } catch (error) {

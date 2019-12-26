@@ -306,12 +306,6 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 						// Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
 					]),
-					// permissionType: Joi.string().valid([
-					// 	Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
-					// 	// Constant.DATABASE.PERMISSION.TYPE.LOAN,
-					// 	// Constant.DATABASE.PERMISSION.TYPE.DASHBOARD,
-					// 	// Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-					// ]),
 					propertyType: Joi.string().trim().valid([
 						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
 						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
@@ -363,12 +357,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				params: {
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					// permissionType: Joi.string().valid([
-					// 	Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
-					// 	// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-					// 	// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-					// 	// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-					// ]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -405,8 +393,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'admin Property detail',
-			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			description: 'admin Property status update',
+			tags: ['api', 'anonymous', 'admin', 'property', 'update'],
 			auth: 'AdminAuth',
 			validate: {
 				params: {
@@ -417,12 +405,6 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 					]),
-					// permissionType: Joi.string().valid([
-					// 	Constant.DATABASE.PERMISSION.TYPE.PROPERTIES,
-					// 	// Constant.DATABASE.PERMISSION.TYPE.ACTIVE_PROPERTIES,
-					// 	// Constant.DATABASE.PERMISSION.TYPE.PENDING_PROPERTIES,
-					// 	// Constant.DATABASE.PERMISSION.TYPE.DECLINED_PROPERTIES,
-					// ]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -489,7 +471,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'admin dashbiard',
+			description: 'admin dashboard',
 			tags: ['api', 'anonymous', 'Admin', 'dashboard'],
 			auth: 'AdminAuth',
 			validate: {
@@ -547,7 +529,6 @@ export let adminProfileRoute: ServerRoute[] = [
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
 					sortBy: Joi.string().default('createdAt'),
-					// sortType: Joi.string(),
 					limit: Joi.number(),
 					page: Joi.number().min(1).default(1),
 					// type: Joi.string().valid('admin', 'user')
@@ -661,10 +642,13 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload = request.payload as any;
-				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(payload.permission);
-				// }
+				const payload = request.payload as AdminRequest.ISubscriptionList;
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.Subscriptions;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+				}
 				const data = await AdminService.subscriptionList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -683,9 +667,9 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
 						Constant.DATABASE.FEATURED_TYPE.PROFILE,
 						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-					]),
-					plans: Joi.array().items(objectSchema),
-					description: Joi.string(),
+					]).required(),
+					plans: Joi.array().items(objectSchema).required(),
+					description: Joi.string().required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -735,13 +719,16 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload = {
+				const payload: AdminRequest.ISubscriptionList = {
 					...request.params as any,
-					...request.payload as any,
+					...request.payload as AdminRequest.ISubscriptionList,
 				};
-				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(payload.permission);
-				// }
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.PROPERTIES;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+				}
 				const data = await AdminService.updateSubscription(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -750,8 +737,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Admin update loan status',
-			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
+			description: 'Admin update subscription plan',
+			tags: ['api', 'anonymous', 'admin', 'update', 'plan', 'subcription'],
 			auth: 'AdminAuth',
 			validate: {
 				params: {
