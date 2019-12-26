@@ -2,12 +2,12 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as config from 'config';
 import * as Jwt from 'jsonwebtoken';
-const cert: any = config.get('jwtSecret');
+const cert: any = config.get('jwtSecret.admin.accessToken');
 import * as utils from '@src/utils';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
 import { promises } from 'fs';
-const pswdCert: string = config.get('forgetPwdjwtSecret');
+const pswdCert: string = config.get('jwtSecret.admin.forgotToken');
 
 /**
  * @author
@@ -473,6 +473,8 @@ export class AdminClass extends BaseEntity {
 			const pipeline = [];
 			let { page, limit, sortBy, sortType } = payload;
 			const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, propertyType } = payload;
+			let firstname;
+			let lastname;
 			if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
 			if (!page) { page = 1; }
 			let sortingType = {};
@@ -514,8 +516,6 @@ export class AdminClass extends BaseEntity {
 			function hasWhiteSpace(s) {
 				return s.indexOf(' ') >= 0;
 			}
-			let firstname;
-			let lastname;
 			if (searchTerm) {
 				const check = hasWhiteSpace(searchTerm);
 				if (check) {

@@ -6,9 +6,6 @@ import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { AdminUserEntity } from '@src/entity';
-import { PromiseProvider } from 'mongoose';
-import { isDate } from 'util';
-const cert: any = config.get('jwtSecret');
 
 /**
  * @author Anurag Agarwal
@@ -26,8 +23,6 @@ class AdminUserControllers {
 
     async addUser(payload) {
         try {
-            console.log('payloadpayloadpayloadpayloadpayload', payload);
-
             const checkMail = { email: payload.email };
             const checkUserName = { userName: payload.userName };
             const userNameCheck: AdminRequest.IAddUser = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
@@ -43,20 +38,10 @@ class AdminUserControllers {
                     const hashPassword = await utils.encryptWordpressHashNode(genCredentials);
                     const userData = {
                         ...payload,
-                        // userName: payload.userName,
-                        // email: payload.email,
                         password: hashPassword,
                         isEmailVerified: true,
                         isProfileComplete: true,
-                        // type: payload.type,
-                        // language: payload.language,
-                        // title: payload.title,
-                        // license: payload.license,
-                        // companyName: payload.companyName,
-                        // address: payload.address,
-                        // aboutMe: payload.aboutMe,
                     };
-                    console.log('userDatauserDatauserDatauserData', userData);
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
                     const userResponse = UniversalFunctions.formatUserData(User);
                     AdminUserEntity.sendInvitationMail(payload.email, genCredentials);
