@@ -43,10 +43,10 @@ class AdminStaffE extends BaseEntity {
         if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
         if (!page) page = 1;
         if (!sortType) sortType = 1;
-        // if (payload.sortBy) {
-        //     sortCondition[payload.sortBy] = parseInt(payload.sortType);
-        //     pipeline.push({ $sort: sortCondition });
-        // }
+        if (payload.sortBy) {
+            sortCondition[payload.sortBy] = parseInt(payload.sortType);
+            // pipeline.push({ $sort: sortCondition });
+        }
         if (!status) {
             matchCondition = {
                 $or: [

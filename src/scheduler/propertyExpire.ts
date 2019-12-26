@@ -9,7 +9,6 @@ let job1 = cron.schedule('0 */1 * * * *', () => {
     this.updateProperty();
 });
 
-
 class ExpireE extends BaseEntity {
     constructor() {
         super('Property');

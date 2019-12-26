@@ -37,6 +37,13 @@ export class SubscriptionClass extends BaseEntity {
     async clear() {
         await this.DAOManager.remove(this.modelName, {});
     }
+
+    async  findAmount(pipeline) {
+        const amount = await this.DAOManager.aggregateData(this.modelName, pipeline);
+        console.log('amountamountamountamountamountamountamountamount', amount);
+
+        return amount[0]['amount'];
+    }
 }
 
 export const SubscriptionPlanEntity = new SubscriptionClass();

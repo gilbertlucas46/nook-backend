@@ -8,7 +8,7 @@ export let swaggerDefaultResponseMessages = [
 	{ code: 500, message: 'Internal Server Error' },
 ];
 export const PRIVILEGE = {
-	SUB_ADMIN_PRIVILEGE: [2],  // 0, 1,   for read and write not need right now
+	SUB_ADMIN_PRIVILEGE: [0, 1, 2],  // 0, 1,   for read and write not need right now
 };
 
 export const ENUM = {

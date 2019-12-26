@@ -30,6 +30,7 @@ export interface IUser extends Document {
 	specializingIn_property_type?: number[];
 	specializingIn_property_category?: string[];
 	serviceAreas?: Types.ObjectId[];
+	stripeId?: string;
 }
 
 const userSchema = new Schema({
@@ -87,6 +88,7 @@ const userSchema = new Schema({
 			CONSTANT.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 		],
 	}],
+	stripeId: { type: String },
 	specializingIn_property_category: [{
 		type: String,
 		enum: [
