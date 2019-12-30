@@ -13,14 +13,27 @@ export class AgentClass extends BaseEntity {
         try {
             let { page, limit, sortType, sortBy } = payload;
             const { fromDate, toDate, byCity, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
-            const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? Constant.DATABASE.FEATURED_TYPE.HOMEPAGE : Constant.DATABASE.FEATURED_TYPE.PROFILE;
+            const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE : Constant.DATABASE.FEATURED_TYPE.PROFILE;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             const matchObject: any = {};
-            matchObject['type'] = 'AGENT';
+            if (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+                matchObject['isHomePageFeatured'] = true;
+                sortingType = {
+                    isHomePageFeatured: sortType,
+                };
+            } else {
+                matchObject['type'] = 'AGENT';
+                sortingType = {
+                    isHomePageFeatured: sortType,
+                    isFeaturedProfile: sortType,
+                    createdAt: sortType,
+                };
+            }
+
             let searchCriteria = {};
             if (searchTerm) {
                 if (searchBy === 'company') {
@@ -31,7 +44,7 @@ export class AgentClass extends BaseEntity {
                 else if (searchBy === 'location') {
                     // db call
                     searchCriteria = {
-                        $match: { 'cityData.name' : new RegExp('.*' + searchTerm + '.*', 'i') },
+                        $match: { 'cityData.name': new RegExp('.*' + searchTerm + '.*', 'i') },
                     };
                 } else if (searchBy === 'name') {
                     searchCriteria = {
@@ -69,26 +82,31 @@ export class AgentClass extends BaseEntity {
                 };
             }
 
-            if (sortBy) {
-                switch (sortBy) {
-                    case 'date':
-                        sortBy = 'date';
-                        sortingType = {
-                            createdAt: sortType,
-                        };
-                        break;
-                    default:
-                        // sortBy = 'isFeaturedProfile';
-                        sortingType = {
-                            isFeaturedProfile: sortType,
-                        };
-                        break;
-                }
-            } else {
-                sortingType = {
-                    isFeaturedProfile: sortType,
-                };
-            }
+            // if (!sortBy) {
+            //     sortingType = {
+            //         isHomePageFeatured: sortType,
+            //         isFeaturedProfile: sortType,
+            //         createdAt: sortType,
+            //     };
+            // }
+
+            // if (sortBy) {
+            //     switch (sortBy) {
+            //         case 'date':
+            //             sortBy = 'date';
+            //             sortingType = {
+            //                 createdAt: sortType,
+            //             };
+            //             break;
+            //         default:
+            //             // sortBy = 'isFeaturedProfile';
+            //             sortingType = {
+            //                 isFeaturedProfile: sortType,
+            //             };
+            //             break;
+            //     }
+            // }
+
             if (specializingIn_property_type) matchObject['specializingIn_property_type'] = specializingIn_property_type;
             if (specializingIn_property_category) matchObject['specializingIn_property_category'] = { $in: specializingIn_property_category };
             if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
@@ -98,6 +116,9 @@ export class AgentClass extends BaseEntity {
             if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
+
+            console.log('featuredTypefeaturedTypefeaturedTypefeaturedTypefeaturedType', featuredType, screenType);
+
             const query = [
                 { $match: matchObject },
                 {
@@ -167,40 +188,40 @@ export class AgentClass extends BaseEntity {
                         },
                     },
                 },
-                {
-                    $lookup: {
-                        from: 'subscriptions',
-                        let: { userId: '$_id' },
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }],
-                                    },
-                                },
-                            },
-                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-                            {
-                                $project: {
-                                    _id: 1,
-                                },
-                            },
-                        ],
-                        as: 'subscriptions',
-                    },
-                },
-                {
-                    $addFields: {
-                        isFeaturedProfile: {
-                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
-                        },
-                    },
-                },
-                {
-                    $project: {
-                        subscriptions: 0,
-                    },
-                },
+                // {
+                //     $lookup: {
+                //         from: 'subscriptions',
+                //         let: { userId: '$_id' },
+                //         pipeline: [
+                //             {
+                //                 $match: {
+                //                     $expr: {
+                //                         $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }],
+                //                     },
+                //                 },
+                //             },
+                //             { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+                //             {
+                //                 $project: {
+                //                     _id: 1,
+                //                 },
+                //             },
+                //         ],
+                //         as: 'subscriptions',
+                //     },
+                // },
+                // {
+                //     $addFields: {
+                //         isFeaturedProfile: {
+                //             $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                //         },
+                //     },
+                // },
+                // {
+                //     $project: {
+                //         subscriptions: 0,
+                //     },
+                // },
                 { $sort: sortingType },
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);

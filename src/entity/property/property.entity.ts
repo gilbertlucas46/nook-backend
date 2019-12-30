@@ -130,7 +130,7 @@ export class PropertyClass extends BaseEntity {
 		}
 	}
 
-	async getPropertyList(payload: PropertyRequest.SearchProperty) {
+	async 	getPropertyList(payload: PropertyRequest.SearchProperty) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
 			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate, property_features, byCity, byRegion, screenType } = payload;
