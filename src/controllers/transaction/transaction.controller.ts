@@ -67,6 +67,7 @@ class TransactionController extends BaseEntity {
 				'plans.planId': payload.planId,
 			};
 			const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {});
+			console.log('checkplancheckplancheckplancheckplancheckplan', checkplan);
 			if (!checkplan) {
 				return Promise.reject('not in Db');
 			}
@@ -94,7 +95,7 @@ class TransactionController extends BaseEntity {
 				console.log('planInfoplanInfoplanInfo', planInfo);
 				const createSubscript = await stripeService.createSubscription(createCustomer, payload);
 				console.log('stripeIdstripeIdstripeIdstripeIdstripeIdstripeId', createSubscript);
-				if (createSubscript.status) {
+				if (createSubscript.status === 'active') {
 					const insertData = {
 						featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
 						subscriptionType: createSubscript['plan']['interval'],  // createSubscript['plan']['interval'],
@@ -109,9 +110,14 @@ class TransactionController extends BaseEntity {
 						paymentMethod: createCard['brand'],
 					};
 
-					if (createSubscript.status == 'active' && planInfo['nickname'] === 'HOMEPAGE_PROFILE_YEARLY') {
-						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: 'true' });
+					// if (createSubscript.status === 'active') {
+					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
 					}
+					if (checkplan['featuredType'] === 'PROFILE') {
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
+					}
+					// }
 					const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
 					console.log('step3step3step3step3step3step3step3step3', step3);
 					createSubscript['subscriptionId'] = step3['_id'];
@@ -145,9 +151,9 @@ class TransactionController extends BaseEntity {
 					const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
 					console.log('userCardInfouserCardInfouserCardInfo', userCardInfo);
 				}
-				if (checkCardAdded === false) {
+				if (!checkCardAdded) {
 					dataToSet.$push = {
-						cardDetuail: fingerprint['card'],
+						cardDetail: fingerprint['card'],
 					};
 					console.log('dataToSetdataToSetdataToSet', dataToSet);
 					const userCardInfo = await ENTITY.UserCardE.updateOneEntity(criteria, dataToSet);
@@ -172,7 +178,7 @@ class TransactionController extends BaseEntity {
 
 				// get plan info
 
-				if (createSubscript.status) {
+				if (createSubscript.status === 'active') {
 					const insertData = {
 						featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
 						subscriptionType: createSubscript['plan']['interval'],  // createSubscript['plan']['interval'],
@@ -186,9 +192,16 @@ class TransactionController extends BaseEntity {
 						isRecurring: payload.cancel_at_period_end,
 						paymentMethod: fingerprint['card']['brand'],
 					};
-					if (createSubscript.status == 'active') {
-						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: 'true' });
+					const update = {};
+					// if (checkplan.nickname === Constant.)
+					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
 					}
+					if (checkplan['featuredType'] === 'PROFILE') {
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
+					}
+					// ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: 'true' });
+
 					const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
 					console.log('step3step3step3step3step3step3step3step3', step3);
 					return;

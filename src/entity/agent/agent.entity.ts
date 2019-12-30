@@ -23,14 +23,14 @@ export class AgentClass extends BaseEntity {
             if (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
                 matchObject['isHomePageFeatured'] = true;
                 sortingType = {
-                    isHomePageFeatured: sortType,
+                    isHomePageFeatured: 1,
                 };
             } else {
                 matchObject['type'] = 'AGENT';
                 sortingType = {
-                    isHomePageFeatured: sortType,
-                    isFeaturedProfile: sortType,
-                    createdAt: sortType,
+                    isHomePageFeatured: -1,
+                    isFeaturedProfile: -1,
+                    createdAt: -sortType,
                 };
             }
 

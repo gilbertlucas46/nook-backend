@@ -23,6 +23,7 @@ export class PropertyController {
 	async checkSubscriptionExist(payload: PropertyRequest.PropertyData, userData: UserRequest.UserData) {
 		if (payload.isFeatured) {
 			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
+			console.log('step1step1', step1);
 			if (step1) {
 				return { isFeatured: true, subscriptionId: step1._id };
 			} else {
@@ -30,7 +31,8 @@ export class PropertyController {
 				return { isFeatured: false };
 			}
 		} else if (payload.isHomePageFeatured) {
-			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
+			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY });
+			console.log('step1step1step>>>>>>>>>>>>>.', step1);
 			if (step1) {
 				return { isHomePageFeatured: true, subscriptionId: step1._id };
 			} else {
@@ -51,7 +53,6 @@ export class PropertyController {
 		try {
 			let result;
 			let propertyAction;
-			const promiseArray = [];
 			const criteria = {
 				_id: payload.propertyId,
 			};
@@ -110,7 +111,7 @@ export class PropertyController {
 				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 					payload.isFeatured = true;
 				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 					payload.isHomePageFeatured = true;
 				}
 				delete payload.propertyId;
@@ -125,7 +126,7 @@ export class PropertyController {
 				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 					payload.isFeatured = true;
 				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 					payload.isHomePageFeatured = true;
 				}
 				const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);

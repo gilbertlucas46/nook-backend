@@ -16,8 +16,9 @@ export class SubscriptionClass extends BaseEntity {
 			const query: any = {};
 			query.userId = payload.userId;
 			query.featuredType = payload.featuredType;
-			query['$and'] = [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }];
-			query.propertyId = { $exists: false };
+			query.status = 'active';
+			// query['$and'] = [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }];
+			// query.propertyId = { $exists: false };
 			return await this.DAOManager.findOne(this.modelName, query, {});
 		} catch (error) {
 			utils.consolelog('Error', error, true);

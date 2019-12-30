@@ -29,7 +29,7 @@ export class TransactionClass extends BaseEntity {
 
 			return await this.DAOManager.saveData(this.modelName, {
 				transactionId: chargeData.id,
-				amount: chargeData['plan']['amount'],
+				amount: (chargeData['plan']['amount'] / 100),
 				currency: chargeData['plan']['currency'],
 				// chargeId: chargeData.id,
 				// cardId: chargeData.source.id,
@@ -37,11 +37,10 @@ export class TransactionClass extends BaseEntity {
 				description: chargeData.description,  // to be remove
 				status: chargeData['status'],
 				userId: userData._id,
-				// name: chargeData['plan']['nickname'],
 				subscriptionId: chargeData['subscriptionId'],
 				address: payload.address,
 				featuredType: getSubscriptionDetailInDb['featuredType'], // chargeData['plan']['nickname'], // payload.featuredType,
-				billingType: chargeData['plan']['interval'],  //payload.billingType,
+				billingType: chargeData['plan']['interval'],  // payload.billingType,
 				// paymentMethod: chargeData.payment_method_details.card.brand,
 				// paymentObject: chargeData,
 				productId: chargeData['plan']['product'],
