@@ -126,7 +126,7 @@ const propertySchema = new Schema({
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User', index: true },
 	createdAt: { type: Number, required: true },
 	updatedAt: { type: Number, required: true },
-	propertyId: { type: Number, required: true },
+	propertyId: { type: Number },
 	property_features: {
 		storeys_2: { type: Boolean, default: false },
 		security_24hr: { type: Boolean, default: false },
