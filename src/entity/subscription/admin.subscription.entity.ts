@@ -48,7 +48,9 @@ export class SubscriptionClass extends BaseEntity {
 
     async stripePlan() {
         try {
-            const data = await stripeService.getPlanList()
+            const data = await stripeService.getPlanList();
+            console.log('datadatadatadatadatadatadata',data);
+            
             return data;
         } catch (error) {
             return Promise.reject(error);
