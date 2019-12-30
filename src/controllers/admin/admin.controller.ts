@@ -4,7 +4,8 @@ import * as utils from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { Types } from 'mongoose';
 import { sendSuccess } from '../../utils';
-
+import { stripeService } from '../../lib/stripe.manager';
+import { illegal } from 'boom';
 /**
  * @author
  * @description this controller contains actions for admin's account related activities
@@ -133,6 +134,7 @@ export class AdminController {
 	async getSubscriptionList() {
 		try {
 			return await ENTITY.SubscriptionPlanEntity.getMultiple({}, {});
+			// return await ENTITY.SubscriptionPlanEntity.stripePlan();
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -144,8 +146,18 @@ export class AdminController {
 				_id: payload.id,
 			};
 			delete payload['id'];
-			const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
-			return data;
+			// const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+			// return data;
+			if (payload.planId) {
+				const planInfo = await stripeService.getPlanInfo(payload);
+				console.log('planInfoplanInfoplanInfoplanInfo', planInfo);
+				// payload['product'] = planInfo.product;
+				const deletePlan = await stripeService.deletePlan(payload);
+				const createPlan = await stripeService.createPlan(payload, planInfo);
+				delete payload['planId'];
+				const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+
+			}
 
 		} catch (error) {
 			return Promise.reject(error);

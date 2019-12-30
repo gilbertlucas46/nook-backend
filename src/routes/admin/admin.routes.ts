@@ -724,7 +724,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					...request.payload as AdminRequest.ISubscriptionList,
 				};
 				const checkPermission = adminData['permission'].some(data => {
-					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.PROPERTIES;
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.Subscriptions;
 				});
 				if (checkPermission === false) {
 					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
@@ -742,15 +742,17 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				params: {
-					id: Joi.string(),
+					id: Joi.string().required(),
 				},
 				payload: {
-					featuredType: Joi.string().valid([
-						Constant.DATABASE.FEATURED_TYPE.FREE,
-						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
-						Constant.DATABASE.FEATURED_TYPE.PROFILE,
-						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-					]),
+					planId: Joi.string(),
+					// featuredType: Joi.string().valid([
+					// 	Constant.DATABASE.FEATURED_TYPE.FREE,
+					// 	Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+					// 	Constant.DATABASE.FEATURED_TYPE.PROFILE,
+					// 	Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					// ]),
+					amount: Joi.number(),
 					description: Joi.string(),
 					plans: Joi.array().items(objectSchema),
 				},
