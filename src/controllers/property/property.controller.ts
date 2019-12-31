@@ -118,7 +118,8 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
-				const data = await ENTITY.PropertyE.createOneEntity(payload);
+				// const data = await ENTITY.PropertyE.createOneEntity(payload);
+				const data = await ENTITY.SubscriptionE.getOneEntity({ _id: payload.subscriptionId }, {});
 				let step1;
 				if (payload.subscriptionId) {
 					step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
@@ -129,8 +130,9 @@ export class PropertyController {
 				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 					payload.isHomePageFeatured = true;
 				}
-				const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
-				return data;
+				const propertyData = await ENTITY.PropertyE.createOneEntity(payload);
+				// const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
+				return propertyData;
 			}
 		} catch (error) {
 			utils.consolelog('error', error, true);
