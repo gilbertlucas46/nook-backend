@@ -108,7 +108,7 @@ export let userRoute: ServerRoute[] = [
 			// auth: 'DoubleAuth',
 			validate: {
 				params: {
-					_id: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
+					_id: Joi.string().trim().required(),
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -440,7 +440,7 @@ export let userRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 					]),
 					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']),
-					propertyId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
+					propertyId: Joi.string().trim(),
 					userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
 				},
 
