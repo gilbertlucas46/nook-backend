@@ -87,7 +87,6 @@ class TransactionController extends BaseEntity {
 				const planInfo = await stripeService.getPlanInfo(payload);
 				const createSubscript = await stripeService.createSubscription(createCustomer, payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
-
 				if (createSubscript.status === 'active') {
 					const insertData = {
 						featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
@@ -123,40 +122,30 @@ class TransactionController extends BaseEntity {
 			} else {
 				// get all card of the user
 				const getUserCardInfo = await ENTITY.UserCardE.getOneEntity({ userId: userData._id }, { cardDetail: 1 });
-				console.log('getCardInfogetCardInfogetCardInfo', getUserCardInfo);
 				const fingerprint = await stripeService.getfingerPrint(userData, payload);
-				console.log('fingerprintfingerprintfingerprintfingerprint22222222222222222', fingerprint);
 				let checkCardAdded;
 				if (getUserCardInfo !== null) {
 					checkCardAdded = getUserCardInfo['cardDetail'].some(data => {
 						return data.fingerprint === fingerprint['card']['fingerprint'];
 					});
 				}
-				console.log(';checkCardAddedcheckCardAddedcheckCardAddedcheckCardAdded', checkCardAdded);
 				if (getUserCardInfo == null) {
 					const createCard = await stripeService.createCard2(userData, payload);
-					console.log('createCardcreateCardcreateCardcreateCard2222222222222222222', createCard);
 					const dataToSave = {
 						userId: userData._id,
 						cardDetail: createCard,
 					};
-					console.log('dataToSetdataToSetdataToSet', dataToSave);
 					const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
-					console.log('userCardInfouserCardInfouserCardInfo', userCardInfo);
 				}
 				if (!checkCardAdded) {
 					dataToSet.$push = {
 						cardDetail: fingerprint['card'],
 					};
-					console.log('dataToSetdataToSetdataToSet', dataToSet);
 					const userCardInfo = await ENTITY.UserCardE.updateOneEntity(criteria, dataToSet);
-					console.log('userCardInfouserCardInfouserCardInfo', userCardInfo);
 					if (getUserCardInfo.length >= 1) {
 						const createDfaultCard = await stripeService.setDefaultCard(getStripeId, fingerprint);
-						console.log('createDfaultCardcreateDfaultCardcreateDfaultCard', createDfaultCard);
 					}
 					const createCard = await stripeService.createCard2(userData, payload);
-					console.log('createCardcreateCardcreateCardcreateCard2222222222222222222', createCard);
 				}
 				// if (checkCardAdded === true) {
 				// 	const createCard = await stripeService.createCard2(userData, payload);
@@ -165,9 +154,7 @@ class TransactionController extends BaseEntity {
 
 				const createSubscript = await stripeService.createSubscription(userData, payload);
 				console.log('createSubscriptcreateSubscriptcreateSubscriptcreateSubscript', createSubscript);
-
 				const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan);
-				console.log('step2step2step2step2step2step2>>>>>>>>>>>>>>>>>2222222222222222', step2);
 
 				// get plan info
 
@@ -185,7 +172,6 @@ class TransactionController extends BaseEntity {
 						isRecurring: payload.cancel_at_period_end,
 						paymentMethod: fingerprint['card']['brand'],
 					};
-					const update = {};
 					// if (checkplan.nickname === Constant.)
 					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
 						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
@@ -194,7 +180,6 @@ class TransactionController extends BaseEntity {
 						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
 					}
 					// ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: 'true' });
-
 					const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
 					console.log('step3step3step3step3step3step3step3step3', step3);
 					return;

@@ -550,7 +550,7 @@ export let userRoute: ServerRoute[] = [
 
 	{
 		method: 'GET',
-		path: '/v1/user/featureDashboard',
+		path: '/v1/user/featuredCount',
 		async handler(request, h) {
 			try {
 				// const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];

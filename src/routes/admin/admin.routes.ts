@@ -766,4 +766,58 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
+
+	// {
+	// 	method: 'PATCH',
+	// 	path: '/v1/admin/subscriptionList/{id}',
+	// 	handler: async (request, h) => {
+	// 		try {
+	// 			const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+	// 			const payload: AdminRequest.ISubscriptionList = {
+	// 				...request.params as any,
+	// 				...request.payload as AdminRequest.ISubscriptionList,
+	// 			};
+	// 			const checkPermission = adminData['permission'].some(data => {
+	// 				return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.Subscriptions;
+	// 			});
+	// 			if (checkPermission === false) {
+	// 				return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+	// 			}
+	// 			const data = await AdminService.updateSubscription(payload);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+	// 		} catch (error) {
+	// 			utils.consolelog('Error', error, true);
+	// 			return (UniversalFunctions.sendError(error));
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'Admin update subscription plan',
+	// 		tags: ['api', 'anonymous', 'admin', 'update', 'plan', 'subcription'],
+	// 		auth: 'AdminAuth',
+	// 		validate: {
+	// 			params: {
+	// 				id: Joi.string().required(),
+	// 			},
+	// 			payload: {
+	// 				planId: Joi.string(),
+	// 				// featuredType: Joi.string().valid([
+	// 				// 	Constant.DATABASE.FEATURED_TYPE.FREE,
+	// 				// 	Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+	// 				// 	Constant.DATABASE.FEATURED_TYPE.PROFILE,
+	// 				// 	Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+	// 				// ]),
+	// 				amount: Joi.number(),
+	// 				description: Joi.string(),
+	// 				plans: Joi.array().items(objectSchema),
+	// 			},
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 		plugins: {
+	// 			'hapi-swagger': {
+	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
+	// 			},
+	// 		},
+	// },
+	// },
 ];
