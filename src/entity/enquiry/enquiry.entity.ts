@@ -125,6 +125,7 @@ export class EnquiryClass extends BaseEntity {
                         phoneNumber: 1,
                         message: 1,
                         title: '$propertyData.property_basic_details.title',
+                        propertyName: '$propertyData.property_basic_details.name',
                     },
                 },
             ];
