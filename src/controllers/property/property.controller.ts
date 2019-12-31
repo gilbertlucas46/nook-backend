@@ -1,9 +1,9 @@
-
 import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import { exists } from 'fs';
 export class PropertyController {
 
 	getTypeAndDisplayName(findObj, num: number) {
@@ -23,7 +23,6 @@ export class PropertyController {
 	async checkSubscriptionExist(payload: PropertyRequest.PropertyData, userData: UserRequest.UserData) {
 		if (payload.isFeatured) {
 			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
-			console.log('step1step1', step1);
 			if (step1) {
 				return { isFeatured: true, subscriptionId: step1._id };
 			} else {
@@ -31,8 +30,7 @@ export class PropertyController {
 				return { isFeatured: false };
 			}
 		} else if (payload.isHomePageFeatured) {
-			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY });
-			console.log('step1step1step>>>>>>>>>>>>>.', step1);
+			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
 			if (step1) {
 				return { isHomePageFeatured: true, subscriptionId: step1._id };
 			} else {
@@ -53,6 +51,7 @@ export class PropertyController {
 		try {
 			let result;
 			let propertyAction;
+			const promiseArray = [];
 			const criteria = {
 				_id: payload.propertyId,
 			};
@@ -111,15 +110,22 @@ export class PropertyController {
 				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 					payload.isFeatured = true;
 				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
 					payload.isHomePageFeatured = true;
 				}
 				delete payload.propertyId;
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
-				// const data = await ENTITY.PropertyE.createOneEntity(payload);
-				const data = await ENTITY.SubscriptionE.getOneEntity({ _id: payload.subscriptionId }, {});
+				payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
+				let data: any;
+				if (exist) {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
+					ENTITY.PropertyE.updateOneEntity({ _id: data._id }, { 'property_basic_details.name': payload.property_basic_details.name + '-' + data.propertyId });
+				} else {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
+				}
 				let step1;
 				if (payload.subscriptionId) {
 					step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
@@ -127,12 +133,11 @@ export class PropertyController {
 				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 					payload.isFeatured = true;
 				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
 					payload.isHomePageFeatured = true;
 				}
-				const propertyData = await ENTITY.PropertyE.createOneEntity(payload);
-				// const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
-				return propertyData;
+				const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
+				return data;
 			}
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -252,7 +257,16 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return updateData;
 			}
-			return await ENTITY.PropertyE.createOneEntity(payload);
+			payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+			const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
+			let data: any;
+			if (exist) {
+				data = await ENTITY.PropertyE.createOneEntity(payload);
+				ENTITY.PropertyE.updateOneEntity({ _id: data._id }, { 'property_basic_details.name': payload.property_basic_details.name + '-' + data.propertyId });
+			} else {
+				data = await ENTITY.PropertyE.createOneEntity(payload);
+			}
+			return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -441,7 +455,15 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
-				const data = await ENTITY.PropertyE.createOneEntity(payload);
+				payload.property_basic_details.name = await payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
+				let data: any;
+				if (exist) {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
+					ENTITY.PropertyE.updateOneEntity({ _id: data._id }, { 'property_basic_details.name': payload.property_basic_details.name + '-' + data.propertyId });
+				} else {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
+				}
 				let step1;
 				if (payload.subscriptionId) {
 					step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });

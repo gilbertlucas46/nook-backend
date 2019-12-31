@@ -72,6 +72,27 @@ export class SubscriptionClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+
+
+	async checkFeaturePropertyCount(userData) {
+		try {
+			const query: any = {};
+			query.userId = userData._id;
+			query.featuredType = Constant.DATABASE.FEATURED_TYPE.PROPERTY;
+			query.status = 'active';
+			// query['$and'] = [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }];
+			// query.propertyId = { $exists: false };
+			//   return await this.DAOManager.count();
+			const data = await this.DAOManager.count(this.modelName, query);
+			return {
+				featurePropertyCount: data,
+			};
+		} catch (error) {
+			utils.consolelog('Error', error, true);
+			return Promise.reject(error);
+		}
+	}
 }
+
 
 export const SubscriptionE = new SubscriptionClass();

@@ -363,7 +363,7 @@ export class UserController {
 			const criteria = { _id: userData._id };
 			const dataToUpdate = { type: payload.userType };
 			const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
-			
+
 			const accessToken = await ENTITY.UserE.createToken(payload, data);
 			// await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
 			const formatedData = utils.formatUserData(data);
@@ -371,6 +371,18 @@ export class UserController {
 		}
 		catch (error) {
 			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+
+	async featureDashboard(userData) {
+		try {
+			const step1 = await ENTITY.SubscriptionE.checkFeaturePropertyCount(userData);
+			console.log('step1step1', step1);
+			// const step2 = await ENTITY.UserE.userDashboad(userData);
+			// step2.isFeaturedProfile = step1 ? true : false;
+			return step1;
+		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
