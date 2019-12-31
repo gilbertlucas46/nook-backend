@@ -38,6 +38,7 @@ const subscriptionSchema = new Schema({
 	// 	],
 	// 	required: true,
 	// },
+	amount: { type: Number },
 	status: { type: String },
 	propertyId: { type: Schema.Types.ObjectId, ref: 'Property' },
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
