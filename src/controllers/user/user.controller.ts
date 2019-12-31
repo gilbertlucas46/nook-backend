@@ -373,6 +373,17 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
+
+	async featureDashboard(userData) {
+		try {
+			const step1 = await ENTITY.SubscriptionE.checkFeaturePropertyCount(userData);
+			// const step2 = await ENTITY.UserE.userDashboad(userData);
+			// step2.isFeaturedProfile = step1 ? true : false;
+			return step1;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
 }
 
 export let UserService = new UserController();

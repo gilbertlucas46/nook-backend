@@ -141,7 +141,7 @@ class LoanApplicationE extends BaseEntity {
             const matchObject: any = {};
 
             // if (userData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE || userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE) {
-            matchObject['saveAsDraft'] = false;
+            // matchObject['saveAsDraft'] = false;
             // }
 
             if (sortBy) {

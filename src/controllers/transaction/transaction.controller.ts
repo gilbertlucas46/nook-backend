@@ -1,70 +1,197 @@
 import { TransactionRequest } from '@src/interfaces/transaction.interface';
 import * as ENTITY from '@src/entity';
 import { BaseEntity } from '@src/entity/base/base.entity';
-import { StripeManager } from '@src/lib/stripe.manager';
+import { stripeService } from '@src/lib/stripe.manager';
+// import * as Stripe from 'stripe';
+
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../../utils';
-const stripeManager = new StripeManager();
 
 class TransactionController extends BaseEntity {
 
 	async createCharge(payload: TransactionRequest.CreateCharge, userData) {
 		try {
-			const { featuredType, billingType } = payload;
-			// const criteria = {
-			// 	featuredType: payload.featuredType,
-			// 	plans: [{
-			// 		billingType: payload.billingType,
-			// 	}]
-			// }
-			console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
+			// const { featuredType, billingType } = payload;
 
-			const pipeline = [
-				{
-					$match: {
-						'featuredType': featuredType,
-						'plans.billingType': billingType,
-					},
-				},
-				{
-					$project: {
-						plans: {
-							$filter: {
-								input: '$plans',
-								as: 'plans',
-								cond: { $eq: ['$$plans.billingType', billingType] },
-							},
-						},
-					},
-				},
-				{
-					$unwind: {
-						path: '$plans',
-					},
-				},
-				{
-					$project: {
-						amount: '$plans.amount',
-					},
-				},
-			];
-			console.log('pipelinepipelinepipeline', pipeline);
+			// const pipeline = [
+			// 	{
+			// 		$match: {
+			// 			'featuredType': featuredType,
+			// 			'plans.billingType': billingType,
+			// 		},
+			// 	},
+			// 	{
+			// 		$project: {
+			// 			plans: {
+			// 				$filter: {
+			// 					input: '$plans',
+			// 					as: 'plans',
+			// 					cond: { $eq: ['$$plans.billingType', billingType] },
+			// 				},
+			// 			},
+			// 		},
+			// 	},
+			// 	{
+			// 		$unwind: {
+			// 			path: '$plans',
+			// 		},
+			// 	},
+			// 	{
+			// 		$project: {
+			// 			amount: '$plans.amount',
+			// 		},
+			// 	},
+			// ];
+			// console.log('pipelinepipelinepipeline', pipeline);
 
-			const amount = await ENTITY.SubscriptionPlanEntity.findAmount(pipeline);
-			console.log('amountamountamountamount', amount);
+			// const amount = await ENTITY.SubscriptionPlanEntity.findAmount(pipeline);
+			// console.log('amountamountamountamount>>>>>>>>>>>>', amount);
 
-			const step1 = await stripeManager.createCharges({
-				// amount: payload.amount * (0.01967 * 100),
-				amount: amount * 100,
-				currency: payload.currency,
-				source: payload.source,
-				description: payload.description,
-			});
-			console.log('step1step1step1', step1);
+			// const step1 = await stripeManager.createCharges({
+			// 	// amount: payload.amount * (0.01967 * 100),
+			// 	amount: amount * 100,
+			// 	currency: payload.currency,
+			// 	source: payload.source,
+			// 	description: payload.description,
+			// });
+			// console.log('step1step1step1', step1);
+			// payload['amount'] = amount;
+			// const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
+			const getUserCriteria = {
+				_id: userData._id,
+			};
+			const criteria = {
+				userId: userData._id,
+			};
+			const CheckplaninDb = {
+				'plans.planId': payload.planId,
+			};
+			const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {});
+			if (!checkplan) {
+				return Promise.reject('not in Db');
+			}
+			const getStripeId = await ENTITY.UserE.getOneEntity(getUserCriteria, { stripeId: 1, email: 1 });
 
-			const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
-			return {};
-		} catch (error) {
+			const dataToSet: any = {};
+			if (!getStripeId.stripeId) {
+				const createCustomer = await stripeService.createCustomers(getStripeId, payload);
+				await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { stripeId: createCustomer.id });
+
+				const createCard = await stripeService.createCard(createCustomer, payload);
+				const dataToSave = {
+					userId: userData._id,
+					cardDetail: createCard,
+				};
+				const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
+
+				const planInfo = await stripeService.getPlanInfo(payload);
+				const createSubscript = await stripeService.createSubscription(createCustomer, payload);
+				console.log('createSubscriptcreateSubscript', createSubscript);
+				if (createSubscript.status === 'active') {
+					const insertData = {
+						featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
+						subscriptionType: createSubscript['plan']['interval'],  // createSubscript['plan']['interval'],
+						userId: userData._id,
+						startDate: new Date().getTime(),
+						endDate: new Date().setFullYear(new Date().getFullYear() + 1),
+						createdAt: new Date().getTime(),
+						updatedAt: new Date().getTime(),
+						propertyId: payload.propertyId,
+						status: createSubscript.status,
+						isRecurring: payload.cancel_at_period_end,
+						paymentMethod: createCard['brand'],
+					};
+
+					// if (createSubscript.status === 'active') {
+					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
+					}
+					if (checkplan['featuredType'] === 'PROFILE') {
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
+					}
+					// }
+					const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
+					console.log('step3step3step3step3step3step3step3step3', step3);
+					createSubscript['subscriptionId'] = step3['_id'];
+					createSubscript['paymentMethod'] = step3['paymentMethod'];
+					const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan);
+					console.log('step2step2step2step2step2step2>>>>>>>>>>>>>>>>>', step2);
+					return;
+					// return;
+				}
+			} else {
+				// get all card of the user
+				const getUserCardInfo = await ENTITY.UserCardE.getOneEntity({ userId: userData._id }, { cardDetail: 1 });
+				const fingerprint = await stripeService.getfingerPrint(userData, payload);
+				let checkCardAdded;
+				if (getUserCardInfo !== null) {
+					checkCardAdded = getUserCardInfo['cardDetail'].some(data => {
+						return data.fingerprint === fingerprint['card']['fingerprint'];
+					});
+				}
+				if (getUserCardInfo == null) {
+					const createCard = await stripeService.createCard2(userData, payload);
+					const dataToSave = {
+						userId: userData._id,
+						cardDetail: createCard,
+					};
+					const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
+				}
+				if (!checkCardAdded) {
+					dataToSet.$push = {
+						cardDetail: fingerprint['card'],
+					};
+					const userCardInfo = await ENTITY.UserCardE.updateOneEntity(criteria, dataToSet);
+					if (getUserCardInfo.length >= 1) {
+						const createDfaultCard = await stripeService.setDefaultCard(getStripeId, fingerprint);
+					}
+					const createCard = await stripeService.createCard2(userData, payload);
+				}
+				// if (checkCardAdded === true) {
+				// 	const createCard = await stripeService.createCard2(userData, payload);
+				// 	console.log('createCardcreateCardcreateCardcreateCard2222222222222222222', createCard);
+				// }
+
+				const createSubscript = await stripeService.createSubscription(userData, payload);
+				console.log('createSubscriptcreateSubscriptcreateSubscriptcreateSubscript', createSubscript);
+				const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan);
+
+				// get plan info
+
+				if (createSubscript.status === 'active') {
+					const insertData = {
+						featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
+						subscriptionType: createSubscript['plan']['interval'],  // createSubscript['plan']['interval'],
+						userId: userData._id,
+						startDate: new Date().getTime(),
+						endDate: new Date().setFullYear(new Date().getFullYear() + 1),
+						createdAt: new Date().getTime(),
+						updatedAt: new Date().getTime(),
+						propertyId: payload.propertyId,
+						status: createSubscript.status,
+						isRecurring: payload.cancel_at_period_end,
+						paymentMethod: fingerprint['card']['brand'],
+					};
+					// if (checkplan.nickname === Constant.)
+					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
+					}
+					if (checkplan['featuredType'] === 'PROFILE') {
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
+					}
+					// ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: 'true' });
+					const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
+					console.log('step3step3step3step3step3step3step3step3', step3);
+					return;
+				}
+				// else if (createSubscript.status === 'active') {
+				// 	return Promise.reject(createSubscript.status)
+				// }
+				return {};
+				// const checkUserInStripe = await stripeManager.createCustomers()
+			}
+		}
+		catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
@@ -114,6 +241,8 @@ class TransactionController extends BaseEntity {
 
 	async webhook(payload) {
 		const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
+		console.log('step1step1step1step1step1step1step1step1step1step1', step1);
+
 		const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: step1._id, webhookObject: payload });
 		try {
 			const event = payload;
@@ -130,8 +259,15 @@ class TransactionController extends BaseEntity {
 					await this.handleChargeFailed(step1, paymentIntent);
 					break;
 				// ... handle other event types
-				default:
-					console.log('Unexpected Event', event.type);
+				// default:
+				// 	console.log('Unexpected Event', event.type);
+
+				case 'customer.subscription.trial_will_end':
+					// await
+					break;
+				case 'customer.subscription.deleted':
+					break;
+
 			}
 			return {};
 

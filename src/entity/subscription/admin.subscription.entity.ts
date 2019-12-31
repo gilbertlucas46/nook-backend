@@ -2,6 +2,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { SubscriptionPlan, ISubscriptionPlan } from '@src/models/subscription';
 import { PLANS } from '@src/constants/subscription.plan.constant';
+import { stripeService } from '../../lib/stripe.manager';
 export class SubscriptionClass extends BaseEntity {
 
     constructor() {
@@ -43,6 +44,17 @@ export class SubscriptionClass extends BaseEntity {
         console.log('amountamountamountamountamountamountamountamount', amount);
 
         return amount[0]['amount'];
+    }
+
+    async stripePlan() {
+        try {
+            const data = await stripeService.getPlanList();
+            console.log('datadatadatadatadatadatadata',data);
+            
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 }
 
