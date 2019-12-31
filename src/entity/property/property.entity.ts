@@ -32,7 +32,7 @@ export class PropertyClass extends BaseEntity {
 			const criteria = [
 				{
 					$match: {
-						_id: Types.ObjectId(propertyId),
+						'property_basic_details.name': propertyId,
 					},
 				},
 				{
@@ -422,7 +422,7 @@ export class PropertyClass extends BaseEntity {
 			let query;
 			if (!userId) {
 				const criteria = {
-					_id: Types.ObjectId(propertyId),
+					'property_basic_details.name': propertyId,
 				};
 				const propertyData = await this.DAOManager.findOne(this.modelName, criteria, ['_id', 'property_added_by']);
 				if (!propertyData) return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
@@ -433,8 +433,8 @@ export class PropertyClass extends BaseEntity {
 				query = {
 					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-					'_id': {
-						$ne: Types.ObjectId(payload.propertyId),
+					'property_basic_details.name': {
+						$ne: propertyId,
 					},
 					'property_basic_details.property_for_number': payload.propertyFor,
 				};
@@ -454,8 +454,8 @@ export class PropertyClass extends BaseEntity {
 					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
 					'property_for.number': payload.propertyFor,
-					'_id': {
-						$ne: Types.ObjectId(payload.propertyId),
+					'property_basic_details.name': {
+						$ne: payload.propertyId,
 					},
 				};
 			}
