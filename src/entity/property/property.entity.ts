@@ -137,12 +137,12 @@ export class PropertyClass extends BaseEntity {
 			const featuredType = (screenType === Constant.DATABASE.SCREEN_TYPE.SEARCH) ? Constant.DATABASE.FEATURED_TYPE.PROPERTY : Constant.DATABASE.FEATURED_TYPE.HOMEPAGE;
 			let addFields;
 			const matchObject: any = { $match: {} };
-	
+
 			if (!limit) { limit = Constant.SERVER.LIMIT; }
 			if (!page) { page = 1; }
 			let sortingType = {};
 			sortType = !sortType ? -1 : sortType;
-		
+
 			let searchCriteria = {};
 			if (searchTerm) {
 				// for filtration
@@ -224,8 +224,8 @@ export class PropertyClass extends BaseEntity {
 				// 		$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
 				// 	},
 				// };
-				matchObject.$match['isHomePageFeatured']=true;
- 				if (!payload.sortBy) {
+				matchObject.$match['isHomePageFeatured'] = true;
+				if (!payload.sortBy) {
 					payload.sortBy = 'isHomePageFeatured';
 					payload.sortType = -1;
 				}
