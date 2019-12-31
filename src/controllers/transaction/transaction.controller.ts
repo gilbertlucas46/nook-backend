@@ -67,34 +67,27 @@ class TransactionController extends BaseEntity {
 				'plans.planId': payload.planId,
 			};
 			const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {});
-			console.log('checkplancheckplancheckplancheckplancheckplan', checkplan);
 			if (!checkplan) {
 				return Promise.reject('not in Db');
 			}
 			const getStripeId = await ENTITY.UserE.getOneEntity(getUserCriteria, { stripeId: 1, email: 1 });
-			console.log('stripeUserIdstripeUserIdstripeUserIdstripeUserId', getStripeId);
 
 			const dataToSet: any = {};
 			if (!getStripeId.stripeId) {
 				const createCustomer = await stripeService.createCustomers(getStripeId, payload);
 				await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { stripeId: createCustomer.id });
-				console.log('createCustomercreateCustomercreateCustomercreateCustomer', createCustomer);
 
 				const createCard = await stripeService.createCard(createCustomer, payload);
-				console.log('checkCardcheckCardcheckCardcheckCardcheckCardcheckCard', createCard);
 				const dataToSave = {
 					userId: userData._id,
 					cardDetail: createCard,
 				};
-				console.log('dataToSetdataToSetdataToSet', dataToSave);
-
 				const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
-				console.log('userCardInfouserCardInfouserCardInfo', userCardInfo);
 
 				const planInfo = await stripeService.getPlanInfo(payload);
-				console.log('planInfoplanInfoplanInfo', planInfo);
 				const createSubscript = await stripeService.createSubscription(createCustomer, payload);
-				console.log('stripeIdstripeIdstripeIdstripeIdstripeIdstripeId', createSubscript);
+				console.log('createSubscriptcreateSubscript', createSubscript);
+
 				if (createSubscript.status === 'active') {
 					const insertData = {
 						featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
@@ -281,8 +274,15 @@ class TransactionController extends BaseEntity {
 					await this.handleChargeFailed(step1, paymentIntent);
 					break;
 				// ... handle other event types
-				default:
-					console.log('Unexpected Event', event.type);
+				// default:
+				// 	console.log('Unexpected Event', event.type);
+
+				case 'customer.subscription.trial_will_end':
+					// await
+					break;
+				case 'customer.subscription.deleted':
+					break;
+
 			}
 			return {};
 
