@@ -4,6 +4,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import * as utils from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
 import { SubscriptionRequest } from '@src/interfaces/subscription.interface';
+import { Types } from 'mongoose';
 
 export class SubscriptionClass extends BaseEntity {
 
@@ -73,7 +74,6 @@ export class SubscriptionClass extends BaseEntity {
 		}
 	}
 
-
 	async checkFeaturePropertyCount(userData) {
 		try {
 			const query: any = {};
@@ -92,7 +92,91 @@ export class SubscriptionClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-}
 
+	async getUserDashboard(payload, userData) {
+		try {
+			let { page, limit, sortBy, sortType } = payload;
+
+			if (!limit) { limit = Constant.SERVER.LIMIT; }
+			if (!page) { page = 1; }
+			let sortingType = {};
+			sortType = !sortType ? -1 : sortType;
+			sortingType = {
+				// sortBy= 'updatedAt'
+				// sortingType = {
+				// 	updatedAt: -1,
+				// },
+			};
+
+			const pipeline = [
+				{
+					$match: {
+						$and: [
+							{
+								status: 'active',
+								userId: userData._id,
+							},
+							{
+								$or: [{
+									featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+								}, {
+									featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
+								}],
+							},
+						],
+					},
+				},
+				{
+					$project: {
+						_id: 1,
+						propertyId: 1,
+						featuredType: 1,
+						subscriptionType: 1,
+						status: 1,
+						isRecurring: 1,
+						paymentMethod: 1,
+						amount: 1,
+					},
+				},
+				{
+					$lookup: {
+						from: 'properties',
+						let: { propertyId: '$propertyId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$and: [{ $eq: ['$_id', '$$propertyId'] }, { $eq: ['$property_status.number', 3] }],
+									},
+								},
+							}, {
+								$project: {
+									'_id': 1,
+									'isFeatured': 1,
+									'isHomePageFeatured': 1,
+									'property_basic_details.title': 1,
+									'property_basic_details.name': 1,
+								},
+							},
+						],
+						as: 'propertyData',
+					},
+				},
+				{
+					$unwind: '$propertyData',
+				},
+				// { $sort: sortingType },
+			];
+
+			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+			console.log('data>>>>>>>>>>>>>>>>>>', data);
+			return data;
+
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
+}
 
 export const SubscriptionE = new SubscriptionClass();

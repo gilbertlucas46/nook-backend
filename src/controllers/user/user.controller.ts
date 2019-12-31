@@ -378,7 +378,6 @@ export class UserController {
 	async featureDashboard(userData) {
 		try {
 			const step1 = await ENTITY.SubscriptionE.checkFeaturePropertyCount(userData);
-			console.log('step1step1', step1);
 			// const step2 = await ENTITY.UserE.userDashboad(userData);
 			// step2.isFeaturedProfile = step1 ? true : false;
 			return step1;

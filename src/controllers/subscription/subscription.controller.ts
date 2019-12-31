@@ -2,6 +2,8 @@ import * as Constant from '@src/constants/app.constant';
 import * as utils from '@src/utils';
 import * as ENTITY from '../../entity';
 import { formatUserData } from '@src/utils';
+
+
 class SubscriptionController {
 
 	async subscriptionList(payload) {
@@ -41,6 +43,14 @@ class SubscriptionController {
 			console.log('datadatadatadata', data);
 			return data;
 
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+	async userDashboard(payload, userData) {
+		try {
+			const data = await ENTITY.SubscriptionE.getUserDashboard(payload, userData);
+			return data;
 		} catch (error) {
 			return Promise.reject(error);
 		}

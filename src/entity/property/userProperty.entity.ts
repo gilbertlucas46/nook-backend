@@ -69,10 +69,20 @@ export class UserPropertyClass extends BaseEntity {
 			if (propertyType === Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER) {
 				criteria = {
 					$match: {
-						userId: userData._id,
-						isFeatured: true,
+						$and: [{
+							userId: userData._id,
+						}, {
+							$or: [
+								{
+									isFeatured: true,
+								}, {
+									isHomePageFeatured: true,
+								},
+							],
+						},
+						],
 					},
-				};
+				}
 			}
 			else if (propertyType !== Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER) {
 				criteria = {
