@@ -2,7 +2,7 @@ import { Schema, Document, model } from 'mongoose';
 import * as shortid from 'shortid';
 import * as Constant from '../../constants';
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
-
+import { incrementNumber } from '../../utils';
 export interface IPropertyActions extends Document {
 	actionNumber?: number;
 	actionString?: string;
@@ -126,7 +126,7 @@ const propertySchema = new Schema({
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User', index: true },
 	createdAt: { type: Number, required: true },
 	updatedAt: { type: Number, required: true },
-	propertyId: { type: String, default: shortid.generate },
+	propertyId: { type: Number },
 	property_features: {
 		storeys_2: { type: Boolean, default: false },
 		security_24hr: { type: Boolean, default: false },
@@ -196,6 +196,7 @@ const propertySchema = new Schema({
 	},
 	property_basic_details: {
 		title: { type: String },
+		name: { type: String },
 		description: { type: String },
 		type: {
 			type: String,
@@ -407,4 +408,11 @@ propertySchema.index({
 	'property_address.location': '2dsphere',
 });
 
-export let Property = model<IProperty>('properties', propertySchema);
+propertySchema.pre('save', function (this: any, next: () => void) {
+	if (!this.propertyId) {
+		this.propertyId = incrementNumber(++global.counters.Property);
+	}
+	next();
+});
+
+export const Property = model<IProperty>('properties', propertySchema);

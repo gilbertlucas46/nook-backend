@@ -23,3 +23,4 @@ export { WebhookE } from './webhook/webhook.entity';
 export { AdminUserEntity } from './admin/admin.user.entity';
 export { SubscriptionPlanEntity } from './subscription/admin.subscription.entity';
 export { ArticleCategoryE } from './article/adminArticle.entity';
+export { UserCardE } from './card/user.card';

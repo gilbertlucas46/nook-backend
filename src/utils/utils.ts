@@ -184,4 +184,6 @@ export let consolelog = (identifier: string, value: any, status: boolean) => {
 
 export let invoiceNumber = (value) => {
 	return 'INV' + new Date().getFullYear() + ('00000000' + value).slice(-8);
-}
+};
+
+export let incrementNumber = (value) => { return value; };

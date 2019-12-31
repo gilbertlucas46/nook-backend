@@ -60,6 +60,7 @@ export namespace PropertyRequest {
 		};
 		property_basic_details: {
 			title?: string
+			name?: string
 			description?: string
 			type?: string
 			property_for_number?: number

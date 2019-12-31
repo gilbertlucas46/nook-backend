@@ -188,10 +188,10 @@ export let propertyRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const payload: any = request.query;
-				if (!payload.sortBy) {
-					payload.sortBy = 'isFeatured';
-					payload.sortType = -1;
-				}
+				// if (!payload.sortBy) {
+				// 	payload.sortBy = 'isFeatured';
+				// 	payload.sortType = -1;
+				// }
 				payload['property_status'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
 				const propertyList = await PropertyService.searchProperties(request.query);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList));
