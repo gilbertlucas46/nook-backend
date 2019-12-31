@@ -46,7 +46,7 @@ export class Bootstrap {
 		}
 		const lastProperty = await Property.findOne({}).sort({ propertyId: -1 }).select({ propertyId: 1, _id: 0 }).exec();
 		let propertyCounter = 0;
-		if (propertyCounter) {
+		if (lastProperty['propertyId']) {
 			propertyCounter = lastProperty['propertyId'] || 0;
 		}
 
