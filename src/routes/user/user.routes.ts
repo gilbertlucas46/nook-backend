@@ -547,4 +547,41 @@ export let userRoute: ServerRoute[] = [
 			},
 		},
 	},
+
+	{
+		method: 'GET',
+		path: '/v1/user/featureDashboard',
+		async handler(request, h) {
+			try {
+				// const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
+				// const payload: UserRequest.RecentProperty = request.query as any;
+				// const cityBasedData = await PropertyService.featureDashboard(payload);
+				// const userResponse = UniversalFunctions.formatUserData(cityBasedData);
+				// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const responseData = await UserService.featureDashboard(userData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'feature subscription count',
+			tags: ['api', 'anonymous', 'user', 'feature subscription count'],
+			auth: 'UserAuth',
+			validate: {
+				query: {
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
 ];
