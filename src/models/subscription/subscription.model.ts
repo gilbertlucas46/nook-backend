@@ -27,7 +27,8 @@ const subscriptionSchema = new Schema({
 	// featuredType: { type: String, required: true },
 	subscriptionType: {
 		type: String, enum: [
-			'month', 'year',
+			CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
+			CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
 		], required: true,
 	},
 	// subscriptionType: {
@@ -43,11 +44,13 @@ const subscriptionSchema = new Schema({
 	propertyId: { type: Schema.Types.ObjectId, ref: 'Property' },
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
 	startDate: { type: Number },
+	subscriptionId: { type: String, required: true },
 	endDate: { type: Number },
 	createdAt: { type: Number, required: true },
-	isRecurring: { type: Boolean },
+	isRecurring: { type: Boolean, required: true },
 	updatedAt: { type: Number, required: true },
-	paymentMethod: { type: String },
+	paymentMethod: { type: String, required: true },
+	planId: { type: String, required: true },
 }, {
 		versionKey: false,
 	});
