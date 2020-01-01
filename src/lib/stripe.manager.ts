@@ -66,7 +66,7 @@ export class StripeManager {
 	// 	}
 	// }
 
-	async createSubscription(createCustomer: any, payload) {
+	async createSubscription(createCustomer: any, payload: any) {
 		try {
 			const data = await stripe.subscriptions.create(
 				{
@@ -111,7 +111,6 @@ export class StripeManager {
 
 	async createCard2(createCustomer, payload) {
 		try {
-			console.log('userDatauserDatauserDatauserData>>>>>>>>>>>>>>>>>>>', createCustomer, createCustomer['id']);
 			const data = await stripe.customers.createSource(
 				createCustomer.stripeId,
 				{ source: payload.source },
@@ -194,14 +193,25 @@ export class StripeManager {
 	 * 
 	 * @param payload Updata customer card
 	 */
-	async setDefaultCard(getStripeId, fingerprint) {
+	async setDefaultCard(getStripeId, payload) {
 		try {
-			console.log('getStripeIdgetStripeId', getStripeId['stripeId'], '>>>>>>>>>>', fingerprint['card']['id']);
 
 			const data = await stripe.customers.update(
 				getStripeId['stripeId'],
 				// { metadata: { order_id: '6735' } },
-				{ default_source: fingerprint['card']['id'] },
+				{ metadata: { default_source: payload.source } } , // fingerprint['card']['id'] },
+			);
+			return data;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+	async updateSubscription(userSubscriptionData) {
+		try {
+			const data = await stripe.subscriptions.update(
+				userSubscriptionData['subscriptionId'],
+				// { metadata: { cancel_at_period_end: true } } ,
+				{ cancel_at_period_end: true }  ,
 			);
 			return data;
 		} catch (error) {

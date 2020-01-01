@@ -365,6 +365,12 @@ export let DATABASE = {
 		},
 	},
 
+	SUBSCRIPTION_STATUS: {
+		ACTIVE: 'active',
+		CANCEL: 'cancel',
+		EXPIRE: 'expire',
+		PENDING: 'pending',
+	},
 	PROPERTY_TYPE: {
 		'NONE': 'None',
 		'APPARTMENT/CONDO': 'Apartment/Condo',
@@ -786,6 +792,11 @@ export let STATUS_MSG = {
 				type: 'UNAUTHORIZED',
 				message: 'You are not authorized to perform this action',
 			},
+			SUBSCRIPTION_INACTIVE: {
+				statusCode: 401,
+				type: 'SUNSCRIPTION',
+				message: 'Subscription Not Active',
+			}
 			// MISSINING_AUTHENTICATION: (tokenType: any) => {
 			// 	return {
 			// 		statusCode: 401,

@@ -79,12 +79,12 @@ class TransactionController extends BaseEntity {
 				await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { stripeId: createCustomer.id });
 
 				const createCard = await stripeService.createCard(createCustomer, payload);
+				console.log('createCardcreateCardcreateCard', createCard);
 				const dataToSave = {
 					userId: userData._id,
 					cardDetail: createCard,
 				};
 				const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
-
 				const planInfo = await stripeService.getPlanInfo(payload);
 				const createSubscript = await stripeService.createSubscription(createCustomer, payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
@@ -120,7 +120,7 @@ class TransactionController extends BaseEntity {
 					console.log('step3step3step3step3step3step3step3step3', step3);
 					createSubscript['subscriptionId'] = step3['_id'];
 					createSubscript['paymentMethod'] = step3['paymentMethod'];
-					const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan);
+					const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan, createCard['brand']);
 					console.log('step2step2step2step2step2step2>>>>>>>>>>>>>>>>>', step2);
 					return;
 					// return;
@@ -143,7 +143,6 @@ class TransactionController extends BaseEntity {
 
 				if (getUserCardInfo == null) {
 					console.log('22222222222222222222222222222', getUserCardInfo);
-
 					const createCard = await stripeService.createCard2(userData, payload);
 					const dataToSave = {
 						userId: userData._id,
@@ -162,7 +161,7 @@ class TransactionController extends BaseEntity {
 					console.log('userCardInfouserCardInfo', userCardInfo);
 
 					if (getUserCardInfo['cardDetail'].length >= 1) {
-						const createDfaultCard = await stripeService.setDefaultCard(getStripeId, fingerprint);
+						const createDfaultCard = await stripeService.setDefaultCard(getStripeId, payload);
 						console.log('createDfaultCardcreateDfaultCard222222222', createDfaultCard);
 					}
 					const createCard = await stripeService.createCard2(userData, payload);
@@ -175,7 +174,7 @@ class TransactionController extends BaseEntity {
 
 				const createSubscript = await stripeService.createSubscription(userData, payload);
 				console.log('createSubscriptcreateSubscriptcreateSubscriptcreateSubscript', createSubscript);
-				const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan);
+				const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan, fingerprint['card']['brand']);
 
 				// get plan info
 
