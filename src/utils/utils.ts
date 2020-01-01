@@ -5,6 +5,7 @@ import * as CONSTANT from '../constants';
 import * as crypto from 'crypto';
 import * as randomstring from 'randomstring';
 import { isArray } from 'util';
+import {logger} from '../lib/logger.manager'
 const displayColors = config.get('displayColors');
 import * as hasher from 'wordpress-hash-node';
 
@@ -24,11 +25,18 @@ export let sendError = (data: any) => {
 		if (typeof data === 'object') {
 			if (data.name === 'MongoError') {
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + CONSTANT.STATUS_MSG.ERROR.ENQUIRY_ALREADY_SENT;
+				//logger for mongoerror (error in query)
+				logger.log('DB_ERROR', `message - ${data.message}, time-${new Date().toISOString()}`)
 			} else if (data.name === 'ApplicationError') {
+				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`)
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.APP_ERROR.message + ' : ';
 			} else if (data.name === 'ValidationError') {
+				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`)
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.VALIDATION_ERROR.message + data.message;
 			} else if (data.name === 'CastError') {
+				//logger for cast error (id not valid)
+				console.log('?????????????????????????????????????????????????????????????????????????????????')
+				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`)
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + CONSTANT.STATUS_MSG.ERROR.E400.INVALID_ID.message + data.value;
 			}
 		} else {
