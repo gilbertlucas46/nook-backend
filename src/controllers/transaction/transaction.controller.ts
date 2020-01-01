@@ -139,6 +139,8 @@ class TransactionController extends BaseEntity {
 						return data.fingerprint === fingerprint['card']['fingerprint'];
 					});
 				}
+				console.log('checkCardAddedcheckCardAdded>>>>>>>>>>>>>', checkCardAdded);
+
 				if (getUserCardInfo == null) {
 					console.log('22222222222222222222222222222', getUserCardInfo);
 
@@ -152,21 +154,19 @@ class TransactionController extends BaseEntity {
 					console.log('checkCardAddedcheckCardAddedcheckCardAdded>>>>>>>@@@@@@@@@2222222222222222222222', checkCardAdded);
 
 				}
-				if (!checkCardAdded) {
+				if (checkCardAdded === false) {
 					dataToSet.$push = {
 						cardDetail: fingerprint['card'],
 					};
 					const userCardInfo = await ENTITY.UserCardE.updateOneEntity(criteria, dataToSet);
 					console.log('userCardInfouserCardInfo', userCardInfo);
 
-					if (getUserCardInfo.length >= 1) {
+					if (getUserCardInfo['cardDetail'].length >= 1) {
 						const createDfaultCard = await stripeService.setDefaultCard(getStripeId, fingerprint);
 						console.log('createDfaultCardcreateDfaultCard222222222', createDfaultCard);
-
 					}
 					const createCard = await stripeService.createCard2(userData, payload);
 					console.log('createCardcreateCardcreateCard', createCard);
-
 				}
 				// if (checkCardAdded === true) {
 				// 	const createCard = await stripeService.createCard2(userData, payload);
