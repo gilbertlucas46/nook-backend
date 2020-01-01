@@ -196,8 +196,10 @@ export class StripeManager {
 	 */
 	async setDefaultCard(getStripeId, fingerprint) {
 		try {
+			console.log('getStripeIdgetStripeId', getStripeId['stripeId'], '>>>>>>>>>>', fingerprint['card']['id']);
+
 			const data = await stripe.customers.update(
-				getStripeId,
+				getStripeId['stripeId'],
 				// { metadata: { order_id: '6735' } },
 				{ default_source: fingerprint['card']['id'] },
 			);
