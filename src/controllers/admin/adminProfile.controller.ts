@@ -61,8 +61,12 @@ export class AdminProfileController {
 
 	async profile(payload) {
 		try {
-			const criteria = { _id: payload._id };
-			return await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
+			const criteria = { _id: payload.id };
+			const data = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
+			if (!data) {
+				return Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE;
+			}
+			return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);

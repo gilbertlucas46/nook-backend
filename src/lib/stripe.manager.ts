@@ -70,7 +70,7 @@ export class StripeManager {
 		try {
 			const data = await stripe.subscriptions.create(
 				{
-					customer: createCustomer.id || createCustomer.stripeId,
+					customer: createCustomer.id ? createCustomer.id : createCustomer.stripeId,
 					items: [{ plan: payload.planId }],
 					cancel_at_period_end: payload.cancel_at_period_end,
 				},
