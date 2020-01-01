@@ -117,8 +117,6 @@ export class AgentClass extends BaseEntity {
             if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
 
-            console.log('featuredTypefeaturedTypefeaturedTypefeaturedTypefeaturedType', featuredType, screenType);
-
             const query = [
                 { $match: matchObject },
                 {

@@ -128,7 +128,7 @@ export let subscriptionRoute: ServerRoute[] = [
 				const data = await subscriptionController.userDashboard(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
-				// utils.consolelog('Error', error, true);
+				console.log('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
