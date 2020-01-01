@@ -71,6 +71,7 @@ class TransactionController extends BaseEntity {
 				return Promise.reject('not in Db');
 			}
 			const getStripeId = await ENTITY.UserE.getOneEntity(getUserCriteria, { stripeId: 1, email: 1 });
+			console.log('getStripeIdgetStripeIdgetStripeId', getStripeId);
 
 			const dataToSet: any = {};
 			if (!getStripeId.stripeId) {
@@ -78,12 +79,12 @@ class TransactionController extends BaseEntity {
 				await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { stripeId: createCustomer.id });
 
 				const createCard = await stripeService.createCard(createCustomer, payload);
+				console.log('createCardcreateCardcreateCard', createCard);
 				const dataToSave = {
 					userId: userData._id,
 					cardDetail: createCard,
 				};
 				const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
-
 				const planInfo = await stripeService.getPlanInfo(payload);
 				const createSubscript = await stripeService.createSubscription(createCustomer, payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
@@ -93,14 +94,18 @@ class TransactionController extends BaseEntity {
 						subscriptionType: createSubscript['plan']['interval'],  // createSubscript['plan']['interval'],
 						userId: userData._id,
 						startDate: new Date().getTime(),
-						endDate: new Date().setFullYear(new Date().getFullYear() + 1),
-						createdAt: new Date().getTime(),
+						// endDate: new Date().setFullYear(new Date().getFullYear() + 1),
+						// createdAt: new Date().getTime(),
+						endDate: createSubscript.current_period_end, // new Date().setFullYear(new Date().getFullYear() + 1),
+						current_period_start: createSubscript.current_period_start,
 						updatedAt: new Date().getTime(),
 						propertyId: payload.propertyId,
 						status: createSubscript.status,
 						isRecurring: payload.cancel_at_period_end,
 						paymentMethod: createCard['brand'],
 						amount: (createSubscript['plan']['amount'] / 100),
+						subscriptionId: createSubscript.id,
+						planId: createSubscript['plan']['id'],
 					};
 
 					// if (createSubscript.status === 'active') {
@@ -115,7 +120,7 @@ class TransactionController extends BaseEntity {
 					console.log('step3step3step3step3step3step3step3step3', step3);
 					createSubscript['subscriptionId'] = step3['_id'];
 					createSubscript['paymentMethod'] = step3['paymentMethod'];
-					const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan);
+					const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan, createCard['brand']);
 					console.log('step2step2step2step2step2step2>>>>>>>>>>>>>>>>>', step2);
 					return;
 					// return;
@@ -123,30 +128,44 @@ class TransactionController extends BaseEntity {
 			} else {
 				// get all card of the user
 				const getUserCardInfo = await ENTITY.UserCardE.getOneEntity({ userId: userData._id }, { cardDetail: 1 });
+				console.log('getUserCardInfogetUserCardInfogetUserCardInfo', getUserCardInfo);
+
 				const fingerprint = await stripeService.getfingerPrint(userData, payload);
+				console.log('fingerprintfingerprintfingerprint>222222222222', fingerprint);
+
 				let checkCardAdded;
 				if (getUserCardInfo !== null) {
 					checkCardAdded = getUserCardInfo['cardDetail'].some(data => {
 						return data.fingerprint === fingerprint['card']['fingerprint'];
 					});
 				}
+				console.log('checkCardAddedcheckCardAdded>>>>>>>>>>>>>', checkCardAdded);
+
 				if (getUserCardInfo == null) {
+					console.log('22222222222222222222222222222', getUserCardInfo);
 					const createCard = await stripeService.createCard2(userData, payload);
 					const dataToSave = {
 						userId: userData._id,
 						cardDetail: createCard,
 					};
 					const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
+					console.log('userCardInfouserCardInfouserCardInfo', userCardInfo);
+					console.log('checkCardAddedcheckCardAddedcheckCardAdded>>>>>>>@@@@@@@@@2222222222222222222222', checkCardAdded);
+
 				}
-				if (!checkCardAdded) {
+				if (checkCardAdded === false) {
 					dataToSet.$push = {
 						cardDetail: fingerprint['card'],
 					};
 					const userCardInfo = await ENTITY.UserCardE.updateOneEntity(criteria, dataToSet);
-					if (getUserCardInfo.length >= 1) {
-						const createDfaultCard = await stripeService.setDefaultCard(getStripeId, fingerprint);
+					console.log('userCardInfouserCardInfo', userCardInfo);
+
+					if (getUserCardInfo['cardDetail'].length >= 1) {
+						const createDfaultCard = await stripeService.setDefaultCard(getStripeId, payload);
+						console.log('createDfaultCardcreateDfaultCard222222222', createDfaultCard);
 					}
 					const createCard = await stripeService.createCard2(userData, payload);
+					console.log('createCardcreateCardcreateCard', createCard);
 				}
 				// if (checkCardAdded === true) {
 				// 	const createCard = await stripeService.createCard2(userData, payload);
@@ -155,7 +174,7 @@ class TransactionController extends BaseEntity {
 
 				const createSubscript = await stripeService.createSubscription(userData, payload);
 				console.log('createSubscriptcreateSubscriptcreateSubscriptcreateSubscript', createSubscript);
-				const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan);
+				const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan, fingerprint['card']['brand']);
 
 				// get plan info
 
@@ -165,14 +184,16 @@ class TransactionController extends BaseEntity {
 						subscriptionType: createSubscript['plan']['interval'],  // createSubscript['plan']['interval'],
 						userId: userData._id,
 						startDate: new Date().getTime(),
-						endDate: new Date().setFullYear(new Date().getFullYear() + 1),
-						createdAt: new Date().getTime(),
+						endDate: createSubscript.current_period_end, // new Date().setFullYear(new Date().getFullYear() + 1),
+						current_period_start: createSubscript.current_period_start,
 						updatedAt: new Date().getTime(),
 						propertyId: payload.propertyId,
 						status: createSubscript.status,
 						isRecurring: payload.cancel_at_period_end,
 						paymentMethod: fingerprint['card']['brand'],
 						amount: (createSubscript['plan']['amount'] / 100),
+						subscriptionId: createSubscript.id,
+						planId: createSubscript['plan']['id'],
 					};
 					// if (checkplan.nickname === Constant.)
 					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {

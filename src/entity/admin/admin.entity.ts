@@ -133,7 +133,7 @@ export class AdminClass extends BaseEntity {
 		try {
 			return await this.DAOManager.findOne(this.modelName, criteria, ProjectData);
 		} catch (error) {
-			Promise.reject(error);
+			return Promise.reject(error);
 		}
 	}
 	/**

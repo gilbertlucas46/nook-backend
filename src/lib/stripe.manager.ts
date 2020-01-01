@@ -66,11 +66,11 @@ export class StripeManager {
 	// 	}
 	// }
 
-	async createSubscription(createCustomer: any, payload) {
+	async createSubscription(createCustomer: any, payload: any) {
 		try {
 			const data = await stripe.subscriptions.create(
 				{
-					customer: createCustomer.id || createCustomer.stripeId,
+					customer: createCustomer.id ? createCustomer.id : createCustomer.stripeId,
 					items: [{ plan: payload.planId }],
 					cancel_at_period_end: payload.cancel_at_period_end,
 				},
@@ -111,7 +111,6 @@ export class StripeManager {
 
 	async createCard2(createCustomer, payload) {
 		try {
-			console.log('userDatauserDatauserDatauserData>>>>>>>>>>>>>>>>>>>', createCustomer, createCustomer['id']);
 			const data = await stripe.customers.createSource(
 				createCustomer.stripeId,
 				{ source: payload.source },
@@ -194,12 +193,25 @@ export class StripeManager {
 	 * 
 	 * @param payload Updata customer card
 	 */
-	async setDefaultCard(getStripeId, fingerprint) {
+	async setDefaultCard(getStripeId, payload) {
 		try {
+
 			const data = await stripe.customers.update(
-				getStripeId,
+				getStripeId['stripeId'],
 				// { metadata: { order_id: '6735' } },
-				{ default_source: fingerprint['card']['id'] },
+				{ metadata: { default_source: payload.source } } , // fingerprint['card']['id'] },
+			);
+			return data;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+	async updateSubscription(userSubscriptionData) {
+		try {
+			const data = await stripe.subscriptions.update(
+				userSubscriptionData['subscriptionId'],
+				// { metadata: { cancel_at_period_end: true } } ,
+				{ cancel_at_period_end: true }  ,
 			);
 			return data;
 		} catch (error) {
