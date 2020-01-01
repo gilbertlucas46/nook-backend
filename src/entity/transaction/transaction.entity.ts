@@ -23,7 +23,7 @@ export class TransactionClass extends BaseEntity {
 		}
 	}
 
-	async addTransaction(payload: TransactionRequest.CreateCharge, userData, chargeData, getSubscriptionDetailInDb) {
+	async addTransaction(payload: TransactionRequest.CreateCharge, userData, chargeData, getSubscriptionDetailInDb, brandName) {
 		try {
 			console.log('chargeDatachargeDatachargeDatachargeDatachargeDatachargeData', chargeData);
 
@@ -56,7 +56,7 @@ export class TransactionClass extends BaseEntity {
 				// address: payload.address,
 				// featuredType: payload.featuredType,
 				// billingType: payload.billingType,
-				paymentMethod: chargeData['paymentMethod'],
+				paymentMethod: brandName,
 			});
 		} catch (error) {
 			utils.consolelog('Error', error, true);
