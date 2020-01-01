@@ -100,6 +100,7 @@ class TransactionController extends BaseEntity {
 						status: createSubscript.status,
 						isRecurring: payload.cancel_at_period_end,
 						paymentMethod: createCard['brand'],
+						amount: (createSubscript['plan']['amount'] / 100),
 					};
 
 					// if (createSubscript.status === 'active') {
@@ -171,6 +172,7 @@ class TransactionController extends BaseEntity {
 						status: createSubscript.status,
 						isRecurring: payload.cancel_at_period_end,
 						paymentMethod: fingerprint['card']['brand'],
+						amount: (createSubscript['plan']['amount'] / 100),
 					};
 					// if (checkplan.nickname === Constant.)
 					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {

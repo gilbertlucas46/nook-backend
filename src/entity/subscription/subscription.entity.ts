@@ -102,12 +102,8 @@ export class SubscriptionClass extends BaseEntity {
 			let sortingType = {};
 			sortType = !sortType ? -1 : sortType;
 			sortingType = {
-				// sortBy= 'updatedAt'
-				// sortingType = {
-				// 	updatedAt: -1,
-				// },
+				updatedAt: -1,
 			};
-
 			const pipeline = [
 				{
 					$match: {
@@ -136,6 +132,9 @@ export class SubscriptionClass extends BaseEntity {
 						isRecurring: 1,
 						paymentMethod: 1,
 						amount: 1,
+						userId: 1,
+						createdAt: 1,
+						updatedAt: 1,
 					},
 				},
 				{
@@ -149,13 +148,15 @@ export class SubscriptionClass extends BaseEntity {
 										$and: [{ $eq: ['$_id', '$$propertyId'] }, { $eq: ['$property_status.number', 3] }],
 									},
 								},
-							}, {
+							},
+							{
 								$project: {
-									'_id': 1,
-									'isFeatured': 1,
-									'isHomePageFeatured': 1,
-									'property_basic_details.title': 1,
-									'property_basic_details.name': 1,
+									_id: 1,
+									isFeatured: 1,
+									isHomePageFeatured: 1,
+									title: '$property_basic_details.title',
+									name: '$property_basic_details.name',
+									propertyId: '$property',
 								},
 							},
 						],
@@ -163,14 +164,17 @@ export class SubscriptionClass extends BaseEntity {
 					},
 				},
 				{
-					$unwind: '$propertyData',
+					$unwind: {
+						path: '$propertyData',
+						preserveNullAndEmptyArrays: true,
+
+					},
 				},
-				// { $sort: sortingType },
+				{ $sort: sortingType },
 			];
 
 			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-			console.log('data>>>>>>>>>>>>>>>>>>', data);
-			return data;
+			return data['data'];
 
 		} catch (error) {
 			return Promise.reject(error);
