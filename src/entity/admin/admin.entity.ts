@@ -296,7 +296,7 @@ export class AdminClass extends BaseEntity {
 				},
 				],
 			};
-			let pipeline = [];
+			const pipeline = [];
 			const Allproperty = [
 				{
 					$facet: {
@@ -397,7 +397,7 @@ export class AdminClass extends BaseEntity {
 						AGENT: { $size: '$AGENT' },
 					},
 				},
-			]
+			];
 
 			const LoanList = [{
 				$facet: {
