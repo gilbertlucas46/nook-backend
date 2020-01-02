@@ -35,7 +35,7 @@ export let adminProperty: ServerRoute[] = [
             validate: {
                 payload: {
                     propertyId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/),
-                    subscriptionId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).optional(),
+                    // subscriptionId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).optional(),
                     property_features: {
                         storeys_2: Joi.boolean().default(false),
                         security_24hr: Joi.boolean().default(false),

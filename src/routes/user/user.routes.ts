@@ -105,12 +105,12 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'get detail of property ',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			// auth: 'DoubleAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				params: {
 					_id: Joi.string().trim().required(),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 		},

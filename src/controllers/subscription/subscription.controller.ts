@@ -69,7 +69,7 @@ class SubscriptionController {
 			const stripeData = await stripeService.updateSubscription(userSubscriptionData);
 			console.log('stripeDatastripeDatastripeData', stripeData);
 
-			return await ENTITY.SubscriptionE.updateOneEntity({ _id: payload.id }, { $set: { status: Constant.DATABASE.SUBSCRIPTION_STATUS.CANCEL } });
+			return await ENTITY.SubscriptionE.updateOneEntity({ _id: payload.id }, { $set: { isRecurring: false } });
 
 		} catch (error) {
 			return Promise.reject(error);
