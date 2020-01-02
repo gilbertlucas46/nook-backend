@@ -74,6 +74,7 @@ export const AdminSchema = new Schema(
 					CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
 					CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
 					CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
+					CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
 				],
 			},
 			accessLevel: { type: Number, enum: [CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE] },
