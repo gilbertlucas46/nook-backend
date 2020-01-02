@@ -316,6 +316,7 @@ export let DATABASE = {
 			Article_Category: 'article-categories',
 			Subscriptions: 'subscriptions',
 			loanReferrals: 'loan-referrals',
+			HELPCENTER: 'help-center',
 		},
 	},
 

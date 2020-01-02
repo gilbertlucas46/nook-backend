@@ -95,6 +95,10 @@ export class AdminClass extends BaseEntity {
 					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
 
 				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
 			],
 		};
 
