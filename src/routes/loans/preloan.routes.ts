@@ -24,7 +24,7 @@ export let preloanRoute: ServerRoute[] = [
     options: {
       description: 'Get pre Loan Requirements',
       tags: ['api', 'anonymous', 'loan'],
-      // auth: 'UserAuth',
+      auth: 'DoubleAuth',
       validate: {
         query: {
           bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
@@ -130,7 +130,7 @@ export let preloanRoute: ServerRoute[] = [
             fixingPeriod: Joi.number(),
           }),
         },
-        // headers: UniversalFunctions.authorizationHeaderObj,
+        headers: UniversalFunctions.authorizationHeaderObj,
         failAction: UniversalFunctions.failActionFunction,
       },
       plugins: {

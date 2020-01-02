@@ -103,9 +103,9 @@ export class CategoryClass extends BaseEntity {
             };
             const insert = {
                 // $set: {
-                _id: Types.ObjectId('5df7515fd72c62a525cc9333'),
+                _id: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
                 name: 'SELLING',
-                status: 'Active',
+                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 // },
             };
             const checkData = await this.DAOManager.findOne(this.modelName, criteria, {});

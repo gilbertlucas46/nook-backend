@@ -24,3 +24,5 @@ export { AdminUserEntity } from './admin/admin.user.entity';
 export { SubscriptionPlanEntity } from './subscription/admin.subscription.entity';
 export { ArticleCategoryE } from './article/adminArticle.entity';
 export { UserCardE } from './card/user.card';
+// export { BankE } from './banks/banks.entity';
+// export { loanCriteriaE } from './banks/userloan.criteria';
