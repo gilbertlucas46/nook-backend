@@ -356,7 +356,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				params: {
-					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					propertyId: Joi.string().trim().required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
