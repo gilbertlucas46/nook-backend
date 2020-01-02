@@ -174,7 +174,7 @@ export class SubscriptionClass extends BaseEntity {
 			];
 
 			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-			return data['data'];
+			return data;
 
 		} catch (error) {
 			return Promise.reject(error);

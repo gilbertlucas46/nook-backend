@@ -798,7 +798,8 @@ export let STATUS_MSG = {
 				statusCode: 401,
 				type: 'SUNSCRIPTION',
 				message: 'Subscription Not Active',
-			}
+			},
+
 			// MISSINING_AUTHENTICATION: (tokenType: any) => {
 			// 	return {
 			// 		statusCode: 401,

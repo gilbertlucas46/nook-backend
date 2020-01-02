@@ -328,9 +328,12 @@ export class UserController {
 	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
-			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
+			// const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
+			// console.log('step1step1', step1);
+
 			const step2 = await ENTITY.UserE.userDashboad(userData);
-			step2.isFeaturedProfile = step1 ? true : false;
+			console.log('step2step2step2>>>>>>>>>>>>>>.', step2);
+			// step2.isFeaturedProfile = step1 ? true : false;
 			return step2;
 		} catch (error) {
 			utils.consolelog('error', error, true);
