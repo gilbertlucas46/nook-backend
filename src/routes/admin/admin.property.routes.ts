@@ -19,7 +19,6 @@ export let adminProperty: ServerRoute[] = [
                 if (checkPermission === false) {
                     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
                 }
-
                 const responseData = await PropertyService.adminAddProperty(payload, adminData);
                 // const registerResponse = await AdminUserController.addUser(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, responseData));
@@ -133,20 +132,20 @@ export let adminProperty: ServerRoute[] = [
                         ]),
                     },
                     // userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
-                    property_added_by: {
-                        userName: Joi.string(),
-                        phoneNumber: Joi.string(),
-                        userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
-                        profilePicUrl: Joi.string().allow(''),
-                        firstName: Joi.string().allow(''),
-                        lastName: Joi.string().allow(''),
-                        email: Joi.string().email().lowercase().required(),
-                        middleName: Joi.string(),
-                        userType: Joi.string().valid([
-                            Constant.DATABASE.USER_TYPE.AGENT.TYPE,
-                            Constant.DATABASE.USER_TYPE.OWNER.TYPE,
-                        ]),
-                    },
+                    // property_added_by: {
+                    //     userName: Joi.string(),
+                    //     phoneNumber: Joi.string(),
+                    //     userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
+                    //     profilePicUrl: Joi.string().allow(''),
+                    //     firstName: Joi.string().allow(''),
+                    //     lastName: Joi.string().allow(''),
+                    //     email: Joi.string().email().lowercase().required(),
+                    //     middleName: Joi.string(),
+                    //     userType: Joi.string().valid([
+                    //         Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+                    //         Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+                    //     ]),
+                    // },
                     isFeatured: Joi.boolean().default(false),
                     isHomePageFeatured: Joi.boolean().default(false),
                     propertyImages: Joi.array(),
