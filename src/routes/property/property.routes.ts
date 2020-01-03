@@ -128,6 +128,7 @@ export let propertyRoute: ServerRoute[] = [
 						},
 					},
 					property_basic_details: {
+						name: Joi.string().min(1).max(60).trim(),
 						title: Joi.string().min(1).max(60).trim().required(),
 						description: Joi.string().min(1).max(2000).trim().required(),
 						type: Joi.string().valid([
