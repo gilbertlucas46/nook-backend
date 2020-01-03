@@ -245,10 +245,8 @@ export class HelpCenter {
                 },
             ];
             const data = await ENTITY.HelpCenterE.aggregate(pipeline);
-            console.log('categoryTypecategoryTypecategoryType', data);
             return data[0];
             // }
-
         } catch (error) {
             return Promise.reject(error);
         }

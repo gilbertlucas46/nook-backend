@@ -295,7 +295,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					limit: Joi.number(),
 					sortBy: Joi.string(),
 					sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
-					searchTerm: Joi.string(),
+					searchTerm: Joi.string().trim(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
 					property_status: Joi.number().valid([

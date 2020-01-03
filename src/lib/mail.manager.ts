@@ -97,7 +97,6 @@ export class MailManager {
 
 	async contactEmail(params) {
 		try {
-			console.log('paramsparamsparamsparams', params);
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
 				.compileFile({
 					name: params.name,
