@@ -66,11 +66,11 @@ export class StripeManager {
 	// 	}
 	// }
 
-	async createSubscription(createCustomer: any, payload: any) {
+	async createSubscription(id: string, payload: any) {
 		try {
 			const data = await stripe.subscriptions.create(
 				{
-					customer: createCustomer.id ? createCustomer.id : createCustomer.stripeId,
+					customer: id,
 					items: [{ plan: payload.planId }],
 					cancel_at_period_end: payload.cancel_at_period_end,
 				},
@@ -98,7 +98,6 @@ export class StripeManager {
 
 	async createCard(createCustomer, payload) {
 		try {
-			console.log('userDatauserDatauserDatauserData>>>>>>>>>>>>>>>>>>>', createCustomer, createCustomer['id']);
 			const data = await stripe.customers.createSource(
 				createCustomer.id,
 				{ source: payload.source },
@@ -123,8 +122,6 @@ export class StripeManager {
 
 	async getfingerPrint(userData, payload) {
 		try {
-			console.log('getfingerPrintgetfingerPrintgetfingerPrint', userData.stripeId, payload.source);
-
 			const data = await stripe.tokens.retrieve(
 				// userData.stripeId,
 				payload.source ,

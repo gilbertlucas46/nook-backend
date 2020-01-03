@@ -441,16 +441,16 @@ export class PropertyController {
 				// };
 				// // promiseArray.push(ENTITY.EnquiryE.updateOneEntity(criteria, enquiryDataToUpdate));
 
-				let step1;
-				if (payload.subscriptionId) {
-					step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
-				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-					payload.isFeatured = true;
-				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
-					payload.isHomePageFeatured = true;
-				}
+				// let step1;
+				// if (payload.subscriptionId) {
+				// 	step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
+				// }
+				// if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+				// 	payload.isFeatured = true;
+				// }
+				// if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+				// 	payload.isHomePageFeatured = true;
+				// }
 				delete payload.propertyId;
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
