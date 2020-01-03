@@ -267,7 +267,7 @@ export class PropertyClass extends BaseEntity {
 			if (maxArea) { matchObject.$match['property_details.floor_area'] = { $lt: maxArea }; }
 			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
 			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
-			if (byCity) { matchObject.$match['property_address.cityId'] = byCity; }
+			if (byCity) { matchObject.$match['property_address.cityId'] = new Types.ObjectId(byCity); }
 			if (byRegion) { matchObject.$match['regionId'] = byRegion; }
 
 			// List of properties acc to specific property status
