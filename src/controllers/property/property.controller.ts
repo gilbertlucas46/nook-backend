@@ -187,7 +187,9 @@ export class PropertyController {
 			//         }
 			//     }
 			// ]);
-			return await ENTITY.PropertyE.getPropertyList(payload);
+			const data = await ENTITY.PropertyE.getPropertyList(payload);
+			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
+			return data;
 		} catch (err) {
 			utils.consolelog('error', err, true);
 			return Promise.reject(err);
