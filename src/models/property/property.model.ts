@@ -82,6 +82,7 @@ export interface IProperty extends Document {
 		}
 	};
 	property_basic_details: {
+		name: string;
 		title: string;
 		description: string;
 		type: string;
@@ -196,7 +197,7 @@ const propertySchema = new Schema({
 	},
 	property_basic_details: {
 		title: { type: String },
-		name: { type: String },
+		name: { type: String, unique: true },
 		description: { type: String },
 		type: {
 			type: String,

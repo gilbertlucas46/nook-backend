@@ -458,6 +458,7 @@ export class PropertyController {
 				return { updateData };
 			} else {
 				payload.property_basic_details.name = await payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+				console.log('payloadpayloadpayload', payload);
 				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
 				let data: any;
 				if (exist) {
