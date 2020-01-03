@@ -124,8 +124,6 @@ class AdminUserControllers {
             };
             const dataToSet: any = {};
             const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
-            console.log('datadatadatadatadata', data);
-
             if (payload.status === Constant.DATABASE.STATUS.USER.ACTIVE) {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
             } else if (payload.status === Constant.DATABASE.STATUS.USER.BLOCKED || payload.status === Constant.DATABASE.STATUS.USER.DELETE) {
@@ -148,11 +146,8 @@ class AdminUserControllers {
             };
 
             ENTITY.PropertyE.updateMultiple(propertyCriteria, dataToSet);
-            console.log('dataToUpdatedataToUpdatedataToUpdate', data);
             return data;
         } catch (error) {
-            console.log('errorerrorerrorerrorerrorerrorerror', error);
-
             return Promise.reject(error);
         }
     }

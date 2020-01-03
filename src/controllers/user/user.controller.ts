@@ -171,7 +171,6 @@ export class UserController {
 
 			request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
 				if (err) { return console.log(err); }
-				console.log('body ----', body);
 			});
 
 			return updateUser;

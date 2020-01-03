@@ -41,16 +41,12 @@ export class SubscriptionClass extends BaseEntity {
 
     async  findAmount(pipeline) {
         const amount = await this.DAOManager.aggregateData(this.modelName, pipeline);
-        console.log('amountamountamountamountamountamountamountamount', amount);
-
         return amount[0]['amount'];
     }
 
     async stripePlan() {
         try {
             const data = await stripeService.getPlanList();
-            console.log('datadatadatadatadatadatadata',data);
-            
             return data;
         } catch (error) {
             return Promise.reject(error);

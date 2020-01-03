@@ -523,21 +523,23 @@ export class AdminClass extends BaseEntity {
 				return s.indexOf(' ') >= 0;
 			}
 			if (searchTerm) {
-				const check = hasWhiteSpace(searchTerm);
+				const check = await hasWhiteSpace(searchTerm);
 				if (check) {
-					firstname = searchTerm.split[' '][0];
-					lastname = searchTerm.split[' '][1];
+					firstname = searchTerm.split(' ')[0];
+					lastname = searchTerm.split(' ')[1];
 				} else {
 					firstname = searchTerm;
 					lastname = searchTerm;
 				}
+				const regex = new RegExp(searchTerm, 'gi');
 				matchObject = {
 					$or: [
-						{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ 'property_address.cityName': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ propertyId: new RegExp('.*' + searchTerm.substring(2) + '.*', 'i') },
+						{ 'property_address.address': regex },
+						{ 'property_address.cityName': regex },
+						{ 'property_added_by.email': regex },
+						{ 'property_basic_details.title': regex },
+						// { propertyId: new RegExp('.*' + searchTerm.substring(2) + '.*', 'i') },
+						{ $where: `/${searchTerm}/.test(this.propertyId)` },
 						{ 'property_added_by.firstName': new RegExp('.*' + firstname + '.*', 'i') },
 						{ 'property_added_by.lastName': new RegExp('.*' + lastname + '.*', 'i') },
 					],
