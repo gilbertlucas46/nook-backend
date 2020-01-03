@@ -169,7 +169,6 @@ export let loanReferral: any = [
                     ...request.params,
                 };
                 const data = await referralController.updateReferral(payload, adminData);
-                console.log('datadatadatadatadata', data);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
                 UniversalFunctions.consolelog(error, 'error', true);
