@@ -409,7 +409,7 @@ export class PropertyController {
 				payload.property_status['displayName'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.DISPLAY_NAME;
 			}
 
-			payload['userId'] = payload.property_added_by.userId;
+			// payload['userId'] = payload.property_added_by.userId;
 
 			// payload.property_added_by = {
 			// 	userId: adminData._id,
