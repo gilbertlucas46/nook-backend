@@ -142,7 +142,7 @@ export class HelpCenter {
      * return
      */
 
-    async getHelpCenterByCategoryId(id: number) {
+    async getHelpCenterByCategoryId(id) {
         try {
             return await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
         } catch (error) {
