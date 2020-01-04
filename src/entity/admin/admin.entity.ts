@@ -539,7 +539,7 @@ export class AdminClass extends BaseEntity {
 						{ 'property_added_by.email': regex },
 						{ 'property_basic_details.title': regex },
 						// { propertyId: new RegExp('.*' + searchTerm.substring(2) + '.*', 'i') },
-						{ $where: `/${searchTerm}/.test(this.propertyId)` },
+						{ $where: `/${searchTerm.substr(2)}/.test(this.propertyId)` },
 						{ 'property_added_by.firstName': new RegExp('.*' + firstname + '.*', 'i') },
 						{ 'property_added_by.lastName': new RegExp('.*' + lastname + '.*', 'i') },
 					],
