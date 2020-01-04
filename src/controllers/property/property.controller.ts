@@ -188,7 +188,6 @@ export class PropertyController {
 			//     }
 			// ]);
 			const data = await ENTITY.PropertyE.getPropertyList(payload);
-			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 			return data;
 		} catch (err) {
 			utils.consolelog('error', err, true);
