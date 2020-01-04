@@ -109,8 +109,8 @@ export class AgentClass extends BaseEntity {
 
             if (specializingIn_property_type) matchObject['specializingIn_property_type'] = specializingIn_property_type;
             if (specializingIn_property_category) matchObject['specializingIn_property_category'] = { $in: specializingIn_property_category };
-            if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
-            if (byCity) matchObject['serviceAreas'] = { $in: [Types.ObjectId(cityId)] };
+            // if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
+            if (cityId) matchObject['serviceAreas'] = { $in: [new Types.ObjectId(cityId)] };
 
             // Date filters
             if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
