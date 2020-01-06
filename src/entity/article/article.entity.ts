@@ -354,6 +354,7 @@ export class ArticleClass extends BaseEntity {
     }
 
     async getUserArticle(payload) {
+        console.log('payload>>>>>>>>>>>>>>>>>.', payload);
         try {
             const {
                 type,
@@ -361,10 +362,12 @@ export class ArticleClass extends BaseEntity {
                 categoryId,
                 page = 1,
                 sortType = -1,
-                limit = Constant.SERVER.LIMIT,
+                limit = 6,
             } = payload;
             const sortingType = { updatedAt: sortType };
-
+            if (page > 1) {
+                limit === 6;
+            }
             if (type) {
                 const criteria = {
                     categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
@@ -373,8 +376,10 @@ export class ArticleClass extends BaseEntity {
                 return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
             }
             const paginateOptions = {
-                page: page || 1,
-                limit: limit || Constant.SERVER.LIMIT,
+                // if(page> 1)
+                limit: limit, // Constant.SERVER.LIMIT,
+                page: page > 1 ? (limit * (page - 1)) : 1,
+                // const skip = (limit * (page - 1));
             };
             let $match: object = {
                 categoryId: Types.ObjectId(categoryId),
