@@ -219,8 +219,12 @@ export class ArticleClass extends BaseEntity {
             ];
 
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
-            if (!data || data.length === 0) return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {});
-            else return data[0];
+            // if (!data || data.length === 0) return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, data);
+            return data[0] || {
+                CATEGORIES: [],
+                FEATURED: [],
+                LATEST: [],
+            };
 
         } catch (error) {
             utils.consolelog('Error', error, true);

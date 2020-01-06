@@ -109,9 +109,9 @@ export class UserController {
 	 * @payload payload :PropertyDetail
 	 * return Proeperty Data
 	 */
-	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
+	async propertyDetail(payload: PropertyRequest.PropertyDetail, userData) {
 		try {
-			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
+			const getPropertyData = await ENTITY.PropertyE.userPropertyDetail(payload._id, userData);
 			// if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
 			// 	return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
 			// }

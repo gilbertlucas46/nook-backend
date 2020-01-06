@@ -95,8 +95,9 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/property/{_id}',
 		async handler(request, h) {
 			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: PropertyRequest.PropertyDetail = request.params as any;
-				const propertyDetail = await UserService.propertyDetail(payload);
+				const propertyDetail = await UserService.propertyDetail(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -171,7 +172,7 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'update user Profile',
 			tags: ['api', 'anonymous', 'user', 'update'],
-			// auth: 'UserAuth',
+			auth: 'UserAuth',
 			validate: {
 				payload: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
@@ -211,7 +212,7 @@ export let userRoute: ServerRoute[] = [
 					),
 					serviceAreas: Joi.array().items(Joi.string()),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
