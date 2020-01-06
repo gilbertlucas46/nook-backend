@@ -130,7 +130,81 @@ export class PropertyClass extends BaseEntity {
 		}
 	}
 
-	async 	getPropertyList(payload: PropertyRequest.SearchProperty) {
+	async userPropertyDetail(propertyId, userData) {
+		try {
+			const criteria = [
+				{
+					$match: {
+						'property_basic_details.name': propertyId,
+					},
+				},
+				{
+					$project: {
+						_id: 1,
+						property_features: 1,
+						updatedAt: 1,
+						createdAt: 1,
+						property_details: 1,
+						property_address: 1,
+						approvedAt: 1,
+						propertyId: '$_id',
+						propertyShortId: '$propertyId',
+						property_basic_details: 1,
+						property_added_by: 1,
+						propertyImages: 1,
+						isFeatured: 1,
+						isHomePageFeatured: 1,
+						property_status: 1,
+					},
+				},
+				{
+					$lookup: {
+						from: 'savedproperties',
+						let: { pid: '$propertyId', uid: 'userData._id' },
+						pipeline: [{
+							$match: {
+								$expr: {
+									$and: [{ $eq: ['$propertyId', '$$pid'] }, { $eq: ['$userId', '$uid'] }],
+								},
+							},
+						},
+						],
+						as: 'saveProp',
+					},
+				},
+				{
+					$addFields: {
+						isSaved: {
+							$cond: {
+								if: {
+									$gt: [
+										{ $size: '$saveProp' },
+										0,
+									],
+								},
+								then: true,
+								else: false,
+							},
+						},
+					},
+				},
+				{
+					$project: {
+						saveProp: 0,
+					},
+				},
+			];
+
+			const getPropertyData = await this.DAOManager.aggregateData(this.modelName, criteria, {});
+			console.log('getPropertyDatagetPropertyData', getPropertyData);
+			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
+			return getPropertyData[0];
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
+	async; getPropertyList(payload: PropertyRequest.SearchProperty) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
 			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate, property_features, byCity, byRegion, screenType } = payload;
@@ -405,7 +479,7 @@ export class PropertyClass extends BaseEntity {
 				// },
 				{ $sort: sortingType },
 			];
-			return await this.DAOManager.paginate(this.modelName, query, limit, page);
+			return this.DAOManager.paginate(this.modelName, query, limit, page);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -550,59 +624,59 @@ export class PropertyClass extends BaseEntity {
 						saveProp: 0,
 					},
 				},
-				{
-					$lookup: {
-						from: 'subscriptions',
-						let: { propertyId: '$_id', userId: '$property_added_by.userId' },
-						pipeline: [
-							{
-								$facet: {
-									properties: [
-										{
-											$match: {
-												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
-												},
-											},
-										},
-										{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-										{ $project: { _id: 1 } },
-									],
-									users: [
-										{
-											$match: {
-												$expr: {
-													$and: [{ $eq: ['$userId', '$$userId'] }, { $in: ['$featuredType', [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE]] }],
-												},
-											},
-										},
-										{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-										{ $project: { _id: 1 } },
-									],
-								},
-							},
-						],
-						as: 'subscriptions',
-					},
-				},
-				{
-					$addFields: { subscriptions: { $arrayElemAt: ['$subscriptions', 0] } },
-				},
-				{
-					$addFields: {
-						'isFeatured': {
-							$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } } },
-						},
-						'property_added_by.isFeaturedProfile': {
-							$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
-						},
-					},
-				},
-				{
-					$project: {
-						subscriptions: 0,
-					},
-				},
+				// {
+				// 	$lookup: {
+				// 		from: 'subscriptions',
+				// 		let: { propertyId: '$_id', userId: '$property_added_by.userId' },
+				// 		pipeline: [
+				// 			{
+				// 				$facet: {
+				// 					properties: [
+				// 						{
+				// 							$match: {
+				// 								$expr: {
+				// 									$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
+				// 								},
+				// 							},
+				// 						},
+				// 						{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+				// 						{ $project: { _id: 1 } },
+				// 					],
+				// 					users: [
+				// 						{
+				// 							$match: {
+				// 								$expr: {
+				// 									$and: [{ $eq: ['$userId', '$$userId'] }, { $in: ['$featuredType', [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE]] }],
+				// 								},
+				// 							},
+				// 						},
+				// 						{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+				// 						{ $project: { _id: 1 } },
+				// 					],
+				// 				},
+				// 			},
+				// 		],
+				// 		as: 'subscriptions',
+				// 	},
+				// },
+				// {
+				// 	$addFields: { subscriptions: { $arrayElemAt: ['$subscriptions', 0] } },
+				// },
+				// {
+				// 	$addFields: {
+				// 		'isFeatured': {
+				// 			$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } } },
+				// 		},
+				// 		'property_added_by.isFeaturedProfile': {
+				// 			$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
+				// 		},
+				// 	},
+				// },
+				// {
+				// 	$project: {
+				// 		subscriptions: 0,
+				// 	},
+				// },
 				{ $sort: sortingType },
 			];
 			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
