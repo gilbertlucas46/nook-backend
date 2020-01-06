@@ -183,7 +183,6 @@ export class PropertyClass extends BaseEntity {
 								0,
 							],
 							// $cond: {
-
 							// 	if: {
 							// 		$gt: [
 							// 			{ $size: '$saveProp' },
@@ -204,7 +203,6 @@ export class PropertyClass extends BaseEntity {
 			];
 
 			const getPropertyData = await this.DAOManager.aggregateData(this.modelName, criteria, {});
-			console.log('getPropertyDatagetPropertyData', getPropertyData);
 			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
 			return getPropertyData[0];
 		} catch (error) {
@@ -502,7 +500,17 @@ export class PropertyClass extends BaseEntity {
 			sortType = !sortType ? -1 : sortType;
 			let sortingType = {};
 			let query;
+
+
+			sortingType = {
+				isHomePageFeatured: sortType,
+				isFeatured: sortType,
+				updatedAt: sortType,
+			};
+
 			if (!userId) {
+				console.log('1111111111111111');
+
 				const criteria = {
 					'property_basic_details.name': propertyId,
 				};
@@ -511,7 +519,8 @@ export class PropertyClass extends BaseEntity {
 				userId = propertyData.property_added_by.userId;
 			}
 
-			if (payload.propertyFor) {
+			if (payload.propertyFor && propertyId) {
+				console.log('2222222222222');
 				query = {
 					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
@@ -520,22 +529,30 @@ export class PropertyClass extends BaseEntity {
 					},
 					'property_basic_details.property_for_number': payload.propertyFor,
 				};
-			}
-
-			else if (payload.propertyType === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
-				query = {
-					'property_added_by.userId': Types.ObjectId(userId),
-					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-					'_id': {
-						$ne: Types.ObjectId(payload.propertyId),
-					},
-				};
-			}
-			else {
+			} else if (payload.propertyFor && userId) {
+				console.log('33333333333333333');
 				query = {
 					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-					'property_for.number': payload.propertyFor,
+					'property_basic_details.property_for_number': payload.propertyFor,
+				};
+			}
+			else if (payload.propertyType === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
+				console.log('4444444444444444444444444444444');
+				query = {
+					'property_added_by.userId': Types.ObjectId(userId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+					// '_id': {
+					// 	$ne: Types.ObjectId(payload.propertyId),
+					// },
+				};
+			}
+			else {
+				console.log('5555555555555555555555555555555');
+				query = {
+					'property_added_by.userId': Types.ObjectId(userId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+					// 'property_for.number': payload.propertyFor,
 					'property_basic_details.name': {
 						$ne: payload.propertyId,
 					},
@@ -562,11 +579,6 @@ export class PropertyClass extends BaseEntity {
 						};
 						break;
 				}
-			} else {
-				sortBy = 'isFeatured';
-				sortingType = {
-					isFeatured: 1,
-				};
 			}
 			const pipeline = [
 				{
@@ -687,6 +699,7 @@ export class PropertyClass extends BaseEntity {
 				// },
 				{ $sort: sortingType },
 			];
+
 			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 
 		} catch (error) {

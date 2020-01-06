@@ -164,7 +164,7 @@ class LoanEntities extends BaseEntity {
                         logoUrl: 1,
                         iconUrl: 1,
                         bannerUrl: 1,
-                        processingTime: '5-7 working days',
+                        processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
                         loanDuration: 1,
                         totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },

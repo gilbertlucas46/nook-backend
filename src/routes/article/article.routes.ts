@@ -273,7 +273,6 @@ export let articleRoutes: ServerRoute[] = [
             try {
                 const payload: ArticleRequest.GetArticle = request.query as any;
                 const registerResponse = await ArticleService.getCategoryWiseArticles(payload);
-                console.log('registerResponseregisterResponseregisterResponse', registerResponse);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
