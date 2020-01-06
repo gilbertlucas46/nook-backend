@@ -132,6 +132,9 @@ export class PropertyClass extends BaseEntity {
 
 	async userPropertyDetail(propertyId, userData) {
 		try {
+
+			console.log('propertyIdpropertyId', propertyId, 'userID>>>>>>>>', userData._id);
+
 			const criteria = [
 				{
 					$match: {
@@ -160,11 +163,11 @@ export class PropertyClass extends BaseEntity {
 				{
 					$lookup: {
 						from: 'savedproperties',
-						let: { pid: '$propertyId', uid: 'userData._id' },
+						let: { pid: '$_id', uid: userData._id },
 						pipeline: [{
 							$match: {
 								$expr: {
-									$and: [{ $eq: ['$propertyId', '$$pid'] }, { $eq: ['$userId', '$uid'] }],
+									$and: [{ $eq: ['$propertyId', '$$pid'] }, { $eq: ['$userId', '$$uid'] }],
 								},
 							},
 						},
@@ -175,16 +178,21 @@ export class PropertyClass extends BaseEntity {
 				{
 					$addFields: {
 						isSaved: {
-							$cond: {
-								if: {
-									$gt: [
-										{ $size: '$saveProp' },
-										0,
-									],
-								},
-								then: true,
-								else: false,
-							},
+							$gt: [
+								{ $size: '$saveProp' },
+								0,
+							],
+							// $cond: {
+
+							// 	if: {
+							// 		$gt: [
+							// 			{ $size: '$saveProp' },
+							// 			0,
+							// 		],
+							// 	},
+							// 	then: true,
+							// 	else: false,
+							// },
 						},
 					},
 				},
