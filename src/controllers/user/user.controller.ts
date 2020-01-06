@@ -331,7 +331,6 @@ export class UserController {
 			// console.log('step1step1', step1);
 
 			const step2 = await ENTITY.UserE.userDashboad(userData);
-			console.log('step2step2step2>>>>>>>>>>>>>>.', step2);
 			// step2.isFeaturedProfile = step1 ? true : false;
 			return step2;
 		} catch (error) {
