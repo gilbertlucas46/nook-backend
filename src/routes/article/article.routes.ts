@@ -543,12 +543,12 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'DoubleAuth',
             validate: {
                 query: {
-                    // limit: Joi.number(),
-                    // page: Joi.number(),
+                    limit: Joi.number(),
+                    page: Joi.number(),
                     // sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
                     // sortBy: Joi.string(),
                     type: Joi.string().lowercase().valid('selling'),
-                    categoryId: Joi.string().when('type', { is: '', then: Joi.string().required() }),
+                    categoryId: Joi.string().when('type', { is: '', then: Joi.string().trim().required() }),
                     // articleId: Joi.string(),
                     searchTerm: Joi.string(),
                 },
