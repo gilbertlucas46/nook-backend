@@ -284,14 +284,14 @@ export class DAOManager {
 		return q;
 	}
 
-	paginatePipeline(matchPipeline: object[], options: { page: number, limit: number }, pipeline: object[]) {
+	paginatePipeline(matchPipeline: object[], options: { page: number, limit: number, skip?: number }, pipeline: object[]) {
 		const aggrPipeline = [
 			...matchPipeline,
 			{
 				$facet: {
 					data: [
 						{
-							$skip: (options.page - 1) * options.limit,
+							$skip: options.skip || (options.page - 1) * options.limit,
 						}, {
 							$limit: options.limit,
 						},
