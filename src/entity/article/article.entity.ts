@@ -362,7 +362,7 @@ export class ArticleClass extends BaseEntity {
                 categoryId,
                 page = 1,
                 sortType = -1,
-                limit = 6,
+                limit = 7,
             } = payload;
             const sortingType = { updatedAt: sortType };
             if (page > 1) {
