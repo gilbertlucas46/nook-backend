@@ -262,16 +262,15 @@ class TransactionController extends BaseEntity {
 	}
 
 	async webhook(payload) {
-		const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
-		console.log('step1step1step1step1step1step1step1step1step1step1', step1);
+		// const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
+		// console.log('step1step1step1step1step1step1step1step1step1step1', step1);
 
-		const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: step1._id, webhookObject: payload });
+		// const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: step1._id, webhookObject: payload });
 		try {
 			const event = payload;
 			const paymentIntent = event.data.object;
 			console.log('paymentIntentpaymentIntentpaymentIntent', paymentIntent);
 			console.log('event.typeevent.typeevent.type', event.type);
-
 			// Handle the event
 			switch (event.type) {
 				case 'charge.succeeded':
