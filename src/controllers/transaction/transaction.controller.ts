@@ -303,8 +303,12 @@ class TransactionController extends BaseEntity {
 
 					break;
 				case 'customer.subscription.deleted':
+<<<<<<< HEAD
 					console.log(6);
 
+=======
+					await this.handleChargeFailed(step1, paymentIntent);
+>>>>>>> e4eeef00f69c3041d3189a0d135f541662b599eb
 					break;
 
 			}
