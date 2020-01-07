@@ -81,3 +81,5 @@ const helpCenterSchema = new Schema({
     });
 
 export let HelpCentre = model<IHelpCenter>('helpcenter', helpCenterSchema);
+
+helpCenterSchema.index({ title: -1 })
