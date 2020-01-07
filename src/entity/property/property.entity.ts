@@ -130,7 +130,87 @@ export class PropertyClass extends BaseEntity {
 		}
 	}
 
-	async 	getPropertyList(payload: PropertyRequest.SearchProperty) {
+	async userPropertyDetail(propertyId, userData) {
+		try {
+
+			console.log('propertyIdpropertyId', propertyId, 'userID>>>>>>>>', userData._id);
+
+			const criteria = [
+				{
+					$match: {
+						'property_basic_details.name': propertyId,
+					},
+				},
+				{
+					$project: {
+						_id: 1,
+						property_features: 1,
+						updatedAt: 1,
+						createdAt: 1,
+						property_details: 1,
+						property_address: 1,
+						approvedAt: 1,
+						propertyId: '$_id',
+						propertyShortId: '$propertyId',
+						property_basic_details: 1,
+						property_added_by: 1,
+						propertyImages: 1,
+						isFeatured: 1,
+						isHomePageFeatured: 1,
+						property_status: 1,
+					},
+				},
+				{
+					$lookup: {
+						from: 'savedproperties',
+						let: { pid: '$_id', uid: userData._id },
+						pipeline: [{
+							$match: {
+								$expr: {
+									$and: [{ $eq: ['$propertyId', '$$pid'] }, { $eq: ['$userId', '$$uid'] }],
+								},
+							},
+						},
+						],
+						as: 'saveProp',
+					},
+				},
+				{
+					$addFields: {
+						isSaved: {
+							$gt: [
+								{ $size: '$saveProp' },
+								0,
+							],
+							// $cond: {
+							// 	if: {
+							// 		$gt: [
+							// 			{ $size: '$saveProp' },
+							// 			0,
+							// 		],
+							// 	},
+							// 	then: true,
+							// 	else: false,
+							// },
+						},
+					},
+				},
+				{
+					$project: {
+						saveProp: 0,
+					},
+				},
+			];
+
+			const getPropertyData = await this.DAOManager.aggregateData(this.modelName, criteria, {});
+			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
+			return getPropertyData[0];
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
+	async; getPropertyList(payload: PropertyRequest.SearchProperty) {
 		try {
 			let { page, limit, sortBy, sortType } = payload;
 			const { searchTerm, propertyId, propertyType, type, label, maxPrice, minPrice, bedrooms, bathrooms, minArea, maxArea, property_status, fromDate, toDate, property_features, byCity, byRegion, screenType } = payload;
@@ -267,7 +347,7 @@ export class PropertyClass extends BaseEntity {
 			if (maxArea) { matchObject.$match['property_details.floor_area'] = { $lt: maxArea }; }
 			if (minPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $gt: minPrice }; }
 			if (maxPrice) { matchObject.$match['property_basic_details.sale_rent_price'] = { $lt: maxPrice }; }
-			if (byCity) { matchObject.$match['cityId'] = byCity; }
+			if (byCity) { matchObject.$match['property_address.cityId'] = new Types.ObjectId(byCity); }
 			if (byRegion) { matchObject.$match['regionId'] = byRegion; }
 
 			// List of properties acc to specific property status
@@ -405,7 +485,7 @@ export class PropertyClass extends BaseEntity {
 				// },
 				{ $sort: sortingType },
 			];
-			return await this.DAOManager.paginate(this.modelName, query, limit, page);
+			return this.DAOManager.paginate(this.modelName, query, limit, page);
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -420,7 +500,17 @@ export class PropertyClass extends BaseEntity {
 			sortType = !sortType ? -1 : sortType;
 			let sortingType = {};
 			let query;
+
+
+			sortingType = {
+				isHomePageFeatured: sortType,
+				isFeatured: sortType,
+				updatedAt: sortType,
+			};
+
 			if (!userId) {
+				console.log('1111111111111111');
+
 				const criteria = {
 					'property_basic_details.name': propertyId,
 				};
@@ -429,7 +519,8 @@ export class PropertyClass extends BaseEntity {
 				userId = propertyData.property_added_by.userId;
 			}
 
-			if (payload.propertyFor) {
+			if (payload.propertyFor && propertyId) {
+				console.log('2222222222222');
 				query = {
 					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
@@ -438,22 +529,30 @@ export class PropertyClass extends BaseEntity {
 					},
 					'property_basic_details.property_for_number': payload.propertyFor,
 				};
-			}
-
-			else if (payload.propertyType === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
-				query = {
-					'property_added_by.userId': Types.ObjectId(userId),
-					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-					'_id': {
-						$ne: Types.ObjectId(payload.propertyId),
-					},
-				};
-			}
-			else {
+			} else if (payload.propertyFor && userId) {
+				console.log('33333333333333333');
 				query = {
 					'property_added_by.userId': Types.ObjectId(userId),
 					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-					'property_for.number': payload.propertyFor,
+					'property_basic_details.property_for_number': payload.propertyFor,
+				};
+			}
+			else if (payload.propertyType === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
+				console.log('4444444444444444444444444444444');
+				query = {
+					'property_added_by.userId': Types.ObjectId(userId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+					// '_id': {
+					// 	$ne: Types.ObjectId(payload.propertyId),
+					// },
+				};
+			}
+			else {
+				console.log('5555555555555555555555555555555');
+				query = {
+					'property_added_by.userId': Types.ObjectId(userId),
+					'property_status.number': Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+					// 'property_for.number': payload.propertyFor,
 					'property_basic_details.name': {
 						$ne: payload.propertyId,
 					},
@@ -480,11 +579,6 @@ export class PropertyClass extends BaseEntity {
 						};
 						break;
 				}
-			} else {
-				sortBy = 'isFeatured';
-				sortingType = {
-					isFeatured: 1,
-				};
 			}
 			const pipeline = [
 				{
@@ -550,61 +644,62 @@ export class PropertyClass extends BaseEntity {
 						saveProp: 0,
 					},
 				},
-				{
-					$lookup: {
-						from: 'subscriptions',
-						let: { propertyId: '$_id', userId: '$property_added_by.userId' },
-						pipeline: [
-							{
-								$facet: {
-									properties: [
-										{
-											$match: {
-												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
-												},
-											},
-										},
-										{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-										{ $project: { _id: 1 } },
-									],
-									users: [
-										{
-											$match: {
-												$expr: {
-													$and: [{ $eq: ['$userId', '$$userId'] }, { $in: ['$featuredType', [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE]] }],
-												},
-											},
-										},
-										{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-										{ $project: { _id: 1 } },
-									],
-								},
-							},
-						],
-						as: 'subscriptions',
-					},
-				},
-				{
-					$addFields: { subscriptions: { $arrayElemAt: ['$subscriptions', 0] } },
-				},
-				{
-					$addFields: {
-						'isFeatured': {
-							$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } } },
-						},
-						'property_added_by.isFeaturedProfile': {
-							$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
-						},
-					},
-				},
-				{
-					$project: {
-						subscriptions: 0,
-					},
-				},
+				// {
+				// 	$lookup: {
+				// 		from: 'subscriptions',
+				// 		let: { propertyId: '$_id', userId: '$property_added_by.userId' },
+				// 		pipeline: [
+				// 			{
+				// 				$facet: {
+				// 					properties: [
+				// 						{
+				// 							$match: {
+				// 								$expr: {
+				// 									$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
+				// 								},
+				// 							},
+				// 						},
+				// 						{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+				// 						{ $project: { _id: 1 } },
+				// 					],
+				// 					users: [
+				// 						{
+				// 							$match: {
+				// 								$expr: {
+				// 									$and: [{ $eq: ['$userId', '$$userId'] }, { $in: ['$featuredType', [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE]] }],
+				// 								},
+				// 							},
+				// 						},
+				// 						{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+				// 						{ $project: { _id: 1 } },
+				// 					],
+				// 				},
+				// 			},
+				// 		],
+				// 		as: 'subscriptions',
+				// 	},
+				// },
+				// {
+				// 	$addFields: { subscriptions: { $arrayElemAt: ['$subscriptions', 0] } },
+				// },
+				// {
+				// 	$addFields: {
+				// 		'isFeatured': {
+				// 			$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.properties', []] }, then: false, else: true } } },
+				// 		},
+				// 		'property_added_by.isFeaturedProfile': {
+				// 			$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
+				// 		},
+				// 	},
+				// },
+				// {
+				// 	$project: {
+				// 		subscriptions: 0,
+				// 	},
+				// },
 				{ $sort: sortingType },
 			];
+
 			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 
 		} catch (error) {

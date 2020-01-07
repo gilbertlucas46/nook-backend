@@ -143,7 +143,7 @@ export let enquiryRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: EnquiryRequest.GetEnquiry = request.query as any;
-				const registerResponse = await EnquiryService.getEnquiryList(payload, adminData);
+				const registerResponse = await EnquiryService.adminGetEnquiryList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
@@ -156,9 +156,6 @@ export let enquiryRoutes: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				query: {
-					enquiryType: Joi.string().valid([
-						Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
-					]),
 					page: Joi.number(),
 					limit: Joi.number(),
 					fromDate: Joi.number(),
