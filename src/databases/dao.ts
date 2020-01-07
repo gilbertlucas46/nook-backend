@@ -304,6 +304,12 @@ export class DAOManager {
 			}, {
 				$project: {
 					data: 1,
+					page: {
+						$literal: options.page,
+					},
+					limit: {
+						$literal: options.limit,
+					},
 					total: {
 						$arrayElemAt: ['$meta.total', 0],
 					},
@@ -312,9 +318,9 @@ export class DAOManager {
 		];
 		return {
 			pipeline: aggrPipeline,
-			async aggregate<T extends Document = any>(model: string) {
+			async aggregate<T extends Document = any>(model: string, allowDiskUse: boolean = false) {
 				const CollectionModel: Model<T> = Models[model];
-				const result = await CollectionModel.aggregate(aggrPipeline).exec(); return result[0];
+				const result = await CollectionModel.aggregate(aggrPipeline).allowDiskUse(allowDiskUse).exec(); return result[0];
 			},
 		};
 	}

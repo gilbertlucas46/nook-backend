@@ -719,7 +719,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				console.log('adminData', adminData);
+				// console.log('adminData', adminData);
 
 				const payload: AdminRequest.ISubscriptionList = {
 					...request.params as any,

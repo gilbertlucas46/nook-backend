@@ -182,6 +182,8 @@ export let propertyRoute: ServerRoute[] = [
 	},
 	/**
 	 * @description :Property List
+	 * @screens HomePage, For Rent, For Sale
+	 * @Device App
 	 */
 	{
 		method: 'GET',
@@ -241,7 +243,9 @@ export let propertyRoute: ServerRoute[] = [
 		},
 	},
 	/**
-	 * @description : near by peoperty listing based on the radius
+	 * @description :Property List
+	 * @screens Property Search Screen
+	 * @Device App
 	 */
 	{
 		method: 'GET',

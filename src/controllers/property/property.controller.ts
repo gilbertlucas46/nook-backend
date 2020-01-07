@@ -472,7 +472,7 @@ export class PropertyController {
 				// // if (payload.subscriptionId) {
 				// // 	step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
 				// // }
-				
+
 				// // if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 				// // 	payload.isFeatured = true;
 				// // }
