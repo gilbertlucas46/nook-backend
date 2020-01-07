@@ -280,9 +280,9 @@ class TransactionController extends BaseEntity {
 				case 'charge.failed':
 					await this.handleChargeFailed(step1, paymentIntent);
 					break;
-				// ... handle other event types
-				// default:
-				// 	console.log('Unexpected Event', event.type);
+				case 'charge.failed':
+					await this.handleChargeFailed(step1, paymentIntent);
+					break;
 
 				case 'customer.subscription.trial_will_end':
 					// await
