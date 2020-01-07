@@ -364,6 +364,7 @@ export class AgentClass extends BaseEntity {
                         faxNumber: { $first: '$faxNumber' },
                         companyName: { $first: '$companyName' },
                         address: { $first: '$address' },
+                        fullPhoneNumber: { $first: '$fullPhoneNumber' },
                         aboutMe: { $first: '$aboutMe' },
                         profilePicUrl: { $first: '$profilePicUrl' },
                         backGroundImageUrl: { $first: '$backGroundImageUrl' },
