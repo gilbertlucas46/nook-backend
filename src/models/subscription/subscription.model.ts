@@ -29,6 +29,7 @@ const subscriptionSchema = new Schema({
 		type: String, enum: [
 			CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
 			CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
+			'day'
 		], required: true,
 	},
 	// subscriptionType: {

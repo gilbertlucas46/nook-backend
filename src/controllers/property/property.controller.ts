@@ -188,7 +188,6 @@ export class PropertyController {
 			//     }
 			// ]);
 			const data = await ENTITY.PropertyE.getPropertyList(payload);
-			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 			return data;
 		} catch (err) {
 			utils.consolelog('error', err, true);
@@ -409,7 +408,7 @@ export class PropertyController {
 				payload.property_status['displayName'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.DISPLAY_NAME;
 			}
 
-			payload['userId'] = payload.property_added_by.userId;
+			// payload['userId'] = payload.property_added_by.userId;
 
 			// payload.property_added_by = {
 			// 	userId: adminData._id,
@@ -457,7 +456,9 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
+				payload.userId = payload.property_added_by.userId;
 				payload.property_basic_details.name = await payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+				console.log('payloadpayloadpayload', payload);
 				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
 				let data: any;
 				if (exist) {
