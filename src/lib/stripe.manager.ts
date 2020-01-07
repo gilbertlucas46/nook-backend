@@ -170,17 +170,14 @@ export class StripeManager {
 
 	async createPlan(payload, planInfo) {
 		try {
-
-			const data = await stripe.plans.create(
-				{
-					id: payload.planId,
-					amount: payload.amount,
-					currency: planInfo['currency'],
-					interval: 'month',
-					nickname: planInfo['nickname'],
-					product: { name: planInfo['product'] },
-				},
-			);
+			const data = await stripe.plans.create({
+				amount: payload.amount,
+				currency: planInfo['currency'],
+				interval: planInfo['interval'],
+				product: planInfo['product'],
+				nickname: planInfo['nickname'],
+				id: planInfo['id'],
+			});
 			return data;
 		} catch (error) {
 			return Promise.reject(error);

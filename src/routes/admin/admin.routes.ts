@@ -719,6 +719,8 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				console.log('adminData', adminData);
+
 				const payload: AdminRequest.ISubscriptionList = {
 					...request.params as any,
 					...request.payload as AdminRequest.ISubscriptionList,
@@ -745,7 +747,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					id: Joi.string().required(),
 				},
 				payload: {
-					planId: Joi.string(),
+					planId: Joi.string().required(),
 					// featuredType: Joi.string().valid([
 					// 	Constant.DATABASE.FEATURED_TYPE.FREE,
 					// 	Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
@@ -754,7 +756,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					// ]),
 					amount: Joi.number(),
 					description: Joi.string(),
-					plans: Joi.array().items(objectSchema),
+					// plans: Joi.array().items(objectSchema),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

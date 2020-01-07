@@ -145,21 +145,29 @@ export class AdminController {
 			const criteria = {
 				_id: payload.id,
 			};
-			delete payload['id'];
+			// delete payload['id'];
 			// const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
 			// return data;
-			if (payload.planId) {
-				const planInfo = await stripeService.getPlanInfo(payload);
-				console.log('planInfoplanInfoplanInfoplanInfo', planInfo);
-				// payload['product'] = planInfo.product;
-				const deletePlan = await stripeService.deletePlan(payload);
-				const createPlan = await stripeService.createPlan(payload, planInfo);
-				delete payload['planId'];
-				const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+			// if (payload.planId) {
+			const planInfo = await stripeService.getPlanInfo(payload);
+			console.log('planInfoplanInfoplanInfoplanInfo', planInfo, planInfo['id']);
+			// payload['product'] = planInfo.product;
 
-			}
+			// const deletePlan = await stripeService.deletePlan(payload);
+			const createPlan = await stripeService.createPlan(payload, planInfo);
+
+
+			// const getSubscriptionInfo = await ENTITY.SubscriptionPlanEntity.getOneEntity(criteria, {});
+			// console.log('getSubscriptionInfogetSubscriptionInfo', getSubscriptionInfo);
+
+			// delete payload['planId'];
+			// const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+			return;
+			// }
 
 		} catch (error) {
+			console.log('errorerror', error);
+
 			return Promise.reject(error);
 		}
 	}
