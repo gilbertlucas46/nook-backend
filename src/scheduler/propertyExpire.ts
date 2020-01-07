@@ -17,7 +17,8 @@ class ExpireE extends BaseEntity {
     async updateProperty() {
         try {
             const compareTime = new Date().setFullYear(new Date().getFullYear() - 1); // 1 year a
-            const compare = new Date().getTime() - (5 * 24 * 60 * 60 * 1000);
+            const compare = new Date();
+            compare.setFullYear(compare.getFullYear() + 1);
             const expireCriteria = {
                 //  updated at aaj ke ek saaal se jyada nhi hna chahiye
                 updatedAt: { $lt: compareTime },   // 31556926 are 1 year second
