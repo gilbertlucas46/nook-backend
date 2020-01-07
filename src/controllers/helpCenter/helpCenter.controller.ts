@@ -273,6 +273,9 @@ export class HelpCenter {
                     $ne: Types.ObjectId(id),
                 };
             }
+            const sortingType = {
+                title: 1,
+            }
             if (searchTerm) {
                 seacrhObject = {
                     // $and:{status:}
@@ -298,6 +301,7 @@ export class HelpCenter {
                 {
                     $match: seacrhObject,
                 },
+                { $sort: sortingType },
             ]
 
             const data = await ENTITY.HelpCenterE.aggregate(pipeline);
