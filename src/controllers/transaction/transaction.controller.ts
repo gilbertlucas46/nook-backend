@@ -269,25 +269,42 @@ class TransactionController extends BaseEntity {
 		try {
 			const event = payload;
 			const paymentIntent = event.data.object;
+			console.log('paymentIntentpaymentIntentpaymentIntent', paymentIntent);
+			console.log('event.typeevent.typeevent.type', event.type);
+
 			// Handle the event
 			switch (event.type) {
 				case 'charge.succeeded':
-					await this.handleChargeSucceeded(step1, paymentIntent);
+					console.log(1);
+
+					// await this.handleChargeSucceeded(step1, paymentIntent);
 					break;
 				case 'charge.pending':
-					await this.handleChargePending(step1, paymentIntent);
+					console.log(2);
+
+					// await this.handleChargePending(step1, paymentIntent);
 					break;
 				case 'charge.failed':
-					await this.handleChargeFailed(step1, paymentIntent);
+					console.log(3);
+
+					// await this.handleChargeFailed(step1, paymentIntent);
 					break;
 				case 'charge.failed':
-					await this.handleChargeFailed(step1, paymentIntent);
+					console.log(4);
+
+					// await this.handleChargeFailed(step1, paymentIntent);
 					break;
 
 				case 'customer.subscription.trial_will_end':
+					console.log(5);
+
 					// await
+					console.log('1111111111111');
+
 					break;
 				case 'customer.subscription.deleted':
+					console.log(6);
+
 					break;
 
 			}
