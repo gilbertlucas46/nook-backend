@@ -215,7 +215,7 @@ const propertySchema = new Schema({
 			enum: [
 				Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
 				Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-			],
+			], index: true,
 		},
 		property_for_string: {
 			type: String,
