@@ -19,7 +19,10 @@ export class AgentClass extends BaseEntity {
             const skip = (limit * (page - 1));
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-            const matchObject: any = {};
+            const matchObject: any = {
+                status: Constant.DATABASE.STATUS.USER.ACTIVE,
+            };
+            // matchObject['type'] !=;
             if (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
                 matchObject['isHomePageFeatured'] = true;
                 sortingType = {
