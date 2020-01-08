@@ -181,6 +181,17 @@ export class SubscriptionClass extends BaseEntity {
 		}
 	}
 
+
+	async updateSubscriptionStatus(paymentIntent) {
+		try {
+			// const data = await this.DAOManager()
+			// console.log('data>>>>>>>>>>>>>>>>>>>>>', data);
+			// return data;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 }
 
 export const SubscriptionE = new SubscriptionClass();
