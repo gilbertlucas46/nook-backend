@@ -299,7 +299,7 @@ class TransactionController extends BaseEntity {
 			const event = payload;
 			const paymentIntent = event.data.object;
 			console.log('paymentIntentpaymentIntentpaymentIntent', paymentIntent);
-			console.log('event.typeevent.typeevent.type', event.type);
+			console.log('jSON STRINFIFYoBJECT>>>>>>>>>>>>>>>>>>>>>>>>>>>', JSON.stringify(event));
 			// Handle the event
 			switch (event.type) {
 				case 'charge.succeeded':
