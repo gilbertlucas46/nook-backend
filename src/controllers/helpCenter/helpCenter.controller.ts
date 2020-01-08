@@ -193,6 +193,9 @@ export class HelpCenter {
                 query = {
                 };
             }
+            const sortingType = {
+                title: 1,
+            }
             // else {
             // return Constant.DATABASE.HELP_CENTER_TYPE;
             pipeline = [
@@ -209,7 +212,9 @@ export class HelpCenter {
                                 },
                             },
                             { $project: { _id: 1, title: 1, categoryId: 1 } },
+                            { $sort: sortingType },
                         ],
+
                         ACCOUNT: [{
                             $match: {
                                 categoryType: 'ACCOUNT',
@@ -219,6 +224,7 @@ export class HelpCenter {
                             },
                         },
                         { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        { $sort: sortingType },
                         ],
                         BILLING: [{
                             $match: {
@@ -229,6 +235,7 @@ export class HelpCenter {
                             },
                         },
                         { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        { $sort: sortingType },
                         ],
                         HOME_LOANS: [{
                             $match: {
@@ -239,10 +246,11 @@ export class HelpCenter {
                             },
                         },
                         { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        { $sort: sortingType },
                         ],
-
                     },
                 },
+
             ];
             const data = await ENTITY.HelpCenterE.aggregate(pipeline);
             return data[0];
@@ -264,6 +272,9 @@ export class HelpCenter {
                 query['_id'] = {
                     $ne: Types.ObjectId(id),
                 };
+            }
+            const sortingType = {
+                title: 1,
             }
             if (searchTerm) {
                 seacrhObject = {
@@ -290,6 +301,7 @@ export class HelpCenter {
                 {
                     $match: seacrhObject,
                 },
+                { $sort: sortingType },
             ]
 
             const data = await ENTITY.HelpCenterE.aggregate(pipeline);

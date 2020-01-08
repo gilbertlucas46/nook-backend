@@ -95,8 +95,9 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/property/{_id}',
 		async handler(request, h) {
 			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: PropertyRequest.PropertyDetail = request.params as any;
-				const propertyDetail = await UserService.propertyDetail(payload);
+				const propertyDetail = await UserService.propertyDetail(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -161,6 +162,8 @@ export let userRoute: ServerRoute[] = [
 			try {
 				// let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
 				const payload: UserRequest.ProfileUpdate = request.payload as any;
+				console.log('payloadpayloadpayload', payload);
+
 				const responseData = await UserService.updateProfile(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
 			} catch (error) {
@@ -171,7 +174,7 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'update user Profile',
 			tags: ['api', 'anonymous', 'user', 'update'],
-			// auth: 'UserAuth',
+			auth: 'UserAuth',
 			validate: {
 				payload: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
@@ -184,17 +187,17 @@ export let userRoute: ServerRoute[] = [
 						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
 					]),
-					title: Joi.string().allow(''),
-					license: Joi.string().allow(''),
-					taxnumber: Joi.string().allow(''),
-					faxNumber: Joi.string().allow(''),
-					fullPhoneNumber: Joi.string().allow(''),
-					language: Joi.string().allow(''),
-					companyName: Joi.string().allow(''),
-					address: Joi.string().allow(''),
-					aboutMe: Joi.string().allow(''),
-					profilePicUrl: Joi.string().allow(''),
-					backGroundImageUrl: Joi.string().allow(''),
+					title: Joi.string().trim().allow(null).allow(''),
+					license: Joi.string().allow('').allow(null),
+					taxnumber: Joi.string().allow('').allow(null),
+					faxNumber: Joi.string().allow('').allow(null),
+					fullPhoneNumber: Joi.string().allow('').allow(null),
+					language: Joi.string().allow('').allow(null),
+					companyName: Joi.string().allow('').allow(null),
+					address: Joi.string().allow('').allow(null),
+					aboutMe: Joi.string().allow('').allow(null),
+					profilePicUrl: Joi.string().allow('').allow(null),
+					backGroundImageUrl: Joi.string().allow('').allow(null),
 					specializingIn_property_type: Joi.array().items(
 						Joi.number().valid([
 							Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
@@ -211,7 +214,7 @@ export let userRoute: ServerRoute[] = [
 					),
 					serviceAreas: Joi.array().items(Joi.string()),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {

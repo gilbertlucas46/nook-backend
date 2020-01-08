@@ -132,6 +132,7 @@ export let adminProperty: ServerRoute[] = [
                             Constant.DATABASE.PRICE_LABEL.YEARLY,
                         ]),
                     },
+                    approvedAt: Joi.number().default(new Date().getTime()),
                     // userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
                     property_added_by: {
                         userName: Joi.string(),
