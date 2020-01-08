@@ -24,7 +24,7 @@ export class AgentClass extends BaseEntity {
             // };
             // matchObject['type'] !=;
             let matchObject: any = {};
-            matchObject['type'] = Constant.DATABASE.USER_TYPE.AGENT;
+            matchObject['type'] = Constant.DATABASE.USER_TYPE.AGENT.TYPE;
             matchObject['status'] = Constant.DATABASE.STATUS.USER.ACTIVE;
             if (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
                 matchObject['isHomePageFeatured'] = true;
