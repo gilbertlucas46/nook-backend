@@ -40,15 +40,16 @@ export class UserController {
 						type: payload.type,
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
-					const userResponse = UniversalFunctions.formatUserData(User);
+					// const userResponse = UniversalFunctions.formatUserData(User);
 					const mail = new MailManager();
 					const sendObj = {
 						receiverEmail: payload.email,
 						subject: 'nook welcomes you',
 						userName: payload.userName,
 					};
+					const token = ENTITY.UserE.createRegisterToken(User._id);
 					mail.welcomeMail(sendObj);
-					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
+					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 				}
 			}
 		} catch (error) {
@@ -385,6 +386,9 @@ export class UserController {
 		} catch (error) {
 			return Promise.reject(error);
 		}
+	}
+	async completeRegistration(token: string, data: object) {
+		return await ENTITY.UserE.completeRegisterProcess(token, data);
 	}
 }
 

@@ -93,3 +93,7 @@ export let decodeToken = async (token: string) => {
 		return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 	}
 };
+
+export let generateToken = (data): string => {
+	return Jwt.sign(data, cert, { algorithm: 'HS256' });
+};
