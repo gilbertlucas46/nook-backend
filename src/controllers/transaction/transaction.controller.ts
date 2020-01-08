@@ -57,6 +57,8 @@ class TransactionController extends BaseEntity {
 			// console.log('step1step1step1', step1);
 			// payload['amount'] = amount;
 			// const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
+			console.log('payloadpayloadpayloadpayloadpayloadpayload', payload);
+
 			const getUserCriteria = {
 				_id: userData._id,
 			};
@@ -67,6 +69,8 @@ class TransactionController extends BaseEntity {
 				'plans.planId': payload.planId,
 			};
 			const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {});
+			console.log('checkplancheckplancheckplan', checkplan);
+
 			if (!checkplan) {
 				return Promise.reject('not in Db');
 			}
@@ -110,10 +114,12 @@ class TransactionController extends BaseEntity {
 
 					// if (createSubscript.status === 'active') {
 					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
-						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
+						console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>@2222222222222222222');
+						await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
 					}
 					if (checkplan['featuredType'] === 'PROFILE') {
-						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
+						console.log('22222222222222222222222222222222222222222');
+						await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
 					}
 					// }
 					const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
@@ -194,12 +200,18 @@ class TransactionController extends BaseEntity {
 						subscriptionId: createSubscript.id,
 						planId: createSubscript['plan']['id'],
 					};
+					console.log('11111111111111111111111111111111111111111111111111');
+
 					// if (checkplan.nickname === Constant.)
 					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
-						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
+						console.log('?>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
+						await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
 					}
 					if (checkplan['featuredType'] === 'PROFILE') {
-						ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
+						console.log('2222222222222222222222222222222222222222222222222222');
+
+						await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
 					}
 					// ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: 'true' });
 					const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
@@ -261,35 +273,71 @@ class TransactionController extends BaseEntity {
 		return {};
 	}
 
-	async webhook(payload) {
-		const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
-		console.log('step1step1step1step1step1step1step1step1step1step1', step1);
+	async updateSubscriptionStatus(paymentIntent) {
+		//  if(paymentIntent.status==='active')
+		// await ENTITY.SubscriptionE.updateSubscriptionStatus(paymentIntent)
 
-		const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: step1._id, webhookObject: payload });
+		// await ENTITY.WebhookE.createOneEntity()
+		const getUser = {
+			stripeId: paymentIntent['customer'],
+		};
+		const getUserInfo = await ENTITY.UserE.getOneEntity(getUser, {});
+		console.log('getUserInfogetUserInfogetUserInfo', getUserInfo);
+
+		// console.log('getUserInfogetUserInfogetUserInfo', getUserInfo);
+
+		// const getUserInfo()
+		// await ENTITY.SubscriptionE
+	}
+
+	async webhook(payload) {
+		// const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
+		// console.log('step1step1step1step1step1step1step1step1step1step1', step1);
+
+		// const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: step1._id, webhookObject: payload });
 		try {
 			const event = payload;
 			const paymentIntent = event.data.object;
+			console.log('paymentIntentpaymentIntentpaymentIntent', paymentIntent);
+			console.log('event.typeevent.typeevent.type', event.type);
 			// Handle the event
 			switch (event.type) {
 				case 'charge.succeeded':
-					await this.handleChargeSucceeded(step1, paymentIntent);
+					console.log(1);
+
+					// await this.handleChargeSucceeded(step1, paymentIntent);
 					break;
 				case 'charge.pending':
-					await this.handleChargePending(step1, paymentIntent);
+					console.log(2);
+
+					// await this.handleChargePending(step1, paymentIntent);
 					break;
 				case 'charge.failed':
-					await this.handleChargeFailed(step1, paymentIntent);
+					console.log(3);
+
+					// await this.handleChargeFailed(step1, paymentIntent);
 					break;
-				// ... handle other event types
-				// default:
-				// 	console.log('Unexpected Event', event.type);
+				case 'charge.failed':
+					console.log(4);
+
+					// await this.handleChargeFailed(step1, paymentIntent);
+					break;
 
 				case 'customer.subscription.trial_will_end':
+					console.log(5);
+
 					// await
+					console.log('1111111111111');
+
 					break;
 				case 'customer.subscription.deleted':
+					console.log(6);
+
 					break;
 
+				case 'customer.subscription.updated':
+					console.log('77777777777777777777777777777777');
+					await this.updateSubscriptionStatus(paymentIntent);
 			}
 			return {};
 

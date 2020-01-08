@@ -145,6 +145,16 @@ export class EnquiryController {
             return Promise.reject(error);
         }
     }
+
+    async adminGetEnquiryList(payload) {
+        try {
+            const data = await ENTITY.EnquiryE.adminEnquiryList(payload);
+            return data;
+
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 
 export let EnquiryService = new EnquiryController();

@@ -125,8 +125,8 @@ export interface IProperty extends Document {
 const propertySchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true, auto: true },
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User', index: true },
-	createdAt: { type: Number, required: true },
-	updatedAt: { type: Number, required: true },
+	createdAt: { type: Number, required: true, index: true },
+	updatedAt: { type: Number, required: true, index: true },
 	propertyId: { type: Number },
 	property_features: {
 		storeys_2: { type: Boolean, default: false },
@@ -215,7 +215,7 @@ const propertySchema = new Schema({
 			enum: [
 				Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
 				Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-			],
+			], index: true,
 		},
 		property_for_string: {
 			type: String,

@@ -110,9 +110,9 @@ export class UserController {
 	 * @payload payload :PropertyDetail
 	 * return Proeperty Data
 	 */
-	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
+	async propertyDetail(payload: PropertyRequest.PropertyDetail, userData) {
 		try {
-			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
+			const getPropertyData = await ENTITY.PropertyE.userPropertyDetail(payload._id, userData);
 			// if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
 			// 	return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
 			// }
@@ -332,7 +332,6 @@ export class UserController {
 			// console.log('step1step1', step1);
 
 			const step2 = await ENTITY.UserE.userDashboad(userData);
-			console.log('step2step2step2>>>>>>>>>>>>>>.', step2);
 			// step2.isFeaturedProfile = step1 ? true : false;
 			return step2;
 		} catch (error) {

@@ -74,10 +74,12 @@ const helpCenterSchema = new Schema({
         firstName: { type: String },
         actionTime: { type: Number },
     }],
-    createdAt: { type: Number, required: true },
-    updatedAt: { type: Number, required: true },
+    createdAt: { type: Number, required: true, index: true },
+    updatedAt: { type: Number, required: true, index: true },
 }, {
         versionKey: false,
     });
 
 export let HelpCentre = model<IHelpCenter>('helpcenter', helpCenterSchema);
+
+helpCenterSchema.index({ title: -1 })

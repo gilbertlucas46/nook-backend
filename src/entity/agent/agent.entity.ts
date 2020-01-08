@@ -19,112 +19,73 @@ export class AgentClass extends BaseEntity {
             const skip = (limit * (page - 1));
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-            const matchObject: any = {};
+            // const matchObject: any = {
+            //     status: Constant.DATABASE.STATUS.USER.ACTIVE,
+            // };
+            // matchObject['type'] !=;
+            let matchObject: any = {};
+            matchObject['type'] = Constant.DATABASE.USER_TYPE.AGENT.TYPE;
+            matchObject['status'] = Constant.DATABASE.STATUS.USER.ACTIVE;
             if (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
                 matchObject['isHomePageFeatured'] = true;
                 sortingType = {
-                    isHomePageFeatured: 1,
+                    createdAt: -1,
                 };
             } else {
-                matchObject['type'] = 'AGENT';
                 sortingType = {
                     isHomePageFeatured: -1,
                     isFeaturedProfile: -1,
-                    createdAt: -sortType,
+                    createdAt: -1,
                 };
             }
-
-            let searchCriteria = {};
-            if (searchTerm) {
-                if (searchBy === 'company') {
-                    searchCriteria = {
-                        $match: { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                    };
-                }
-                else if (searchBy === 'location') {
-                    // db call
-                    searchCriteria = {
-                        $match: { 'cityData.name': new RegExp('.*' + searchTerm + '.*', 'i') },
-                    };
-                } else if (searchBy === 'name') {
-                    searchCriteria = {
-                        $match: {
-                            $or: [
-                                { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            ],
-                        },
-                    };
-                } else {
-                    searchCriteria = {
-                        $match: {
-                            $or: [
-                                { email: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { title: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { license: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { taxNumber: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { faxNumber: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { aboutMe: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            ],
-                        },
-
-                    };
-                }
-            }
-            else {
-                searchCriteria = {
-                    $match: {
-                    },
-                };
-            }
-
-            // if (!sortBy) {
-            //     sortingType = {
-            //         isHomePageFeatured: sortType,
-            //         isFeaturedProfile: sortType,
-            //         createdAt: sortType,
-            //     };
-            // }
-
-            // if (sortBy) {
-            //     switch (sortBy) {
-            //         case 'date':
-            //             sortBy = 'date';
-            //             sortingType = {
-            //                 createdAt: sortType,
-            //             };
-            //             break;
-            //         default:
-            //             // sortBy = 'isFeaturedProfile';
-            //             sortingType = {
-            //                 isFeaturedProfile: sortType,
-            //             };
-            //             break;
-            //     }
-            // }
-
             if (specializingIn_property_type) matchObject['specializingIn_property_type'] = specializingIn_property_type;
             if (specializingIn_property_category) matchObject['specializingIn_property_category'] = { $in: specializingIn_property_category };
             // if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
             if (cityId) matchObject['serviceAreas'] = { $in: [new Types.ObjectId(cityId)] };
 
             // Date filters
-            if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
-            if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
-            if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
+            if (fromDate && toDate) { matchObject['createdAt'] = { $gte: fromDate, $lte: toDate }; }
+            if (fromDate && !toDate) { matchObject['createdAt'] = { $gte: fromDate }; }
+            if (!fromDate && toDate) { matchObject['createdAt'] = { $lte: toDate }; }
+
+            if (searchTerm) {
+                const regExp = new RegExp(searchTerm, 'gi');
+                const $or: object[] = [];
+                if (searchBy === 'company') {
+                    $or.push({ companyName: regExp });
+                }
+                else if (searchBy === 'location') {
+                    // db call
+                    $or.push({ 'cityData.name': regExp });
+                } else if (searchBy === 'name') {
+                    $or.push(
+                        { userName: regExp },
+                        { firstName: regExp },
+                        { lastName: regExp },
+                    );
+                } else {
+                    $or.push(
+                        { email: regExp },
+                        { userName: regExp },
+                        { firstName: regExp },
+                        { lastName: regExp },
+                        { title: regExp },
+                        { license: regExp },
+                        { taxNumber: regExp },
+                        { faxNumber: regExp },
+                        { aboutMe: regExp },
+                    );
+                }
+                matchObject = {
+                    $and: [
+                        matchObject,
+                        { $or },
+                    ],
+                };
+            }
 
             const query = [
                 { $match: matchObject },
-                {
-                    $unwind: {
-                        path: '$serviceAreas',
-                        preserveNullAndEmptyArrays: true,
-                    },
-                },
                 {
                     $lookup: {
                         from: 'cities',
@@ -133,57 +94,24 @@ export class AgentClass extends BaseEntity {
                             {
                                 $match: {
                                     $expr: {
-                                        $eq: ['$_id', '$$cityId'],
+                                        $in: ['$_id', '$$cityId'],
                                     },
                                 },
                             },
                             {
                                 $project: {
                                     name: 1,
-                                    _id: 1,
+                                    cityId: '$_id',
                                 },
                             },
                         ],
-                        as: 'cityData',
+                        as: 'city',
                     },
                 },
                 {
-                    $unwind: {
-                        path: '$cityData',
-                        preserveNullAndEmptyArrays: true,
-                    },
-                },
-                searchCriteria,
-
-                {
-                    $group: {
-                        _id: '$_id',
-                        firstName: { $first: '$firstName' },
-                        userName: { $first: '$userName' },
-                        email: { $first: '$email' },
-                        middleName: { $first: '$middleName' },
-                        createdAt: { $first: '$createdAt' },
-                        phoneNumber: { $first: '$phoneNumber' },
-                        type: { $first: '$type' },
-                        title: { $first: '$title' },
-                        license: { $first: '$license' },
-                        taxNumber: { $first: '$taxNumber' },
-                        faxNumber: { $first: '$faxNumber' },
-                        companyName: { $first: '$companyName' },
-                        address: { $first: '$address' },
-                        aboutMe: { $first: '$aboutMe' },
-                        profilePicUrl: { $first: '$profilePicUrl' },
-                        backGroundImageUrl: { $first: '$backGroundImageUrl' },
-                        specializingIn_property_type: { $first: '$specializingIn_property_type' },
-                        specializingIn_property_category: { $first: '$specializingIn_property_category' },
-                        isFeaturedProfile: { $first: '$isFeaturedProfile' },
-                        lastName: { $first: '$lastName' },
-                        city: {
-                            $push: {
-                                cityId: '$cityData._id',
-                                cityName: '$cityData.name',
-                            },
-                        },
+                    $project: {
+                        password: 0,
+                        serviceAreas: 0,
                     },
                 },
                 // {
@@ -222,6 +150,9 @@ export class AgentClass extends BaseEntity {
                 // },
                 { $sort: sortingType },
             ];
+
+            console.log('queryqueryquery', query);
+
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -335,13 +266,20 @@ export class AgentClass extends BaseEntity {
                             {
                                 $project: {
                                     name: 1,
-                                    _id: 1,
+                                    cityId: '$_id',
                                 },
                             },
                         ],
                         as: 'cityData',
                     },
                 },
+                {
+                    $project: {
+                        password: 0,
+                        serviceAreas: 0,
+                    },
+                },
+
                 {
                     $unwind: {
                         path: '$cityData',
@@ -364,6 +302,7 @@ export class AgentClass extends BaseEntity {
                         faxNumber: { $first: '$faxNumber' },
                         companyName: { $first: '$companyName' },
                         address: { $first: '$address' },
+                        fullPhoneNumber: { $first: '$fullPhoneNumber' },
                         aboutMe: { $first: '$aboutMe' },
                         profilePicUrl: { $first: '$profilePicUrl' },
                         backGroundImageUrl: { $first: '$backGroundImageUrl' },
@@ -380,35 +319,35 @@ export class AgentClass extends BaseEntity {
                         },
                     },
                 },
-                {
-                    $lookup: {
-                        from: 'subscriptions',
-                        let: { userId: '$_id' },
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROFILE] }],
-                                    },
-                                },
-                            },
-                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-                            {
-                                $project: {
-                                    _id: 1,
-                                },
-                            },
-                        ],
-                        as: 'subscriptions',
-                    },
-                },
-                {
-                    $addFields: {
-                        isFeaturedProfile: {
-                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
-                        },
-                    },
-                },
+                // {
+                //     $lookup: {
+                //         from: 'subscriptions',
+                //         let: { userId: '$_id' },
+                //         pipeline: [
+                //             {
+                //                 $match: {
+                //                     $expr: {
+                //                         $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROFILE] }],
+                //                     },
+                //                 },
+                //             },
+                //             { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+                //             {
+                //                 $project: {
+                //                     _id: 1,
+                //                 },
+                //             },
+                //         ],
+                //         as: 'subscriptions',
+                //     },
+                // },
+                // {
+                //     $addFields: {
+                //         isFeaturedProfile: {
+                //             $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                //         },
+                //     },
+                // },
                 {
                     $project: {
                         subscriptions: 0,

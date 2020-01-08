@@ -188,7 +188,6 @@ export class PropertyController {
 			//     }
 			// ]);
 			const data = await ENTITY.PropertyE.getPropertyList(payload);
-			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 			return data;
 		} catch (err) {
 			utils.consolelog('error', err, true);
@@ -457,6 +456,7 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
+				payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
 				payload.userId = payload.property_added_by.userId;
 				payload.property_basic_details.name = await payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
 				console.log('payloadpayloadpayload', payload);
@@ -468,17 +468,18 @@ export class PropertyController {
 				} else {
 					data = await ENTITY.PropertyE.createOneEntity(payload);
 				}
-				let step1;
-				if (payload.subscriptionId) {
-					step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
-				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-					payload.isFeatured = true;
-				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
-					payload.isHomePageFeatured = true;
-				}
-				const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
+				// let step1;
+				// // if (payload.subscriptionId) {
+				// // 	step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
+				// // }
+
+				// // if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+				// // 	payload.isFeatured = true;
+				// // }
+				// if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+				// 	payload.isHomePageFeatured = true;
+				// }
+				// const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
 				return data;
 			}
 		} catch (error) {
