@@ -583,5 +583,45 @@ export let userRoute: ServerRoute[] = [
 			},
 		},
 	},
-
+	{
+		method: 'PATCH',
+		path: '/v1/user/complete-registration',
+		async handler(request, h) {
+			try {
+				const { token } = request.query;
+				await UserService.completeRegistration(token as string, request.payload as object);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Complete registration second step',
+			tags: ['api', 'anonymous', 'user', 'complete registration'],
+			auth: 'DoubleAuth',
+			validate: {
+				query: {
+					token: Joi.string().required(),
+				},
+				payload: {
+					firstName: Joi.string().trim().min(3).max(30).required(),
+					lastName: Joi.string().trim().min(3).max(30).required(),
+					phoneNumber: Joi.string().trim().min(7).max(15).required(),
+					type: Joi.string().trim().valid([
+						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+					]).required(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	}
 ];
