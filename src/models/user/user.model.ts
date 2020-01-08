@@ -63,9 +63,10 @@ const userSchema = new Schema({
 			CONSTANT.DATABASE.STATUS.USER.DELETE,
 		],
 		default: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+		index: true,
 	},
-	createdAt: { type: Number, required: true },
-	updatedAt: { type: Number, required: true },
+	createdAt: { type: Number, required: true, index: true },
+	updatedAt: { type: Number, required: true, index: true },
 	type: {
 		type: String,
 		enum: [
@@ -75,6 +76,7 @@ const userSchema = new Schema({
 			// CONSTANT.DATABASE.USER_TYPE.GUEST.TYPE,
 		],
 		default: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
+		index: true,
 	},
 	isProfileComplete: { type: Boolean, default: false },
 	passwordResetToken: { type: String },
@@ -87,6 +89,7 @@ const userSchema = new Schema({
 			CONSTANT.DATABASE.PROPERTY_FOR.RENT.NUMBER,
 			CONSTANT.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 		],
+		index: true,
 	}],
 	stripeId: { type: String },
 	specializingIn_property_category: [{
@@ -98,7 +101,9 @@ const userSchema = new Schema({
 			CONSTANT.DATABASE.PROPERTY_TYPE.LAND,
 			CONSTANT.DATABASE.PROPERTY_TYPE.ROOM,
 		],
-	}],
+		index: true,
+	},
+	],
 	serviceAreas: [{
 		type: Schema.Types.ObjectId, ref: 'City',  // Refer to city schema
 	}],
@@ -108,3 +113,5 @@ const userSchema = new Schema({
 );
 
 export let User = model<IUser>('User', userSchema);
+
+// userSchema.index({ isHomePageFeatured: -1, isFeaturedProfile: -1, createdAt: 1, updatedAt: 1 });
