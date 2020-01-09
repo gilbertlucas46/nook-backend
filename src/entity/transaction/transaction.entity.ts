@@ -99,30 +99,30 @@ export class TransactionClass extends BaseEntity {
 	// 	}
 	// }
 
-	// async invoiceList(payload: TransactionRequest.InvoiceList, userData) {
-	// 	try {
-	// 		const { page, limit, featuredType, fromDate, toDate } = payload;
+	async invoiceList(payload: TransactionRequest.InvoiceList, userData) {
+		try {
+			const { page, limit, featuredType, fromDate, toDate } = payload;
 
-	// 		const query: any = {};
-	// 		query.userId = Types.ObjectId(userData._id);
-	// 		// query.status = 'active';
-	// 		if (featuredType) {
-	// 			query['featuredType'] = featuredType;
-	// 		}
-	// 		if (fromDate && toDate) { query.createdAt = { $gte: fromDate, $lte: toDate }; }
-	// 		if (fromDate && !toDate) { query.createdAt = { $gte: fromDate }; }
-	// 		if (!fromDate && toDate) { query.createdAt = { $lte: toDate }; }
+			const query: any = {};
+			query.userId = Types.ObjectId(userData._id);
+			// query.status = 'active';
+			if (featuredType) {
+				query['featuredType'] = featuredType;
+			}
+			if (fromDate && toDate) { query.createdAt = { $gte: fromDate, $lte: toDate }; }
+			if (fromDate && !toDate) { query.createdAt = { $gte: fromDate }; }
+			if (!fromDate && toDate) { query.createdAt = { $lte: toDate }; }
 
-	// 		const pipeline = [
-	// 			{ $match: query },
-	// 		];
-	// 		const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-	// 		return data;
-	// 	} catch (error) {
-	// 		utils.consolelog('Error', error, true);
-	// 		return Promise.reject(error);
-	// 	}
-	// }
+			const pipeline = [
+				{ $match: query },
+			];
+			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+			return data;
+		} catch (error) {
+			utils.consolelog('Error', error, true);
+			return Promise.reject(error);
+		}
+	}
 
 	// async invoiceDetails(payload: TransactionRequest.Id) {
 	// 	try {
