@@ -387,6 +387,7 @@ export class PropertyController {
 
 	async adminAddProperty(payload, adminData) {
 		try {
+
 			let result;
 			let propertyAction;
 			const promiseArray = [];
@@ -402,7 +403,7 @@ export class PropertyController {
 			payload.property_address.location['type'] = 'Point';
 
 			if (!payload.propertyId) {
-				// payload.property_status = {};
+				payload.property_status = {};
 				payload.property_status['number'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
 				payload.property_status['status'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.TYPE;
 				payload.property_status['displayName'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.DISPLAY_NAME;
@@ -456,10 +457,8 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
-				payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
 				payload.userId = payload.property_added_by.userId;
 				payload.property_basic_details.name = await payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
-				console.log('payloadpayloadpayload', payload);
 				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
 				let data: any;
 				if (exist) {
