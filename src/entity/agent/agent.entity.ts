@@ -12,98 +12,80 @@ export class AgentClass extends BaseEntity {
     async getAgent(payload: AgentRequest.SearchAgent) {
         try {
             let { page, limit, sortType, sortBy } = payload;
-            const {
-                // fromDate, toDate,
-                byCity, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
-            const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? Constant.DATABASE.FEATURED_TYPE.HOMEPAGE : Constant.DATABASE.FEATURED_TYPE.PROFILE;
+            const { fromDate, toDate, byCity, cityId, specializingIn_property_type, searchBy, searchTerm, specializingIn_property_category, soldProperty, screenType } = payload;
+            const featuredType = (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) ? Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE : Constant.DATABASE.FEATURED_TYPE.PROFILE;
             if (!limit) { limit = SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
-            const matchObject: any = {};
-            matchObject['type'] = 'AGENT';
-            let searchCriteria: any;
-            if (searchTerm) {
-                if (searchBy === 'company') {
-                    searchCriteria = {
-                        $match:
-                            { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                    };
-                }
-                else if (searchBy === 'location') {
-                    searchCriteria = {
-                        $match:
-                            { address: new RegExp('.*' + searchTerm + '.*', 'i') },
-                    };
-                } else if (searchBy === 'name') {
-                    searchCriteria = {
-                        $match:
-                        {
-                            $or: [
-                                { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                                { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            ],
-                        },
-                    };
-                }
-            }
-            else {
-                searchCriteria = {
-                    $match: {
-                    },
+            // const matchObject: any = {
+            //     status: Constant.DATABASE.STATUS.USER.ACTIVE,
+            // };
+            // matchObject['type'] !=;
+            let matchObject: any = {};
+            matchObject['type'] = Constant.DATABASE.USER_TYPE.AGENT.TYPE;
+            matchObject['status'] = Constant.DATABASE.STATUS.USER.ACTIVE;
+            if (screenType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+                matchObject['isHomePageFeatured'] = true;
+                sortingType = {
+                    createdAt: -1,
                 };
-            }
-
-            if (sortBy) {
-                switch (sortBy) {
-                    case 'date':
-                        sortBy = 'date';
-                        sortingType = {
-                            createdAt: sortType,
-                        };
-                        break;
-                    default:
-                        // sortBy = 'isFeaturedProfile';
-                        sortingType = {
-                            isFeaturedProfile: sortType,
-                        };
-                        break;
-                }
             } else {
                 sortingType = {
-                    isFeaturedProfile: sortType,
+                    isHomePageFeatured: -1,
+                    isFeaturedProfile: -1,
+                    createdAt: -1,
                 };
             }
-            if (specializingIn_property_type) {
-                matchObject['specializingIn_property_type'] =
-                    specializingIn_property_type;
+            if (specializingIn_property_type) matchObject['specializingIn_property_type'] = specializingIn_property_type;
+            if (specializingIn_property_category) matchObject['specializingIn_property_category'] = { $in: specializingIn_property_category };
+            // if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
+            if (cityId) matchObject['serviceAreas'] = { $in: [new Types.ObjectId(cityId)] };
+
+            // Date filters
+            if (fromDate && toDate) { matchObject['createdAt'] = { $gte: fromDate, $lte: toDate }; }
+            if (fromDate && !toDate) { matchObject['createdAt'] = { $gte: fromDate }; }
+            if (!fromDate && toDate) { matchObject['createdAt'] = { $lte: toDate }; }
+
+            if (searchTerm) {
+                const regExp = new RegExp(searchTerm, 'gi');
+                const $or: object[] = [];
+                if (searchBy === 'company') {
+                    $or.push({ companyName: regExp });
+                }
+                else if (searchBy === 'location') {
+                    // db call
+                    $or.push({ 'cityData.name': regExp });
+                } else if (searchBy === 'name') {
+                    $or.push(
+                        { userName: regExp },
+                        { firstName: regExp },
+                        { lastName: regExp },
+                    );
+                } else {
+                    $or.push(
+                        { email: regExp },
+                        { userName: regExp },
+                        { firstName: regExp },
+                        { lastName: regExp },
+                        { title: regExp },
+                        { license: regExp },
+                        { taxNumber: regExp },
+                        { faxNumber: regExp },
+                        { aboutMe: regExp },
+                    );
+                }
+                matchObject = {
+                    $and: [
+                        matchObject,
+                        { $or },
+                    ],
+                };
             }
 
-            // if (specializingIn_property_category) {
-            //     matchObject['specializingIn_property_category'] =
-            //         { $in: specializingIn_property_category };
-            // }
-
-            if (cityId) { matchObject['_id'] = Types.ObjectId(cityId); }
-            if (byCity) {
-                matchObject['serviceAreas'] = { $in: [Types.ObjectId(cityId)] };
-            }
-            // // Date filters
-            // if (fromDate && toDate) { matchObject.$match['createdAt'] = { $gte: fromDate, $lte: toDate }; }
-            // if (fromDate && !toDate) { matchObject.$match['createdAt'] = { $gte: fromDate }; }
-            // if (!fromDate && toDate) { matchObject.$match['createdAt'] = { $lte: toDate }; }
             const query = [
                 { $match: matchObject },
-                { $skip: skip },
-                { $limit: limit },
-                {
-                    $unwind: {
-                        path: '$serviceAreas',
-                        preserveNullAndEmptyArrays: true,
-                    },
-                },
                 {
                     $lookup: {
                         from: 'cities',
@@ -112,93 +94,65 @@ export class AgentClass extends BaseEntity {
                             {
                                 $match: {
                                     $expr: {
-                                        $eq: ['$_id', '$$cityId'],
+                                        $in: ['$_id', '$$cityId'],
                                     },
                                 },
                             },
                             {
                                 $project: {
                                     name: 1,
-                                    _id: 1,
+                                    cityId: '$_id',
                                 },
                             },
                         ],
-                        as: 'cityData',
-                    },
-                },
-                {
-                    $unwind: {
-                        path: '$cityData',
-                        preserveNullAndEmptyArrays: true,
-                    },
-                },
-                {
-                    $group: {
-                        _id: '$_id',
-                        firstName: { $first: '$firstName' },
-                        userName: { $first: '$userName' },
-                        email: { $first: '$email' },
-                        middleName: { $first: '$middleName' },
-                        createdAt: { $first: '$createdAt' },
-                        phoneNumber: { $first: '$phoneNumber' },
-                        type: { $first: '$type' },
-                        title: { $first: '$title' },
-                        license: { $first: '$license' },
-                        taxNumber: { $first: '$taxNumber' },
-                        faxNumber: { $first: '$faxNumber' },
-                        companyName: { $first: '$companyName' },
-                        address: { $first: '$address' },
-                        aboutMe: { $first: '$aboutMe' },
-                        profilePicUrl: { $first: '$profilePicUrl' },
-                        backGroundImageUrl: { $first: '$backGroundImageUrl' },
-                        specializingIn_property_type: { $first: '$specializingIn_property_type' },
-                        specializingIn_property_category: { $first: '$specializingIn_property_category' },
-                        isFeaturedProfile: { $first: '$isFeaturedProfile' },
-                        lastName: { $first: '$lastName' },
-                        city: {
-                            $push: {
-                                cityId: '$cityData._id',
-                                cityName: '$cityData.name',
-                            },
-                        },
-                    },
-                },
-                {
-                    $lookup: {
-                        from: 'subscriptions',
-                        let: { userId: '$_id' },
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }],
-                                    },
-                                },
-                            },
-                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-                            {
-                                $project: {
-                                    _id: 1,
-                                },
-                            },
-                        ],
-                        as: 'subscriptions',
-                    },
-                },
-                {
-                    $addFields: {
-                        isFeaturedProfile: {
-                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
-                        },
+                        as: 'city',
                     },
                 },
                 {
                     $project: {
-                        subscriptions: 0,
+                        password: 0,
+                        serviceAreas: 0,
                     },
                 },
+                // {
+                //     $lookup: {
+                //         from: 'subscriptions',
+                //         let: { userId: '$_id' },
+                //         pipeline: [
+                //             {
+                //                 $match: {
+                //                     $expr: {
+                //                         $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', featuredType] }],
+                //                     },
+                //                 },
+                //             },
+                //             { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+                //             {
+                //                 $project: {
+                //                     _id: 1,
+                //                 },
+                //             },
+                //         ],
+                //         as: 'subscriptions',
+                //     },
+                // },
+                // {
+                //     $addFields: {
+                //         isFeaturedProfile: {
+                //             $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                //         },
+                //     },
+                // },
+                // {
+                //     $project: {
+                //         subscriptions: 0,
+                //     },
+                // },
                 { $sort: sortingType },
             ];
+
+            console.log('queryqueryquery', query);
+
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -312,13 +266,20 @@ export class AgentClass extends BaseEntity {
                             {
                                 $project: {
                                     name: 1,
-                                    _id: 1,
+                                    cityId: '$_id',
                                 },
                             },
                         ],
                         as: 'cityData',
                     },
                 },
+                {
+                    $project: {
+                        password: 0,
+                        serviceAreas: 0,
+                    },
+                },
+
                 {
                     $unwind: {
                         path: '$cityData',
@@ -341,6 +302,7 @@ export class AgentClass extends BaseEntity {
                         faxNumber: { $first: '$faxNumber' },
                         companyName: { $first: '$companyName' },
                         address: { $first: '$address' },
+                        fullPhoneNumber: { $first: '$fullPhoneNumber' },
                         aboutMe: { $first: '$aboutMe' },
                         profilePicUrl: { $first: '$profilePicUrl' },
                         backGroundImageUrl: { $first: '$backGroundImageUrl' },
@@ -348,6 +310,7 @@ export class AgentClass extends BaseEntity {
                         specializingIn_property_category: { $first: '$specializingIn_property_category' },
                         isFeaturedProfile: { $first: '$isFeaturedProfile' },
                         lastName: { $first: '$lastName' },
+                        isHomePageFeatured: { $first: '$isHomePageFeatured' },
                         city: {
                             $push: {
                                 cityId: '$cityData._id',
@@ -356,35 +319,35 @@ export class AgentClass extends BaseEntity {
                         },
                     },
                 },
-                {
-                    $lookup: {
-                        from: 'subscriptions',
-                        let: { userId: '$_id' },
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROFILE] }],
-                                    },
-                                },
-                            },
-                            { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-                            {
-                                $project: {
-                                    _id: 1,
-                                },
-                            },
-                        ],
-                        as: 'subscriptions',
-                    },
-                },
-                {
-                    $addFields: {
-                        isFeaturedProfile: {
-                            $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
-                        },
-                    },
-                },
+                // {
+                //     $lookup: {
+                //         from: 'subscriptions',
+                //         let: { userId: '$_id' },
+                //         pipeline: [
+                //             {
+                //                 $match: {
+                //                     $expr: {
+                //                         $and: [{ $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROFILE] }],
+                //                     },
+                //                 },
+                //             },
+                //             { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+                //             {
+                //                 $project: {
+                //                     _id: 1,
+                //                 },
+                //             },
+                //         ],
+                //         as: 'subscriptions',
+                //     },
+                // },
+                // {
+                //     $addFields: {
+                //         isFeaturedProfile: {
+                //             $cond: { if: { $eq: ['$subscriptions', []] }, then: false, else: true },
+                //         },
+                //     },
+                // },
                 {
                     $project: {
                         subscriptions: 0,

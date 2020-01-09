@@ -1,10 +1,10 @@
-import { Schema, model } from 'mongoose';
-import * as CONSTANT from '@src/constants';
-import { EMPLOYMENT_TENURE } from '@src/constants';
+import { Schema, Document, model, Types } from 'mongoose';
+import * as CONSTANT from './../../constants';
+import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../constants';
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
-    saveAsDraft: { type: Schema.Types.Boolean, default: false },
+    // saveAsDraft: { type: Schema.Types.Boolean, default: false },
     applicationStatus: {
         type: Schema.Types.String, enum: Object.values(CONSTANT.DATABASE.LOAN_APPLICATION_STATUS),
         default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,

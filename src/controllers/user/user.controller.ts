@@ -5,12 +5,11 @@ import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
 import * as Jwt from 'jsonwebtoken';
-const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import * as request from 'request';
-const pswdCert: string = config.get('forgetPwdjwtSecret');
+const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 
 export class UserController {
 	/**
@@ -41,15 +40,16 @@ export class UserController {
 						type: payload.type,
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
-					const userResponse = UniversalFunctions.formatUserData(User);
+					// const userResponse = UniversalFunctions.formatUserData(User);
 					const mail = new MailManager();
 					const sendObj = {
 						receiverEmail: payload.email,
 						subject: 'nook welcomes you',
 						userName: payload.userName,
 					};
+					const token = ENTITY.UserE.createRegisterToken(User._id);
 					mail.welcomeMail(sendObj);
-					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
+					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 				}
 			}
 		} catch (error) {
@@ -79,7 +79,7 @@ export class UserController {
 					if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
 						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
 					}
-					if (userData.status === Constant.DATABASE.STATUS.USER.DELETED) {
+					if (userData.status === Constant.DATABASE.STATUS.USER.DELETE) {
 						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
 					}
 					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
@@ -110,13 +110,13 @@ export class UserController {
 	 * @payload payload :PropertyDetail
 	 * return Proeperty Data
 	 */
-	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
+	async propertyDetail(payload: PropertyRequest.PropertyDetail, userData) {
 		try {
-			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
-			if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
-			}
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
+			const getPropertyData = await ENTITY.PropertyE.userPropertyDetail(payload._id, userData);
+			// if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
+			// 	return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
+			// }
+			if (!getPropertyData) { return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {}); }
 			return getPropertyData;
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -151,6 +151,7 @@ export class UserController {
 						firstName: updateUser.firstName,
 						lastName: updateUser.lastName,
 						userType: updateUser.type,
+						email: getUser.email,
 					},
 					isProfileComplete: true,
 				};
@@ -171,7 +172,6 @@ export class UserController {
 
 			request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
 				if (err) { return console.log(err); }
-				console.log('body ----', body);
 			});
 
 			return updateUser;
@@ -306,7 +306,10 @@ export class UserController {
 			};
 			const today: any = new Date();
 			const diffMs = (today - checkAlreadyUsedToken.passwordResetTokenExpirationTime);
+			console.log('diffMinsdiffMins', diffMs);
 			const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes in negative minus
+			console.log('diffMinsdiffMinsdiffMins', diffMins);
+
 			if (diffMins > 0) { return Promise.reject('Time_Expired'); }
 			else {
 				const updatePassword = await ENTITY.UserE.updateOneEntity({ email: result }, updatePswd);
@@ -325,9 +328,11 @@ export class UserController {
 	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
-			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
+			// const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
+			// console.log('step1step1', step1);
+
 			const step2 = await ENTITY.UserE.userDashboad(userData);
-			step2.isFeaturedProfile = step1 ? true : false;
+			// step2.isFeaturedProfile = step1 ? true : false;
 			return step2;
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -359,6 +364,7 @@ export class UserController {
 			const criteria = { _id: userData._id };
 			const dataToUpdate = { type: payload.userType };
 			const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
+
 			const accessToken = await ENTITY.UserE.createToken(payload, data);
 			// await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
 			const formatedData = utils.formatUserData(data);
@@ -368,6 +374,20 @@ export class UserController {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
+	}
+
+	async featureDashboard(userData) {
+		try {
+			const step1 = await ENTITY.SubscriptionE.checkFeaturePropertyCount(userData);
+			// const step2 = await ENTITY.UserE.userDashboad(userData);
+			// step2.isFeaturedProfile = step1 ? true : false;
+			return step1;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+	async completeRegistration(token: string, data: object) {
+		return await ENTITY.UserE.completeRegisterProcess(token, data);
 	}
 }
 

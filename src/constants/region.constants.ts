@@ -29,6 +29,306 @@ export const REGIONS: Location.RegionLocation[] = [
 				name: 'Tabuk City',
 				location: { type: 'Point', coordinates: [0, 0] },
 			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bangued',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Boliney',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bucay',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bucloc',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Daguioman',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Danglas',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Dolores',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'La Paz',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lacub',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lagangilang',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lagayan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Langiden',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Licuan-Baay (Licuan)',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Luba',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Malibcong',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Manabo',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Peñarrubia',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pidigan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pilar',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sallapadan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'San Isidro',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'San Juan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'San Quintin',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tayum',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tineg',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tubo',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Villaviciosa',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Calanasan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Conner',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Flora',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kabugao',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Luna',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pudtol',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Santa Marcela',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Atok',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bakun',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bokod',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Buguias',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Itogon',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kabayan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kapangan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kibungan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'La Trinidad',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Mankayan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sablan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tuba',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tublay',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aguinaldo',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alfonso Lista (Potia)',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Asipulo',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Banaue',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Hingyon',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Hungduan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kiangan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lagawe',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lamut',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Mayoyao',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tinoc',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Balbalan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lubuagan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pasil',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pinukpuk',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Rizal (Liwan)',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tanudan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tinglayan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Barlig',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bauko',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Besao',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bontoc',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Natonin',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Paracelis',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sabangan',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sadanga',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sagada',
+			},
+			{
+				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tadian',
+			},
 		],
 	},
 	{
@@ -533,7 +833,7 @@ export const REGIONS: Location.RegionLocation[] = [
 				location: { type: 'Point', coordinates: [0, 0] },
 			},
 			{
-				name: 'Parañaque',
+				name: 'Parañaque City',
 				images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQA9EKl0ayBD5dZ93IPz01dESu9-3QofSy88U8jXIkKVkVx6x9d',
 					'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRv_wSaTY8lvQrf42tzceLMa1iPP01VfEbFcDNvOmfFKRVDC0t9',
 					'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR7m3toPejIri5M9B61luStIBMz9_RCPzJoNYL_DInBnYUUEWjj',
@@ -688,7 +988,7 @@ export const REGIONS: Location.RegionLocation[] = [
 				},
 			},
 			{
-				name: 'Pasay',
+				name: 'Pasay City',
 				location: { type: 'Point', coordinates: [0, 0] },
 				images: ['https://explore.traveloka.com/wp-v1/wp-content/uploads/2017/05/Star-City-Facade-Design.jpg',
 					'https://3.bp.blogspot.com/-KayQnEOLksg/XJERwyWKWEI/AAAAAAABPoM/SjpIFv6lysobAYsqofW1FGJU7-rQV2o4gCLcBGAs/s1600/star%2Bcity.jpg',
@@ -842,7 +1142,7 @@ export const REGIONS: Location.RegionLocation[] = [
 				},
 			},
 			{
-				name: 'Pasig',
+				name: 'Pasig City',
 				location: { type: 'Point', coordinates: [0, 0] },
 				subTitle: 'The Green City',
 				isFeatured: true,
@@ -1174,7 +1474,7 @@ export const REGIONS: Location.RegionLocation[] = [
 				location: { type: 'Point', coordinates: [0, 0] },
 			},
 			{
-				name: 'Taguig',
+				name: 'Taguig City',
 				location: { type: 'Point', coordinates: [0, 0] },
 				subTitle: 'Metro Manila\'s ProbinSyudad',
 				isFeatured: true,
@@ -1859,8 +2159,155 @@ export const REGIONS: Location.RegionLocation[] = [
 				location: { type: 'Point', coordinates: [0, 0] },
 			},
 			{
-				name: 'Mandaue City',
+				name: 'MANDAUE CITY',
 				location: { type: 'Point', coordinates: [0, 0] },
+				subTitle: 'Industrial Capital of Southern Philippines',
+				isFeatured: true,
+				mapUrl: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d125598.4977306913!2d123.945011!3d10.345639!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a99889680ceefd%3A0xa9f911a1f5dda572!2sMandaue%20City%2C%20Cebu!5e0!3m2!1sen!2sph!4v1576216353137!5m2!1sen!2sph',
+				description: 'Mandaue City is located on the central-eastern coastal region of Cebu. Its southwest coast borders Mactan Island where Lapu-Lapu City is located and is connected to the island via two bridges: the Mactan-Mandaue Bridge and Marcelo Fernan Bridge. Mandaue City is bounded on the north by the town of Consolacion, to the east by the Camotes Sea, and to the west and south by Cebu City.\n\n It is one of three highly urbanized cities on Cebu island and forms a part of the Cebu Metropolitan area and is part of the Sixth District of Cebu joined with the municipalities of Consolacion and Cordova. Although qualified for a lone district since 1991, this was neglected by lawmakers. However, as of 5 April 2019, President Duterte recently signed a law declaring this city as a lone legislative district.',
+				directory: {
+					medical: [
+						{
+							name: 'CHONG HUA HOSPITAL',
+							address: 'Mantawe Ave, Tipolo, Mandaue City, Cebu',
+							email: 'customerservice@chonghua.com.ph',
+							website: 'http://www.chonghua.com.ph/',
+							telephone: '(032) 233 8000',
+							locationUrl: 'https://goo.gl/maps/kkm32G6ed2Rc7Wbs5',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/chong-hua-hospital-100x100.jpg',
+						},
+						{
+							name: 'UNIVERSITY OF CEBU MEDICAL CENTER – UCMED',
+							address: 'A1 Ouano Avenue, Mandaue City, 6014 Cebu',
+							email: 'info@ucmed.ph',
+							website: 'https://ucmed.ph/',
+							telephone: '(032) 517-0888',
+							locationUrl: 'https://g.page/ucmedofficial?share',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/UCMED-100x100.jpg',
+						},
+						{
+							name: 'SEAMAN’S HOSPITAL CEBU AMOSUP PTGWO ITF',
+							address: 'Plaridel St, Mandaue City, 6014 Cebu',
+							email: '',
+							website: 'https://www.practo.com/taguig/hospital/fort-bonifacio-general-hospital-makati-city-2',
+							telephone: '(032) 236 4773',
+							locationUrl: 'https://goo.gl/maps/Wu6Q9aYemjjFdA4T6',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/Seamens-Hospital-Cebu-Amosup-PTGWO-ITF-100x100.jpg',
+						},
+						{
+							name: 'EVERSLEY CHILDS SANITARIUM AND GENERAL HOSPITAL',
+							address: 'Upper Jagobiao Rd, Mandaue City, Cebu',
+							email: '',
+							website: '',
+							telephone: '(032) 346 2468',
+							locationUrl: 'https://goo.gl/maps/c66geVHDrZrqRZEw8',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/Eversley-Childs-Sanitarium-100x100.jpg',
+						},
+						{
+							name: 'VICENTE GULLAS MEMORIAL HOSPITAL',
+							address: 'Gov Cuenco Ave, Cebu City, Cebu',
+							email: 'http://www.phap-ph.org/Members/view/vicente_gullas_memorial_hospital',
+							website: 'http://www.phap-ph.org/Members/view/vicente_gullas_memorial_hospital',
+							telephone: '(032) 346 9292',
+							locationUrl: 'https://goo.gl/maps/knWJF9JCPqjHwM6i7',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/Vicente-Gullas-Memorial-Hospital-100x100.jpg',
+						},
+					],
+					shopping: [
+						{
+							name: 'NORTHDRIVE MALL',
+							address: 'Ouano Avenue, Tipolo, Mandaue City, Cebu',
+							email: '',
+							website: 'https://www.facebook.com/elinlanddev/posts/northdrive-malls-grand-opening/1840219042721689/',
+							telephone: '(032) 234 9227',
+							locationUrl: 'https://goo.gl/maps/MDbCvXnXGovnZwtJ8',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/NorthDrive-Mall-Mandaue-City-100x100.jpg',
+						},
+						{
+							name: 'GAISANO GRAND MALL MANDAUE CENTRO',
+							address: 'A. Del Rosario St, Mandaue City, 6014 Cebu',
+							email: '',
+							website: 'https://gaisanograndmalls.com/',
+							telephone: ' (032) 520 6040',
+							locationUrl: 'https://goo.gl/maps/LSbQceY43wfS8pCt6A',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/Gaisano-Grand-Mall-Mandaue-Centro-1-100x100.jpg',
+						},
+						{
+							name: 'J CENTRE MALL',
+							address: '165 A. S. Fortuna St, Mandaue City, 6014 Cebu',
+							email: 'marketing@jcentrecebu.com',
+							website: 'http://jcentrecebu.com/',
+							telephone: '(032) 266 8888',
+							locationUrl: 'https://goo.gl/maps/PmnFKdnpVC9hi6fa6',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/J-Centre-Mall-100x100.jpg',
+						},
+						{
+							name: 'PARKMALL',
+							address: 'Ouano Avenue, Mandaue Reclamation Area, Tipolo, Mandaue City, 6014 Cebu',
+							email: 'info@your-domain.com',
+							website: 'https://parkmallcebu.com/',
+							telephone: '(032) 344 7817',
+							locationUrl: 'https://goo.gl/maps/JgvJ59UETrRPv4TZ6',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/PARKMALL-100x100.jpg',
+						},
+						{
+							name: 'INSULAR SQUARE',
+							address: '31 Central Nautical Hwy, Mandaue City, 6014 Cebu',
+							email: '',
+							website: 'https://www.facebook.com/InsularSquare/',
+							telephone: '(032) 346 8824',
+							locationUrl: 'https://goo.gl/maps/JdLEnMFNSNuy8VKt5',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/INSULAR-MALL-100x100.jpg',
+						},
+					],
+					others: [
+						{
+							name: 'TRADEMARK BAR AND LOUNGE',
+							address: 'Meerea High Street, Ouano Ave., NRA, Mandaue City, Cebu',
+							email: '',
+							website: '',
+							telephone: '+639171237387',
+							locationUrl: 'https://goo.gl/maps/m1zNSTFA27ZUvqjj8',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/Trademark-Bar-and-Lounge-100x100.jpg',
+						},
+						{
+							name: 'SLABADU',
+							address: '880 Hernan Cortes St, Tipolo, Mandaue City, Cebu',
+							email: '',
+							website: 'https://www.facebook.com/slabaducafeandbistro/',
+							telephone: '(032) 345 4581',
+							locationUrl: 'https://goo.gl/maps/bwd4JWYiC1gsJdz9A',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/SLABADU-100x100.jpg',
+						},
+						{
+							name: 'HI-FI FAMILY KTV CEBU',
+							address: 'City Time Square, Mantawe Ave, Mandaue City, 6014 Cebu',
+							email: '',
+							website: 'http://hififamilyktvcebu.com/#contact-us',
+							telephone: ' (032) 505 2094',
+							locationUrl: 'https://goo.gl/maps/g58XrRco5eodKqwS8',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/Hi-Fi-Family-KTV-Cebu-100x100.jpg',
+						},
+						{
+							name: 'MO2 RESTOBAR CEBU',
+							address: '6014 Cebu N Rd, Tipolo, Mandaue City, 6014 Cebu',
+							email: '',
+							website: '',
+							telephone: '+639173206262',
+							locationUrl: 'https://goo.gl/maps/oLD8L2ipX8doNEe28',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/MO2-Restobar-Cebu-100x100.jpg',
+						},
+						{
+							name: 'JAM CENTRAL',
+							address: 'P.Remedio Street, 356-A A. S. Fortuna St, Mandaue City, 6014 Cebu',
+							email: '',
+							website: 'https://www.facebook.com/jamcentralph',
+							telephone: '(032) 384 4291',
+							locationUrl: 'https://goo.gl/maps/t73AnmgtXRkis4gx6',
+							imageUrl: 'https://www.nook.com.ph/wp-content/uploads/2019/10/Jam-Central-100x100.jpg',
+						},
+					],
+				},
 			},
 			{
 				name: 'Naga City',
@@ -2090,4 +2537,5 @@ export const REGIONS: Location.RegionLocation[] = [
 			},
 		],
 	},
+
 ];

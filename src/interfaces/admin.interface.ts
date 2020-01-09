@@ -155,8 +155,11 @@ export namespace AdminRequest {
 
 	export interface IadminUpdatePermission {
 		id: string;
-		permission: [object];
-		status: string;
+		permission?: [object];
+		status?: string;
+		firstName?: string;
+		lastName?: string;
+		phoneNumber?: string;
 	}
 
 	export interface IcreateUser {
@@ -203,7 +206,7 @@ export namespace AdminRequest {
 	export interface IGetUSerList {
 		page: number;
 		limit: number;
-		sortBy: string; // allow('createdAt'),
+		sortBy: string;
 		status: string;
 		type: string;
 		sortType: number;
@@ -211,5 +214,102 @@ export namespace AdminRequest {
 		fromDate: number;
 		toDate: number;
 		userId?: string;
+		isByAdmin?: boolean;
+	}
+
+	export interface IaddProperty {
+		propertyId?: string;
+		createdAt?: number;
+		updatedAt?: number;
+		userId?: string;
+		property_added_by: {
+			userName: string;
+			phoneNumber: string;
+			userId: string;
+			profilePicUrl?: string;
+			firstName?: string;
+			lastName?: string;
+			email: string,
+			middleName?: string;
+			userType?: string
+		};
+		property_status?: object;
+		propertyActions?: object[];
+		property_features: {
+			storeys_2?: boolean;
+			security_24hr?: boolean;
+			air_conditioning?: boolean;
+			balcony?: boolean;
+			basketball_court?: boolean;
+			business_center?: boolean;
+			carpark?: boolean;
+			CCTV_monitoring?: boolean;
+			child_playground?: boolean;
+			clothes_dryer?: boolean;
+			club_house?: boolean;
+			day_care?: boolean;
+			den?: boolean;
+			fully_furnished?: boolean;
+			function_Room?: boolean;
+			garden?: boolean;
+			gym?: boolean;
+			laundry?: boolean;
+			loft?: boolean;
+			maids_room?: boolean;
+			microwave?: boolean;
+			parking?: boolean;
+			pet_friendly?: boolean;
+			refrigerator?: boolean;
+			semi_furnished?: boolean;
+			sky_deck?: boolean;
+			spa?: boolean;
+			swimming_pool?: boolean;
+			tennis_court?: boolean;
+			TV_cable?: boolean;
+			unfurnished?: boolean;
+			washing_machine?: boolean;
+			wiFi?: boolean;
+		};
+		property_details: {
+			floor_area?: number,
+			lot_area?: number,
+			bedrooms?: number,
+			bathrooms?: number,
+			garages?: number,
+			garage_size?: number,
+			buildYear?: number,
+		};
+		property_address: {
+			address: string,
+			region: string,
+			city: string,
+			barangay: string,
+			location: any,
+		};
+		property_basic_details: {
+			title?: string
+			description?: string
+			type?: string
+			property_for_number?: number
+			// property_for_type: Joi.string(),
+			label?: string
+			sale_rent_price?: number,
+			price_currency?: string,
+			price_label?: string,
+			property_for_string?: any,
+			property_for_displayName?: any;
+		};
+		isFeatured: boolean;
+		isHomePageFeatured: boolean;
+		subscriptionId?: string;
+		propertyImages: string[];
+	}
+
+	export interface ISubscriptionList {
+		id?: string;
+		planId: string;
+		featuredType?: string;
+		plans?: object[];
+		description?: string;
 	}
 }

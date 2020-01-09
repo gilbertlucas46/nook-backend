@@ -3,6 +3,7 @@ import * as Constant from '@src/constants/app.constant';
 import { Types } from 'mongoose';
 import { MailManager } from '@src/lib';
 import { AdminRequest } from '@src/interfaces/admin.interface';
+import { Utils } from 'handlebars';
 
 /**
  * @author
@@ -16,7 +17,7 @@ class AdminUserE extends BaseEntity {
     async getUserList(payload: AdminRequest.IGetUSerList) {
         try {
             let { page, limit, sortBy, sortType } = payload;
-            const { searchTerm, userId, type, status, fromDate, toDate } = payload;
+            const { searchTerm, userId, type, status, fromDate, toDate, isByAdmin } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             let sortingType = {};
@@ -36,13 +37,17 @@ class AdminUserE extends BaseEntity {
                             { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
                             { middleName: new RegExp('.*' + searchTerm + '.*', 'i') },
                             { lastName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { title: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { phoneNumber: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                            { aboutMe: new RegExp('.*' + searchTerm + '.*', 'i') },
                         ],
                     },
                 };
+                if (!isByAdmin) {
+                    searchCriteria['$match']['$or'].push(
+                        { title: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        { phoneNumber: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        { companyName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        { aboutMe: new RegExp('.*' + searchTerm + '.*', 'i') },
+                    );
+                }
             } else {
                 searchCriteria = {
                     $match: {
@@ -96,12 +101,6 @@ class AdminUserE extends BaseEntity {
                         break;
                 }
             }
-            // else {
-            //     sortBy = 'updatedAt';
-            //     sortingType = {
-            //         createdAt: sortType,
-            //     };
-            // }
             if (!status) {
                 matchObject.$match = {
                     $or: [{
@@ -115,6 +114,9 @@ class AdminUserE extends BaseEntity {
 
             if (userId) { matchObject.$match._id = Types.ObjectId(userId); }
             if (type) { matchObject.$match['type'] = type; }
+            if (isByAdmin) {
+                matchObject.$match['type'] = { $ne: Constant.DATABASE.USER_TYPE.TENANT.TYPE };
+            }
             if (status) { matchObject.$match['status'] = status; }
 
             // Date filters
@@ -141,12 +143,14 @@ class AdminUserE extends BaseEntity {
                         firstName: 1,
                         middleName: 1,
                         // userId: '$_id',
+                        lastName: 1,
                         status: 1,
                     },
                 },
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (error) {
+            console.log('errorerrorerrorerror', error)
             return Promise.reject(error);
         }
     }

@@ -10,11 +10,11 @@ export interface IWebhook extends Document {
 export const webhookSchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true, auto: true },
 	transactionId: { type: Schema.Types.ObjectId, ref: 'Transaction', required: true },
-	webhookObject: {},
+	webhookObject: { type: Schema.Types.Mixed },
 	createdAt: { type: Number, required: true },
 	updatedAt: { type: Number, required: true },
 }, {
-	versionKey: false,
-});
+		versionKey: false,
+	});
 
 export const Webhook = model<IWebhook>('Webhook', webhookSchema);

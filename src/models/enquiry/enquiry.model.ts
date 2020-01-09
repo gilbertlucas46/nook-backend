@@ -18,19 +18,12 @@ export interface IEnquiry extends Document {
 }
 
 const enquirySchema = new Schema({
-    // _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     userId: { type: Schema.Types.ObjectId, ref: 'User', allow: '' },
     propertyId: { type: Schema.Types.ObjectId, ref: 'Property', index: true },
     email: { type: String, index: true },
     propertyOwnerId: { type: Schema.Types.ObjectId, index: true },
     name: { type: String, required: true },
-    userType: {
-        type: String,
-        // enum: [
-        //     CONSTANT.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
-        //     CONSTANT.DATABASE.ENQUIRY_TYPE.REGISTERED_USER.NUMBER,
-        // ], index: true,
-    },
+    userType: { type: String },
     phoneNumber: { type: String, index: true },
     message: { type: String },
     agentId: { type: Schema.Types.ObjectId },
@@ -53,8 +46,7 @@ const enquirySchema = new Schema({
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
 }, {
-        versionKey: false,
-    });
+    versionKey: false,
+});
 
-// enquirySchema.index({ userId: 1, propertyId: 1 }, { unique: true });
 export let Enquiry = model<IEnquiry>('Enquiry', enquirySchema);

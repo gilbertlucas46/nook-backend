@@ -18,7 +18,8 @@ const objectSchema = Joi.object({
 		CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 		CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
 		CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
-
+		CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
+		CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
 	]).required(),
 	accessLevel: Joi.number().valid([CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE]).default(2),
 });
@@ -31,8 +32,15 @@ export let subAdminRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: AdminRequest.IaddSubAdmin = request.payload as AdminRequest.IaddSubAdmin;
+
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.STAFF;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+				}
 				const registerResponse = await AdminStaffController.createStaff(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {}));
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
@@ -78,14 +86,17 @@ export let subAdminRoutes: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Create staff member',
-			tags: ['api', 'anonymous', 'Admin', 'staff_member'],
+			description: 'update staff member',
+			tags: ['api', 'anonymous', 'Admin', 'staff_member', 'update'],
 			auth: 'AdminAuth',
 			validate: {
 				params: {
 					id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				payload: {
+					firstName: Joi.string().min(1).max(32),
+					lastName: Joi.string().min(1).max(32),
+					phoneNumber: Joi.string().min(7).max(15),
 					permission: Joi.array().items(objectSchema).min(1).unique(),
 					status: Joi.string().valid([
 						CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
@@ -119,7 +130,7 @@ export let subAdminRoutes: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Create staff member',
+			description: 'staff resend request',
 			tags: ['api', 'anonymous', 'Admin', 'staff_member'],
 			auth: 'AdminAuth',
 			validate: {
@@ -195,17 +206,14 @@ export let subAdminRoutes: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Get Admin Profile',
-			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			description: 'Get Admin Staff',
+			tags: ['api', 'anonymous', 'admin', 'staff'],
 			auth: 'AdminAuth',
 			validate: {
 				query: {
 					page: Joi.number(),
 					limit: Joi.number(),
-					sortBy: Joi.string().allow('createdAt'),
-					// permission: Joi.string().valid([
-					// 	CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
-					// ]).required(),
+					sortBy: Joi.string().allow('updatedAt'),
 					permissionType: Joi.string().valid([
 						CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
 						CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTIES,
@@ -214,6 +222,10 @@ export let subAdminRoutes: ServerRoute[] = [
 						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+						CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
+						CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
+						CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
+						CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
 					]),
 					status: Joi.string().valid([
 						CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,

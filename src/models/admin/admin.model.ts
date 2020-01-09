@@ -73,13 +73,14 @@ export const AdminSchema = new Schema(
 					CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 					CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
 					CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
+					CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
+					CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
 				],
 			},
 			accessLevel: { type: Number, enum: [CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE] },
-
 		}],
-		createdAt: { type: Number, required: true },
-		updatedAt: { type: Number, required: true },
+		createdAt: { type: Number, required: true, index: true },
+		updatedAt: { type: Number, required: true, index: true },
 		type: {
 			type: String,
 			enum: [

@@ -3,6 +3,10 @@ import { Routes } from './src/routes';
 import { plugins } from './src/plugins';
 import * as Bootstrap from './src/utils/bootstrap';
 import * as config from 'config';
+// import * as Constant from './src/constants';
+// import * as cron from 'node-cron';
+// import * as ENTITY from './src/entity';
+import { ExpireServices, job1 } from './src/scheduler/propertyExpire';
 
 // let env = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'default';
 
@@ -29,6 +33,8 @@ const originArray: string[] = [
 	'http://10.10.8.213:4200',
 
 ];
+
+
 const server = new Server({
 	port: config.get('port'),
 	routes: {
@@ -58,11 +64,11 @@ const init = async () => {
 		},
 	});
 
-
 	server.route(Routes);
 	await server.start();
 	const db = new Bootstrap.Bootstrap();
 	await db.bootstrap();
+	ExpireServices.updateProperty();
 };
 
 init().then(_ => {

@@ -22,4 +22,14 @@ export namespace loanReferralRequest {
         fromDate?: number;
         toDate?: number;
     }
+
+    export interface IAdminLoanReferral {
+        page: number;
+        limit: number;
+        sortBy?: string;
+        sortType?: number;
+        searchTerm: string;
+        fromDate?: number;
+        toDate?: number;
+    }
 }

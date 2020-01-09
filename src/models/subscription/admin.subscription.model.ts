@@ -9,12 +9,14 @@ const adminSubcription = new Schema({
         enum: [
             CONSTANT.DATABASE.FEATURED_TYPE.PROFILE,
             CONSTANT.DATABASE.FEATURED_TYPE.PROPERTY,
-            CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE,
+            CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
+            CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
             CONSTANT.DATABASE.FEATURED_TYPE.FREE,
         ],
     },
     plans: [
         {
+            planId: { type: String },
             billingType: {
                 type: String, enum: [
                     CONSTANT.DATABASE.BILLING_TYPE.YEARLY,

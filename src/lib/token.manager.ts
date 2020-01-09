@@ -5,8 +5,10 @@ import * as Constant from '../constants';
 import * as Jwt from 'jsonwebtoken';
 import * as ENTITY from '../entity';
 import * as UniversalFunctions from '../utils';
-const cert: any = config.get('jwtSecret');
+const cert: any = config.get('jwtSecret.app.accessToken');
+const adminCert: string = config.get('jwtSecret.admin.accessToken');
 import * as utils from '../utils';
+
 export let setToken = async (tokenData: any) => {
 	if (!tokenData.id || !tokenData.tokenType) {
 		return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
@@ -58,7 +60,7 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 
 export let verifyAdminToken = async (token, tokenType, request?: any) => {
 	try {
-		const result: any = Jwt.verify(token, cert, { algorithms: ['HS256'] });
+		const result: any = Jwt.verify(token, adminCert, { algorithms: ['HS256'] });
 		if (!result) { return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN; }
 		const adminData: any = {};
 		const criteria = { _id: result._id };
@@ -90,4 +92,8 @@ export let decodeToken = async (token: string) => {
 	} else {
 		return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 	}
+};
+
+export let generateToken = (data): string => {
+	return Jwt.sign(data, cert, { algorithm: 'HS256' });
 };

@@ -126,6 +126,7 @@ export let loanRoute: ServerRoute[] = [
 				const data = await LoanController.addLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -195,15 +196,9 @@ export let loanRoute: ServerRoute[] = [
 					},
 
 					applicationStatus: Joi.string().valid([
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
-					]),
-
+					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value),
 					bankInfo: Joi.object().keys({
 						iconUrl: Joi.string(),
 						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
@@ -480,7 +475,17 @@ export let loanRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					saveAsDraft: Joi.boolean().required(),
+					// saveAsDraft: Joi.boolean().required(),
+					applicationStatus: Joi.string().valid([
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value),
+
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
@@ -734,7 +739,7 @@ export let loanRoute: ServerRoute[] = [
 		options: {
 			description: 'get abnk images data shufedl',
 			tags: ['api', 'anonymous', 'user', 'shuffle', 'banks'],
-			auth: 'UserAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				failAction: UniversalFunctions.failActionFunction,
 			},

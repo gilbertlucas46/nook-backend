@@ -9,7 +9,7 @@ class CityController {
      * @param payload
      */
 
-    async popularCities(payload: PropertyRequest.IPaginate) {
+    async popularCities(payload: PropertyRequest.PopularCity)  {
         try {
             return await ENTITY.cityEntity.getPopularCity(payload);
         } catch (error) {

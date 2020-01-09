@@ -7,7 +7,7 @@ import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Constant from '../../constants/app.constant';
 import * as utils from 'src/utils';
-import { add } from 'winston';
+
 class LoanControllers extends BaseEntity {
 
     /**
@@ -114,9 +114,11 @@ class LoanControllers extends BaseEntity {
 
     async updateLoanApplication(payload: LoanRequest.AddLoan) {
         try {
-            if (payload.saveAsDraft) {
-                payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value;
-            }
+            // if (payload.saveAsDraft) {
+            //     payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value;
+            // } else {
+            //     payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value;
+            // }
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return data['referenceId'];
         } catch (error) {
@@ -162,9 +164,9 @@ class LoanControllers extends BaseEntity {
      * return []
      */
 
-    async adminLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
+    async adminLoansList(payload: LoanRequest.IGetAdminLoanList, adminData) {
         try {
-            return await ENTITY.LoanApplicationEntity.getAdminLoanList(payload, userData);
+            return await ENTITY.LoanApplicationEntity.getAdminLoanList(payload, adminData);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -228,11 +230,7 @@ class LoanControllers extends BaseEntity {
     async loanShuffle() {
         try {
             const bankList = await this.DAOManager.findAll('Bank', {}, { bankName: 1, iconUrl: 1, bannerUrl: 1, logoUrl: 1 });
-            bankList.sort(shufflefunc);
-            function shufflefunc(a: {}, b: {}) {
-                return 0.5 - Math.random();
-            }
-            return bankList;
+            return bankList.sort(() => 0.5 - Math.random());
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
