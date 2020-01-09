@@ -295,6 +295,8 @@ class TransactionController extends BaseEntity {
 		// console.log('step1step1step1step1step1step1step1step1step1step1', step1);
 
 		// const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: step1._id, webhookObject: payload });
+		const addWebhook = await ENTITY.WebhookE.createOneEntity({ webhookObject: payload });
+		console.log('addWebhookaddWebhook>>>>>>>>>>>>>>>>>>>>>>', addWebhook);
 		try {
 			const event = payload;
 			const paymentIntent = event.data.object;
