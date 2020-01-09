@@ -203,6 +203,8 @@ export class PropertyClass extends BaseEntity {
 			];
 
 			const getPropertyData = await this.DAOManager.aggregateData(this.modelName, criteria, {});
+			console.log('getPropertyData', getPropertyData);
+
 			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
 			return getPropertyData[0];
 		} catch (error) {

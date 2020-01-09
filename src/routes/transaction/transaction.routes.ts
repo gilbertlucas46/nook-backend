@@ -104,8 +104,8 @@ export let transactionRoute: ServerRoute[] = [
 		handler: async (request: any, h: ResponseToolkit) => {
 			try {
 				const query: TransactionRequest.Id = request.query;
-				const data = await transactionController.invoiceDetails(query);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				// const data = await transactionController.invoiceDetails(query);
+				// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
@@ -133,7 +133,6 @@ export let transactionRoute: ServerRoute[] = [
 		path: '/v1/transaction/webhook',
 		handler: async (request, h: ResponseToolkit) => {
 			const payload = request.payload;
-			console.log('payloadpayloadpayloadpayload>>>>>>>>>>>>>>>>', payload);
 			try {
 				const data = await transactionController.webhook(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
