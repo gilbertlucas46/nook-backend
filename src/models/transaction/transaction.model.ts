@@ -26,29 +26,19 @@ export interface ITransaction extends Document {
 }
 
 export const transactionSchema = new Schema({
-	// _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-	transactionId: { type: String, index: true, required: true }, // balance_transaction
+	// transactionId: { type: String, index: true, required: true }, // balance_transaction
 	subscriptionId: { type: Schema.Types.ObjectId, ref: 'Subscription' },
 	amount: { type: Number, required: true },
 	currency: { type: String, required: true },
-	// chargeId: { type: String, index: true, required: true },
-	// cardId: { type: String, required: true },
-	// receiptUrl: { type: String, required: true },
+
 	description: { type: String },
 	status: { type: String, required: true },
 	billingType: { type: String },
 	productId: { type: String },
-	receiptUrl: { type: String },
-	// enum: [
-	// 	CONSTANT.DATABASE.TRANSACTION_STATUS.SUCCEEDED,
-	// 	CONSTANT.DATABASE.TRANSACTION_STATUS.PENDING,
-	// 	CONSTANT.DATABASE.TRANSACTION_STATUS.FAILED,
-	// ],
-	// default: '',
-	// },
+	// receiptUrl: { type: String },
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
 	featuredType: { type: String, required: true },
-	address: { type: String, required: true },
+	// address: { type: String, required: true },
 	invoiceNo: { type: String },
 	// featuredType: {
 	// 	type: String,
@@ -62,7 +52,7 @@ export const transactionSchema = new Schema({
 	// billingType: {
 	// 	type: String,
 	// 	enum: [
-	// 		CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
+	// CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
 	// 		CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
 	// 	],
 	// 	required: true,
