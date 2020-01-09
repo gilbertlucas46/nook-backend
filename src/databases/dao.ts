@@ -284,14 +284,14 @@ export class DAOManager {
 		return q;
 	}
 
-	paginatePipeline(matchPipeline: object[], options: { page: number, limit: number }, pipeline: object[]) {
+	paginatePipeline(matchPipeline: object[], options: { page: number, limit: number, skip?: number }, pipeline: object[]) {
 		const aggrPipeline = [
 			...matchPipeline,
 			{
 				$facet: {
 					data: [
 						{
-							$skip: (options.page - 1) * options.limit,
+							$skip: options.skip || (options.page - 1) * options.limit,
 						}, {
 							$limit: options.limit,
 						},
@@ -304,6 +304,12 @@ export class DAOManager {
 			}, {
 				$project: {
 					data: 1,
+					page: {
+						$literal: options.page,
+					},
+					limit: {
+						$literal: options.limit,
+					},
 					total: {
 						$arrayElemAt: ['$meta.total', 0],
 					},
@@ -312,9 +318,9 @@ export class DAOManager {
 		];
 		return {
 			pipeline: aggrPipeline,
-			async aggregate<T extends Document = any>(model: string) {
+			async aggregate<T extends Document = any>(model: string, allowDiskUse: boolean = false) {
 				const CollectionModel: Model<T> = Models[model];
-				const result = await CollectionModel.aggregate(aggrPipeline).exec(); return result[0];
+				const result = await CollectionModel.aggregate(aggrPipeline).allowDiskUse(allowDiskUse).exec(); return result[0];
 			},
 		};
 	}

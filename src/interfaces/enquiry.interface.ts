@@ -6,15 +6,12 @@ export namespace EnquiryRequest {
 		phoneNumber: string;
 		email: string;
 		message?: string;
-		// userId?: string;
 		propertyId: string;
 		enquiryType: string;
 		propertyOwnerId: string;
 		agentEmail?: string;
-		// propertyOwnerEmail?: string;
 		agentId?: string;
 		propertyOwnerEmail?: string;
-		// title: string;
 	}
 	export interface GetEnquiry {
 		page?: number;

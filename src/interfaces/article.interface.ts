@@ -7,7 +7,7 @@ export namespace ArticleRequest {
         description: string;
         status: number;
         categoryType: string;
-        categoryId: number;
+        categoryId: string;
         userId: string;
         createdAt: number;
         updatedAt: number;
@@ -20,20 +20,21 @@ export namespace ArticleRequest {
         page: number;
         sortBy?: string;
         sortType?: number;
-        categoryId?: number;
+        categoryId?: string;
         articleId?: string;
         searchTerm?: string;
         fromDate?: number;
         toDate?: number;
         isFeatured?: boolean;
         status?: string;
+        type?: string;
 
     }
     export interface GetArticleById {
         articleId: string;
     }
     export interface UpdateArticle {
-        categoryId: number;
+        categoryId: string;
         imageUrl: string;
         title: string;
         description: string;
@@ -49,4 +50,17 @@ export namespace ArticleRequest {
         name: string;
     }
 
+    export interface CategoryList {
+        limit: number;
+        page: number;
+        sortType?: number;
+    }
+
+    export interface CategoryId {
+        id?: string;
+    }
+    export interface CategoryUpdate extends CategoryId {
+        name?: string;
+        status?: string;
+    }
 }

@@ -1,7 +1,7 @@
 import { Database } from '../databases';
-import { AdminE, regionEntity, SubscriptionPlanEntity } from '@src/entity';
+import { AdminE, regionEntity, SubscriptionPlanEntity, ArticleCategoryE } from '@src/entity';
 import { LoanApplication } from '@src/models';
-import { Transaction } from '@src/models';
+import { Transaction, Property } from '@src/models';
 
 export class Bootstrap {
 	private dataBaseService = new Database();
@@ -11,7 +11,8 @@ export class Bootstrap {
 		AdminE.adminAccountCreator();
 		await this.initCounters();
 		await this.subscriptionPlan();
-		await this.bootstrapCounters();
+		// await this.bootstrapCounters();
+		ArticleCategoryE.addSellingArticle();
 	}
 	async initRegions() {
 		await regionEntity.bootstrap();
@@ -20,7 +21,7 @@ export class Bootstrap {
 	async bootstrapCounters() {
 		const criteria1 = ({
 			createdAt: {
-				$gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0)
+				$gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
 			},
 		});
 
@@ -43,8 +44,15 @@ export class Bootstrap {
 			const invoiceNo = lastTransaction['invoiceNo'] || 'INV' + new Date().getFullYear();
 			transactionCounter = parseInt(invoiceNo.substr(7));
 		}
+		const lastProperty = await Property.findOne({}).sort({ propertyId: -1 }).select({ propertyId: 1, _id: 0 }).exec();
+		let propertyCounter = 0;
+		if (lastProperty['propertyId']) {
+			propertyCounter = lastProperty['propertyId'] || 0;
+		}
+
 		global.counters = {
 			Transaction: transactionCounter,
+			Property: propertyCounter,
 		};
 	}
 

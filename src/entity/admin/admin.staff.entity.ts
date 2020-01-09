@@ -1,5 +1,4 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
-import * as moment from 'moment';
 import * as CONSTANT from '../../constants';
 import { Types } from 'mongoose';
 import { MailManager } from '@src/lib';
@@ -35,10 +34,6 @@ class AdminStaffE extends BaseEntity {
     async staffListing(payload: any) {
         const { fromDate, toDate, permissionType, searchTerm, status } = payload;
         let { limit, page, sortType } = payload;
-        let matchCondition: any = {
-            type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
-            // staffStatus: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
-        };
         const pipeline = [];
         const sortCondition: any = {};
         if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
@@ -46,23 +41,24 @@ class AdminStaffE extends BaseEntity {
         if (!sortType) sortType = 1;
         if (payload.sortBy) {
             sortCondition[payload.sortBy] = parseInt(payload.sortType);
-            pipeline.push({ $sort: sortCondition });
+            // pipeline.push({ $sort: sortCondition });
         }
-        if (!status) {
-            matchCondition = {
-                $or: [
-                    { staffStatus: CONSTANT.DATABASE.STATUS.USER.ACTIVE },
-                    { staffStatus: CONSTANT.DATABASE.STATUS.USER.BLOCKED },
-                ],
-            };
-        }
+        let matchCondition: any = {};
+        matchCondition['type'] = CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE;
 
-        // matchCondition['type'] = CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE;
         if (permissionType) {
             matchCondition['permission'] = { $elemMatch: { moduleName: permissionType } };
         }
         if (status) {
             matchCondition['staffStatus'] = status;
+        } else {
+            matchCondition['$or'] =
+                [{
+                    staffStatus: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+                }, {
+                    staffStatus: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+                },
+                ];
         }
         if (searchTerm) {
             matchCondition = {
@@ -97,6 +93,11 @@ class AdminStaffE extends BaseEntity {
                     createdAt: 1,
                     permission: 1,
                     staffStatus: 1,
+                },
+            },
+            {
+                $sort: {
+                    updatedAt: sortType,
                 },
             });
         return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);

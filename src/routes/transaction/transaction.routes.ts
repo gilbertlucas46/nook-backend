@@ -22,26 +22,31 @@ export let transactionRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'create charge of the user',
-			tags: ['api', 'anonymous', 'stripe', 'Add'],
+			description: 'create subscription of the user',
+			tags: ['api', 'anonymous', 'stripe', 'subscription'],
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					amount: Joi.number().min(40),
-					currency: Joi.string().valid('php'),
-					source: Joi.string().default('tok_visa'),
-					featuredType: Joi.string().valid([
-						Constant.DATABASE.FEATURED_TYPE.PROFILE,
-						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
-					]).required(),
-					description: Joi.string().optional().default('').max(35),
-					billingType: Joi.string().valid([
-						Constant.DATABASE.BILLING_TYPE.MONTHLY,
-						Constant.DATABASE.BILLING_TYPE.YEARLY,
-					]).required(),
+					// amount: Joi.number().min(40),
+					// currency: Joi.string().valid('php'),
+					// source: Joi.string().default('tok_visa'),
+					// featuredType: Joi.string().valid([
+					// 	Constant.DATABASE.FEATURED_TYPE.PROFILE,
+					// 	Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					// 	Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+					// ]).required(),
+					// description: Joi.string().optional().default('').max(35),
+					// billingType: Joi.string().valid([
+					// 	Constant.DATABASE.BILLING_TYPE.MONTHLY,
+					// 	Constant.DATABASE.BILLING_TYPE.YEARLY,
+					// ]).required(),
 					name: Joi.string().required(),
 					address: Joi.string().required(),
+					planId: Joi.string(),
+					source: Joi.string(),
+					cancel_at_period_end: Joi.boolean().default(false),
+					propertyId: Joi.string(),
+					// prod_GPfDhgKBK2ZR8d
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -77,7 +82,8 @@ export let transactionRoute: ServerRoute[] = [
 					featuredType: Joi.string().valid([
 						Constant.DATABASE.FEATURED_TYPE.PROFILE,
 						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
 					]).optional(),
 					fromDate: Joi.number().optional(),
 					toDate: Joi.number().optional(),
@@ -127,6 +133,7 @@ export let transactionRoute: ServerRoute[] = [
 		path: '/v1/transaction/webhook',
 		handler: async (request, h: ResponseToolkit) => {
 			const payload = request.payload;
+			console.log('payloadpayloadpayloadpayload>>>>>>>>>>>>>>>>', payload);
 			try {
 				const data = await transactionController.webhook(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));

@@ -37,7 +37,7 @@ export let HelpCenterStatus = model<IHelpFulHelpCenter>('helpcenterStatus', Help
 
 const helpCenterSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-    title: { type: String },
+    title: { type: String, index: true },
     videoUrl: { type: String, allow: '' },
     userId: { type: Schema.Types.ObjectId, required: true },
     userRole: {
@@ -47,7 +47,7 @@ const helpCenterSchema = new Schema({
             Constant.DATABASE.USER_TYPE.STAFF.TYPE,
         ],
     },
-    description: { type: String },
+    description: { type: String, index: true },
     categoryId: {
         type: Number,
         enum: [
@@ -65,6 +65,7 @@ const helpCenterSchema = new Schema({
             Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.TYPE,
             Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.TYPE,
         ],
+        index: true,
     },
     actions: [{
         userRole: { type: String },
@@ -73,10 +74,12 @@ const helpCenterSchema = new Schema({
         firstName: { type: String },
         actionTime: { type: Number },
     }],
-    createdAt: { type: Number, required: true },
-    updatedAt: { type: Number, required: true },
+    createdAt: { type: Number, required: true, index: true },
+    updatedAt: { type: Number, required: true, index: true },
 }, {
         versionKey: false,
     });
 
 export let HelpCentre = model<IHelpCenter>('helpcenter', helpCenterSchema);
+
+helpCenterSchema.index({ title: -1 })

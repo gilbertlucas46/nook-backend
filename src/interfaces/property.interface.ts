@@ -1,6 +1,6 @@
 export namespace PropertyRequest {
 	export interface PropertyData {
-		propertyId?: string;    // in the case of update
+		propertyId?: string;
 		createdAt?: number;
 		updatedAt?: number;
 		userId?: string;
@@ -60,6 +60,7 @@ export namespace PropertyRequest {
 		};
 		property_basic_details: {
 			title?: string
+			name?: string
 			description?: string
 			type?: string
 			property_for_number?: number
@@ -135,5 +136,10 @@ export namespace PropertyRequest {
 		sortType?: number;
 		sortBy?: string;
 		searchTerm?: string;
+	}
+
+	export interface PopularCity {
+		limit?: number;
+		propertyType: number;
 	}
 }

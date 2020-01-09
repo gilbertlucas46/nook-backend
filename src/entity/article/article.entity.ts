@@ -3,7 +3,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
 import * as utils from '@src/utils';
-import { Types, Schema } from 'mongoose';
+import { Types } from 'mongoose';
 import * as UniversalFunctions from '../../utils';
 export class ArticleClass extends BaseEntity {
     constructor() {
@@ -219,12 +219,13 @@ export class ArticleClass extends BaseEntity {
             ];
 
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
+            // if (!data || data.length === 0) return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, data);
+            return data[0] || {
+                CATEGORIES: [],
+                FEATURED: [],
+                LATEST: [],
+            };
 
-            if (!data || data.length === 0)
-                return data;
-            else
-                // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {}));
-                return data[0];
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
@@ -233,16 +234,18 @@ export class ArticleClass extends BaseEntity {
 
     async getArticlelist(payload: ArticleRequest.GetArticle, Admindata) {
         try {
-            let { page, limit, sortType } = payload;
-            const { articleId, sortBy, searchTerm, fromDate, toDate, categoryId, status } = payload;
-            if (!limit) { limit = Constant.SERVER.LIMIT; }
-            if (!page) { page = 1; }
-            const skip = (limit * (page - 1));
+            let { sortType } = payload;
+            const { articleId, searchTerm, fromDate, toDate, categoryId, status, page, limit } = payload;
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             let query: any = {};
             sortingType = {
+                isFeatured: sortType,
                 updatedAt: sortType,
+            };
+            const paginateOptions = {
+                page: page || 1,
+                limit: limit || Constant.SERVER.LIMIT,
             };
 
             if (Admindata && !status) {
@@ -254,13 +257,19 @@ export class ArticleClass extends BaseEntity {
                 query = {
                     status,
                 };
-            } else {
+            } else if (articleId && categoryId) {
                 query = {
                     categoryId: Types.ObjectId(categoryId),
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                     _id: {
                         $ne: Types.ObjectId(articleId),
                     },
+                };
+            }
+            else {
+                query = {
+                    isFeatured: true,
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 };
             }
 
@@ -294,10 +303,11 @@ export class ArticleClass extends BaseEntity {
             if (fromDate && !toDate) { query['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
 
-            const pipeline = [
+            const matchPipeline = [
                 { $match: query },
-                { $skip: skip },
-                { $limit: limit },
+                { $sort: sortingType },
+            ];
+            const pipeline = [
                 {
                     $lookup: {
                         from: 'articlecategories',
@@ -335,10 +345,8 @@ export class ArticleClass extends BaseEntity {
 
                     },
                 },
-                { $sort: sortingType },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, pipeline);
-            return data;
+            return await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
         } catch (error) {
             utils.consolelog('Error', error, true);
             return Promise.reject(error);
@@ -347,72 +355,79 @@ export class ArticleClass extends BaseEntity {
 
     async getUserArticle(payload) {
         try {
-            let { sortType } = payload;
-            const { categoryId, searchTerm } = payload;
-            // if (!limit) { limit = Constant.SERVER.LIMIT; }
-            // if (!page) { page = 1; }
-            let sortingType = {};
-            let query: any = {};
-            let searchCriteria: any = {};
-            sortType = !sortType ? -1 : sortType;
-            sortingType = {
-                isFeatured: sortType,
-                updatedAt: sortType,
-            };
+            const {
+                type,
+                searchTerm,
+                categoryId,
+                page = 1,
+                sortType = -1,
+                limit = Constant.SERVER.LIMIT,
+            } = payload;
+            const sortingType = { updatedAt: sortType };
 
-            if (searchTerm) {
-                searchCriteria = {
-                    $or: [
-                        { title: { $regex: searchTerm, $options: 'i' } },
-                        { description: { $regex: searchTerm, $options: 'i' } },
-                    ],
+            if (type) {
+                const criteria = {
+                    categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 };
+                return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
             }
-            else {
-                searchCriteria = {
-                };
+            const paginateOptions = { page, limit, skip: null };
+            if (page > 1) {
+                paginateOptions.skip = (limit * (page - 1)) + 1;
             }
-
-            query = {
+            let $match: object = {
                 categoryId: Types.ObjectId(categoryId),
                 status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
             };
+            sortingType['isFeatured'] = sortType;
+            if (searchTerm) {
+                $match = {
+                    $and: [
+                        $match,
+                        {
+                            $or: [
+                                { title: { $regex: searchTerm, $options: 'i' } },
+                                { description: { $regex: searchTerm, $options: 'i' } },
+                            ],
+                        },
+                    ],
+                };
+            }
 
-            const pipeline = [
-                {
-                    $match: query,
-                },
-                {
-                    $match: searchCriteria,
-                },
+            const matchPipeline = [
+                { $match },
                 { $sort: sortingType },
-                { $limit: 7 },
-                {
-                    $project: {
-                        articleAction: 0,
-                    },
-                },
             ];
-            const cateogryPipeline = [
-                {
-                    $match: {
-                        _id: new Types.ObjectId(categoryId),
-                    },
-                },
-                {
-                    $lookup: {
-                        from: 'articles',
-                        pipeline,
-                        as: 'articles',
-                    },
-                },
-            ];
-            const data = await this.DAOManager.aggregateData('ArticleCategories', cateogryPipeline);
-            return data;
+            const [metaData, data] = await Promise.all([
+                page === 1 ? this.DAOManager.findOne('ArticleCategories', { _id: new Types.ObjectId(categoryId) }, {}) : null,
+                this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName),
+            ]);
+            return {
+                ...data,
+                metaData,
+            };
+
         } catch (error) {
             return Promise.reject(error);
         }
     }
+
+    // async sellingArticle() {
+    //     try {
+    //         const criteria = {
+    //             categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+    //             status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+    //         };
+    //         const sortingType = {
+    //             createdAt: -1,
+    //         }
+    //         // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+    //         return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
+    //     } catch (error) {
+
+    //     }
+    // }
 }
 
 export const ArticleE = new ArticleClass();

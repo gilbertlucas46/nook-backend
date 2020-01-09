@@ -2,12 +2,12 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as config from 'config';
 import * as Jwt from 'jsonwebtoken';
-const cert: any = config.get('jwtSecret');
+const cert: any = config.get('jwtSecret.admin.accessToken');
 import * as utils from '@src/utils';
-import { UserRequest } from '@src/interfaces/user.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
-const pswdCert: string = config.get('forgetPwdjwtSecret');
+import { promises } from 'fs';
+const pswdCert: string = config.get('jwtSecret.admin.forgotToken');
 
 /**
  * @author
@@ -44,9 +44,64 @@ export class AdminClass extends BaseEntity {
 		const toSave = {
 			name: 'Base Admin',
 			email: 'base_admin@yopmail.com',
+			firstName: 'super',
+			lastName: 'admin',
 			password: await utils.encryptWordpressHashNode('123456'),
 			profilePicUrl: '',
+			permission: [
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTIES,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.LOAN,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+
+				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+			],
 		};
+
 		const criteria = {
 			email: 'base_admin@yopmail.com',
 		};
@@ -84,7 +139,7 @@ export class AdminClass extends BaseEntity {
 		try {
 			return await this.DAOManager.findOne(this.modelName, criteria, ProjectData);
 		} catch (error) {
-			Promise.reject(error);
+			return Promise.reject(error);
 		}
 	}
 	/**
@@ -188,44 +243,232 @@ export class AdminClass extends BaseEntity {
 				'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
 			};
 
-			const totalUser = {
-				$or: [{
-					status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
-				}, {
-					status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
-				},
-				],
-			};
+			// const totalUser = {
+			// 	$or: [{
+			// 		status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+			// 	}, {
+			// 		status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+			// 	},
+			// 	],
+			// };
 			const totalArticles = {
 				status: {
 					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
 				},
 			};
-			const loanQuery = {
-				saveAsDraft: {
-					$ne: false,
-				},
+			// };
+			// const loanQuery = {
+			// 	saveAsDraft: {
+			// 		$ne: true,
+			// 	},
+			// };
+
+			// const propertPromise = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('Property', propertyQuery));
+			// });
+			// const userPromise = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('User', totalUser));
+			// });
+			// const articlePromise = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('Article', totalArticles));
+			// });
+			// const enquiryPromise = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('Enquiry', {}));
+			// });
+			// const loanPromsie = new Promise((resolve) => {
+			// 	resolve(this.DAOManager.count('LoanApplication', loanQuery));
+			// });
+			// return Promise.all([propertPromise, userPromise, articlePromise, enquiryPromise, loanPromsie])
+			// 	.then(([propertyCount, userCount, articleCount, enquiryCount, loanCount]) => {
+			// 		return { propertyCount, userCount, articleCount, enquiryCount, loanCount };
+			// 	});
+
+			const totalEnquiry = {
+				enquiryType: CONSTANT.DATABASE.ENQUIRY_TYPE.PROPERTY,
 			};
 
-			const propertPromise = new Promise((resolve) => {
-				resolve(this.DAOManager.count('Property', propertyQuery));
-			});
-			const userPromise = new Promise((resolve) => {
-				resolve(this.DAOManager.count('User', totalUser));
-			});
-			const articlePromise = new Promise((resolve) => {
-				resolve(this.DAOManager.count('Article', totalArticles));
-			});
-			const enquiryPromise = new Promise((resolve) => {
-				resolve(this.DAOManager.count('Enquiry', {}));
-			});
-			const loanPromsie = new Promise((resolve) => {
-				resolve(this.DAOManager.count('LoanApplication', loanQuery));
-			});
-			return Promise.all([propertPromise, userPromise, articlePromise, enquiryPromise, loanPromsie])
-				.then(([propertyCount, userCount, articleCount, enquiryCount, loanCount]) => {
-					return { propertyCount, userCount, articleCount, enquiryCount, loanCount };
-				});
+			const totalNookStaff = {
+				type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
+				$or: [{
+					staffStatus: CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
+				}, {
+					staffStatus: CONSTANT.DATABASE.STATUS.ADMIN.BLOCKED,
+				},
+				],
+			};
+			const pipeline = [];
+			const Allproperty = [
+				{
+					$facet: {
+						DECLINED: [
+							{
+								$match: {
+									'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
+								},
+							},
+						],
+						PENDING: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+							},
+						}],
+						ACTIVE: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+							},
+						}],
+						EXPIRED: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
+							},
+						}],
+						SOLD_RENTED: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+							},
+						}],
+						FEATURED: [{
+							$match: {
+								isFeatured: true,
+							},
+						}],
+						DRAFT: [{
+							$match: {
+								'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
+							},
+						}],
+					},
+				},
+				{
+					$project: {
+						DECLINED: { $size: '$DECLINED' },
+						PENDING: { $size: '$PENDING' },
+						ACTIVE: { $size: '$ACTIVE' },
+						EXPIRED: { $size: '$EXPIRED' },
+						SOLD_RENTED: { $size: '$SOLD_RENTED' },
+						FEATURED: { $size: '$FEATURED' },
+						DRAFT: { $size: '$DRAFT' },
+					},
+				},
+			];
+
+			const UsersList = [
+				{
+					$facet: {
+						TENANT: [{
+							$match: {
+								type: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
+								$or: [{
+									status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+								}, {
+									status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+								},
+								],
+							},
+						}],
+						OWNER: [{
+							$match: {
+								type: CONSTANT.DATABASE.USER_TYPE.OWNER.TYPE,
+								$or: [{
+									status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+								}, {
+									status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+								},
+								],
+							},
+						}],
+						AGENT: [{
+							$match: {
+								type: CONSTANT.DATABASE.USER_TYPE.AGENT.TYPE,
+								$or: [{
+									status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+								}, {
+									status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+								},
+								],
+							},
+						}],
+					},
+				},
+				{
+					$project: {
+						TENANT: { $size: '$TENANT' },
+						OWNER: { $size: '$OWNER' },
+						AGENT: { $size: '$AGENT' },
+					},
+				},
+			];
+
+			const LoanList = [{
+				$facet: {
+					NEW: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						},
+					}],
+					REFERRED_TO_BANK: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+						},
+					}],
+					BANK_APPROVED: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+						},
+					}],
+					BANK_DECLINED: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+						},
+					}],
+					NOOK_DECLINED: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+
+						},
+					}],
+					NOOK_REVIEW: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+
+						},
+					}],
+					DRAFT: [{
+						$match: {
+							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						},
+					}],
+				},
+			},
+			{
+				$project: {
+					NEW: { $size: '$NEW' },
+					REFERRED_TO_BANK: { $size: '$REFERRED_TO_BANK' },
+					BANK_APPROVED: { $size: '$BANK_APPROVED' },
+					BANK_DECLINED: { $size: '$BANK_DECLINED' },
+					NOOK_DECLINED: { $size: '$NOOK_DECLINED' },
+					NOOK_REVIEW: { $size: '$NOOK_REVIEW' },
+					DRAFT: { $size: '$DRAFT' },
+				},
+			}];
+			pipeline.push(this.DAOManager.aggregateData('Property', Allproperty));
+			pipeline.push(this.DAOManager.aggregateData('User', UsersList));
+			pipeline.push(this.DAOManager.aggregateData('LoanApplication', LoanList));
+			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
+			pipeline.push(this.DAOManager.count('Article', totalArticles));
+			pipeline.push(this.DAOManager.count('LoanReferral', {}));
+			pipeline.push(this.DAOManager.count('Enquiry', totalEnquiry));
+			const [propertyCount, userCount, loanCount, staffcount, articleCount, referralCount, enquiryCount] = await Promise.all(pipeline);
+			return {
+				propertyCount: propertyCount[0],
+				userCount: userCount[0],
+				loanCount: loanCount[0],
+				staffcount,
+				articleCount,
+				referralCount,
+				enquiryCount,
+			};
+
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -236,6 +479,8 @@ export class AdminClass extends BaseEntity {
 			const pipeline = [];
 			let { page, limit, sortBy, sortType } = payload;
 			const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, propertyType } = payload;
+			let firstname;
+			let lastname;
 			if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
 			if (!page) { page = 1; }
 			let sortingType = {};
@@ -243,7 +488,6 @@ export class AdminClass extends BaseEntity {
 			let matchObject: any = {};
 			const skip = (limit * (page - 1));
 			if (property_status === CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {  // for active
-				// sortBy = 'approvedAt';
 				sortingType = {
 					updatedAt: sortType,
 				};
@@ -275,14 +519,29 @@ export class AdminClass extends BaseEntity {
 						break;
 				}
 			}
-
+			function hasWhiteSpace(s) {
+				return s.indexOf(' ') >= 0;
+			}
 			if (searchTerm) {
+				const check = await hasWhiteSpace(searchTerm);
+				if (check) {
+					firstname = searchTerm.split(' ')[0];
+					lastname = searchTerm.split(' ')[1];
+				} else {
+					firstname = searchTerm;
+					lastname = searchTerm;
+				}
+				const regex = new RegExp(searchTerm, 'gi');
 				matchObject = {
 					$or: [
-						{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ 'property_address.cityName': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
+						{ 'property_address.address': regex },
+						{ 'property_address.cityName': regex },
+						{ 'property_added_by.email': regex },
+						{ 'property_basic_details.title': regex },
+						// { propertyId: new RegExp('.*' + searchTerm.substring(2) + '.*', 'i') },
+						{ $where: `/${searchTerm.substr(2)}/.test(this.propertyId)` },
+						{ 'property_added_by.firstName': new RegExp('.*' + firstname + '.*', 'i') },
+						{ 'property_added_by.lastName': new RegExp('.*' + lastname + '.*', 'i') },
 					],
 				};
 			}
@@ -304,8 +563,8 @@ export class AdminClass extends BaseEntity {
 				matchObject['property_status.number'] = payload.property_status;
 			}
 			if (propertyType) matchObject['property_basic_details.type'] = payload.propertyType;
-			if (byCity) { matchObject.$match['cityId'] = byCity; }
-			if (byRegion) { matchObject.$match['regionId'] = byRegion; }
+			if (byCity) { matchObject['cityId'] = byCity; }
+			if (byRegion) { matchObject['regionId'] = byRegion; }
 
 			// Date filters
 			if (fromDate && toDate) { matchObject['createdAt'] = { $gte: fromDate, $lte: toDate }; }

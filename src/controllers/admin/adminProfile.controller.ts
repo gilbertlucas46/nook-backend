@@ -3,10 +3,9 @@ import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
 import * as Jwt from 'jsonwebtoken';
-const cert: any = config.get('jwtSecret');
 import { MailManager } from '@src/lib/mail.manager';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-const pswdCert: string = config.get('forgetPwdjwtSecret');
+const pswdCert: string = config.get('jwtSecret.admin.forgotToken');
 
 /**
  * @author
@@ -23,13 +22,13 @@ export class AdminProfileController {
 		try {
 			const email: string = payload.email;
 			const checkData = { email: payload.email };
-			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
+			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus', 'firstName', 'lastName']);
 			// check email
 			if (!adminData) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
-			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETE && adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
 			}
-			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.BLOCKED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.BLOCKED && adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
 			}
 			if (!(await utils.decryptWordpressHashNode(payload.password, adminData.password))) {
@@ -60,8 +59,12 @@ export class AdminProfileController {
 
 	async profile(payload) {
 		try {
-			const criteria = { _id: payload._id };
-			return await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
+			const criteria = { _id: payload.id };
+			const data = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
+			if (!data) {
+				return Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE;
+			}
+			return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -86,6 +89,12 @@ export class AdminProfileController {
 			const criteria = { email: payload.email };
 			const adminData = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'firstName']);
 			if (!adminData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETE && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
+			}
+			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.BLOCKED && adminData === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
+			}
 			else {
 				const passwordResetToken = await ENTITY.AdminE.createPasswordResetToken(adminData);
 				const url = config.get('host') + Constant.SERVER.ADMIN_FORGET_PASSWORD_URL + passwordResetToken;

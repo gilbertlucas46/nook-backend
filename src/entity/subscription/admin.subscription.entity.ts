@@ -2,7 +2,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { SubscriptionPlan, ISubscriptionPlan } from '@src/models/subscription';
 import { PLANS } from '@src/constants/subscription.plan.constant';
-import { Subscription } from '../../interfaces/subscription.plan.constant';
+import { stripeService } from '../../lib/stripe.manager';
 export class SubscriptionClass extends BaseEntity {
 
     constructor() {
@@ -11,9 +11,7 @@ export class SubscriptionClass extends BaseEntity {
 
     async adminSubscription() {
         try {
-            const data = await this.DAOManager.getData('AdminSubscription', {}, {}, {});
-            return data;
-
+            return await this.DAOManager.getData('AdminSubscription', {}, {}, {});
         } catch (error) {
             return Promise.reject(error);
         }
@@ -40,27 +38,20 @@ export class SubscriptionClass extends BaseEntity {
     async clear() {
         await this.DAOManager.remove(this.modelName, {});
     }
+
+    async  findAmount(pipeline) {
+        const amount = await this.DAOManager.aggregateData(this.modelName, pipeline);
+        return amount[0]['amount'];
+    }
+
+    async stripePlan() {
+        try {
+            const data = await stripeService.getPlanList();
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 
-// export const regionEntity = new RegionEntity();
-
 export const SubscriptionPlanEntity = new SubscriptionClass();
-
- // const pipeline: any[] = [{
-            //     $group: {
-            //         _id: '$featuredType',
-            //         data: {
-            //             $push: {
-            //                 _id: '$_id',
-            //                 amount: '$amount',
-            //                 description: '$description',
-            //                 featuredType: '$featuredType',
-            //                 plans: '@plans',
-            //             },
-            //         },
-            //     },
-            // },
-            // { $unwind: '$data' },
-            // { $project: { _id: 0 } },
-            // ];
-            // const data = await this.DAOManager.aggregateData('AdminSubscription', pipeline, {});

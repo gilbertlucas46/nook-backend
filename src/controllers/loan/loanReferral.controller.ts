@@ -51,5 +51,38 @@ class Referal extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    async getAdminReferral(payload, adminData) {
+        try {
+            const data = await ENTITY.ReferalE.getAdminData(payload, adminData);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async updateReferral(payload, adminData) {
+        try {
+            const criteria = {
+                _id: payload.id,
+            };
+            const dataToSet: any = {};
+            dataToSet.$set = {
+                ...payload,
+            };
+            dataToSet.$push = {
+                status: payload.staffStatus,
+                staffId: adminData._id,
+                seenAt: new Date().getTime(),
+                stafName: adminData.firstName,
+                message: payload.message || '',
+            };
+            // const [message] = payload;
+            const data = await ENTITY.ReferalE.updateOneEntity(criteria, dataToSet);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 export const referralController = new Referal();

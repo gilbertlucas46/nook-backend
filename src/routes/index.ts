@@ -18,6 +18,7 @@ import { loanReferral } from './referral/loanReferral.routes';
 import { searchRoutes } from './search.routes';
 import { subscriptionRoute } from './subscription/subscription.routes';
 import { adminUserRoutes } from './admin/admin.user.routes';
+import { adminProperty } from './admin/admin.property.routes';
 // const arr = [];
 export let Routes: ServerRoute[] = [
 	...userRoute,
@@ -38,6 +39,7 @@ export let Routes: ServerRoute[] = [
 	...searchRoutes,
 	...subscriptionRoute,
 	...adminUserRoutes,
+	...adminProperty,
 	// {
 	// 	method: ['*'],
 	// 	path: '/{any*}',
@@ -51,10 +53,10 @@ export let Routes: ServerRoute[] = [
 	// 		if (arr[0].includes([accept])) {
 	// 			return;
 	// 		} else {
-	// 			return Promise.reject('Fuckity fuck, this resource isn’t available.');
+	// 			return Promise.reject(' this resource isn’t available.');
 	// 		}
 	// 		// if (accept && accept.match(arr[0])) {
-	// 		// 	return Promise.reject('Fuckity fuck, this resource isn’t available.');
+	// 		// 	return Promise.reject(' this resource isn’t available.');
 	// 		// }
 	// 		return;
 	// 	},
