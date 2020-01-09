@@ -402,7 +402,7 @@ export class PropertyController {
 			payload.property_address.location['type'] = 'Point';
 
 			if (!payload.propertyId) {
-				payload.property_status = {};
+				// payload.property_status = {};
 				payload.property_status['number'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
 				payload.property_status['status'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.TYPE;
 				payload.property_status['displayName'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.DISPLAY_NAME;
