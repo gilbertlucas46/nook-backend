@@ -59,9 +59,10 @@ export class MailManager {
 					// projectName: 'Nook',
 					faceBookUrl: config['host'] + '/images/facebook.png',
 					instaUrl: config['host'] + '/images/instagram-2.png',
+					twitterUrl: config['host'] + '/images/twitter-2.png',
 					// faceBookUrl: EMAIL_TEMPLATE.SOCIAL_LINK.FB,
 					// instaUrl: EMAIL_TEMPLATE.SOCIAL_LINK.INSTAGRAM,
-					twitterUrl: config['host'] + '/images/twitter-2.png',
+
 					// twitterUrl: EMAIL_TEMPLATE.SOCIAL_LINK.TWITTER,
 					userName: params.userName,
 
@@ -103,6 +104,9 @@ export class MailManager {
 		try {
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
 				.compileFile({
+					faceBookUrl: config['host'] + '/images/facebook.png',
+					instaUrl: config['host'] + '/images/instagram-2.png',
+					twitterUrl: config['host'] + '/images/twitter-2.png',
 					name: params.name,
 					address: params.address,
 					description: params.message,
@@ -113,7 +117,6 @@ export class MailManager {
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
 		} catch (error) {
-			console.log('error>>>>>>>>>>>>>>>>>>>>>>>', error);
 			return Promise.reject(error);
 		}
 	}
@@ -122,6 +125,9 @@ export class MailManager {
 		try {
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
 				.compileFile({
+					faceBookUrl: config['host'] + '/images/facebook.png',
+					instaUrl: config['host'] + '/images/instagram-2.png',
+					twitterUrl: config['host'] + '/images/twitter-2.png',
 					name: params.name,
 					// address: params.address,
 					description: params.message,
