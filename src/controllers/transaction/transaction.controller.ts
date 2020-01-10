@@ -162,8 +162,9 @@ class TransactionController extends BaseEntity {
 
 			const step2 = await ENTITY.TransactionE.addTransaction(event, userData, checkplan);
 			console.log('step2>>>>>>>>>>>>>>>>>>>', step2);
-
+			return;
 		} catch (error) {
+			console.log('errorerrorerrorerrorerrorerror>>>>>>>>>>>>>>.', error);
 			return Promise.reject(error);
 		}
 	}
@@ -202,7 +203,7 @@ class TransactionController extends BaseEntity {
 				featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
 				subscriptionType: subscriptionData['data']['object']['plan']['interval'],  // subscriptionData['plan']['interval'],
 				userId: userData['_id'],
-				startDate: new Date().getTime(),
+				startDate: subscriptionData['data']['object']['start_date'],
 				endDate: (subscriptionData['data']['object']['current_period_end'] * 1000), // new Date().setFullYear(new Date().getFullYear() + 1),
 				current_period_start: (subscriptionData['data']['object']['current_period_start'] * 1000),
 				status: subscriptionData['data']['object']['status'],
@@ -234,7 +235,6 @@ class TransactionController extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-
 
 	async webhook(payload) {
 		// const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
@@ -289,7 +289,7 @@ class TransactionController extends BaseEntity {
 
 				case 'invoice.payment_succeeded':
 					console.log('9999999999999999999999999', event);
-					// await this.createInvoice(event);
+					await this.createInvoice(event);
 					break;
 				case 'invoice.created':
 					console.log('100111111111111111111111111112100>>>>>>>>>>', event);

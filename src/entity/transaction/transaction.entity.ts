@@ -63,8 +63,9 @@ export class TransactionClass extends BaseEntity {
 				// userId: userData['_id'],
 				// status: subscriptionData['data']['object']['status'],
 				// subscriptionId: subscriptionData['data']['object']['id'],
-
-				type: invoice['data']['object']['object'],
+				billingReason: invoice['data']['object']['billing_reason'],
+				chargeId: invoice['data']['object']['charge'],
+				// type: invoice['data']['object']['object'],
 				productId: invoice['data']['object']['lines']['data'][0]['plan']['product'],
 				billingType: invoice['data']['object']['lines']['data'][0]['plan']['interval'],
 				amount: invoice['data']['object']['lines']['data'][0]['amount'],
@@ -73,6 +74,10 @@ export class TransactionClass extends BaseEntity {
 				userId: userData['_id'],
 				status: invoice['data']['object']['status'],
 				subscriptionId: invoice['data']['object']['lines'][0]['subscription'],
+				customer: invoice['data']['object']['customer'],
+				customer_email: invoice['data']['object']['email'],
+				hosted_invoice_url: invoice['data']['object']['hosted_invoice_url'],
+				paid: invoice['data']['object']['paid'],
 
 			});
 		}
