@@ -187,6 +187,9 @@ class TransactionController extends BaseEntity {
 
 	async createSubscription(subscriptionData) {
 		try {
+
+			console.log('subscriptionDatasubscriptionData', subscriptionData);
+
 			const userData = await ENTITY.UserE.getOneEntity({ stripeId: subscriptionData['data']['object']['customer'] }, { _id: 1 });
 			const CheckplaninDb = {
 				'plans.planId': subscriptionData['data']['object']['plan']['id'],
@@ -239,7 +242,7 @@ class TransactionController extends BaseEntity {
 
 		// const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: step1._id, webhookObject: payload });
 		const addWebhook = await ENTITY.WebhookE.createOneEntity({ webhookObject: payload });
-		console.log('addWebhookaddWebhook>>>>>>>>>>>>>>>>>>>>>>', addWebhook);
+		// console.log('addWebhookaddWebhook>>>>>>>>>>>>>>>>>>>>>>', addWebhook);
 		try {
 			const event = payload;
 			const paymentIntent = event.data.object;
@@ -249,7 +252,6 @@ class TransactionController extends BaseEntity {
 			switch (event.type) {
 				case 'charge.succeeded':
 					console.log(1);
-
 					// await this.handleChargeSucceeded(step1, paymentIntent);
 					break;
 				case 'charge.pending':
@@ -280,20 +282,22 @@ class TransactionController extends BaseEntity {
 
 					break;
 
-				case 'customer.subscription.updated':
-					console.log('77777777777777777777777777777777');
-					// await this.updateSubscriptionStatus(paymentIntent);
-
-					break;
-
 				case 'customer.subscription.created':
-					console.log('8888888888888888888888888888888888888888');
+					console.log('8888888888888888888888888888888888888888', event);
 					await this.createSubscription(event);
 					break;
 
 				case 'invoice.payment_succeeded':
-					console.log('9999999999999999999999999');
-					await this.createInvoice(event);
+					console.log('9999999999999999999999999', event);
+					// await this.createInvoice(event);
+					break;
+				case 'invoice.created':
+					console.log('100111111111111111111111111112100>>>>>>>>>>', event);
+					break;
+
+				case 'invoice.finalized':
+					console.log('invoice.finalized>>>>>>>>>>>>>>>>>>>>>>>>>', event);
+					break;
 			}
 			return {};
 
