@@ -387,6 +387,7 @@ export class PropertyController {
 
 	async adminAddProperty(payload, adminData) {
 		try {
+
 			let result;
 			let propertyAction;
 			const promiseArray = [];
@@ -456,7 +457,6 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
-				payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
 				payload.userId = payload.property_added_by.userId;
 				payload.property_basic_details.name = await payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
 				console.log('payloadpayloadpayload', payload);
