@@ -159,7 +159,7 @@ export let subscriptionRoute: ServerRoute[] = [
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload = request.params as any;
 				const data = await subscriptionController.cancelSubscription(payload, userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
 			} catch (error) {
 				console.log('Error', error, true);
 				return (UniversalFunctions.sendError(error));
