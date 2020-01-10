@@ -52,11 +52,11 @@ export const transactionSchema = new Schema({
 		enum: [
 			CONSTANT.DATABASE.FEATURED_TYPE.PROFILE,
 			CONSTANT.DATABASE.FEATURED_TYPE.PROPERTY,
-			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE,
+			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
+			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
 		],
 		required: true,
 	},
-	address: { type: String },
 	invoiceNo: { type: String },
 	cardHolder: { type: String },
 	paymentMethod: { type: String },
