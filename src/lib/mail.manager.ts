@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 	host: config.get('smtp.mailHost'),
 	port: config.get('smtp.mailPort'),
 	// bcc: config.get('smtp.bccMail')
-	secure: true,
+	secure: false,
 	auth: {
 		user: config.get('smtp.mailUserName'), // config.get('MAIL_USERNAME'),
 		pass: config.get('smtp.mailPassword'), // '12345Appinventiv'
