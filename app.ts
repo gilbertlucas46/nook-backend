@@ -57,7 +57,7 @@ const init = async () => {
 		options: {
 			handler: {
 				directory: {
-					path: process.cwd() + '/uploads/',
+					path: process.cwd() + '/views/',
 					listing: false,
 				},
 			},
