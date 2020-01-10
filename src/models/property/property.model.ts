@@ -197,7 +197,7 @@ const propertySchema = new Schema({
 	},
 	property_basic_details: {
 		title: { type: String },
-		name: { type: String, unique: true },
+		name: { type: String },
 		description: { type: String },
 		type: {
 			type: String,
