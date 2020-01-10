@@ -6,8 +6,9 @@ const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     // saveAsDraft: { type: Schema.Types.Boolean, default: false },
     applicationStatus: {
-        type: Schema.Types.String, enum: Object.values(CONSTANT.DATABASE.LOAN_APPLICATION_STATUS),
+        type: Schema.Types.String,
         default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+        enum: Object.values(CONSTANT.DATABASE.LOAN_APPLICATION_STATUS).map(({value}) => value),
     },
     personalInfo: {
         firstName: { type: Schema.Types.String, trim: true },
@@ -94,6 +95,7 @@ const schema = new Schema({
     },
 
     loanDetails: {
+        maxLoanTerm: { type: Schema.Types.Number },
         fixedPeriod: { type: Schema.Types.Number },
         loanTerm: { type: Schema.Types.Number },
         rate: { type: Schema.Types.Number },

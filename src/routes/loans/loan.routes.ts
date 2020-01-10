@@ -223,6 +223,7 @@ export let loanRoute: ServerRoute[] = [
 					}),
 
 					loanDetails: Joi.object().keys({
+						maxLoanTerm: Joi.number(),
 						fixedPeriod: Joi.number(),
 						loanTerm: Joi.number(),
 						rate: Joi.number().max(100),
@@ -570,6 +571,7 @@ export let loanRoute: ServerRoute[] = [
 					}),
 
 					loanDetails: Joi.object().keys({
+						maxLoanTerm: Joi.number(),
 						fixedPeriod: Joi.number(),
 						loanTerm: Joi.number(),
 						rate: Joi.number().max(100),
