@@ -53,11 +53,11 @@ const init = async () => {
 	await server.register(plugins);
 	Routes.push({
 		method: 'GET',
-		path: '/{path*}',
+		path: '/images/{path*}',
 		options: {
 			handler: {
 				directory: {
-					path: process.cwd() + '/views/',
+					path: process.cwd() + '/src/views/images/',
 					listing: false,
 				},
 			},
