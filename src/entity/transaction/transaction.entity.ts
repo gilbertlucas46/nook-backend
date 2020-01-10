@@ -78,7 +78,7 @@ export class TransactionClass extends BaseEntity {
 				// subscriptionId: invoice['data']['object']['lines'][0]['subscription'],
 				customer: invoice['data']['object']['customer'],
 				customer_email: invoice['data']['object']['email'],
-				hosted_invoice_url: invoice['data']['object']['hosted_invoice_url'],
+				receiptUrl: invoice['data']['object']['hosted_invoice_url'],
 				paid: invoice['data']['object']['paid'],
 			};
 			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
