@@ -43,7 +43,6 @@ class TransactionController extends BaseEntity {
 				return;
 			} else {
 				const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
-
 				const createSubscript = await stripeService.createSubscription(getStripeId['stripeId'], payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
 				return;
