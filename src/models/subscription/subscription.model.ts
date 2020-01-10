@@ -50,7 +50,7 @@ const subscriptionSchema = new Schema({
 	createdAt: { type: Number, required: true },
 	isRecurring: { type: Boolean, required: true },
 	updatedAt: { type: Number, required: true },
-	paymentMethod: { type: String, required: true },
+	// paymentMethod: { type: String, required: true },
 	planId: { type: String, required: true },
 }, {
 		versionKey: false,
