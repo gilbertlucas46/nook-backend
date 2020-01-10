@@ -53,6 +53,8 @@ export class TransactionClass extends BaseEntity {
 
 	async addTransaction(invoice, userData, checkplan) {
 		try {
+			console.log('checkplancheckplan', checkplan);
+
 			// return await this.DAOManager.saveData(this.modelName, {
 			// type: subscriptionData['data']['object']['object'],
 			// productId: subscriptionData['data']['object']['plan']['product'],
@@ -77,7 +79,7 @@ export class TransactionClass extends BaseEntity {
 				// subscription:
 				// subscriptionId: invoice['data']['object']['lines'][0]['subscription'],
 				customer: invoice['data']['object']['customer'],
-				customer_email: invoice['data']['object']['email'],
+				customer_email: invoice['data']['object']['customer_email'],
 				receiptUrl: invoice['data']['object']['hosted_invoice_url'],
 				paid: invoice['data']['object']['paid'],
 			};

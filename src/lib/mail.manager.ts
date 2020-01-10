@@ -89,7 +89,7 @@ export class MailManager {
 					year: new Date().getFullYear(),
 					// projectName: 'Nook',
 					// subject: params.subject,
-					GSG_ADDRESS: EMAIL_TEMPLATE.GSG_ADDRESS,
+					// GSG_ADDRESS: EMAIL_TEMPLATE.GSG_ADDRESS,
 					email: params.receiverEmail,
 					userName: params.userName,
 				});
