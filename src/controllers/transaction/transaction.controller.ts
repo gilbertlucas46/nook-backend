@@ -11,60 +11,14 @@ class TransactionController extends BaseEntity {
 
 	async createCharge(payload: TransactionRequest.CreateCharge, userData) {
 		try {
-			// const { featuredType, billingType } = payload;
-
-			// const pipeline = [
-			// 	{
-			// 		$match: {
-			// 			'featuredType': featuredType,
-			// 			'plans.billingType': billingType,
-			// 		},
-			// 	},
-			// 	{
-			// 		$project: {
-			// 			plans: {
-			// 				$filter: {
-			// 					input: '$plans',
-			// 					as: 'plans',
-			// 					cond: { $eq: ['$$plans.billingType', billingType] },
-			// 				},
-			// 			},
-			// 		},
-			// 	},
-			// 	{
-			// 		$unwind: {
-			// 			path: '$plans',
-			// 		},
-			// 	},
-			// 	{
-			// 		$project: {
-			// 			amount: '$plans.amount',
-			// 		},
-			// 	},
-			// ];
-			// console.log('pipelinepipelinepipeline', pipeline);
-
-			// const amount = await ENTITY.SubscriptionPlanEntity.findAmount(pipeline);
-			// console.log('amountamountamountamount>>>>>>>>>>>>', amount);
-
-			// const step1 = await stripeManager.createCharges({
-			// 	// amount: payload.amount * (0.01967 * 100),
-			// 	amount: amount * 100,
-			// 	currency: payload.currency,
-			// 	source: payload.source,
-			// 	description: payload.description,
-			// });
-			// console.log('step1step1step1', step1);
-			// payload['amount'] = amount;
-			// const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
 			console.log('payloadpayloadpayloadpayloadpayloadpayload', payload);
 
 			const getUserCriteria = {
 				_id: userData._id,
 			};
-			const criteria = {
-				userId: userData._id,
-			};
+			// const criteria = {
+			// 	userId: userData._id,
+			// };
 			const CheckplaninDb = {
 				'plans.planId': payload.planId,
 			};
@@ -74,157 +28,40 @@ class TransactionController extends BaseEntity {
 			if (!checkplan) {
 				return Promise.reject('not in Db');
 			}
+
 			const getStripeId = await ENTITY.UserE.getOneEntity(getUserCriteria, { stripeId: 1, email: 1 });
 			console.log('getStripeIdgetStripeIdgetStripeId', getStripeId);
-
+			let createCustomer;
 			const dataToSet: any = {};
 			if (!getStripeId.stripeId) {
-				const createCustomer = await stripeService.createCustomers(getStripeId, payload);
+				createCustomer = await stripeService.createCustomers(getStripeId, payload);
 				await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { stripeId: createCustomer.id });
+				const createCard = await stripeService.createCard(createCustomer['id'], payload);
 
-				const createCard = await stripeService.createCard(createCustomer, payload);
-				console.log('createCardcreateCardcreateCard', createCard);
-				const dataToSave = {
-					userId: userData._id,
-					cardDetail: createCard,
-				};
-				const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
-				const planInfo = await stripeService.getPlanInfo(payload);
 				const createSubscript = await stripeService.createSubscription(createCustomer['id'], payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
-				if (createSubscript.status === 'active') {
-					const insertData = {
-						featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
-						subscriptionType: createSubscript['plan']['interval'],  // createSubscript['plan']['interval'],
-						userId: userData._id,
-						startDate: new Date().getTime(),
-						// endDate: new Date().setFullYear(new Date().getFullYear() + 1),
-						// createdAt: new Date().getTime(),
-						endDate: createSubscript.current_period_end, // new Date().setFullYear(new Date().getFullYear() + 1),
-						current_period_start: createSubscript.current_period_start,
-						updatedAt: new Date().getTime(),
-						propertyId: payload.propertyId,
-						status: createSubscript.status,
-						isRecurring: payload.cancel_at_period_end,
-						paymentMethod: createCard['brand'],
-						amount: (createSubscript['plan']['amount'] / 100),
-						subscriptionId: createSubscript.id,
-						planId: createSubscript['plan']['id'],
-					};
-
-					// if (createSubscript.status === 'active') {
-					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
-						console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>@2222222222222222222');
-						await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
-					}
-					if (checkplan['featuredType'] === 'PROFILE') {
-						console.log('22222222222222222222222222222222222222222');
-						await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
-					}
-					// }
-					const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
-					console.log('step3step3step3step3step3step3step3step3', step3);
-					createSubscript['subscriptionId'] = step3['_id'];
-					createSubscript['paymentMethod'] = step3['paymentMethod'];
-					// return;
-				}
-				const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan, createCard['brand']);
-				console.log('step2step2step2step2step2step2>>>>>>>>>>>>>>>>>', step2);
 				return;
 			} else {
-				// get all card of the user
-				const getUserCardInfo = await ENTITY.UserCardE.getOneEntity({ userId: userData._id }, { cardDetail: 1 });
-				console.log('getUserCardInfogetUserCardInfogetUserCardInfo', getUserCardInfo);
-
-				const fingerprint = await stripeService.getfingerPrint(userData, payload);
-				console.log('fingerprintfingerprintfingerprint>222222222222', fingerprint);
-
-				let checkCardAdded;
-				if (getUserCardInfo !== null) {
-					checkCardAdded = getUserCardInfo['cardDetail'].some(data => {
-						return data.fingerprint === fingerprint['card']['fingerprint'];
-					});
-				}
-				console.log('checkCardAddedcheckCardAdded>>>>>>>>>>>>>', checkCardAdded);
-
-				if (getUserCardInfo == null) {
-					console.log('22222222222222222222222222222', getUserCardInfo);
-					const createCard = await stripeService.createCard2(userData, payload);
-					const dataToSave = {
-						userId: userData._id,
-						cardDetail: createCard,
-					};
-					const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
-					console.log('userCardInfouserCardInfouserCardInfo', userCardInfo);
-					console.log('checkCardAddedcheckCardAddedcheckCardAdded>>>>>>>@@@@@@@@@2222222222222222222222', checkCardAdded);
-				}
-				if (checkCardAdded === false) {
-					dataToSet.$push = {
-						cardDetail: fingerprint['card'],
-					};
-					const userCardInfo = await ENTITY.UserCardE.updateOneEntity(criteria, dataToSet);
-					console.log('userCardInfouserCardInfo', userCardInfo);
-
-					if (getUserCardInfo['cardDetail'].length >= 1) {
-						const createDfaultCard = await stripeService.setDefaultCard(getStripeId, payload);
-						console.log('createDfaultCardcreateDfaultCard222222222', createDfaultCard);
-					}
-					const createCard = await stripeService.createCard2(userData, payload);
-					console.log('createCardcreateCardcreateCard', createCard);
-				}
-				// if (checkCardAdded === true) {
-				// 	const createCard = await stripeService.createCard2(userData, payload);
-				// 	console.log('createCardcreateCardcreateCardcreateCard2222222222222222222', createCard);
-				// }
-
-				const createSubscript = await stripeService.createSubscription(userData['stripeId'], payload);
-				console.log('createSubscriptcreateSubscriptcreateSubscriptcreateSubscript', createSubscript);
-				const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan, fingerprint['card']['brand']);
-
-				// get plan info
-
-				if (createSubscript.status === 'active') {
-					const insertData = {
-						featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
-						subscriptionType: createSubscript['plan']['interval'],  // createSubscript['plan']['interval'],
-						userId: userData._id,
-						startDate: new Date().getTime(),
-						endDate: createSubscript.current_period_end, // new Date().setFullYear(new Date().getFullYear() + 1),
-						current_period_start: createSubscript.current_period_start,
-						updatedAt: new Date().getTime(),
-						propertyId: payload.propertyId,
-						status: createSubscript.status,
-						isRecurring: payload.cancel_at_period_end,
-						paymentMethod: fingerprint['card']['brand'],
-						amount: (createSubscript['plan']['amount'] / 100),
-						subscriptionId: createSubscript.id,
-						planId: createSubscript['plan']['id'],
-					};
-					console.log('11111111111111111111111111111111111111111111111111');
-
-					// if (checkplan.nickname === Constant.)
-					if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
-						console.log('?>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-
-						await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
-					}
-					if (checkplan['featuredType'] === 'PROFILE') {
-						console.log('2222222222222222222222222222222222222222222222222222');
-
-						await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
-					}
-					// ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: 'true' });
-					const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
-					console.log('step3step3step3step3step3step3step3step3', step3);
-					return;
-				}
-				// else if (createSubscript.status === 'active') {
-				// 	return Promise.reject(createSubscript.status)
-				// }
-				return {};
-				// const checkUserInStripe = await stripeManager.createCustomers()
+				const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
+				const setDefaultCard = await stripeService.setDefaultCard(getStripeId, payload);
+				const createSubscript = await stripeService.createSubscription(getStripeId['stripeId'], payload);
+				console.log('createSubscriptcreateSubscript', createSubscript);
+				return;
 			}
+			// console.log('createCardcreateCardcreateCard', createCard);
+			// const dataToSave = {
+			// 	userId: userData._id,
+			// 	cardDetail: createCard,
+			// };
+
+			// const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
+			// const planInfo = await stripeService.getPlanInfo(payload);
+
+			// }
+			// return {};
+			// const checkUserInStripe = await stripeManager.createCustomers()
 		}
+
 		catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -249,45 +86,139 @@ class TransactionController extends BaseEntity {
 		}
 	}
 
-	async handleChargeSucceeded(transactioData, paymentIntent) {
-		if (!transactioData.subscriptionId) {
-			const payload: any = {
-				featuredType: transactioData.featuredType,
-				subscriptionType: transactioData.billingType,
-				userId: transactioData.userId,
+	// async handleChargeSucceeded(transactioData, paymentIntent) {
+	// 	if (!transactioData.subscriptionId) {
+	// 		const payload: any = {
+	// 			featuredType: transactioData.featuredType,
+	// 			subscriptionType: transactioData.billingType,
+	// 			userId: transactioData.userId,
+	// 		};
+	// 		const step1 = await ENTITY.SubscriptionE.addSubscrition(payload);
+	// 		transactioData.subscriptionId = step1._id;
+	// 	}
+	// 	const step2 = await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
+	// 	return {};
+	// }
+
+	// async handleChargePending(transactioData, paymentIntent) {
+	// 	await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
+	// 	return {};
+	// }
+
+	// async handleChargeFailed(transactioData, paymentIntent) {
+	// 	await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
+	// 	return {};
+	// }
+
+	async createInvoice(event) {
+		try {
+			const CheckplaninDb = {
+				'plans.planId': event['data']['object']['lines']['data'][0]['plan']['id'],
 			};
-			const step1 = await ENTITY.SubscriptionE.addSubscrition(payload);
-			transactioData.subscriptionId = step1._id;
+			const criteria = {
+				stripeId: event['data']['object']['customer'],
+			};
+			const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {})
+
+			const userData = await ENTITY.UserE.getOneEntity(criteria, { _id: 1 });
+			console.log('userDatauserData', userData);
+
+			const step2 = await ENTITY.TransactionE.addTransaction(event, userData, checkplan);
+			console.log('step2>>>>>>>>>>>>>>>>>>>', step2);
+			return;
+		} catch (error) {
+			console.log('errorerrorerrorerrorerrorerror>>>>>>>>>>>>>>.', error);
+			return Promise.reject(error);
 		}
-		const step2 = await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
-		return {};
 	}
 
-	async handleChargePending(transactioData, paymentIntent) {
-		await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
-		return {};
+	// async updateSubscriptionStatus(paymentIntent) {
+	// 	//  if(paymentIntent.status==='active')
+	// 	// await ENTITY.SubscriptionE.updateSubscriptionStatus(paymentIntent)
+
+	// 	// await ENTITY.WebhookE.createOneEntity()
+	// 	const getUser = {
+	// 		stripeId: paymentIntent['customer'],
+	// 	};
+	// 	const getUserInfo = await ENTITY.UserE.getOneEntity(getUser, {});
+	// 	console.log('getUserInfogetUserInfogetUserInfo', getUserInfo);
+
+	// 	// console.log('getUserInfogetUserInfogetUserInfo', getUserInfo);
+
+	// 	// const getUserInfo()
+	// 	// await ENTITY.SubscriptionE
+	// }
+
+	async createSubscription(subscriptionData) {
+		try {
+			console.log('subscriptionDatasubscriptionData', subscriptionData);
+			const userData = await ENTITY.UserE.getOneEntity({ stripeId: subscriptionData['data']['object']['customer'] }, { _id: 1 });
+			const CheckplaninDb = {
+				'plans.planId': subscriptionData['data']['object']['plan']['id'],
+			};
+			// if (subscriptionData.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
+			const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {});
+			console.log('checkplancheckplancheckplan', checkplan);
+			// }
+			const insertData = {
+				featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
+				subscriptionType: subscriptionData['data']['object']['plan']['interval'],  // subscriptionData['plan']['interval'],
+				userId: userData['_id'],
+				startDate: (subscriptionData['data']['object']['start_date'] * 1000),
+				endDate: (subscriptionData['data']['object']['current_period_end'] * 1000), // new Date().setFullYear(new Date().getFullYear() + 1),
+				current_period_start: (subscriptionData['data']['object']['current_period_start'] * 1000),
+				status: subscriptionData['data']['object']['status'],
+				isRecurring: !subscriptionData['data']['object']['cancel_at_period_end'],
+				// paymentMethod: createCard['brand'],
+				amount: (subscriptionData['data']['object']['plan']['amount'] / 100),
+				subscriptionId: subscriptionData['data']['object']['id'],
+				planId: subscriptionData['data']['object']['plan']['id'],
+			};
+			console.log('insertDatainsertDatainsertData', insertData);
+			const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
+
+			if (step3.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
+				if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
+					// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>@2222222222222222222');
+					await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
+				}
+				if (checkplan['featuredType'] === 'PROFILE') {
+					console.log('22222222222222222222222222222222222222222');
+					await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
+				}
+				// const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan, createCard['brand']);
+				return;
+			}
+			// const step2 = await ENTITY.TransactionE.addTransaction(subscriptionData, userData, checkplan);
+			// console.log('step2>>>>>>>>>>>>>>>>>>>', step2);
+			return;
+		} catch (error) {
+			return Promise.reject(error);
+		}
 	}
 
-	async handleChargeFailed(transactioData, paymentIntent) {
-		await ENTITY.TransactionE.updateTransactionStatus(transactioData, paymentIntent);
-		return {};
-	}
+	async cancelSubscription(event) {
+		try {
+			if (event['data']['object']['cancel_at_period_end']) {
+				const getUser = {
+					stripeId: event['data']['object']['customer'],
+				};
+				const userId = await ENTITY.UserE.getOneEntity(getUser, { _id: 1 });
+				// console.log('userSubscriptionIduserSubscriptionIduserSubscriptionId', userSubscriptionData);
+				// if (userSubscriptionData['status'] !== Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
+				// 	return Constant.STATUS_MSG.ERROR.E401.SUBSCRIPTION_INACTIVE;
+				// }
+				// console.log('userSubscriptionIduserSubscriptionId', userSubscriptionData['subscriptionId']);
+				// console.log('stripeDatastripeDatastripeData', stripeData);
+				const data = await ENTITY.SubscriptionE.updateOneEntity({ userId: userId._id, subscriptionId: event['data']['object']['id'] }, { $set: { isRecurring: false } });
+				return;
+			}
 
-	async updateSubscriptionStatus(paymentIntent) {
-		//  if(paymentIntent.status==='active')
-		// await ENTITY.SubscriptionE.updateSubscriptionStatus(paymentIntent)
+			// const subscriptionUserId = await ENTITY.SubscriptionE.updateOneEntity()
 
-		// await ENTITY.WebhookE.createOneEntity()
-		const getUser = {
-			stripeId: paymentIntent['customer'],
-		};
-		const getUserInfo = await ENTITY.UserE.getOneEntity(getUser, {});
-		console.log('getUserInfogetUserInfogetUserInfo', getUserInfo);
-
-		// console.log('getUserInfogetUserInfogetUserInfo', getUserInfo);
-
-		// const getUserInfo()
-		// await ENTITY.SubscriptionE
+		} catch (error) {
+			return Promise.reject(error);
+		}
 	}
 
 	async webhook(payload) {
@@ -295,49 +226,69 @@ class TransactionController extends BaseEntity {
 		// console.log('step1step1step1step1step1step1step1step1step1step1', step1);
 
 		// const step2 = await ENTITY.WebhookE.addWebhook({ transactionId: step1._id, webhookObject: payload });
+		const addWebhook = await ENTITY.WebhookE.createOneEntity({ webhookObject: payload });
+		// console.log('addWebhookaddWebhook>>>>>>>>>>>>>>>>>>>>>>', addWebhook);
 		try {
 			const event = payload;
 			const paymentIntent = event.data.object;
 			console.log('paymentIntentpaymentIntentpaymentIntent', paymentIntent);
-			console.log('event.typeevent.typeevent.type', event.type);
+			console.log('jSON STRINFIFYoBJECT>>>>>>>>>>>>>>>>>>>>>>>>>>>', JSON.stringify(event));
 			// Handle the event
 			switch (event.type) {
 				case 'charge.succeeded':
-					console.log(1);
-
+					console.log('111111111111111111111111111111111111111111111111111');
 					// await this.handleChargeSucceeded(step1, paymentIntent);
 					break;
 				case 'charge.pending':
-					console.log(2);
+					console.log('2222222222222222222222222222222222222222222');
 
 					// await this.handleChargePending(step1, paymentIntent);
 					break;
 				case 'charge.failed':
-					console.log(3);
-
-					// await this.handleChargeFailed(step1, paymentIntent);
-					break;
-				case 'charge.failed':
-					console.log(4);
+					console.log('33333333333333333333333333333333333333');
 
 					// await this.handleChargeFailed(step1, paymentIntent);
 					break;
 
 				case 'customer.subscription.trial_will_end':
-					console.log(5);
+					console.log('55555555555555555555555555555555555555555');
 
 					// await
-					console.log('1111111111111');
+					console.log('1111111111111??????????>>>>>>>>>>>>>>>>>>>>>>>.');
 
 					break;
 				case 'customer.subscription.deleted':
-					console.log(6);
+					console.log('6666666666666666666666666666666666666666666666666666');
 
 					break;
 
+				case 'customer.subscription.created':
+					console.log('8888888888888888888888888888888888888888', event);
+					await this.createSubscription(event);
+					break;
+
+				case 'invoice.payment_succeeded':
+					console.log('9999999999999999999999999', event);
+					await this.createInvoice(event);
+					break;
+				case 'invoice.created':
+					console.log('100111111111111111111111111112100>>>>>>>>>>', event);
+					break;
+
+				case 'invoice.finalized':
+					console.log('invoice.finalized>>>>>>>>>>>>>>>>>>>>>>>>>', event);
+					break;
+
 				case 'customer.subscription.updated':
-					console.log('77777777777777777777777777777777');
-					await this.updateSubscriptionStatus(paymentIntent);
+					console.log('customer.subscription.updated>>>>>>>>>>>>', event);
+					await this.cancelSubscription(event);
+
+					break;
+
+				case 'subscription_schedule.canceled':
+					console.log('subscription_schedule.canceledsubscription_schedule.canceled>>>>>>>>', event);
+
+					break;
 			}
 			return {};
 

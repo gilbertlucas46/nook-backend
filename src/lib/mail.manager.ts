@@ -4,14 +4,13 @@ import { SERVER, EMAIL_TEMPLATE } from '@src/constants/app.constant';
 import * as utils from '../utils';
 import Mail = require('nodemailer/lib/mailer');
 import { TemplateUtil } from '@src/utils/template.util';
-import { CategoryClass } from '@src/entity/article/adminArticle.entity';
 
 const transporter = nodemailer.createTransport({
 
 	host: config.get('smtp.mailHost'),
 	port: config.get('smtp.mailPort'),
 	// bcc: config.get('smtp.bccMail')
-	secure: true,
+	secure: false,
 	auth: {
 		user: config.get('smtp.mailUserName'), // config.get('MAIL_USERNAME'),
 		pass: config.get('smtp.mailPassword'), // '12345Appinventiv'
@@ -30,7 +29,7 @@ export class MailManager {
 		try {
 			// let senderEmail = this.senderEmail
 			const mailOptions: Mail.Options = {
-				from: config.get('smtp.mailHost'), // sender email
+				from: config.get('smtp.mailFromAddress'), // sender email
 				to: params.receiverEmail, // || this.receiverEmail,
 				subject: params.subject, // || this.subject,
 				// 	text: 'params.content', // || this.content,
@@ -58,10 +57,15 @@ export class MailManager {
 					// url: url,
 					year: new Date().getFullYear(),
 					// projectName: 'Nook',
-					faceBookUrl: EMAIL_TEMPLATE.SOCIAL_LINK.FB,
-					instaUrl: EMAIL_TEMPLATE.SOCIAL_LINK.INSTAGRAM,
-					twitterUrl: EMAIL_TEMPLATE.SOCIAL_LINK.TWITTER,
+					faceBookUrl: config['host'] + '/images/facebook.png',
+					instaUrl: config['host'] + '/images/instagram-2.png',
+					twitterUrl: config['host'] + '/images/twitter-2.png',
+					// faceBookUrl: EMAIL_TEMPLATE.SOCIAL_LINK.FB,
+					// instaUrl: EMAIL_TEMPLATE.SOCIAL_LINK.INSTAGRAM,
+
+					// twitterUrl: EMAIL_TEMPLATE.SOCIAL_LINK.TWITTER,
 					userName: params.userName,
+
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'welcome template', content: mailContent });
 
@@ -80,11 +84,12 @@ export class MailManager {
 			// }
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'reset-password.html'))
 				.compileFile({
+
 					url: params.url,
 					year: new Date().getFullYear(),
 					// projectName: 'Nook',
 					// subject: params.subject,
-					GSG_ADDRESS: EMAIL_TEMPLATE.GSG_ADDRESS,
+					// GSG_ADDRESS: EMAIL_TEMPLATE.GSG_ADDRESS,
 					email: params.receiverEmail,
 					userName: params.userName,
 				});
@@ -99,6 +104,9 @@ export class MailManager {
 		try {
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
 				.compileFile({
+					faceBookUrl: config['host'] + '/images/facebook.png',
+					instaUrl: config['host'] + '/images/instagram-2.png',
+					twitterUrl: config['host'] + '/images/twitter-2.png',
 					name: params.name,
 					address: params.address,
 					description: params.message,
@@ -109,7 +117,6 @@ export class MailManager {
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
 		} catch (error) {
-			console.log('error>>>>>>>>>>>>>>>>>>>>>>>', error);
 			return Promise.reject(error);
 		}
 	}
@@ -118,6 +125,9 @@ export class MailManager {
 		try {
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
 				.compileFile({
+					faceBookUrl: config['host'] + '/images/facebook.png',
+					instaUrl: config['host'] + '/images/instagram-2.png',
+					twitterUrl: config['host'] + '/images/twitter-2.png',
 					name: params.name,
 					// address: params.address,
 					description: params.message,
@@ -132,3 +142,4 @@ export class MailManager {
 		}
 	}
 }
+
