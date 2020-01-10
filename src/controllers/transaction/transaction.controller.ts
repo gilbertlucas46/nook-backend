@@ -262,11 +262,6 @@ class TransactionController extends BaseEntity {
 
 					// await this.handleChargeFailed(step1, paymentIntent);
 					break;
-				case 'charge.failed':
-					console.log('444444444444444444444444444444444444444');
-
-					// await this.handleChargeFailed(step1, paymentIntent);
-					break;
 
 				case 'customer.subscription.trial_will_end':
 					console.log('55555555555555555555555555555555555555555');

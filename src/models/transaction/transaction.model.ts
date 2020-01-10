@@ -39,16 +39,9 @@ export const transactionSchema = new Schema({
 	billingType: { type: String },
 	productId: { type: String },
 	receiptUrl: { type: String },
-	// enum: [
-	// 	CONSTANT.DATABASE.TRANSACTION_STATUS.SUCCEEDED,
-	// 	CONSTANT.DATABASE.TRANSACTION_STATUS.PENDING,
-	// 	CONSTANT.DATABASE.TRANSACTION_STATUS.FAILED,
-	// ],
-	// default: '',
-	// },
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
 	featuredType: { type: String, required: true },
-	address: { type: String, required: true },
+	address: { type: String },
 	invoiceNo: { type: String },
 	// featuredType: {
 	// 	type: String,
