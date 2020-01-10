@@ -53,16 +53,17 @@ export class TransactionClass extends BaseEntity {
 
 	async addTransaction(invoice, userData, checkplan) {
 		try {
-			return await this.DAOManager.saveData(this.modelName, {
-				// type: subscriptionData['data']['object']['object'],
-				// productId: subscriptionData['data']['object']['plan']['product'],
-				// billingType: subscriptionData['data']['object']['plan']['interval'],
-				// amount: subscriptionData['data']['object']['plan']['amount'],
-				// currency: subscriptionData['data']['object']['plan']['currency'],
-				// featuredType: checkplan['featuredType'],
-				// userId: userData['_id'],
-				// status: subscriptionData['data']['object']['status'],
-				// subscriptionId: subscriptionData['data']['object']['id'],
+			// return await this.DAOManager.saveData(this.modelName, {
+			// type: subscriptionData['data']['object']['object'],
+			// productId: subscriptionData['data']['object']['plan']['product'],
+			// billingType: subscriptionData['data']['object']['plan']['interval'],
+			// amount: subscriptionData['data']['object']['plan']['amount'],
+			// currency: subscriptionData['data']['object']['plan']['currency'],
+			// featuredType: checkplan['featuredType'],
+			// userId: userData['_id'],
+			// status: subscriptionData['data']['object']['status'],
+			// subscriptionId: subscriptionData['data']['object']['id'],
+			const data = {
 				billingReason: invoice['data']['object']['billing_reason'],
 				chargeId: invoice['data']['object']['charge'],
 				// type: invoice['data']['object']['object'],
@@ -73,13 +74,16 @@ export class TransactionClass extends BaseEntity {
 				featuredType: checkplan['featuredType'],
 				userId: userData['_id'],
 				status: invoice['data']['object']['status'],
-				subscriptionId: invoice['data']['object']['lines'][0]['subscription'],
+				// subscriptionId: invoice['data']['object']['lines'][0]['subscription'],
 				customer: invoice['data']['object']['customer'],
 				customer_email: invoice['data']['object']['email'],
 				hosted_invoice_url: invoice['data']['object']['hosted_invoice_url'],
 				paid: invoice['data']['object']['paid'],
+			};
+			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 
-			});
+			const insertData = await this.DAOManager.saveData(this.modelName, data);
+			return data;
 		}
 		catch (error) {
 			return Promise.reject(error);

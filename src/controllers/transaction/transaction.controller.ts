@@ -188,9 +188,7 @@ class TransactionController extends BaseEntity {
 
 	async createSubscription(subscriptionData) {
 		try {
-
 			console.log('subscriptionDatasubscriptionData', subscriptionData);
-
 			const userData = await ENTITY.UserE.getOneEntity({ stripeId: subscriptionData['data']['object']['customer'] }, { _id: 1 });
 			const CheckplaninDb = {
 				'plans.planId': subscriptionData['data']['object']['plan']['id'],
@@ -203,7 +201,7 @@ class TransactionController extends BaseEntity {
 				featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
 				subscriptionType: subscriptionData['data']['object']['plan']['interval'],  // subscriptionData['plan']['interval'],
 				userId: userData['_id'],
-				startDate: subscriptionData['data']['object']['start_date'],
+				startDate: (subscriptionData['data']['object']['start_date'] * 1000),
 				endDate: (subscriptionData['data']['object']['current_period_end'] * 1000), // new Date().setFullYear(new Date().getFullYear() + 1),
 				current_period_start: (subscriptionData['data']['object']['current_period_start'] * 1000),
 				status: subscriptionData['data']['object']['status'],
