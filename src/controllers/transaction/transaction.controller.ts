@@ -200,7 +200,6 @@ class TransactionController extends BaseEntity {
 	async cancelSubscription(event) {
 		try {
 			if (event['data']['object']['cancel_at_period_end']) {
-
 				const getUser = {
 					stripeId: event['data']['object']['customer'],
 				};
@@ -211,9 +210,10 @@ class TransactionController extends BaseEntity {
 				// }
 				// console.log('userSubscriptionIduserSubscriptionId', userSubscriptionData['subscriptionId']);
 				// console.log('stripeDatastripeDatastripeData', stripeData);
-				const data = await ENTITY.SubscriptionE.updateOneEntity({ userId: userId.id, subscriptionId: event['data']['object']['id'] }, { $set: { isRecurring: false } });
+				const data = await ENTITY.SubscriptionE.updateOneEntity({ userId: userId._id, subscriptionId: event['data']['object']['id'] }, { $set: { isRecurring: false } });
 				return;
 			}
+
 			// const subscriptionUserId = await ENTITY.SubscriptionE.updateOneEntity()
 
 		} catch (error) {
