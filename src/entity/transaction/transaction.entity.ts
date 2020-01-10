@@ -74,6 +74,7 @@ export class TransactionClass extends BaseEntity {
 				featuredType: checkplan['featuredType'],
 				userId: userData['_id'],
 				status: invoice['data']['object']['status'],
+				// subscription:
 				// subscriptionId: invoice['data']['object']['lines'][0]['subscription'],
 				customer: invoice['data']['object']['customer'],
 				customer_email: invoice['data']['object']['email'],
