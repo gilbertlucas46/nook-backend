@@ -168,7 +168,7 @@ class TransactionController extends BaseEntity {
 				endDate: (subscriptionData['data']['object']['current_period_end'] * 1000), // new Date().setFullYear(new Date().getFullYear() + 1),
 				current_period_start: (subscriptionData['data']['object']['current_period_start'] * 1000),
 				status: subscriptionData['data']['object']['status'],
-				isRecurring: subscriptionData['data']['object']['cancel_at_period_end'],
+				isRecurring: !subscriptionData['data']['object']['cancel_at_period_end'],
 				// paymentMethod: createCard['brand'],
 				amount: (subscriptionData['data']['object']['plan']['amount'] / 100),
 				subscriptionId: subscriptionData['data']['object']['id'],
