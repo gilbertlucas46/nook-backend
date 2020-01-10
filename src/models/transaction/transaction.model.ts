@@ -65,7 +65,6 @@ export const transactionSchema = new Schema({
 	billingReason: { type: String },
 	customer: { type: String },
 	customer_email: { type: String },
-	hosted_invoice_url: { type: String },
 	paid: { type: Boolean },
 }
 	, {
