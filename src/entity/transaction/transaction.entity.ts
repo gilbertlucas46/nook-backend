@@ -23,24 +23,40 @@ export class TransactionClass extends BaseEntity {
 		}
 	}
 
-	async addTransaction(payload: TransactionRequest.CreateCharge, userData, chargeData) {
+	async addTransaction(payload: TransactionRequest.CreateCharge, userData, chargeData, getSubscriptionDetailInDb, brandName) {
 		try {
+			console.log('chargeDatachargeDatachargeDatachargeDatachargeDatachargeData', chargeData);
+
 			return await this.DAOManager.saveData(this.modelName, {
-				transactionId: chargeData.balance_transaction,
-				amount: payload.amount,
-				currency: chargeData.currency,
-				chargeId: chargeData.id,
-				cardId: chargeData.source.id,
-				receiptUrl: chargeData.receipt_url,
-				description: chargeData.description,
-				status: chargeData.status,
+				transactionId: chargeData.id,
+				amount: (chargeData['plan']['amount'] / 100),
+				currency: chargeData['plan']['currency'],
+				// chargeId: chargeData.id,
+				// cardId: chargeData.source.id,
+				receiptUrl: chargeData['items']['url'],
+				description: chargeData.description,  // to be remove
+				status: chargeData['status'],
 				userId: userData._id,
-				name: payload.name,
+				subscriptionId: chargeData['subscriptionId'],
 				address: payload.address,
-				featuredType: payload.featuredType,
-				billingType: payload.billingType,
-				paymentMethod: chargeData.payment_method_details.card.brand,
-				paymentObject: chargeData,
+				featuredType: getSubscriptionDetailInDb['featuredType'], // chargeData['plan']['nickname'], // payload.featuredType,
+				billingType: chargeData['plan']['interval'],  // payload.billingType,
+				// paymentMethod: chargeData.payment_method_details.card.brand,
+				// paymentObject: chargeData,
+				productId: chargeData['plan']['product'],
+				cardHolder: payload.name,
+				// transactionId: chargeData.balance_transaction,
+				// amount: payload.amount,
+				// currency: chargeData.currency,
+				// chargeId: chargeData.id,
+				// cardId: chargeData.source.id,
+				// receiptUrl: chargeData.receipt_url,
+				// description: chargeData.description,
+				// name: payload.name,
+				// address: payload.address,
+				// featuredType: payload.featuredType,
+				// billingType: payload.billingType,
+				paymentMethod: brandName,
 			});
 		} catch (error) {
 			utils.consolelog('Error', error, true);
@@ -73,9 +89,9 @@ export class TransactionClass extends BaseEntity {
 
 			const query: any = {};
 			query.userId = Types.ObjectId(userData._id);
-			query.status = 'succeeded';
+			// query.status = 'active';
 			if (featuredType) {
-				query.featuredType = featuredType;
+				query['featuredType'] = featuredType;
 			}
 			if (fromDate && toDate) { query.createdAt = { $gte: fromDate, $lte: toDate }; }
 			if (fromDate && !toDate) { query.createdAt = { $gte: fromDate }; }
@@ -83,20 +99,9 @@ export class TransactionClass extends BaseEntity {
 
 			const pipeline = [
 				{ $match: query },
-				{
-					$project: {
-						invoiceNo: 1,
-						createdAt: 1,
-						description: 1,
-						featuredType: 1,
-						billingType: 1,
-						paymentMethod: 1,
-						amount: 1,
-					},
-				},
 			];
-
-			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+			return data;
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
@@ -107,8 +112,8 @@ export class TransactionClass extends BaseEntity {
 		try {
 			const query: any = {};
 			query._id = payload.transactionId;
-			const projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
-			const response = await this.DAOManager.findOne(this.modelName, query, projection);
+			// const projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
+			const response = await this.DAOManager.findOne(this.modelName, query, {});
 			const populateQuery = [
 				{ path: 'userId', model: 'User', select: 'email' },
 			];

@@ -31,14 +31,37 @@ export class HelpCenterEntity extends BaseEntity {
         }
     }
 
-    async getHelpCenterByCategory(id: number) {
+    async getHelpCenterByCategory(payload) {
         try {
+            const { searchTerm, id } = payload;
+            let query;
+            if (searchTerm) {
+                query = {
+                    // $and:{status:}
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                        { categoryType: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+            }
+            else {
+                query = {
+
+                };
+            }
+            // const d
+
             const pipeline: any[] = [
                 {
                     $match: {
+                        // $and: [{
                         categoryId: id,
+                        $or: [
+                            query,
+                        ],
                     },
-                },
+            },
                 {
                     $project: {
                         _id: 1,

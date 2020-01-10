@@ -40,15 +40,16 @@ export class UserController {
 						type: payload.type,
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
-					const userResponse = UniversalFunctions.formatUserData(User);
+					// const userResponse = UniversalFunctions.formatUserData(User);
 					const mail = new MailManager();
 					const sendObj = {
 						receiverEmail: payload.email,
 						subject: 'nook welcomes you',
 						userName: payload.userName,
 					};
+					const token = ENTITY.UserE.createRegisterToken(User._id);
 					mail.welcomeMail(sendObj);
-					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
+					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 				}
 			}
 		} catch (error) {
@@ -109,9 +110,9 @@ export class UserController {
 	 * @payload payload :PropertyDetail
 	 * return Proeperty Data
 	 */
-	async propertyDetail(payload: PropertyRequest.PropertyDetail) {
+	async propertyDetail(payload: PropertyRequest.PropertyDetail, userData) {
 		try {
-			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload._id);
+			const getPropertyData = await ENTITY.PropertyE.userPropertyDetail(payload._id, userData);
 			// if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
 			// 	return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
 			// }
@@ -171,7 +172,6 @@ export class UserController {
 
 			request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
 				if (err) { return console.log(err); }
-				console.log('body ----', body);
 			});
 
 			return updateUser;
@@ -328,9 +328,11 @@ export class UserController {
 	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
-			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
+			// const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
+			// console.log('step1step1', step1);
+
 			const step2 = await ENTITY.UserE.userDashboad(userData);
-			step2.isFeaturedProfile = step1 ? true : false;
+			// step2.isFeaturedProfile = step1 ? true : false;
 			return step2;
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -372,6 +374,20 @@ export class UserController {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
+	}
+
+	async featureDashboard(userData) {
+		try {
+			const step1 = await ENTITY.SubscriptionE.checkFeaturePropertyCount(userData);
+			// const step2 = await ENTITY.UserE.userDashboad(userData);
+			// step2.isFeaturedProfile = step1 ? true : false;
+			return step1;
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+	async completeRegistration(token: string, data: object) {
+		return await ENTITY.UserE.completeRegisterProcess(token, data);
 	}
 }
 

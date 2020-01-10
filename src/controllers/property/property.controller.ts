@@ -1,9 +1,9 @@
-
 import * as Constant from '@src/constants/app.constant';
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
+import { exists } from 'fs';
 export class PropertyController {
 
 	getTypeAndDisplayName(findObj, num: number) {
@@ -117,7 +117,15 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
-				const data = await ENTITY.PropertyE.createOneEntity(payload);
+				payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
+				let data: any;
+				if (exist) {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
+					ENTITY.PropertyE.updateOneEntity({ _id: data._id }, { 'property_basic_details.name': payload.property_basic_details.name + '-' + data.propertyId });
+				} else {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
+				}
 				let step1;
 				if (payload.subscriptionId) {
 					step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
@@ -179,7 +187,8 @@ export class PropertyController {
 			//         }
 			//     }
 			// ]);
-			return await ENTITY.PropertyE.getPropertyList(payload);
+			const data = await ENTITY.PropertyE.getPropertyList(payload);
+			return data;
 		} catch (err) {
 			utils.consolelog('error', err, true);
 			return Promise.reject(err);
@@ -249,7 +258,16 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return updateData;
 			}
-			return await ENTITY.PropertyE.createOneEntity(payload);
+			payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+			const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
+			let data: any;
+			if (exist) {
+				data = await ENTITY.PropertyE.createOneEntity(payload);
+				ENTITY.PropertyE.updateOneEntity({ _id: data._id }, { 'property_basic_details.name': payload.property_basic_details.name + '-' + data.propertyId });
+			} else {
+				data = await ENTITY.PropertyE.createOneEntity(payload);
+			}
+			return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -369,6 +387,7 @@ export class PropertyController {
 
 	async adminAddProperty(payload, adminData) {
 		try {
+
 			let result;
 			let propertyAction;
 			const promiseArray = [];
@@ -383,7 +402,6 @@ export class PropertyController {
 			propertyAction = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_ACTIONS, Constant.DATABASE.PROPERTY_ACTIONS.PENDING.NUMBER);
 			payload.property_address.location['type'] = 'Point';
 
-
 			if (!payload.propertyId) {
 				payload.property_status = {};
 				payload.property_status['number'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
@@ -391,7 +409,7 @@ export class PropertyController {
 				payload.property_status['displayName'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.DISPLAY_NAME;
 			}
 
-			payload['userId'] = payload.property_added_by.userId;
+			// payload['userId'] = payload.property_added_by.userId;
 
 			// payload.property_added_by = {
 			// 	userId: adminData._id,
@@ -425,32 +443,42 @@ export class PropertyController {
 				// };
 				// // promiseArray.push(ENTITY.EnquiryE.updateOneEntity(criteria, enquiryDataToUpdate));
 
-				let step1;
-				if (payload.subscriptionId) {
-					step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
-				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-					payload.isFeatured = true;
-				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
-					payload.isHomePageFeatured = true;
-				}
+				// let step1;
+				// if (payload.subscriptionId) {
+				// 	step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
+				// }
+				// if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+				// 	payload.isFeatured = true;
+				// }
+				// if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+				// 	payload.isHomePageFeatured = true;
+				// }
 				delete payload.propertyId;
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
-				const data = await ENTITY.PropertyE.createOneEntity(payload);
-				let step1;
-				if (payload.subscriptionId) {
-					step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
+				payload.userId = payload.property_added_by.userId;
+				payload.property_basic_details.name = await payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
+				let data: any;
+				if (exist) {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
+					ENTITY.PropertyE.updateOneEntity({ _id: data._id }, { 'property_basic_details.name': payload.property_basic_details.name + '-' + data.propertyId });
+				} else {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
 				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-					payload.isFeatured = true;
-				}
-				if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
-					payload.isHomePageFeatured = true;
-				}
-				const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
+				// let step1;
+				// // if (payload.subscriptionId) {
+				// // 	step1 = ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
+				// // }
+
+				// // if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+				// // 	payload.isFeatured = true;
+				// // }
+				// if (step1 && step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
+				// 	payload.isHomePageFeatured = true;
+				// }
+				// const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
 				return data;
 			}
 		} catch (error) {

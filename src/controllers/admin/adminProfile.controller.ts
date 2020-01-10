@@ -22,9 +22,8 @@ export class AdminProfileController {
 		try {
 			const email: string = payload.email;
 			const checkData = { email: payload.email };
-			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus']);
+			const adminData = await ENTITY.AdminE.getOneEntity(checkData, ['type', 'password', 'permission', '_id', 'email', 'staffStatus', 'firstName', 'lastName']);
 			// check email
-			console.log('adminData', adminData);
 			if (!adminData) return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL);
 			if (adminData.staffStatus === Constant.DATABASE.STATUS.USER.DELETE && adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
@@ -60,8 +59,12 @@ export class AdminProfileController {
 
 	async profile(payload) {
 		try {
-			const criteria = { _id: payload._id };
-			return await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
+			const criteria = { _id: payload.id };
+			const data = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
+			if (!data) {
+				return Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE;
+			}
+			return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);

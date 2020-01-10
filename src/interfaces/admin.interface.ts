@@ -307,6 +307,7 @@ export namespace AdminRequest {
 
 	export interface ISubscriptionList {
 		id?: string;
+		planId: string;
 		featuredType?: string;
 		plans?: object[];
 		description?: string;

@@ -316,6 +316,8 @@ export let DATABASE = {
 			Article_Category: 'article-categories',
 			Subscriptions: 'subscriptions',
 			loanReferrals: 'loan-referrals',
+			ENQUIRY: 'enquiries',
+
 		},
 	},
 
@@ -365,6 +367,12 @@ export let DATABASE = {
 		},
 	},
 
+	SUBSCRIPTION_STATUS: {
+		ACTIVE: 'active',
+		CANCEL: 'cancel',
+		EXPIRE: 'expire',
+		PENDING: 'pending',
+	},
 	PROPERTY_TYPE: {
 		'NONE': 'None',
 		'APPARTMENT/CONDO': 'Apartment/Condo',
@@ -494,13 +502,21 @@ export let DATABASE = {
 		PROFILE: 'PROFILE',
 		PROPERTY: 'PROPERTY',
 		HOMEPAGE: 'HOMEPAGE',
+		HOMEPAGE_PROFILE: 'HOMEPAGE_PROFILE',
+		HOMEPAGE_PROPERTY: 'HOMEPAGE_PROPERTY',
 	},
+	// BILLING_TYPE: {
+	// 	MONTHLY: 'MONTHLY',
+	// 	YEARLY: 'YEARLY',
+	// },
 	BILLING_TYPE: {
-		MONTHLY: 'MONTHLY',
-		YEARLY: 'YEARLY',
+		MONTHLY: 'month',
+		YEARLY: 'year',
 	},
 	SCREEN_TYPE: {
 		HOMEPAGE: 'HOMEPAGE',
+		HOMEPAGE_PROFILE: 'HOMEPAGE_PROFILE',
+		HOMEPAGE_PROPERTY: 'HOMEPAGE_PROPERTY',
 		SEARCH: 'SEARCH',
 	},
 	// type = YEARLY, MONTHLY
@@ -778,6 +794,12 @@ export let STATUS_MSG = {
 				type: 'UNAUTHORIZED',
 				message: 'You are not authorized to perform this action',
 			},
+			SUBSCRIPTION_INACTIVE: {
+				statusCode: 401,
+				type: 'SUNSCRIPTION',
+				message: 'Subscription Not Active',
+			},
+
 			// MISSINING_AUTHENTICATION: (tokenType: any) => {
 			// 	return {
 			// 		statusCode: 401,

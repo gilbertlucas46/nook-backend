@@ -7,14 +7,1207 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Lamitan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Akbar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				name: 'Marawi City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Al-Barka',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Amai Manabilang (Bumbaran)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Ampatuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Bacolod-Kalawi (Bacolod-Grande)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Balabagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Balindong (Watu)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Banguingui (Tongkil)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Barira',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Bayang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Binidayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Bongao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Buadiposo-Buntong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Bubong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Buldon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Buluan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Butig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Calanogas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Cotabato City',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Abdullah Sangki',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Anggal Midtimbang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Blah T. Sinsuat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Hoffer Ampatuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Montawal (Pagagawan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Odin Sinsuat (Dinaig)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Paglas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Piang (Dulawan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Salibo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Saudi-Ampatuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Datu Unsay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Ditsaan-Ramain',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Ganassi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'General Salipada K. Pendatun',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Guindulungan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Hadji Mohammad Ajul',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Hadji Muhtamad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Hadji Panglima Tahil (Marunggas)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Indanan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Isabela City',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Jolo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Kabuntalan (Tumbao)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Kalingalan Caluang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Kapai',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Kapatagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lamitan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Languyan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lantawan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lugus',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lumba-Bayabao (Maguing)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lumbaca-Unayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lumbatan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lumbayanague',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Luuk',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Madalum',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Madamba',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Maguing',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Maimbung',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Malabang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Maluso',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Mamasapano',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Mangudadatu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Mapun (Cagayan de Tawi-Tawi)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Marantao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Marawi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Marogong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Masiu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Matanog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Mulondo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Northern Kabuntalan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Old Panamao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Omar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pagalungan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pagayawan (Tatarikan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Paglat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pandag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pandami',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Panglima Estino (New Panamao)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Panglima Sugala (Balimbing)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pangutaran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Parang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Parang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pata',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Patikul',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Piagapo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Picong (Sultan Gumander)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Poona Bayabao (Gata)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pualas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Rajah Buayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Saguiaran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Sapa-Sapa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Shariff Aguak (Maganoy)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Shariff Saydona Mustapha',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Siasi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Sibutu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Simunul',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Sitangkai',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'South Ubian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'South Upi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Sultan Dumalondong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Sultan Kudarat (Nuling)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Sultan Mastura',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Sultan sa Barongis (Lambayong)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Sultan Sumagka (Talitay)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Sumisip',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tabuan-Lasa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tagoloan II',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Talayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Talipao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tamparan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tandubas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tapul',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Taraka',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tipo-Tipo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tubaran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tuburan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tugaya',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Turtle Islands (Taganak)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Ungkaya Pukan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Upi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Wao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 		],
+
 	},
 	{
 		fullName: 'Cordillera Administrative Region',
@@ -22,312 +1215,774 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Baguio City',
-				location: { type: 'Point', coordinates: [0, 0] },
-			},
-			{
-				name: 'Tabuk City',
-				location: { type: 'Point', coordinates: [0, 0] },
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Bangued',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Boliney',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Bucay',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Bucloc',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Daguioman',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Danglas',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Dolores',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'La Paz',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Lacub',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Lagangilang',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Lagayan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Langiden',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Licuan-Baay (Licuan)',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Luba',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Malibcong',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Manabo',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Peñarrubia',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Pidigan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Pilar',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Sallapadan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'San Isidro',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'San Juan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'San Quintin',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Tayum',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Tineg',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Tubo',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Villaviciosa',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Calanasan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Conner',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Flora',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Kabugao',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Luna',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Pudtol',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Santa Marcela',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Atok',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Bakun',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Bokod',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Buguias',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Itogon',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Kabayan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Kapangan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Kibungan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'La Trinidad',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Mankayan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Sablan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Tuba',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Tublay',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
 				name: 'Aguinaldo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Alfonso Lista (Potia)',
+				name: 'Alfonso Lista (Potia)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
 				name: 'Asipulo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Banaue',
+				name: 'Atok',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Hingyon',
+				name: 'Baguio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Hungduan',
+				name: 'Bakun',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Kiangan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Lagawe',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Lamut',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Mayoyao',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Tinoc',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
 				name: 'Balbalan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Lubuagan',
+				name: 'Banaue',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Pasil',
+				name: 'Bangued',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Pinukpuk',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Rizal (Liwan)',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Tanudan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
-				name: 'Tinglayan',
-			},
-			{
-				location: { type: 'Point', coordinates: [0, 0] },
 				name: 'Barlig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
 				name: 'Bauko',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
 				name: 'Besao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bokod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Boliney',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
 				name: 'Bontoc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bucay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Bucloc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Buguias',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Calanasan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Conner',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Daguioman',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Danglas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Dolores',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Flora',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Hingyon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Hungduan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Itogon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Kabayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Kabugao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Kapangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Kiangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Kibungan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'La Paz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'La Trinidad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lacub',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lagangilang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lagawe',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lagayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lamut',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Langiden',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Licuan-Baay (Licuan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Luba',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Lubuagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Luna',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Malibcong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Manabo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Mankayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Mayoyao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
 				name: 'Natonin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
 				name: 'Paracelis',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Pasil',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Peñarrubia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pidigan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pilar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pinukpuk',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Pudtol',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Rizal (Liwan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
 				name: 'Sabangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sablan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
 				name: 'Sadanga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
 				name: 'Sagada',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 			{
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Sallapadan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'San Isidro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'San Juan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'San Quintin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Santa Marcela',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tabuk',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
 				name: 'Tadian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tanudan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tayum',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tineg',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tinglayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tinoc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tuba',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tublay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Tubo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
+			},
+			{
+				name: 'Villaviciosa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0,
+					],
+				},
 			},
 		],
 	},
@@ -343,6 +1998,12 @@ export const REGIONS: Location.RegionLocation[] = [
 			{
 				name: 'Las Piñas City',
 				location: { type: 'Point', coordinates: [0, 0] },
+			},
+			{
+				name: 'Pateros',
+				location: {
+					type: 'Point', coordinates: [0, 0]
+				},
 			},
 			{
 				name: 'Makati City',
@@ -1637,67 +3298,2239 @@ export const REGIONS: Location.RegionLocation[] = [
 		fullName: 'Ilocos Region',
 		shortName: 'Region 1',
 		location: { type: 'Point', coordinates: [0, 0] },
+		// cities: [
+		// 	{
+		// 		name: 'Batac City',
+		// 		location: { type: 'Point', coordinates: [0, 0] },
+		// 	},
+		// 	{
+		// 		name: 'Laoag City',
+		// 		location: { type: 'Point', coordinates: [0, 0] },
+		// 	},
+		// 	{
+		// 		name: 'Candon City',
+		// 		location: { type: 'Point', coordinates: [0, 0] },
+		// 	},
+		// 	{
+		// 		name: 'Vigan City',
+		// 		location: { type: 'Point', coordinates: [0, 0] },
+		// 	},
+		// 	{
+		// 		name: 'San Fernando City',
+		// 		location: { type: 'Point', coordinates: [0, 0] },
+		// 	},
+		// 	{
+		// 		name: 'Alaminos City',
+		// 		location: { type: 'Point', coordinates: [0, 0] },
+		// 	},
+		// 	{
+		// 		name: 'Dagupan City',
+		// 		location: { type: 'Point', coordinates: [0, 0] },
+		// 	},
+		// 	{
+		// 		name: 'San Carlos City',
+		// 		location: { type: 'Point', coordinates: [0, 0] },
+		// 	},
+		// 	{
+		// 		name: 'Urdaneta City',
+		// 		location: { type: 'Point', coordinates: [0, 0] },
+		// 	},
+		// ],
 		cities: [
 			{
-				name: 'Batac City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Adams',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Laoag City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Agno',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Candon City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Agoo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Vigan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aguilar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'San Fernando City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alaminos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Alaminos City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alcala',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Dagupan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alilem',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'San Carlos City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Anda',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Urdaneta City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aringay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Asingan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bacarra',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bacnotan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Badoc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bagulin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balaoan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balungao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Banayoyo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bangar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bangui',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bani',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Banna (Espiritu)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bantay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Basista',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Batac',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bauang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bautista',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bayambang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Binalonan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Binmaley',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bolinao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bugallon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Burgos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Burgos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Burgos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Burgos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Caba',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabugao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calasiao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Candon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Caoayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carasi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cervantes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Currimao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dagupan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dasol',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dingras',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dumalneg',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Galimuyod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gregorio del Pilar (Concepcion)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Infanta',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Labrador',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Laoac',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Laoag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lidlidda',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lingayen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Luna',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mabini',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magsingal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malasiqui',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Manaoag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mangaldan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mangatarem',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mapandan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Marcos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nagbukel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Naguilian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Narvacan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Natividad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nueva Era',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pagudpud',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Paoay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pasuquin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Piddig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pinili',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pozorrubio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pugo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quirino (Angkaki)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rosales',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rosario',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Salcedo (Baugen)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Carlos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Emilio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Esteban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Fabian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Fernando',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Gabriel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Ildefonso',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jacinto',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Juan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Juan (Lapog)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Manuel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Nicolas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Nicolas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Quintin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Vicente',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Barbara',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Catalina',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Cruz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Lucia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Maria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Maria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santiago',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Domingo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Tomas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Tomas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santol',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sarrat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sigay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sinait',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sison',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Solsona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sual',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sudipen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sugpon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Suyo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tagudin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tayug',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tubao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Umingan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Urbiztondo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Urdaneta',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Vigan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Villasis',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Vintar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Cagayan Valley',
 		shortName: 'Region 2',
-		location: { type: 'Point', coordinates: [0, 0] },
+		location: {
+			type: 'Point',
+			coordinates: [
+				0,
+				0
+			]
+		},
 		cities: [
 			{
-				name: 'Tuguegarao City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Abulug',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Cauayan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aglipay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Ilagan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alcala',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Santiago City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alfonso Castañeda',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Alicia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Allacapan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ambaguio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Amulung',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Angadanan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Aparri',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Aritao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Aurora',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bagabag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Baggao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ballesteros',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bambang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Basco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bayombong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Benito Soliven',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buguey',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Burgos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabarroguis',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabatuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Camalaniugan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cauayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Claveria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cordon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Delfin Albano (Magsaysay)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Diadi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Diffun',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dinapigue',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Divilacan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dupax del Norte',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dupax del Sur',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Echague',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Enrile',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gamu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gattaran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gonzaga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Iguig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ilagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Itbayat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ivana',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jones',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kasibu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kayapa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lal-lo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lasam',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Luna',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maconacon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maddela',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mahatao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mallig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nagtipunan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Naguilian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Palanan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pamplona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Peñablanca',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Piat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quezon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quezon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quirino',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ramon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Reina Mercedes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rizal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Roxas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sabtang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Saguday',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Agustin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Guillermo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Isidro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Manuel (Callang)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Mariano',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Mateo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Pablo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sanchez-Mira',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Ana',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Fe (Imugan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Maria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Praxedes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Teresita',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santiago',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Niño (Faire)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Tomas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Solana',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Solano',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tuao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tuguegarao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tumauini',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Uyugan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Villaverde (Ibung)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Central Luzon',
@@ -1705,62 +5538,936 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Balanga City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Abulug',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Malolos City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aglipay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Meycauayan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alcala',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'San Jose del Monte City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alfonso Castañeda',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Cabanatuan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alicia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Gapan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Allacapan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Muñoz City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Ambaguio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Palayan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Amulung',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Angeles City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Angadanan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Mabalacat City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aparri',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'San Fernando City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aritao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tarlac City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aurora',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Olongapo City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bagabag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'San Jose City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Baggao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Ballesteros',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bambang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Basco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bayombong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Benito Soliven',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buguey',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Burgos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabarroguis',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabatuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Camalaniugan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cauayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Claveria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cordon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Delfin Albano (Magsaysay)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Diadi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Diffun',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dinapigue',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Divilacan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dupax del Norte',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dupax del Sur',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Echague',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Enrile',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gamu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gattaran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gonzaga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Iguig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ilagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Itbayat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ivana',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jones',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kasibu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kayapa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lal-lo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lasam',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Luna',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maconacon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maddela',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mahatao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mallig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nagtipunan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Naguilian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Palanan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pamplona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Peñablanca',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Piat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quezon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quezon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quirino',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ramon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Reina Mercedes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rizal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Roxas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sabtang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Saguday',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Agustin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Guillermo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Isidro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Manuel (Callang)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Mariano',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Mateo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Pablo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sanchez-Mira',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Ana',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Fe (Imugan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Maria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Praxedes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Teresita',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santiago',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Niño (Faire)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Tomas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Solana',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Solano',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tuao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tuguegarao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tumauini',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Uyugan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Villaverde (Ibung)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'CALABARZON',
@@ -1768,74 +6475,1426 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
+				name: 'Agdangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Agoncillo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Alabat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Alaminos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Alfonso',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Alitagtag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Amadeo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Angono',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Antipolo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Atimonan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bacoor',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balete',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Baras',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
 				name: 'Batangas City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Lipa City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bauan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tanauan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Bacoor City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Biñan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Binangonan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buenavista',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Burdeos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabuyao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cainta',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calaca',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calamba',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calatagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calauag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calauan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Candelaria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cardona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carmona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Catanauan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cavinti',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
 				name: 'Cavite City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Dasmariñas City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Cuenca',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Imus City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Dasmariñas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tagaytay City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Dolores',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Trece Martires City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Famy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Biñan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'General Emilio Aguinaldo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Cabuyao City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'General Luna',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'San Pablo City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'General Mariano Alvarez',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Santa Rosa City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'General Nakar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Lucena City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'General Trias',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tayabas City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Guinayangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Antipolo City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Gumaca',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Calamba City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Ibaan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Imus',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Indang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Infanta',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jalajala',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jomalig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kalayaan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kawit',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Laurel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lemery',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Liliw',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lipa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lobo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lopez',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Los Baños',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lucban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lucena',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Luisiana',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lumban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mabini',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mabitac',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Macalelon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magallanes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magdalena',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Majayjay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malvar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maragondon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mataasnakahoy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mauban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mendez (Mendez-Nuñez)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Morong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mulanay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nagcarlan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Naic',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nasugbu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Noveleta',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Padre Burgos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Padre Garcia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Paete',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pagbilao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pagsanjan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pakil',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pangil',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Panukulan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Patnanungan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Perez',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pila',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pililla',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pitogo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Plaridel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Polillo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quezon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Real',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rizal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rodriguez (Montalban)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rosario',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rosario',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sampaloc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Andres',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Antonio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Francisco (Aurora)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jose',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Juan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Luis',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Mateo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Narciso',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Nicolas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Pablo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Pascual',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Pedro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Cruz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Maria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Rosa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Teresita',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Tomas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sariaya',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Silang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Siniloan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Taal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tagaytay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tagkawayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talisay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tanauan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tanay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tanza',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tayabas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Taysan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Taytay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Teresa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ternate',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tiaong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tingloy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Trece Martires',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tuy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Unisan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Victoria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'MIMAROPA',
@@ -1843,14 +7902,736 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Calapan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aborlan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Puerto Princesa City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Abra de Ilog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Agutaya',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Alcantara',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Araceli',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Baco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balabac',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bansud',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Banton (Jones)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bataraza',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Boac',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bongabong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Brooke\'s Point',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buenavista',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bulalacao (San Pedro)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Busuanga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cagayancillo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cajidiocan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calapan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calatrava',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calintaan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Concepcion',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Corcuera',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Coron',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Culion',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cuyo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dumaran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'El Nido (Bacuit)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ferrol',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gasan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gloria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kalayaan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Linapacan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Looc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Looc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lubang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magdiwang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magsaysay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magsaysay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mamburao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mansalay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mogpog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Narra',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Naujan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Odiongan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Paluan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pinamalayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pola',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Puerto Galera',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Puerto Princesa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quezon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rizal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rizal (Marcos)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Romblon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Roxas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Roxas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sablayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Agustin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Andres',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Fernando',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jose',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jose',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Teodoro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Vicente',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Cruz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Cruz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Fe',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Maria (Imelda)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Socorro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sofronio Española',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Taytay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Torrijos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Victoria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Bicol',
@@ -1858,34 +8639,1146 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Legazpi City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aroroy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Ligao City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Baao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tabaco City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bacacay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Iriga City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bagamanoc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Naga City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Balatan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Baleno',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balud',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Baras',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Barcelona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Basud',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bato',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bato',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Batuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bombon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buhi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bula',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bulan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bulusan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabusao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calabanga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Camalig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Camaligan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Canaman',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Capalonga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Caramoan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Caramoran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Casiguran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Castilla',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cataingan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cawayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Claveria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Daet',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Daraga (Locsin)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Del Gallego',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dimasalang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Donsol',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Esperanza',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gainza',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Garchitorena',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gigmoto',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Goa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gubat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Guinobatan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Iriga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Irosin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jose Panganiban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jovellar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Juban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Labo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lagonoy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Legazpi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Libmanan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Libon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ligao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lupi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magallanes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magarao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malilipot',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malinao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mandaon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Manito',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
 				name: 'Masbate City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Matnog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mercedes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Milagros',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Milaor',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Minalabac',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mobo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Monreal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nabua',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Naga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Oas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ocampo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Palanas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pamplona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pandan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Panganiban (Payo)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Paracale',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pasacao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pilar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pili',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pio Duran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pio V. Corpuz (Limbuhan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Placer',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Polangui',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Presentacion (Parubcan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Prieto Diaz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ragay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rapu-Rapu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sagñay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Andres (Calolbon)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Fernando',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Fernando',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jacinto',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jose',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Lorenzo Ruiz (Imelda)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Miguel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Pascual',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Vicente',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Elena',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Magdalena',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Domingo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sipocot',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Siruma',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
 				name: 'Sorsogon City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Tabaco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talisay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tigaon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tinambac',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tiwi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Uson',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Viga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Vinzons',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Virac',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Western Visayas',
@@ -1893,70 +9786,1336 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Roxas City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Ajuy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Alimodian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Altavas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Anilao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Anini-y',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bacolod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Badiangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bago',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balasan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balete',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Banate',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Banga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Barbaza',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Barotac Nuevo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Barotac Viejo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Batad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Batan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Belison',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Binalbagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bingawan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buenavista',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bugasong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buruanga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabatuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cadiz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calatrava',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calinog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Caluya',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Candoni',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carles',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cauayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Concepcion',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cuartero',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Culasi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dingle',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dueñas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dumalag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dumangas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dumarao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Enrique B. Magalona (Saravia)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Escalante',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Estancia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Guimbal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hamtic',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Himamaylan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hinigaran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hinoba-an (Asia)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ibajay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Igbaras',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ilog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
 				name: 'Iloilo City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Passi City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Isabela',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Bacolod City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Ivisan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Bago City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Jamindan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Cadiz City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Janiuay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Escalante City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Jordan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Himamaylan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kabankalan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Kabankalan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Kalibo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'La Carlota City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'La Carlota',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Sagay City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'La Castellana',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'San Carlos City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lambunao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Silay City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Laua-an',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Sipalay City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Leganes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Talisay City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Lemery',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Victorias City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Leon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Lezo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Libacao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Libertad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maasin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maayon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Madalag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Makato',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malinao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mambusao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Manapla',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Miagao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mina',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Moises Padilla (Magallon)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Murcia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nabas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'New Lucena',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'New Washington',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nueva Valencia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Numancia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Oton',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Panay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pandan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Panitan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Passi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Patnongon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pavia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pilar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pontevedra',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pontevedra',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pototan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'President Roxas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pulupandan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Roxas City',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sagay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Salvador Benedicto',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Carlos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Dionisio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Enrique',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Enrique',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Joaquin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jose de Buenavista',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Lorenzo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Miguel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Rafael',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Remigio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Barbara',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sapian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sara',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sebaste',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sibalom',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sibunag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sigma',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Silay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sipalay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talisay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tangalan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tapaz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tibiao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tigbauan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tobias Fornier (Dao)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Toboso',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tubungan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Valderrama',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Valladolid',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Victorias',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Zarraga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Central Visayas',
@@ -1964,16 +11123,384 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Tagbilaran City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alburquerque',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Bogo City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alcantara',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Carcar City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alcoy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Alegria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Alicia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Aloguinsan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Amlan (Ayuquitan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Anda',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Antequera',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Argao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Asturias',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ayungon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Baclayon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bacong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Badian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bais',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balamban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balilihan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bantayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Barili',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Basay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Batuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bayawan (Tulong)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bien Unido',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bilar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bindoy (Payabon)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bogo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Boljoon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Borbon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buenavista',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calape',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Candijay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Canlaon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carcar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carmen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carmen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Catigbian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Catmon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
 				name: 'Cebu City',
@@ -2151,12 +11678,394 @@ export const REGIONS: Location.RegionLocation[] = [
 				},
 			},
 			{
-				name: 'Danao City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Clarin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Lapu-Lapu City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Compostela',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Consolacion',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cordova',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Corella',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cortes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Daanbantayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dagohoy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dalaguete',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Danao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Danao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dauin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dauis',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dimiao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Duero',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dumaguete',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dumanjug',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Enrique Villanueva',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Garcia Hernandez',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Getafe',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ginatilan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Guihulngan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Guindulman',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Inabanga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jagna',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jimalalud',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'La Libertad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lapu-Lapu (Opon)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Larena',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lazi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lila',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Liloan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Loay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Loboc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Loon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mabinay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mabini',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Madridejos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malabuyoc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
 				name: 'MANDAUE CITY',
@@ -2310,38 +12219,536 @@ export const REGIONS: Location.RegionLocation[] = [
 				},
 			},
 			{
-				name: 'Naga City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Manjuyod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Talisay City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Maria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Bais City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Maribojoc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Bayawan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Medellin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Canlaon City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Minglanilla',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Dumaguete City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Moalboal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Guihulngan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Naga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tanjay City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Oslob',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Pamplona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Panglao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pilar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pilar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pinamungajan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Poro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'President Carlos P. Garcia (Pitogo)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ronda',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sagbayan (Borja)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Samboan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Fernando',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Francisco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Isidro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jose',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Juan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Miguel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Remigio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Catalina',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Fe',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santander',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sevilla',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Siaton',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sibonga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sibulan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sierra Bullones',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sikatuna',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Siquijor',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sogod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tabogon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tabuelan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tagbilaran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talibon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talisay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tanjay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tayasan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Toledo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Trinidad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tubigon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tuburan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tudela',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ubay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Valencia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Valencia (Luzurriaga)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Vallehermoso',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Zamboanguita',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Eastern Visayas',
@@ -2349,34 +12756,1436 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Borongan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Abuyog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Baybay City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alangalang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Ormoc City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Albuera',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tacloban City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Allen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Calbayog City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Almagro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Catbalogan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Almeria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Maasin City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Anahawan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Arteche',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Babatngon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balangiga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Balangkayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Barugo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Basey',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bato',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Baybay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Biliran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Biri',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bobon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bontoc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Borongan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Burauen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabucgayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Caibiran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calbayog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calbiga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calubian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Can-avid',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Capoocan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Capul',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carigara',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Catarman',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Catbalogan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Catubig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Culaba',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dagami',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Daram',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dolores',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dulag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gamay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gandara',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'General MacArthur',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Giporlos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Guiuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hernani',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hilongos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hinabangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hindang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hinunangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hinundayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Inopacan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Isabel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jaro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Javier (Bugho)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jiabong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jipapad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Julita',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kananga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kawayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'La Paz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Laoang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lapinig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Las Navas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lavezares',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lawaan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Leyte',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Libagon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Liloan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Limasawa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Llorente',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lope de Vega',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maasin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'MacArthur',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Macrohon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mahaplag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malitbog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mapanas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Marabut',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maripipi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maslog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Matag-ob',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Matalom',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Matuguinao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maydolong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mayorga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mercedes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Merida',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mondragon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Motiong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Naval',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Oras',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ormoc',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Padre Burgos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pagsanghan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Palapag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Palo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Palompon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pambujan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Paranas (Wright)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pastrana',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pinabacdao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pintuyan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quinapondan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rosario',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Saint Bernard',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Salcedo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Antonio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Francisco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Isidro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Isidro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jorge',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jose',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jose de Buan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Juan (Cabalian)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Julian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Miguel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Policarpo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Ricardo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Roque',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Sebastian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Vicente',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Fe',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Margarita',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Rita',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Niño',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Silago',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Silvino Lobos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sogod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sulat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tabango',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tabontabon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tacloban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Taft',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tagapul-an',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talalora',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tanauan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tarangnan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tolosa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tomas Oppus',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tunga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Victoria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Villaba',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Villareal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Zumarraga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Zamboanga Peninsula',
@@ -2384,26 +14193,716 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Isabela City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alicia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Dapitan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aurora',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Dipolog City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Baliguian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Pagadian City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bayog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buug',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dapitan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dimataling',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dinas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Diplahan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dipolog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dumalinao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dumingag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Godod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Guipos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gutalac',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Imelda',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ipil',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jose Dalman (Ponot)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Josefina',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kabasalan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kalawit',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Katipunan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kumalarang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'La Libertad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Labangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Labason',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lakewood',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lapuyan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Leon B. Postigo (Bacungan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Liloy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mabuhay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mahayag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malangas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Manukan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Margosatubig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Midsalip',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Molave',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mutia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Naga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Olutanga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pagadian',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Payao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Piñan (New Piñan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pitogo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Polanco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'President Manuel A. Roxas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ramon Magsaysay (Liargo)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rizal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Roseller Lim',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Salug',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Miguel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Pablo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sergio Osmeña Sr.',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Siay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Siayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sibuco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sibutad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sindangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Siocon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sirawai',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sominot (Don Mariano Marcos)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tabina',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talusan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tambulig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tampilisan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tigbao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Titay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tukuran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tungawan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Vincenzo A. Sagun',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
 				name: 'Zamboanga City',
-				location: { type: 'Point', coordinates: [0, 0] },
-			},
-		],
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Northern Mindanao',
@@ -2411,42 +14910,936 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Malaybalay City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aloran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Valencia City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alubijid',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Iligan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bacolod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Oroquieta City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Baliangao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Ozamiz City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Balingasag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tangub City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Balingoan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Cagayan de Oro City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Baloi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'El Salvador City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Baroy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Gingoog City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Baungon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Binuangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bonifacio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabanglasan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cagayan de Oro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Calamba',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Catarman',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Clarin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Claveria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Concepcion',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Damulog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dangcagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Don Carlos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Don Victoriano Chiongbian (Don Mariano Marcos)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'El Salvador',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gingoog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gitagum',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Guinsiliban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Iligan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Impasugong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Initao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jasaan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jimenez',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kadingilan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kalilangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kapatagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kauswagan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kibawe',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kinoguitan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kitaotao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kolambugan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lagonglong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Laguindingan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lala',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lantapan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Libertad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Libona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Linamon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lopez Jaena',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lugait',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magsaysay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magsaysay (Linugos)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mahinog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maigo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malaybalay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malitbog',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mambajao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Manolo Fortich',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Manticao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maramag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Matungao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Medina',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Munai',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Naawan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nunungan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Opol',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Oroquieta',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Ozamiz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Panaon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pangantucan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pantao Ragat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pantar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Plaridel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Poona Piagapo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Quezon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sagay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Salay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Salvador',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Fernando',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sapad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sapang Dalaga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sinacaban',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sugbongcogon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sultan Naga Dimaporo (Karomatan)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sumilao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tagoloan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tagoloan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talakag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talisayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tangcal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tangub',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tubod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tudela',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Valencia',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Villanueva',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Davao Region',
@@ -2454,30 +15847,496 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Panabo City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Asuncion (Saug)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Samal City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Baganga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tagum City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Banaybanay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bansalan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Boston',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Braulio E. Dujali',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Caraga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carmen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cateel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Compostela',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
 				name: 'Davao City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Digos City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Digos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Mati City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Don Marcelino',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Governor Generoso',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hagonoy',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jose Abad Santos (Trinidad)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kapalong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kiblawan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Laak (San Vicente)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lupon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mabini (Doña Alicia)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magsaysay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malalag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malita',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Manay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maragusan (San Mariano)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Matanao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mati',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mawab',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Monkayo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Montevista',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nabunturan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'New Bataan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'New Corella',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Padada',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Panabo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pantukan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Samal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Isidro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Isidro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Cruz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Maria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Tomas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sarangani',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sulop',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tagum',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talaingod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tarragona',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'SOCCSKSARGEN',
@@ -2485,26 +16344,496 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Kidapawan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alabel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Cotabato City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alamada',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'General Santos City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Aleosan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Koronadal City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Antipas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tacurong City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Arakan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Bagumbayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Banga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Banisilan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carmen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Columbio',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Esperanza',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'General Santos (Dadiangas)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Glan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Isulan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kabacan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kalamansig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kiamba',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kidapawan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Koronadal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lake Sebu',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lambayong (Mariano Marcos)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lebak',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Libungan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lutayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maasim',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magpet',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Maitum',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Makilala',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malapatan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malungon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Matalam',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Midsayap',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'M\'lang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Norala',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Palimbang',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pigcawayan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pikit',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Polomolok',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'President Quirino',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'President Roxas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santo Niño',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Senator Ninoy Aquino',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Surallah',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tacurong',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tampakan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tantangan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'T\'Boli',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tulunan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tupi',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 	{
 		fullName: 'Caraga Region',
@@ -2512,30 +16841,736 @@ export const REGIONS: Location.RegionLocation[] = [
 		location: { type: 'Point', coordinates: [0, 0] },
 		cities: [
 			{
-				name: 'Butuan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Alegria',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Cabadbaran City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Bacuag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Bayugan City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Barobo',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Basilisa (Rizal)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bayabas',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bayugan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bislig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Buenavista',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Bunawan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Burgos',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Butuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cabadbaran',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cagdianao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cagwait',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cantilan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carmen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carmen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Carrascal',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Claver',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Cortes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dapa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Del Carmen',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Dinagat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Esperanza',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'General Luna',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Gigaquit',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Hinatuan',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Jabonga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Kitcharao',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'La Paz',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lanuza',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Las Nieves',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lianga',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Libjo (Albor)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Lingig',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Loreto',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Loreto',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Madrid',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Magallanes',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Mainit',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Malimono',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Marihatag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Nasipit',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Pilar',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Placer',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Prosperidad',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Remedios T. Romualdez',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Rosario',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Agustin',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Benito',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Francisco',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Francisco (Anao-Aon)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Isidro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Jose',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Luis',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'San Miguel',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Josefa',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santa Monica (Sapao)',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Santiago',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sibagat',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Sison',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Socorro',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
 				name: 'Surigao City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Bislig City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tagana-an',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
 			{
-				name: 'Tandag City',
-				location: { type: 'Point', coordinates: [0, 0] },
+				name: 'Tagbina',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
 			},
-		],
+			{
+				name: 'Tago',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Talacogon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tandag',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Trento',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tubajon',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tubay',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Tubod',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			},
+			{
+				name: 'Veruela',
+				location: {
+					type: 'Point',
+					coordinates: [
+						0,
+						0
+					]
+				}
+			}
+		]
 	},
 
 ];

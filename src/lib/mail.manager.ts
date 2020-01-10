@@ -97,7 +97,6 @@ export class MailManager {
 
 	async contactEmail(params) {
 		try {
-			console.log('paramsparamsparamsparams', params);
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
 				.compileFile({
 					name: params.name,
@@ -117,7 +116,6 @@ export class MailManager {
 
 	async enquiryEmail(params) {
 		try {
-			console.log('paramsparamsparamsparams>>>>>>>>>>>>>>', params);
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
 				.compileFile({
 					name: params.name,
@@ -130,7 +128,6 @@ export class MailManager {
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
 		} catch (error) {
-			console.log('error>>>>>>>>>>>>>>>>>>>>>>>', error);
 			return Promise.reject(error);
 		}
 	}

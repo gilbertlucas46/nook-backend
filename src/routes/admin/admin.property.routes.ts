@@ -19,7 +19,6 @@ export let adminProperty: ServerRoute[] = [
                 if (checkPermission === false) {
                     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
                 }
-
                 const responseData = await PropertyService.adminAddProperty(payload, adminData);
                 // const registerResponse = await AdminUserController.addUser(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, responseData));
@@ -35,7 +34,7 @@ export let adminProperty: ServerRoute[] = [
             validate: {
                 payload: {
                     propertyId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/),
-                    subscriptionId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).optional(),
+                    // subscriptionId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).optional(),
                     property_features: {
                         storeys_2: Joi.boolean().default(false),
                         security_24hr: Joi.boolean().default(false),
@@ -95,6 +94,7 @@ export let adminProperty: ServerRoute[] = [
                         },
                     },
                     property_basic_details: {
+                        name: Joi.string().min(1).trim(),
                         title: Joi.string().min(1).max(60).trim().required(),
                         description: Joi.string().min(1).max(2000).trim().required(),
                         type: Joi.string().valid([
@@ -132,6 +132,7 @@ export let adminProperty: ServerRoute[] = [
                             Constant.DATABASE.PRICE_LABEL.YEARLY,
                         ]),
                     },
+                    approvedAt: Joi.number().default(new Date().getTime()),
                     // userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
                     property_added_by: {
                         userName: Joi.string(),

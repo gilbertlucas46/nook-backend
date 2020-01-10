@@ -211,7 +211,7 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/admin/help-center-group/{id}',
         handler: async (request) => {
             try {
-                const payload = Number(request.params.id);
+                const payload = request.params;
                 const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);

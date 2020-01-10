@@ -5,8 +5,9 @@ import * as Constant from '../constants';
 
 import { BaseEntity } from '@src/entity/base/base.entity';
 
-let job1 = cron.schedule('0 */1 * * * *', () => {
-    this.updateProperty();
+export let job1 = cron.schedule('0 */1 * * * *', () => {
+    // this.updateProperty();
+    ExpireServices.updateProperty();
 });
 
 class ExpireE extends BaseEntity {
@@ -16,7 +17,8 @@ class ExpireE extends BaseEntity {
     async updateProperty() {
         try {
             const compareTime = new Date().setFullYear(new Date().getFullYear() - 1); // 1 year a
-            const compare = new Date().getTime() - 5 * 24 * 60 * 60 * 1000;
+            const compare = new Date();
+            compare.setFullYear(compare.getFullYear() + 1);
             const expireCriteria = {
                 //  updated at aaj ke ek saaal se jyada nhi hna chahiye
                 updatedAt: { $lt: compareTime },   // 31556926 are 1 year second
@@ -28,9 +30,10 @@ class ExpireE extends BaseEntity {
                     number: Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
                     status: Constant.DATABASE.PROPERTY_STATUS.EXPIRED.TYPE,
                     displayName: Constant.DATABASE.PROPERTY_STATUS.EXPIRED.DISPLAY_NAME,
-
                 },
             };
+
+
             // const dataq = await ENTITY.PropertyE.updateMultiple(expireCriteria, dataToUpdate);
             // console.log('expireCriteriaexpireCriteriaexpireCriteria', dataq);
             // job.start();
