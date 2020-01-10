@@ -65,7 +65,7 @@ export class TransactionClass extends BaseEntity {
 			// subscriptionId: subscriptionData['data']['object']['id'],
 			const data = {
 				billingReason: invoice['data']['object']['billing_reason'],
-				chargeId: invoice['data']['object']['charge'],
+				transactionId: invoice['data']['object']['charge'],
 				// type: invoice['data']['object']['object'],
 				productId: invoice['data']['object']['lines']['data'][0]['plan']['product'],
 				billingType: invoice['data']['object']['lines']['data'][0]['plan']['interval'],
