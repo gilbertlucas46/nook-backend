@@ -44,6 +44,8 @@ export class AdminClass extends BaseEntity {
 		const toSave = {
 			name: 'Base Admin',
 			email: 'base_admin@yopmail.com',
+			firstName: 'super',
+			lastName: 'admin',
 			password: await utils.encryptWordpressHashNode('123456'),
 			profilePicUrl: '',
 			permission: [
@@ -90,8 +92,12 @@ export class AdminClass extends BaseEntity {
 				},
 				{
 					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
-					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[0],
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
 
+				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
 				},
 			],
 		};
@@ -133,7 +139,7 @@ export class AdminClass extends BaseEntity {
 		try {
 			return await this.DAOManager.findOne(this.modelName, criteria, ProjectData);
 		} catch (error) {
-			Promise.reject(error);
+			return Promise.reject(error);
 		}
 	}
 	/**
@@ -290,7 +296,7 @@ export class AdminClass extends BaseEntity {
 				},
 				],
 			};
-			let pipeline = [];
+			const pipeline = [];
 			const Allproperty = [
 				{
 					$facet: {
@@ -391,7 +397,7 @@ export class AdminClass extends BaseEntity {
 						AGENT: { $size: '$AGENT' },
 					},
 				},
-			]
+			];
 
 			const LoanList = [{
 				$facet: {
@@ -517,21 +523,23 @@ export class AdminClass extends BaseEntity {
 				return s.indexOf(' ') >= 0;
 			}
 			if (searchTerm) {
-				const check = hasWhiteSpace(searchTerm);
+				const check = await hasWhiteSpace(searchTerm);
 				if (check) {
-					firstname = searchTerm.split[' '][0];
-					lastname = searchTerm.split[' '][1];
+					firstname = searchTerm.split(' ')[0];
+					lastname = searchTerm.split(' ')[1];
 				} else {
 					firstname = searchTerm;
 					lastname = searchTerm;
 				}
+				const regex = new RegExp(searchTerm, 'gi');
 				matchObject = {
 					$or: [
-						{ 'property_address.address': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ 'property_address.cityName': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ 'property_added_by.email': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ 'property_basic_details.title': new RegExp('.*' + searchTerm + '.*', 'i') },
-						{ propertyId: new RegExp('.*' + searchTerm.substring(2) + '.*', 'i') },
+						{ 'property_address.address': regex },
+						{ 'property_address.cityName': regex },
+						{ 'property_added_by.email': regex },
+						{ 'property_basic_details.title': regex },
+						// { propertyId: new RegExp('.*' + searchTerm.substring(2) + '.*', 'i') },
+						{ $where: `/${searchTerm.substr(2)}/.test(this.propertyId)` },
 						{ 'property_added_by.firstName': new RegExp('.*' + firstname + '.*', 'i') },
 						{ 'property_added_by.lastName': new RegExp('.*' + lastname + '.*', 'i') },
 					],

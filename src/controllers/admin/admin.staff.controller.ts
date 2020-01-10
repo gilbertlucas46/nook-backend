@@ -17,7 +17,6 @@ class AdminStaffControllers {
         try {
             const email: string = payload.email;
             const checkEmail = await ENTITY.AdminStaffEntity.checkStaffEmail(email);
-            console.log('checkEmailcheckEmailcheckEmailcheckEmail', checkEmail);
 
             if (!checkEmail) {
                 const generateString = generateRandomString(4);
@@ -54,8 +53,6 @@ class AdminStaffControllers {
             dataToUpdate.$set = {
                 ...payload,
             };
-            console.log('dataToUpdatedataToUpdatedataToUpdatedataToUpdate', dataToUpdate);
-
             return await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, dataToUpdate);
         } catch (error) {
             utils.consolelog('error', error, true);

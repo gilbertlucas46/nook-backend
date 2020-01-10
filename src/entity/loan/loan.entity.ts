@@ -19,6 +19,10 @@ class LoanEntities extends BaseEntity {
             if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome; // If any investment exists than that is also added in the income part.
             // if other loans exits
             if (payload.other.prevLoans.status) preLoanMonthlyAmount = payload.other.prevLoans.monthlyTotal;
+            if (payload.other.creditCard.status === Constant.CREDIT_CARD_STATUS.YES.value && payload.other.creditCard.limit > 0) {
+                preLoanMonthlyAmount = preLoanMonthlyAmount + payload.other.creditCard.limit;
+            }
+
             let localVisa = false;
             let ageAtlastLoanPayment = 0;
             if (payload.other.nationality === NATIONALITY.FILIPINO.value) localVisa = true;
@@ -160,7 +164,7 @@ class LoanEntities extends BaseEntity {
                         logoUrl: 1,
                         iconUrl: 1,
                         bannerUrl: 1,
-                        processingTime: '5-7 working days',
+                        processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
                         loanDuration: 1,
                         totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },

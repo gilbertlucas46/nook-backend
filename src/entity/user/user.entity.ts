@@ -5,6 +5,7 @@ import * as Jwt from 'jsonwebtoken';
 const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '@src/constants';
+import { Types } from 'mongoose';
 
 export class UserClass extends BaseEntity {
 	constructor() {
@@ -183,6 +184,30 @@ export class UserClass extends BaseEntity {
 
 		} catch (error) {
 			return Promise.reject(error);
+		}
+	}
+	/**
+	 * @description A Function to create token for after register api
+	 */
+	createRegisterToken(id: string | Types.ObjectId): string {
+		return TokenManager.generateToken({ id });
+	}
+	/**
+	 * @description A function to update the user with register second step data
+	 * @param token A token to validate correct user request
+	 * @param data A Data to update
+	 */
+	async completeRegisterProcess(token: string, data: object) {
+		try {
+			const { id } = await TokenManager.decodeToken(token) as { id: string };
+			await this.DAOManager.findAndUpdate(this.modelName, {
+				_id: new Types.ObjectId(id),
+			}, data);
+			return;
+		} catch (err) {
+			console.log(err);
+			// @TODO handle error messages for token and update failed
+			return Promise.reject(err);
 		}
 	}
 }

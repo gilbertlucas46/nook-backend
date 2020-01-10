@@ -19,6 +19,7 @@ const objectSchema = Joi.object({
 		CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
 		CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
 		CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
+		CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
 	]).required(),
 	accessLevel: Joi.number().valid([CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE]).default(2),
 });
@@ -205,8 +206,8 @@ export let subAdminRoutes: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Get Admin Profile',
-			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			description: 'Get Admin Staff',
+			tags: ['api', 'anonymous', 'admin', 'staff'],
 			auth: 'AdminAuth',
 			validate: {
 				query: {
@@ -222,6 +223,9 @@ export let subAdminRoutes: ServerRoute[] = [
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 						CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
+						CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
+						CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
+						CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
 					]),
 					status: Joi.string().valid([
 						CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,

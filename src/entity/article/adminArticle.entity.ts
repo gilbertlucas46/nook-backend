@@ -2,8 +2,6 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
-import * as utils from '@src/utils';
-import { ObjectId, ObjectID } from 'bson';
 import { Types } from 'mongoose';
 export class CategoryClass extends BaseEntity {
     constructor() {
@@ -105,9 +103,9 @@ export class CategoryClass extends BaseEntity {
             };
             const insert = {
                 // $set: {
-                _id: Types.ObjectId('5df7515fd72c62a525cc9333'),
+                _id: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
                 name: 'SELLING',
-                status: 'Active',
+                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 // },
             };
             const checkData = await this.DAOManager.findOne(this.modelName, criteria, {});

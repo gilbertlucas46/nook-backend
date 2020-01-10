@@ -273,7 +273,6 @@ export let articleRoutes: ServerRoute[] = [
             try {
                 const payload: ArticleRequest.GetArticle = request.query as any;
                 const registerResponse = await ArticleService.getCategoryWiseArticles(payload);
-                console.log('registerResponseregisterResponseregisterResponse', registerResponse);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
@@ -456,8 +455,6 @@ export let articleRoutes: ServerRoute[] = [
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
                 const registerResponse = await ArticleService.getArticleById(payload);
-                console.log('registerResponseregisterResponseregisterResponse', registerResponse);
-
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
@@ -546,12 +543,12 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'DoubleAuth',
             validate: {
                 query: {
-                    // limit: Joi.number(),
-                    // page: Joi.number(),
+                    limit: Joi.number(),
+                    page: Joi.number(),
                     // sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
                     // sortBy: Joi.string(),
                     type: Joi.string().lowercase().valid('selling'),
-                    categoryId: Joi.string().when('type', { is: '', then: Joi.string().required() }),
+                    categoryId: Joi.string().when('type', { is: '', then: Joi.string().trim().required() }),
                     // articleId: Joi.string(),
                     searchTerm: Joi.string(),
                 },
