@@ -200,7 +200,7 @@ class TransactionController extends BaseEntity {
 			// }
 			const insertData = {
 				featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
-				subscriptionType: subscriptionData['plan']['interval'],  // subscriptionData['plan']['interval'],
+				subscriptionType: subscriptionData['data']['object']['plan']['interval'],  // subscriptionData['plan']['interval'],
 				userId: userData['_id'],
 				startDate: new Date().getTime(),
 				endDate: (subscriptionData['data']['object']['current_period_end'] * 1000), // new Date().setFullYear(new Date().getFullYear() + 1),
@@ -208,7 +208,7 @@ class TransactionController extends BaseEntity {
 				status: subscriptionData['data']['object']['status'],
 				isRecurring: subscriptionData['data']['object']['cancel_at_period_end'],
 				// paymentMethod: createCard['brand'],
-				amount: subscriptionData['plan']['amount'],
+				amount: (subscriptionData['data']['object']['plan']['amount'] / 100),
 				subscriptionId: subscriptionData['data']['object']['id'],
 				planId: subscriptionData['data']['object']['plan']['id'],
 			};
@@ -251,34 +251,34 @@ class TransactionController extends BaseEntity {
 			// Handle the event
 			switch (event.type) {
 				case 'charge.succeeded':
-					console.log(1);
+					console.log('111111111111111111111111111111111111111111111111111');
 					// await this.handleChargeSucceeded(step1, paymentIntent);
 					break;
 				case 'charge.pending':
-					console.log(2);
+					console.log('2222222222222222222222222222222222222222222');
 
 					// await this.handleChargePending(step1, paymentIntent);
 					break;
 				case 'charge.failed':
-					console.log(3);
+					console.log('33333333333333333333333333333333333333');
 
 					// await this.handleChargeFailed(step1, paymentIntent);
 					break;
 				case 'charge.failed':
-					console.log(4);
+					console.log('444444444444444444444444444444444444444');
 
 					// await this.handleChargeFailed(step1, paymentIntent);
 					break;
 
 				case 'customer.subscription.trial_will_end':
-					console.log(5);
+					console.log('55555555555555555555555555555555555555555');
 
 					// await
-					console.log('1111111111111');
+					console.log('1111111111111??????????>>>>>>>>>>>>>>>>>>>>>>>.');
 
 					break;
 				case 'customer.subscription.deleted':
-					console.log(6);
+					console.log('6666666666666666666666666666666666666666666666666666');
 
 					break;
 
