@@ -36,35 +36,39 @@ export const transactionSchema = new Schema({
 	// receiptUrl: { type: String, required: true },
 	description: { type: String },
 	status: { type: String, required: true },
-	billingType: { type: String },
-	productId: { type: String },
-	receiptUrl: { type: String },
+	billingType: {
+		type: String,
+		enum: [
+			CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
+			CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
+		],
+		required: true,
+	},
+	productId: { type: String, required: true },
+	receiptUrl: { type: String, required: true },
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
-	featuredType: { type: String, required: true },
+	featuredType: {
+		type: String,
+		enum: [
+			CONSTANT.DATABASE.FEATURED_TYPE.PROFILE,
+			CONSTANT.DATABASE.FEATURED_TYPE.PROPERTY,
+			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE,
+		],
+		required: true,
+	},
 	address: { type: String },
 	invoiceNo: { type: String },
-	// featuredType: {
-	// 	type: String,
-	// 	enum: [
-	// 		CONSTANT.DATABASE.FEATURED_TYPE.PROFILE,
-	// 		CONSTANT.DATABASE.FEATURED_TYPE.PROPERTY,
-	// 		CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE,
-	// 	],
-	// 	required: true,
-	// },
-	// billingType: {
-	// 	type: String,
-	// 	enum: [
-	// 		CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
-	// 		CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
-	// 	],
-	// 	required: true,
-	// },
 	cardHolder: { type: String },
 	paymentMethod: { type: String },
 	createdAt: { type: Number, required: true },
 	updatedAt: { type: Number, required: true },
-}, {
+	billingReason: { type: String },
+	customer: { type: String },
+	customer_email: { type: String },
+	hosted_invoice_url: { type: String },
+	paid: { type: Boolean },
+}
+	, {
 		versionKey: false,
 	});
 

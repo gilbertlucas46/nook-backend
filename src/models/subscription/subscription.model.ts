@@ -32,14 +32,6 @@ const subscriptionSchema = new Schema({
 			'day',
 		], required: true,
 	},
-	// subscriptionType: {
-	// 	type: String,
-	// 	enum: [
-	// 		CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
-	// 		CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
-	// 	],
-	// 	required: true,
-	// },
 	amount: { type: Number },
 	status: { type: String },
 	propertyId: { type: Schema.Types.ObjectId, ref: 'Property' },
@@ -52,6 +44,7 @@ const subscriptionSchema = new Schema({
 	updatedAt: { type: Number, required: true },
 	// paymentMethod: { type: String, required: true },
 	planId: { type: String, required: true },
+
 }, {
 		versionKey: false,
 	});
