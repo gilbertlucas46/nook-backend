@@ -112,13 +112,13 @@ export class SubscriptionClass extends BaseEntity {
 								status: 'active',
 								userId: userData._id,
 							},
-							{
-								$or: [{
-									featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-								}, {
-									featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
-								}],
-							},
+							// {
+							// 	$or: [{
+							// 		featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+							// 	}, {
+							// 		featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
+							// 	}],
+							// },
 						],
 					},
 				},

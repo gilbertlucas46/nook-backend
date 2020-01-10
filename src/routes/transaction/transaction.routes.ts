@@ -133,7 +133,6 @@ export let transactionRoute: ServerRoute[] = [
 		path: '/v1/transaction/webhook',
 		handler: async (request, h: ResponseToolkit) => {
 			const payload = request.payload;
-			console.log('payloadpayloadpayloadpayload>>>>>>>>>>>>>>>>', payload);
 			try {
 				const data = await transactionController.webhook(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
