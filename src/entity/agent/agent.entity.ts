@@ -151,8 +151,6 @@ export class AgentClass extends BaseEntity {
                 { $sort: sortingType },
             ];
 
-            console.log('queryqueryquery', query);
-
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (error) {
             utils.consolelog('error', error, true);

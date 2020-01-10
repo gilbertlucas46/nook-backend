@@ -218,13 +218,15 @@ export class UserController {
 		try {
 			const criteria = { $or: [{ userName: payload.email }, { email: payload.email }] };
 			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id', 'userName']);
+			console.log('userDatauserData', userData);
+
 			if (!userData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
 				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
 				const url = config.get('host') + Constant.SERVER.FORGET_PASSWORD_URL + passwordResetToken;
 				// const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
 				const sendObj = {
-					receiverEmail: payload.email,
+					receiverEmail: userData.email,
 					subject: 'reset password Nook',
 					token: passwordResetToken,
 					url,
