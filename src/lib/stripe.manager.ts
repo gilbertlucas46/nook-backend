@@ -72,7 +72,7 @@ export class StripeManager {
 				{
 					customer: id,
 					items: [{ plan: payload.planId }],
-					cancel_at_period_end: payload.cancel_at_period_end,
+					// cancel_at_period_end: payload.cancel_at_period_end,
 				},
 			);
 			return data;
@@ -96,10 +96,10 @@ export class StripeManager {
 	// 	}
 	// }
 
-	async createCard(createCustomer, payload) {
+	async createCard(customerId, payload) {
 		try {
 			const data = await stripe.customers.createSource(
-				createCustomer.id,
+				customerId,
 				{ source: payload.source },
 			);
 			return data;

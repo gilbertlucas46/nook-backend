@@ -21,7 +21,7 @@ export class ArticleClass extends BaseEntity {
             let sortingType = {};
 
             sortingType = {
-                updatedAt: sortType,
+                createdAt: sortType,
                 isFeatured: sortType,
             };
 
@@ -363,7 +363,7 @@ export class ArticleClass extends BaseEntity {
                 sortType = -1,
                 limit = Constant.SERVER.LIMIT,
             } = payload;
-            const sortingType = { updatedAt: sortType };
+            const sortingType = { createdAt: sortType };
 
             if (type) {
                 const criteria = {

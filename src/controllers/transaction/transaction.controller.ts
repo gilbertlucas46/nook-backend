@@ -36,7 +36,7 @@ class TransactionController extends BaseEntity {
 			if (!getStripeId.stripeId) {
 				createCustomer = await stripeService.createCustomers(getStripeId, payload);
 				await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { stripeId: createCustomer.id });
-				const createCard = await stripeService.createCard(createCustomer, payload);
+				const createCard = await stripeService.createCard(createCustomer['id'], payload);
 
 				const createSubscript = await stripeService.createSubscription(createCustomer['id'], payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
@@ -197,6 +197,30 @@ class TransactionController extends BaseEntity {
 		}
 	}
 
+	async cancelSubscription(event) {
+		try {
+			if (event['data']['object']['cancel_at_period_end']) {
+
+				const getUser = {
+					stripeId: event['data']['object']['customer'],
+				};
+				const userId = await ENTITY.UserE.getOneEntity(getUser, { _id: 1 });
+				// console.log('userSubscriptionIduserSubscriptionIduserSubscriptionId', userSubscriptionData);
+				// if (userSubscriptionData['status'] !== Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
+				// 	return Constant.STATUS_MSG.ERROR.E401.SUBSCRIPTION_INACTIVE;
+				// }
+				// console.log('userSubscriptionIduserSubscriptionId', userSubscriptionData['subscriptionId']);
+				// console.log('stripeDatastripeDatastripeData', stripeData);
+				const data = await ENTITY.SubscriptionE.updateOneEntity({ userId: userId.id, subscriptionId: event['data']['object']['id'] }, { $set: { isRecurring: false } });
+				return;
+			}
+			// const subscriptionUserId = await ENTITY.SubscriptionE.updateOneEntity()
+
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 	async webhook(payload) {
 		// const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
 		// console.log('step1step1step1step1step1step1step1step1step1step1', step1);
@@ -253,6 +277,17 @@ class TransactionController extends BaseEntity {
 
 				case 'invoice.finalized':
 					console.log('invoice.finalized>>>>>>>>>>>>>>>>>>>>>>>>>', event);
+					break;
+
+				case 'customer.subscription.updated':
+					console.log('customer.subscription.updated>>>>>>>>>>>>', event);
+					await this.cancelSubscription(event);
+
+					break;
+
+				case 'subscription_schedule.canceled':
+					console.log('subscription_schedule.canceledsubscription_schedule.canceled>>>>>>>>', event);
+
 					break;
 			}
 			return {};
