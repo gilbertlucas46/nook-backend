@@ -91,7 +91,7 @@ const userSchema = new Schema({
 		],
 		index: true,
 	}],
-	stripeId: { type: String },
+	stripeId: { type: String, index: true, unique: true },
 	specializingIn_property_category: [{
 		type: String,
 		enum: [

@@ -69,7 +69,7 @@ export class TransactionClass extends BaseEntity {
 				// type: invoice['data']['object']['object'],
 				productId: invoice['data']['object']['lines']['data'][0]['plan']['product'],
 				billingType: invoice['data']['object']['lines']['data'][0]['plan']['interval'],
-				amount: invoice['data']['object']['lines']['data'][0]['amount'],
+				amount: (invoice['data']['object']['lines']['data'][0]['amount'] / 100),
 				currency: invoice['data']['object']['lines']['data'][0]['plan']['currency'],
 				featuredType: checkplan['featuredType'],
 				userId: userData['_id'],

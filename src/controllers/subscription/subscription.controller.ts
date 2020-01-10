@@ -58,18 +58,19 @@ class SubscriptionController {
 
 	async cancelSubscription(payload, userData) {
 		try {
-			console.log('>?>>>>>>>>>>>..');
-
+			// console.log('>?>>>>>>>>>>>..');
 			const userSubscriptionData = await ENTITY.SubscriptionE.getOneEntity({ _id: payload.id, userId: userData._id }, { subscriptionId: 1, status: 1 })
-			console.log('userSubscriptionIduserSubscriptionIduserSubscriptionId', userSubscriptionData);
-			if (userSubscriptionData['status'] !== Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
-				return Constant.STATUS_MSG.ERROR.E401.SUBSCRIPTION_INACTIVE;
-			}
-			console.log('userSubscriptionIduserSubscriptionId', userSubscriptionData['subscriptionId']);
+			// console.log('userSubscriptionIduserSubscriptionIduserSubscriptionId', userSubscriptionData);
+			// if (userSubscriptionData['status'] !== Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
+			// 	return Constant.STATUS_MSG.ERROR.E401.SUBSCRIPTION_INACTIVE;
+			// }
+			// console.log('userSubscriptionIduserSubscriptionId', userSubscriptionData['subscriptionId']); 
 			const stripeData = await stripeService.updateSubscription(userSubscriptionData);
-			console.log('stripeDatastripeDatastripeData', stripeData);
+			// console.log('stripeDatastripeDatastripeData', stripeData);
 
-			return await ENTITY.SubscriptionE.updateOneEntity({ _id: payload.id }, { $set: { isRecurring: false } });
+			// return await ENTITY.SubscriptionE.updateOneEntity({ _id: payload.id }, { $set: { isRecurring: false } });
+
+
 
 		} catch (error) {
 			return Promise.reject(error);

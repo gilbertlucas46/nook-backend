@@ -158,9 +158,6 @@ export let subscriptionRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload = request.params as any;
-				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(payload.permission);
-				// }
 				const data = await subscriptionController.cancelSubscription(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
