@@ -8,13 +8,25 @@ const schema = new Schema({
     applicationStatus: {
         type: Schema.Types.String,
         default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
-        enum: Object.values(CONSTANT.DATABASE.LOAN_APPLICATION_STATUS).map(({value}) => value),
+        enum: Object.values(CONSTANT.DATABASE.LOAN_APPLICATION_STATUS).map(({ value }) => value),
     },
     personalInfo: {
         firstName: { type: Schema.Types.String, trim: true },
         middleName: { type: Schema.Types.String, trim: true },
         lastName: { type: Schema.Types.String, trim: true },
         motherMaidenName: { type: Schema.Types.String, trim: true },
+        nationality: Schema.Types.String,
+        localVisa: Schema.Types.Boolean,
+        creditCard: {
+            status: Schema.Types.String,
+            limit: Schema.Types.Number,
+            cancelled: Schema.Types.Boolean,
+        },
+        prevLoans: {
+            status: Schema.Types.Boolean,
+            monthlyTotal: Schema.Types.Number,
+            remainingTotal: Schema.Types.Number,
+        },
         gender: {
             type: Schema.Types.String, enum: [
                 CONSTANT.DATABASE.GENDER.MALE,
@@ -40,7 +52,7 @@ const schema = new Schema({
         },
         birthDate: { type: Schema.Types.Number },
         monthlyIncome: { type: Schema.Types.Number, default: 0 },
-        otherIncome : { type: Schema.Types.Number, default: 0 },
+        otherIncome: { type: Schema.Types.Number, default: 0 },
         spouseInfo: {
             firstName: { type: Schema.Types.String, trim: true },
             middleName: { type: Schema.Types.String, trim: true },
@@ -114,6 +126,9 @@ const schema = new Schema({
     },
 
     employmentInfo: {
+        type: { type: Schema.Types.String },
+        tenure: Schema.Types.String,
+        rank: Schema.Types.String,
         companyIndustry: { type: Schema.Types.String, enum: Object.keys(CONSTANT.INDUSTRIES) },
         tin: { type: Schema.Types.String, trim: true },
         companyName: { type: Schema.Types.String, trime: true },

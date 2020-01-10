@@ -144,6 +144,18 @@ export let loanRoute: ServerRoute[] = [
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
 						birthDate: Joi.number(),
+						nationality: Joi.string(),
+						localVisa: Joi.boolean(),
+						creditCard: Joi.object({
+							status: Joi.string(),
+							limit: Joi.number(),
+							cancelled: Joi.boolean(),
+						}),
+						prevLoans: Joi.object({
+							status: Joi.boolean(),
+							monthlyTotal: Joi.number(),
+							remainingTotal: Joi.number(),
+						}),
 						gender: Joi.string().valid([
 							Constant.DATABASE.GENDER.MALE,
 							Constant.DATABASE.GENDER.FEMALE,
@@ -235,6 +247,9 @@ export let loanRoute: ServerRoute[] = [
 					}),
 
 					employmentInfo: Joi.object().keys({
+						type: Joi.string(),
+						rank: Joi.string(),
+						tenure: Joi.string(),
 						tin: Joi.string(),
 						companyName: Joi.string().min(1).max(300),
 						sss: Joi.string(),
@@ -495,6 +510,18 @@ export let loanRoute: ServerRoute[] = [
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
 						birthDate: Joi.number(),
+						nationality: Joi.string(),
+						localVisa: Joi.boolean(),
+						creditCard: Joi.object({
+							status: Joi.string(),
+							limit: Joi.number(),
+							cancelled: Joi.boolean(),
+						}),
+						prevLoans: Joi.object({
+							status: Joi.boolean(),
+							monthlyTotal: Joi.number(),
+							remainingTotal: Joi.number(),
+						}),
 						gender: Joi.string().valid([
 							Constant.DATABASE.GENDER.MALE,
 							Constant.DATABASE.GENDER.FEMALE,
@@ -583,6 +610,9 @@ export let loanRoute: ServerRoute[] = [
 					}),
 
 					employmentInfo: Joi.object().keys({
+						type: Joi.string(),
+						rank: Joi.string(),
+						tenure: Joi.string(),
 						tin: Joi.string(),
 						companyName: Joi.string().min(1).max(300),
 						sss: Joi.string(),
