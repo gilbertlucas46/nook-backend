@@ -43,6 +43,7 @@ class TransactionController extends BaseEntity {
 				return;
 			} else {
 				const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
+				const setDefaultCard = await stripeService.setDefaultCard(getStripeId, payload);
 				const createSubscript = await stripeService.createSubscription(getStripeId['stripeId'], payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
 				return;
@@ -76,14 +77,14 @@ class TransactionController extends BaseEntity {
 		}
 	}
 
-	// async invoiceDetails(payload: TransactionRequest.Id) {
-	// 	try {
-	// 		return await ENTITY.TransactionE.invoiceDetails(payload);
-	// 	} catch (error) {
-	// 		utils.consolelog('error', error, true);
-	// 		return Promise.reject(error);
-	// 	}
-	// }
+	async invoiceDetails(payload: TransactionRequest.Id) {
+		try {
+			return await ENTITY.TransactionE.invoiceDetails(payload);
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
 
 	// async handleChargeSucceeded(transactioData, paymentIntent) {
 	// 	if (!transactioData.subscriptionId) {
@@ -111,7 +112,6 @@ class TransactionController extends BaseEntity {
 
 	async createInvoice(event) {
 		try {
-
 			const CheckplaninDb = {
 				'plans.planId': event['data']['object']['lines']['data'][0]['plan']['id'],
 			};

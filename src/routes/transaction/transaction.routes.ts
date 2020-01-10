@@ -104,8 +104,8 @@ export let transactionRoute: ServerRoute[] = [
 		handler: async (request: any, h: ResponseToolkit) => {
 			try {
 				const query: TransactionRequest.Id = request.query;
-				// const data = await transactionController.invoiceDetails(query);
-				// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				const data = await transactionController.invoiceDetails(query);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
 			}
