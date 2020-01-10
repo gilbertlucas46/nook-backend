@@ -11,60 +11,14 @@ class TransactionController extends BaseEntity {
 
 	async createCharge(payload: TransactionRequest.CreateCharge, userData) {
 		try {
-			// const { featuredType, billingType } = payload;
-
-			// const pipeline = [
-			// 	{
-			// 		$match: {
-			// 			'featuredType': featuredType,
-			// 			'plans.billingType': billingType,
-			// 		},
-			// 	},
-			// 	{
-			// 		$project: {
-			// 			plans: {
-			// 				$filter: {
-			// 					input: '$plans',
-			// 					as: 'plans',
-			// 					cond: { $eq: ['$$plans.billingType', billingType] },
-			// 				},
-			// 			},
-			// 		},
-			// 	},
-			// 	{
-			// 		$unwind: {
-			// 			path: '$plans',
-			// 		},
-			// 	},
-			// 	{
-			// 		$project: {
-			// 			amount: '$plans.amount',
-			// 		},
-			// 	},
-			// ];
-			// console.log('pipelinepipelinepipeline', pipeline);
-
-			// const amount = await ENTITY.SubscriptionPlanEntity.findAmount(pipeline);
-			// console.log('amountamountamountamount>>>>>>>>>>>>', amount);
-
-			// const step1 = await stripeManager.createCharges({
-			// 	// amount: payload.amount * (0.01967 * 100),
-			// 	amount: amount * 100,
-			// 	currency: payload.currency,
-			// 	source: payload.source,
-			// 	description: payload.description,
-			// });
-			// console.log('step1step1step1', step1);
-			// payload['amount'] = amount;
-			// const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, step1);
 			console.log('payloadpayloadpayloadpayloadpayloadpayload', payload);
 
 			const getUserCriteria = {
 				_id: userData._id,
 			};
-			const criteria = {
-				userId: userData._id,
-			};
+			// const criteria = {
+			// 	userId: userData._id,
+			// };
 			const CheckplaninDb = {
 				'plans.planId': payload.planId,
 			};
@@ -74,25 +28,35 @@ class TransactionController extends BaseEntity {
 			if (!checkplan) {
 				return Promise.reject('not in Db');
 			}
+
 			const getStripeId = await ENTITY.UserE.getOneEntity(getUserCriteria, { stripeId: 1, email: 1 });
 			console.log('getStripeIdgetStripeIdgetStripeId', getStripeId);
-
+			let createCustomer;
 			const dataToSet: any = {};
-			// if (!getStripeId.stripeId) {
-			const createCustomer = await stripeService.createCustomers(getStripeId, payload);
-			await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { stripeId: createCustomer.id });
+			if (!getStripeId.stripeId) {
+				createCustomer = await stripeService.createCustomers(getStripeId, payload);
+				await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { stripeId: createCustomer.id });
+				const createCard = await stripeService.createCard(createCustomer, payload);
 
-			const createCard = await stripeService.createCard(createCustomer, payload);
-			console.log('createCardcreateCardcreateCard', createCard);
-			const dataToSave = {
-				userId: userData._id,
-				cardDetail: createCard,
-			};
-			const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
+				const createSubscript = await stripeService.createSubscription(createCustomer['id'], payload);
+				console.log('createSubscriptcreateSubscript', createSubscript);
+				return;
+			} else {
+				const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
+
+				const createSubscript = await stripeService.createSubscription(getStripeId['stripeId'], payload);
+				console.log('createSubscriptcreateSubscript', createSubscript);
+				return;
+			}
+			// console.log('createCardcreateCardcreateCard', createCard);
+			// const dataToSave = {
+			// 	userId: userData._id,
+			// 	cardDetail: createCard,
+			// };
+
+			// const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
 			// const planInfo = await stripeService.getPlanInfo(payload);
-			const createSubscript = await stripeService.createSubscription(createCustomer['id'], payload);
-			console.log('createSubscriptcreateSubscript', createSubscript);
-			return;
+
 			// }
 			// return {};
 			// const checkUserInStripe = await stripeManager.createCustomers()
