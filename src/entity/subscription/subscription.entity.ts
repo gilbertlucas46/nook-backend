@@ -76,14 +76,21 @@ export class SubscriptionClass extends BaseEntity {
 
 	async checkFeaturePropertyCount(userData) {
 		try {
-			const query: any = {};
-			query.userId = userData._id;
-			query.featuredType = Constant.DATABASE.FEATURED_TYPE.PROPERTY;
-			query.status = 'active';
+			// const query: any = {};
+			// query.userId = userData._id;
+			// query.featuredType = Constant.DATABASE.FEATURED_TYPE.PROPERTY;
+			// query.status = 'active';
 			// query['$and'] = [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }];
 			// query.propertyId = { $exists: false };
 			//   return await this.DAOManager.count();
-			const data = await this.DAOManager.count(this.modelName, query);
+			const query = {
+				'isFeatured': true,
+				'property_added_by.userId': userData._id,
+				'property_status.number': 2,
+			};
+
+			const data = await this.DAOManager.count('Property', query);
+
 			return {
 				featurePropertyCount: data,
 			};
