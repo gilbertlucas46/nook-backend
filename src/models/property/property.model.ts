@@ -339,8 +339,8 @@ const propertySchema = new Schema({
 		},
 	},
 	approvedAt: { type: Number },
-	isFeatured: { type: Boolean, default: false },
-	isHomePageFeatured: { type: Boolean, default: false },
+	isHomePageFeatured: { type: Boolean, default: false, index: true },
+	isFeatured: { type: Boolean, default: false, index: true },
 	propertyActions: [
 		{
 			actionNumber: {
