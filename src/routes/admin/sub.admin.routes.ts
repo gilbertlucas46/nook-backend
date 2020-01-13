@@ -18,7 +18,7 @@ const objectSchema = Joi.object({
 		CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 		CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
 		CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
-
+		CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
 	]).required(),
 	accessLevel: Joi.number().valid([CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE]).default(2),
 });
@@ -214,6 +214,7 @@ export let subAdminRoutes: ServerRoute[] = [
 						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
+						CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
 					]),
 					status: Joi.string().valid([
 						CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
