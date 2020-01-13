@@ -1978,7 +1978,7 @@ export const REGIONS: Location.RegionLocation[] = [
 			{
 				name: 'Cebu City',
 				location: { type: 'Point', coordinates: [0, 0] },
-				subTitle: 'FQueen City of the South',
+				subTitle: 'Queen City of the South',
 				images: ['https://cdn.thecrazytourist.com/wp-content/uploads/2017/07/Taoist-Temple-cebu.jpg',
 					'https://travelcebu.b-cdn.net/wp-content/uploads/2018/08/Simala-Church-Cebu.jpg',
 					'https://travelcebu.b-cdn.net/wp-content/uploads/2018/09/Taoist-Temple-Cebu.jpg',
