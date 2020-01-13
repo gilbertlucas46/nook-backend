@@ -11,6 +11,7 @@ export interface IHelpCenter extends Document {
     imageUrl: string;
     categoryId: number;
     categoryType: string;
+    action: object[];
 }
 
 export interface IHelpFulHelpCenter extends Document {
@@ -68,6 +69,8 @@ const helpCenterSchema = new Schema({
     actions: [{
         userRole: { type: String },
         userId: { type: String },
+        name: { type: String },
+        firstName: { type: String },
         actionTime: { type: Number },
     }],
     createdAt: { type: Number, required: true },

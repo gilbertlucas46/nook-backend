@@ -89,17 +89,22 @@ export class HelpCenter {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
             }
             dataToSet.$set = {
-                categoryId: payload.categoryId,
+                ...payload,
+                // categoryId: payload.categoryId,
                 categoryType: result.TYPE,
-                videoUrl: payload.videoUrl,
+                // videoUrl: payload.videoUrl,
                 userId: adminData._id,
-                userRole: adminData.type,
-                description: payload.description,
+                firstName: adminData.firstName,
+                name: adminData.name || '',
+                // userRole: adminData.type,
+                // description: payload.description,
             };
 
             dataToSet.$push = {
                 actions: {
                     userRole: adminData.type,
+                    name: adminData.name,
+                    firstName: adminData.firstName,
                     userId: adminData._id,
                     actionTime: new Date().getTime(),
                 },
