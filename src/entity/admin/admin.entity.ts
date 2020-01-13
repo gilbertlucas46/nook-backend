@@ -231,17 +231,27 @@ export class AdminClass extends BaseEntity {
 		}
 	}
 
-	async getPropertyList(payload: AdminRequest.SearchProperty) {
+	async getPropertyList(payload: AdminRequest.AdminPropertyList) {
 		try {
 			const pipeline = [];
 			let { page, limit, sortBy, sortType } = payload;
-			const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, property_type } = payload;
+			const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, propertyType } = payload;
 			if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
 			if (!page) { page = 1; }
 			let sortingType = {};
 			sortType = !sortType ? -1 : sortType;
 			let matchObject: any = {};
 			const skip = (limit * (page - 1));
+			if (property_status === CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {  // for active
+				// sortBy = 'approvedAt';
+				sortingType = {
+					updatedAt: sortType,
+				};
+			} else {
+				sortingType = {
+					createdAt: sortType,
+				};
+			}
 
 			if (sortBy) {
 				switch (sortBy) {
@@ -264,11 +274,6 @@ export class AdminClass extends BaseEntity {
 						};
 						break;
 				}
-			} else {
-				sortBy = 'approvedAt';
-				sortingType = {
-					updatedAt: sortType,
-				};
 			}
 
 			if (searchTerm) {
@@ -298,7 +303,7 @@ export class AdminClass extends BaseEntity {
 			if (property_status) {
 				matchObject['property_status.number'] = payload.property_status;
 			}
-			if (property_type) matchObject['property_basic_details.type'] = payload.property_type;
+			if (propertyType) matchObject['property_basic_details.type'] = payload.propertyType;
 			if (byCity) { matchObject.$match['cityId'] = byCity; }
 			if (byRegion) { matchObject.$match['regionId'] = byRegion; }
 
