@@ -309,6 +309,7 @@ export class AgentClass extends BaseEntity {
                         isFeaturedProfile: { $first: '$isFeaturedProfile' },
                         lastName: { $first: '$lastName' },
                         isHomePageFeatured: { $first: '$isHomePageFeatured' },
+                        status: { $first: '$status' },
                         city: {
                             $push: {
                                 cityId: '$cityData._id',
