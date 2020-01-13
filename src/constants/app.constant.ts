@@ -1024,7 +1024,15 @@ export let STATUS_MSG = {
 				message: 'Payment Done Successfully',
 			},
 		},
+		S204: {
+			NO_CONTENT_AVAILABLE: {
+				statusCode: 204,
+				type: 'DEFAULT',
+				message: 'No Data found',
+			},
+		},
 	},
+
 	S210: {
 		FORGET_PASSWORD_PHONE_NUMBER: {
 			statusCode: 210,
