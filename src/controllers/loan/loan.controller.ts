@@ -7,6 +7,7 @@ import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Constant from '../../constants/app.constant';
 import * as utils from 'src/utils';
+import { add } from 'winston';
 class LoanControllers extends BaseEntity {
 
     /**
@@ -41,43 +42,42 @@ class LoanControllers extends BaseEntity {
                 saveAsDraft: { $ne: true },
             };
             payload['userId'] = userData._id;
-
-            const start = new Date();
-            start.setHours(0, 0, 0, 0);
-            const end = new Date();
-            end.setHours(23, 59, 59, 999);
-            const criteria1 = {
+            const criteria1 = ({
                 createdAt: {
-                    $gt: start,
-                    $lt: end,
+                    $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
                 },
-            }
+            });
 
-            const referenceNumber = await ENTITY.LoanApplicationEntity.getReferenceId(criteria);
-            console.log('referenceNumberreferenceNumber', referenceNumber);
-
+            const referenceNumber = await ENTITY.LoanApplicationEntity.getReferenceId(criteria1);
+            console.log('new Datenew Datenew Date', new Date());
             if (!referenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
                 const month = ('0' + (new Date(new Date().getTime()).getMonth() + 1)).slice(-2);
-                const date = ('0' + (new Date(new Date().getTime()).getDate() + 1)).slice(-2);
+                const date = ('0' + (new Date(new Date().getTime()).getDate())).slice(-2);
                 const referenceId = 1;
                 const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + Contsant.SERVER.LOAN_PRE__ZEOS + referenceId;
+                console.log('formattedTimeformattedTimeformattedTimeformattedTime>1111111111111', formattedTime);
                 payload['referenceId'] = formattedTime;
             } else {
-                const year = new Date(referenceNumber.createdAt).getFullYear().toString().substr(-2);
-                const month = new Date(referenceNumber.createdAt).getMonth().toString().substr(-2);
-                const date = new Date(referenceNumber.createdAt).getDate().toString().substr(-2);
+                // const year = new Date(referenceNumber.createdAt).getFullYear().toString().substr(-2);
+                // const month = (new Date(referenceNumber.createdAt).getMonth() + 1).toString().substr(-2);
+                // const date = ('0' + new Date(referenceNumber.createdAt).getDate()).slice(-2);  //.toString().substr(-2);
                 const id = referenceNumber['referenceId'].split('-')[2];
-                referenceNumber['referenceId']++;
+                console.log('idididididididididididididididididididid', id);
+
                 let num = (parseInt(id) + 1).toString();
-                const remainingChars = 4 - num.length;
-                for (let i = 0; i < remainingChars; i++) {
-                    num = '0' + num;
+                if (num.length < 4) {
+                    const remainingChars = 4 - num.length;
+                    for (let i = 0; i < remainingChars; i++) {
+                        num = '0' + num;
+                    }
                 }
-                const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + num;
+                // const num = await this.addOne(id);
+                console.log('numnumnumnumnumnum', num);
+                const formattedTime = referenceNumber['referenceId'].replace(referenceNumber['referenceId'].split('-')[2], num);
+                console.log('formattedTimeformattedTimeformattedTimeformattedTime22222222222222222', formattedTime);
                 payload['referenceId'] = formattedTime;
             }
-
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
             /**
              * Need to push data to salesforce
@@ -240,3 +240,22 @@ class LoanControllers extends BaseEntity {
     }
 }
 export const LoanController = new LoanControllers();
+
+// async addOne(s) {
+//     let newNumber = '';
+//     let continueAdding = true;
+//     for (let i = s.length - 1; i >= 0; i--) {
+//         if (continueAdding) {
+//             const num = parseInt(s[i], 10) + 1;
+//             if (num < 10) {
+//                 newNumber += num;
+//                 continueAdding = false;
+//             } else {
+//                 newNumber += '0';
+//             }
+//         } else {
+//             newNumber += s[i];
+//         }
+//     }
+//     return newNumber.split('').reverse().join('');
+// }

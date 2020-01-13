@@ -72,6 +72,7 @@ const schema = new Schema({
         bankId: { type: Schema.Types.ObjectId },
         bankName: { type: Schema.Types.String },
         abbrevation: { type: Schema.Types.String },
+        iconUrl: { type: String },
     },
     contactInfo: {
         phoneNumber: { type: Schema.Types.String, trim: true },
@@ -278,7 +279,7 @@ const schema = new Schema({
         adminName: { type: String },
         approvedAt: { type: Number },
     }],
-    referenceId: { type: String, index: true },
+    referenceId: { type: String, index: true, unique: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },
 },
@@ -287,11 +288,11 @@ const schema = new Schema({
     },
 );
 
-schema.pre('save', function (this: any, next: () => void) {
-    if (!this.referenceId) {
-        this.referenceId = `USR${++global.counters.LoanApplication}`;
-    }
-    next();
-});
+// schema.pre('save', function (this: any, next: () => void) {
+//     if (!this.referenceId) {
+//         this.referenceId = `USR${++global.counters.LoanApplication}`;
+//     }
+//     next();
+// });
 
 export const LoanApplication = model('loanapplications', schema);

@@ -11,14 +11,21 @@ export class Bootstrap {
 		AdminE.adminAccountCreator();
 		await this.initCounters();
 		await this.subscriptionPlan();
-		// await this.bootstrapCounters();
+		await this.bootstrapCounters();
 	}
 	async initRegions() {
 		await regionEntity.bootstrap();
 	}
 
 	async bootstrapCounters() {
-		const lastUser: any = await LoanApplication.findOne({}).sort({ uniqueId: -1 }).select({ uniqueId: 1, _id: 0 }).exec();
+		const criteria1 = ({
+			createdAt: {
+				$gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0)
+			},
+		});
+
+		const lastUser: any = await LoanApplication.findOne(criteria1).sort({ uniqueId: -1 }).select({ uniqueId: 1, _id: 0 }).exec();
+		console.log('lastUserlastUserlastUserlastUser', lastUser);
 		let userCounter = 0;
 		if (lastUser) {
 			const userId = lastUser.referenceId || 'USR0';
