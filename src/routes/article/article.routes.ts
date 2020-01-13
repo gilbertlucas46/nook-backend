@@ -266,6 +266,7 @@ export let articleRoutes: ServerRoute[] = [
             try {
                 const payload: ArticleRequest.GetArticle = request.query as any;
                 const registerResponse = await ArticleService.getCategoryWiseArticles(payload);
+                console.log('registerResponseregisterResponseregisterResponse', registerResponse);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
@@ -396,7 +397,7 @@ export let articleRoutes: ServerRoute[] = [
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
-                const registerResponse = await ArticleService.getArticle(payload,adminData);
+                const registerResponse = await ArticleService.getArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
@@ -457,6 +458,8 @@ export let articleRoutes: ServerRoute[] = [
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
                 const registerResponse = await ArticleService.getArticleById(payload);
+                console.log('registerResponseregisterResponseregisterResponse', registerResponse);
+
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
