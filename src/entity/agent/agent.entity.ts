@@ -238,34 +238,37 @@ export class AgentClass extends BaseEntity {
                 {
                     $match: {
                         userName,
+                        type: Constant.DATABASE.USER_TYPE.AGENT.TYPE,
                     },
                 },
-                {
-                    $unwind: {
-                        path: '$serviceAreas',
-                        preserveNullAndEmptyArrays: true,
-                    },
-                },
+                // {
+                //     $unwind: {
+                //         path: '$serviceAreas',
+                //         preserveNullAndEmptyArrays: true,
+                //     },
+                // },
                 {
                     $lookup: {
                         from: 'cities',
-                        let: { cityId: '$serviceAreas' },
+                        let: {
+                            cityId: '$serviceAreas',
+                        },
                         pipeline: [
                             {
                                 $match: {
                                     $expr: {
-                                        $eq: ['$_id', '$$cityId'],
+                                        $in: ['$_id', '$$cityId'],
                                     },
                                 },
-                            },
-                            {
+                            }, {
                                 $project: {
-                                    name: 1,
                                     cityId: '$_id',
+                                    cityName: '$name',
+
                                 },
                             },
                         ],
-                        as: 'cityData',
+                        as: 'city',
                     },
                 },
                 {
@@ -275,45 +278,45 @@ export class AgentClass extends BaseEntity {
                     },
                 },
 
-                {
-                    $unwind: {
-                        path: '$cityData',
-                        preserveNullAndEmptyArrays: true,
-                    },
-                },
-                {
-                    $group: {
-                        _id: '$_id',
-                        firstName: { $first: '$firstName' },
-                        userName: { $first: '$userName' },
-                        email: { $first: '$email' },
-                        middleName: { $first: '$middleName' },
-                        createdAt: { $first: '$createdAt' },
-                        phoneNumber: { $first: '$phoneNumber' },
-                        type: { $first: '$type' },
-                        title: { $first: '$title' },
-                        license: { $first: '$license' },
-                        taxNumber: { $first: '$taxNumber' },
-                        faxNumber: { $first: '$faxNumber' },
-                        companyName: { $first: '$companyName' },
-                        address: { $first: '$address' },
-                        fullPhoneNumber: { $first: '$fullPhoneNumber' },
-                        aboutMe: { $first: '$aboutMe' },
-                        profilePicUrl: { $first: '$profilePicUrl' },
-                        backGroundImageUrl: { $first: '$backGroundImageUrl' },
-                        specializingIn_property_type: { $first: '$specializingIn_property_type' },
-                        specializingIn_property_category: { $first: '$specializingIn_property_category' },
-                        isFeaturedProfile: { $first: '$isFeaturedProfile' },
-                        lastName: { $first: '$lastName' },
-                        isHomePageFeatured: { $first: '$isHomePageFeatured' },
-                        city: {
-                            $push: {
-                                cityId: '$cityData._id',
-                                cityName: '$cityData.name',
-                            },
-                        },
-                    },
-                },
+                // {
+                //     $unwind: {
+                //         path: '$cityData',
+                //         preserveNullAndEmptyArrays: true,
+                //     },
+                // },
+                // {
+                //     $group: {
+                //         _id: '$_id',
+                //         firstName: { $first: '$firstName' },
+                //         userName: { $first: '$userName' },
+                //         email: { $first: '$email' },
+                //         middleName: { $first: '$middleName' },
+                //         createdAt: { $first: '$createdAt' },
+                //         phoneNumber: { $first: '$phoneNumber' },
+                //         type: { $first: '$type' },
+                //         title: { $first: '$title' },
+                //         license: { $first: '$license' },
+                //         taxNumber: { $first: '$taxNumber' },
+                //         faxNumber: { $first: '$faxNumber' },
+                //         companyName: { $first: '$companyName' },
+                //         address: { $first: '$address' },
+                //         fullPhoneNumber: { $first: '$fullPhoneNumber' },
+                //         aboutMe: { $first: '$aboutMe' },
+                //         profilePicUrl: { $first: '$profilePicUrl' },
+                //         backGroundImageUrl: { $first: '$backGroundImageUrl' },
+                //         specializingIn_property_type: { $first: '$specializingIn_property_type' },
+                //         specializingIn_property_category: { $first: '$specializingIn_property_category' },
+                //         isFeaturedProfile: { $first: '$isFeaturedProfile' },
+                //         lastName: { $first: '$lastName' },
+                //         isHomePageFeatured: { $first: '$isHomePageFeatured' },
+                //         city: {
+                //             $push: {
+                //                 cityId: '$cityData._id',
+                //                 cityName: '$cityData.name',
+                //             },
+                //         },
+                //     },
+                // },
                 // {
                 //     $lookup: {
                 //         from: 'subscriptions',
@@ -343,11 +346,11 @@ export class AgentClass extends BaseEntity {
                 //         },
                 //     },
                 // },
-                {
-                    $project: {
-                        subscriptions: 0,
-                    },
-                },
+                // {
+                //     $project: {
+                //         subscriptions: 0,
+                //     },
+                // },
             ];
             return await this.DAOManager.aggregateData(this.modelName, query);
         } catch (err) {
