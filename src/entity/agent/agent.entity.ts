@@ -95,7 +95,7 @@ export class AgentClass extends BaseEntity {
                             },
                             {
                                 $project: {
-                                    name: 1,
+                                    cityName: '$name',
                                     cityId: '$_id',
                                 },
                             },
