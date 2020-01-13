@@ -1027,6 +1027,8 @@ export class PropertyClass extends BaseEntity {
 			if (!page) { page = 1; }
 			const skip = (limit * (page - 1));
 			sortingType = {
+				isHomePageFeatured: sortType,
+				isFeatured: sortType,
 				approvedAt: sortType,
 			};
 			const agentSorting = {
