@@ -2008,7 +2008,17 @@ export const REGIONS: Location.RegionLocation[] = [
 			{
 				name: 'Makati City',
 				location: { type: 'Point', coordinates: [0, 0] },
+<<<<<<< HEAD
 				subTitle: 'Financial Capital of the Philippines',
+=======
+				subTitle: 'Queen City of the South',
+				images: ['https://cdn.thecrazytourist.com/wp-content/uploads/2017/07/Taoist-Temple-cebu.jpg',
+					'https://travelcebu.b-cdn.net/wp-content/uploads/2018/08/Simala-Church-Cebu.jpg',
+					'https://travelcebu.b-cdn.net/wp-content/uploads/2018/09/Taoist-Temple-Cebu.jpg',
+					'http://images.summitmedia-digital.com/cosmo/images/2018/11/23/cebu-itinerary-1542932518.jpg',
+					'https://www.travelcebu.ph/wp-content/uploads/2018/08/Cebu-Kawasan-Canyoneering-Adventure.jpg',
+					'https://www.travelbook.ph/blog/cms/wp-content/uploads/2018/02/Tops-Lookout_29.jpg'],
+>>>>>>> 16e782553ab3959e28ee01b3799fd763c666c907
 				isFeatured: true,
 				mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30894.23105584977!2d121.01563733413383!3d14.554633584486625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c90264a0ed01%3A0x2b066ed57830cace!2sMakati%2C%20Metro%20Manila%2C%20Philippines!5e0!3m2!1sen!2sin!4v1574850988018!5m2!1sen!2sin',
 				description: 'Makati is the financial center of the Philippines; it has the highest concentration of multinational and local corporations in the country. Major banks, corporations, department stores as well as foreign embassies are based in Makati. The biggest trading floor of the Philippine Stock Exchange is situated along the city’s Ayala Avenue. Makati is also known for being a major cultural and entertainment hub in Metro Manila.\n\nMakati is located within the circle of 14′40″ °north and 121′3″ °E right at the center of Metro Manila. The city is bounded on the north by the Pasig River, facing Mandaluyong, on the northeast by Pasig, on the southeast by the municipality of Pateros and Taguig, on the northwest by the city of Manila, and on the southwest by Pasay. Makati has a total land area of 27.36 square kilometres (10.56 sq mi).',

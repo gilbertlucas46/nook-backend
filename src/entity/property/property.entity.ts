@@ -1027,8 +1027,15 @@ export class PropertyClass extends BaseEntity {
 			if (!page) { page = 1; }
 			const skip = (limit * (page - 1));
 			sortingType = {
+				isHomePageFeatured: sortType,
+				isFeatured: sortType,
 				approvedAt: sortType,
 			};
+			const agentSorting = {
+				isHomePageFeatured: sortType,
+				isFeatured: sortType,
+				createdAt: sortType,
+			}
 			if (sortBy) {
 				switch (sortBy) {
 					case 'price':
@@ -1050,81 +1057,89 @@ export class PropertyClass extends BaseEntity {
 			};
 			promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
 			const agentQuery = {
-				type: 'AGENT',
+				type: Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 				serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] },
 				// isFeaturedProfile: true,
 			};
 
 			const query1 = [
 				{ $match: agentQuery },
-				{ $sort: sortingType },
+				{ $sort: agentSorting },
 				{ $skip: skip },
 				{ $limit: limit },
-				{
-					$unwind: {
-						path: '$serviceAreas',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
+				// {
+				// 	$unwind: {
+				// 		path: '$serviceAreas',
+				// 		preserveNullAndEmptyArrays: true,
+				// 	},
+				// },
+
 				{
 					$lookup: {
 						from: 'cities',
-						let: { cityId },
+						let: { cityId: '$serviceAreas' },
 						pipeline: [
 							{
 								$match: {
 									$expr: {
-										$eq: ['$_id', '$$cityId'],
+										$in: ['$_id', '$$cityId'],
 									},
 								},
 							},
 							{
 								$project: {
-									name: 1,
-									_id: 1,
+									cityName: '$name',
+									cityId: '$_id',
 								},
 							},
 						],
-						as: 'cityData',
+						as: 'city',
 					},
 				},
+				// {
+				// 	$unwind: {
+				// 		path: '$cityData',
+				// 		preserveNullAndEmptyArrays: true,
+				// 	},
+				// },
+				// {
+
 				{
-					$unwind: {
-						path: '$cityData',
-						preserveNullAndEmptyArrays: true,
+					$project: {
+						password: 0,
+						serviceAreas: 0,
 					},
-				},
-				{
-					$group: {
-						_id: '$_id',
-						firstName: { $first: '$firstName' },
-						userName: { $first: '$userName' },
-						email: { $first: '$email' },
-						middleName: { $first: '$middleName' },
-						createdAt: { $first: '$createdAt' },
-						phoneNumber: { $first: '$phoneNumber' },
-						type: { $first: '$type' },
-						title: { $first: '$title' },
-						license: { $first: '$license' },
-						taxNumber: { $first: '$taxNumber' },
-						faxNumber: { $first: '$faxNumber' },
-						companyName: { $first: '$companyName' },
-						address: { $first: '$address' },
-						aboutMe: { $first: '$aboutMe' },
-						profilePicUrl: { $first: '$profilePicUrl' },
-						backGroundImageUrl: { $first: '$backGroundImageUrl' },
-						specializingIn_property_type: { $first: '$specializingIn_property_type' },
-						specializingIn_property_category: { $first: '$specializingIn_property_category' },
-						isFeaturedProfile: { $first: '$isFeaturedProfile' },
-						lastName: { $first: '$lastName' },
-						city: {
-							$push: {
-								cityId: '$cityData._id',
-								cityName: '$cityData.name',
-							},
-						},
-					},
-				},
+				}
+				// $group: {
+				// 	_id: '$_id',
+				// 	firstName: { $first: '$firstName' },
+				// 	userName: { $first: '$userName' },
+				// 	email: { $first: '$email' },
+				// 	middleName: { $first: '$middleName' },
+				// 	createdAt: { $first: '$createdAt' },
+				// 	phoneNumber: { $first: '$phoneNumber' },
+				// 	type: { $first: '$type' },
+				// 	title: { $first: '$title' },
+				// 	license: { $first: '$license' },
+				// 	taxNumber: { $first: '$taxNumber' },
+				// 	faxNumber: { $first: '$faxNumber' },
+				// 	companyName: { $first: '$companyName' },
+				// 	address: { $first: '$address' },
+				// 	aboutMe: { $first: '$aboutMe' },
+				// 	profilePicUrl: { $first: '$profilePicUrl' },
+				// 	backGroundImageUrl: { $first: '$backGroundImageUrl' },
+				// 	specializingIn_property_type: { $first: '$specializingIn_property_type' },
+				// 	specializingIn_property_category: { $first: '$specializingIn_property_category' },
+				// 	isFeaturedProfile: { $first: '$isFeaturedProfile' },
+				// 	lastName: { $first: '$lastName' },
+				// 	city: {
+				// 		$push: {
+				// 			cityId: '$cityData._id',
+				// 			cityName: '$cityData.name',
+				// 		},
+				// 	},
+				// },
+				// },
 			];
 			promiseArray.push(this.DAOManager.paginate('User', query1, limit, page));
 			promiseArray.push(this.DAOManager.findOne('City', { _id: cityId }, {}, {}));
