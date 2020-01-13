@@ -27,15 +27,18 @@ class LoanReferral extends BaseEntity {
 
     async getUserReferral(payload: loanReferralRequest.IUserLoanRefferal, userData) {
         try {
-            const pipeline = [];
+            console.log('userDatauserDatauserDatauserData', userData);
+
             let { page, limit, sortType } = payload;
             const { sortBy, searchTerm } = payload;
             let query: any = {};
-            if (!searchTerm) {
-                query = {
-                    userId: userData._id,
-                };
-            }
+
+            // if (!searchTerm) {
+            //     query = {
+            //         userId: userData._id,
+            //     };
+            // }
+            query['userId'] = userData._id;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             let sortingType = {};
@@ -45,9 +48,8 @@ class LoanReferral extends BaseEntity {
             sortingType = {
                 [sortBy]: sortType,
             };
-            // const criteria = {
-            //     userId: userData._id,
-            // };
+            query['userId'] = userData._id;
+
             if (searchTerm) {
                 query = {
                     $or: [
@@ -58,19 +60,66 @@ class LoanReferral extends BaseEntity {
                         { notes: { $regex: searchTerm, $options: 'i' } },
                     ],
                 };
-
-                promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
-                promiseArray.push(this.DAOManager.count(this.modelName, query));
-                const [data, total] = await Promise.all(promiseArray);
-                return {
-                    data, total,
-                };
             }
+            promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+            promiseArray.push(this.DAOManager.count(this.modelName, query));
+            const [data, total] = await Promise.all(promiseArray);
+            return {
+                data, total,
+            };
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
+
+    async getAdminData(payload, adminData) {
+        try {
+            console.log('userDatauserDatauserDatauserData', adminData);
+
+            let { page, limit, sortType } = payload;
+            const { sortBy, searchTerm, fromData, toDate } = payload;
+            let query: any = {};
+
+            if (!limit) { limit = Constant.SERVER.LIMIT; }
+            if (!page) { page = 1; }
+            let sortingType = {};
+            sortType = !sortType ? -1 : sortType;
+            const skip = (limit * (page - 1));
+            const promiseArray = [];
+            sortingType = {
+                sortBy: sortType,
+            };
+            // query['userId'] = adminData._id;
+            // if (!searchTerm) {
+            //     query = {
+            //         userId: adminData._id,
+            //     };
+            // }
+            // query['userId'] = adminData._id;
+            if (searchTerm) {
+                query = {
+                    $or: [
+                        { firstName: { $regex: searchTerm, $options: 'i' } },
+                        { lastName: { $regex: searchTerm, $options: 'i' } },
+                        { email: { $regex: searchTerm, $options: 'i' } },
+                        { phoneNumber: { $regex: searchTerm, $options: 'i' } },
+                        { notes: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+            }
+            promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+            promiseArray.push(this.DAOManager.count(this.modelName, query));
+            const [data, total] = await Promise.all(promiseArray);
+            return {
+                data, total,
+            };
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
 
 }
 
