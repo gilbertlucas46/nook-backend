@@ -60,7 +60,7 @@ export let subscriptionRoute: ServerRoute[] = [
 		options: {
 			description: 'Admin update loan status',
 			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
-			auth: 'UserAuth',
+			auth: 'AdminAuth',
 			validate: {
 				// payload: {
 				// },
