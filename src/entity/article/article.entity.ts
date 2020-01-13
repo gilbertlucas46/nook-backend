@@ -4,6 +4,7 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
 import * as utils from '@src/utils';
 import { Types, Schema } from 'mongoose';
+import * as UniversalFunctions from '../../utils';
 export class ArticleClass extends BaseEntity {
     constructor() {
         super('Article');
@@ -218,7 +219,9 @@ export class ArticleClass extends BaseEntity {
             ];
 
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
-            if (!data) return Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE;
+
+            if (!data || data.length === 0)
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {}));
             return data[0];
         } catch (error) {
             utils.consolelog('Error', error, true);
