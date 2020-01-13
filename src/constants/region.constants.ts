@@ -2002,23 +2002,13 @@ export const REGIONS: Location.RegionLocation[] = [
 			{
 				name: 'Pateros',
 				location: {
-					type: 'Point', coordinates: [0, 0]
+					type: 'Point', coordinates: [0, 0],
 				},
 			},
 			{
 				name: 'Makati City',
 				location: { type: 'Point', coordinates: [0, 0] },
-<<<<<<< HEAD
-				subTitle: 'Financial Capital of the Philippines',
-=======
 				subTitle: 'Queen City of the South',
-				images: ['https://cdn.thecrazytourist.com/wp-content/uploads/2017/07/Taoist-Temple-cebu.jpg',
-					'https://travelcebu.b-cdn.net/wp-content/uploads/2018/08/Simala-Church-Cebu.jpg',
-					'https://travelcebu.b-cdn.net/wp-content/uploads/2018/09/Taoist-Temple-Cebu.jpg',
-					'http://images.summitmedia-digital.com/cosmo/images/2018/11/23/cebu-itinerary-1542932518.jpg',
-					'https://www.travelcebu.ph/wp-content/uploads/2018/08/Cebu-Kawasan-Canyoneering-Adventure.jpg',
-					'https://www.travelbook.ph/blog/cms/wp-content/uploads/2018/02/Tops-Lookout_29.jpg'],
->>>>>>> 16e782553ab3959e28ee01b3799fd763c666c907
 				isFeatured: true,
 				mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30894.23105584977!2d121.01563733413383!3d14.554633584486625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c90264a0ed01%3A0x2b066ed57830cace!2sMakati%2C%20Metro%20Manila%2C%20Philippines!5e0!3m2!1sen!2sin!4v1574850988018!5m2!1sen!2sin',
 				description: 'Makati is the financial center of the Philippines; it has the highest concentration of multinational and local corporations in the country. Major banks, corporations, department stores as well as foreign embassies are based in Makati. The biggest trading floor of the Philippine Stock Exchange is situated along the city’s Ayala Avenue. Makati is also known for being a major cultural and entertainment hub in Metro Manila.\n\nMakati is located within the circle of 14′40″ °north and 121′3″ °E right at the center of Metro Manila. The city is bounded on the north by the Pasig River, facing Mandaluyong, on the northeast by Pasig, on the southeast by the municipality of Pateros and Taguig, on the northwest by the city of Manila, and on the southwest by Pasay. Makati has a total land area of 27.36 square kilometres (10.56 sq mi).',
@@ -3353,9 +3343,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Agno',
@@ -3363,9 +3353,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Agoo',
@@ -3373,9 +3363,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aguilar',
@@ -3383,9 +3373,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alaminos',
@@ -3393,9 +3383,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alcala',
@@ -3403,9 +3393,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alilem',
@@ -3413,9 +3403,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Anda',
@@ -3423,9 +3413,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aringay',
@@ -3433,9 +3423,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Asingan',
@@ -3443,9 +3433,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bacarra',
@@ -3453,9 +3443,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bacnotan',
@@ -3463,9 +3453,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Badoc',
@@ -3473,9 +3463,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bagulin',
@@ -3483,9 +3473,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balaoan',
@@ -3493,9 +3483,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balungao',
@@ -3503,9 +3493,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Banayoyo',
@@ -3513,9 +3503,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bangar',
@@ -3523,9 +3513,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bangui',
@@ -3533,9 +3523,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bani',
@@ -3543,9 +3533,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Banna (Espiritu)',
@@ -3553,9 +3543,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bantay',
@@ -3563,9 +3553,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Basista',
@@ -3573,9 +3563,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Batac',
@@ -3583,9 +3573,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bauang',
@@ -3593,9 +3583,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bautista',
@@ -3603,9 +3593,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bayambang',
@@ -3613,9 +3603,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Binalonan',
@@ -3623,9 +3613,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Binmaley',
@@ -3633,9 +3623,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bolinao',
@@ -3643,9 +3633,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bugallon',
@@ -3653,9 +3643,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Burgos',
@@ -3663,9 +3653,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Burgos',
@@ -3673,9 +3663,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Burgos',
@@ -3683,9 +3673,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Burgos',
@@ -3693,9 +3683,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Caba',
@@ -3703,9 +3693,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabugao',
@@ -3713,9 +3703,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calasiao',
@@ -3723,9 +3713,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Candon',
@@ -3733,9 +3723,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Caoayan',
@@ -3743,9 +3733,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carasi',
@@ -3753,9 +3743,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cervantes',
@@ -3763,9 +3753,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Currimao',
@@ -3773,9 +3763,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dagupan',
@@ -3783,9 +3773,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dasol',
@@ -3793,9 +3783,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dingras',
@@ -3803,9 +3793,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dumalneg',
@@ -3813,9 +3803,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Galimuyod',
@@ -3823,9 +3813,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gregorio del Pilar (Concepcion)',
@@ -3833,9 +3823,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Infanta',
@@ -3843,9 +3833,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Labrador',
@@ -3853,9 +3843,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Laoac',
@@ -3863,9 +3853,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Laoag',
@@ -3873,9 +3863,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lidlidda',
@@ -3883,9 +3873,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lingayen',
@@ -3893,9 +3883,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Luna',
@@ -3903,9 +3893,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mabini',
@@ -3913,9 +3903,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magsingal',
@@ -3923,9 +3913,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malasiqui',
@@ -3933,9 +3923,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Manaoag',
@@ -3943,9 +3933,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mangaldan',
@@ -3953,9 +3943,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mangatarem',
@@ -3963,9 +3953,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mapandan',
@@ -3973,9 +3963,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Marcos',
@@ -3983,9 +3973,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nagbukel',
@@ -3993,9 +3983,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naguilian',
@@ -4003,9 +3993,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Narvacan',
@@ -4013,9 +4003,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Natividad',
@@ -4023,9 +4013,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nueva Era',
@@ -4033,9 +4023,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pagudpud',
@@ -4043,9 +4033,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Paoay',
@@ -4053,9 +4043,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pasuquin',
@@ -4063,9 +4053,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Piddig',
@@ -4073,9 +4063,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pinili',
@@ -4083,9 +4073,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pozorrubio',
@@ -4093,9 +4083,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pugo',
@@ -4103,9 +4093,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quirino (Angkaki)',
@@ -4113,9 +4103,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rosales',
@@ -4123,9 +4113,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rosario',
@@ -4133,9 +4123,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Salcedo (Baugen)',
@@ -4143,9 +4133,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Carlos',
@@ -4153,9 +4143,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Emilio',
@@ -4163,9 +4153,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Esteban',
@@ -4173,9 +4163,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Fabian',
@@ -4183,9 +4173,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Fernando',
@@ -4193,9 +4183,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Gabriel',
@@ -4203,9 +4193,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Ildefonso',
@@ -4213,9 +4203,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jacinto',
@@ -4223,9 +4213,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Juan',
@@ -4233,9 +4223,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Juan (Lapog)',
@@ -4243,9 +4233,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Manuel',
@@ -4253,9 +4243,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Nicolas',
@@ -4263,9 +4253,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Nicolas',
@@ -4273,9 +4263,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Quintin',
@@ -4283,9 +4273,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Vicente',
@@ -4293,9 +4283,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa',
@@ -4303,9 +4293,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Barbara',
@@ -4313,9 +4303,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Catalina',
@@ -4323,9 +4313,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Cruz',
@@ -4333,9 +4323,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Lucia',
@@ -4343,9 +4333,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Maria',
@@ -4353,9 +4343,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Maria',
@@ -4363,9 +4353,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santiago',
@@ -4373,9 +4363,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Domingo',
@@ -4383,9 +4373,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Tomas',
@@ -4393,9 +4383,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Tomas',
@@ -4403,9 +4393,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santol',
@@ -4413,9 +4403,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sarrat',
@@ -4423,9 +4413,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sigay',
@@ -4433,9 +4423,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sinait',
@@ -4443,9 +4433,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sison',
@@ -4453,9 +4443,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Solsona',
@@ -4463,9 +4453,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sual',
@@ -4473,9 +4463,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sudipen',
@@ -4483,9 +4473,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sugpon',
@@ -4493,9 +4483,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Suyo',
@@ -4503,9 +4493,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagudin',
@@ -4513,9 +4503,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tayug',
@@ -4523,9 +4513,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tubao',
@@ -4533,9 +4523,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Umingan',
@@ -4543,9 +4533,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Urbiztondo',
@@ -4553,9 +4543,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Urdaneta',
@@ -4563,9 +4553,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Vigan',
@@ -4573,9 +4563,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Villasis',
@@ -4583,9 +4573,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Vintar',
@@ -4593,11 +4583,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Cagayan Valley',
@@ -4606,8 +4596,8 @@ export const REGIONS: Location.RegionLocation[] = [
 			type: 'Point',
 			coordinates: [
 				0,
-				0
-			]
+				0,
+			],
 		},
 		cities: [
 			{
@@ -4616,9 +4606,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aglipay',
@@ -4626,9 +4616,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alcala',
@@ -4636,9 +4626,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alfonso Castañeda',
@@ -4646,9 +4636,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alicia',
@@ -4656,9 +4646,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Allacapan',
@@ -4666,9 +4656,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ambaguio',
@@ -4676,9 +4666,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Amulung',
@@ -4686,9 +4676,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Angadanan',
@@ -4696,9 +4686,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aparri',
@@ -4706,9 +4696,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aritao',
@@ -4716,9 +4706,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aurora',
@@ -4726,9 +4716,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bagabag',
@@ -4736,9 +4726,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baggao',
@@ -4746,9 +4736,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ballesteros',
@@ -4756,9 +4746,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bambang',
@@ -4766,9 +4756,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Basco',
@@ -4776,9 +4766,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bayombong',
@@ -4786,9 +4776,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Benito Soliven',
@@ -4796,9 +4786,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buguey',
@@ -4806,9 +4796,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Burgos',
@@ -4816,9 +4806,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabagan',
@@ -4826,9 +4816,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabarroguis',
@@ -4836,9 +4826,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabatuan',
@@ -4846,9 +4836,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calayan',
@@ -4856,9 +4846,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Camalaniugan',
@@ -4866,9 +4856,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cauayan',
@@ -4876,9 +4866,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Claveria',
@@ -4886,9 +4876,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cordon',
@@ -4896,9 +4886,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Delfin Albano (Magsaysay)',
@@ -4906,9 +4896,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Diadi',
@@ -4916,9 +4906,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Diffun',
@@ -4926,9 +4916,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dinapigue',
@@ -4936,9 +4926,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Divilacan',
@@ -4946,9 +4936,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dupax del Norte',
@@ -4956,9 +4946,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dupax del Sur',
@@ -4966,9 +4956,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Echague',
@@ -4976,9 +4966,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Enrile',
@@ -4986,9 +4976,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gamu',
@@ -4996,9 +4986,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gattaran',
@@ -5006,9 +4996,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gonzaga',
@@ -5016,9 +5006,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Iguig',
@@ -5026,9 +5016,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ilagan',
@@ -5036,9 +5026,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Itbayat',
@@ -5046,9 +5036,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ivana',
@@ -5056,9 +5046,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jones',
@@ -5066,9 +5056,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kasibu',
@@ -5076,9 +5066,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kayapa',
@@ -5086,9 +5076,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lal-lo',
@@ -5096,9 +5086,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lasam',
@@ -5106,9 +5096,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Luna',
@@ -5116,9 +5106,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maconacon',
@@ -5126,9 +5116,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maddela',
@@ -5136,9 +5126,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mahatao',
@@ -5146,9 +5136,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mallig',
@@ -5156,9 +5146,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nagtipunan',
@@ -5166,9 +5156,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naguilian',
@@ -5176,9 +5166,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Palanan',
@@ -5186,9 +5176,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pamplona',
@@ -5196,9 +5186,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Peñablanca',
@@ -5206,9 +5196,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Piat',
@@ -5216,9 +5206,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quezon',
@@ -5226,9 +5216,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quezon',
@@ -5236,9 +5226,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quirino',
@@ -5246,9 +5236,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ramon',
@@ -5256,9 +5246,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Reina Mercedes',
@@ -5266,9 +5256,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rizal',
@@ -5276,9 +5266,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Roxas',
@@ -5286,9 +5276,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sabtang',
@@ -5296,9 +5286,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Saguday',
@@ -5306,9 +5296,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Agustin',
@@ -5316,9 +5306,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Guillermo',
@@ -5326,9 +5316,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Isidro',
@@ -5336,9 +5326,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Manuel (Callang)',
@@ -5346,9 +5336,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Mariano',
@@ -5356,9 +5346,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Mateo',
@@ -5366,9 +5356,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Pablo',
@@ -5376,9 +5366,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sanchez-Mira',
@@ -5386,9 +5376,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Ana',
@@ -5396,9 +5386,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Fe (Imugan)',
@@ -5406,9 +5396,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Maria',
@@ -5416,9 +5406,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Praxedes',
@@ -5426,9 +5416,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Teresita',
@@ -5436,9 +5426,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santiago',
@@ -5446,9 +5436,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Niño (Faire)',
@@ -5456,9 +5446,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Tomas',
@@ -5466,9 +5456,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Solana',
@@ -5476,9 +5466,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Solano',
@@ -5486,9 +5476,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tuao',
@@ -5496,9 +5486,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tuguegarao',
@@ -5506,9 +5496,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tumauini',
@@ -5516,9 +5506,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Uyugan',
@@ -5526,9 +5516,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Villaverde (Ibung)',
@@ -5536,11 +5526,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Central Luzon',
@@ -5553,9 +5543,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aglipay',
@@ -5563,9 +5553,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alcala',
@@ -5573,9 +5563,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alfonso Castañeda',
@@ -5583,9 +5573,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alicia',
@@ -5593,9 +5583,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Allacapan',
@@ -5603,9 +5593,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ambaguio',
@@ -5613,9 +5603,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Amulung',
@@ -5623,9 +5613,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Angadanan',
@@ -5633,9 +5623,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aparri',
@@ -5643,9 +5633,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aritao',
@@ -5653,9 +5643,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aurora',
@@ -5663,9 +5653,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bagabag',
@@ -5673,9 +5663,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baggao',
@@ -5683,9 +5673,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ballesteros',
@@ -5693,9 +5683,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bambang',
@@ -5703,9 +5693,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Basco',
@@ -5713,9 +5703,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bayombong',
@@ -5723,9 +5713,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Benito Soliven',
@@ -5733,9 +5723,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buguey',
@@ -5743,9 +5733,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Burgos',
@@ -5753,9 +5743,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabagan',
@@ -5763,9 +5753,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabarroguis',
@@ -5773,9 +5763,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabatuan',
@@ -5783,9 +5773,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calayan',
@@ -5793,9 +5783,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Camalaniugan',
@@ -5803,9 +5793,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cauayan',
@@ -5813,9 +5803,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Claveria',
@@ -5823,9 +5813,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cordon',
@@ -5833,9 +5823,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Delfin Albano (Magsaysay)',
@@ -5843,9 +5833,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Diadi',
@@ -5853,9 +5843,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Diffun',
@@ -5863,9 +5853,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dinapigue',
@@ -5873,9 +5863,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Divilacan',
@@ -5883,9 +5873,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dupax del Norte',
@@ -5893,9 +5883,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dupax del Sur',
@@ -5903,9 +5893,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Echague',
@@ -5913,9 +5903,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Enrile',
@@ -5923,9 +5913,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gamu',
@@ -5933,9 +5923,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gattaran',
@@ -5943,9 +5933,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gonzaga',
@@ -5953,9 +5943,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Iguig',
@@ -5963,9 +5953,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ilagan',
@@ -5973,9 +5963,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Itbayat',
@@ -5983,9 +5973,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ivana',
@@ -5993,9 +5983,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jones',
@@ -6003,9 +5993,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kasibu',
@@ -6013,9 +6003,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kayapa',
@@ -6023,9 +6013,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lal-lo',
@@ -6033,9 +6023,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lasam',
@@ -6043,9 +6033,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Luna',
@@ -6053,9 +6043,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maconacon',
@@ -6063,9 +6053,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maddela',
@@ -6073,9 +6063,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mahatao',
@@ -6083,9 +6073,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mallig',
@@ -6093,9 +6083,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nagtipunan',
@@ -6103,9 +6093,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naguilian',
@@ -6113,9 +6103,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Palanan',
@@ -6123,9 +6113,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pamplona',
@@ -6133,9 +6123,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Peñablanca',
@@ -6143,9 +6133,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Piat',
@@ -6153,9 +6143,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quezon',
@@ -6163,9 +6153,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quezon',
@@ -6173,9 +6163,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quirino',
@@ -6183,9 +6173,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ramon',
@@ -6193,9 +6183,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Reina Mercedes',
@@ -6203,9 +6193,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rizal',
@@ -6213,9 +6203,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Roxas',
@@ -6223,9 +6213,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sabtang',
@@ -6233,9 +6223,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Saguday',
@@ -6243,9 +6233,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Agustin',
@@ -6253,9 +6243,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Guillermo',
@@ -6263,9 +6253,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Isidro',
@@ -6273,9 +6263,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Manuel (Callang)',
@@ -6283,9 +6273,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Mariano',
@@ -6293,9 +6283,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Mateo',
@@ -6303,9 +6293,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Pablo',
@@ -6313,9 +6303,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sanchez-Mira',
@@ -6323,9 +6313,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Ana',
@@ -6333,9 +6323,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Fe (Imugan)',
@@ -6343,9 +6333,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Maria',
@@ -6353,9 +6343,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Praxedes',
@@ -6363,9 +6353,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Teresita',
@@ -6373,9 +6363,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santiago',
@@ -6383,9 +6373,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Niño (Faire)',
@@ -6393,9 +6383,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Tomas',
@@ -6403,9 +6393,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Solana',
@@ -6413,9 +6403,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Solano',
@@ -6423,9 +6413,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tuao',
@@ -6433,9 +6423,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tuguegarao',
@@ -6443,9 +6433,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tumauini',
@@ -6453,9 +6443,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Uyugan',
@@ -6463,9 +6453,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Villaverde (Ibung)',
@@ -6473,11 +6463,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'CALABARZON',
@@ -6490,9 +6480,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Agoncillo',
@@ -6500,9 +6490,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alabat',
@@ -6510,9 +6500,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alaminos',
@@ -6520,9 +6510,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alfonso',
@@ -6530,9 +6520,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alitagtag',
@@ -6540,9 +6530,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Amadeo',
@@ -6550,9 +6540,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Angono',
@@ -6560,9 +6550,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Antipolo',
@@ -6570,9 +6560,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Atimonan',
@@ -6580,9 +6570,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bacoor',
@@ -6590,9 +6580,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balayan',
@@ -6600,9 +6590,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balete',
@@ -6610,9 +6600,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baras',
@@ -6620,9 +6610,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Batangas City',
@@ -6630,9 +6620,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bauan',
@@ -6640,9 +6630,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bay',
@@ -6650,9 +6640,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Biñan',
@@ -6660,9 +6650,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Binangonan',
@@ -6670,9 +6660,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buenavista',
@@ -6680,9 +6670,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Burdeos',
@@ -6690,9 +6680,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabuyao',
@@ -6700,9 +6690,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cainta',
@@ -6710,9 +6700,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calaca',
@@ -6720,9 +6710,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calamba',
@@ -6730,9 +6720,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calatagan',
@@ -6740,9 +6730,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calauag',
@@ -6750,9 +6740,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calauan',
@@ -6760,9 +6750,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Candelaria',
@@ -6770,9 +6760,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cardona',
@@ -6780,9 +6770,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carmona',
@@ -6790,9 +6780,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Catanauan',
@@ -6800,9 +6790,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cavinti',
@@ -6810,9 +6800,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cavite City',
@@ -6820,9 +6810,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cuenca',
@@ -6830,9 +6820,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dasmariñas',
@@ -6840,9 +6830,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dolores',
@@ -6850,9 +6840,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Famy',
@@ -6860,9 +6850,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'General Emilio Aguinaldo',
@@ -6870,9 +6860,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'General Luna',
@@ -6880,9 +6870,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'General Mariano Alvarez',
@@ -6890,9 +6880,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'General Nakar',
@@ -6900,9 +6890,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'General Trias',
@@ -6910,9 +6900,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Guinayangan',
@@ -6920,9 +6910,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gumaca',
@@ -6930,9 +6920,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ibaan',
@@ -6940,9 +6930,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Imus',
@@ -6950,9 +6940,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Indang',
@@ -6960,9 +6950,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Infanta',
@@ -6970,9 +6960,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jalajala',
@@ -6980,9 +6970,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jomalig',
@@ -6990,9 +6980,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kalayaan',
@@ -7000,9 +6990,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kawit',
@@ -7010,9 +7000,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Laurel',
@@ -7020,9 +7010,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lemery',
@@ -7030,9 +7020,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lian',
@@ -7040,9 +7030,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Liliw',
@@ -7050,9 +7040,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lipa',
@@ -7060,9 +7050,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lobo',
@@ -7070,9 +7060,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lopez',
@@ -7080,9 +7070,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Los Baños',
@@ -7090,9 +7080,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lucban',
@@ -7100,9 +7090,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lucena',
@@ -7110,9 +7100,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Luisiana',
@@ -7120,9 +7110,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lumban',
@@ -7130,9 +7120,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mabini',
@@ -7140,9 +7130,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mabitac',
@@ -7150,9 +7140,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Macalelon',
@@ -7160,9 +7150,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magallanes',
@@ -7170,9 +7160,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magdalena',
@@ -7180,9 +7170,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Majayjay',
@@ -7190,9 +7180,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malvar',
@@ -7200,9 +7190,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maragondon',
@@ -7210,9 +7200,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mataasnakahoy',
@@ -7220,9 +7210,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mauban',
@@ -7230,9 +7220,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mendez (Mendez-Nuñez)',
@@ -7240,9 +7230,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Morong',
@@ -7250,9 +7240,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mulanay',
@@ -7260,9 +7250,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nagcarlan',
@@ -7270,9 +7260,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naic',
@@ -7280,9 +7270,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nasugbu',
@@ -7290,9 +7280,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Noveleta',
@@ -7300,9 +7290,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Padre Burgos',
@@ -7310,9 +7300,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Padre Garcia',
@@ -7320,9 +7310,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Paete',
@@ -7330,9 +7320,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pagbilao',
@@ -7340,9 +7330,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pagsanjan',
@@ -7350,9 +7340,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pakil',
@@ -7360,9 +7350,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pangil',
@@ -7370,9 +7360,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Panukulan',
@@ -7380,9 +7370,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Patnanungan',
@@ -7390,9 +7380,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Perez',
@@ -7400,9 +7390,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pila',
@@ -7410,9 +7400,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pililla',
@@ -7420,9 +7410,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pitogo',
@@ -7430,9 +7420,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Plaridel',
@@ -7440,9 +7430,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Polillo',
@@ -7450,9 +7440,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quezon',
@@ -7460,9 +7450,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Real',
@@ -7470,9 +7460,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rizal',
@@ -7480,9 +7470,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rodriguez (Montalban)',
@@ -7490,9 +7480,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rosario',
@@ -7500,9 +7490,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rosario',
@@ -7510,9 +7500,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sampaloc',
@@ -7520,9 +7510,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Andres',
@@ -7530,9 +7520,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Antonio',
@@ -7540,9 +7530,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Francisco (Aurora)',
@@ -7550,9 +7540,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jose',
@@ -7560,9 +7550,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Juan',
@@ -7570,9 +7560,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Luis',
@@ -7580,9 +7570,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Mateo',
@@ -7590,9 +7580,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Narciso',
@@ -7600,9 +7590,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Nicolas',
@@ -7610,9 +7600,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Pablo',
@@ -7620,9 +7610,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Pascual',
@@ -7630,9 +7620,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Pedro',
@@ -7640,9 +7630,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Cruz',
@@ -7650,9 +7640,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Maria',
@@ -7660,9 +7650,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Rosa',
@@ -7670,9 +7660,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Teresita',
@@ -7680,9 +7670,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Tomas',
@@ -7690,9 +7680,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sariaya',
@@ -7700,9 +7690,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Silang',
@@ -7710,9 +7700,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Siniloan',
@@ -7720,9 +7710,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Taal',
@@ -7730,9 +7720,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagaytay',
@@ -7740,9 +7730,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagkawayan',
@@ -7750,9 +7740,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talisay',
@@ -7760,9 +7750,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tanauan',
@@ -7770,9 +7760,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tanay',
@@ -7780,9 +7770,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tanza',
@@ -7790,9 +7780,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tayabas',
@@ -7800,9 +7790,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Taysan',
@@ -7810,9 +7800,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Taytay',
@@ -7820,9 +7810,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Teresa',
@@ -7830,9 +7820,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ternate',
@@ -7840,9 +7830,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tiaong',
@@ -7850,9 +7840,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tingloy',
@@ -7860,9 +7850,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Trece Martires',
@@ -7870,9 +7860,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tuy',
@@ -7880,9 +7870,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Unisan',
@@ -7890,9 +7880,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Victoria',
@@ -7900,11 +7890,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'MIMAROPA',
@@ -7917,9 +7907,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Abra de Ilog',
@@ -7927,9 +7917,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Agutaya',
@@ -7937,9 +7927,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alcantara',
@@ -7947,9 +7937,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Araceli',
@@ -7957,9 +7947,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baco',
@@ -7967,9 +7957,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balabac',
@@ -7977,9 +7967,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bansud',
@@ -7987,9 +7977,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Banton (Jones)',
@@ -7997,9 +7987,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bataraza',
@@ -8007,9 +7997,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Boac',
@@ -8017,9 +8007,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bongabong',
@@ -8027,9 +8017,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Brooke\'s Point',
@@ -8037,9 +8027,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buenavista',
@@ -8047,9 +8037,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bulalacao (San Pedro)',
@@ -8057,9 +8047,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Busuanga',
@@ -8067,9 +8057,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cagayancillo',
@@ -8077,9 +8067,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cajidiocan',
@@ -8087,9 +8077,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calapan',
@@ -8097,9 +8087,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calatrava',
@@ -8107,9 +8097,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calintaan',
@@ -8117,9 +8107,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Concepcion',
@@ -8127,9 +8117,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Corcuera',
@@ -8137,9 +8127,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Coron',
@@ -8147,9 +8137,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Culion',
@@ -8157,9 +8147,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cuyo',
@@ -8167,9 +8157,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dumaran',
@@ -8177,9 +8167,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'El Nido (Bacuit)',
@@ -8187,9 +8177,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ferrol',
@@ -8197,9 +8187,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gasan',
@@ -8207,9 +8197,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gloria',
@@ -8217,9 +8207,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kalayaan',
@@ -8227,9 +8217,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Linapacan',
@@ -8237,9 +8227,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Looc',
@@ -8247,9 +8237,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Looc',
@@ -8257,9 +8247,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lubang',
@@ -8267,9 +8257,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magdiwang',
@@ -8277,9 +8267,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magsaysay',
@@ -8287,9 +8277,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magsaysay',
@@ -8297,9 +8287,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mamburao',
@@ -8307,9 +8297,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mansalay',
@@ -8317,9 +8307,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mogpog',
@@ -8327,9 +8317,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Narra',
@@ -8337,9 +8327,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naujan',
@@ -8347,9 +8337,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Odiongan',
@@ -8357,9 +8347,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Paluan',
@@ -8367,9 +8357,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pinamalayan',
@@ -8377,9 +8367,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pola',
@@ -8387,9 +8377,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Puerto Galera',
@@ -8397,9 +8387,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Puerto Princesa',
@@ -8407,9 +8397,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quezon',
@@ -8417,9 +8407,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rizal',
@@ -8427,9 +8417,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rizal (Marcos)',
@@ -8437,9 +8427,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Romblon',
@@ -8447,9 +8437,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Roxas',
@@ -8457,9 +8447,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Roxas',
@@ -8467,9 +8457,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sablayan',
@@ -8477,9 +8467,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Agustin',
@@ -8487,9 +8477,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Andres',
@@ -8497,9 +8487,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Fernando',
@@ -8507,9 +8497,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jose',
@@ -8517,9 +8507,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jose',
@@ -8527,9 +8517,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Teodoro',
@@ -8537,9 +8527,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Vicente',
@@ -8547,9 +8537,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Cruz',
@@ -8557,9 +8547,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Cruz',
@@ -8567,9 +8557,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Fe',
@@ -8577,9 +8567,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Maria (Imelda)',
@@ -8587,9 +8577,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Socorro',
@@ -8597,9 +8587,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sofronio Española',
@@ -8607,9 +8597,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Taytay',
@@ -8617,9 +8607,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Torrijos',
@@ -8627,9 +8617,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Victoria',
@@ -8637,11 +8627,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Bicol',
@@ -8654,9 +8644,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baao',
@@ -8664,9 +8654,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bacacay',
@@ -8674,9 +8664,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bagamanoc',
@@ -8684,9 +8674,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balatan',
@@ -8694,9 +8684,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baleno',
@@ -8704,9 +8694,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balud',
@@ -8714,9 +8704,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baras',
@@ -8724,9 +8714,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Barcelona',
@@ -8734,9 +8724,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Basud',
@@ -8744,9 +8734,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bato',
@@ -8754,9 +8744,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bato',
@@ -8764,9 +8754,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Batuan',
@@ -8774,9 +8764,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bombon',
@@ -8784,9 +8774,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buhi',
@@ -8794,9 +8784,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bula',
@@ -8804,9 +8794,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bulan',
@@ -8814,9 +8804,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bulusan',
@@ -8824,9 +8814,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabusao',
@@ -8834,9 +8824,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calabanga',
@@ -8844,9 +8834,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Camalig',
@@ -8854,9 +8844,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Camaligan',
@@ -8864,9 +8854,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Canaman',
@@ -8874,9 +8864,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Capalonga',
@@ -8884,9 +8874,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Caramoan',
@@ -8894,9 +8884,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Caramoran',
@@ -8904,9 +8894,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Casiguran',
@@ -8914,9 +8904,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Castilla',
@@ -8924,9 +8914,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cataingan',
@@ -8934,9 +8924,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cawayan',
@@ -8944,9 +8934,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Claveria',
@@ -8954,9 +8944,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Daet',
@@ -8964,9 +8954,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Daraga (Locsin)',
@@ -8974,9 +8964,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Del Gallego',
@@ -8984,9 +8974,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dimasalang',
@@ -8994,9 +8984,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Donsol',
@@ -9004,9 +8994,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Esperanza',
@@ -9014,9 +9004,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gainza',
@@ -9024,9 +9014,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Garchitorena',
@@ -9034,9 +9024,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gigmoto',
@@ -9044,9 +9034,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Goa',
@@ -9054,9 +9044,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gubat',
@@ -9064,9 +9054,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Guinobatan',
@@ -9074,9 +9064,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Iriga',
@@ -9084,9 +9074,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Irosin',
@@ -9094,9 +9084,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jose Panganiban',
@@ -9104,9 +9094,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jovellar',
@@ -9114,9 +9104,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Juban',
@@ -9124,9 +9114,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Labo',
@@ -9134,9 +9124,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lagonoy',
@@ -9144,9 +9134,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Legazpi',
@@ -9154,9 +9144,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Libmanan',
@@ -9164,9 +9154,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Libon',
@@ -9174,9 +9164,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ligao',
@@ -9184,9 +9174,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lupi',
@@ -9194,9 +9184,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magallanes',
@@ -9204,9 +9194,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magarao',
@@ -9214,9 +9204,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malilipot',
@@ -9224,9 +9214,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malinao',
@@ -9234,9 +9224,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mandaon',
@@ -9244,9 +9234,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Manito',
@@ -9254,9 +9244,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Masbate City',
@@ -9264,9 +9254,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Matnog',
@@ -9274,9 +9264,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mercedes',
@@ -9284,9 +9274,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Milagros',
@@ -9294,9 +9284,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Milaor',
@@ -9304,9 +9294,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Minalabac',
@@ -9314,9 +9304,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mobo',
@@ -9324,9 +9314,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Monreal',
@@ -9334,9 +9324,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nabua',
@@ -9344,9 +9334,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naga',
@@ -9354,9 +9344,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Oas',
@@ -9364,9 +9354,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ocampo',
@@ -9374,9 +9364,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Palanas',
@@ -9384,9 +9374,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pamplona',
@@ -9394,9 +9384,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pandan',
@@ -9404,9 +9394,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Panganiban (Payo)',
@@ -9414,9 +9404,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Paracale',
@@ -9424,9 +9414,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pasacao',
@@ -9434,9 +9424,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pilar',
@@ -9444,9 +9434,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pili',
@@ -9454,9 +9444,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pio Duran',
@@ -9464,9 +9454,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pio V. Corpuz (Limbuhan)',
@@ -9474,9 +9464,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Placer',
@@ -9484,9 +9474,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Polangui',
@@ -9494,9 +9484,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Presentacion (Parubcan)',
@@ -9504,9 +9494,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Prieto Diaz',
@@ -9514,9 +9504,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ragay',
@@ -9524,9 +9514,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rapu-Rapu',
@@ -9534,9 +9524,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sagñay',
@@ -9544,9 +9534,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Andres (Calolbon)',
@@ -9554,9 +9544,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Fernando',
@@ -9564,9 +9554,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Fernando',
@@ -9574,9 +9564,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jacinto',
@@ -9584,9 +9574,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jose',
@@ -9594,9 +9584,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Lorenzo Ruiz (Imelda)',
@@ -9604,9 +9594,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Miguel',
@@ -9614,9 +9604,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Pascual',
@@ -9624,9 +9614,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Vicente',
@@ -9634,9 +9624,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Elena',
@@ -9644,9 +9634,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Magdalena',
@@ -9654,9 +9644,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Domingo',
@@ -9664,9 +9654,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sipocot',
@@ -9674,9 +9664,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Siruma',
@@ -9684,9 +9674,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sorsogon City',
@@ -9694,9 +9684,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tabaco',
@@ -9704,9 +9694,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talisay',
@@ -9714,9 +9704,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tigaon',
@@ -9724,9 +9714,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tinambac',
@@ -9734,9 +9724,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tiwi',
@@ -9744,9 +9734,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Uson',
@@ -9754,9 +9744,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Viga',
@@ -9764,9 +9754,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Vinzons',
@@ -9774,9 +9764,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Virac',
@@ -9784,11 +9774,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Western Visayas',
@@ -9801,9 +9791,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alimodian',
@@ -9811,9 +9801,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Altavas',
@@ -9821,9 +9811,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Anilao',
@@ -9831,9 +9821,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Anini-y',
@@ -9841,9 +9831,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bacolod',
@@ -9851,9 +9841,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Badiangan',
@@ -9861,9 +9851,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bago',
@@ -9871,9 +9861,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balasan',
@@ -9881,9 +9871,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balete',
@@ -9891,9 +9881,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Banate',
@@ -9901,9 +9891,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Banga',
@@ -9911,9 +9901,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Barbaza',
@@ -9921,9 +9911,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Barotac Nuevo',
@@ -9931,9 +9921,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Barotac Viejo',
@@ -9941,9 +9931,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Batad',
@@ -9951,9 +9941,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Batan',
@@ -9961,9 +9951,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Belison',
@@ -9971,9 +9961,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Binalbagan',
@@ -9981,9 +9971,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bingawan',
@@ -9991,9 +9981,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buenavista',
@@ -10001,9 +9991,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bugasong',
@@ -10011,9 +10001,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buruanga',
@@ -10021,9 +10011,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabatuan',
@@ -10031,9 +10021,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cadiz',
@@ -10041,9 +10031,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calatrava',
@@ -10051,9 +10041,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calinog',
@@ -10061,9 +10051,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Caluya',
@@ -10071,9 +10061,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Candoni',
@@ -10081,9 +10071,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carles',
@@ -10091,9 +10081,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cauayan',
@@ -10101,9 +10091,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Concepcion',
@@ -10111,9 +10101,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cuartero',
@@ -10121,9 +10111,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Culasi',
@@ -10131,9 +10121,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dao',
@@ -10141,9 +10131,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dingle',
@@ -10151,9 +10141,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dueñas',
@@ -10161,9 +10151,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dumalag',
@@ -10171,9 +10161,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dumangas',
@@ -10181,9 +10171,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dumarao',
@@ -10191,9 +10181,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Enrique B. Magalona (Saravia)',
@@ -10201,9 +10191,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Escalante',
@@ -10211,9 +10201,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Estancia',
@@ -10221,9 +10211,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Guimbal',
@@ -10231,9 +10221,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hamtic',
@@ -10241,9 +10231,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Himamaylan',
@@ -10251,9 +10241,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hinigaran',
@@ -10261,9 +10251,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hinoba-an (Asia)',
@@ -10271,9 +10261,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ibajay',
@@ -10281,9 +10271,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Igbaras',
@@ -10291,9 +10281,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ilog',
@@ -10301,9 +10291,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Iloilo City',
@@ -10311,9 +10301,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Isabela',
@@ -10321,9 +10311,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ivisan',
@@ -10331,9 +10321,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jamindan',
@@ -10341,9 +10331,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Janiuay',
@@ -10351,9 +10341,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jordan',
@@ -10361,9 +10351,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kabankalan',
@@ -10371,9 +10361,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kalibo',
@@ -10381,9 +10371,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'La Carlota',
@@ -10391,9 +10381,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'La Castellana',
@@ -10401,9 +10391,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lambunao',
@@ -10411,9 +10401,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Laua-an',
@@ -10421,9 +10411,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Leganes',
@@ -10431,9 +10421,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lemery',
@@ -10441,9 +10431,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Leon',
@@ -10451,9 +10441,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lezo',
@@ -10461,9 +10451,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Libacao',
@@ -10471,9 +10461,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Libertad',
@@ -10481,9 +10471,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maasin',
@@ -10491,9 +10481,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maayon',
@@ -10501,9 +10491,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Madalag',
@@ -10511,9 +10501,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Makato',
@@ -10521,9 +10511,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malay',
@@ -10531,9 +10521,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malinao',
@@ -10541,9 +10531,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mambusao',
@@ -10551,9 +10541,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Manapla',
@@ -10561,9 +10551,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Miagao',
@@ -10571,9 +10561,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mina',
@@ -10581,9 +10571,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Moises Padilla (Magallon)',
@@ -10591,9 +10581,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Murcia',
@@ -10601,9 +10591,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nabas',
@@ -10611,9 +10601,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'New Lucena',
@@ -10621,9 +10611,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'New Washington',
@@ -10631,9 +10621,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nueva Valencia',
@@ -10641,9 +10631,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Numancia',
@@ -10651,9 +10641,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Oton',
@@ -10661,9 +10651,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Panay',
@@ -10671,9 +10661,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pandan',
@@ -10681,9 +10671,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Panitan',
@@ -10691,9 +10681,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Passi',
@@ -10701,9 +10691,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Patnongon',
@@ -10711,9 +10701,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pavia',
@@ -10721,9 +10711,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pilar',
@@ -10731,9 +10721,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pontevedra',
@@ -10741,9 +10731,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pontevedra',
@@ -10751,9 +10741,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pototan',
@@ -10761,9 +10751,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'President Roxas',
@@ -10771,9 +10761,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pulupandan',
@@ -10781,9 +10771,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Roxas City',
@@ -10791,9 +10781,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sagay',
@@ -10801,9 +10791,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Salvador Benedicto',
@@ -10811,9 +10801,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Carlos',
@@ -10821,9 +10811,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Dionisio',
@@ -10831,9 +10821,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Enrique',
@@ -10841,9 +10831,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Enrique',
@@ -10851,9 +10841,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Joaquin',
@@ -10861,9 +10851,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jose de Buenavista',
@@ -10871,9 +10861,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Lorenzo',
@@ -10881,9 +10871,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Miguel',
@@ -10891,9 +10881,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Rafael',
@@ -10901,9 +10891,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Remigio',
@@ -10911,9 +10901,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Barbara',
@@ -10921,9 +10911,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sapian',
@@ -10931,9 +10921,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sara',
@@ -10941,9 +10931,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sebaste',
@@ -10951,9 +10941,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sibalom',
@@ -10961,9 +10951,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sibunag',
@@ -10971,9 +10961,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sigma',
@@ -10981,9 +10971,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Silay',
@@ -10991,9 +10981,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sipalay',
@@ -11001,9 +10991,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talisay',
@@ -11011,9 +11001,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tangalan',
@@ -11021,9 +11011,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tapaz',
@@ -11031,9 +11021,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tibiao',
@@ -11041,9 +11031,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tigbauan',
@@ -11051,9 +11041,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tobias Fornier (Dao)',
@@ -11061,9 +11051,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Toboso',
@@ -11071,9 +11061,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tubungan',
@@ -11081,9 +11071,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Valderrama',
@@ -11091,9 +11081,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Valladolid',
@@ -11101,9 +11091,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Victorias',
@@ -11111,9 +11101,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Zarraga',
@@ -11121,11 +11111,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Central Visayas',
@@ -11138,9 +11128,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alcantara',
@@ -11148,9 +11138,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alcoy',
@@ -11158,9 +11148,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alegria',
@@ -11168,9 +11158,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alicia',
@@ -11178,9 +11168,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aloguinsan',
@@ -11188,9 +11178,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Amlan (Ayuquitan)',
@@ -11198,9 +11188,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Anda',
@@ -11208,9 +11198,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Antequera',
@@ -11218,9 +11208,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Argao',
@@ -11228,9 +11218,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Asturias',
@@ -11238,9 +11228,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ayungon',
@@ -11248,9 +11238,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baclayon',
@@ -11258,9 +11248,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bacong',
@@ -11268,9 +11258,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Badian',
@@ -11278,9 +11268,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bais',
@@ -11288,9 +11278,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balamban',
@@ -11298,9 +11288,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balilihan',
@@ -11308,9 +11298,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bantayan',
@@ -11318,9 +11308,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Barili',
@@ -11328,9 +11318,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Basay',
@@ -11338,9 +11328,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Batuan',
@@ -11348,9 +11338,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bayawan (Tulong)',
@@ -11358,9 +11348,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bien Unido',
@@ -11368,9 +11358,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bilar',
@@ -11378,9 +11368,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bindoy (Payabon)',
@@ -11388,9 +11378,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bogo',
@@ -11398,9 +11388,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Boljoon',
@@ -11408,9 +11398,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Borbon',
@@ -11418,9 +11408,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buenavista',
@@ -11428,9 +11418,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calape',
@@ -11438,9 +11428,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Candijay',
@@ -11448,9 +11438,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Canlaon',
@@ -11458,9 +11448,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carcar',
@@ -11468,9 +11458,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carmen',
@@ -11478,9 +11468,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carmen',
@@ -11488,9 +11478,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Catigbian',
@@ -11498,9 +11488,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Catmon',
@@ -11508,9 +11498,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cebu City',
@@ -11693,9 +11683,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Compostela',
@@ -11703,9 +11693,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Consolacion',
@@ -11713,9 +11703,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cordova',
@@ -11723,9 +11713,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Corella',
@@ -11733,9 +11723,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cortes',
@@ -11743,9 +11733,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Daanbantayan',
@@ -11753,9 +11743,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dagohoy',
@@ -11763,9 +11753,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dalaguete',
@@ -11773,9 +11763,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Danao',
@@ -11783,9 +11773,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Danao',
@@ -11793,9 +11783,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dauin',
@@ -11803,9 +11793,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dauis',
@@ -11813,9 +11803,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dimiao',
@@ -11823,9 +11813,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Duero',
@@ -11833,9 +11823,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dumaguete',
@@ -11843,9 +11833,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dumanjug',
@@ -11853,9 +11843,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Enrique Villanueva',
@@ -11863,9 +11853,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Garcia Hernandez',
@@ -11873,9 +11863,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Getafe',
@@ -11883,9 +11873,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ginatilan',
@@ -11893,9 +11883,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Guihulngan',
@@ -11903,9 +11893,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Guindulman',
@@ -11913,9 +11903,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Inabanga',
@@ -11923,9 +11913,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jagna',
@@ -11933,9 +11923,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jimalalud',
@@ -11943,9 +11933,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'La Libertad',
@@ -11953,9 +11943,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lapu-Lapu (Opon)',
@@ -11963,9 +11953,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Larena',
@@ -11973,9 +11963,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lazi',
@@ -11983,9 +11973,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lila',
@@ -11993,9 +11983,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Liloan',
@@ -12003,9 +11993,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Loay',
@@ -12013,9 +12003,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Loboc',
@@ -12023,9 +12013,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Loon',
@@ -12033,9 +12023,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mabinay',
@@ -12043,9 +12033,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mabini',
@@ -12053,9 +12043,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Madridejos',
@@ -12063,9 +12053,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malabuyoc',
@@ -12073,9 +12063,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'MANDAUE CITY',
@@ -12234,9 +12224,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maria',
@@ -12244,9 +12234,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maribojoc',
@@ -12254,9 +12244,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Medellin',
@@ -12264,9 +12254,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Minglanilla',
@@ -12274,9 +12264,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Moalboal',
@@ -12284,9 +12274,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naga',
@@ -12294,9 +12284,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Oslob',
@@ -12304,9 +12294,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pamplona',
@@ -12314,9 +12304,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Panglao',
@@ -12324,9 +12314,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pilar',
@@ -12334,9 +12324,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pilar',
@@ -12344,9 +12334,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pinamungajan',
@@ -12354,9 +12344,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Poro',
@@ -12364,9 +12354,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'President Carlos P. Garcia (Pitogo)',
@@ -12374,9 +12364,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ronda',
@@ -12384,9 +12374,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sagbayan (Borja)',
@@ -12394,9 +12384,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Samboan',
@@ -12404,9 +12394,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Fernando',
@@ -12414,9 +12404,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Francisco',
@@ -12424,9 +12414,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Isidro',
@@ -12434,9 +12424,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jose',
@@ -12444,9 +12434,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Juan',
@@ -12454,9 +12444,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Miguel',
@@ -12464,9 +12454,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Remigio',
@@ -12474,9 +12464,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Catalina',
@@ -12484,9 +12474,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Fe',
@@ -12494,9 +12484,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santander',
@@ -12504,9 +12494,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sevilla',
@@ -12514,9 +12504,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Siaton',
@@ -12524,9 +12514,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sibonga',
@@ -12534,9 +12524,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sibulan',
@@ -12544,9 +12534,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sierra Bullones',
@@ -12554,9 +12544,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sikatuna',
@@ -12564,9 +12554,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Siquijor',
@@ -12574,9 +12564,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sogod',
@@ -12584,9 +12574,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tabogon',
@@ -12594,9 +12584,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tabuelan',
@@ -12604,9 +12594,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagbilaran',
@@ -12614,9 +12604,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talibon',
@@ -12624,9 +12614,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talisay',
@@ -12634,9 +12624,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tanjay',
@@ -12644,9 +12634,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tayasan',
@@ -12654,9 +12644,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Toledo',
@@ -12664,9 +12654,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Trinidad',
@@ -12674,9 +12664,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tubigon',
@@ -12684,9 +12674,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tuburan',
@@ -12694,9 +12684,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tudela',
@@ -12704,9 +12694,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ubay',
@@ -12714,9 +12704,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Valencia',
@@ -12724,9 +12714,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Valencia (Luzurriaga)',
@@ -12734,9 +12724,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Vallehermoso',
@@ -12744,9 +12734,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Zamboanguita',
@@ -12754,11 +12744,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Eastern Visayas',
@@ -12771,9 +12761,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alangalang',
@@ -12781,9 +12771,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Albuera',
@@ -12791,9 +12781,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Allen',
@@ -12801,9 +12791,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Almagro',
@@ -12811,9 +12801,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Almeria',
@@ -12821,9 +12811,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Anahawan',
@@ -12831,9 +12821,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Arteche',
@@ -12841,9 +12831,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Babatngon',
@@ -12851,9 +12841,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balangiga',
@@ -12861,9 +12851,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balangkayan',
@@ -12871,9 +12861,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Barugo',
@@ -12881,9 +12871,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Basey',
@@ -12891,9 +12881,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bato',
@@ -12901,9 +12891,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baybay',
@@ -12911,9 +12901,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Biliran',
@@ -12921,9 +12911,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Biri',
@@ -12931,9 +12921,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bobon',
@@ -12941,9 +12931,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bontoc',
@@ -12951,9 +12941,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Borongan',
@@ -12961,9 +12951,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Burauen',
@@ -12971,9 +12961,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabucgayan',
@@ -12981,9 +12971,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Caibiran',
@@ -12991,9 +12981,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calbayog',
@@ -13001,9 +12991,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calbiga',
@@ -13011,9 +13001,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calubian',
@@ -13021,9 +13011,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Can-avid',
@@ -13031,9 +13021,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Capoocan',
@@ -13041,9 +13031,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Capul',
@@ -13051,9 +13041,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carigara',
@@ -13061,9 +13051,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Catarman',
@@ -13071,9 +13061,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Catbalogan',
@@ -13081,9 +13071,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Catubig',
@@ -13091,9 +13081,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Culaba',
@@ -13101,9 +13091,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dagami',
@@ -13111,9 +13101,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Daram',
@@ -13121,9 +13111,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dolores',
@@ -13131,9 +13121,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dulag',
@@ -13141,9 +13131,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gamay',
@@ -13151,9 +13141,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gandara',
@@ -13161,9 +13151,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'General MacArthur',
@@ -13171,9 +13161,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Giporlos',
@@ -13181,9 +13171,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Guiuan',
@@ -13191,9 +13181,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hernani',
@@ -13201,9 +13191,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hilongos',
@@ -13211,9 +13201,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hinabangan',
@@ -13221,9 +13211,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hindang',
@@ -13231,9 +13221,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hinunangan',
@@ -13241,9 +13231,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hinundayan',
@@ -13251,9 +13241,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Inopacan',
@@ -13261,9 +13251,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Isabel',
@@ -13271,9 +13261,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jaro',
@@ -13281,9 +13271,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Javier (Bugho)',
@@ -13291,9 +13281,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jiabong',
@@ -13301,9 +13291,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jipapad',
@@ -13311,9 +13301,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Julita',
@@ -13321,9 +13311,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kananga',
@@ -13331,9 +13321,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kawayan',
@@ -13341,9 +13331,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'La Paz',
@@ -13351,9 +13341,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Laoang',
@@ -13361,9 +13351,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lapinig',
@@ -13371,9 +13361,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Las Navas',
@@ -13381,9 +13371,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lavezares',
@@ -13391,9 +13381,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lawaan',
@@ -13401,9 +13391,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Leyte',
@@ -13411,9 +13401,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Libagon',
@@ -13421,9 +13411,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Liloan',
@@ -13431,9 +13421,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Limasawa',
@@ -13441,9 +13431,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Llorente',
@@ -13451,9 +13441,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lope de Vega',
@@ -13461,9 +13451,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maasin',
@@ -13471,9 +13461,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'MacArthur',
@@ -13481,9 +13471,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Macrohon',
@@ -13491,9 +13481,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mahaplag',
@@ -13501,9 +13491,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malitbog',
@@ -13511,9 +13501,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mapanas',
@@ -13521,9 +13511,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Marabut',
@@ -13531,9 +13521,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maripipi',
@@ -13541,9 +13531,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maslog',
@@ -13551,9 +13541,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Matag-ob',
@@ -13561,9 +13551,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Matalom',
@@ -13571,9 +13561,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Matuguinao',
@@ -13581,9 +13571,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maydolong',
@@ -13591,9 +13581,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mayorga',
@@ -13601,9 +13591,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mercedes',
@@ -13611,9 +13601,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Merida',
@@ -13621,9 +13611,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mondragon',
@@ -13631,9 +13621,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Motiong',
@@ -13641,9 +13631,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naval',
@@ -13651,9 +13641,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Oras',
@@ -13661,9 +13651,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ormoc',
@@ -13671,9 +13661,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Padre Burgos',
@@ -13681,9 +13671,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pagsanghan',
@@ -13691,9 +13681,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Palapag',
@@ -13701,9 +13691,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Palo',
@@ -13711,9 +13701,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Palompon',
@@ -13721,9 +13711,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pambujan',
@@ -13731,9 +13721,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Paranas (Wright)',
@@ -13741,9 +13731,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pastrana',
@@ -13751,9 +13741,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pinabacdao',
@@ -13761,9 +13751,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pintuyan',
@@ -13771,9 +13761,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quinapondan',
@@ -13781,9 +13771,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rosario',
@@ -13791,9 +13781,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Saint Bernard',
@@ -13801,9 +13791,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Salcedo',
@@ -13811,9 +13801,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Antonio',
@@ -13821,9 +13811,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Francisco',
@@ -13831,9 +13821,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Isidro',
@@ -13841,9 +13831,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Isidro',
@@ -13851,9 +13841,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jorge',
@@ -13861,9 +13851,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jose',
@@ -13871,9 +13861,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jose de Buan',
@@ -13881,9 +13871,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Juan (Cabalian)',
@@ -13891,9 +13881,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Julian',
@@ -13901,9 +13891,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Miguel',
@@ -13911,9 +13901,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Policarpo',
@@ -13921,9 +13911,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Ricardo',
@@ -13931,9 +13921,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Roque',
@@ -13941,9 +13931,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Sebastian',
@@ -13951,9 +13941,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Vicente',
@@ -13961,9 +13951,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Fe',
@@ -13971,9 +13961,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Margarita',
@@ -13981,9 +13971,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Rita',
@@ -13991,9 +13981,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Niño',
@@ -14001,9 +13991,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Silago',
@@ -14011,9 +14001,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Silvino Lobos',
@@ -14021,9 +14011,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sogod',
@@ -14031,9 +14021,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sulat',
@@ -14041,9 +14031,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tabango',
@@ -14051,9 +14041,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tabontabon',
@@ -14061,9 +14051,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tacloban',
@@ -14071,9 +14061,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Taft',
@@ -14081,9 +14071,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagapul-an',
@@ -14091,9 +14081,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talalora',
@@ -14101,9 +14091,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tanauan',
@@ -14111,9 +14101,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tarangnan',
@@ -14121,9 +14111,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tolosa',
@@ -14131,9 +14121,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tomas Oppus',
@@ -14141,9 +14131,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tunga',
@@ -14151,9 +14141,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Victoria',
@@ -14161,9 +14151,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Villaba',
@@ -14171,9 +14161,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Villareal',
@@ -14181,9 +14171,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Zumarraga',
@@ -14191,11 +14181,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Zamboanga Peninsula',
@@ -14208,9 +14198,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aurora',
@@ -14218,9 +14208,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baliguian',
@@ -14228,9 +14218,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bayog',
@@ -14238,9 +14228,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buug',
@@ -14248,9 +14238,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dapitan',
@@ -14258,9 +14248,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dimataling',
@@ -14268,9 +14258,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dinas',
@@ -14278,9 +14268,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Diplahan',
@@ -14288,9 +14278,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dipolog',
@@ -14298,9 +14288,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dumalinao',
@@ -14308,9 +14298,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dumingag',
@@ -14318,9 +14308,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Godod',
@@ -14328,9 +14318,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Guipos',
@@ -14338,9 +14328,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gutalac',
@@ -14348,9 +14338,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Imelda',
@@ -14358,9 +14348,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ipil',
@@ -14368,9 +14358,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jose Dalman (Ponot)',
@@ -14378,9 +14368,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Josefina',
@@ -14388,9 +14378,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kabasalan',
@@ -14398,9 +14388,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kalawit',
@@ -14408,9 +14398,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Katipunan',
@@ -14418,9 +14408,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kumalarang',
@@ -14428,9 +14418,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'La Libertad',
@@ -14438,9 +14428,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Labangan',
@@ -14448,9 +14438,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Labason',
@@ -14458,9 +14448,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lakewood',
@@ -14468,9 +14458,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lapuyan',
@@ -14478,9 +14468,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Leon B. Postigo (Bacungan)',
@@ -14488,9 +14478,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Liloy',
@@ -14498,9 +14488,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mabuhay',
@@ -14508,9 +14498,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mahayag',
@@ -14518,9 +14508,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malangas',
@@ -14528,9 +14518,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Manukan',
@@ -14538,9 +14528,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Margosatubig',
@@ -14548,9 +14538,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Midsalip',
@@ -14558,9 +14548,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Molave',
@@ -14568,9 +14558,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mutia',
@@ -14578,9 +14568,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naga',
@@ -14588,9 +14578,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Olutanga',
@@ -14598,9 +14588,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pagadian',
@@ -14608,9 +14598,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Payao',
@@ -14618,9 +14608,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Piñan (New Piñan)',
@@ -14628,9 +14618,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pitogo',
@@ -14638,9 +14628,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Polanco',
@@ -14648,9 +14638,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'President Manuel A. Roxas',
@@ -14658,9 +14648,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ramon Magsaysay (Liargo)',
@@ -14668,9 +14658,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rizal',
@@ -14678,9 +14668,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Roseller Lim',
@@ -14688,9 +14678,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Salug',
@@ -14698,9 +14688,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Miguel',
@@ -14708,9 +14698,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Pablo',
@@ -14718,9 +14708,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sergio Osmeña Sr.',
@@ -14728,9 +14718,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Siay',
@@ -14738,9 +14728,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Siayan',
@@ -14748,9 +14738,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sibuco',
@@ -14758,9 +14748,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sibutad',
@@ -14768,9 +14758,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sindangan',
@@ -14778,9 +14768,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Siocon',
@@ -14788,9 +14778,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sirawai',
@@ -14798,9 +14788,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sominot (Don Mariano Marcos)',
@@ -14808,9 +14798,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tabina',
@@ -14818,9 +14808,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talusan',
@@ -14828,9 +14818,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tambulig',
@@ -14838,9 +14828,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tampilisan',
@@ -14848,9 +14838,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tigbao',
@@ -14858,9 +14848,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Titay',
@@ -14868,9 +14858,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tukuran',
@@ -14878,9 +14868,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tungawan',
@@ -14888,9 +14878,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Vincenzo A. Sagun',
@@ -14898,9 +14888,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Zamboanga City',
@@ -14908,11 +14898,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Northern Mindanao',
@@ -14925,9 +14915,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alubijid',
@@ -14935,9 +14925,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bacolod',
@@ -14945,9 +14935,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baliangao',
@@ -14955,9 +14945,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balingasag',
@@ -14965,9 +14955,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Balingoan',
@@ -14975,9 +14965,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baloi',
@@ -14985,9 +14975,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baroy',
@@ -14995,9 +14985,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baungon',
@@ -15005,9 +14995,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Binuangan',
@@ -15015,9 +15005,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bonifacio',
@@ -15025,9 +15015,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabanglasan',
@@ -15035,9 +15025,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cagayan de Oro',
@@ -15045,9 +15035,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Calamba',
@@ -15055,9 +15045,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Catarman',
@@ -15065,9 +15055,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Clarin',
@@ -15075,9 +15065,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Claveria',
@@ -15085,9 +15075,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Concepcion',
@@ -15095,9 +15085,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Damulog',
@@ -15105,9 +15095,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dangcagan',
@@ -15115,9 +15105,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Don Carlos',
@@ -15125,9 +15115,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Don Victoriano Chiongbian (Don Mariano Marcos)',
@@ -15135,9 +15125,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'El Salvador',
@@ -15145,9 +15135,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gingoog',
@@ -15155,9 +15145,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gitagum',
@@ -15165,9 +15155,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Guinsiliban',
@@ -15175,9 +15165,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Iligan',
@@ -15185,9 +15175,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Impasugong',
@@ -15195,9 +15185,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Initao',
@@ -15205,9 +15195,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jasaan',
@@ -15215,9 +15205,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jimenez',
@@ -15225,9 +15215,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kadingilan',
@@ -15235,9 +15225,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kalilangan',
@@ -15245,9 +15235,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kapatagan',
@@ -15255,9 +15245,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kauswagan',
@@ -15265,9 +15255,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kibawe',
@@ -15275,9 +15265,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kinoguitan',
@@ -15285,9 +15275,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kitaotao',
@@ -15295,9 +15285,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kolambugan',
@@ -15305,9 +15295,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lagonglong',
@@ -15315,9 +15305,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Laguindingan',
@@ -15325,9 +15315,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lala',
@@ -15335,9 +15325,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lantapan',
@@ -15345,9 +15335,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Libertad',
@@ -15355,9 +15345,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Libona',
@@ -15365,9 +15355,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Linamon',
@@ -15375,9 +15365,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lopez Jaena',
@@ -15385,9 +15375,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lugait',
@@ -15395,9 +15385,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magsaysay',
@@ -15405,9 +15395,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magsaysay (Linugos)',
@@ -15415,9 +15405,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mahinog',
@@ -15425,9 +15415,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maigo',
@@ -15435,9 +15425,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malaybalay',
@@ -15445,9 +15435,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malitbog',
@@ -15455,9 +15445,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mambajao',
@@ -15465,9 +15455,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Manolo Fortich',
@@ -15475,9 +15465,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Manticao',
@@ -15485,9 +15475,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maramag',
@@ -15495,9 +15485,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Matungao',
@@ -15505,9 +15495,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Medina',
@@ -15515,9 +15505,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Munai',
@@ -15525,9 +15515,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Naawan',
@@ -15535,9 +15525,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nunungan',
@@ -15545,9 +15535,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Opol',
@@ -15555,9 +15545,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Oroquieta',
@@ -15565,9 +15555,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Ozamiz',
@@ -15575,9 +15565,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Panaon',
@@ -15585,9 +15575,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pangantucan',
@@ -15595,9 +15585,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pantao Ragat',
@@ -15605,9 +15595,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pantar',
@@ -15615,9 +15605,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Plaridel',
@@ -15625,9 +15615,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Poona Piagapo',
@@ -15635,9 +15625,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Quezon',
@@ -15645,9 +15635,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sagay',
@@ -15655,9 +15645,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Salay',
@@ -15665,9 +15655,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Salvador',
@@ -15675,9 +15665,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Fernando',
@@ -15685,9 +15675,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sapad',
@@ -15695,9 +15685,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sapang Dalaga',
@@ -15705,9 +15695,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sinacaban',
@@ -15715,9 +15705,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sugbongcogon',
@@ -15725,9 +15715,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sultan Naga Dimaporo (Karomatan)',
@@ -15735,9 +15725,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sumilao',
@@ -15745,9 +15735,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagoloan',
@@ -15755,9 +15745,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagoloan',
@@ -15765,9 +15755,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talakag',
@@ -15775,9 +15765,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talisayan',
@@ -15785,9 +15775,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tangcal',
@@ -15795,9 +15785,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tangub',
@@ -15805,9 +15795,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tubod',
@@ -15815,9 +15805,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tudela',
@@ -15825,9 +15815,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Valencia',
@@ -15835,9 +15825,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Villanueva',
@@ -15845,11 +15835,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Davao Region',
@@ -15862,9 +15852,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Baganga',
@@ -15872,9 +15862,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Banaybanay',
@@ -15882,9 +15872,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bansalan',
@@ -15892,9 +15882,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Boston',
@@ -15902,9 +15892,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Braulio E. Dujali',
@@ -15912,9 +15902,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Caraga',
@@ -15922,9 +15912,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carmen',
@@ -15932,9 +15922,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cateel',
@@ -15942,9 +15932,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Compostela',
@@ -15952,9 +15942,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Davao City',
@@ -15962,9 +15952,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Digos',
@@ -15972,9 +15962,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Don Marcelino',
@@ -15982,9 +15972,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Governor Generoso',
@@ -15992,9 +15982,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hagonoy',
@@ -16002,9 +15992,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jose Abad Santos (Trinidad)',
@@ -16012,9 +16002,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kapalong',
@@ -16022,9 +16012,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kiblawan',
@@ -16032,9 +16022,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Laak (San Vicente)',
@@ -16042,9 +16032,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lupon',
@@ -16052,9 +16042,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mabini (Doña Alicia)',
@@ -16062,9 +16052,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maco',
@@ -16072,9 +16062,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magsaysay',
@@ -16082,9 +16072,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malalag',
@@ -16092,9 +16082,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malita',
@@ -16102,9 +16092,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Manay',
@@ -16112,9 +16102,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maragusan (San Mariano)',
@@ -16122,9 +16112,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Matanao',
@@ -16132,9 +16122,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mati',
@@ -16142,9 +16132,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mawab',
@@ -16152,9 +16142,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Monkayo',
@@ -16162,9 +16152,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Montevista',
@@ -16172,9 +16162,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nabunturan',
@@ -16182,9 +16172,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'New Bataan',
@@ -16192,9 +16182,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'New Corella',
@@ -16202,9 +16192,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Padada',
@@ -16212,9 +16202,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Panabo',
@@ -16222,9 +16212,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pantukan',
@@ -16232,9 +16222,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Samal',
@@ -16242,9 +16232,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Isidro',
@@ -16252,9 +16242,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Isidro',
@@ -16262,9 +16252,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Cruz',
@@ -16272,9 +16262,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Maria',
@@ -16282,9 +16272,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Tomas',
@@ -16292,9 +16282,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sarangani',
@@ -16302,9 +16292,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sulop',
@@ -16312,9 +16302,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagum',
@@ -16322,9 +16312,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talaingod',
@@ -16332,9 +16322,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tarragona',
@@ -16342,11 +16332,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'SOCCSKSARGEN',
@@ -16359,9 +16349,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Alamada',
@@ -16369,9 +16359,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Aleosan',
@@ -16379,9 +16369,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Antipas',
@@ -16389,9 +16379,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Arakan',
@@ -16399,9 +16389,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bagumbayan',
@@ -16409,9 +16399,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Banga',
@@ -16419,9 +16409,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Banisilan',
@@ -16429,9 +16419,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carmen',
@@ -16439,9 +16429,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Columbio',
@@ -16449,9 +16439,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Esperanza',
@@ -16459,9 +16449,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'General Santos (Dadiangas)',
@@ -16469,9 +16459,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Glan',
@@ -16479,9 +16469,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Isulan',
@@ -16489,9 +16479,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kabacan',
@@ -16499,9 +16489,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kalamansig',
@@ -16509,9 +16499,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kiamba',
@@ -16519,9 +16509,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kidapawan',
@@ -16529,9 +16519,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Koronadal',
@@ -16539,9 +16529,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lake Sebu',
@@ -16549,9 +16539,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lambayong (Mariano Marcos)',
@@ -16559,9 +16549,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lebak',
@@ -16569,9 +16559,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Libungan',
@@ -16579,9 +16569,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lutayan',
@@ -16589,9 +16579,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maasim',
@@ -16599,9 +16589,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magpet',
@@ -16609,9 +16599,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Maitum',
@@ -16619,9 +16609,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Makilala',
@@ -16629,9 +16619,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malapatan',
@@ -16639,9 +16629,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malungon',
@@ -16649,9 +16639,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Matalam',
@@ -16659,9 +16649,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Midsayap',
@@ -16669,9 +16659,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'M\'lang',
@@ -16679,9 +16669,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Norala',
@@ -16689,9 +16679,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Palimbang',
@@ -16699,9 +16689,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pigcawayan',
@@ -16709,9 +16699,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pikit',
@@ -16719,9 +16709,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Polomolok',
@@ -16729,9 +16719,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'President Quirino',
@@ -16739,9 +16729,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'President Roxas',
@@ -16749,9 +16739,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santo Niño',
@@ -16759,9 +16749,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Senator Ninoy Aquino',
@@ -16769,9 +16759,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Surallah',
@@ -16779,9 +16769,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tacurong',
@@ -16789,9 +16779,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tampakan',
@@ -16799,9 +16789,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tantangan',
@@ -16809,9 +16799,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'T\'Boli',
@@ -16819,9 +16809,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tulunan',
@@ -16829,9 +16819,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tupi',
@@ -16839,11 +16829,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 	{
 		fullName: 'Caraga Region',
@@ -16856,9 +16846,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bacuag',
@@ -16866,9 +16856,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Barobo',
@@ -16876,9 +16866,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Basilisa (Rizal)',
@@ -16886,9 +16876,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bayabas',
@@ -16896,9 +16886,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bayugan',
@@ -16906,9 +16896,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bislig',
@@ -16916,9 +16906,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Buenavista',
@@ -16926,9 +16916,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Bunawan',
@@ -16936,9 +16926,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Burgos',
@@ -16946,9 +16936,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Butuan',
@@ -16956,9 +16946,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cabadbaran',
@@ -16966,9 +16956,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cagdianao',
@@ -16976,9 +16966,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cagwait',
@@ -16986,9 +16976,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cantilan',
@@ -16996,9 +16986,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carmen',
@@ -17006,9 +16996,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carmen',
@@ -17016,9 +17006,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Carrascal',
@@ -17026,9 +17016,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Claver',
@@ -17036,9 +17026,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Cortes',
@@ -17046,9 +17036,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dapa',
@@ -17056,9 +17046,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Del Carmen',
@@ -17066,9 +17056,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Dinagat',
@@ -17076,9 +17066,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Esperanza',
@@ -17086,9 +17076,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'General Luna',
@@ -17096,9 +17086,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Gigaquit',
@@ -17106,9 +17096,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Hinatuan',
@@ -17116,9 +17106,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Jabonga',
@@ -17126,9 +17116,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Kitcharao',
@@ -17136,9 +17126,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'La Paz',
@@ -17146,9 +17136,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lanuza',
@@ -17156,9 +17146,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Las Nieves',
@@ -17166,9 +17156,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lianga',
@@ -17176,9 +17166,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Libjo (Albor)',
@@ -17186,9 +17176,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Lingig',
@@ -17196,9 +17186,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Loreto',
@@ -17206,9 +17196,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Loreto',
@@ -17216,9 +17206,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Madrid',
@@ -17226,9 +17216,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Magallanes',
@@ -17236,9 +17226,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Mainit',
@@ -17246,9 +17236,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Malimono',
@@ -17256,9 +17246,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Marihatag',
@@ -17266,9 +17256,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Nasipit',
@@ -17276,9 +17266,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Pilar',
@@ -17286,9 +17276,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Placer',
@@ -17296,9 +17286,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Prosperidad',
@@ -17306,9 +17296,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Remedios T. Romualdez',
@@ -17316,9 +17306,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Rosario',
@@ -17326,9 +17316,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Agustin',
@@ -17336,9 +17326,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Benito',
@@ -17346,9 +17336,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Francisco',
@@ -17356,9 +17346,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Francisco (Anao-Aon)',
@@ -17366,9 +17356,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Isidro',
@@ -17376,9 +17366,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Jose',
@@ -17386,9 +17376,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Luis',
@@ -17396,9 +17386,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'San Miguel',
@@ -17406,9 +17396,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Josefa',
@@ -17416,9 +17406,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santa Monica (Sapao)',
@@ -17426,9 +17416,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Santiago',
@@ -17436,9 +17426,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sibagat',
@@ -17446,9 +17436,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Sison',
@@ -17456,9 +17446,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Socorro',
@@ -17466,9 +17456,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Surigao City',
@@ -17476,9 +17466,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagana-an',
@@ -17486,9 +17476,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tagbina',
@@ -17496,9 +17486,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tago',
@@ -17506,9 +17496,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Talacogon',
@@ -17516,9 +17506,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tandag',
@@ -17526,9 +17516,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Trento',
@@ -17536,9 +17526,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tubajon',
@@ -17546,9 +17536,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tubay',
@@ -17556,9 +17546,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Tubod',
@@ -17566,9 +17556,9 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
+						0,
+					],
+				},
 			},
 			{
 				name: 'Veruela',
@@ -17576,11 +17566,11 @@ export const REGIONS: Location.RegionLocation[] = [
 					type: 'Point',
 					coordinates: [
 						0,
-						0
-					]
-				}
-			}
-		]
+						0,
+					],
+				},
+			},
+		],
 	},
 
 ];
