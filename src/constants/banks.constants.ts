@@ -1020,7 +1020,7 @@ export const bankinsert = [{
 
 
 
- // banks data 
+ // banks data
 // /* 1 */
 // [
 //     {
