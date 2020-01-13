@@ -3,6 +3,7 @@ import * as ENTITY from '../../entity';
 import * as utils from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { Types } from 'mongoose';
+import { sendSuccess } from '../../utils';
 
 /**
  * @author
@@ -29,8 +30,10 @@ export class AdminController {
 		try {
 			// if (!payload.property_status) payload.property_status = Constant.DATABASE.PROPERTY_STATUS.ADMIN_PROPERTIES_LIST.NUMBER;
 			const getPropertyData = await ENTITY.AdminE.getPropertyList(payload);
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
-			return getPropertyData;
+			if (!getPropertyData)
+				return sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, getPropertyData);
+			else
+				return getPropertyData;
 		} catch (error) {
 			utils.consolelog(error, 'error', true);
 			return Promise.reject(error);

@@ -129,7 +129,7 @@ export namespace AdminRequest {
 		toDate?: number;
 		property_status?: number;
 		permissionType?: string;
-		propertyType?: string;
+		propertyType?: any;
 		// label?: [];
 		minPrice?: number;
 		maxPrice?: number;
@@ -177,7 +177,7 @@ export namespace AdminRequest {
 		sortType?: number;
 		fromDate?: number;
 		toDate?: number;
-		propertyType?: number;
+		propertyType: number;
 		userId?: string;
 		type?: string;
 		status?: string;
