@@ -11,7 +11,7 @@ export class Bootstrap {
 		AdminE.adminAccountCreator();
 		await this.initCounters();
 		await this.subscriptionPlan();
-		await this.bootstrapCounters();
+		// await this.bootstrapCounters();
 	}
 	async initRegions() {
 		await regionEntity.bootstrap();
@@ -20,7 +20,7 @@ export class Bootstrap {
 	async bootstrapCounters() {
 		const criteria1 = ({
 			createdAt: {
-				$gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0)
+				$gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
 			},
 		});
 

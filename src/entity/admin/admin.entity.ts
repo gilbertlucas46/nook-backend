@@ -304,8 +304,8 @@ export class AdminClass extends BaseEntity {
 				matchObject['property_status.number'] = payload.property_status;
 			}
 			if (propertyType) matchObject['property_basic_details.type'] = payload.propertyType;
-			if (byCity) { matchObject.$match['cityId'] = byCity; }
-			if (byRegion) { matchObject.$match['regionId'] = byRegion; }
+			if (byCity) { matchObject['cityId'] = byCity; }
+			if (byRegion) { matchObject['regionId'] = byRegion; }
 
 			// Date filters
 			if (fromDate && toDate) { matchObject['createdAt'] = { $gte: fromDate, $lte: toDate }; }
