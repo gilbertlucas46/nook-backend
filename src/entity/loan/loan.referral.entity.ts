@@ -78,7 +78,7 @@ class LoanReferral extends BaseEntity {
             console.log('userDatauserDatauserDatauserData', adminData);
 
             let { page, limit, sortType } = payload;
-            const { sortBy, searchTerm, fromData, toDate } = payload;
+            const { sortBy, searchTerm, fromDate, toDate } = payload;
             let query: any = {};
 
             if (!limit) { limit = Constant.SERVER.LIMIT; }
@@ -108,6 +108,9 @@ class LoanReferral extends BaseEntity {
                     ],
                 };
             }
+            if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
+            if (fromDate && !toDate) { query['createdAt'] = { $gte: fromDate }; }
+            if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
             promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
             promiseArray.push(this.DAOManager.count(this.modelName, query));
             const [data, total] = await Promise.all(promiseArray);
