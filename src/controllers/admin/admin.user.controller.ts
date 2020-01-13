@@ -6,8 +6,6 @@ import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { AdminUserEntity } from '@src/entity';
-import { PromiseProvider } from 'mongoose';
-import { isDate } from 'util';
 const cert: any = config.get('jwtSecret');
 
 /**
@@ -26,8 +24,6 @@ class AdminUserControllers {
 
     async addUser(payload) {
         try {
-            console.log('payloadpayloadpayloadpayloadpayload', payload);
-
             const checkMail = { email: payload.email };
             const checkUserName = { userName: payload.userName };
             const userNameCheck: AdminRequest.IAddUser = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
@@ -56,7 +52,6 @@ class AdminUserControllers {
                         // address: payload.address,
                         // aboutMe: payload.aboutMe,
                     };
-                    console.log('userDatauserDatauserDatauserData', userData);
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
                     const userResponse = UniversalFunctions.formatUserData(User);
                     AdminUserEntity.sendInvitationMail(payload.email, genCredentials);
@@ -64,7 +59,7 @@ class AdminUserControllers {
                 }
             }
         } catch (error) {
-            console.log('errorerrorerrorerror', error);
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -104,9 +99,6 @@ class AdminUserControllers {
     //     }
     // }
 
-
-
-
     // async deleteUser(payload: any, adminData: any) {
     //     try {
     //         if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
@@ -141,7 +133,6 @@ class AdminUserControllers {
             };
             const dataToSet: any = {};
             const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
-            console.log('datadatadatadatadata', data);
 
             if (payload.status === Constant.DATABASE.STATUS.USER.ACTIVE) {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
@@ -163,8 +154,6 @@ class AdminUserControllers {
             //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
             // }
 
-            console.log('resultresultresultresultresultresult', result);
-
             dataToSet.$set = {
                 isUserBlockedByAdmin: payload.status !== payload.status['ACTIVE'],
                 property_status: {
@@ -176,11 +165,9 @@ class AdminUserControllers {
             };
 
             ENTITY.PropertyE.updateMultiple(propertyCriteria, dataToSet);
-            console.log('dataToUpdatedataToUpdatedataToUpdate', data);
             return data;
         } catch (error) {
-            console.log('errorerrorerrorerrorerrorerrorerror', error);
-
+            UniversalFunctions.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

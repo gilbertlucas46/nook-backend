@@ -145,10 +145,7 @@ class AdminUserE extends BaseEntity {
                     },
                 },
             ];
-            const data = await this.DAOManager.paginate(this.modelName, query, limit, page);
-            console.log('datadatadatadatadatadatadata', data);
-            return data;
-
+            return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (error) {
             return Promise.reject(error);
         }
