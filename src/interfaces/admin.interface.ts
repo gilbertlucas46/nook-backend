@@ -129,7 +129,7 @@ export namespace AdminRequest {
 		toDate?: number;
 		property_status?: number;
 		permissionType?: string;
-		property_type?: string;
+		propertyType?: string;
 		// label?: [];
 		minPrice?: number;
 		maxPrice?: number;

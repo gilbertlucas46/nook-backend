@@ -314,9 +314,8 @@ export let adminProfileRoute: ServerRoute[] = [
 					// 	// Constant.DATABASE.PERMISSION.TYPE.LOAN,
 					// 	// Constant.DATABASE.PERMISSION.TYPE.DASHBOARD,
 					// 	// Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER,
-
 					// ]),
-					property_type: Joi.string().trim().valid([
+					propertyType: Joi.string().trim().valid([
 						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
 						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
 						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
