@@ -2,7 +2,6 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
-import * as utils from '@src/utils';
 export class CategoryClass extends BaseEntity {
     constructor() {
         super('ArticleCategories');
@@ -66,10 +65,7 @@ export class CategoryClass extends BaseEntity {
                     },
                 },
             ];
-            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
-            console.log('datadatadatadatadatadata', data);
-
-            return data;
+            return  await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
         } catch (error) {
             return Promise.reject(error);
         }

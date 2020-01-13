@@ -45,11 +45,8 @@ export let Routes: ServerRoute[] = [
 	// 		const accept = request.url.pathname;
 	// 		let arr = [];
 	// 		arr.push(Routes.map(data => data.path));
-	// 		console.log('arrarrarrarrarrarr', arr);
-	// 		console.log('acceptacceptacceptaccept', accept);
-
 	// 		// if (arr[0].match(accept)) {
-	// 		// 	return Promise.reject('Fuckity fuck, this resource isn’t available.');
+	// 		// 	return Promise.reject('This resource isn’t available.');
 	// 		// }
 	// 		if (arr[0].includes([accept])) {
 	// 			return;
@@ -63,5 +60,3 @@ export let Routes: ServerRoute[] = [
 	// 	},
 	// },
 ];
-
-	// WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
