@@ -29,8 +29,13 @@ class LoanReferral extends BaseEntity {
         try {
             const pipeline = [];
             let { page, limit, sortType } = payload;
-            const { sortBy } = payload;
-
+            const { sortBy, searchTerm } = payload;
+            let query: any = {};
+            if (!searchTerm) {
+                query = {
+                    userId: userData._id,
+                };
+            }
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             let sortingType = {};
@@ -40,16 +45,27 @@ class LoanReferral extends BaseEntity {
             sortingType = {
                 [sortBy]: sortType,
             };
-            const criteria = {
-                userId: userData._id,
-            };
+            // const criteria = {
+            //     userId: userData._id,
+            // };
+            if (searchTerm) {
+                query = {
+                    $or: [
+                        { firstName: { $regex: searchTerm, $options: 'i' } },
+                        { lastName: { $regex: searchTerm, $options: 'i' } },
+                        { email: { $regex: searchTerm, $options: 'i' } },
+                        { phoneNumber: { $regex: searchTerm, $options: 'i' } },
+                        { notes: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
 
-            promiseArray.push(this.DAOManager.findAll(this.modelName, criteria, {}, { limit, skip, sort: sortingType }));
-            promiseArray.push(this.DAOManager.count(this.modelName, criteria));
-            const [data, total] = await Promise.all(promiseArray);
-            return {
-                data, total,
-            };
+                promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+                promiseArray.push(this.DAOManager.count(this.modelName, query));
+                const [data, total] = await Promise.all(promiseArray);
+                return {
+                    data, total,
+                };
+            }
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
