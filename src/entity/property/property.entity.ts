@@ -1086,8 +1086,8 @@ export class PropertyClass extends BaseEntity {
 							},
 							{
 								$project: {
-									name: 1,
-									_id: 1,
+									cityName: '$name',
+									cityId: '$_id',
 								},
 							},
 						],
