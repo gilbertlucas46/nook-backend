@@ -41,6 +41,7 @@ export const transactionSchema = new Schema({
 		enum: [
 			CONSTANT.DATABASE.BILLING_TYPE.MONTHLY,
 			CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
+			'day',
 		],
 		required: true,
 	},
