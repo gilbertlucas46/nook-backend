@@ -84,7 +84,7 @@ export class MailManager {
 			// }
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'reset-password.html'))
 				.compileFile({
-
+					nookLogoUrl: config['host'] + '/images/nooklogo.png',
 					url: params.url,
 					year: new Date().getFullYear(),
 					// projectName: 'Nook',
@@ -136,7 +136,7 @@ export class MailManager {
 					email: params.email,
 					Id: params.propertyId, // shortId
 					title: params.title,
-						propertyUrl: params.propertyUrl,
+					propertyUrl: params.propertyUrl,
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
 		} catch (error) {
