@@ -1,171 +1,118 @@
-<!doctype html>
-<html lang="en">
+<html>
 
 <head>
     <title></title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-
-        img {
-            display: block;
-        }
-
-        span {
-            font-weight: 600;
-        }
-
-        .label {
-            width: 120px;
-            padding: 5px 0px;
-            font-weight: bold;
-        }
-
-        .value {
-            color: #7c8287;
-        }
-
-        @media screen and (max-width: 500px) {
-            .head {
-                font-size: 25px !important;
-            }
-
-            .subhead {
-                padding: 40px 0 20 !important;
-                font-size: 16px !important;
-            }
-
-            .title {
-                font-size: 16px !important;
-            }
-
-            .para {
-                font-size: 14px !important;
-                margin: 20px 0 !important;
-            }
-
-            .invbtn {
-                font-size: 16px !important;
-                padding: 20px 40px !important;
-            }
-
-            .logo {
-                width: 300px !important;
-            }
-
-            .tablecl {
-                padding: 0 40px 30px !important;
-            }
-
-            .copyrgt {
-                font-size: 11px !important
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="" name="format-detection">
 </head>
 
-<body style="padding: 0; margin: 0; background-color: #eaeaea;">
-    <table cellpadding="0" cellspacing="0" border="0"
-        style="margin: 0 auto; min-width:320px; max-width:600px; width:100%; font-family: Arial,sans-serif;  background-color: #ffffff; color: #000000;">
-        <tr>
-            <td style="width: 100%; background: #196192; height: 10px;"></td>
-        </tr>
-        <tr>
-            <td style="width: 100%">
-                <table cellpadding="0" cellspacing="0" border="0" class="tablecl"
-                    style="width:100%;  padding: 0 80px 30px;">
-                    <tr>
-                        <td align="center" class="head"
-                            style=" padding: 60px 0 10px; font-size: 30px;  font-weight: 600; color: #196192"></td>
-                    </tr>
-                    <tr>
-                        <td align="center"><img src="images/logo.png" class="logo" width="120px"></td>
-                    </tr>
-                    <tr>
-                        <!-- <td class="subhead"
-                            style="padding: 50px 0 0; font-size: 24px; font-weight: 600; color: #636161">Hello</td> -->
-                    </tr>
-                    <tr>
-                        <td class="para"
-                            style="font-size: 18px; font-weight: 500; line-height: 1.5; color: #797979; letter-spacing: 0.4px; padding: 30px 0 0px;">
-                            Enquiry you got .
-                        </td>
-                    </tr>
+<body style="margin:0;padding:0">
 
-                    <tr>
-                        <table cellpadding="0" cellspacing="0" border="0" class="tablecl"
-                            style="width:100%;  padding: 0 80px 30px;">
-                            <tbody>
-                                <tr>
-                                    <td class="label">Name: </td>
-                                    <td class="value">{{name}}</td>
-                                </tr>
-                                <!-- <tr>
-                                    <td class="label">ID: </td>
-                                    <td class="value">{{Id}}</td>
-                                </tr> -->
-                                <tr>
-                                    <td class="label">propertyId: </td>
-                                    <td class="value">{{Id}}</td>
-                                </tr>
-                                <tr>
-                                    <td class="label">Address: </td>
-                                    <td class="value">dhgf 54 dgf ds, 54</td>
-                                </tr>
-                                <tr>
-                                    <td class="label">Phone: </td>
-                                    <td class="value">{{phone}}</td>
-                                </tr>
-                                <tr>
-                                    <td class="label">Email: </td>
-                                    <td class="value">{{email}}</td>
-                                </tr>
-                                <tr>
-                                    <td class="label">Description </td>
-                                    <td class="value">{{description}}</td>
-                                </tr>
-                                <tr>
-                                    <td class="title"
-                                        style="padding: 40px 0 10px; font-size: 20px; font-weight: 600; color: #636161">
-                                        Cheers,</td>
-                                </tr>
-                                <tr>
-                                    <td class="title"
-                                        style="padding: 0 0 10px; font-size: 20px; font-weight: 600; color: #636161">
-                                        Nook Team </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table cellpadding="0" cellspacing="0" border="0" class="dwntbl"
-                    style="width:100%; padding: 12px 25px; background: #eef8fb; ">
-                    <tr>
-                        <td class="copyrgt" style="font-size: 14px; color: #a0a9bd;">
-                            Copyright © 2019 Nook
-                        </td>
-                        <td align="right">
-                            <a href="{{faceBookUrl}}" style="padding: 0 3px; display: inline-block ">
-                                <img src={{faceBookUrl}} alt="Facebook Logo"></a>
-                            <a href="{{instaUrl}}" style="padding: 0 3px; display: inline-block ">
-                                <img src={{instaUrl}} alt="Instagram Logo "></a>
-                            <a href="{{twitterUrl}}" style="padding: 0 3px; display: inline-block ">
-                                <img src={{twitterUrl}} alt="Twitter Logo"></a>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+    <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td>
+                    <table cellpadding="0" cellspacing="0" width="600px" style="margin:0px auto">
+                        <tbody>
+                            <tr>
+                                <td valign="top">
+
+                                    <table cellpadding="0" cellspacing="0" width="100%" style="background: #e4e4e400;
+                                    padding: 31px 26px;
+                                    border-radius: 2px;
+                                    font-family: Arial, Helvetica, sans-serif;
+                                    box-sizing: border-box;
+                                    border: 10px solid #e8e8e8;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 7px 0px;
+                                                font-size: 17px;
+                                                font-weight: bold;
+                                                border-bottom: 1px dotted black;
+                                                text-align: center;">
+                                                    EMAIL ABOUT AN ENQUIRY RECEIVED</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-bottom:20px;font-size:15px;padding-top: 30px;">Email
+                                                    subject: You
+                                                    received a property enquiry!</td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="Untitled.png" style="width: 180px;
+                                                height: auto;padding-bottom: 20px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td height="40"><b>You’ve receive an enquiry!
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="55"><b>Hey, {{name}}!</b>
+                                                </td>
+                                            </tr>
+
+                                <td style="padding-bottom:30px;font-size:15px">You have received a new
+                                    property enquiry
+                                    from: {sender_name}. Please contact the potential buyer directly using
+                                    the details below.</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:15px;padding:10px 0px"><b>Property Title:</b> {{title}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:15px;padding:10px 0px"><b>Property URL: </b> {{propertyUrl}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:15px;padding:10px 0px"><b>Phone Number: </b> {{phone}} </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:15px;padding:10px 0px"><b>Email Address: </b> {{email}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:15px;padding:10px 0px"><b>Additional message:
+                                    </b>{{description}}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding-top:20px ;font-size:15px;padding-bottom: 20px;">You can also check
+                                    the full message from your Nook account in the <a href="#"><b>Enquiries
+                                            section.</b></a>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding-top:10px;padding-bottom:15px">
+                                    Regards,
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:10px">
+                                    <b> Nook Web Team </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:3px;padding-bottom: 20px;">
+                                    <a href="#"><b>www.nook.com.ph</b></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+
     </table>
+
+
+
 </body>
 
 </html>

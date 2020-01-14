@@ -93,7 +93,7 @@ export class MailManager {
 					email: params.receiverEmail,
 					userName: params.userName,
 				});
-			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'reset-password Nook ', content: mailContent });
+			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Password reset request', content: mailContent });
 
 		} catch (error) {
 			return {};
@@ -135,6 +135,7 @@ export class MailManager {
 					email: params.email,
 					Id: params.propertyId, // shortId
 					title: params.title,
+					propertyUrl: params.propertyUrl,
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
 		} catch (error) {
