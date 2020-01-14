@@ -1,8 +1,8 @@
 import { Schema, Document, model } from 'mongoose';
-import * as shortid from 'shortid';
+// import * as shortid from 'shortid';
 import * as Constant from '../../constants';
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
-
+// shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
+import { incrementNumber } from '../../utils';
 export interface IPropertyActions extends Document {
 	actionNumber?: number;
 	actionString?: string;
@@ -82,6 +82,7 @@ export interface IProperty extends Document {
 		}
 	};
 	property_basic_details: {
+		name: string;
 		title: string;
 		description: string;
 		type: string;
@@ -124,9 +125,9 @@ export interface IProperty extends Document {
 const propertySchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true, auto: true },
 	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User', index: true },
-	createdAt: { type: Number, required: true },
-	updatedAt: { type: Number, required: true },
-	propertyId: { type: String, default: shortid.generate },
+	createdAt: { type: Number, required: true, index: true },
+	updatedAt: { type: Number, required: true, index: true },
+	propertyId: { type: Number },
 	property_features: {
 		storeys_2: { type: Boolean, default: false },
 		security_24hr: { type: Boolean, default: false },
@@ -196,6 +197,7 @@ const propertySchema = new Schema({
 	},
 	property_basic_details: {
 		title: { type: String },
+		name: { type: String },
 		description: { type: String },
 		type: {
 			type: String,
@@ -213,7 +215,7 @@ const propertySchema = new Schema({
 			enum: [
 				Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
 				Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-			],
+			], index: true,
 		},
 		property_for_string: {
 			type: String,
@@ -337,8 +339,8 @@ const propertySchema = new Schema({
 		},
 	},
 	approvedAt: { type: Number },
-	isFeatured: { type: Boolean, default: false },
-	isHomePageFeatured: { type: Boolean, default: false },
+	isHomePageFeatured: { type: Boolean, default: false, index: true },
+	isFeatured: { type: Boolean, default: false, index: true },
 	propertyActions: [
 		{
 			actionNumber: {
@@ -407,4 +409,11 @@ propertySchema.index({
 	'property_address.location': '2dsphere',
 });
 
-export let Property = model<IProperty>('properties', propertySchema);
+propertySchema.pre('save', function (this: any, next: () => void) {
+	if (!this.propertyId) {
+		this.propertyId = incrementNumber(++global.counters.Property);
+	}
+	next();
+});
+
+export const Property = model<IProperty>('properties', propertySchema);

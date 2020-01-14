@@ -1,0 +1,385 @@
+/* 1 */
+{
+    "_id" : ObjectId("5daffe8b321a161cd6746e20"),
+    "contactInfo" : {
+        "property_address" : {
+            "address" : "string",
+            "regionId" : ObjectId("5da08caafd084758c1eb6ad4"),
+            "cityId" : ObjectId("5da08cadfd084758c1eb6ae5"),
+            "regionName" : "regionNameregionName",
+            "cityName" : "cityNamecityName",
+            "barangay" : "barangaybarangay",
+            "homeOwnership" : "living_with_relative"
+        },
+        "phoneNo" : 323233660,
+        "email" : "shubham17mahe@gmail.com",
+        "mobileNo" : 123456789
+    },
+    "employmentInfo" : {
+        "coBorrowerInfo" : {
+            "employmentType" : "BPO",
+            "tin" : "tintintin",
+            "companyName" : "companyName",
+            "sss" : "ssssssssssss",
+            "employmentRank" : "ASSISSTANT_VICE_PRESIDENT",
+            "employmentTenure" : "less_than_1",
+            "companyIndustry" : "agriculture",
+            "officePhone" : 332323332,
+            "officeEmail" : "officeEmail",
+            "officeAddress" : "string",
+            "cityId" : ObjectId("5da08cadfd084758c1eb6ae5"),
+            "cityName" : "cityName",
+            "regionId" : ObjectId("5da08cadfd084758c1eb6ae5"),
+            "regionName" : "regionName",
+            "barangay" : "string",
+            "country" : "string"
+        },
+        "tin" : "tintin",
+        "companyName" : "companyName companyName",
+        "officePhone" : 322323,
+        "officeEmail" : "officeEmail@gmail.com",
+        "officeAddress" : "string",
+        "cityId" : ObjectId("5da08cadfd084758c1eb6ae5"),
+        "cityName" : "string",
+        "regionId" : ObjectId("5da08caafd084758c1eb6ad4"),
+        "regionName" : "string",
+        "barangay" : "string",
+        "country" : "string"
+    },
+    "propertyDocuments" : {
+        "purchasePropertyInfo" : {
+            "address" : "string",
+            "regionId" : ObjectId("5da08caafd084758c1eb6ad4"),
+            "cityId" : ObjectId("5da08cadfd084758c1eb6ae5"),
+            "regionName" : "string",
+            "cityName" : "string",
+            "barangay" : "string",
+            "contactPerson" : "string",
+            "contactNumber" : 0,
+            "collateralDocStatus" : true,
+            "collateralDocList" : [ 
+                {
+                    "_id" : ObjectId("5daffe8b321a161cd6746e22"),
+                    "docType" : "reservation_agreement",
+                    "docUrl" : "string"
+                }
+            ]
+        },
+        "borrowerValidDocIds" : [ 
+            "string"
+        ],
+        "coBorrowerValidId" : [ 
+            "string"
+        ],
+        "latestITR" : "string",
+        "employmentCert" : "string"
+    },
+    "saveAsDraft" : false,
+    "applicationStatus" : "pending",
+    "userId" : ObjectId("5da0587813b1e97ec2d80a39"),
+    "personalInfo" : {
+        "firstName" : "shubham",
+        "lastName" : "mahe",
+        "middleName" : "kumar",
+        "gender" : "MALE",
+        "educationBackground" : "postGraduate",
+        "civilStatus" : "single",
+        "spouseFirstName" : "string",
+        "spouseMiddleName" : "string",
+        "spouseLastName" : "string",
+        "birthDate" : ISODate("2019-10-23T00:00:00.000Z"),
+        "coBorrowerFirstName" : "string",
+        "coBorrowerMiddleName" : "string",
+        "coBorrowerLastName" : "string",
+        "relationship" : "brother"
+    },
+    "loanDetails" : {
+        "fixedPeriod" : 2,
+        "loanTerm" : "2",
+        "rate" : 8,
+        "monthlyRepayment" : 1500
+    },
+    "dependentsInfo" : [ 
+        {
+            "_id" : ObjectId("5daffe8b321a161cd6746e21"),
+            "name" : "string",
+            "dob" : ISODate("2019-10-23T00:00:00.000Z"),
+            "relationship" : "brother"
+        }
+    ],
+    "createdAt" : 1571815051859.0,
+    "updatedAt" : 1571815051859.0,
+    "__v" : 0
+}
+
+
+
+
+//////////////////////////////////////////
+/* 1 */
+{
+    "_id" : ObjectId("5db01d20c714ff32829b8e6c"),
+    "contactInfo" : {
+        "property_address" : {
+            "address" : "string",
+            "homeOwnership" : "living_with_relative"
+        },
+        "phoneNumber" : "string",
+        "email" : "contactInfo@gmail.com",
+        "mobileNo" : "23456789"
+    },
+    "employmentInfo" : {
+        "coBorrowerInfo" : {
+            "employmentType" : "BPO",
+            "tin" : "string",
+            "companyName" : "string",
+            "sss" : "string",
+            "employmentRank" : "ASSISSTANT_VICE_PRESIDENT",
+            "employmentTenure" : "less_than_1",
+            "companyIndustry" : "agriculture",
+            "officePhone" : "0",
+            "officeEmail" : "string@gmail.com",
+            "officeAddress" : "string"
+        },
+        "tin" : "string",
+        "companyName" : "string",
+        "officePhone" : "string",
+        "officeEmail" : "string@gmail.com",
+        "officeAddress" : "string"
+    },
+    "propertyDocuments" : {
+        "purchasePropertyInfo" : {
+            "address" : "string",
+            "contactPerson" : "string",
+            "contactNumber" : "0",
+            "collateralDocStatus" : true,
+            "collateralDocList" : [ 
+                {
+                    "_id" : ObjectId("5db01d20c714ff32829b8e6e"),
+                    "docType" : "reservation_agreement",
+                    "docUrl" : "string"
+                }
+            ]
+        },
+        "borrowerValidDocIds" : [ 
+            "string"
+        ],
+        "coBorrowerValidId" : [ 
+            "string"
+        ],
+        "latestITR" : "http://cdscds.com",
+        "employmentCert" : "http://dscdsc.com"
+    },
+    "saveAsDraft" : true,
+    "applicationStatus" : "pending",
+    "userId" : ObjectId("5da0587813b1e97ec2d80a39"),
+    "personalInfo" : {
+        "firstName" : "string",
+        "lastName" : "string",
+        "middleName" : "string",
+        "gender" : "MALE",
+        "educationBackground" : "postGraduate",
+        "civilStatus" : "single",
+        "spouseFirstName" : "string",
+        "spouseMiddleName" : "string",
+        "spouseLastName" : "string",
+        "dob" : 0,
+        "coBorrowerFirstName" : "string",
+        "coBorrowerMiddleName" : "string",
+        "coBorrowerLastName" : "string",
+        "relationship" : "brother"
+    },
+    "loanDetails" : {
+        "fixedPeriod" : 0,
+        "loanTerm" : "0",
+        "rate" : 0,
+        "monthlyRepayment" : 0
+    },
+    "dependentsInfo" : [ 
+        {
+            "_id" : ObjectId("5db01d20c714ff32829b8e6d"),
+            "name" : "string",
+            "dob" : 0,
+            "relationship" : "brother"
+        }
+    ],
+    "createdAt" : 1571822880356.0,
+    "updatedAt" : 1571822880356.0,
+    "__v" : 0
+}
+
+
+
+
+{
+  "userId": "5d9c774e304f7c7abec40dad",
+  "saveAsDraft": true,
+  "personalInfo": {
+    "firstName": "string",
+    "lastName": "string",
+    "middleName": "string",
+    "gender": "MALE",
+    "educationBackground": "postGraduate",
+    "civilStatus": "single",
+    "spouseFirstName": "string",
+    "spouseMiddleName": "string",
+    "spouseLastName": "string",
+    "dob": 0,
+    "coBorrowerFirstName": "string",
+    "coBorrowerMiddleName": "string",
+    "coBorrowerLastName": "string",
+    "relationship": "brother"
+  },
+  "contactInfo": {
+    "phoneNumber": "string",
+    "email": "string@gmail.com",
+    "mobileNo": "12345789",
+    "property_address": {
+      "address": "string",
+      "homeOwnership": "living_with_relative"
+    }
+  },
+  "loanDetails": {
+    "fixedPeriod": 0,
+    "loanTerm": 0,
+    "rate": 0,
+    "monthlyRepayment": 0
+  },
+  "employmentInfo": {
+    "tin": "string",
+    "companyName": "string",
+    "officePhone": "string",
+    "officeEmail": "string@gmail.com1",
+    "officeAddress": "string",
+    "coBorrowerInfo": {
+      "employmentType": "BPO",
+      "tin": "string",
+      "companyName": "string",
+      "sss": "string",
+      "employmentRank": "ASSISSTANT_VICE_PRESIDENT",
+      "employmentTenure": "less_than_1",
+      "companyIndustry": "agriculture",
+      "officePhone": 0,
+      "officeEmail": "string@gmail.com",
+      "officeAddress": "string"
+    }
+  },
+  "dependentsInfo": [
+    {
+      "name": "string",
+      "dob": 0,
+      "relationship": "brother"
+    }
+  ],
+  "propertyDocuments": {
+    "borrowerValidDocIds": [
+      "string"
+    ],
+    "coBorrowerValidId": [
+      "string"
+    ],
+    "latestITR": "http://dfcds.com",
+    "employmentCert": "http://sdfsdfds.com",
+    "purchasePropertyInfo": {
+      "address": "string",
+      "contactPerson": "string",
+      "contactNumber": 0,
+      "collateralDocStatus": true,
+      "collateralDocList": [
+        {
+          "docType": "reservation_agreement",
+          "docUrl": "string"
+        }
+      ],
+      "nookAgent": "string"
+    }
+  }
+}
+
+
+
+
+{ 
+    "contactInfo" : {
+        "phoneNumber" : "32423453245",
+        "email" : "ashish@gmail.com",
+        "mobileNumber" : "3245324532452"
+    },
+    "employmentInfo" : {
+        "coBorrowerInfo" : {
+            "employmentType" : "PRIVATE",
+            "tin" : "23452345",
+            "employmentRank" : "ASSISSTANT_VICE_PRESIDENT",
+            "sss" : "3452345",
+            "employmentTenure" : "2_3",
+            "companyName" : "Appinventiv",
+            "companyIndustry" : "accomodation",
+            "officePhone" : "32452345",
+            "officeEmail" : "ashish@gmail.com",
+            "officeAddress" : "dcasdasdf"
+        },
+        "companyIndustry" : "communication",
+        "tin" : "4353456",
+        "companyName" : "Appinventiv",
+        "sss" : "34654356435",
+        "officePhone" : "24524352435",
+        "officeEmail" : "ashish@gmail.com",
+        "officeAddress" : "Appinventiv"
+    },
+    "propertyDocuments" : {
+        "purchasePropertyInfo" : {
+            "address" : "Appsss",
+            "contactPerson" : "dsfasdfasdf",
+            "contactNumber" : "234532453245",
+            "collateralDocStatus" : false,
+            "collateralDocList" : []
+        },
+        "borrowerValidDocIds" : [ 
+            "https://appinventiv-development.s3.amazonaws.com/agents%20search.png", 
+            "https://appinventiv-development.s3.amazonaws.com/https.png"
+        ],
+        "coBorrowerValidId" : [ 
+            "https://appinventiv-development.s3.amazonaws.com/compensation.png", 
+            "https://appinventiv-development.s3.amazonaws.com/internal-server-error.png"
+        ],
+        "latestITR" : "https://appinventiv-development.s3.amazonaws.com/drawer.png",
+        "employmentCert" : "https://appinventiv-development.s3.amazonaws.com/glidar.png",
+        "nookAgent" : "asdasdfadsf"
+    },
+    "saveAsDraft" : false,
+     "personalInfo" : {
+        "firstName" : "ashish",
+        "middleName" : "kumar",
+        "lastName" : "gurjar",
+        "gender" : "MALE",
+        "educationBackground" : "underGraduate",
+        "civilStatus" : "married",
+        "spouseFirstName" : "asdasdf",
+        "spouseMiddleName" : "asdfasdf",
+        "spouseLastName" : "asdfsadf",
+        "motherMaidenName" : "adsjfasdf",
+        "birthDate" : 825705000000.0,
+        "coBorrowerFirstName" : "asdasdfa",
+        "coBorrowerMiddleName" : "dsfasdf",
+        "coBorrowerLastName" : "dfsadf",
+        "relationship" : "brother"
+    },
+    "loanDetails" : {
+        "fixedPeriod" : 1,
+        "loanTerm" : "2",
+        "rate" : 6.5,
+        "monthlyRepayment" : 35637.0011468091
+    },
+    "dependentsInfo" : [ 
+        {
+            "name" : "asasas",
+            "age" : 1212,
+            "relationship" : "brother"
+        }, 
+        {
+            "name" : "adsfasdfasdf",
+            "age" : 12,
+            "relationship" : "brother"
+        }
+    ]
+}

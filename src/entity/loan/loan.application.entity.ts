@@ -141,7 +141,7 @@ class LoanApplicationE extends BaseEntity {
             const matchObject: any = {};
 
             // if (userData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE || userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE) {
-            matchObject['saveAsDraft'] = false;
+            // matchObject['saveAsDraft'] = false;
             // }
 
             if (sortBy) {
@@ -158,8 +158,16 @@ class LoanApplicationE extends BaseEntity {
             }
 
             if (amountFrom && amountTo) {
-                matchObject['loanDetails']['loanAmount'] = {
+                matchObject['loanDetails.loanAmount'] = {
                     $gt: amountFrom,
+                    $lt: amountTo,
+                };
+            } else if (amountFrom && !amountTo) {
+                matchObject['loanDetails.loanAmount'] = {
+                    $gt: amountFrom,
+                };
+            } else if (amountTo && !amountFrom) {
+                matchObject['loanDetails.loanAmount'] = {
                     $lt: amountTo,
                 };
             }

@@ -23,14 +23,14 @@ class CategoryController {
     //     }
     // }
 
-    async deleteCategory(payload) {
+    async deleteCategory(payload: ArticleRequest.CategoryId) {
         try {
             const criteria = {
                 _id: payload.id,
             };
             const articleCriteria = {
                 articleId: payload.id,
-            }
+            };
             const articleCount = await ENTITY.ArticleE.count(articleCriteria);
             if (articleCount === 0) {
                 const data = await ENTITY.ArticleCategoryE.removeEntity(criteria);
@@ -38,8 +38,6 @@ class CategoryController {
             } else {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.DELETE_ARTICLE_FIRST);
             }
-            // const deleteArticle = await ENTITY.ArticleE.removeEntity(articleCriteria);
-            // return data;
         } catch (error) {
             return Promise.reject(error);
         }

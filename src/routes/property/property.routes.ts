@@ -128,6 +128,7 @@ export let propertyRoute: ServerRoute[] = [
 						},
 					},
 					property_basic_details: {
+						name: Joi.string().min(1).max(60).trim(),
 						title: Joi.string().min(1).max(60).trim().required(),
 						description: Joi.string().min(1).max(2000).trim().required(),
 						type: Joi.string().valid([
@@ -181,6 +182,8 @@ export let propertyRoute: ServerRoute[] = [
 	},
 	/**
 	 * @description :Property List
+	 * @screens HomePage, For Rent, For Sale
+	 * @Device App
 	 */
 	{
 		method: 'GET',
@@ -188,10 +191,10 @@ export let propertyRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const payload: any = request.query;
-				if (!payload.sortBy) {
-					payload.sortBy = 'isFeatured';
-					payload.sortType = -1;
-				}
+				// if (!payload.sortBy) {
+				// 	payload.sortBy = 'isFeatured';
+				// 	payload.sortType = -1;
+				// }
 				payload['property_status'] = Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER;
 				const propertyList = await PropertyService.searchProperties(request.query);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, propertyList));
@@ -240,7 +243,9 @@ export let propertyRoute: ServerRoute[] = [
 		},
 	},
 	/**
-	 * @description : near by peoperty listing based on the radius
+	 * @description :Property List
+	 * @screens Property Search Screen
+	 * @Device App
 	 */
 	{
 		method: 'GET',
@@ -331,6 +336,7 @@ export let propertyRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 						Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
+						Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
 					]),
 					page: Joi.number(),
 					limit: Joi.number(),

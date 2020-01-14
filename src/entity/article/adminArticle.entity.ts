@@ -2,6 +2,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
+import { Types } from 'mongoose';
 export class CategoryClass extends BaseEntity {
     constructor() {
         super('ArticleCategories');
@@ -65,7 +66,8 @@ export class CategoryClass extends BaseEntity {
                     },
                 },
             ];
-            return  await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }
@@ -81,14 +83,38 @@ export class CategoryClass extends BaseEntity {
                 categoryId: payload.id,
             };
             if (payload.name) {
-                const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, { name: payload.name });
-                return data;
+                return await this.DAOManager.findAndUpdate(this.modelName, criteria, { name: payload.name });
+
             } else if (payload.status) {
                 const statusData = await this.DAOManager.findAndUpdate(this.modelName, criteria, { status: payload.status });
                 this.DAOManager.updateMany('Article', articleStatusCriteria, { status: payload.status }, {});
                 return statusData;
             }
 
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async addSellingArticle() {
+        try {
+            const criteria = {
+                name: 'SELLING',
+            };
+            const insert = {
+                // $set: {
+                _id: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+                name: 'SELLING',
+                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                // },
+            };
+            const checkData = await this.DAOManager.findOne(this.modelName, criteria, {});
+            // this.DAOManager.
+            if (!checkData) {
+                this.DAOManager.save(this.modelName, insert);
+                return;
+            }
+            return;
         } catch (error) {
             return Promise.reject(error);
         }

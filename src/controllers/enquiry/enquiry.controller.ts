@@ -24,7 +24,6 @@ export class EnquiryController {
         try {
             let dataToSave = {};
             let enquiryData = {};
-            let html: any;
             // let mail: any;
             // for the user=> agent
             if (payload.agentEmail) {
@@ -40,49 +39,78 @@ export class EnquiryController {
                 };
 
                 if (userData._id) dataToSave['userId'] = userData._id;
-                html = `<p> This user want to contact to you | email: ${payload.email} |phoneNumber:${payload.phoneNumber}...</p>`;
-                // mail = new MailManager(payload.agentEmail, 'Enquiry', html);
-                // mail.sendMail();
+                // get the email of the property owner by propertyId
                 enquiryData = ENTITY.EnquiryE.createOneEntity(dataToSave);
+                const mail = new MailManager();
+                const sendObj = {
+                    receiverEmail: payload.agentEmail, // propertyData['property_added_by']['email'],
+                    subject: Constant.EMAIL_TEMPLATE.SUBJECT.Contact,
+                    name: payload.name,
+                    message: payload.message,
+                    phone: payload.phoneNumber,
+                    email: payload.email,
+                };
+                mail.contactEmail(sendObj);
+                // return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
                 return {};
             }
+            else {
+                dataToSave = {
+                    email: payload.email,
+                    userType: userData.type ? userData.type : '', // Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
+                    name: payload.name,
+                    message: payload.message,
+                    phoneNumber: payload.phoneNumber,
+                    propertyId: payload.propertyId,
+                    propertyOwnerId: payload.propertyOwnerId,
+                    enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
+                };
 
-            dataToSave = {
-                email: payload.email,
-                userType: userData.type ? userData.type : '', // Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
-                name: payload.name,
-                message: payload.message,
-                phoneNumber: payload.phoneNumber,
-                propertyId: payload.propertyId,
-                propertyOwnerId: payload.propertyOwnerId,
-                enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
-            };
+                if (userData._id) {
+                    dataToSave['userId'] = userData._id;
+                }
+                // html = `<p> this user want an enquiry of your property | email: ${payload.email} |phoneNumber:${payload.phoneNumber} | propertyId:${payload.propertyId}    ...</p>`;
+                // mail = new MailManager(payload.propertyOwnerEmail, 'Enquiry', html);
+                // mail.sendMail();
+                await ENTITY.EnquiryE.createOneEntity(dataToSave);
+                const criteria = {
+                    _id: payload.propertyId,
+                };
+                const propertyData = await ENTITY.PropertyE.getOneEntity(criteria, { 'property_added_by.userId': 1, 'property_added_by.email': 1, 'propertyId': 1, 'property_basic_details.title': 1, 'property_basic_details.name': 1 });
+                console.log('propertyDatapropertyDatapropertyDatapropertyData', propertyData);
 
-            if (userData._id) {
-                dataToSave['userId'] = userData._id;
+                const mail = new MailManager();
+                const sendObj = {
+                    receiverEmail: propertyData['property_added_by']['email'],
+                    subject: Constant.EMAIL_TEMPLATE.SUBJECT.Enquiry,
+                    propertyId: propertyData.propertyId,
+                    name: payload.name || '',
+                    message: payload.message,
+                    title: propertyData['property_basic_details']['title'],
+                    email: payload.email || '',
+                    phone: payload.phoneNumber || '',
+                    propertyUrl: config.get('homePage') + '/property/' + propertyData.property_basic_details.name,
+                };
+                mail.enquiryEmail(sendObj);
+
+                // send lead to salesforce
+                const salesforceData = {
+                    email: payload.email,
+                    userType: userData.type ? userData.type : '',
+                    name: payload.name,
+                    message: payload.message,
+                    phoneNumber: payload.phoneNumber,
+                    propertyId: payload.propertyId,
+                    propertyOwnerId: payload.propertyOwnerId,
+                    enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
+                };
+
+                request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
+                    if (err) { return console.log(err); }
+                    console.log('body ----', body);
+                });
+                return;
             }
-            html = `<p> this user want an enquiry of your property | email: ${payload.email} |phoneNumber:${payload.phoneNumber} | propertyId:${payload.propertyId}    ...</p>`;
-            // mail = new MailManager(payload.propertyOwnerEmail, 'Enquiry', html);
-            // mail.sendMail();
-            await ENTITY.EnquiryE.createOneEntity(dataToSave);
-
-            // send lead to salesforce
-            const salesforceData = {
-                email: payload.email,
-                userType: userData.type ? userData.type : '',
-                name: payload.name,
-                message: payload.message,
-                phoneNumber: payload.phoneNumber,
-                propertyId: payload.propertyId,
-                propertyOwnerId: payload.propertyOwnerId,
-                enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
-            };
-
-            request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
-                if (err) { return console.log(err); }
-                console.log('body ----', body);
-            });
-            return;
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -115,6 +143,16 @@ export class EnquiryController {
             return await ENTITY.EnquiryE.getOneEntity(criteria, {});
         } catch (error) {
             utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    async adminGetEnquiryList(payload) {
+        try {
+            const data = await ENTITY.EnquiryE.adminEnquiryList(payload);
+            return data;
+
+        } catch (error) {
             return Promise.reject(error);
         }
     }

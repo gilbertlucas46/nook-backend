@@ -2,6 +2,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { SubscriptionPlan, ISubscriptionPlan } from '@src/models/subscription';
 import { PLANS } from '@src/constants/subscription.plan.constant';
+import { stripeService } from '../../lib/stripe.manager';
 export class SubscriptionClass extends BaseEntity {
 
     constructor() {
@@ -36,6 +37,20 @@ export class SubscriptionClass extends BaseEntity {
 
     async clear() {
         await this.DAOManager.remove(this.modelName, {});
+    }
+
+    async  findAmount(pipeline) {
+        const amount = await this.DAOManager.aggregateData(this.modelName, pipeline);
+        return amount[0]['amount'];
+    }
+
+    async stripePlan() {
+        try {
+            const data = await stripeService.getPlanList();
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 }
 

@@ -16,7 +16,7 @@ export class TemplateUtil {
             complieData['fbLink'] = CONSTANT.EMAIL_TEMPLATE.SOCIAL_LINK.FB;
             complieData['twitterLink'] = CONSTANT.EMAIL_TEMPLATE.SOCIAL_LINK.TWITTER;
             complieData['instalLink'] = CONSTANT.EMAIL_TEMPLATE.SOCIAL_LINK.INSTAGRAM;
-            complieData['gsgAddress'] = CONSTANT.EMAIL_TEMPLATE.GSG_ADDRESS;
+            // complieData['gsgAddress'] = CONSTANT.EMAIL_TEMPLATE.GSG_ADDRESS;
             fs.readFile(this.template, 'utf8', (error, content) => {
                 if (error)
                     reject(error);
