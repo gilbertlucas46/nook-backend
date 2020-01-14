@@ -89,6 +89,7 @@ export class EnquiryController {
                     title: propertyData['property_basic_details']['title'],
                     email: payload.email || '',
                     phone: payload.phoneNumber || '',
+                    propertyUrl: config.get('host') + '/property' + propertyData.property_basic_details.name,
                 };
                 mail.enquiryEmail(sendObj);
 
