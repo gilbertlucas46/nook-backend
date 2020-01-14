@@ -2,6 +2,9 @@ import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
 import * as utils from '@src/utils';
+import { describe } from 'joi';
+import { pipeline } from 'stream';
+import { Types } from 'mongoose';
 
 export class HelpCenter {
 
@@ -139,7 +142,7 @@ export class HelpCenter {
      * return
      */
 
-    async getHelpCenterByCategoryId(id: number) {
+    async getHelpCenterByCategoryId(id) {
         try {
             return await ENTITY.HelpCenterE.getHelpCenterByCategory(id);
         } catch (error) {
@@ -160,6 +163,152 @@ export class HelpCenter {
             return await ENTITY.HelpfulE.createhelpfulStatus(payload);
         } catch (error) {
             utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    async getUserHelpCenter(payload, userData) {
+        try {
+            const { searchTerm, categoryId } = payload;
+            let query: object = {};
+            let pipeline: any;
+            if (searchTerm) {
+                query = {
+                    // $and:{status:}
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                        { categoryType: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+                // const data = await ENTITY.HelpCenterE.getMultiple(query, {});
+                // return data;
+
+            } else if (categoryId) {
+                query = {
+                    categoryId,
+                };
+                return ENTITY.HelpCenterE.getMultiple(query, {});
+            } else {
+                query = {
+                };
+            }
+            const sortingType = {
+                title: 1,
+            }
+            // else {
+            // return Constant.DATABASE.HELP_CENTER_TYPE;
+            pipeline = [
+                {
+                    $facet: {
+                        PROPERTIES: [
+                            {
+                                $match: {
+
+                                    categoryType: 'PROPERTIES',
+                                    $or: [
+                                        query,
+                                    ],
+                                },
+                            },
+                            { $project: { _id: 1, title: 1, categoryId: 1 } },
+                            { $sort: sortingType },
+                        ],
+
+                        ACCOUNT: [{
+                            $match: {
+                                categoryType: 'ACCOUNT',
+                                $or: [
+                                    query,
+                                ],
+                            },
+                        },
+                        { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        { $sort: sortingType },
+                        ],
+                        BILLING: [{
+                            $match: {
+                                categoryType: 'BILLING',
+                                $or: [
+                                    query,
+                                ],
+                            },
+                        },
+                        { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        { $sort: sortingType },
+                        ],
+                        HOME_LOANS: [{
+                            $match: {
+                                categoryType: 'HOME_LOANS',
+                                $or: [
+                                    query,
+                                ],
+                            },
+                        },
+                        { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        { $sort: sortingType },
+                        ],
+                    },
+                },
+
+            ];
+            const data = await ENTITY.HelpCenterE.aggregate(pipeline);
+            return data[0];
+            // }
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getRelatedArticles(payload, userData) {
+        try {
+            const { searchTerm, categoryId, id } = payload;
+            let query: any = {};
+            let seacrhObject = {};
+
+            query['categoryId'] = categoryId;
+
+            if (id) {
+                query['_id'] = {
+                    $ne: Types.ObjectId(id),
+                };
+            }
+            const sortingType = {
+                title: 1,
+            }
+            if (searchTerm) {
+                seacrhObject = {
+                    // $and:{status:}
+                    $or: [
+                        { title: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                        { categoryType: { $regex: searchTerm, $options: 'i' } },
+                    ],
+                };
+                // const data = await ENTITY.HelpCenterE.getMultiple(query, {});
+                // return data;
+
+            } else {
+                seacrhObject = {
+
+                };
+            }
+
+            const pipeline = [
+                {
+                    $match: query,
+                },
+                {
+                    $match: seacrhObject,
+                },
+                { $sort: sortingType },
+            ]
+
+            const data = await ENTITY.HelpCenterE.aggregate(pipeline);
+            console.log('categoryTypecategoryTypecategoryType', data);
+            return data;
+
+        } catch (error) {
             return Promise.reject(error);
         }
     }

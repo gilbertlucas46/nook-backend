@@ -32,9 +32,9 @@ export let userRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					userName: Joi.string().min(3).max(32).trim().required(),
-					email: Joi.string().email(),
+					email: Joi.string().trim().email(),
 					password: Joi.string().min(6).max(16).trim().required(),
-					type: Joi.string().valid([
+					type: Joi.string().trim().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
@@ -73,8 +73,8 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					email: Joi.string().min(4).max(100).trim(),
-					password: Joi.string().min(6).max(16).trim().required(),
+					email: Joi.string().trim().min(4).max(100),
+					password: Joi.string().trim().min(6).max(16).required(),
 					deviceToken: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -95,8 +95,9 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/property/{_id}',
 		async handler(request, h) {
 			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: PropertyRequest.PropertyDetail = request.params as any;
-				const propertyDetail = await UserService.propertyDetail(payload);
+				const propertyDetail = await UserService.propertyDetail(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
@@ -105,12 +106,12 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'get detail of property ',
 			tags: ['api', 'anonymous', 'user', 'register'],
-			// auth: 'DoubleAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				params: {
-					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					_id: Joi.string().trim().required(),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 		},
@@ -161,6 +162,8 @@ export let userRoute: ServerRoute[] = [
 			try {
 				// let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
 				const payload: UserRequest.ProfileUpdate = request.payload as any;
+				console.log('payloadpayloadpayload', payload);
+
 				const responseData = await UserService.updateProfile(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
 			} catch (error) {
@@ -171,30 +174,30 @@ export let userRoute: ServerRoute[] = [
 		options: {
 			description: 'update user Profile',
 			tags: ['api', 'anonymous', 'user', 'update'],
-			// auth: 'UserAuth',
+			auth: 'UserAuth',
 			validate: {
 				payload: {
 					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					firstName: Joi.string().min(3).max(30).trim(),
+					firstName: Joi.string().trim().min(3).max(30),
 					middleName: Joi.string().trim().allow(''),
-					lastName: Joi.string().min(3).max(30).trim(),
-					phoneNumber: Joi.string().min(7).max(15).trim(),
-					type: Joi.string().valid([
+					lastName: Joi.string().trim().min(3).max(30),
+					phoneNumber: Joi.string().trim().min(7).max(15),
+					type: Joi.string().trim().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
 					]),
-					title: Joi.string().allow(''),
-					license: Joi.string().allow(''),
-					taxnumber: Joi.string().allow(''),
-					faxNumber: Joi.string().allow(''),
-					fullPhoneNumber: Joi.string().allow(''),
-					language: Joi.string().allow(''),
-					companyName: Joi.string().allow(''),
-					address: Joi.string().allow(''),
-					aboutMe: Joi.string().allow(''),
-					profilePicUrl: Joi.string().allow(''),
-					backGroundImageUrl: Joi.string().allow(''),
+					title: Joi.string().trim().allow(null).allow(''),
+					license: Joi.string().allow('').allow(null),
+					taxnumber: Joi.string().allow('').allow(null),
+					faxNumber: Joi.string().allow('').allow(null),
+					fullPhoneNumber: Joi.string().allow('').allow(null),
+					language: Joi.string().allow('').allow(null),
+					companyName: Joi.string().allow('').allow(null),
+					address: Joi.string().allow('').allow(null),
+					aboutMe: Joi.string().allow('').allow(null),
+					profilePicUrl: Joi.string().allow('').allow(null),
+					backGroundImageUrl: Joi.string().allow('').allow(null),
 					specializingIn_property_type: Joi.array().items(
 						Joi.number().valid([
 							Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
@@ -211,7 +214,7 @@ export let userRoute: ServerRoute[] = [
 					),
 					serviceAreas: Joi.array().items(Joi.string()),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -281,7 +284,7 @@ export let userRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'Detail'],
 			validate: {
 				params: {
-					link: Joi.string(),
+					link: Joi.string().trim(),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -315,8 +318,8 @@ export let userRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					oldPassword: Joi.string().min(6).max(16),
-					newPassword: Joi.string().min(6).max(16),
+					oldPassword: Joi.string().trim().min(6).max(16),
+					newPassword: Joi.string().trim().min(6).max(16),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -357,8 +360,8 @@ export let userRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'reset'],
 			validate: {
 				payload: {
-					link: Joi.string(),
-					password: Joi.string().min(6).max(16),
+					link: Joi.string().trim(),
+					password: Joi.string().trim().min(6).max(16),
 				},
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -440,8 +443,8 @@ export let userRoute: ServerRoute[] = [
 						Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
 					]),
 					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']),
-					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					propertyId: Joi.string().trim(),
+					userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
 				},
 
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -478,7 +481,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					userType: Joi.string().valid([
+					userType: Joi.string().trim().valid([
 						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
 						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
@@ -518,7 +521,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				query: {
-					propertyType: Joi.string().valid([
+					propertyType: Joi.string().trim().valid([
 						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
 						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
 						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
@@ -547,4 +550,81 @@ export let userRoute: ServerRoute[] = [
 			},
 		},
 	},
+
+	{
+		method: 'GET',
+		path: '/v1/user/featuredCount',
+		async handler(request, h) {
+			try {
+				// const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
+				// const payload: UserRequest.RecentProperty = request.query as any;
+				// const cityBasedData = await PropertyService.featureDashboard(payload);
+				// const userResponse = UniversalFunctions.formatUserData(cityBasedData);
+				// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const responseData = await UserService.featureDashboard(userData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'feature subscription count',
+			tags: ['api', 'anonymous', 'user', 'feature subscription count'],
+			auth: 'UserAuth',
+			validate: {
+				query: {
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	{
+		method: 'PATCH',
+		path: '/v1/user/complete-registration',
+		async handler(request, h) {
+			try {
+				const { token } = request.query;
+				await UserService.completeRegistration(token as string, request.payload as object);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Complete registration second step',
+			tags: ['api', 'anonymous', 'user', 'complete registration'],
+			auth: 'DoubleAuth',
+			validate: {
+				query: {
+					token: Joi.string().required(),
+				},
+				payload: {
+					firstName: Joi.string().trim().min(3).max(30).required(),
+					lastName: Joi.string().trim().min(3).max(30).required(),
+					phoneNumber: Joi.string().trim().min(7).max(15).required(),
+					type: Joi.string().trim().valid([
+						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+					]).required(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	}
 ];

@@ -34,7 +34,7 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 payload: {
-                    name: Joi.string(),
+                    name: Joi.string().uppercase(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -55,7 +55,7 @@ export let articleRoutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-                const payload = request.query;
+                const payload: ArticleRequest.CategoryList = request.query as any;
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
@@ -67,8 +67,8 @@ export let articleRoutes: ServerRoute[] = [
             }
         },
         options: {
-            description: 'create article categories',
-            tags: ['api', 'anonymous', 'user', 'admin', 'articleName', 'add'],
+            description: 'get article categories',
+            tags: ['api', 'anonymous', 'user', 'admin', 'category', 'list'],
             auth: 'AdminAuth',
             validate: {
                 query: {
@@ -96,13 +96,16 @@ export let articleRoutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-                const payload = {
+                const payload: ArticleRequest.CategoryUpdate = {
                     ...request.params as any,
-                    ...request.payload as any,
+                    ...request.payload as ArticleRequest.CategoryUpdate,
                 };
-                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                // }
+                const checkPermission = adminData['permission'].some(data => {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.Article_Category;
+                });
+                if (checkPermission === false) {
+                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+                }
                 const data = await ArticleService.updateCategoryList(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
             } catch (error) {
@@ -111,10 +114,13 @@ export let articleRoutes: ServerRoute[] = [
             }
         },
         options: {
-            description: 'create article categories',
-            tags: ['api', 'anonymous', 'user', 'admin', 'articleName', 'add'],
+            description: 'update article categories',
+            tags: ['api', 'anonymous', 'admin', 'category', 'update'],
             auth: 'AdminAuth',
             validate: {
+                query: {
+                    id: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).required(),
+                },
                 payload: {
                     name: Joi.string(),
                     status: Joi.string().valid([
@@ -141,7 +147,7 @@ export let articleRoutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-                const payload = request.params;
+                const payload: ArticleRequest.CategoryId = request.params as ArticleRequest.CategoryId;
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
@@ -218,7 +224,7 @@ export let articleRoutes: ServerRoute[] = [
     },
     /**
      * related Article
-     * not in use check it
+     *
      */
     {
         method: 'GET',
@@ -267,7 +273,6 @@ export let articleRoutes: ServerRoute[] = [
             try {
                 const payload: ArticleRequest.GetArticle = request.query as any;
                 const registerResponse = await ArticleService.getCategoryWiseArticles(payload);
-                console.log('registerResponseregisterResponseregisterResponse', registerResponse);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
@@ -361,20 +366,11 @@ export let articleRoutes: ServerRoute[] = [
                     title: Joi.string(),
                     description: Joi.string(),
                     imageUrl: Joi.string(),
-                    // categoryId: Joi.number().valid([
-                    //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                    //     // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-                    //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
-                    // ]).required(),
                     status: Joi.string().valid([
                         Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                         Constant.DATABASE.ARTICLE_STATUS.BLOCK,
                     ]),
+                    categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     isFeatured: Joi.boolean().default(false),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -459,8 +455,6 @@ export let articleRoutes: ServerRoute[] = [
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
                 const registerResponse = await ArticleService.getArticleById(payload);
-                console.log('registerResponseregisterResponseregisterResponse', registerResponse);
-
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
@@ -549,11 +543,12 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'DoubleAuth',
             validate: {
                 query: {
-                    // limit: Joi.number(),
-                    // page: Joi.number(),
+                    limit: Joi.number(),
+                    page: Joi.number(),
                     // sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
                     // sortBy: Joi.string(),
-                    categoryId: Joi.string().required(),
+                    type: Joi.string().lowercase().valid('selling'),
+                    categoryId: Joi.string().when('type', { is: '', then: Joi.string().trim().required() }),
                     // articleId: Joi.string(),
                     searchTerm: Joi.string(),
                 },
@@ -567,4 +562,5 @@ export let articleRoutes: ServerRoute[] = [
             },
         },
     },
+
 ];

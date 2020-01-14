@@ -211,7 +211,7 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/admin/help-center-group/{id}',
         handler: async (request) => {
             try {
-                const payload = Number(request.params.id);
+                const payload = request.params;
                 const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
@@ -298,6 +298,79 @@ export let helpCenterRoute: ServerRoute[] = [
                 payload: {
                     helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     isHelpful: Joi.boolean(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+
+    /**
+     *
+     */
+    {
+        method: 'GET',
+        path: '/v1/user/helpcenter',
+        handler: async (request, h) => {
+            try {
+                const userData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
+                const payload = request.query as any;
+                const data = await HelpCenterService.getUserHelpCenter(payload, userData);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'get article User',
+            tags: ['api', 'anonymous', 'user', 'helpcenter-article-helpful'],
+            auth: 'DoubleAuth',
+            validate: {
+                query: {
+                    // helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    categoryId: Joi.number().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                    ]),
+                    searchTerm: Joi.string(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+    {
+        method: 'GET',
+        path: '/v1/user/helpcenterRelated',
+        handler: async (request, h) => {
+            try {
+                const userData = request.auth && request.auth.credentials && (request.auth.credentials as any)['userData'];
+                const payload = request.query as any;
+                const data = await HelpCenterService.getRelatedArticles(payload, userData);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'get article User',
+            tags: ['api', 'anonymous', 'user', 'helpcenter-article-helpful'],
+            auth: 'DoubleAuth',
+            validate: {
+                query: {
+                    // helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    categoryId: Joi.number().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                    ]).required(),
+                    searchTerm: Joi.string(),
+                    id: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

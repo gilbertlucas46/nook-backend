@@ -6,7 +6,6 @@ import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { AdminUserEntity } from '@src/entity';
-const cert: any = config.get('jwtSecret');
 
 /**
  * @author Anurag Agarwal
@@ -39,18 +38,9 @@ class AdminUserControllers {
                     const hashPassword = await utils.encryptWordpressHashNode(genCredentials);
                     const userData = {
                         ...payload,
-                        // userName: payload.userName,
-                        // email: payload.email,
                         password: hashPassword,
                         isEmailVerified: true,
                         isProfileComplete: true,
-                        // type: payload.type,
-                        // language: payload.language,
-                        // title: payload.title,
-                        // license: payload.license,
-                        // companyName: payload.companyName,
-                        // address: payload.address,
-                        // aboutMe: payload.aboutMe,
                     };
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
                     const userResponse = UniversalFunctions.formatUserData(User);
@@ -59,7 +49,7 @@ class AdminUserControllers {
                 }
             }
         } catch (error) {
-            utils.consolelog('error', error, true);
+            console.log('errorerrorerrorerror', error);
             return Promise.reject(error);
         }
     }
@@ -99,6 +89,7 @@ class AdminUserControllers {
     //     }
     // }
 
+
     // async deleteUser(payload: any, adminData: any) {
     //     try {
     //         if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
@@ -133,10 +124,9 @@ class AdminUserControllers {
             };
             const dataToSet: any = {};
             const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
-
             if (payload.status === Constant.DATABASE.STATUS.USER.ACTIVE) {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
-            } else if (payload.status === Constant.DATABASE.STATUS.USER.BLOCKED || payload.status === Constant.DATABASE.STATUS.USER.DELETED) {
+            } else if (payload.status === Constant.DATABASE.STATUS.USER.BLOCKED || payload.status === Constant.DATABASE.STATUS.USER.DELETE) {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER);
             } else {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
@@ -144,15 +134,6 @@ class AdminUserControllers {
             const propertyCriteria = {
                 'property_added_by.userId': payload.userId,
             };
-            // isUserBlockedByAdmin: payload.status,
-            // actions_performed_by_admin =
-            // if (payload.status === Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {
-            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
-            // } else if (payload.status === Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER) {
-            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER);
-            // } else {
-            //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
-            // }
 
             dataToSet.$set = {
                 isUserBlockedByAdmin: payload.status !== payload.status['ACTIVE'],
@@ -167,7 +148,6 @@ class AdminUserControllers {
             ENTITY.PropertyE.updateMultiple(propertyCriteria, dataToSet);
             return data;
         } catch (error) {
-            UniversalFunctions.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

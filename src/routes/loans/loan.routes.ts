@@ -136,12 +136,26 @@ export let loanRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					// userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					// saveAsDraft: Joi.boolean().required(),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
 						middleName: Joi.string().max(32).allow(''),
+						monthlyIncome: Joi.number(),
+						otherIncome: Joi.number(),
+						motherMaidenName: Joi.string(),
+						birthDate: Joi.number(),
+						nationality: Joi.string(),
+						localVisa: Joi.boolean(),
+						creditCard: Joi.object({
+							status: Joi.string(),
+							limit: Joi.number(),
+							cancelled: Joi.boolean(),
+						}),
+						prevLoans: Joi.object({
+							status: Joi.boolean(),
+							monthlyTotal: Joi.number(),
+							remainingTotal: Joi.number(),
+						}),
 						gender: Joi.string().valid([
 							Constant.DATABASE.GENDER.MALE,
 							Constant.DATABASE.GENDER.FEMALE,
@@ -159,50 +173,57 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.CIVIL_STATUS.SEPERATED,
 							Constant.DATABASE.CIVIL_STATUS.MARRIED,
 						]),
-						spouseFirstName: Joi.string().min(1).max(32),
-						spouseMiddleName: Joi.string().min(1).max(32).allow(''),
-						spouseLastName: Joi.string().min(1).max(32),
-						motherMaidenName: Joi.string(),
-						birthDate: Joi.number(),
-						coBorrowerFirstName: Joi.string().min(1).max(32),
-						coBorrowerMiddleName: Joi.string().min(1).max(32).allow(''),
-						coBorrowerLastName: Joi.string().min(1).max(32),
-						relationship: Joi.string().valid([
-							Constant.DATABASE.RELATIONSHIP.BROTHER,
-							Constant.DATABASE.RELATIONSHIP.FATHER,
-							Constant.DATABASE.RELATIONSHIP.MOTHER,
-							Constant.DATABASE.RELATIONSHIP.SISTER,
-							Constant.DATABASE.RELATIONSHIP.SPOUSE,
-							Constant.DATABASE.RELATIONSHIP.SON,
-							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
-						]),
+						spouseInfo: {
+							firstName: Joi.string().max(32),
+							lastName: Joi.string().max(32),
+							middleName: Joi.string().max(32),
+							birthDate: Joi.number(),
+							monthlyIncome: Joi.number(),
+							isCoborrower: Joi.boolean(),
+						},
+						coBorrowerInfo: {
+							firstName: Joi.string().max(32),
+							lastName: Joi.string().max(32),
+							middleName: Joi.string().max(32),
+							birthDate: Joi.number(),
+							monthlyIncome: Joi.number(),
+							isCoborrower: Joi.boolean(),
+							relationship: Joi.string().valid([
+								Constant.DATABASE.RELATIONSHIP.BROTHER,
+								Constant.DATABASE.RELATIONSHIP.FATHER,
+								Constant.DATABASE.RELATIONSHIP.MOTHER,
+								Constant.DATABASE.RELATIONSHIP.SISTER,
+								Constant.DATABASE.RELATIONSHIP.SPOUSE,
+								Constant.DATABASE.RELATIONSHIP.SON,
+								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							]),
+						},
 					}),
+
+					propertyInfo: {
+						value: Joi.number(),
+						type: Joi.string(),
+						status: Joi.string(),
+						developer: Joi.string(),
+					},
+
 					applicationStatus: Joi.string().valid([
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
-					]),
+					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value),
 					bankInfo: Joi.object().keys({
 						iconUrl: Joi.string(),
 						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 						bankName: Joi.string().min(5).max(50),
 						abbrevation: Joi.string().max(10),
 					}),
+
 					contactInfo: Joi.object().keys({
 						phoneNumber: Joi.string(),
 						email: Joi.string().email(),
 						mobileNumber: Joi.string().min(8).max(15),
 						currentAddress: Joi.object().keys({
 							address: Joi.string().max(300),
-							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-							// regionName: Joi.string().min(1).max(32),
-							// cityName: Joi.string().min(1).max(32),
-							// barangay: Joi.string().min(1).max(32),
 							homeOwnership: Joi.string().valid([
 								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
 								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
@@ -212,7 +233,9 @@ export let loanRoute: ServerRoute[] = [
 							]),
 						}),
 					}),
+
 					loanDetails: Joi.object().keys({
+						maxLoanTerm: Joi.number(),
 						fixedPeriod: Joi.number(),
 						loanTerm: Joi.number(),
 						rate: Joi.number().max(100),
@@ -221,9 +244,12 @@ export let loanRoute: ServerRoute[] = [
 						loanType: Joi.string(),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
-						propertyValue: Joi.number(),
 					}),
+
 					employmentInfo: Joi.object().keys({
+						type: Joi.string(),
+						rank: Joi.string(),
+						tenure: Joi.string(),
 						tin: Joi.string(),
 						companyName: Joi.string().min(1).max(300),
 						sss: Joi.string(),
@@ -253,12 +279,6 @@ export let loanRoute: ServerRoute[] = [
 							INDUSTRIES.SAFETY_SECURITY_LEGAL.value,
 							INDUSTRIES.TRANSPORTATION.value,
 						]),
-						// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),      // Refer to city schema
-						// cityName: Joi.string(),
-						// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
-						// regionName: Joi.string(),
-						// barangay: Joi.string(),
-						// country: Joi.string(),
 						coBorrowerInfo: {
 							employmentType: Joi.string().valid([
 								EMPLOYMENT_TYPE.BPO.value,
@@ -321,12 +341,6 @@ export let loanRoute: ServerRoute[] = [
 							officePhone: Joi.number(),
 							officeEmail: Joi.string().email(),
 							officeAddress: Joi.string().max(300),
-							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
-							// cityName: Joi.string(),
-							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
-							// regionName: Joi.string(),
-							// barangay: Joi.string(),
-							// country: Joi.string(),
 						},
 					}),
 					dependentsInfo: Joi.array().items({
@@ -342,6 +356,7 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
 					}),
+
 					propertyDocuments: Joi.object().keys({
 						borrowerValidDocIds: Joi.array().items(Joi.string()),
 						coBorrowerValidId: Joi.array().items(Joi.string()),
@@ -349,11 +364,6 @@ export let loanRoute: ServerRoute[] = [
 						employmentCert: Joi.string().uri(),
 						purchasePropertyInfo: Joi.object().keys({
 							address: Joi.string().max(300),
-							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
-							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
-							// regionName: Joi.string(),
-							// cityName: Joi.string(),
-							// barangay: Joi.string(),
 							contactPerson: Joi.string(),
 							contactNumber: Joi.number(),
 							collateralDocStatus: Joi.boolean(),
@@ -435,7 +445,6 @@ export let loanRoute: ServerRoute[] = [
 				const payload: LoanRequest.LoanById = request.params as any;
 				const data = await LoanController.loanById(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
-				// return UniversalFunctions. (Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
@@ -482,11 +491,37 @@ export let loanRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-					saveAsDraft: Joi.boolean().required(),
+					// saveAsDraft: Joi.boolean().required(),
+					applicationStatus: Joi.string().valid([
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+						// Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value),
+
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
-						middleName: Joi.string().max(32),
+						middleName: Joi.string().max(32).allow(''),
+						monthlyIncome: Joi.number(),
+						otherIncome: Joi.number(),
+						motherMaidenName: Joi.string(),
+						birthDate: Joi.number(),
+						nationality: Joi.string(),
+						localVisa: Joi.boolean(),
+						creditCard: Joi.object({
+							status: Joi.string(),
+							limit: Joi.number(),
+							cancelled: Joi.boolean(),
+						}),
+						prevLoans: Joi.object({
+							status: Joi.boolean(),
+							monthlyTotal: Joi.number(),
+							remainingTotal: Joi.number(),
+						}),
 						gender: Joi.string().valid([
 							Constant.DATABASE.GENDER.MALE,
 							Constant.DATABASE.GENDER.FEMALE,
@@ -504,41 +539,54 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.CIVIL_STATUS.SEPERATED,
 							Constant.DATABASE.CIVIL_STATUS.MARRIED,
 						]),
-						spouseFirstName: Joi.string().min(1).max(32),
-						spouseMiddleName: Joi.string().min(1).max(32),
-						spouseLastName: Joi.string().min(1).max(32),
-						motherMaidenName: Joi.string(),
-						birthDate: Joi.number(),
-						coBorrowerFirstName: Joi.string().min(1).max(32),
-						coBorrowerMiddleName: Joi.string().min(1).max(32),
-						coBorrowerLastName: Joi.string().min(1).max(32),
-						relationship: Joi.string().valid([
-							Constant.DATABASE.RELATIONSHIP.BROTHER,
-							Constant.DATABASE.RELATIONSHIP.FATHER,
-							Constant.DATABASE.RELATIONSHIP.MOTHER,
-							Constant.DATABASE.RELATIONSHIP.SISTER,
-							Constant.DATABASE.RELATIONSHIP.SPOUSE,
-							Constant.DATABASE.RELATIONSHIP.SON,
-							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
-						]),
+						spouseInfo: {
+							firstName: Joi.string().max(32),
+							lastName: Joi.string().max(32),
+							middleName: Joi.string().max(32),
+							birthDate: Joi.number(),
+							monthlyIncome: Joi.number(),
+							isCoborrower: Joi.boolean(),
+						},
+
+						coBorrowerInfo: {
+							firstName: Joi.string().max(32),
+							lastName: Joi.string().max(32),
+							middleName: Joi.string().max(32),
+							birthDate: Joi.number(),
+							monthlyIncome: Joi.number(),
+							isCoborrower: Joi.boolean(),
+							relationship: Joi.string().valid([
+								Constant.DATABASE.RELATIONSHIP.BROTHER,
+								Constant.DATABASE.RELATIONSHIP.FATHER,
+								Constant.DATABASE.RELATIONSHIP.MOTHER,
+								Constant.DATABASE.RELATIONSHIP.SISTER,
+								Constant.DATABASE.RELATIONSHIP.SPOUSE,
+								Constant.DATABASE.RELATIONSHIP.SON,
+								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							]),
+						},
 					}),
+
 					bankInfo: Joi.object().keys({
 						iconUrl: Joi.string(),
 						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 						bankName: Joi.string().min(5).max(50),
 						abbrevation: Joi.string().max(10),
 					}),
+
+					propertyInfo: {
+						value: Joi.number(),
+						type: Joi.string(),
+						status: Joi.string(),
+						developer: Joi.string(),
+					},
+
 					contactInfo: Joi.object().keys({
 						phoneNumber: Joi.string(),
 						email: Joi.string().email(),
 						mobileNumber: Joi.string().min(8).max(15),
 						currentAddress: Joi.object().keys({
 							address: Joi.string().max(300),
-							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-							// regionName: Joi.string().min(1).max(32),
-							// cityName: Joi.string().min(1).max(32),
-							// barangay: Joi.string().min(1).max(32),
 							homeOwnership: Joi.string().valid([
 								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
 								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
@@ -548,7 +596,9 @@ export let loanRoute: ServerRoute[] = [
 							]),
 						}),
 					}),
+
 					loanDetails: Joi.object().keys({
+						maxLoanTerm: Joi.number(),
 						fixedPeriod: Joi.number(),
 						loanTerm: Joi.number(),
 						rate: Joi.number().max(100),
@@ -557,9 +607,12 @@ export let loanRoute: ServerRoute[] = [
 						loanType: Joi.string(),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
-						propertyValue: Joi.number(),
 					}),
+
 					employmentInfo: Joi.object().keys({
+						type: Joi.string(),
+						rank: Joi.string(),
+						tenure: Joi.string(),
 						tin: Joi.string(),
 						companyName: Joi.string().min(1).max(300),
 						sss: Joi.string(),
@@ -589,12 +642,6 @@ export let loanRoute: ServerRoute[] = [
 							INDUSTRIES.SAFETY_SECURITY_LEGAL.value,
 							INDUSTRIES.TRANSPORTATION.value,
 						]),
-						// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),      // Refer to city schema
-						// cityName: Joi.string(),
-						// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
-						// regionName: Joi.string(),
-						// barangay: Joi.string(),
-						// country: Joi.string(),
 						coBorrowerInfo: {
 							employmentType: Joi.string().valid([
 								EMPLOYMENT_TYPE.BPO.value,
@@ -657,12 +704,6 @@ export let loanRoute: ServerRoute[] = [
 							officePhone: Joi.number(),
 							officeEmail: Joi.string().email(),
 							officeAddress: Joi.string().max(300),
-							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
-							// cityName: Joi.string(),
-							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
-							// regionName: Joi.string(),
-							// barangay: Joi.string(),
-							// country: Joi.string(),
 						},
 					}),
 					dependentsInfo: Joi.array().items({
@@ -685,11 +726,6 @@ export let loanRoute: ServerRoute[] = [
 						employmentCert: Joi.string().uri(),
 						purchasePropertyInfo: Joi.object().keys({
 							address: Joi.string().max(300),
-							// regionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // Refer to region schema
-							// cityId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),     // Refer to city schema
-							// regionName: Joi.string(),
-							// cityName: Joi.string(),
-							// barangay: Joi.string(),
 							contactPerson: Joi.string(),
 							contactNumber: Joi.number(),
 							collateralDocStatus: Joi.boolean(),
@@ -725,10 +761,8 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/banks/shuffle',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
-				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const data = await LoanController.loanShuffle();
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
-				// return UniversalFunctions. (Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
 				return (UniversalFunctions.sendError(error));
@@ -737,7 +771,7 @@ export let loanRoute: ServerRoute[] = [
 		options: {
 			description: 'get abnk images data shufedl',
 			tags: ['api', 'anonymous', 'user', 'shuffle', 'banks'],
-			auth: 'UserAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				failAction: UniversalFunctions.failActionFunction,
 			},

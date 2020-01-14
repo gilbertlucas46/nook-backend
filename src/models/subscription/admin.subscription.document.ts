@@ -1,6 +1,7 @@
 import { Schema, Document, Types, model } from 'mongoose';
 
 export interface Plan {
+    planId: string;
     billingType: string;
     amount: number;
 }

@@ -21,7 +21,7 @@ export class ArticleClass extends BaseEntity {
             let sortingType = {};
 
             sortingType = {
-                updatedAt: sortType,
+                createdAt: sortType,
                 isFeatured: sortType,
             };
 
@@ -219,8 +219,12 @@ export class ArticleClass extends BaseEntity {
             ];
 
             const data = await this.DAOManager.aggregateData(this.modelName, pipeline);
-            if (!data || data.length === 0) return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {});
-            else return data[0];
+            // if (!data || data.length === 0) return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, data);
+            return data[0] || {
+                CATEGORIES: [],
+                FEATURED: [],
+                LATEST: [],
+            };
 
         } catch (error) {
             utils.consolelog('Error', error, true);
@@ -351,71 +355,79 @@ export class ArticleClass extends BaseEntity {
 
     async getUserArticle(payload) {
         try {
-            let { sortType } = payload;
-            const { categoryId, searchTerm } = payload;
-            // if (!limit) { limit = Constant.SERVER.LIMIT; }
-            // if (!page) { page = 1; }
-            let sortingType = {};
-            let query: any = {};
-            let searchCriteria: any = {};
-            sortType = !sortType ? -1 : sortType;
-            sortingType = {
-                isFeatured: sortType,
-                updatedAt: sortType,
-            };
+            const {
+                type,
+                searchTerm,
+                categoryId,
+                page = 1,
+                sortType = -1,
+                limit = Constant.SERVER.LIMIT,
+            } = payload;
+            const sortingType = { createdAt: sortType };
 
-            if (searchTerm) {
-                searchCriteria = {
-                    $or: [
-                        { title: { $regex: searchTerm, $options: 'i' } },
-                        { description: { $regex: searchTerm, $options: 'i' } },
-                    ],
+            if (type) {
+                const criteria = {
+                    categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 };
+                return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
             }
-            else {
-                searchCriteria = {
-                };
+            const paginateOptions = { page, limit, skip: null };
+            if (page > 1) {
+                paginateOptions.skip = (limit * (page - 1)) + 1;
             }
-
-            query = {
+            let $match: object = {
                 categoryId: Types.ObjectId(categoryId),
                 status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
             };
+            sortingType['isFeatured'] = sortType;
+            if (searchTerm) {
+                $match = {
+                    $and: [
+                        $match,
+                        {
+                            $or: [
+                                { title: { $regex: searchTerm, $options: 'i' } },
+                                { description: { $regex: searchTerm, $options: 'i' } },
+                            ],
+                        },
+                    ],
+                };
+            }
 
-            const pipeline = [
-                {
-                    $match: query,
-                },
-                {
-                    $match: searchCriteria,
-                },
+            const matchPipeline = [
+                { $match },
                 { $sort: sortingType },
-                { $limit: 7 },
-                {
-                    $project: {
-                        articleAction: 0,
-                    },
-                },
             ];
-            const cateogryPipeline = [
-                {
-                    $match: {
-                        _id: new Types.ObjectId(categoryId),
-                    },
-                },
-                {
-                    $lookup: {
-                        from: 'articles',
-                        pipeline,
-                        as: 'articles',
-                    },
-                },
-            ];
-            return await this.DAOManager.aggregateData('ArticleCategories', cateogryPipeline);
+            const [metaData, data] = await Promise.all([
+                page === 1 ? this.DAOManager.findOne('ArticleCategories', { _id: new Types.ObjectId(categoryId) }, {}) : null,
+                this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName),
+            ]);
+            return {
+                ...data,
+                metaData,
+            };
+
         } catch (error) {
             return Promise.reject(error);
         }
     }
+
+    // async sellingArticle() {
+    //     try {
+    //         const criteria = {
+    //             categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+    //             status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+    //         };
+    //         const sortingType = {
+    //             createdAt: -1,
+    //         }
+    //         // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+    //         return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
+    //     } catch (error) {
+
+    //     }
+    // }
 }
 
 export const ArticleE = new ArticleClass();

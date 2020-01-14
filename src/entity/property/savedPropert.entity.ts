@@ -21,7 +21,7 @@ export class SavedProperty extends BaseEntity {
                 switch (sortBy) {
                     case 'price':
                         sortingType = {
-                            price: sortType,
+                            'property_basic_details.sale_rent_price': sortType,
                         };
                         break;
                     case 'date':
@@ -42,8 +42,8 @@ export class SavedProperty extends BaseEntity {
             }
             const query = [
                 matchObject,
-                { $skip: skip },
-                { $limit: limit },
+                // { $skip: skip },
+                // { $limit: limit },
                 {
                     $unwind: {
                         path: '$propertyId',

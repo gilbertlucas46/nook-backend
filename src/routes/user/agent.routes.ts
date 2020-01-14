@@ -31,7 +31,7 @@ export let agentRoute: ServerRoute[] = [
                 query: {
                     page: Joi.number(),
                     limit: Joi.number(),
-                    searchTerm: Joi.string(),
+                    searchTerm: Joi.string().trim(),
                     type: Joi.string(),
                     label: Joi.array(),
                     propertyType: Joi.number(),
@@ -40,9 +40,9 @@ export let agentRoute: ServerRoute[] = [
                     sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                     fromDate: Joi.number(),
                     // toDate: Joi.number(),
-                    cityId: Joi.string(),
-                    byCity: Joi.string(),
-                    userId: Joi.string(),
+                    cityId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
+                    byCity: Joi.string().trim(),
+                    userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
                     // specializingIn_property_type: Joi.array().items(
                     //     Joi.number().valid(
                     //         Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
@@ -71,7 +71,7 @@ export let agentRoute: ServerRoute[] = [
                             ),
                         ),
                     searchBy: Joi.string().valid('company', 'name', 'location').default('location'),
-                    screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE)
+                    screenType: Joi.string().trim().required().valid([Constant.DATABASE.SCREEN_TYPE.HOMEPAGE, Constant.DATABASE.SCREEN_TYPE.SEARCH]).default(Constant.DATABASE.SCREEN_TYPE.HOMEPAGE),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -105,7 +105,7 @@ export let agentRoute: ServerRoute[] = [
             auth: 'DoubleAuth',
             validate: {
                 params: {
-                    userName: Joi.string(),
+                    userName: Joi.string().trim(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
