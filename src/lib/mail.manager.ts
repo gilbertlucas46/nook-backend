@@ -125,6 +125,7 @@ export class MailManager {
 		try {
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
 				.compileFile({
+					nookLogoUrl: config['host'] + '/images/nooklogo.png',
 					faceBookUrl: config['host'] + '/images/facebook.png',
 					instaUrl: config['host'] + '/images/instagram-2.png',
 					twitterUrl: config['host'] + '/images/twitter-2.png',
