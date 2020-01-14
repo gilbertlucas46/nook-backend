@@ -10,8 +10,8 @@
 </head>
 
 <body style="margin:0;padding:0">
-
-    <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0">
+    <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0"
+        style="background: #e8e8e8; font-family: Arial,">
         <tbody>
             <tr>
                 <td>
@@ -19,102 +19,110 @@
                         <tbody>
                             <tr>
                                 <td valign="top">
-
-                                    <table cellpadding="0" cellspacing="0" width="100%" style="background: #e4e4e400;
-                                    padding: 31px 26px;
-                                    border-radius: 2px;
-                                    font-family: Arial, Helvetica, sans-serif;
-                                    box-sizing: border-box;
-                                    border: 10px solid #e8e8e8;">
+                                    <table cellpadding="0" cellspacing="0" width="100%" style="background: #ffffff;
+                                    padding: 20px 25px;  box-sizing: border-box;">
                                         <tbody>
                                             <tr>
-                                                <td style="padding: 7px 0px;
-                                                font-size: 17px;
-                                                font-weight: bold;
-                                                border-bottom: 1px dotted black;
-                                                text-align: center;">
-                                                    EMAIL ABOUT AN ENQUIRY RECEIVED</td>
+                                                <td
+                                                    style="padding: 10px 0 10px; font-size: 18px; border-bottom: 2px solid black;">
+                                                    EMAIL ABOUT AN ENQUIRY RECEIVED
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding-bottom:20px;font-size:15px;padding-top: 30px;">Email
-                                                    subject: You
-                                                    received a property enquiry!</td>
+                                                <!-- <td style="padding-bottom: 40px; font-size: 15px; padding-top: 15px;">Email
+                                                    subject: You received a property enquiry!
+                                                </td> -->
                                             </tr>
                                             <tr>
                                                 <td><img src="Untitled.png" style="width: 180px;
                                                 height: auto;padding-bottom: 20px;"></td>
                                             </tr>
                                             <tr>
-                                                <td height="40"><b>You’ve receive an enquiry!
-                                                    </b>
+                                                <td
+                                                    style="padding : 15px 0 20px; font-size: 15px; font-weight: 600; border-top: solid 1px #ddd;">
+                                                    You’ve receive an enquiry!
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td height="55"><b>Hey, {{name}}!</b>
+                                                <td style="padding: 10px 0; font-size: 15px; font-weight: 600">
+                                                    Hey, {{name}}!</b>
                                                 </td>
                                             </tr>
                                             <tr>
 
-                                <td style="padding-bottom:30px;font-size:15px">You have received a new
-                                    property enquiry
-                                    from: {sender_name}. Please contact the potential buyer directly using
-                                    the details below.</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size:15px;padding:10px 0px"><b>Property Title:</b> {{title}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-size:15px;padding:10px 0px"><b>Property URL: </b> {{propertyUrl}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-size:15px;padding:10px 0px"><b>Phone Number: </b> {{phone}} </td>
-                            </tr>
-                            <tr>
-                                <td style="font-size:15px;padding:10px 0px"><b>Email Address: </b> {{email}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-size:15px;padding:10px 0px"><b>Additional message:
-                                    </b>{{description}}
-                                </td>
-                            </tr>
+                                                <td style="padding: 20px 0; font-size:15px; color: #757575;">You have
+                                                    received a new
+                                                    property enquiry
+                                                    from: <b style="font-weight: 600;"> {sender_name} </b>. Please
+                                                    contact the potential buyer directly using
+                                                    the details below.</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size:15px;padding:3px 0px; color: #757575;">
+                                                    <b style="font-weight: 500;">Property Title:</b> {{title}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size:15px;padding:3px 0px; color: #757575;">
+                                                    <b style="font-weight: 500;">Property URL: </b> {{propertyUrl}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size:15px;padding:3px 0px; color: #757575;">
+                                                    <b style="font-weight: 500;">Phone Number: </b> {{phone}} </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size:15px;padding:3px 0px; color: #757575;">
+                                                    <b style="font-weight: 500;">Email Address: </b> {{email}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size:15px;padding:20px 0px 0px; color: #757575; ">
+                                                    <b style="font-weight: 500;">Additional message:</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size:15px;padding:0 0 20px; color: #757575;">
+                                                    {{description}}
+                                                </td>
+                                            </tr>
 
-                            <tr>
-                                <td style="padding-top:20px ;font-size:15px;padding-bottom: 20px;">You can also check
-                                    the full message from your Nook account in the <a href="#"><b>Enquiries
-                                            section.</b></a>
+                                            <tr>
+                                                <td style="padding:15px 0;font-size:15px;color: #757575;">You can also
+                                                    check
+                                                    the full message from your Nook account in the <a href="#">Enquiries
+                                                    </a>
+                                                    section.
 
-                                </td>
-                            </tr>
+                                                </td>
+                                            </tr>
 
-                            <tr>
-                                <td style="padding-top:10px;padding-bottom:15px">
-                                    Regards,
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:10px">
-                                    <b> Nook Web Team </b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:3px;padding-bottom: 20px;">
-                                    <a href="#"><b>www.nook.com.ph</b></a>
+                                            <tr>
+                                                <td style="padding:15px 0; color: #000000; font-size: 15px">
+                                                    Regards,
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:10px 0; color: #000000; font-size: 16px">
+                                                    <b> Nook Web Team </b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:0 0 20px; color: #000000; font-size: 16px">
+                                                    <a href="#"><b>www.nook.com.ph</b></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>
                         </tbody>
+
                     </table>
                 </td>
             </tr>
         </tbody>
-
     </table>
-</td>
-</tr>
-</tbody>
-</table>
 
 
 
