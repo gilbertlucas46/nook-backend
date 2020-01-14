@@ -125,6 +125,7 @@ export class MailManager {
 		try {
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
 				.compileFile({
+					nookLogoUrl: config['host'] + '/images/nooklogo.png',
 					faceBookUrl: config['host'] + '/images/facebook.png',
 					instaUrl: config['host'] + '/images/instagram-2.png',
 					twitterUrl: config['host'] + '/images/twitter-2.png',
@@ -135,7 +136,7 @@ export class MailManager {
 					email: params.email,
 					Id: params.propertyId, // shortId
 					title: params.title,
-					propertyUrl: params.propertyUrl,
+						propertyUrl: params.propertyUrl,
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
 		} catch (error) {
