@@ -47,7 +47,7 @@ const helpCenterSchema = new Schema({
             Constant.DATABASE.USER_TYPE.STAFF.TYPE,
         ],
     },
-    description: { type: String, index: true },
+    description: { type: String },
     categoryId: {
         type: Number,
         enum: [

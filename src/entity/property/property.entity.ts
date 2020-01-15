@@ -706,11 +706,10 @@ export class PropertyClass extends BaseEntity {
 			let sortingType = {};
 			let query;
 
-
 			sortingType = {
 				isHomePageFeatured: sortType,
 				isFeatured: sortType,
-				updatedAt: sortType,
+				createdAt: sortType,
 			};
 
 			if (!userId) {
