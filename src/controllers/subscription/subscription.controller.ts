@@ -17,10 +17,6 @@ class SubscriptionController {
 
 	async activeSubscriptionList(userData) {
 		try {
-			// const criteria = {
-			// 	userId: userData._id,
-			// 	status: 'active',
-
 			const pipeline = [
 				{
 					$match: {
