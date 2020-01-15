@@ -1058,6 +1058,7 @@ export class PropertyClass extends BaseEntity {
 			promiseArray.push(this.DAOManager.findAll(this.modelName, query, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
 			const agentQuery = {
 				type: Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+				status: Constant.DATABASE.STATUS.USER.ACTIVE,
 				serviceAreas: { $in: [mongoose.Types.ObjectId(cityId)] },
 				// isFeaturedProfile: true,
 			};
