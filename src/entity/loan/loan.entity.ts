@@ -19,9 +19,9 @@ class LoanEntities extends BaseEntity {
             if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome; // If any investment exists than that is also added in the income part.
             // if other loans exits
             if (payload.other.prevLoans.status) preLoanMonthlyAmount = payload.other.prevLoans.monthlyTotal;
-            if (payload.other.creditCard.status === Constant.CREDIT_CARD_STATUS.YES.value && payload.other.creditCard.limit > 0) {
-                preLoanMonthlyAmount = preLoanMonthlyAmount + payload.other.creditCard.limit;
-            }
+            // if (payload.other.creditCard.status === Constant.CREDIT_CARD_STATUS.YES.value && payload.other.creditCard.limit > 0) {
+            //     preLoanMonthlyAmount = preLoanMonthlyAmount + payload.other.creditCard.limit;
+            // }
 
             let localVisa = false;
             let ageAtlastLoanPayment = 0;
