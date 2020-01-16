@@ -218,7 +218,7 @@ export class UserController {
 	async forgetPassword(payload: UserRequest.ForgetPassword) {
 		try {
 			const criteria = { $or: [{ userName: payload.email }, { email: payload.email }] };
-			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id', 'userName']);
+			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id', 'userName', 'firstName']);
 			console.log('userDatauserData', userData);
 
 			if (!userData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
