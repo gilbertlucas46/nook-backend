@@ -41,6 +41,7 @@ const articleSchema = new Schema({
         ], index: true,
     },
     description: { type: String },
+    shortDescription: { type: String },
     viewCount: { type: Number },
     shareCount: { type: Number },
     status: {
