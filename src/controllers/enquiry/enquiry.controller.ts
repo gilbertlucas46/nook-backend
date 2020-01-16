@@ -37,7 +37,7 @@ export class EnquiryController {
                     enquiryType: Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
                     agentId: payload.agentId,
                 };
-                const getName = await ENTITY.UserE.getOneEntity({ email: payload.email }, { userName: 1, firstName: 1 })
+                const getName = await ENTITY.UserE.getOneEntity({ email: payload.agentEmail }, { userName: 1, firstName: 1 });
 
                 if (userData._id) dataToSave['userId'] = userData._id;
                 // get the email of the property owner by propertyId
