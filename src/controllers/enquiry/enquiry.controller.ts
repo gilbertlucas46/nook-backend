@@ -28,14 +28,9 @@ export class EnquiryController {
             // for the user=> agent
             if (payload.agentEmail) {
                 dataToSave = {
-                    email: payload.email,
+                    ...payload,
                     userType: userData.type ? userData.type : '',
-                    name: payload.name,
-                    message: payload.message,
-                    phoneNumber: payload.phoneNumber,
-                    propertyId: payload.propertyId,
                     enquiryType: Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
-                    agentId: payload.agentId,
                 };
                 const getName = await ENTITY.UserE.getOneEntity({ email: payload.agentEmail }, { userName: 1, firstName: 1 });
 
@@ -59,13 +54,8 @@ export class EnquiryController {
             }
             else {
                 dataToSave = {
-                    email: payload.email,
+                    ...payload,
                     userType: userData.type ? userData.type : '', // Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
-                    name: payload.name,
-                    message: payload.message,
-                    phoneNumber: payload.phoneNumber,
-                    propertyId: payload.propertyId,
-                    propertyOwnerId: payload.propertyOwnerId,
                     enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
                 };
 
@@ -103,9 +93,10 @@ export class EnquiryController {
                     name: payload.name,
                     message: payload.message,
                     phoneNumber: payload.phoneNumber,
-                    propertyId: payload.propertyId,
+                    propertyId: propertyData.propertyId,
                     propertyOwnerId: payload.propertyOwnerId,
                     enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
+                    enquiryDate: new Date().toString(),
                 };
 
                 request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
