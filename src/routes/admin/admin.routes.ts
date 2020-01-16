@@ -74,7 +74,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'forget-password to admin',
 			tags: ['api', 'anonymous', 'admin', 'forget-password', 'link'],
-			// auth: 'DoubleAuth',
+			auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					email: Joi.string().email().lowercase().trim().required(),
