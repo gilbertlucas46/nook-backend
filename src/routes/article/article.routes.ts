@@ -366,6 +366,7 @@ export let articleRoutes: ServerRoute[] = [
                 payload: {
                     title: Joi.string(),
                     description: Joi.string(),
+                    shortDescription: Joi.string(),
                     imageUrl: Joi.string(),
                     status: Joi.string().valid([
                         Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
