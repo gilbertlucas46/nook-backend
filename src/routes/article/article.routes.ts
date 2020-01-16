@@ -205,6 +205,7 @@ export let articleRoutes: ServerRoute[] = [
                 payload: {
                     title: Joi.string(),
                     description: Joi.string().required(),
+                    shortDescription: Joi.string(),
                     // viewCount: Joi.number(),
                     imageUrl: Joi.string().required(),
                     // articleCategoryId: Joi.string(),
