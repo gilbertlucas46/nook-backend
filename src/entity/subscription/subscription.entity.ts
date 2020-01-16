@@ -102,7 +102,7 @@ export class SubscriptionClass extends BaseEntity {
 
 	async getUserDashboard(payload, userData) {
 		try {
-			let { page, limit, sortBy, sortType } = payload;
+			let { page, limit, sortType } = payload;
 
 			if (!limit) { limit = Constant.SERVER.LIMIT; }
 			if (!page) { page = 1; }
@@ -116,7 +116,7 @@ export class SubscriptionClass extends BaseEntity {
 					$match: {
 						$and: [
 							{
-								status: 'active',
+								status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
 								userId: userData._id,
 							},
 							// {
@@ -142,6 +142,8 @@ export class SubscriptionClass extends BaseEntity {
 						userId: 1,
 						createdAt: 1,
 						updatedAt: 1,
+						endDate: 1,
+						startDate: 1,
 					},
 				},
 				{

@@ -103,6 +103,8 @@ export interface IProperty extends Document {
 		middleName?: string,
 		lastName?: string,
 		email?: string,
+		isFeatured?: boolean;
+		isHomePageFeatured?: boolean;
 	};
 	actions_performed_by_admin: {
 		number: number;
@@ -270,6 +272,8 @@ const propertySchema = new Schema({
 		lastName: { type: String },
 		email: { type: String },
 		userType: { type: String },
+		isFeatured: { type: Boolean },
+		isHomePageFeatured: { type: Boolean }
 	},
 	property_status: {
 		number: {
