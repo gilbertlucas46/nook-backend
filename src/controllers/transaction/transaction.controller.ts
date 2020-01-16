@@ -215,7 +215,13 @@ class TransactionController extends BaseEntity {
 				// }
 				// console.log('userSubscriptionIduserSubscriptionId', userSubscriptionData['subscriptionId']);
 				// console.log('stripeDatastripeDatastripeData', stripeData);
+
+				const updateSubscription = {
+					isRecurring: false,
+					endDate: event['data']['object']['current_period_end'],
+				}
 				const data = await ENTITY.SubscriptionE.updateOneEntity({ userId: userId._id, subscriptionId: event['data']['object']['id'] }, { $set: { isRecurring: false } });
+
 				/**
 				 * TODO also updated when in the property added by
 				 */
