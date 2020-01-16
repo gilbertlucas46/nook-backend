@@ -199,11 +199,11 @@ class TransactionController extends BaseEntity {
 
 	async cancelSubscription(event) {
 		try {
+			const getUser = {
+				stripeId: event['data']['object']['customer'],
+			};
+			const userId = await ENTITY.UserE.getOneEntity(getUser, { _id: 1 });
 			if (event['data']['object']['cancel_at_period_end']) {
-				const getUser = {
-					stripeId: event['data']['object']['customer'],
-				};
-				const userId = await ENTITY.UserE.getOneEntity(getUser, { _id: 1 });
 				// console.log('userSubscriptionIduserSubscriptionIduserSubscriptionId', userSubscriptionData);
 				// if (userSubscriptionData['status'] !== Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
 				// 	return Constant.STATUS_MSG.ERROR.E401.SUBSCRIPTION_INACTIVE;
@@ -211,6 +211,44 @@ class TransactionController extends BaseEntity {
 				// console.log('userSubscriptionIduserSubscriptionId', userSubscriptionData['subscriptionId']);
 				// console.log('stripeDatastripeDatastripeData', stripeData);
 				const data = await ENTITY.SubscriptionE.updateOneEntity({ userId: userId._id, subscriptionId: event['data']['object']['id'] }, { $set: { isRecurring: false } });
+				return;
+			} else {
+				const dataToupdate = {
+					startDate: (event['data']['object']['current_period_start'] * 1000),
+					endDate: (event['data']['object']['current_period_end'] * 1000),
+					// eventId: event.id,
+				};
+				const criteria = {
+					userId: userId._id,
+					subscriptionId: event['data']['object']['id'],
+					status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+				};
+				if (event['data']['object']['status'] === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
+					const data = await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: dataToupdate });
+					return;
+				} else {
+					// in case of pending or indufficient fund
+					const getPlanInfo = {
+						planId: event['data']['object']['plan']['id'],
+					}
+					const getPlanData = await ENTITY.SubscriptionPlanEntity.getOneEntity({ 'plans.planId': getPlanInfo }, {});
+					if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
+						//  cancel subscription
+						await ENTITY.UserE.updateOneEntity(getUser, { $set: { isHomePageFeatured: false } });
+
+					}
+					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
+						await ENTITY.UserE.updateOneEntity(getUser, { $set: { isFeatured: false } });
+
+					}
+					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+
+					}
+					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+
+					}
+
+				}
 				return;
 			}
 

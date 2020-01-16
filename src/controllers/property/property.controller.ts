@@ -457,6 +457,7 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
+				payload.approvedAt = new Date().getTime();
 				payload.userId = payload.property_added_by.userId;
 				payload.property_basic_details.name = await payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
 				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});

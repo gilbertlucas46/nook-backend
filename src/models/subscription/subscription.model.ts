@@ -44,6 +44,7 @@ const subscriptionSchema = new Schema({
 	updatedAt: { type: Number, required: true },
 	// paymentMethod: { type: String, required: true },
 	planId: { type: String, required: true },
+	eventId: { type: String },
 
 }, {
 		versionKey: false,

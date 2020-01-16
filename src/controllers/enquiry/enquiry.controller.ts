@@ -37,12 +37,15 @@ export class EnquiryController {
                     enquiryType: Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
                     agentId: payload.agentId,
                 };
+                const getName = await ENTITY.UserE.getOneEntity({ email: payload.email }, { userName: 1, firstName: 1 })
 
                 if (userData._id) dataToSave['userId'] = userData._id;
                 // get the email of the property owner by propertyId
                 enquiryData = ENTITY.EnquiryE.createOneEntity(dataToSave);
                 const mail = new MailManager();
                 const sendObj = {
+                    userName: getName.userName,
+                    firstName: getName.firstName,
                     receiverEmail: payload.agentEmail, // propertyData['property_added_by']['email'],
                     subject: Constant.EMAIL_TEMPLATE.SUBJECT.Contact,
                     name: payload.name,
