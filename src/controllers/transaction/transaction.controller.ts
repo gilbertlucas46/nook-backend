@@ -160,6 +160,9 @@ class TransactionController extends BaseEntity {
 			const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {});
 			console.log('checkplancheckplancheckplan', checkplan);
 			// }
+			const updatePropertyAddedBy = {
+				'property_added_by.userId': userData._id,
+			};
 			const insertData = {
 				featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
 				subscriptionType: subscriptionData['data']['object']['plan']['interval'],  // subscriptionData['plan']['interval'],
@@ -181,10 +184,12 @@ class TransactionController extends BaseEntity {
 				if (checkplan['featuredType'] === 'HOMEPAGE_PROFILE') {
 					// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>@2222222222222222222');
 					await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
+					await ENTITY.PropertyE.updateMultiple(updatePropertyAddedBy, { $set: { 'property_added_by.isHomePageFeatured': true } });
 				}
 				if (checkplan['featuredType'] === 'PROFILE') {
 					console.log('22222222222222222222222222222222222222222');
 					await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isFeaturedProfile: true });
+					await ENTITY.PropertyE.updateMultiple(updatePropertyAddedBy, { $set: { 'property_added_by.isFeatured': true } });
 				}
 				// const step2 = await ENTITY.TransactionE.addTransaction(payload, userData, createSubscript, checkplan, createCard['brand']);
 				return;
@@ -197,7 +202,7 @@ class TransactionController extends BaseEntity {
 		}
 	}
 
-	async cancelSubscription(event) {
+	async cancelUpdateSubscription(event) {
 		try {
 			const getUser = {
 				stripeId: event['data']['object']['customer'],
@@ -211,6 +216,9 @@ class TransactionController extends BaseEntity {
 				// console.log('userSubscriptionIduserSubscriptionId', userSubscriptionData['subscriptionId']);
 				// console.log('stripeDatastripeDatastripeData', stripeData);
 				const data = await ENTITY.SubscriptionE.updateOneEntity({ userId: userId._id, subscriptionId: event['data']['object']['id'] }, { $set: { isRecurring: false } });
+				/**
+				 * TODO also updated when in the property added by
+				 */
 				return;
 			} else {
 				const dataToupdate = {
@@ -230,19 +238,27 @@ class TransactionController extends BaseEntity {
 					// in case of pending or indufficient fund
 					const getPlanInfo = {
 						planId: event['data']['object']['plan']['id'],
-					}
+					};
 					const getPlanData = await ENTITY.SubscriptionPlanEntity.getOneEntity({ 'plans.planId': getPlanInfo }, {});
 					if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
 						//  cancel subscription
+						const propertyCriteria = {
+							'property_added_by.isHomePageFeatured': true,
+						};
 						await ENTITY.UserE.updateOneEntity(getUser, { $set: { isHomePageFeatured: false } });
-
+						// await ENTITY.PropertyE.updateOneEntity()
+						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
 						await ENTITY.UserE.updateOneEntity(getUser, { $set: { isFeatured: false } });
-
+						const propertyCriteria = {
+							'property_added_by.isFeatured': true,
+						};
+						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 
+						// await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 
@@ -290,16 +306,12 @@ class TransactionController extends BaseEntity {
 
 				case 'customer.subscription.trial_will_end':
 					console.log('55555555555555555555555555555555555555555');
-
 					// await
 					console.log('1111111111111??????????>>>>>>>>>>>>>>>>>>>>>>>.');
-
 					break;
 				case 'customer.subscription.deleted':
 					console.log('6666666666666666666666666666666666666666666666666666');
-
 					break;
-
 				case 'customer.subscription.created':
 					console.log('8888888888888888888888888888888888888888', event);
 					await this.createSubscription(event);
@@ -319,7 +331,7 @@ class TransactionController extends BaseEntity {
 
 				case 'customer.subscription.updated':
 					console.log('customer.subscription.updated>>>>>>>>>>>>', event);
-					await this.cancelSubscription(event);
+					await this.cancelUpdateSubscription(event);
 
 					break;
 
