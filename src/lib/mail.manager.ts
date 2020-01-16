@@ -91,7 +91,8 @@ export class MailManager {
 					// subject: params.subject,
 					// GSG_ADDRESS: EMAIL_TEMPLATE.GSG_ADDRESS,
 					email: params.receiverEmail,
-					userName: params.userName,
+					userName: params.firstName ? params.firstName : params.userName,
+					// firstName: params.firstName,
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Password reset request', content: mailContent });
 
@@ -104,9 +105,9 @@ export class MailManager {
 		try {
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
 				.compileFile({
-					faceBookUrl: config['host'] + '/images/facebook.png',
-					instaUrl: config['host'] + '/images/instagram-2.png',
-					twitterUrl: config['host'] + '/images/twitter-2.png',
+					// faceBookUrl: config['host'] + '/images/facebook.png',
+					// instaUrl: config['host'] + '/images/instagram-2.png',
+					// twitterUrl: config['host'] + '/images/twitter-2.png',
 					name: params.name,
 					address: params.address,
 					description: params.message,
@@ -114,6 +115,7 @@ export class MailManager {
 					// Id: params.propertyId, // shortId
 					email: params.email,
 					title: params.title,
+					userName: params.firstName ? params.firstName : params.userName,
 				});
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject, content: mailContent });
 		} catch (error) {
