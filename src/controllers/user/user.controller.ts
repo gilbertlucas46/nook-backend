@@ -49,7 +49,8 @@ export class UserController {
 					};
 					const token = ENTITY.UserE.createRegisterToken(User._id);
 					mail.welcomeMail(sendObj);
-					return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
+					return token;
+					// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 				}
 			}
 		} catch (error) {
