@@ -76,6 +76,7 @@ export class MailManager {
 
 	async forgetPassword(params) {
 		try {
+			console.log('paramsparams>>>>>>>>>>>>..', params);
 			// let url;
 			// if (params.platform && params.platform == config.CONSTANT.PLATFORM_TYPE.WEBSITE) {
 			// url = config.SERVER.WEBSITE_USER_REST_URL + `${params.accessToken}`;
