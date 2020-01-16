@@ -3,6 +3,8 @@ import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import * as utils from '@src/utils';
+import * as config from 'config';
+import fetch from 'node-fetch';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -14,7 +16,10 @@ class LoanApplicationE extends BaseEntity {
      */
     async saveLoanApplication(payload) {
         try {
-            return await this.createOneEntity(payload);
+            const data = await this.createOneEntity(payload);
+            // send data to sales-force
+            this.sendApplication(data);
+            return data;
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -26,7 +31,10 @@ class LoanApplicationE extends BaseEntity {
      */
     async updateLoanApplication(payload) {
         try {
-            return this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
+            const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
+            // send data to sales-force
+            this.sendApplication(data);
+            return data;
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -217,6 +225,38 @@ class LoanApplicationE extends BaseEntity {
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
+        }
+    }
+    /**
+     * @description A Function to map and send application data to sales-force
+     * @param data Application Data
+     */
+    async sendApplication(data) {
+        // console.log('inside Loan');
+        if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
+            const salesforceData: {[key: string]: string | number} = {};
+            (function recurse(obj, key: string) {
+                if (typeof obj !== 'object') {
+                    salesforceData[key] = obj;
+                } else {
+                    if (Array.isArray(obj)) {
+                        obj.forEach((item, index) => {
+                            recurse(item, key ? `${key}.${index + 1}` : `${index + 1}`);
+                        });
+                    } else if ((obj instanceof Date) || (obj instanceof Types.ObjectId)) {
+                        salesforceData[key] = obj.toString();
+                    } else {
+                        Object.keys(obj).forEach((prop) => {
+                            recurse(obj[prop], key ? `${key}.${prop}` : prop);
+                        });
+                    }
+                }
+            })(data.toObject ? data.toObject() : data, '');
+            await fetch(config.get('zapier_loanUrl'), {
+                method: 'post',
+                body: JSON.stringify(salesforceData),
+            });
+            // console.log(config.get('zapier_loanUrl'), salesforceData);
         }
     }
 }
