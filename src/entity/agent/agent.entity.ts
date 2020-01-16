@@ -47,16 +47,11 @@ export class AgentClass extends BaseEntity {
             if (fromDate && toDate) { matchObject['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             if (fromDate && !toDate) { matchObject['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { matchObject['createdAt'] = { $lte: toDate }; }
-
-            if (searchTerm) {
-                const regExp = new RegExp(searchTerm, 'gi');
-                const $or: object[] = [];
+            const $or: object[] = [];
+            const regExp = new RegExp(searchTerm, 'gi');
+            if (searchTerm && searchBy !== 'location') {
                 if (searchBy === 'company') {
                     $or.push({ companyName: regExp });
-                }
-                else if (searchBy === 'location') {
-                    // db call
-                    $or.push({ 'cityData.name': regExp });
                 } else if (searchBy === 'name') {
                     $or.push(
                         { userName: regExp },
@@ -83,31 +78,30 @@ export class AgentClass extends BaseEntity {
                     ],
                 };
             }
-
-            const query = [
-                { $match: matchObject },
-                {
-                    $lookup: {
-                        from: 'cities',
-                        let: { cityId: '$serviceAreas' },
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $in: ['$_id', '$$cityId'],
-                                    },
+            const lookupCities = {
+                $lookup: {
+                    from: 'cities',
+                    let: { cityId: '$serviceAreas' },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $in: ['$_id', '$$cityId'],
                                 },
                             },
-                            {
-                                $project: {
-                                    cityName: '$name',
-                                    cityId: '$_id',
-                                },
+                        },
+                        {
+                            $project: {
+                                cityName: '$name',
+                                cityId: '$_id',
                             },
-                        ],
-                        as: 'city',
-                    },
+                        },
+                    ],
+                    as: 'city',
                 },
+            };
+            const query: object[] = [
+                { $match: matchObject },
                 {
                     $project: {
                         password: 0,
@@ -150,8 +144,63 @@ export class AgentClass extends BaseEntity {
                 // },
                 { $sort: sortingType },
             ];
+            if (searchBy !== 'location') {
+                query.splice(1, 0, lookupCities);
+                return await this.DAOManager.paginate(this.modelName, query, limit, page);
+            }
+            // matchObject['$expr'] = {
+            //     $toBool: {
+            //         $size: { $setIntersection: ['$serviceAreas', '$$cityId'] },
+            //     },
+            // };
+            $or.push(
+                { name: regExp },
+            );
+            matchObject = {
+                // $and: [
+                $or,
+                // ],
+            };
 
-            return await this.DAOManager.paginate(this.modelName, query, limit, page);
+            const cityPipeline = [
+                { $match: matchObject },
+                {
+                    $group:
+                    {
+                        _id: null,
+                        cities: {
+                            $push: '$_id',
+                        },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'users',
+                        let: { cities: '$cities' },
+                        pipeline: [{
+                            $match: {
+                                type: Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+                                $expr: {
+                                    $toBool: {
+                                        $size: { $setIntersection: ['$serviceAreas', '$$cities'] },
+                                    },
+                                },
+                            },
+                        },
+                        ],
+                        as: 'agents',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$agents',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                { $replaceRoot: { newRoot: '$agents' } },
+                lookupCities,
+            ];
+            return await this.DAOManager.paginate('City', cityPipeline, limit, page);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -242,6 +291,7 @@ export class AgentClass extends BaseEntity {
                     $match: {
                         userName,
                         type: Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+                        status: Constant.DATABASE.STATUS.USER.ACTIVE,
                     },
                 },
                 // {

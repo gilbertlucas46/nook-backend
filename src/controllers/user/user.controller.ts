@@ -230,6 +230,7 @@ export class UserController {
 					subject: 'reset password Nook',
 					token: passwordResetToken,
 					url,
+					firstName: userData.firstName,
 					userName: userData.userName,
 				};
 				const mail = new MailManager();
