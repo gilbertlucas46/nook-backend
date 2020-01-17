@@ -5,6 +5,7 @@ import { LoanRequest } from '@src/interfaces/loan.interface';
 import * as utils from '@src/utils';
 import * as config from 'config';
 import fetch from 'node-fetch';
+import { flattenObject } from '@src/utils';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -234,24 +235,7 @@ class LoanApplicationE extends BaseEntity {
     async sendApplication(data) {
         // console.log('inside Loan');
         if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
-            const salesforceData: {[key: string]: string | number} = {};
-            (function recurse(obj, key: string) {
-                if (typeof obj !== 'object') {
-                    salesforceData[key] = obj;
-                } else {
-                    if (Array.isArray(obj)) {
-                        obj.forEach((item, index) => {
-                            recurse(item, key ? `${key}.${index + 1}` : `${index + 1}`);
-                        });
-                    } else if ((obj instanceof Date) || (obj instanceof Types.ObjectId)) {
-                        salesforceData[key] = obj.toString();
-                    } else {
-                        Object.keys(obj).forEach((prop) => {
-                            recurse(obj[prop], key ? `${key}.${prop}` : prop);
-                        });
-                    }
-                }
-            })(data.toObject ? data.toObject() : data, '');
+            const salesforceData: {[key: string]: string | number} = flattenObject(data.toObject ? data.toObject() : data);
             await fetch(config.get('zapier_loanUrl'), {
                 method: 'post',
                 body: JSON.stringify(salesforceData),

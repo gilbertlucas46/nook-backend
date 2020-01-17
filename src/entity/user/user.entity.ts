@@ -6,6 +6,8 @@ const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 import { UserRequest } from '@src/interfaces/user.interface';
 import * as Constant from '@src/constants';
 import { Types } from 'mongoose';
+import { flattenObject } from '@src/utils';
+import fetch from 'node-fetch';
 
 export class UserClass extends BaseEntity {
 	constructor() {
@@ -200,9 +202,15 @@ export class UserClass extends BaseEntity {
 	async completeRegisterProcess(token: string, data: object) {
 		try {
 			const { id } = await TokenManager.decodeToken(token) as { id: string };
-			await this.DAOManager.findAndUpdate(this.modelName, {
+			const doc = await this.DAOManager.findAndUpdate(this.modelName, {
 				_id: new Types.ObjectId(id),
-			}, data);
+			}, data, { new: true });
+			const salesforceData = flattenObject(doc.toObject ? doc.toObject() : doc);
+			// console.log(doc, salesforceData);
+			await fetch(config.get('zapier_personUrl'), {
+				method: 'post',
+				body: JSON.stringify(salesforceData),
+			});
 			return;
 		} catch (err) {
 			console.log(err);

@@ -8,7 +8,8 @@ import * as Jwt from 'jsonwebtoken';
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-import * as request from 'request';
+import { flattenObject } from '@src/utils';
+import fetch from 'node-fetch';
 const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 
 export class UserController {
@@ -133,8 +134,13 @@ export class UserController {
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
 			const criteria = { _id: payload._id };
-			if (payload.firstName && payload.lastName && payload.type) { payload.isProfileComplete = true; }
-			else { payload.isProfileComplete = false; }
+			const isProfileCompleted = await ENTITY.UserE.count({
+				_id: payload._id,
+				isProfileComplete: true,
+			});
+			if (!isProfileCompleted) {
+				payload.isProfileComplete = true;
+			}
 			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
@@ -154,26 +160,20 @@ export class UserController {
 						userType: updateUser.type,
 						email: getUser.email,
 					},
-					isProfileComplete: true,
 				};
 				ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
 			}
 			/**
 			 *  push contract to salesforce
 			 */
-			const salesforceData = {
-				userName: updateUser.userName,
-				email: updateUser.email,
-				firstName: updateUser.firstName || '',
-				middleName: updateUser.middleName || '',
-				lastName: updateUser.lastName || '',
-				phoneNumber: updateUser.phoneNumber || '',
-				type: updateUser.type,
-			};
-
-			request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
-				if (err) { return console.log(err); }
-			});
+			if (!isProfileCompleted) {
+				// convert document to data
+				const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
+				await fetch(config.get('zapier_personUrl'), {
+					method: 'post',
+					body: JSON.stringify(salesforceData),
+				});
+			}
 
 			return updateUser;
 		} catch (error) {
@@ -391,7 +391,10 @@ export class UserController {
 		}
 	}
 	async completeRegistration(token: string, data: object) {
-		return await ENTITY.UserE.completeRegisterProcess(token, data);
+		return await ENTITY.UserE.completeRegisterProcess(token, {
+			...data,
+			isProfileComplete: true,
+		});
 	}
 }
 
