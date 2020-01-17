@@ -165,10 +165,9 @@ class TransactionController extends BaseEntity {
 	async createSubscription(subscriptionData, payload) {
 		try {
 			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>::::::::::::::::::::::::::::::', subscriptionData, '>>>>>>>>', payload);
-
-			const userData = await ENTITY.UserE.getOneEntity({ stripeId: subscriptionData['data']['object']['customer'] }, { _id: 1 });
+			const userData = await ENTITY.UserE.getOneEntity({ stripeId: subscriptionData['customer'] }, { _id: 1 });
 			const CheckplaninDb = {
-				'plans.planId': subscriptionData['data']['object']['plan']['id'],
+				'plans.planId': subscriptionData['plan']['id'],
 			};
 			// if (subscriptionData.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
 			const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {});
@@ -181,17 +180,18 @@ class TransactionController extends BaseEntity {
 				name: payload.name,
 				address: payload.address,
 				featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
-				subscriptionType: subscriptionData['data']['object']['plan']['interval'],  // subscriptionData['plan']['interval'],
+				subscriptionType: subscriptionData['plan']['interval'],  // subscriptionData['plan']['interval'],
 				userId: userData['_id'],
-				startDate: (subscriptionData['data']['object']['start_date'] * 1000),
-				endDate: (subscriptionData['data']['object']['current_period_end'] * 1000), // new Date().setFullYear(new Date().getFullYear() + 1),
-				current_period_start: (subscriptionData['data']['object']['current_period_start'] * 1000),
-				status: subscriptionData['data']['object']['status'],
-				isRecurring: !subscriptionData['data']['object']['cancel_at_period_end'],
+				startDate: (subscriptionData['start_date'] * 1000),
+				endDate: (subscriptionData['current_period_end'] * 1000), // new Date().setFullYear(new Date().getFullYear() + 1),
+				current_period_start: (subscriptionData['current_period_start'] * 1000),
+				status: subscriptionData['status'],
+				isRecurring: !subscriptionData['cancel_at_period_end'],
 				// paymentMethod: createCard['brand'],
-				amount: (subscriptionData['data']['object']['plan']['amount'] / 100),
-				subscriptionId: subscriptionData['data']['object']['id'],
-				planId: subscriptionData['data']['object']['plan']['id'],
+				amount: (subscriptionData['plan']['amount'] / 100),
+				subscriptionId: subscriptionData['id'],
+				planId: subscriptionData['plan']['id'],
+				source: subscriptionData['source'],
 			};
 			console.log('insertDatainsertDatainsertData', insertData);
 			const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
