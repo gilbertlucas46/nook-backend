@@ -40,12 +40,18 @@ class TransactionController extends BaseEntity {
 
 				const createSubscript = await stripeService.createSubscription(createCustomer['id'], payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
+				if (createSubscript.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
+					this.createSubscription(createSubscript, payload);
+				}
 				return;
 			} else {
 				const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
 				const setDefaultCard = await stripeService.setDefaultCard(getStripeId, payload);
 				const createSubscript = await stripeService.createSubscription(getStripeId['stripeId'], payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
+				if (createSubscript.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
+					this.createSubscription(createSubscript, payload);
+				}
 				return;
 			}
 			// console.log('createCardcreateCardcreateCard', createCard);
@@ -156,9 +162,8 @@ class TransactionController extends BaseEntity {
 	// 	// await ENTITY.SubscriptionE
 	// }
 
-	async createSubscription(subscriptionData) {
+	async createSubscription(subscriptionData, payload) {
 		try {
-			console.log('subscriptionDatasubscriptionData', subscriptionData);
 			const userData = await ENTITY.UserE.getOneEntity({ stripeId: subscriptionData['data']['object']['customer'] }, { _id: 1 });
 			const CheckplaninDb = {
 				'plans.planId': subscriptionData['data']['object']['plan']['id'],
@@ -171,6 +176,8 @@ class TransactionController extends BaseEntity {
 				'property_added_by.userId': userData._id,
 			};
 			const insertData = {
+				name: payload.name,
+				address:payload.address,
 				featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
 				subscriptionType: subscriptionData['data']['object']['plan']['interval'],  // subscriptionData['plan']['interval'],
 				userId: userData['_id'],
@@ -379,7 +386,7 @@ class TransactionController extends BaseEntity {
 					break;
 				case 'customer.subscription.created':
 					console.log('8888888888888888888888888888888888888888', event);
-					await this.createSubscription(event);
+					// await this.createSubscription(event);
 					break;
 
 				case 'invoice.payment_succeeded':
