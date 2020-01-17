@@ -41,7 +41,7 @@ class TransactionController extends BaseEntity {
 				const createSubscript = await stripeService.createSubscription(createCustomer['id'], payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
 				if (createSubscript.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
-					this.createSubscription(createSubscript, payload);
+					await this.createSubscription(createSubscript, payload);
 				}
 				return;
 			} else {
@@ -50,7 +50,7 @@ class TransactionController extends BaseEntity {
 				const createSubscript = await stripeService.createSubscription(getStripeId['stripeId'], payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
 				if (createSubscript.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
-					this.createSubscription(createSubscript, payload);
+					await this.createSubscription(createSubscript, payload);
 				}
 				return;
 			}
@@ -164,6 +164,8 @@ class TransactionController extends BaseEntity {
 
 	async createSubscription(subscriptionData, payload) {
 		try {
+			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>::::::::::::::::::::::::::::::');
+
 			const userData = await ENTITY.UserE.getOneEntity({ stripeId: subscriptionData['data']['object']['customer'] }, { _id: 1 });
 			const CheckplaninDb = {
 				'plans.planId': subscriptionData['data']['object']['plan']['id'],
@@ -177,7 +179,7 @@ class TransactionController extends BaseEntity {
 			};
 			const insertData = {
 				name: payload.name,
-				address:payload.address,
+				address: payload.address,
 				featuredType: checkplan.featuredType, // createSubscript['plan']['nickname'].replace(/_YEARLY|_MONTHLY/gi, ''), // step2.name,
 				subscriptionType: subscriptionData['data']['object']['plan']['interval'],  // subscriptionData['plan']['interval'],
 				userId: userData['_id'],
