@@ -35,7 +35,7 @@ export const transactionSchema = new Schema({
 	// cardId: { type: String, required: true },
 	// receiptUrl: { type: String, required: true },
 	description: { type: String },
-	status: { type: String, required: true },
+	status: { type: String, required: true, default: 'pending' },
 	billingType: {
 		type: String,
 		enum: [

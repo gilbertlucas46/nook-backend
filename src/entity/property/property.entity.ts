@@ -299,8 +299,6 @@ export class PropertyClass extends BaseEntity {
 			// 	};
 			// }
 
-
-
 			// if (screenType === Constant.DATABASE.SCREEN_TYPE.SEARCH) {
 			// 	addFields = {
 			// 		'isFeatured': {
@@ -1034,7 +1032,7 @@ export class PropertyClass extends BaseEntity {
 				isHomePageFeatured: sortType,
 				isFeatured: sortType,
 				createdAt: sortType,
-			}
+			};
 			if (sortBy) {
 				switch (sortBy) {
 					case 'price':
@@ -1109,7 +1107,7 @@ export class PropertyClass extends BaseEntity {
 						password: 0,
 						serviceAreas: 0,
 					},
-				}
+				},
 				// $group: {
 				// 	_id: '$_id',
 				// 	firstName: { $first: '$firstName' },
