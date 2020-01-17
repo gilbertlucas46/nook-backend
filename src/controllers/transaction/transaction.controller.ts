@@ -164,7 +164,7 @@ class TransactionController extends BaseEntity {
 
 	async createSubscription(subscriptionData, payload) {
 		try {
-			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>::::::::::::::::::::::::::::::');
+			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>::::::::::::::::::::::::::::::', subscriptionData, '>>>>>>>>', payload);
 
 			const userData = await ENTITY.UserE.getOneEntity({ stripeId: subscriptionData['data']['object']['customer'] }, { _id: 1 });
 			const CheckplaninDb = {
