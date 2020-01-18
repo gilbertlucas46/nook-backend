@@ -53,7 +53,7 @@ const subscriptionSchema = new Schema({
 	cardExpYear: { type: String },
 	cardLast4: { type: String },
 	cardBrand: { type: String },
-	latestInvoice: { type: String },
+	invoiceId: { type: String },
 
 }, {
 		versionKey: false,
