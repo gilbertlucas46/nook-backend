@@ -138,9 +138,9 @@ class TransactionController extends BaseEntity {
 		}
 	}
 
-	async invoiceDetails(payload: TransactionRequest.Id) {
+	async invoiceDetails(payload: TransactionRequest.Id, userData) {
 		try {
-			return await ENTITY.TransactionE.invoiceDetails(payload);
+			return await ENTITY.TransactionE.invoiceDetails(payload, userData);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -402,6 +402,7 @@ class TransactionController extends BaseEntity {
 				userId: getUserId._id,
 
 			};
+			return;
 			// const getsubscriptionInfo = await ENTITY.SubscriptionE.getOneEntity(criteria)
 		} catch (error) {
 			return Promise.reject(error);
@@ -453,8 +454,7 @@ class TransactionController extends BaseEntity {
 				case 'charge.succeeded':
 					console.log('111111111111111111111111111111111111111111111111111');
 					// await this.handleChargeSucceeded(step1, paymentIntent);
-					await this.updateTransaction(event);
-
+					await this.createInvoice(event);
 					break;
 				case 'charge.pending':
 					console.log('2222222222222222222222222222222222222222222');
@@ -496,6 +496,12 @@ class TransactionController extends BaseEntity {
 					console.log('subscription_schedule.canceledsubscription_schedule.canceled>>>>>>>>', event);
 
 					break;
+
+				case 'invoice.payment_failed':
+					console.log('invoice.payment_failed>>>>>>>>>>>>>>>>>>>', event);
+					this.updateSubscription(event);
+					break;
+
 			}
 			return {};
 

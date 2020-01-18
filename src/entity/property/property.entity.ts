@@ -176,6 +176,20 @@ export class PropertyClass extends BaseEntity {
 					},
 				},
 				{
+					$lookup: {
+						from: 'subscriptions',
+						localField: '_id',
+						foreignField: 'propertyId',
+						as: 'subscriptionId',
+					},
+				},
+				{
+					$unwind: {
+						path: '$subscriptionId',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
 					$addFields: {
 						isSaved: {
 							$gt: [
