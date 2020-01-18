@@ -230,13 +230,42 @@ export class SubscriptionClass extends BaseEntity {
 				{ $match: query },
 				{ $sort: sortingType },
 			];
-			// const pipeline = [
-			// 	{ $match: query },
-			// 	{ $sort: sortingType },
-			// ];
+			const pipeline = [
+				{
+					$lookup: {
+						from: 'properties',
+						let: { pid: '$propertyId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$pid'],
+									},
+								},
+							},
+							{
+								$project: {
+									'property_basic_details.name': 1,
+									'property_basic_details.title': 1,
+									// propertyId: 1,
+									// _id: 1,
+								},
+							},
+						],
+						as: 'propertyData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$propertyData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+
+			];
 
 
-			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
 			// const data = await ENTITY.SubscriptionE.paginate(pipeline, {});
 			console.log('>>>>>>>>>>>>>>>>>>>.', data);
 			return data;

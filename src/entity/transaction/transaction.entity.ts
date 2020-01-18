@@ -5,6 +5,7 @@ import { Types } from 'mongoose';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { TransactionRequest } from '@src/interfaces/transaction.interface';
 import * as utils from '@src/utils';
+import { type } from 'os';
 
 export class TransactionClass extends BaseEntity {
 
@@ -149,43 +150,11 @@ export class TransactionClass extends BaseEntity {
 					$sort: sortingType,
 				},
 			];
-			const pipeLine = [
-				// {
-				//     $match: query,
-				// },
-				{
-					$lookup: {
-						from: 'Card',
-						let: { pid: '$propertyId' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$_id', '$$pid'],
-									},
-								},
-							},
-							{
-								$project: {
-									property_basic_details: 1,
-									propertyId: 1,
-									_id: 1,
-								},
-							},
-						],
-						as: 'propertyData',
-					},
-				},
-				{
-					$unwind: {
-						path: '$propertyData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
 
-			];
+
 			// const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 			return data;
 		} catch (error) {
 			utils.consolelog('Error', error, true);
@@ -193,16 +162,67 @@ export class TransactionClass extends BaseEntity {
 		}
 	}
 
-	async invoiceDetails(payload: TransactionRequest.Id) {
+	async invoiceDetails(payload: TransactionRequest.Id, userData) {
 		try {
-			const query: any = {};
-			query._id = payload.transactionId;
-			// const projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
-			const response = await this.DAOManager.findOne(this.modelName, query, {});
-			const populateQuery = [
-				{ path: 'userId', model: 'User', select: 'email' },
+			// // const projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
+			// const response = await this.DAOManager.findOne(this.modelName, query, {});
+			// const populateQuery = [
+			// 	{ path: 'userId', model: 'User', select: 'email' },
+			// ];
+
+			// const query: any = {};
+			// query.userId = Types.ObjectId(userData._id);
+
+			// const matchPipeline = [
+			// 	{ $match: query },
+			// 	{
+			// 		$sort: sortingType,
+			// 	},
+			// ]; 
+
+			const pipeLine = [
+				{
+					$match: {
+						_id: Types.ObjectId(payload.transactionId),
+						userId: Types.ObjectId(userData._id),
+					},
+				},
+				{
+					$lookup: {
+						from: 'cards',
+						let: { cId: '$cardId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$cardDetail.id', '$$cId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									address: 1,
+									// propertyId: 1,
+									// _id: 1,
+								},
+							},
+						],
+						as: 'cardData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$cardData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
 			];
-			return await this.DAOManager.populateDataOnAggregate(this.modelName, response, populateQuery);
+
+			const data = await this.DAOManager.aggregateData(this.modelName, pipeLine)
+			console.log('data>>>>>>>>>>KKKKKKKKKKKKK', data);
+			return data[0];
+			// return await this.DAOManager.paginatePipeline(this.modelName, response, populateQuery);
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
