@@ -29,7 +29,7 @@ export interface ITransaction extends Document {
 export const transactionSchema = new Schema({
 	invoiceId: { type: String },
 	// _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-	transactionId: { type: String, index: true, }, // balance_transaction
+	transactionId: { type: String, index: true }, // balance_transaction
 	subscriptionId: { type: Schema.Types.ObjectId, ref: 'Subscription' },
 	amount: { type: Number, },
 	currency: { type: String, },
@@ -47,8 +47,8 @@ export const transactionSchema = new Schema({
 		],
 		// required: true,
 	},
-	productId: { type: String, required: true },
-	receiptUrl: { type: String, required: true },
+	productId: { type: String },
+	receiptUrl: { type: String },
 	userId: { type: Schema.Types.ObjectId, ref: 'User' },
 	featuredType: {
 		type: String,
