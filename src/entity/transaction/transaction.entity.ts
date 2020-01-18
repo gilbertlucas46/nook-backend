@@ -66,6 +66,7 @@ export class TransactionClass extends BaseEntity {
 			// status: subscriptionData['data']['object']['status'],
 			// subscriptionId: subscriptionData['data']['object']['id'],
 			const data = {
+				invoiceId: invoice['data']['object']['id'],
 				billingReason: invoice['data']['object']['billing_reason'],
 				transactionId: invoice['data']['object']['charge'],
 				// type: invoice['data']['object']['object'],
@@ -114,10 +115,17 @@ export class TransactionClass extends BaseEntity {
 	async invoiceList(payload: TransactionRequest.InvoiceList, userData) {
 		try {
 			const { page, limit, featuredType, fromDate, toDate } = payload;
-
 			const query: any = {};
 			query.userId = Types.ObjectId(userData._id);
-			// query.status = 'active';
+			let sortingType: any = {};
+			sortingType = {
+				createdAt: -1,
+			};
+
+			const paginateOptions = {
+				page: page || 1,
+				limit,
+			};
 			if (featuredType) {
 				query['featuredType'] = featuredType;
 			}
@@ -125,10 +133,21 @@ export class TransactionClass extends BaseEntity {
 			if (fromDate && !toDate) { query.createdAt = { $gte: fromDate }; }
 			if (!fromDate && toDate) { query.createdAt = { $lte: toDate }; }
 
-			const pipeline = [
+			// const pipeline = [
+			// 	{ $match: query },
+			// ];
+			const matchPipeline = [
 				{ $match: query },
+				{
+					$sort: sortingType,
+				},
 			];
-			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+			const pipelin = [
+
+			]
+
+			// const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
 			return data;
 		} catch (error) {
 			utils.consolelog('Error', error, true);
