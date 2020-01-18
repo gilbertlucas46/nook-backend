@@ -51,7 +51,7 @@ export class TransactionClass extends BaseEntity {
 	// 	}
 	// }
 
-	async addTransaction(invoice, userData, checkplan) {
+	async updateTransaction(invoice, userData, checkplan) {
 		try {
 			console.log('checkplancheckplan', checkplan);
 
@@ -65,8 +65,11 @@ export class TransactionClass extends BaseEntity {
 			// userId: userData['_id'],
 			// status: subscriptionData['data']['object']['status'],
 			// subscriptionId: subscriptionData['data']['object']['id'],
-			const data = {
+			const criteria = {
 				invoiceId: invoice['data']['object']['id'],
+			}
+			const data = {
+				// invoiceId: invoice['data']['object']['id'],
 				billingReason: invoice['data']['object']['billing_reason'],
 				transactionId: invoice['data']['object']['charge'],
 				// type: invoice['data']['object']['object'],
@@ -86,8 +89,12 @@ export class TransactionClass extends BaseEntity {
 			};
 			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 
-			const insertData = await this.DAOManager.saveData(this.modelName, data);
-			return data;
+			// const insertData = await this.DAOManager.saveData(this.modelName, data);
+			// return data;
+			const updateDate = await this.DAOManager.findAndUpdate(this.modelName, criteria, { $set: data });
+			console.log('updateDateupdateDate', updateDate);
+			return updateDate;
+
 		}
 		catch (error) {
 			return Promise.reject(error);
@@ -142,10 +149,41 @@ export class TransactionClass extends BaseEntity {
 					$sort: sortingType,
 				},
 			];
-			const pipelin = [
+			const pipeLine = [
+				// {
+				//     $match: query,
+				// },
+				{
+					$lookup: {
+						from: 'Card',
+						let: { pid: '$propertyId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$pid'],
+									},
+								},
+							},
+							{
+								$project: {
+									property_basic_details: 1,
+									propertyId: 1,
+									_id: 1,
+								},
+							},
+						],
+						as: 'propertyData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$propertyData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
 
-			]
-
+			];
 			// const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
 			return data;

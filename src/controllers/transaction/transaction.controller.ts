@@ -56,7 +56,7 @@ class TransactionController extends BaseEntity {
 					const dataToUpdate = {
 						latestInvoice: createSubscript.latestInvoice,
 					};
-					// await ENTITY.TransactionE.updateOneEntity({},{})
+					// await ENTITY.TransactionE.updateOneEntity({ invoiceId: createSubscript.latestInvoice }, {})
 				}
 				return;
 			} else {
@@ -184,8 +184,8 @@ class TransactionController extends BaseEntity {
 			const userData = await ENTITY.UserE.getOneEntity(criteria, { _id: 1 });
 			console.log('userDatauserData', userData);
 
-			const step2 = await ENTITY.TransactionE.addTransaction(event, userData, checkplan);
-			console.log('step2>>>>>>>>>>>>>>>>>>>', step2);
+			const step2 = await ENTITY.TransactionE.updateTransaction(event, userData, checkplan);
+			// console.log('step2>>>>>>>>>>>>>>>>>>>', step2);
 
 			/**
 			 * TODO @for to update the recurrign subscription
@@ -254,7 +254,7 @@ class TransactionController extends BaseEntity {
 				cardLast4: createCard.last4,
 				cardBrand: createCard.brand,
 				invoiceId: subscriptionData['latest_invoice'],
-				cardId: createCard['id']
+				cardId: createCard['id'],
 			};
 			console.log('insertDatainsertDatainsertData', insertData);
 			const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
@@ -419,6 +419,23 @@ class TransactionController extends BaseEntity {
 		}
 	}
 
+	async updateTransaction(event) {
+		try {
+			const createTransaction = {
+				invoiceId: event['data']['object']['invoice'],
+				cardId: event['data']['object']['source']['id'],
+			};
+			console.log('updateTransaction2222222222>>>>>>>>>>>>>>>>>>>>>>>', createTransaction);
+
+			const createTransction = await ENTITY.TransactionE.createOneEntity(createTransaction);
+			console.log('createTransctioncreateTransctioncreateTransction>>>>>>>>>>>>.', createTransction);
+			return createTransction;
+
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 	async webhook(payload) {
 		// const step1 = await ENTITY.TransactionE.findTransactionById({ transactionId: payload.data.object.balance_transaction });
 		// console.log('step1step1step1step1step1step1step1step1step1step1', step1);
@@ -436,6 +453,8 @@ class TransactionController extends BaseEntity {
 				case 'charge.succeeded':
 					console.log('111111111111111111111111111111111111111111111111111');
 					// await this.handleChargeSucceeded(step1, paymentIntent);
+					await this.updateTransaction(event);
+
 					break;
 				case 'charge.pending':
 					console.log('2222222222222222222222222222222222222222222');
