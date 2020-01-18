@@ -5,6 +5,8 @@ import { invoiceNumber } from '../../utils/index';
 export interface ICard extends Document {
     // transactionId: string;
     // idempotencyKey: string;
+    name: string;
+    address: string;
     userId: string;
     cardDetail: string;
     // paymentObject: any;
@@ -13,8 +15,10 @@ export interface ICard extends Document {
 }
 
 export const cardSchema = new Schema({
+    name: { type: String },
+    address: { type: String },
     userId: { type: Schema.Types.ObjectId, required: true },
-    cardDetail: [{ type: Schema.Types.Mixed, required: true }],
+    cardDetail: { type: Schema.Types.Mixed, required: true },
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
 }, {

@@ -3,6 +3,7 @@ import * as CONSTANT from '@src/constants/app.constant';
 import { invoiceNumber } from '../../utils/index';
 
 export interface ITransaction extends Document {
+	invoiceId: string;
 	transactionId: string;
 	idempotencyKey: string;
 	subscriptionId: Types.ObjectId;
@@ -26,6 +27,7 @@ export interface ITransaction extends Document {
 }
 
 export const transactionSchema = new Schema({
+	invoiceId: { type: String },
 	// _id: { type: Schema.Types.ObjectId, required: true, auto: true },
 	transactionId: { type: String, index: true, required: true }, // balance_transaction
 	subscriptionId: { type: Schema.Types.ObjectId, ref: 'Subscription' },
