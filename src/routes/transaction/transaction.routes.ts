@@ -18,6 +18,9 @@ export let transactionRoute: ServerRoute[] = [
 				const data = await transactionController.createCharge(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PAYMENT_ADDED, {}));
 			} catch (error) {
+				console.log('errorerrorerrorerrorerrorerrorerrorerrorerrorerrorerror', error);
+				return error;
+
 				return (UniversalFunctions.sendError(error));
 			}
 		},

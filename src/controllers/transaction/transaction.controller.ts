@@ -88,8 +88,21 @@ class TransactionController extends BaseEntity {
 
 				const fingerprint = await stripeService.getfingerPrint(userData, payload);
 				console.log('fingerprintfingerprintfingerprint>222222222222', fingerprint);
+				// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>', cardData[0]['fingerprint'].some(data => { return data === fingerprint }c));
+				let checkCardAdded;
+				if (cardData.length != 0) {
+					checkCardAdded = cardData[0]['fingerprint'].some(data => {
+						return data === fingerprint;
+					});
+				}
+				console.log('1', checkCardAdded);
 
-				if (cardData[0]['fingerprint'].some(data => { return data === fingerprint })) {
+				// 	checkCardAdded = getUserCardInfo['cardDetail'].some(data => {
+				// 		return data.fingerprint === fingerprint['card']['fingerprint'];
+				// 	});
+				// }
+
+				if (checkCardAdded) {
 					const dataToSave = {
 						name: payload.name,
 						address: payload.name,
@@ -99,7 +112,6 @@ class TransactionController extends BaseEntity {
 					const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
 					const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
 					const setDefaultCard = await stripeService.setDefaultCard(getStripeId, payload);
-
 				}
 				const createSubscript = await stripeService.createSubscription(getStripeId['stripeId'], payload);
 
@@ -124,8 +136,7 @@ class TransactionController extends BaseEntity {
 		}
 
 		catch (error) {
-			utils.consolelog('error', error, true);
-			return Promise.reject(error);
+			return Promise.reject();
 		}
 	}
 
@@ -458,7 +469,7 @@ class TransactionController extends BaseEntity {
 					break;
 				case 'charge.pending':
 					console.log('2222222222222222222222222222222222222222222');
-					// await this.handleChargePending(step1, paymentIntent);
+					// await this.createInvoice(step1, paymentIntent);
 					break;
 				case 'charge.failed':
 					console.log('33333333333333333333333333333333333333');
@@ -499,7 +510,7 @@ class TransactionController extends BaseEntity {
 
 				case 'invoice.payment_failed':
 					console.log('invoice.payment_failed>>>>>>>>>>>>>>>>>>>', event);
-					this.updateSubscription(event);
+					// this.updateSubscription(event);
 					break;
 
 			}
