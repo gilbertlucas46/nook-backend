@@ -90,12 +90,12 @@ class TransactionController extends BaseEntity {
 				console.log('fingerprintfingerprintfingerprint>222222222222', fingerprint);
 				// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>', cardData[0]['fingerprint'].some(data => { return data === fingerprint }c));
 				let checkCardAdded;
-				if (cardData.length != 0) {
+				if (cardData.length !== 0) {
 					checkCardAdded = cardData[0]['fingerprint'].some(data => {
 						return data === fingerprint;
 					});
 				}
-				console.log('1', checkCardAdded);
+				console.log('1>>>>>>>>>>>>', checkCardAdded);
 
 				// 	checkCardAdded = getUserCardInfo['cardDetail'].some(data => {
 				// 		return data.fingerprint === fingerprint['card']['fingerprint'];
@@ -136,7 +136,7 @@ class TransactionController extends BaseEntity {
 		}
 
 		catch (error) {
-			return Promise.reject();
+			return Promise.reject(error);
 		}
 	}
 
@@ -465,7 +465,7 @@ class TransactionController extends BaseEntity {
 				case 'charge.succeeded':
 					console.log('111111111111111111111111111111111111111111111111111');
 					// await this.handleChargeSucceeded(step1, paymentIntent);
-					await this.createInvoice(event);
+					await this.updateTransaction(event);
 					break;
 				case 'charge.pending':
 					console.log('2222222222222222222222222222222222222222222');

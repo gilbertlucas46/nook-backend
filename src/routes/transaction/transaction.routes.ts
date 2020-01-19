@@ -19,7 +19,7 @@ export let transactionRoute: ServerRoute[] = [
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PAYMENT_ADDED, {}));
 			} catch (error) {
 				console.log('errorerrorerrorerrorerrorerrorerrorerrorerrorerrorerror', error);
-				return error;
+				// return error;
 
 				return (UniversalFunctions.sendError(error));
 			}
