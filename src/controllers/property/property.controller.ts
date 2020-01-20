@@ -50,6 +50,8 @@ export class PropertyController {
 	 */
 	async addProperty(payload: PropertyRequest.PropertyData, userData: UserRequest.UserData) {
 		try {
+			console.log('userDatauserData', userData);
+
 			let result;
 			let propertyAction;
 			const promiseArray = [];
