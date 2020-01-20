@@ -158,21 +158,20 @@ export class PropertyController {
 				}
 				if (payload.subscriptionId) {
 					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
+					console.log('step1step1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', step1);
 					const update: any = {};
 					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-						payload.isFeatured = true;
-						update.isFeatured = false;
+						// payload.isFeatured = true;
+						update.isFeatured = true;
 					}
-					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
-						payload.isHomePageFeatured = true;
-						update.isHomePageFeatured = false;
+					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+						// payload.isHomePageFeatured = true;
+						update.isHomePageFeatured = true;
 					}
-					if (step1.propertyId) {
-						ENTITY.PropertyE.updateOneEntity({
-							_id: new Types.ObjectId(step1.propertyId),
-						}, update);
+					if (data.propertyId) {
+						ENTITY.PropertyE.updateOneEntity({ _id: new Types.ObjectId(data._id) }, { $set: update });
 					}
-					const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
+					// const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
 				}
 				return data;
 			}
