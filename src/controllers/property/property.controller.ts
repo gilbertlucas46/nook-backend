@@ -359,33 +359,32 @@ export class PropertyController {
 				};
 				// const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
 				const step1 = await ENTITY.SubscriptionE.getOneEntity(criteria, {});
-				// if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
-
-				// } else if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-
-				// }
 
 				if (step1) {
-					dataToSet.$set = {
-						isFeatured: true,
-					};
-					dataToSet.$push = {
-						propertyActions: {
-							actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
-							actionString: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
-							displayName: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.DISPLAY_NAME,
-							actionPerformedBy: {
-								userId: userData._id,
-								userType: userData.type,
-								action: payload.status ? Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE : Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
-								actionTime: new Date().getTime(),
-							},
-						},
-					};
-					const step2 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: step1._id, propertyId: payload.propertyId });
-					const step3 = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true, lean: true });
-					step3.upgradeToFeature = true;
-					return step3;
+					const upgradeData: any = {};
+					const downgradeData: any = {};
+					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+						upgradeData.isHomePageFeatured = true;
+						downgradeData.isHomePageFeatured = false;
+					} else if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+						upgradeData.isFeatured = true;
+						downgradeData.isFeatured = false;
+					}
+					const updates = [
+						ENTITY.PropertyE.updateOneEntity({
+							_id: new Types.ObjectId(payload.propertyId),
+						}, { $set: upgradeData }, { new: true, lean: true }),
+						ENTITY.SubscriptionE.assignPropertyWithSubscription({
+							subscriptionId: step1._id,
+							propertyId: payload.propertyId,
+						}),
+					];
+					if (step1.propertyId) {
+						updates.push(ENTITY.PropertyE.updateOneEntity({
+							_id: new Types.ObjectId(step1.propertyId),
+						}, { $set: downgradeData }, { new: true, lean: true }));
+					}
+					await Promise.all(updates);
 				} else {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.SUBSCRIPTION_NOT_EXIST({}));
 				}
