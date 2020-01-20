@@ -158,7 +158,6 @@ export class PropertyController {
 				}
 				if (payload.subscriptionId) {
 					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
-					console.log('step1step1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', step1);
 					const update: any = {};
 					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 						// payload.isFeatured = true;
@@ -357,10 +356,9 @@ export class PropertyController {
 					userId: userData._id,
 					_id: payload.subscriptionId,
 					status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
-					propertyId: payload.propertyId,
-				}
-				const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
-				// const step1 = await ENTITY.SubscriptionE.getOneEntity(criteria, {});
+				};
+				// const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
+				const step1 = await ENTITY.SubscriptionE.getOneEntity(criteria, {});
 				// if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 
 				// } else if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
@@ -391,35 +389,36 @@ export class PropertyController {
 				} else {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.SUBSCRIPTION_NOT_EXIST({}));
 				}
-			} else if (payload.upgradeToHomePageFeatured) {
-				const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
-				if (step1) {
-					if (step1) {
-						dataToSet.$set = {
-							isHomePageFeatured: true,
-						};
-						dataToSet.$push = {
-							propertyActions: {
-								actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
-								actionString: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
-								displayName: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.DISPLAY_NAME,
-								actionPerformedBy: {
-									userId: userData._id,
-									userType: userData.type,
-									action: payload.status ? Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE : Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
-									actionTime: new Date().getTime(),
-								},
-							},
-						};
-						const step2 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: step1._id, propertyId: payload.propertyId });
-						const step3 = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true, lean: true });
-						step3.upgradeToHomePageFeatured = true;
-						return step3;
-					} else {
-						return Promise.reject(Constant.STATUS_MSG.ERROR.E400.SUBSCRIPTION_NOT_EXIST);
-					}
-				}
 			}
+			// else if (payload.upgradeToHomePageFeatured) {
+			// 	const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
+			// 	if (step1) {
+			// 		if (step1) {
+			// 			dataToSet.$set = {
+			// 				isHomePageFeatured: true,
+			// 			};
+			// 			dataToSet.$push = {
+			// 				propertyActions: {
+			// 					actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
+			// 					actionString: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
+			// 					displayName: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.DISPLAY_NAME,
+			// 					actionPerformedBy: {
+			// 						userId: userData._id,
+			// 						userType: userData.type,
+			// 						action: payload.status ? Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE : Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
+			// 						actionTime: new Date().getTime(),
+			// 					},
+			// 				},
+			// 			};
+			// 			const step2 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: step1._id, propertyId: payload.propertyId });
+			// 			const step3 = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true, lean: true });
+			// 			step3.upgradeToHomePageFeatured = true;
+			// 			return step3;
+			// 		} else {
+			// 			return Promise.reject(Constant.STATUS_MSG.ERROR.E400.SUBSCRIPTION_NOT_EXIST);
+			// 		}
+			// 	}
+			// }
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);

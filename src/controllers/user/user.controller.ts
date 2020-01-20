@@ -153,6 +153,8 @@ export class UserController {
 						lastName: updateUser.lastName,
 						userType: updateUser.type,
 						email: getUser.email,
+						isFeaturedProfile: getUser.isFeaturedProfile,
+						isHomePageFeatured: getUser.isHomePageFeatured,
 					},
 					isProfileComplete: true,
 				};
