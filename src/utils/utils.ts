@@ -23,24 +23,31 @@ export let sendError = (data: any) => {
 	} else {
 		let errorToSend = '';
 		if (typeof data === 'object') {
+			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
+
 			if (data.name === 'MongoError') {
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + CONSTANT.STATUS_MSG.ERROR.ENQUIRY_ALREADY_SENT;
 				//logger for mongoerror (error in query)
-				logger.log('DB_ERROR', `message - ${data.message}, time-${new Date().toISOString()}`)
+				logger.log('DB_ERROR', `message - ${data.message}, time-${new Date().toISOString()}`);
 			} else if (data.name === 'ApplicationError') {
-				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`)
+				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`);
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.APP_ERROR.message + ' : ';
 			} else if (data.name === 'ValidationError') {
-				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`)
+				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`);
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.VALIDATION_ERROR.message + data.message;
 			} else if (data.name === 'CastError') {
-				//logger for cast error (id not valid)
-				console.log('?????????????????????????????????????????????????????????????????????????????????')
+				// logger for cast error (id not valid)
+				console.log('?????????????????????????????????????????????????????????????????????????????????');
 				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`)
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + CONSTANT.STATUS_MSG.ERROR.E400.INVALID_ID.message + data.value;
 			}
+			else if (data.code === 'card_error') {
+				console.log('><<<<<<<<<<<<<<<<<<<<<', data);
+
+				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + data.message + data.message;
+			}
 		} else {
-			logger.log('info', `message - ${data}, time-${new Date().toISOString()}`)
+			logger.log('info', `message - ${data}, time-${new Date().toISOString()}`);
 			errorToSend = data;
 		}
 		let customErrorMessage = errorToSend;
