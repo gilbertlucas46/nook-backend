@@ -500,11 +500,11 @@ export let propertyRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: any = {
-					// propertyId: request.params.propertyId,
-					// status: (request.payload as any).property_status,
-					// subscriptionId: request.payload.subscriptionId,
-					...request.params,
-					...request.payload as object,
+					propertyId: request.params.propertyId,
+					status: (request.payload as any).property_status,
+					subscriptionId: (request.payload as any).subscriptionId,
+					// ...request.params,
+					// ...request.payload as object,
 
 					// upgradeToFeature: (request.payload as any).upgradeToFeature,
 				};
