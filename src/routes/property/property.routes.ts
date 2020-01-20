@@ -509,11 +509,11 @@ export let propertyRoute: ServerRoute[] = [
 					// upgradeToFeature: (request.payload as any).upgradeToFeature,
 				};
 				const data = await PropertyService.updatePropertyStatus(payload, userData);
-				if (data.upgradeToFeature || data.upgradeToHomePageFeatured) {
-					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_EXIST, data));
-				} else {
-					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
-				}
+				// if (data.upgradeToFeature || data.upgradeToHomePageFeatured) {
+				// 	return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_EXIST, data));
+				// } else {
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				// }
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
