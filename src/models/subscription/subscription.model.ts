@@ -49,6 +49,11 @@ const subscriptionSchema = new Schema({
 	eventId: { type: String },
 	name: { type: String },
 	address: { type: String },
+	cardId: { type: String },
+	cardExpYear: { type: String },
+	cardLast4: { type: String },
+	cardBrand: { type: String },
+	invoiceId: { type: String },
 
 }, {
 		versionKey: false,

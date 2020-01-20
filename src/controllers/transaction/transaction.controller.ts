@@ -37,20 +37,87 @@ class TransactionController extends BaseEntity {
 				createCustomer = await stripeService.createCustomers(getStripeId, payload);
 				await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { stripeId: createCustomer.id });
 				const createCard = await stripeService.createCard(createCustomer['id'], payload);
+				console.log('createCardcreateCardcreateCard', createCard);
+
+				const dataToSave = {
+					name: payload.name,
+					address: payload.name,
+					userId: userData._id,
+					cardDetail: createCard,
+
+				};
+
+				const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
 
 				const createSubscript = await stripeService.createSubscription(createCustomer['id'], payload);
 				console.log('createSubscriptcreateSubscript', createSubscript);
 				if (createSubscript.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
-					await this.createSubscription(createSubscript, payload);
+					const data: any = await this.createSubscription(createSubscript, payload, createCard);
+					const dataToUpdate = {
+						latestInvoice: createSubscript.latestInvoice,
+					};
+					// await ENTITY.TransactionE.updateOneEntity({ invoiceId: createSubscript.latestInvoice }, {})
 				}
 				return;
 			} else {
-				const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
-				const setDefaultCard = await stripeService.setDefaultCard(getStripeId, payload);
+				const query = [
+					{
+						$match: {
+							userId: userData._id,
+						},
+					},
+					{
+						$project: {
+							fingerprint: '$cardDetail.fingerprint',
+						},
+					},
+					{
+						$group: {
+							_id: '$cardDetail.fingerprint',
+							fingerprint: {
+								$push: '$fingerprint',
+							},
+						},
+					},
+				];
+				const cardData = await ENTITY.UserCardE.aggregate(query);
+				console.log('cardDatacardDatacardData>>>>>>>>>>>>>>>>>>>>>>.', cardData);
+				// get all card of the user
+				// const getUserCardInfo = await ENTITY.UserCardE.getMultiple({ userId: userData._id }, { cardDetail: 1 });
+				// console.log('getUserCardInfogetUserCardInfogetUserCardInfo', getUserCardInfo);
+
+				const fingerprint = await stripeService.getfingerPrint(userData, payload);
+				console.log('fingerprintfingerprintfingerprint>222222222222', fingerprint);
+				// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>', cardData[0]['fingerprint'].some(data => { return data === fingerprint }c));
+				let checkCardAdded;
+				if (cardData.length !== 0) {
+					checkCardAdded = cardData[0]['fingerprint'].some(data => {
+						return data === fingerprint;
+					});
+				}
+				console.log('1>>>>>>>>>>>>', checkCardAdded);
+
+				// 	checkCardAdded = getUserCardInfo['cardDetail'].some(data => {
+				// 		return data.fingerprint === fingerprint['card']['fingerprint'];
+				// 	});
+				// }
+
+				if (checkCardAdded) {
+					const dataToSave = {
+						name: payload.name,
+						address: payload.name,
+						userId: userData._id,
+						cardDetail: fingerprint,
+					};
+					const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
+					const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
+					const setDefaultCard = await stripeService.setDefaultCard(getStripeId, payload);
+				}
 				const createSubscript = await stripeService.createSubscription(getStripeId['stripeId'], payload);
-				console.log('createSubscriptcreateSubscript', createSubscript);
+
+				// console.log('createSubscriptcreateSubscript', createSubscript);
 				if (createSubscript.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
-					await this.createSubscription(createSubscript, payload);
+					await this.createSubscription(createSubscript, payload, fingerprint['card']);
 				}
 				return;
 			}
@@ -69,7 +136,6 @@ class TransactionController extends BaseEntity {
 		}
 
 		catch (error) {
-			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}
@@ -83,9 +149,9 @@ class TransactionController extends BaseEntity {
 		}
 	}
 
-	async invoiceDetails(payload: TransactionRequest.Id) {
+	async invoiceDetails(payload: TransactionRequest.Id, userData) {
 		try {
-			return await ENTITY.TransactionE.invoiceDetails(payload);
+			return await ENTITY.TransactionE.invoiceDetails(payload, userData);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -118,25 +184,27 @@ class TransactionController extends BaseEntity {
 
 	async createInvoice(event) {
 		try {
-			if (event['data']['object']['billing_reason'] !== 'subscription_cycle') {
-				const CheckplaninDb = {
-					'plans.planId': event['data']['object']['lines']['data'][0]['plan']['id'],
-				};
-				const criteria = {
-					stripeId: event['data']['object']['customer'],
-				};
-				const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {});
-				const userData = await ENTITY.UserE.getOneEntity(criteria, { _id: 1 });
-				console.log('userDatauserData', userData);
+			// if (event['data']['object']['billing_reason'] !== 'subscription_cycle') {
+			const CheckplaninDb = {
+				'plans.planId': event['data']['object']['lines']['data'][0]['plan']['id'],
+			};
+			const criteria = {
+				stripeId: event['data']['object']['customer'],
+			};
+			const checkplan = await ENTITY.SubscriptionPlanEntity.getOneEntity(CheckplaninDb, {});
+			const userData = await ENTITY.UserE.getOneEntity(criteria, { _id: 1 });
+			console.log('userDatauserData', userData);
 
-				const step2 = await ENTITY.TransactionE.addTransaction(event, userData, checkplan);
-				console.log('step2>>>>>>>>>>>>>>>>>>>', step2);
-				/**
-				 * TODO @for to update the recurrign subscription
-				 */
-				if (event['data']['object']['billing_reason'] === 'subscription_cycle') {
+			const step2 = await ENTITY.TransactionE.updateTransaction(event, userData, checkplan);
+			// console.log('step2>>>>>>>>>>>>>>>>>>>', step2);
+			/**
+			 * TODO @for to update the recurrign subscription
+			 */
 
-				}
+			if (event['data']['object']['billing_reason'] === 'subscription_cycle') {
+
+				// }
+				// }
 			}
 			return;
 		} catch (error) {
@@ -162,9 +230,10 @@ class TransactionController extends BaseEntity {
 	// 	// await ENTITY.SubscriptionE
 	// }
 
-	async createSubscription(subscriptionData, payload) {
+	async createSubscription(subscriptionData, payload, createCard) {
 		try {
-			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>::::::::::::::::::::::::::::::', subscriptionData, '>>>>>>>>', payload);
+			console.log('111111111', subscriptionData, '>>>>>>>>>>>>>>>>>>>>>>>.', payload);
+
 			const userData = await ENTITY.UserE.getOneEntity({ stripeId: subscriptionData['customer'] }, { _id: 1 });
 			const CheckplaninDb = {
 				'plans.planId': subscriptionData['plan']['id'],
@@ -191,7 +260,11 @@ class TransactionController extends BaseEntity {
 				amount: (subscriptionData['plan']['amount'] / 100),
 				subscriptionId: subscriptionData['id'],
 				planId: subscriptionData['plan']['id'],
-				source: subscriptionData['source'],
+				cardExpYear: createCard.exp_year,
+				cardLast4: createCard.last4,
+				cardBrand: createCard.brand,
+				invoiceId: subscriptionData['latest_invoice'],
+				cardId: createCard['id'],
 			};
 			console.log('insertDatainsertDatainsertData', insertData);
 			const step3 = await ENTITY.SubscriptionE.createOneEntity(insertData);
@@ -201,6 +274,7 @@ class TransactionController extends BaseEntity {
 					// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>@2222222222222222222');
 					await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
 					await ENTITY.PropertyE.updateMultiple(updatePropertyAddedBy, { $set: { 'property_added_by.isHomePageFeatured': true } });
+					return;
 				}
 				if (checkplan['featuredType'] === 'PROFILE') {
 					console.log('22222222222222222222222222222222222222222');
@@ -286,7 +360,6 @@ class TransactionController extends BaseEntity {
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 
 					}
-
 				}
 				return;
 			}
@@ -339,6 +412,7 @@ class TransactionController extends BaseEntity {
 				userId: getUserId._id,
 
 			};
+			return;
 			// const getsubscriptionInfo = await ENTITY.SubscriptionE.getOneEntity(criteria)
 		} catch (error) {
 			return Promise.reject(error);
@@ -349,7 +423,24 @@ class TransactionController extends BaseEntity {
 		try {
 			if (event['data']['object']['billing_reason'] === 'subscription_cycle') {
 
-			}
+			};
+
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
+	async updateTransaction(event) {
+		try {
+			const createTransaction = {
+				invoiceId: event['data']['object']['invoice'],
+				cardId: event['data']['object']['source']['id'],
+			};
+			console.log('updateTransaction2222222222>>>>>>>>>>>>>>>>>>>>>>>', createTransaction);
+
+			const createTransction = await ENTITY.TransactionE.createOneEntity(createTransaction);
+			console.log('createTransctioncreateTransctioncreateTransction>>>>>>>>>>>>.', createTransction);
+			return createTransction;
 
 		} catch (error) {
 			return Promise.reject(error);
@@ -373,10 +464,11 @@ class TransactionController extends BaseEntity {
 				case 'charge.succeeded':
 					console.log('111111111111111111111111111111111111111111111111111');
 					// await this.handleChargeSucceeded(step1, paymentIntent);
+					await this.updateTransaction(event);
 					break;
 				case 'charge.pending':
 					console.log('2222222222222222222222222222222222222222222');
-					// await this.handleChargePending(step1, paymentIntent);
+					await this.updateTransaction(event);
 					break;
 				case 'charge.failed':
 					console.log('33333333333333333333333333333333333333');
@@ -414,6 +506,12 @@ class TransactionController extends BaseEntity {
 					console.log('subscription_schedule.canceledsubscription_schedule.canceled>>>>>>>>', event);
 
 					break;
+
+				case 'invoice.payment_failed':
+					console.log('invoice.payment_failed>>>>>>>>>>>>>>>>>>>', event);
+					this.createInvoice(event);
+					break;
+
 			}
 			return {};
 

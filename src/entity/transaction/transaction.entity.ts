@@ -5,6 +5,7 @@ import { Types } from 'mongoose';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { TransactionRequest } from '@src/interfaces/transaction.interface';
 import * as utils from '@src/utils';
+import { type } from 'os';
 
 export class TransactionClass extends BaseEntity {
 
@@ -51,7 +52,7 @@ export class TransactionClass extends BaseEntity {
 	// 	}
 	// }
 
-	async addTransaction(invoice, userData, checkplan) {
+	async updateTransaction(invoice, userData, checkplan) {
 		try {
 			console.log('checkplancheckplan', checkplan);
 
@@ -65,7 +66,11 @@ export class TransactionClass extends BaseEntity {
 			// userId: userData['_id'],
 			// status: subscriptionData['data']['object']['status'],
 			// subscriptionId: subscriptionData['data']['object']['id'],
+			const criteria = {
+				invoiceId: invoice['data']['object']['id'],
+			}
 			const data = {
+				// invoiceId: invoice['data']['object']['id'],
 				billingReason: invoice['data']['object']['billing_reason'],
 				transactionId: invoice['data']['object']['charge'],
 				// type: invoice['data']['object']['object'],
@@ -85,8 +90,12 @@ export class TransactionClass extends BaseEntity {
 			};
 			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 
-			const insertData = await this.DAOManager.saveData(this.modelName, data);
-			return data;
+			// const insertData = await this.DAOManager.saveData(this.modelName, data);
+			// return data;
+			const updateDate = await this.DAOManager.findAndUpdate(this.modelName, criteria, { $set: data });
+			console.log('updateDateupdateDate', updateDate);
+			return updateDate;
+
 		}
 		catch (error) {
 			return Promise.reject(error);
@@ -114,10 +123,17 @@ export class TransactionClass extends BaseEntity {
 	async invoiceList(payload: TransactionRequest.InvoiceList, userData) {
 		try {
 			const { page, limit, featuredType, fromDate, toDate } = payload;
-
 			const query: any = {};
 			query.userId = Types.ObjectId(userData._id);
-			// query.status = 'active';
+			let sortingType: any = {};
+			sortingType = {
+				createdAt: -1,
+			};
+
+			const paginateOptions = {
+				page: page || 1,
+				limit,
+			};
 			if (featuredType) {
 				query['featuredType'] = featuredType;
 			}
@@ -125,10 +141,20 @@ export class TransactionClass extends BaseEntity {
 			if (fromDate && !toDate) { query.createdAt = { $gte: fromDate }; }
 			if (!fromDate && toDate) { query.createdAt = { $lte: toDate }; }
 
-			const pipeline = [
+			// const pipeline = [
+			// 	{ $match: query },
+			// ];
+			const matchPipeline = [
 				{ $match: query },
+				{
+					$sort: sortingType,
+				},
 			];
-			const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+
+
+			// const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
+			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 			return data;
 		} catch (error) {
 			utils.consolelog('Error', error, true);
@@ -136,16 +162,67 @@ export class TransactionClass extends BaseEntity {
 		}
 	}
 
-	async invoiceDetails(payload: TransactionRequest.Id) {
+	async invoiceDetails(payload: TransactionRequest.Id, userData) {
 		try {
-			const query: any = {};
-			query._id = payload.transactionId;
-			// const projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
-			const response = await this.DAOManager.findOne(this.modelName, query, {});
-			const populateQuery = [
-				{ path: 'userId', model: 'User', select: 'email' },
+			// // const projection = { amount: 1, userId: 1, name: 1, address: 1, invoiceNo: 1, featuredType: 1, billingType: 1, paymentMethod: 1, createdAt: 1 };
+			// const response = await this.DAOManager.findOne(this.modelName, query, {});
+			// const populateQuery = [
+			// 	{ path: 'userId', model: 'User', select: 'email' },
+			// ];
+
+			// const query: any = {};
+			// query.userId = Types.ObjectId(userData._id);
+
+			// const matchPipeline = [
+			// 	{ $match: query },
+			// 	{
+			// 		$sort: sortingType,
+			// 	},
+			// ]; 
+
+			const pipeLine = [
+				{
+					$match: {
+						_id: Types.ObjectId(payload.transactionId),
+						userId: Types.ObjectId(userData._id),
+					},
+				},
+				{
+					$lookup: {
+						from: 'cards',
+						let: { cId: '$cardId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$cardDetail.id', '$$cId'],
+									},
+								},
+							},
+							{
+								$project: {
+									name: 1,
+									address: 1,
+									// propertyId: 1,
+									// _id: 1,
+								},
+							},
+						],
+						as: 'cardData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$cardData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
 			];
-			return await this.DAOManager.populateDataOnAggregate(this.modelName, response, populateQuery);
+
+			const data = await this.DAOManager.aggregateData(this.modelName, pipeLine)
+			console.log('data>>>>>>>>>>KKKKKKKKKKKKK', data);
+			return data[0];
+			// return await this.DAOManager.paginatePipeline(this.modelName, response, populateQuery);
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);

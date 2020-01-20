@@ -190,6 +190,108 @@ export class SubscriptionClass extends BaseEntity {
 		}
 	}
 
+	async activeSubscriptionList(userData, payload) {
+		try {
+			const {
+				sortBy = 'date',
+				page = 1,
+				sortType = -1,
+				limit = Constant.SERVER.LIMIT,
+			} = payload;
+
+			const paginateOptions = {
+				page, limit,
+			};
+			let sortingType = {};
+			let query: any = {};
+			sortingType = {
+				createdAt: sortType,
+			};
+
+			query = {
+				userId: userData._id,
+				status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+				$or: [
+					{
+						featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					}, {
+						featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
+					}],
+			};
+
+			// query['$or'] = [
+			// 	{
+			// 		featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE,
+			// 	}, {
+			// 		featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
+			// 	}
+			// ]
+			const matchPipeline = [
+				{ $match: query },
+				{ $sort: sortingType },
+			];
+			const pipeline = [
+				{
+					$lookup: {
+						from: 'properties',
+						let: { pid: '$propertyId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$pid'],
+									},
+								},
+							},
+							{
+								$project: {
+									'property_basic_details.name': 1,
+									'property_basic_details.title': 1,
+									// propertyId: 1,
+									// _id: 1,
+								},
+							},
+						],
+						as: 'propertyData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$propertyData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+
+			];
+
+
+			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
+			// const data = await ENTITY.SubscriptionE.paginate(pipeline, {});
+			console.log('>>>>>>>>>>>>>>>>>>>.', data);
+			return data;
+			// {
+			// 	$match: {
+			// 		$and: [
+			// 			{
+			// 				userId: userData._id,
+			// 				status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+			// 				// endDate: { $gt: new Date().getTime() },
+			// 			},
+			// 			// {
+			// 			// 	$or: [{
+			// 			// 		featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+			// 			// 	}, {
+			// 			// 		featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
+			// 			// 	}],
+			// 			// },
+			// 		],
+			// 	},
+			// }];
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 
 	async updateSubscriptionStatus(paymentIntent) {
 		try {
