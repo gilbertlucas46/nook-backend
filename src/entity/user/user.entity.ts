@@ -115,7 +115,7 @@ export class UserClass extends BaseEntity {
 													},
 												},
 											},
-											{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+											// { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
 											{ $project: { _id: 1 } },
 										],
 										as: 'subscriptions',
