@@ -145,8 +145,8 @@ export class UserController {
 				const propertyCriteria = { userId: updateUser._id };
 				const updatePropertyData = {
 					property_added_by: {
-						userId: updateUser._id,
-						userName: updateUser.userName,
+						userId: getUser._id,
+						userName: getUser.userName,
 						phoneNumber: updateUser.phoneNumber,
 						profilePicUrl: updateUser.profilePicUrl,
 						firstName: updateUser.firstName,
