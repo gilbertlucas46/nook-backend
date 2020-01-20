@@ -18,6 +18,9 @@ export let transactionRoute: ServerRoute[] = [
 				const data = await transactionController.createCharge(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PAYMENT_ADDED, {}));
 			} catch (error) {
+				console.log('errorerrorerrorerrorerrorerrorerrorerrorerrorerrorerror', error);
+				// return error;
+
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -103,8 +106,9 @@ export let transactionRoute: ServerRoute[] = [
 		path: '/v1/transaction/details',
 		handler: async (request: any, h: ResponseToolkit) => {
 			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const query: TransactionRequest.Id = request.query;
-				const data = await transactionController.invoiceDetails(query);
+				const data = await transactionController.invoiceDetails(query, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				return (UniversalFunctions.sendError(error));
