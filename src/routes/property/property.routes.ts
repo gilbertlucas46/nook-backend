@@ -505,7 +505,6 @@ export let propertyRoute: ServerRoute[] = [
 					subscriptionId: (request.payload as any).subscriptionId,
 					// ...request.params,
 					// ...request.payload as object,
-
 					// upgradeToFeature: (request.payload as any).upgradeToFeature,
 				};
 				const data = await PropertyService.updatePropertyStatus(payload, userData);

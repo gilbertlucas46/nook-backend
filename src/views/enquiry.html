@@ -15,7 +15,7 @@
         <tbody>
             <tr>
                 <td>
-                    <table cellpadding="0" cellspacing="0" width="600px" style="margin:0px auto">
+                    <table cellpadding="0" cellspacing="0" width="600px" style="margin:0px auto;font-family: sans-serif, monospace">
                         <tbody>
                             <tr>
                                 <td valign="top">
@@ -35,24 +35,24 @@
                                             </tr>
                                             <tr>
                                                 <td
-                                                    style="padding-bottom: 40px; font-size: 15px; padding-top: 15px;color:Red">
+                                                    style="padding-bottom: 40px; font-size: 12px; padding-top: 15px; color: #000">
                                                     [THIS IS AN AUTOMATED MESSAGE - PLEASE DO NOT REPLY DIRECTLY TO THIS
                                                     EMAIL]
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><img src={{nookLogoUrl}} style="width: 180px;
+                                                <td><img src="{{nookLogoUrl}}" style="width: 180px;
                                                 height: auto;padding-bottom: 20px;"></td>
                                             </tr>
                                             <tr>
                                                 <td
                                                     style="padding : 15px 0 20px; font-size: 15px; font-weight: 600; border-top: solid 1px #ddd;">
-                                                    You’ve receive an enquiry!
+                                                    You’ve received an enquiry!
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="padding: 10px 0; font-size: 15px; font-weight: 600">
-                                                    Hey, {{name}}!</b>
+                                                    Hey, {{receiverName}}!</b>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -66,26 +66,31 @@
                                             </tr>
                                             <tr>
                                                 <td style="font-size:15px;padding:3px 0px; color: #757575;">
-                                                    <b style="font-weight: 500;">Property Title:</b> {{title}}
+                                                    <b style="font-weight: 500;color: #666;font-weight: bold;">Property Title:</b>
+                                                    <span>{{title}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="font-size:15px;padding:3px 0px; color: #757575;">
-                                                    <b style="font-weight: 500;">Property URL: </b> {{propertyUrl}}
+                                                    <b style="font-weight: 500;color: #666;font-weight: bold;">Property URL: </b>
+                                                    <span>{{propertyUrl}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="font-size:15px;padding:3px 0px; color: #757575;">
-                                                    <b style="font-weight: 500;">Phone Number: </b> {{phone}} </td>
+                                                    <b style="font-weight: 500;color: #666;font-weight: bold;">Phone Number: </b>
+                                                    <span>{{phone}}</span>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td style="font-size:15px;padding:3px 0px; color: #757575;">
-                                                    <b style="font-weight: 500;">Email Address: </b> {{email}}
+                                                    <b style="font-weight: 500;color: #666;font-weight: bold;">Email Address: </b>
+                                                    <span>{{email}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="font-size:15px;padding:20px 0px 0px; color: #757575; ">
-                                                    <b style="font-weight: 500;">Additional message:</b>
+                                                    <b style="font-weight: 500;color: #666;font-weight: bold;">Additional message:</b>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -97,7 +102,8 @@
                                             <tr>
                                                 <td style="padding:15px 0;font-size:15px;color: #757575;">You can also
                                                     check
-                                                    the full message from your Nook account in the <a href="#">Enquiries
+                                                    the full message from your Nook account in the <a
+                                                        href="{{enquiryUrl}}">Enquiries
                                                     </a>
                                                     section.
 
@@ -116,7 +122,8 @@
                                             </tr>
                                             <tr>
                                                 <td style="padding:0 0 20px; color: #000000; font-size: 16px">
-                                                    <a href="#"><b>www.nook.com.ph</b></a>
+                                                    <a href="https://www.nook.com.ph"
+                                                        target="_blank"><b>www.nook.com.ph</b></a>
                                                 </td>
                                             </tr>
                                         </tbody>

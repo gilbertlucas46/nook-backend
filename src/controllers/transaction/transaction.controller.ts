@@ -260,9 +260,9 @@ class TransactionController extends BaseEntity {
 				amount: (subscriptionData['plan']['amount'] / 100),
 				subscriptionId: subscriptionData['id'],
 				planId: subscriptionData['plan']['id'],
-				cardExpYear: createCard.exp_year,
-				cardLast4: createCard.last4,
-				cardBrand: createCard.brand,
+				// cardExpYear: createCard.exp_year,
+				// cardLast4: createCard.last4,
+				// cardBrand: createCard.brand,
 				invoiceId: subscriptionData['latest_invoice'],
 				cardId: createCard['id'],
 			};

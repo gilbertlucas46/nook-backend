@@ -2,6 +2,9 @@ import * as ENTITY from '@src/entity';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { loanReferralRequest } from '@src/interfaces/loanReferral.interface';
 import * as utils from '@src/utils';
+import * as request from 'request';
+import * as config from 'config';
+
 class Referal extends BaseEntity {
     // constructor() { }
     /**
@@ -14,7 +17,20 @@ class Referal extends BaseEntity {
     async createReferral(payload: loanReferralRequest.CreateReferral, userData) {
         try {
             payload['userId'] = userData._id;
-            return await ENTITY.ReferalE.createReferral(payload);
+            const data = await ENTITY.ReferalE.createReferral(payload);
+            request.post({
+                url: config.get('zapier_referralUrl'),
+                formData: {
+                    email: data.email,
+                    notes: data.notes,
+                    lastName: data.lastName,
+                    firstName: data.firstName,
+                    mobileNo: data.phoneNumber,
+                },
+            }, function optionalCallback(err, httpResponse, body) {
+                if (err) { return console.log(err); }
+                console.log('body ----', body);
+            });
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

@@ -150,7 +150,7 @@ class AdminUserE extends BaseEntity {
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (error) {
-            console.log('errorerrorerrorerror', error)
+            console.log('errorerrorerrorerror', error);
             return Promise.reject(error);
         }
     }
@@ -165,12 +165,10 @@ class AdminUserE extends BaseEntity {
 
         const sendObj = {
             receiverEmail: payload,
-            subject: 'agent Login Credentials',
-            content: html,
         };
 
         const mail = new MailManager();
-        mail.sendMail(sendObj);
+        mail.welcomeMail(sendObj);
     }
 }
 
