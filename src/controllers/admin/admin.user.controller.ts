@@ -6,7 +6,7 @@ import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { AdminUserEntity } from '@src/entity';
-
+import { MailManager } from '@src/lib';
 /**
  * @author Anurag Agarwal
  * @description this controller contains actions for user management in admin/staff
@@ -44,7 +44,14 @@ class AdminUserControllers {
                     };
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
                     const userResponse = UniversalFunctions.formatUserData(User);
-                    AdminUserEntity.sendInvitationMail(payload.email, genCredentials);
+                    // AdminUserEntity.sendInvitationMail(payload.email, genCredentials);
+                    const sendObj = {
+                        receiverEmail: payload.email,
+                        password: genCredentials,
+                        userName: payload.firstName + '' + payload.lastName,
+                    };
+                    const mail = new MailManager();
+                    await mail.welcomeStaffUSer(sendObj);
                     return userResponse;
                 }
             }

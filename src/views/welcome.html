@@ -89,6 +89,11 @@
                             Thanks for the signing up to keep in touch with Nook. We are happy to see you here .
                         </td>
                     </tr>
+                    {{#if (ne password '')}}
+                    <tr>
+                        <td>Your Password: {{password}}</td>
+                    </tr>
+                    {{/if}}
                     <tr>
                         <!-- <td>
                             <a class="invbtn" href="#"
@@ -104,7 +109,8 @@
                         <td class="para"
                             style="font-size: 18px; font-weight: 500; line-height: 1.5; color: #797979; letter-spacing: 0.4px; padding: 30px 0;">
                             You
-                            can always reach out to us at <a href="mailto:hello@nook.com.ph" style="color: #aa3560">mail us</a>
+                            can always reach out to us at <a href="mailto:hello@nook.com.ph" style="color: #196192">mail
+                                us</a>
                             if you experience any problems.</td>
 
 
@@ -128,12 +134,12 @@
                         <td class="copyrgt" style="font-size: 14px; color: #a0a9bd;">
                             Copyright © {{year}} Nook
                         </td>
-                        <td align="right">
-                            <a href="{{faceBookUrl}}" style="padding: 0 3px; display: inline-block ">
+                        <td style="text-align: right;">
+                            <a href="{{faceBookUrl}}" style="color: #196192;padding: 0 3px; display: inline-block ">
                                 <img src={{faceBookUrl}} alt="Facebook Logo"></a>
-                            <a href="{{instaUrl}}" style="padding: 0 3px; display: inline-block ">
+                            <a href="{{instaUrl}}" style="color: #196192;padding: 0 3px; display: inline-block ">
                                 <img src={{instaUrl}} alt="Instagram Logo "></a>
-                            <a href="{{twitterUrl}}" style="padding: 0 3px; display: inline-block ">
+                            <a href="{{twitterUrl}}" style="color: #196192;padding: 0 3px; display: inline-block ">
                                 <img src={{twitterUrl}} alt="Twitter Logo"></a>
                         </td>
                     </tr>
