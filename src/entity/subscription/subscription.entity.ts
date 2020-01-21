@@ -116,7 +116,7 @@ export class SubscriptionClass extends BaseEntity {
 					$match: {
 						$and: [
 							{
-								// status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+								status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
 								userId: userData._id,
 							},
 							// {
@@ -146,6 +146,32 @@ export class SubscriptionClass extends BaseEntity {
 						startDate: 1,
 						cardId: 1,
 					},
+				}, {
+					$lookup: {
+						from: 'cards',
+						let: { cardId: '$cardId' },
+						pipeline: [{
+							$match: {
+								$expr: {
+									$and: [{ $eq: ['$cardDetail.id', '$$cardId'] }],
+								},
+							},
+						}, {
+							$project: {
+								_id: 0,
+								last4: '$cardDetail.last4',
+							},
+						}],
+						as: 'cardData',
+					},
+
+				},
+				{
+					$unwind: {
+						path: '$cardData',
+						preserveNullAndEmptyArrays: true,
+
+					},
 				},
 				{
 					$lookup: {
@@ -155,7 +181,7 @@ export class SubscriptionClass extends BaseEntity {
 							{
 								$match: {
 									$expr: {
-										$and: [{ $eq: ['$_id', '$$propertyId'] }, { $eq: ['$property_status.number', 3] }],
+										$and: [{ $eq: ['$_id', '$$propertyId'] }, { $eq: ['$property_added_by.userId', userData._id] }],
 									},
 								},
 							},
@@ -265,7 +291,6 @@ export class SubscriptionClass extends BaseEntity {
 
 			];
 
-
 			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
 			// const data = await ENTITY.SubscriptionE.paginate(pipeline, {});
 			console.log('>>>>>>>>>>>>>>>>>>>.', data);
@@ -292,7 +317,6 @@ export class SubscriptionClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-
 
 	async updateSubscriptionStatus(paymentIntent) {
 		try {
