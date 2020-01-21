@@ -87,7 +87,7 @@ export class UserPropertyClass extends BaseEntity {
 			else if (propertyType !== Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER) {
 				criteria = {
 					$match: {
-						'userId': userData._id,
+						'propert_added_by.userId': userData._id,
 						'property_status.number': propertyType,
 					},
 				};

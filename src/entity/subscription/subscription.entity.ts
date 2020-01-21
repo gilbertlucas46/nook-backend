@@ -116,7 +116,7 @@ export class SubscriptionClass extends BaseEntity {
 					$match: {
 						$and: [
 							{
-								status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+								// status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
 								userId: userData._id,
 							},
 							// {
@@ -144,6 +144,7 @@ export class SubscriptionClass extends BaseEntity {
 						updatedAt: 1,
 						endDate: 1,
 						startDate: 1,
+						cardId: 1,
 					},
 				},
 				{
