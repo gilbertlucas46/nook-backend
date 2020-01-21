@@ -42,11 +42,11 @@ export class AdminClass extends BaseEntity {
 	 */
 	async adminAccountCreator() {
 		const toSave = {
-			name: 'Base Admin',
-			email: 'base_admin@yopmail.com',
-			firstName: 'super',
-			lastName: 'admin',
-			password: await utils.encryptWordpressHashNode('123456'),
+			name: 'Nook Admin',
+			email: 'admin@nook.com.ph',
+			firstName: 'Nook',
+			lastName: 'Admin',
+			password: await utils.encryptWordpressHashNode('admin@nook'),
 			profilePicUrl: '',
 			permission: [
 				{

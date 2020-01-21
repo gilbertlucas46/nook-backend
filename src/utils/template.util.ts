@@ -9,7 +9,15 @@ export class TemplateUtil {
 
     constructor(template) {
         this.template = template;
+        handlebars.registerHelper({
+            ne(a, b) {
+                return a !== b;
+            },
+        });
     }
+    // load(file: string) {
+    //     return this;
+    // }
 
     compileFile(complieData: object) {
         return new Promise((resolve, reject) => {

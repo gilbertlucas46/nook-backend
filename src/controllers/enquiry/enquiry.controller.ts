@@ -28,14 +28,9 @@ export class EnquiryController {
             // for the user=> agent
             if (payload.agentEmail) {
                 dataToSave = {
-                    email: payload.email,
+                    ...payload,
                     userType: userData.type ? userData.type : '',
-                    name: payload.name,
-                    message: payload.message,
-                    phoneNumber: payload.phoneNumber,
-                    propertyId: payload.propertyId,
                     enquiryType: Constant.DATABASE.ENQUIRY_TYPE.CONTACT,
-                    agentId: payload.agentId,
                 };
                 const getName = await ENTITY.UserE.getOneEntity({ email: payload.agentEmail }, { userName: 1, firstName: 1 });
 
@@ -59,13 +54,8 @@ export class EnquiryController {
             }
             else {
                 dataToSave = {
-                    email: payload.email,
+                    ...payload,
                     userType: userData.type ? userData.type : '', // Constant.DATABASE.ENQUIRY_TYPE.GUEST.NUMBER,
-                    name: payload.name,
-                    message: payload.message,
-                    phoneNumber: payload.phoneNumber,
-                    propertyId: payload.propertyId,
-                    propertyOwnerId: payload.propertyOwnerId,
                     enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
                 };
 
@@ -79,11 +69,13 @@ export class EnquiryController {
                 const criteria = {
                     _id: payload.propertyId,
                 };
-                const propertyData = await ENTITY.PropertyE.getOneEntity(criteria, { 'property_added_by.userId': 1, 'property_added_by.email': 1, 'propertyId': 1, 'property_basic_details.title': 1, 'property_basic_details.name': 1 });
+                const propertyData = await ENTITY.PropertyE.getOneEntity(criteria, { 'property_added_by.userId': 1, 'property_added_by.email': 1, 'propertyId': 1, 'property_basic_details.title': 1, 'property_basic_details.name': 1, 'property_added_by.userName': 1, 'property_added_by.firstName': 1 });
                 console.log('propertyDatapropertyDatapropertyDatapropertyData', propertyData);
 
                 const mail = new MailManager();
                 const sendObj = {
+                    receieverUserName: propertyData['property_added_by']['userName'],
+                    receiverName: propertyData['property_added_by']['firstName'],
                     receiverEmail: propertyData['property_added_by']['email'],
                     subject: Constant.EMAIL_TEMPLATE.SUBJECT.Enquiry,
                     propertyId: propertyData.propertyId,
@@ -103,9 +95,10 @@ export class EnquiryController {
                     name: payload.name,
                     message: payload.message,
                     phoneNumber: payload.phoneNumber,
-                    propertyId: payload.propertyId,
+                    propertyId: propertyData.propertyId,
                     propertyOwnerId: payload.propertyOwnerId,
                     enquiryType: Constant.DATABASE.ENQUIRY_TYPE.PROPERTY,
+                    enquiryDate: new Date().toString(),
                 };
 
                 request.post({ url: config.get('zapier_enquiryUrl'), formData: salesforceData }, function optionalCallback(err, httpResponse, body) {
