@@ -2,6 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import * as Constant from '@src/constants/app.constant';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import * as utils from '@src/utils';
+import { Types } from 'mongoose';
 
 export class UserPropertyClass extends BaseEntity {
 	constructor() {
@@ -87,7 +88,7 @@ export class UserPropertyClass extends BaseEntity {
 			else if (propertyType !== Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER) {
 				criteria = {
 					$match: {
-						'propert_added_by.userId': userData._id,
+						'propert_added_by.userId': new Types.ObjectId(userData._id),
 						'property_status.number': propertyType,
 					},
 				};
