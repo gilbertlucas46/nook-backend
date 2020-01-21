@@ -5,6 +5,7 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import { exists } from 'fs';
 import { Types } from 'mongoose';
+import { ObjectId } from 'bson';
 export class PropertyController {
 
 	getTypeAndDisplayName(findObj, num: number) {
@@ -359,6 +360,8 @@ export class PropertyController {
 				};
 				// const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
 				const step1 = await ENTITY.SubscriptionE.getOneEntity(criteria, {});
+				console.log('step1step1step1step1step1step1', step1);
+
 				// if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 
 				// } else if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
@@ -383,7 +386,10 @@ export class PropertyController {
 						},
 					};
 					const step2 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: step1._id, propertyId: payload.propertyId });
-					const step3 = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true, lean: true });
+					console.log('step2step2step2step2step2step2step2step2', step2);
+
+					const step3 = await ENTITY.PropertyE.updateOneEntity({ _id: payload.propertyId, userId: userData._id }, dataToSet, { new: true, lean: true });
+					console.log('step3step3step3step3', step3);
 					step3.upgradeToFeature = true;
 					return step3;
 				} else {
