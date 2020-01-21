@@ -5,6 +5,7 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import { exists } from 'fs';
 import { Types } from 'mongoose';
+import { ObjectId } from 'bson';
 export class PropertyController {
 
 	getTypeAndDisplayName(findObj, num: number) {
