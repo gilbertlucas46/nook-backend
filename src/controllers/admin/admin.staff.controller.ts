@@ -6,6 +6,7 @@ import * as UniversalFunctions from '@src/utils';
 import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
+import { MailManager } from '@src/lib';
 
 /**
  * @author shubham
@@ -31,9 +32,19 @@ class AdminStaffControllers {
                     // staffStatus: Constant.DATABASE.STATUS.ADMIN.  ,
                     type: CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE,
                     permission: payload.permission,
+
                 };
                 await ENTITY.AdminStaffEntity.createOneEntity(datatoSave);
-                ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
+                // ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
+                const sendObj = {
+                    receiverEmail: payload.email,
+                    password: genCredentials,
+                    userName: payload.firstName + '' + payload.lastName,
+                };
+                const mail = new MailManager();
+                await mail.welcomeStaffUSer(sendObj).catch((err) => {
+                    console.log('>>>>>>>>>>>>>>>>.erororoororooror', err);
+                });
                 return;
             } else {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT);
