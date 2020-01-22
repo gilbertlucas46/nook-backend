@@ -112,35 +112,39 @@ export class PropertyController {
 
 					// updates to prev property added to this subscription
 					// const update: any = {};
+					if (step1) {
 
-					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-						payload.isFeatured = true;
-						console.log('regular property');
-						// update.isFeatured = false;
-					}
-					if (step1.featuredType === 'HOMEPAGE_PROPERTY') {
-						console.log('home page property');
-						payload.isHomePageFeatured = true;
-						// update.isHomePageFeatured = false;
+						if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+							payload.isFeatured = true;
+							console.log('regular property');
+							// update.isFeatured = false;
+						}
+						if (step1.featuredType === 'HOMEPAGE_PROPERTY') {
+							console.log('home page property');
+							payload.isHomePageFeatured = true;
+							// update.isHomePageFeatured = false;
+						}
 					}
 					// if (step1.propertyId) {
 					// 	ENTITY.PropertyE.updateOneEntity({
 					// 		_id: new Types.ObjectId(step1.propertyId),
 					// 	}, update);
 					// }
+					return {};
 				} else {
 					// @TODO remove subscription from this property
 					const criteriaSubscription = {
 						propertyId: new Types.ObjectId(payload.propertyId),
 					};
 					const data = await ENTITY.SubscriptionE.updateOneEntity(criteriaSubscription, { $set: { propertyId: null } });
-
-					// return ;
-					if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
-						payload.isHomePageFeatured = false
-					}
-					if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-						payload.isFeatured = false
+					console.log('datadatadatadatadata', data);
+					if (data) {
+						if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+							payload.isHomePageFeatured = false;
+						}
+						if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+							payload.isFeatured = false;
+						}
 					}
 
 				}
