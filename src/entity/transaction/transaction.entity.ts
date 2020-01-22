@@ -1,11 +1,10 @@
 'use strict';
 
 import { Types } from 'mongoose';
-
+import * as ENTITY from '../../entity'
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { TransactionRequest } from '@src/interfaces/transaction.interface';
 import * as utils from '@src/utils';
-import { type } from 'os';
 
 export class TransactionClass extends BaseEntity {
 
@@ -55,20 +54,14 @@ export class TransactionClass extends BaseEntity {
 	async updateTransaction(invoice, userData, checkplan) {
 		try {
 			console.log('checkplancheckplan', checkplan);
-
-			// return await this.DAOManager.saveData(this.modelName, {
-			// type: subscriptionData['data']['object']['object'],
-			// productId: subscriptionData['data']['object']['plan']['product'],
-			// billingType: subscriptionData['data']['object']['plan']['interval'],
-			// amount: subscriptionData['data']['object']['plan']['amount'],
-			// currency: subscriptionData['data']['object']['plan']['currency'],
-			// featuredType: checkplan['featuredType'],
-			// userId: userData['_id'],
-			// status: subscriptionData['data']['object']['status'],
-			// subscriptionId: subscriptionData['data']['object']['id'],
+			let userId;
+			if (!userData) {
+				const userData = invoice['data']['object']['customer'];
+				userId = await ENTITY.UserE.getOneEntity({ stripeId: invoice['data']['object']['customer'] }, { _id: 1 });
+			}
 			const criteria = {
 				invoiceId: invoice['data']['object']['id'],
-			}
+			};
 			const data = {
 				// invoiceId: invoice['data']['object']['id'],
 				billingReason: invoice['data']['object']['billing_reason'],
@@ -79,7 +72,7 @@ export class TransactionClass extends BaseEntity {
 				amount: (invoice['data']['object']['lines']['data'][0]['amount'] / 100),
 				currency: invoice['data']['object']['lines']['data'][0]['plan']['currency'],
 				featuredType: checkplan['featuredType'],
-				userId: userData['_id'],
+				userId: userData['_id'] ? userData['_id'] : userId,
 				status: invoice['data']['object']['status'],
 				// subscription:
 				// subscriptionId: invoice['data']['object']['lines'][0]['subscription'],
