@@ -10,6 +10,8 @@ export interface ISubscription extends Document {
 	endDate: number;
 	createdAt: number;
 	updatedAt: number;
+	name?: string;
+	address: string;
 }
 
 const subscriptionSchema = new Schema({
@@ -45,6 +47,13 @@ const subscriptionSchema = new Schema({
 	// paymentMethod: { type: String, required: true },
 	planId: { type: String, required: true },
 	eventId: { type: String },
+	name: { type: String },
+	address: { type: String },
+	cardId: { type: String },
+	cardExpYear: { type: String },
+	cardLast4: { type: String },
+	cardBrand: { type: String },
+	invoiceId: { type: String },
 
 }, {
 		versionKey: false,
