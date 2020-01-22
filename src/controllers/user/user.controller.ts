@@ -170,14 +170,16 @@ export class UserController {
 			/**
 			 *  push contract to salesforce
 			 */
-			// if (!isProfileCompleted) {
-			// 	// convert document to data
-			// 	const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
-			// 	await fetch(config.get('zapier_personUrl'), {
-			// 		method: 'post',
-			// 		body: JSON.stringify(salesforceData),
-			// 	});
-			// }
+			if (config.get['environment'] === 'production') {
+				if (!isProfileCompleted) {
+					// convert document to data
+					const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
+					await fetch(config.get('zapier_personUrl'), {
+						method: 'post',
+						body: JSON.stringify(salesforceData),
+					});
+				}
+			}
 
 			return updateUser;
 		} catch (error) {
