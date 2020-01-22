@@ -435,7 +435,11 @@ class TransactionController extends BaseEntity {
 		try {
 			const createTransaction = {
 				invoiceId: event['data']['object']['invoice'],
-				cardId: event['data']['object']['source']['id'],
+				cardId: event['data']['object']['payment_method'],
+				brand: event['data']['object']['payment_method_details']['card']['brand'],
+				last4: event['data']['object']['payment_method_details']['last4'],
+				exp_year: event['data']['object']['payment_method_details']['exp_year'],
+				exp_month: event['data']['object']['payment_method_details']['exp_month'],
 			};
 			console.log('updateTransaction2222222222>>>>>>>>>>>>>>>>>>>>>>>', createTransaction);
 

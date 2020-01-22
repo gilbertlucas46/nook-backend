@@ -24,6 +24,10 @@ export interface ITransaction extends Document {
 	createdAt: number;
 	updatedAt: number;
 	cardHolder: string;
+	brand: string;
+	last4: string;
+	exp_year: number;
+	exp_month: number;
 }
 
 export const transactionSchema = new Schema({
@@ -68,6 +72,12 @@ export const transactionSchema = new Schema({
 	customer: { type: String },
 	customer_email: { type: String },
 	paid: { type: Boolean },
+
+	brand: { type: String },
+	last4: { type: String },
+	exp_year: { type: Number },
+	exp_month: { type: Number },
+
 }
 	, {
 		versionKey: false,
