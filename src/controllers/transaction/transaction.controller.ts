@@ -6,7 +6,7 @@ import { stripeService } from '@src/lib/stripe.manager';
 
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../../utils';
-import { Types } from 'mongoose';
+import { Types, Document } from 'mongoose';
 
 class TransactionController extends BaseEntity {
 
@@ -60,49 +60,55 @@ class TransactionController extends BaseEntity {
 				}
 				return;
 			} else {
-				const query = [
-					{
-						$match: {
-							userId: userData._id,
-						},
-					},
-					{
-						$project: {
-							fingerprint: '$cardDetail.fingerprint',
-						},
-					},
-					{
-						$group: {
-							_id: '$cardDetail.fingerprint',
-							fingerprint: {
-								$push: '$fingerprint',
-							},
-						},
-					},
-				];
-				const cardData = await ENTITY.UserCardE.aggregate(query);
+				// const query = [
+				// 	{
+				// 		$match: {
+				// 			userId: userData._id,
+				// 		},
+				// 	},
+				// 	{
+				// 		$project: {
+				// 			fingerprint: '$cardDetail.fingerprint',
+				// 		},
+				// 	},
+				// 	{
+				// 		$group: {
+				// 			_id: '$cardDetail.fingerprint',
+				// 			fingerprint: {
+				// 				$push: '$fingerprint',
+				// 			},
+				// 		},
+				// 	},
+				// ];
+				const fingerprint = await stripeService.getfingerPrint(userData, payload);
+				console.log('fingerprintfingerprintfingerprint>222222222222', fingerprint);
+
+				const cardData: Document = await ENTITY.UserCardE.getOneEntity({
+					'userId': new Types.ObjectId(userData._id),
+					'cardDetail.fingerprint': fingerprint,
+				}, {});
 				console.log('cardDatacardDatacardData>>>>>>>>>>>>>>>>>>>>>>.', cardData);
 				// get all card of the user
 				// const getUserCardInfo = await ENTITY.UserCardE.getMultiple({ userId: userData._id }, { cardDetail: 1 });
 				// console.log('getUserCardInfogetUserCardInfogetUserCardInfo', getUserCardInfo);
 
-				const fingerprint = await stripeService.getfingerPrint(userData, payload);
-				console.log('fingerprintfingerprintfingerprint>222222222222', fingerprint);
 				// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>', cardData[0]['fingerprint'].some(data => { return data === fingerprint }c));
-				let checkCardAdded;
-				if (cardData.length !== 0) {
-					checkCardAdded = cardData[0]['fingerprint'].some(data => {
-						return data === fingerprint;
-					});
-				}
-				console.log('1>>>>>>>>>>>>', checkCardAdded);
-
-				// 	checkCardAdded = getUserCardInfo['cardDetail'].some(data => {
-				// 		return data.fingerprint === fingerprint['card']['fingerprint'];
+				// let checkCardAdded;
+				// if (cardData.length !== 0) {
+				// 	checkCardAdded = cardData[0]['fingerprint'].some(data => {
+				// 		return data === fingerprint;
 				// 	});
 				// }
+				// console.log('1>>>>>>>>>>>>', checkCardAdded);
 
-				if (checkCardAdded || cardData.length === 0) {
+
+
+				if (cardData) {
+					await cardData.update({
+						name: payload.name,
+						address: payload.address,
+					}).exec();
+				} else {
 					const dataToSave = {
 						name: payload.name,
 						address: payload.name,
