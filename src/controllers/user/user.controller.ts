@@ -10,6 +10,7 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import { flattenObject } from '@src/utils';
 import fetch from 'node-fetch';
+import { Types } from 'mongoose';
 const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 
 export class UserController {
@@ -142,23 +143,26 @@ export class UserController {
 				payload.isProfileComplete = true;
 			}
 			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
+
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
 				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber
 				|| getUser.type !== updateUser.type) {
 
-				const propertyCriteria = { userId: updateUser._id };
+				const propertyCriteria = { 'property_added_by.userId': new Types.ObjectId(updateUser._id) };
 				const updatePropertyData = {
 					property_added_by: {
-						userId: updateUser._id,
-						userName: updateUser.userName,
+						userId: getUser._id,
+						userName: getUser.userName,
 						phoneNumber: updateUser.phoneNumber,
 						profilePicUrl: updateUser.profilePicUrl,
 						firstName: updateUser.firstName,
 						lastName: updateUser.lastName,
 						userType: updateUser.type,
 						email: getUser.email,
+						isFeaturedProfile: getUser.isFeaturedProfile,
+						isHomePageFeatured: getUser.isHomePageFeatured,
 					},
 				};
 				ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
