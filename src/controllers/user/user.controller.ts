@@ -193,28 +193,28 @@ export class UserController {
 	 * @payload  UserData
 	 * return object
 	 */
-	async getProfile(payload: UserRequest.UserData) {
-		try {
-			if (
-				payload.type === Constant.DATABASE.USER_TYPE.AGENT.TYPE ||
-				payload.type === Constant.DATABASE.USER_TYPE.OWNER.TYPE
-			) {
-				const step1 = await ENTITY.SubscriptionE.getAllHomepageSubscritions({ userId: payload._id });
-				if (step1.length) {
-					payload.isHomePageFeatured = true;
-					payload.subscriptionexpirarionTime = step1[0].endDate;
-				} else {
-					payload.isHomePageFeatured = false;
-				}
-			} else {
-				payload.isHomePageFeatured = false;
-			}
-			return payload;
-		} catch (error) {
-			utils.consolelog('error', error, true);
-			return Promise.reject(error);
-		}
-	}
+	// async getProfile(payload: UserRequest.UserData) {
+	// 	try {
+	// 		if (
+	// 			payload.type === Constant.DATABASE.USER_TYPE.AGENT.TYPE ||
+	// 			payload.type === Constant.DATABASE.USER_TYPE.OWNER.TYPE
+	// 		) {
+	// 			const step1 = await ENTITY.SubscriptionE.getAllHomepageSubscritions({ userId: payload._id });
+	// 			if (step1.length) {
+	// 				payload.isHomePageFeatured = true;
+	// 				payload.subscriptionexpirarionTime = step1[0].endDate;
+	// 			} else {
+	// 				payload.isHomePageFeatured = false;
+	// 			}
+	// 		} else {
+	// 			payload.isHomePageFeatured = false;
+	// 		}
+	// 		return payload;
+	// 	} catch (error) {
+	// 		utils.consolelog('error', error, true);
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 	/**
 	 * @function forgetPassword
 	 * @description function to send the email on the registered emailId

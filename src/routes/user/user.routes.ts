@@ -227,8 +227,8 @@ export let userRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const responseData = await UserService.getProfile(userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
+				// const responseData = await UserService.getProfile(userData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userData));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
