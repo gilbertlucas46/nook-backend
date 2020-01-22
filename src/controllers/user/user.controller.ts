@@ -10,6 +10,7 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import { flattenObject } from '@src/utils';
 import fetch from 'node-fetch';
+import { Types } from 'mongoose';
 const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 
 export class UserController {
@@ -142,7 +143,6 @@ export class UserController {
 				payload.isProfileComplete = true;
 			}
 			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
-			console.log('getUsergetUser', getUser);
 
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
@@ -150,7 +150,7 @@ export class UserController {
 				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber
 				|| getUser.type !== updateUser.type || getUser.isFeaturedProfile !== updateUser.isFeaturedProfile || getUser.isHomePageFeatured !== updateUser.isHomePageFeatured) {
 
-				const propertyCriteria = { userId: updateUser._id };
+				const propertyCriteria = { 'property_added_by.userId': new Types.ObjectId(updateUser._id) };
 				const updatePropertyData = {
 					property_added_by: {
 						userId: getUser._id,
@@ -170,14 +170,14 @@ export class UserController {
 			/**
 			 *  push contract to salesforce
 			 */
-			if (!isProfileCompleted) {
-				// convert document to data
-				const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
-				await fetch(config.get('zapier_personUrl'), {
-					method: 'post',
-					body: JSON.stringify(salesforceData),
-				});
-			}
+			// if (!isProfileCompleted) {
+			// 	// convert document to data
+			// 	const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
+			// 	await fetch(config.get('zapier_personUrl'), {
+			// 		method: 'post',
+			// 		body: JSON.stringify(salesforceData),
+			// 	});
+			// }
 
 			return updateUser;
 		} catch (error) {
