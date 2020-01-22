@@ -145,6 +145,9 @@ export class SubscriptionClass extends BaseEntity {
 						endDate: 1,
 						startDate: 1,
 						cardId: 1,
+						cardLast4: 1,
+						cardBrand: 1,
+						invoiceId: 1,
 					},
 				},
 				// {
