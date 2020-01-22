@@ -67,7 +67,7 @@ class TransactionController extends BaseEntity {
 				const cardData: Document = await ENTITY.UserCardE.getOneEntity({
 					'userId': new Types.ObjectId(userData._id),
 					'cardDetail.fingerprint': result.card.fingerprint,
-				}, {});
+				}, {}, false);
 				console.log('cardDatacardDatacardData>>>>>>>>>>>>>>>>>>>>>>.', cardData);
 
 				if (cardData) {
