@@ -32,9 +32,9 @@ export class BaseEntity {
 		}
 	}
 
-	async getOneEntity(criteria: object, projection: object) {
+	async getOneEntity(criteria: object, projection: object, lean: boolean = true) {
 		try {
-			return await this.DAOManager.findOne(this.modelName, criteria, projection, { lean: true });
+			return await this.DAOManager.findOne(this.modelName, criteria, projection, { lean });
 		} catch (error) {
 			consolelog(`Error in Base Entity in getOneEntity method ${this.modelName}`, error, true);
 			return Promise.reject(error);
