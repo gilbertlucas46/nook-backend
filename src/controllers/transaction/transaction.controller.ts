@@ -60,48 +60,15 @@ class TransactionController extends BaseEntity {
 				}
 				return;
 			} else {
-				// const query = [
-				// 	{
-				// 		$match: {
-				// 			userId: userData._id,
-				// 		},
-				// 	},
-				// 	{
-				// 		$project: {
-				// 			fingerprint: '$cardDetail.fingerprint',
-				// 		},
-				// 	},
-				// 	{
-				// 		$group: {
-				// 			_id: '$cardDetail.fingerprint',
-				// 			fingerprint: {
-				// 				$push: '$fingerprint',
-				// 			},
-				// 		},
-				// 	},
-				// ];
-				const fingerprint = await stripeService.getfingerPrint(userData, payload);
-				console.log('fingerprintfingerprintfingerprint>222222222222', fingerprint);
+
+				const result = await stripeService.getfingerPrint(userData, payload);
+				console.log('fingerprintfingerprintfingerprint>222222222222', result);
 
 				const cardData: Document = await ENTITY.UserCardE.getOneEntity({
 					'userId': new Types.ObjectId(userData._id),
-					'cardDetail.fingerprint': fingerprint,
+					'cardDetail.fingerprint': result.card.fingerprint,
 				}, {});
 				console.log('cardDatacardDatacardData>>>>>>>>>>>>>>>>>>>>>>.', cardData);
-				// get all card of the user
-				// const getUserCardInfo = await ENTITY.UserCardE.getMultiple({ userId: userData._id }, { cardDetail: 1 });
-				// console.log('getUserCardInfogetUserCardInfogetUserCardInfo', getUserCardInfo);
-
-				// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>', cardData[0]['fingerprint'].some(data => { return data === fingerprint }c));
-				// let checkCardAdded;
-				// if (cardData.length !== 0) {
-				// 	checkCardAdded = cardData[0]['fingerprint'].some(data => {
-				// 		return data === fingerprint;
-				// 	});
-				// }
-				// console.log('1>>>>>>>>>>>>', checkCardAdded);
-
-
 
 				if (cardData) {
 					await cardData.update({
@@ -113,7 +80,7 @@ class TransactionController extends BaseEntity {
 						name: payload.name,
 						address: payload.name,
 						userId: userData._id,
-						cardDetail: fingerprint,
+						cardDetail: result,
 					};
 					const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
 					const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
@@ -123,7 +90,7 @@ class TransactionController extends BaseEntity {
 
 				// console.log('createSubscriptcreateSubscript', createSubscript);
 				if (createSubscript.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
-					await this.createSubscription(createSubscript, payload, fingerprint['card']);
+					await this.createSubscription(createSubscript, payload, result['card']);
 				}
 				return;
 			}
