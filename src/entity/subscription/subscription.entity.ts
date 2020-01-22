@@ -67,7 +67,7 @@ export class SubscriptionClass extends BaseEntity {
 				propertyId: payload.propertyId,
 			};
 
-			return await this.DAOManager.findAndUpdate(this.modelName, query, update);
+			return await this.DAOManager.findAndUpdate(this.modelName, query, update, { new: false });
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
@@ -144,8 +144,39 @@ export class SubscriptionClass extends BaseEntity {
 						updatedAt: 1,
 						endDate: 1,
 						startDate: 1,
+						cardId: 1,
+						cardLast4: 1,
+						cardBrand: 1,
+						invoiceId: 1,
 					},
 				},
+				// {
+				// 	$lookup: {
+				// 		from: 'cards',
+				// 		let: { cardId: '$cardId' },
+				// 		pipeline: [{
+				// 			$match: {
+				// 				$expr: {
+				// 					$and: [{ $eq: ['$cardDetail.id', '$$cardId'] }],
+				// 				},
+				// 			},
+				// 		}, {
+				// 			$project: {
+				// 				_id: 0,
+				// 				last4: '$cardDetail.last4',
+				// 			},
+				// 		}],
+				// 		as: 'cardData',
+				// 	},
+
+				// },
+				// {
+				// 	$unwind: {
+				// 		path: '$cardData',
+				// 		preserveNullAndEmptyArrays: true,
+
+				// 	},
+				// },
 				{
 					$lookup: {
 						from: 'properties',
@@ -154,7 +185,7 @@ export class SubscriptionClass extends BaseEntity {
 							{
 								$match: {
 									$expr: {
-										$and: [{ $eq: ['$_id', '$$propertyId'] }, { $eq: ['$property_status.number', 3] }],
+										$and: [{ $eq: ['$_id', '$$propertyId'] }, { $eq: ['$property_added_by.userId', userData._id] }],
 									},
 								},
 							},
@@ -190,6 +221,106 @@ export class SubscriptionClass extends BaseEntity {
 		}
 	}
 
+	async activeSubscriptionList(userData, payload) {
+		try {
+			const {
+				sortBy = 'date',
+				page = 1,
+				sortType = -1,
+				limit = Constant.SERVER.LIMIT,
+			} = payload;
+
+			const paginateOptions = {
+				page, limit,
+			};
+			let sortingType = {};
+			let query: any = {};
+			sortingType = {
+				createdAt: sortType,
+			};
+
+			query = {
+				userId: userData._id,
+				status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+				$or: [
+					{
+						featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					}, {
+						featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
+					}],
+			};
+
+			// query['$or'] = [
+			// 	{
+			// 		featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE,
+			// 	}, {
+			// 		featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
+			// 	}
+			// ]
+			const matchPipeline = [
+				{ $match: query },
+				{ $sort: sortingType },
+			];
+			const pipeline = [
+				{
+					$lookup: {
+						from: 'properties',
+						let: { pid: '$propertyId' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ['$_id', '$$pid'],
+									},
+								},
+							},
+							{
+								$project: {
+									'property_basic_details.name': 1,
+									'property_basic_details.title': 1,
+									// propertyId: 1,
+									// _id: 1,
+								},
+							},
+						],
+						as: 'propertyData',
+					},
+				},
+				{
+					$unwind: {
+						path: '$propertyData',
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+
+			];
+
+			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
+			// const data = await ENTITY.SubscriptionE.paginate(pipeline, {});
+			console.log('>>>>>>>>>>>>>>>>>>>.', data);
+			return data;
+			// {
+			// 	$match: {
+			// 		$and: [
+			// 			{
+			// 				userId: userData._id,
+			// 				status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+			// 				// endDate: { $gt: new Date().getTime() },
+			// 			},
+			// 			// {
+			// 			// 	$or: [{
+			// 			// 		featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+			// 			// 	}, {
+			// 			// 		featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
+			// 			// 	}],
+			// 			// },
+			// 		],
+			// 	},
+			// }];
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
 
 	async updateSubscriptionStatus(paymentIntent) {
 		try {

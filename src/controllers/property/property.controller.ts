@@ -5,6 +5,7 @@ import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import { exists } from 'fs';
 import { Types } from 'mongoose';
+import { ObjectId } from 'bson';
 export class PropertyController {
 
 	getTypeAndDisplayName(findObj, num: number) {
@@ -54,7 +55,7 @@ export class PropertyController {
 			let propertyAction;
 			const promiseArray = [];
 			const criteria = {
-				_id: payload.propertyId,
+				_id: new Types.ObjectId(payload.propertyId),
 			};
 			if (payload.property_basic_details.property_for_number) {
 				result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload.property_basic_details.property_for_number);
@@ -105,27 +106,53 @@ export class PropertyController {
 				// // promiseArray.push(ENTITY.EnquiryE.updateOneEntity(criteria, enquiryDataToUpdate));
 
 				if (payload.subscriptionId) {
-					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
+
+					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: new Types.ObjectId(payload.subscriptionId), propertyId: new Types.ObjectId('payload.propertyId') });
+					console.log('step1step1', step1);
+
 					// updates to prev property added to this subscription
-					const update: any = {};
-					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-						payload.isFeatured = true;
-						update.isFeatured = false;
+					// const update: any = {};
+					if (step1) {
+
+						if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+							payload.isFeatured = true;
+							console.log('regular property');
+							// update.isFeatured = false;
+						}
+						if (step1.featuredType === 'HOMEPAGE_PROPERTY') {
+							console.log('home page property');
+							payload.isHomePageFeatured = true;
+							// update.isHomePageFeatured = false;
+						}
 					}
-					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
-						payload.isHomePageFeatured = true;
-						update.isHomePageFeatured = false;
+					// if (step1.propertyId) {
+					// 	ENTITY.PropertyE.updateOneEntity({
+					// 		_id: new Types.ObjectId(step1.propertyId),
+					// 	}, update);
+					// }
+					return {};
+				} else {
+					// @TODO remove subscription from this property
+					const criteriaSubscription = {
+						propertyId: new Types.ObjectId(payload.propertyId),
+					};
+					const data = await ENTITY.SubscriptionE.updateOneEntity(criteriaSubscription, { $set: { propertyId: null } });
+					console.log('datadatadatadatadata', data);
+					if (data) {
+						if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+							payload.isHomePageFeatured = false;
+						}
+						if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+							payload.isFeatured = false;
+						}
 					}
-					if (step1.propertyId) {
-						ENTITY.PropertyE.updateOneEntity({
-							_id: new Types.ObjectId(step1.propertyId),
-						}, update);
-					}
+
 				}
 				delete payload.propertyId;
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
+
 				payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
 				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
 				let data: any;
@@ -135,23 +162,28 @@ export class PropertyController {
 				} else {
 					data = await ENTITY.PropertyE.createOneEntity(payload);
 				}
+
 				if (payload.subscriptionId) {
 					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
+					const oldSubscription: any = {};
 					const update: any = {};
 					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-						payload.isFeatured = true;
-						update.isFeatured = false;
+						oldSubscription.isFeatured = false;
+						update.isFeatured = true;
 					}
-					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE) {
-						payload.isHomePageFeatured = true;
-						update.isHomePageFeatured = false;
+					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+						oldSubscription.isHomePageFeatured = false;
+						update.isHomePageFeatured = true;
+					}
+					if (data.propertyId) {
+						ENTITY.PropertyE.updateOneEntity({ _id: new Types.ObjectId(data._id) }, { $set: update });
+						// ENTITY.PropertyE.updateOneEntity({step1.propertyId})
 					}
 					if (step1.propertyId) {
-						ENTITY.PropertyE.updateOneEntity({
-							_id: new Types.ObjectId(step1.propertyId),
-						}, update);
+
+						ENTITY.PropertyE.updateOneEntity({ _id: step1.propertyId }, { $set: oldSubscription });
 					}
-					const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
+					// const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
 				}
 				return data;
 			}
@@ -331,61 +363,104 @@ export class PropertyController {
 					},
 				};
 				return await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true });
-			} else if (payload.upgradeToFeature) {
-				const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
+			} else {
+				if (!payload.subscriptionId) {
+					let dataToUpdate = {};
+					const data = await ENTITY.SubscriptionE.updateOneEntity({ propertyId: new Types.ObjectId(payload.propertyId) }, { $set: { propertyId: null } });
+					if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+						dataToUpdate = {
+							isHomePageFeatured: false,
+						};
+					}
+					if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+						dataToUpdate = {
+							isFeatured: false,
+						};
+					}
+					// @TODO find and update subscription by removing property id
+					// @TODO update property by
+					await ENTITY.PropertyE.updateOneEntity({
+						_id: new Types.ObjectId(payload.propertyId),
+					}, { $set: dataToUpdate });
+					return {};
+				}
+				const criteria = {
+					userId: userData._id,
+					_id: new Types.ObjectId(payload.subscriptionId),
+					status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+				};
+				// const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
+				const step1 = await ENTITY.SubscriptionE.getOneEntity(criteria, {});
+
 				if (step1) {
-					dataToSet.$set = {
-						isFeatured: true,
-					};
-					dataToSet.$push = {
-						propertyActions: {
-							actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
-							actionString: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
-							displayName: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.DISPLAY_NAME,
-							actionPerformedBy: {
-								userId: userData._id,
-								userType: userData.type,
-								action: payload.status ? Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE : Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
-								actionTime: new Date().getTime(),
-							},
-						},
-					};
-					const step2 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: step1._id, propertyId: payload.propertyId });
-					const step3 = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true, lean: true });
-					step3.upgradeToFeature = true;
-					return step3;
+					const upgradeData: any = {};
+					const downgradeData: any = {};
+					const step2 = await ENTITY.SubscriptionE.updateOneEntity({
+						propertyId: new Types.ObjectId(payload.propertyId),
+					}, { $set: { propertyId: null } });
+					if (step2) {
+						if (step2.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+							upgradeData.isHomePageFeatured = false;
+						} else if (step2.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+							upgradeData.isFeatured = false;
+						}
+					}
+					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+						upgradeData.isHomePageFeatured = true;
+						downgradeData.isHomePageFeatured = false;
+					} else if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+						upgradeData.isFeatured = true;
+						downgradeData.isFeatured = false;
+					}
+					const updates = [
+						ENTITY.PropertyE.updateOneEntity({
+							_id: new Types.ObjectId(payload.propertyId),
+						}, { $set: upgradeData }, { new: true, lean: true }),
+						ENTITY.SubscriptionE.assignPropertyWithSubscription({
+							subscriptionId: step1._id,
+							propertyId: new Types.ObjectId(payload.propertyId),
+						}),
+					];
+					if (step1.propertyId) {
+						updates.push(ENTITY.PropertyE.updateOneEntity({
+							_id: new Types.ObjectId(step1.propertyId),
+						}, { $set: downgradeData }, { new: true, lean: true }));
+					}
+					await Promise.all(updates);
+					return {};
 				} else {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.SUBSCRIPTION_NOT_EXIST({}));
 				}
-			} else if (payload.upgradeToHomePageFeatured) {
-				const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
-				if (step1) {
-					if (step1) {
-						dataToSet.$set = {
-							isHomePageFeatured: true,
-						};
-						dataToSet.$push = {
-							propertyActions: {
-								actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
-								actionString: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
-								displayName: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.DISPLAY_NAME,
-								actionPerformedBy: {
-									userId: userData._id,
-									userType: userData.type,
-									action: payload.status ? Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE : Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
-									actionTime: new Date().getTime(),
-								},
-							},
-						};
-						const step2 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: step1._id, propertyId: payload.propertyId });
-						const step3 = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true, lean: true });
-						step3.upgradeToHomePageFeatured = true;
-						return step3;
-					} else {
-						return Promise.reject(Constant.STATUS_MSG.ERROR.E400.SUBSCRIPTION_NOT_EXIST);
-					}
-				}
 			}
+			// else if (payload.upgradeToHomePageFeatured) {
+			// 	const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
+			// 	if (step1) {
+			// 		if (step1) {
+			// 			dataToSet.$set = {
+			// 				isHomePageFeatured: true,
+			// 			};
+			// 			dataToSet.$push = {
+			// 				propertyActions: {
+			// 					actionNumber: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
+			// 					actionString: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
+			// 					displayName: Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.DISPLAY_NAME,
+			// 					actionPerformedBy: {
+			// 						userId: userData._id,
+			// 						userType: userData.type,
+			// 						action: payload.status ? Constant.DATABASE.PROPERTY_ACTIONS.SOLD_RENTED.TYPE : Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.TYPE,
+			// 						actionTime: new Date().getTime(),
+			// 					},
+			// 				},
+			// 			};
+			// 			const step2 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: step1._id, propertyId: payload.propertyId });
+			// 			const step3 = await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true, lean: true });
+			// 			step3.upgradeToHomePageFeatured = true;
+			// 			return step3;
+			// 		} else {
+			// 			return Promise.reject(Constant.STATUS_MSG.ERROR.E400.SUBSCRIPTION_NOT_EXIST);
+			// 		}
+			// 	}
+			// }
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
