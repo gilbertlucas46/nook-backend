@@ -156,6 +156,14 @@ export class TransactionClass extends BaseEntity {
 									},
 								},
 							},
+							{
+								$project: {
+									name: 1,
+									address: 1,
+									// propertyId: 1,
+									// _id: 1,
+								},
+							},
 						],
 						as: 'cardData',
 					},
