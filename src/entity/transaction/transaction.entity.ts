@@ -143,42 +143,42 @@ export class TransactionClass extends BaseEntity {
 					$sort: sortingType,
 				},
 			];
-			const pipeline = [
-				{
-					$lookup: {
-						from: 'cards',
-						let: { cardId: '$cardId' },
-						pipeline: [
-							{
-								$match: {
-									$expr: {
-										$eq: ['$cardDetail.id', '$$cardId'],
-									},
-								},
-							},
-							{
-								$project: {
-									name: 1,
-									address: 1,
-									// propertyId: 1,
-									// _id: 1,
-								},
-							},
-						],
-						as: 'cardData',
-					},
-				},
-				{
-					$unwind: {
-						path: '$cardData',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
-			];
+			// const pipeline = [
+			// 	{
+			// 		$lookup: {
+			// 			from: 'cards',
+			// 			let: { cardId: '$cardId' },
+			// 			pipeline: [
+			// 				{
+			// 					$match: {
+			// 						$expr: {
+			// 							$eq: ['$cardDetail.id', '$$cardId'],
+			// 						},
+			// 					},
+			// 				},
+			// 				{
+			// 					$project: {
+			// 						name: 1,
+			// 						address: 1,
+			// 						// propertyId: 1,
+			// 						// _id: 1,
+			// 					},
+			// 				},
+			// 			],
+			// 			as: 'cardData',
+			// 		},
+			// 	},
+			// 	{
+			// 		$unwind: {
+			// 			path: '$cardData',
+			// 			preserveNullAndEmptyArrays: true,
+			// 		},
+			// 	},
+			// ];
 
 
 			// const data = await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
-			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
+			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
 			console.log('data>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KUDUD', data);
 			return data;
 		} catch (error) {
