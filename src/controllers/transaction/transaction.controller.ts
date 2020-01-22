@@ -433,6 +433,8 @@ class TransactionController extends BaseEntity {
 
 	async updateTransaction(event) {
 		try {
+			const data = await ENTITY.UserCardE.getOneEntity({ 'cardDetail.id': event['data']['object']['payment_method'] }, {});
+
 			const createTransaction = {
 				invoiceId: event['data']['object']['invoice'],
 				cardId: event['data']['object']['payment_method'],
@@ -440,6 +442,8 @@ class TransactionController extends BaseEntity {
 				last4: event['data']['object']['payment_method_details']['last4'],
 				exp_year: event['data']['object']['payment_method_details']['exp_year'],
 				exp_month: event['data']['object']['payment_method_details']['exp_month'],
+				name: data['name'],
+				address: data['address'],
 			};
 			console.log('updateTransaction2222222222>>>>>>>>>>>>>>>>>>>>>>>', createTransaction);
 
