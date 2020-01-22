@@ -3,6 +3,7 @@ import * as CONSTANT from '@src/constants/app.constant';
 import { invoiceNumber } from '../../utils/index';
 
 export interface ITransaction extends Document {
+	invoiceId: string;
 	transactionId: string;
 	idempotencyKey: string;
 	subscriptionId: Types.ObjectId;
@@ -23,19 +24,24 @@ export interface ITransaction extends Document {
 	createdAt: number;
 	updatedAt: number;
 	cardHolder: string;
+	brand: string;
+	last4: string;
+	exp_year: number;
+	exp_month: number;
 }
 
 export const transactionSchema = new Schema({
+	invoiceId: { type: String },
 	// _id: { type: Schema.Types.ObjectId, required: true, auto: true },
-	transactionId: { type: String, index: true, required: true }, // balance_transaction
+	transactionId: { type: String, index: true }, // balance_transaction
 	subscriptionId: { type: Schema.Types.ObjectId, ref: 'Subscription' },
-	amount: { type: Number, required: true },
-	currency: { type: String, required: true },
+	amount: { type: Number, },
+	currency: { type: String, },
 	// chargeId: { type: String, index: true, required: true },
-	// cardId: { type: String, required: true },
+	cardId: { type: String },
 	// receiptUrl: { type: String, required: true },
 	description: { type: String },
-	status: { type: String, required: true },
+	status: { type: String, default: 'pending' },
 	billingType: {
 		type: String,
 		enum: [
@@ -43,11 +49,11 @@ export const transactionSchema = new Schema({
 			CONSTANT.DATABASE.BILLING_TYPE.YEARLY,
 			'day',
 		],
-		required: true,
+		// required: true,
 	},
-	productId: { type: String, required: true },
-	receiptUrl: { type: String, required: true },
-	userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+	productId: { type: String },
+	receiptUrl: { type: String },
+	userId: { type: Schema.Types.ObjectId, ref: 'User' },
 	featuredType: {
 		type: String,
 		enum: [
@@ -56,7 +62,6 @@ export const transactionSchema = new Schema({
 			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
 			CONSTANT.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
 		],
-		required: true,
 	},
 	invoiceNo: { type: String },
 	cardHolder: { type: String },
@@ -67,6 +72,14 @@ export const transactionSchema = new Schema({
 	customer: { type: String },
 	customer_email: { type: String },
 	paid: { type: Boolean },
+
+	brand: { type: String },
+	last4: { type: String },
+	exp_year: { type: Number },
+	exp_month: { type: Number },
+	name: { type: String },
+	address: { type: String },
+
 }
 	, {
 		versionKey: false,

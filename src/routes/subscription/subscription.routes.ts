@@ -84,11 +84,11 @@ export let subscriptionRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				console.log('userDatauserData', userData);
-				// const payload = request.payload as any;
+				const payload = request.query as any;
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await AdminStaffEntity.checkPermission(payload.permission);
 				// }
-				const data = await subscriptionController.activeSubscriptionList(userData)
+				const data = await subscriptionController.activeSubscriptionList(userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				// utils.consolelog('Error', error, true);
@@ -100,7 +100,7 @@ export let subscriptionRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'subscription'],
 			auth: 'UserAuth',
 			validate: {
-				// payload: {
+				// query: {
 				// },
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -135,11 +135,8 @@ export let subscriptionRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'subscription'],
 			auth: 'UserAuth',
 			validate: {
-				query: {
-					limit: Joi.number(),
-					page: Joi.number(),
-					sortBy: Joi.string(),
-				},
+				// query: {
+				// },
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -183,4 +180,44 @@ export let subscriptionRoute: ServerRoute[] = [
 			},
 		},
 	},
+
+	{
+		method: 'GET',
+		path: '/v1/user/subscription/property',
+		handler: async (request, h) => {
+			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				console.log('userDatauserData', userData);
+				const payload = request.query as any;
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
+				const data = await subscriptionController.userSubscriptionProperty(userData, payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				// utils.consolelog('Error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'user active subscription list',
+			tags: ['api', 'anonymous', 'user', 'subscription'],
+			auth: 'UserAuth',
+			validate: {
+				query: {
+					limit: Joi.number(),
+					page: Joi.number(),
+					sortBy: Joi.string(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
 ];

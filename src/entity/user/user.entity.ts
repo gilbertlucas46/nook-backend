@@ -113,11 +113,15 @@ export class UserClass extends BaseEntity {
 											{
 												$match: {
 													$expr: {
-														$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
+														$and: [{ $eq: ['$propertyId', '$$propertyId'] },
+														{ $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] },
+														{ $eq: ['$userId', userData._id] },
+														{ $eq: ['status', Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE] },
+														],
 													},
 												},
 											},
-											{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+											// { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
 											{ $project: { _id: 1 } },
 										],
 										as: 'subscriptions',
@@ -133,7 +137,11 @@ export class UserClass extends BaseEntity {
 											{ 'property_status.number': Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
 											{ 'property_basic_details.property_for_number': Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER },
 											{ userId: userData._id },
-											{ sold_rent_time: { $gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+											{
+												sold_rent_time: {
+													$gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000)
+												}
+											},
 										],
 									},
 								},
