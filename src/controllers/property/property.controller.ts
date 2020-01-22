@@ -51,8 +51,6 @@ export class PropertyController {
 	 */
 	async addProperty(payload: PropertyRequest.PropertyData, userData: UserRequest.UserData) {
 		try {
-			console.log('userDatauserData', userData);
-
 			let result;
 			let propertyAction;
 			const promiseArray = [];
@@ -108,10 +106,10 @@ export class PropertyController {
 				// // promiseArray.push(ENTITY.EnquiryE.updateOneEntity(criteria, enquiryDataToUpdate));
 
 				if (payload.subscriptionId) {
+
 					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
 					// updates to prev property added to this subscription
 					// const update: any = {};
-					console.log('????????????????steo111111111111111111111', step1);
 
 					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 						payload.isFeatured = true;
@@ -134,7 +132,6 @@ export class PropertyController {
 						propertyId: payload.propertyId,
 					};
 					const data = await ENTITY.SubscriptionE.updateOneEntity(criteriaSubscription, { $set: { propertyId: null } });
-					console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<', data);
 
 					// return ;
 					if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
@@ -143,11 +140,13 @@ export class PropertyController {
 					if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 						payload.isFeatured = false
 					}
+
 				}
 				delete payload.propertyId;
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
+
 				payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
 				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
 				let data: any;
@@ -157,19 +156,26 @@ export class PropertyController {
 				} else {
 					data = await ENTITY.PropertyE.createOneEntity(payload);
 				}
+
 				if (payload.subscriptionId) {
 					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
+					const oldSubscription: any = {};
 					const update: any = {};
 					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-						// payload.isFeatured = true;
+						oldSubscription.isFeatured = false;
 						update.isFeatured = true;
 					}
 					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
-						// payload.isHomePageFeatured = true;
+						oldSubscription.isHomePageFeatured = false;
 						update.isHomePageFeatured = true;
 					}
 					if (data.propertyId) {
 						ENTITY.PropertyE.updateOneEntity({ _id: new Types.ObjectId(data._id) }, { $set: update });
+						// ENTITY.PropertyE.updateOneEntity({step1.propertyId})
+					}
+					if (step1.propertyId) {
+
+						ENTITY.PropertyE.updateOneEntity({ _id: step1.propertyId }, { $set: oldSubscription });
 					}
 					// const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
 				}
@@ -351,8 +357,25 @@ export class PropertyController {
 					},
 				};
 				return await ENTITY.PropertyE.updateOneEntity(criteria, dataToSet, { new: true });
-			} else if (payload.subscriptionId) {
-
+			} else {
+				if (!payload.subscriptionId) {
+					let dataToUpdate = {};
+					const data = await ENTITY.SubscriptionE.updateOneEntity({ propertyId: payload.propertyId }, { $set: { propertyId: null } });
+					if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+						dataToUpdate = {
+							isHomePageFeatured: false,
+						};
+					}
+					if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+						dataToUpdate = {
+							isFeatured: false,
+						};
+					}
+					// @TODO find and update subscription by removing property id
+					// @TODO update property by
+					await ENTITY.PropertyE.updateOneEntity({ _id: payload.propertyId }, { $set: dataToUpdate });
+					return {};
+				}
 				const criteria = {
 					userId: userData._id,
 					_id: payload.subscriptionId,
@@ -386,6 +409,7 @@ export class PropertyController {
 						}, { $set: downgradeData }, { new: true, lean: true }));
 					}
 					await Promise.all(updates);
+					return {};
 				} else {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.SUBSCRIPTION_NOT_EXIST({}));
 				}
