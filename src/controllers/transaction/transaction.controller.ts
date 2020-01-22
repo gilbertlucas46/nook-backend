@@ -407,7 +407,9 @@ class TransactionController extends BaseEntity {
 	async updateTransaction(event) {
 		try {
 			const data = await ENTITY.UserCardE.getOneEntity({ 'cardDetail.id': event['data']['object']['payment_method'] }, {});
-
+			const criteria = {
+				invoiceId: event['data']['object']['invoice'],
+			}
 			const createTransaction = {
 				invoiceId: event['data']['object']['invoice'],
 				cardId: event['data']['object']['payment_method'],
@@ -420,7 +422,8 @@ class TransactionController extends BaseEntity {
 			};
 			console.log('updateTransaction2222222222>>>>>>>>>>>>>>>>>>>>>>>', createTransaction);
 
-			const createTransction = await ENTITY.TransactionE.createOneEntity(createTransaction);
+			const createTransction = await ENTITY.TransactionE.updateOneEntity(criteria, createTransaction, { upsert: true, new: true });
+			// const createTransction = await ENTITY.TransactionE.createOneEntity(createTransaction);
 			console.log('createTransctioncreateTransctioncreateTransction>>>>>>>>>>>>.', createTransction);
 			return createTransction;
 

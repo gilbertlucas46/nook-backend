@@ -85,7 +85,7 @@ export class TransactionClass extends BaseEntity {
 
 			// const insertData = await this.DAOManager.saveData(this.modelName, data);
 			// return data;
-			const updateDate = await this.DAOManager.findAndUpdate(this.modelName, criteria, { $set: data });
+			const updateDate = await this.DAOManager.findAndUpdate(this.modelName, criteria, { $set: data }, { upsert: true, new: true });
 			console.log('updateDateupdateDate', updateDate);
 			return updateDate;
 
