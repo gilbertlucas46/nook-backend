@@ -104,31 +104,48 @@ export class UserClass extends BaseEntity {
 								},
 								{ $count: 'Total' },
 							],
-							Featured: [
-								{
-									$lookup: {
-										from: 'subscriptions',
-										let: { propertyId: '$_id' },
-										pipeline: [
-											{
-												$match: {
-													$expr: {
-														$and: [{ $eq: ['$propertyId', '$$propertyId'] },
-														{ $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] },
-														{ $eq: ['$userId', userData._id] },
-														{ $eq: ['status', Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE] },
-														],
-													},
-												},
+							Featured: [{
+								$match: {
+									$and: [
+										{
+											'property_added_by.userId': new Types.ObjectId(userData._id),
+										}, {
+											$or: [{
+												isFeatured: true,
+											}, {
+												isHomePageFeatured: true,
 											},
-											// { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-											{ $project: { _id: 1 } },
-										],
-										as: 'subscriptions',
-									},
+											],
+										},
+									],
 								},
-								{ $project: { subscriptions: { $size: '$subscriptions' } } },
-								{ $match: { subscriptions: { $gt: 0 } } },
+
+							},
+								// { $count: 'Total' },
+								// {
+								// 	$lookup: {
+								// 		from: 'subscriptions',
+								// 		let: { propertyId: '$_id' },
+								// 		pipeline: [
+								// 			{
+								// 				$match: {
+								// 					$expr: {
+								// 						$and: [{ $eq: ['$propertyId', '$$propertyId'] },
+								// 						{ $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] },
+								// 						{ $eq: ['$userId', userData._id] },
+								// 						{ $eq: ['status', Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE] },
+								// 						],
+								// 					},
+								// 				},
+								// 			},
+								// 			// { $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+								// 			{ $project: { _id: 1 } },
+								// 		],
+								// 		as: 'subscriptions',
+								// 	},
+								// },
+								// { $project: { subscriptions: { $size: '$subscriptions' } } },
+								// { $match: { subscriptions: { $gt: 0 } } },
 							],
 							soldPropertyLast30Days: [
 								{
@@ -139,8 +156,8 @@ export class UserClass extends BaseEntity {
 											{ userId: userData._id },
 											{
 												sold_rent_time: {
-													$gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000)
-												}
+													$gte: new Date().getTime() - (30 * 24 * 60 * 60 * 1000),
+												},
 											},
 										],
 									},
@@ -164,10 +181,13 @@ export class UserClass extends BaseEntity {
 					},
 					{
 						$project: {
+
 							Active: {
 								$cond: { if: { $size: '$Active' }, then: { $arrayElemAt: ['$Active.Total', 0] }, else: 0 },
 							},
-							Featured: { $size: '$Featured.subscriptions' },
+							// Featured: { if: { $size: '$Featured' }, then: { arrayElemAt: ['$Featured.Total', 0] }, else: 0 },
+							Featured: { $size: '$Featured' },
+
 							soldPropertyLast30Days: {
 								$cond: { if: { $size: ['$soldPropertyLast30Days'] }, then: { $arrayElemAt: ['$soldPropertyLast30Days.Total', 0] }, else: 0 },
 							},
