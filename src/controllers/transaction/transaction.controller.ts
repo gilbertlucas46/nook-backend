@@ -427,7 +427,7 @@ class TransactionController extends BaseEntity {
 				new: true,
 				upsert: true,
 				$setOnInsert: {
-					invoiceId: invoiceNumber(++global.counters.Transaction),
+					invoiceNo: invoiceNumber(++global.counters.Transaction),
 				},
 			});
 			// const createTransction = await ENTITY.TransactionE.createOneEntity(createTransaction);
