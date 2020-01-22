@@ -55,7 +55,7 @@ export class PropertyController {
 			let propertyAction;
 			const promiseArray = [];
 			const criteria = {
-				_id: payload.propertyId,
+				_id: new Types.ObjectId(payload.propertyId),
 			};
 			if (payload.property_basic_details.property_for_number) {
 				result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_FOR, payload.property_basic_details.property_for_number);
@@ -107,7 +107,9 @@ export class PropertyController {
 
 				if (payload.subscriptionId) {
 
-					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: payload.propertyId });
+					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: new Types.ObjectId(payload.subscriptionId), propertyId: new Types.ObjectId('payload.propertyId') });
+					console.log('step1step1', step1);
+
 					// updates to prev property added to this subscription
 					// const update: any = {};
 
@@ -129,7 +131,7 @@ export class PropertyController {
 				} else {
 					// @TODO remove subscription from this property
 					const criteriaSubscription = {
-						propertyId: payload.propertyId,
+						propertyId: new Types.ObjectId(payload.propertyId),
 					};
 					const data = await ENTITY.SubscriptionE.updateOneEntity(criteriaSubscription, { $set: { propertyId: null } });
 
