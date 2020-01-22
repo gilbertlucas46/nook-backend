@@ -360,7 +360,7 @@ export class PropertyController {
 			} else {
 				if (!payload.subscriptionId) {
 					let dataToUpdate = {};
-					const data = await ENTITY.SubscriptionE.updateOneEntity({ propertyId: payload.propertyId }, { $set: { propertyId: null } });
+					const data = await ENTITY.SubscriptionE.updateOneEntity({ propertyId: new Types.ObjectId(payload.propertyId) }, { $set: { propertyId: null } });
 					if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 						dataToUpdate = {
 							isHomePageFeatured: false,
@@ -389,6 +389,16 @@ export class PropertyController {
 				if (step1) {
 					const upgradeData: any = {};
 					const downgradeData: any = {};
+					const step2 = await ENTITY.SubscriptionE.updateOneEntity({
+						propertyId: new Types.ObjectId(payload.propertyId),
+					}, { $set: { propertyId: null } });
+					if (step2) {
+						if (step2.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+							upgradeData.isHomePageFeatured = false;
+						} else if (step2.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+							upgradeData.isFeatured = false;
+						}
+					}
 					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 						upgradeData.isHomePageFeatured = true;
 						downgradeData.isHomePageFeatured = false;
@@ -396,9 +406,6 @@ export class PropertyController {
 						upgradeData.isFeatured = true;
 						downgradeData.isFeatured = false;
 					}
-					await ENTITY.SubscriptionE.updateOneEntity({
-						propertyId: new Types.ObjectId(payload.propertyId),
-					}, { $set: { propertyId: null } });
 					const updates = [
 						ENTITY.PropertyE.updateOneEntity({
 							_id: new Types.ObjectId(payload.propertyId),
