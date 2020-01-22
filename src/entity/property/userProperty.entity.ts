@@ -83,7 +83,7 @@ export class UserPropertyClass extends BaseEntity {
 						},
 						],
 					},
-				}
+				};
 			}
 			else if (propertyType !== Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER) {
 				criteria = {

@@ -243,7 +243,7 @@ class TransactionController extends BaseEntity {
 			console.log('checkplancheckplancheckplan', checkplan);
 			// }
 			const updatePropertyAddedBy = {
-				'property_added_by.userId': userData._id,
+				'property_added_by.userId': new Types.ObjectId(userData._id),
 			};
 			const insertData = {
 				name: payload.name,

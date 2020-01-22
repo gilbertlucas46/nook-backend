@@ -373,12 +373,14 @@ export class PropertyController {
 					}
 					// @TODO find and update subscription by removing property id
 					// @TODO update property by
-					await ENTITY.PropertyE.updateOneEntity({ _id: payload.propertyId }, { $set: dataToUpdate });
+					await ENTITY.PropertyE.updateOneEntity({
+						_id: new Types.ObjectId(payload.propertyId),
+					}, { $set: dataToUpdate });
 					return {};
 				}
 				const criteria = {
 					userId: userData._id,
-					_id: payload.subscriptionId,
+					_id: new Types.ObjectId(payload.subscriptionId),
 					status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
 				};
 				// const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROPERTY });
@@ -394,13 +396,16 @@ export class PropertyController {
 						upgradeData.isFeatured = true;
 						downgradeData.isFeatured = false;
 					}
+					await ENTITY.SubscriptionE.updateOneEntity({
+						propertyId: new Types.ObjectId(payload.propertyId),
+					}, { $set: { propertyId: null } });
 					const updates = [
 						ENTITY.PropertyE.updateOneEntity({
 							_id: new Types.ObjectId(payload.propertyId),
 						}, { $set: upgradeData }, { new: true, lean: true }),
 						ENTITY.SubscriptionE.assignPropertyWithSubscription({
 							subscriptionId: step1._id,
-							propertyId: payload.propertyId,
+							propertyId: new Types.ObjectId(payload.propertyId),
 						}),
 					];
 					if (step1.propertyId) {
