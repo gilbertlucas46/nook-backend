@@ -67,7 +67,7 @@ export class SubscriptionClass extends BaseEntity {
 				propertyId: payload.propertyId,
 			};
 
-			return await this.DAOManager.findAndUpdate(this.modelName, query, update);
+			return await this.DAOManager.findAndUpdate(this.modelName, query, update, { new: false });
 		} catch (error) {
 			utils.consolelog('Error', error, true);
 			return Promise.reject(error);
@@ -146,33 +146,34 @@ export class SubscriptionClass extends BaseEntity {
 						startDate: 1,
 						cardId: 1,
 					},
-				}, {
-					$lookup: {
-						from: 'cards',
-						let: { cardId: '$cardId' },
-						pipeline: [{
-							$match: {
-								$expr: {
-									$and: [{ $eq: ['$cardDetail.id', '$$cardId'] }],
-								},
-							},
-						}, {
-							$project: {
-								_id: 0,
-								last4: '$cardDetail.last4',
-							},
-						}],
-						as: 'cardData',
-					},
-
 				},
-				{
-					$unwind: {
-						path: '$cardData',
-						preserveNullAndEmptyArrays: true,
+				// {
+				// 	$lookup: {
+				// 		from: 'cards',
+				// 		let: { cardId: '$cardId' },
+				// 		pipeline: [{
+				// 			$match: {
+				// 				$expr: {
+				// 					$and: [{ $eq: ['$cardDetail.id', '$$cardId'] }],
+				// 				},
+				// 			},
+				// 		}, {
+				// 			$project: {
+				// 				_id: 0,
+				// 				last4: '$cardDetail.last4',
+				// 			},
+				// 		}],
+				// 		as: 'cardData',
+				// 	},
 
-					},
-				},
+				// },
+				// {
+				// 	$unwind: {
+				// 		path: '$cardData',
+				// 		preserveNullAndEmptyArrays: true,
+
+				// 	},
+				// },
 				{
 					$lookup: {
 						from: 'properties',
