@@ -58,6 +58,7 @@ export class UserPropertyClass extends BaseEntity {
 						sortingType = {
 							isFeatured: sortType,
 						};
+						break;
 					default:
 						sortBy = 'updatedAt';
 						sortingType = {
