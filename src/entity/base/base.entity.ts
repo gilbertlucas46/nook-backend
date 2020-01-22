@@ -62,9 +62,10 @@ export class BaseEntity {
 			} else {
 				option['new'] = true;
 				option['lean'] = true;
-				option['$setOnInsert'] = {
-					updatedAt: new Date().getTime(),
-				};
+				if (!option['$setOnInsert']) {
+					option['$setOnInsert'] = {};
+				}
+				option['$setOnInsert']['updatedAt'] = new Date().getTime();
 			}
 
 			return await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate, option);

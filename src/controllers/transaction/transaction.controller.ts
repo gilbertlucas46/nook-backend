@@ -7,6 +7,7 @@ import { stripeService } from '@src/lib/stripe.manager';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../../utils';
 import { Types, Document } from 'mongoose';
+import { invoiceNumber } from '../../utils';
 
 class TransactionController extends BaseEntity {
 
@@ -422,7 +423,13 @@ class TransactionController extends BaseEntity {
 			};
 			console.log('updateTransaction2222222222>>>>>>>>>>>>>>>>>>>>>>>', createTransaction);
 
-			const createTransction = await ENTITY.TransactionE.updateOneEntity(criteria, createTransaction, { upsert: true, new: true });
+			const createTransction = await ENTITY.TransactionE.updateOneEntity(criteria, createTransaction, {
+				new: true,
+				upsert: true,
+				$setOnInsert: {
+					invoiceId: invoiceNumber(++global.counters.Transaction),
+				},
+			});
 			// const createTransction = await ENTITY.TransactionE.createOneEntity(createTransaction);
 			console.log('createTransctioncreateTransctioncreateTransction>>>>>>>>>>>>.', createTransction);
 			return createTransction;
