@@ -499,17 +499,22 @@ export let propertyRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload = {
+				const payload: any = {
 					propertyId: request.params.propertyId,
 					status: (request.payload as any).property_status,
-					upgradeToFeature: (request.payload as any).upgradeToFeature,
+					subscriptionId: (request.payload as any).subscriptionId,
+					// ...request.params,
+					// ...request.payload as object,
+					// upgradeToFeature: (request.payload as any).upgradeToFeature,
 				};
 				const data = await PropertyService.updatePropertyStatus(payload, userData);
-				if (data.upgradeToFeature || data.upgradeToHomePageFeatured) {
-					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_EXIST, data));
-				} else {
-					return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
-				}
+				console.log('datadatadatadatadata', data);
+
+				// if (data.upgradeToFeature || data.upgradeToHomePageFeatured) {
+				// 	return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_EXIST, data));
+				// } else {
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				// }
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
@@ -529,8 +534,7 @@ export let propertyRoute: ServerRoute[] = [
 							Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
 							Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
 						]),
-					upgradeToFeature: Joi.boolean(),
-					upgradeToHomePageFeatured: Joi.boolean()
+					subscriptionId: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

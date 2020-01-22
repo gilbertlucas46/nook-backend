@@ -2,6 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import * as Constant from '@src/constants/app.constant';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import * as utils from '@src/utils';
+import { Types } from 'mongoose';
 
 export class UserPropertyClass extends BaseEntity {
 	constructor() {
@@ -57,6 +58,7 @@ export class UserPropertyClass extends BaseEntity {
 						sortingType = {
 							isFeatured: sortType,
 						};
+						break;
 					default:
 						sortBy = 'updatedAt';
 						sortingType = {
@@ -82,12 +84,12 @@ export class UserPropertyClass extends BaseEntity {
 						},
 						],
 					},
-				}
+				};
 			}
 			else if (propertyType !== Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER) {
 				criteria = {
 					$match: {
-						'userId': userData._id,
+						'property_added_by.userId': new Types.ObjectId(userData._id),
 						'property_status.number': propertyType,
 					},
 				};
@@ -120,69 +122,128 @@ export class UserPropertyClass extends BaseEntity {
 					$lookup: {
 						from: 'subscriptions',
 						let: { propertyId: '$_id', userId: '$property_added_by.userId' },
-						pipeline: [
-							{
-								$facet: {
-									featuredProperties: [
-										{
-											$match: {
-												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
-												},
-											},
-										},
-										{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-										{ $project: { _id: 1 } },
-									],
-									homepageFeaturedProperties: [
-										{
-											$match: {
-												$expr: {
-													$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] }],
-												},
-											},
-										},
-										{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-										{ $project: { _id: 1 } },
-									],
-									users: [
-										{
-											$match: {
-												$expr: {
-													$and: [{ $eq: ['$userId', '$$userId'] }, { $in: ['$featuredType', [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE]] }],
-												},
-											},
-										},
-										{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
-										{ $project: { _id: 1 } },
-									],
+						pipeline: [{
+							$match: {
+								$expr: {
+									$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }],
 								},
 							},
+						}, {
+							$project: {
+								_id: 1,
+								featuredType: 1,
+							},
+						},
 						],
-						as: 'subscriptions',
-					},
+						as: 'subscriptionData',
+					}
 				},
 				{
-					$addFields: { subscriptions: { $arrayElemAt: ['$subscriptions', 0] } },
-				},
-				{
-					$addFields: {
-						'isFeatured': {
-							$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.featuredProperties', []] }, then: false, else: true } } },
-						},
-						'isHomePageFeatured': {
-							$cond: { if: { $eq: ['$isHomePageFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.homepageFeaturedProperties', []] }, then: false, else: true } } },
-						},
-						'property_added_by.isFeaturedProfile': {
-							$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
-						},
+					$unwind: {
+						path: '$subscriptionData',
+						preserveNullAndEmptyArrays: true,
 					},
 				},
-				{
-					$project: {
-						subscriptions: 0,
-					},
-				},
+
+				// 	{
+				//         $lookup: {
+				//             from: 'properties',
+				//             let: { propertyId: '$propertyId' },
+				//             pipeline: [
+				//                 {
+				//                     $match: {
+				//                         $expr: {
+				//                             $and: [
+				//                                 { $eq: ['$_id', '$$propertyId'] },
+				//                                 { $eq: ['$property_status.number', Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER] },
+				//                             ],
+				//                         },
+				//                     },
+				//                 },
+				//                 { $project: { propertyActions: 0 } },
+				//             ],
+				//             as: 'propertyData',
+				//         },
+				//     },
+				//     {
+				//         $match: {
+				//             $expr: { $gt: [{ $size: '$propertyData' }, 0] },
+				//         },
+				//     },
+				//     {
+				//         $unwind: {
+				//             path: '$propertyData',
+				//             preserveNullAndEmptyArrays: true,
+				//         },
+				//     },
+				//     { $replaceRoot: { newRoot: '$propertyData' } },
+				//     { $sort: sortingType },
+				// ];
+
+
+
+				// 			{
+				// 				$facet: {
+				// 					featuredProperties: [
+				// 						{
+				// 							$match: {
+				// 								$expr: {
+				// 									$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.PROPERTY] }],
+				// 								},
+				// 							},
+				// 						},
+				// 						{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+				// 						{ $project: { _id: 1 } },
+				// 					],
+				// 					homepageFeaturedProperties: [
+				// 						{
+				// 							$match: {
+				// 								$expr: {
+				// 									$and: [{ $eq: ['$propertyId', '$$propertyId'] }, { $eq: ['$userId', '$$userId'] }, { $eq: ['$featuredType', Constant.DATABASE.FEATURED_TYPE.HOMEPAGE] }],
+				// 								},
+				// 							},
+				// 						},
+				// 						{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+				// 						{ $project: { _id: 1 } },
+				// 					],
+				// 					users: [
+				// 						{
+				// 							$match: {
+				// 								$expr: {
+				// 									$and: [{ $eq: ['$userId', '$$userId'] }, { $in: ['$featuredType', [Constant.DATABASE.FEATURED_TYPE.PROFILE, Constant.DATABASE.FEATURED_TYPE.HOMEPAGE]] }],
+				// 								},
+				// 							},
+				// 						},
+				// 						{ $match: { $and: [{ startDate: { $lte: new Date().getTime() } }, { endDate: { $gte: new Date().getTime() } }] } },
+				// 						{ $project: { _id: 1 } },
+				// 					],
+				// 				},
+				// 			},
+				// 		],
+				// 		as: 'subscriptions',
+				// 	},
+				// },
+				// {
+				// 	$addFields: { subscriptions: { $arrayElemAt: ['$subscriptions', 0] } },
+				// },
+				// {
+				// 	$addFields: {
+				// 		'isFeatured': {
+				// 			$cond: { if: { $eq: ['$isFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.featuredProperties', []] }, then: false, else: true } } },
+				// 		},
+				// 		'isHomePageFeatured': {
+				// 			$cond: { if: { $eq: ['$isHomePageFeatured', false] }, then: false, else: { $cond: { if: { $eq: ['$subscriptions.homepageFeaturedProperties', []] }, then: false, else: true } } },
+				// 		},
+				// 		'property_added_by.isFeaturedProfile': {
+				// 			$cond: { if: { $eq: ['$subscriptions.users', []] }, then: false, else: true },
+				// 		},
+				// 	},
+				// },
+				// {
+				// 	$project: {
+				// 		subscriptions: 0,
+				// 	},
+				// },
 			];
 			return await this.DAOManager.paginate(this.modelName, pipeline, limit, page);
 		} catch (error) {

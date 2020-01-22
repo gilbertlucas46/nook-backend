@@ -5,6 +5,7 @@ import { formatUserData } from '@src/utils';
 import { stripeService } from '../../lib';
 
 class SubscriptionController {
+	t
 
 	async subscriptionList(payload) {
 		try {
@@ -38,11 +39,14 @@ class SubscriptionController {
 				}];
 			const data = await ENTITY.SubscriptionE.aggregate(pipeline, {});
 			return data;
-
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
+
+
+
+	
 	async userDashboard(payload, userData) {
 		try {
 			const data = await ENTITY.SubscriptionE.getUserDashboard(payload, userData);
@@ -54,7 +58,6 @@ class SubscriptionController {
 
 	async cancelSubscription(payload, userData) {
 		try {
-			// console.log('>?>>>>>>>>>>>..');
 			const userSubscriptionData = await ENTITY.SubscriptionE.getOneEntity({ _id: payload.id, userId: userData._id }, { subscriptionId: 1, status: 1 });
 			if (userSubscriptionData['status'] !== Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
 				return Promise.reject('already not in active status');
@@ -63,6 +66,15 @@ class SubscriptionController {
 			return;
 		} catch (error) {
 			return Promise.reject(error);
+		}
+	}
+
+	async userSubscriptionProperty(userData, payload) {
+		try {
+			return await ENTITY.SubscriptionE.activeSubscriptionList(userData, payload);
+		} catch (error) {
+			return Promise.reject(error);
+
 		}
 	}
 }

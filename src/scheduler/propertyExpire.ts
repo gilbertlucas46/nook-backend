@@ -7,7 +7,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 
 export let job1 = cron.schedule('0 */1 * * * *', () => {
     // this.updateProperty();
-    ExpireServices.updateProperty();
+    // ExpireServices.updateProperty();
 });
 
 class ExpireE extends BaseEntity {
@@ -40,6 +40,26 @@ class ExpireE extends BaseEntity {
             return;
         }
         catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async updateSubscription() {
+        try {
+            // db.getCollection('subscriptions').find({status:'active', endDate:{ $gt :new Date().getTime() } ,$or:[{featuredType:"HOMEPAGE_PROFILE"} ,{featuredType:"PROFILE"}]});
+
+            const ExpiredSubscriptionCriteria = {
+                status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+                $or: [{
+                    featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
+                }, {
+                    featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE,
+                }],
+                endDate: { $lt: new Date().getTime() },
+                isRecurring: false,
+            };
+
+        } catch (error) {
             return Promise.reject(error);
         }
     }

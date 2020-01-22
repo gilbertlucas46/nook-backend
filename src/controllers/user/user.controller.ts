@@ -148,7 +148,7 @@ export class UserController {
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
 				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber
-				|| getUser.type !== updateUser.type) {
+				|| getUser.type !== updateUser.type || getUser.isFeaturedProfile !== updateUser.isFeaturedProfile || getUser.isHomePageFeatured !== updateUser.isHomePageFeatured) {
 
 				const propertyCriteria = { 'property_added_by.userId': new Types.ObjectId(updateUser._id) };
 				const updatePropertyData = {
@@ -170,13 +170,15 @@ export class UserController {
 			/**
 			 *  push contract to salesforce
 			 */
-			if (!isProfileCompleted) {
-				// convert document to data
-				const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
-				await fetch(config.get('zapier_personUrl'), {
-					method: 'post',
-					body: JSON.stringify(salesforceData),
-				});
+			if (config.get['environment'] === 'production') {
+				if (!isProfileCompleted) {
+					// convert document to data
+					const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
+					await fetch(config.get('zapier_personUrl'), {
+						method: 'post',
+						body: JSON.stringify(salesforceData),
+					});
+				}
 			}
 
 			return updateUser;

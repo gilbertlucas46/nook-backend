@@ -272,8 +272,8 @@ const propertySchema = new Schema({
 		lastName: { type: String },
 		email: { type: String },
 		userType: { type: String },
-		isFeatured: { type: Boolean },
-		isHomePageFeatured: { type: Boolean }
+		isFeaturedProfile: { type: Boolean },
+		isHomePageFeatured: { type: Boolean },
 	},
 	property_status: {
 		number: {
