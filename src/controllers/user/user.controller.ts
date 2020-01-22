@@ -142,11 +142,13 @@ export class UserController {
 				payload.isProfileComplete = true;
 			}
 			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
+			console.log('getUsergetUser', getUser);
+
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
 			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
 				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber
-				|| getUser.type !== updateUser.type) {
+				|| getUser.type !== updateUser.type || getUser.isFeaturedProfile !== updateUser.isFeaturedProfile || getUser.isHomePageFeatured !== updateUser.isHomePageFeatured) {
 
 				const propertyCriteria = { userId: updateUser._id };
 				const updatePropertyData = {

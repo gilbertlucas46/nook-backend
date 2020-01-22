@@ -508,6 +508,8 @@ export let propertyRoute: ServerRoute[] = [
 					// upgradeToFeature: (request.payload as any).upgradeToFeature,
 				};
 				const data = await PropertyService.updatePropertyStatus(payload, userData);
+				console.log('datadatadatadatadata', data);
+
 				// if (data.upgradeToFeature || data.upgradeToHomePageFeatured) {
 				// 	return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.SUBSCRIPTION_EXIST, data));
 				// } else {
