@@ -42,10 +42,9 @@ class TransactionController extends BaseEntity {
 
 				const dataToSave = {
 					name: payload.name,
-					address: payload.name,
+					address: payload.address,
 					userId: userData._id,
 					cardDetail: createCard,
-
 				};
 
 				const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
@@ -272,7 +271,7 @@ class TransactionController extends BaseEntity {
 
 			if (step3.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
 				if (checkplan['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
-					// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>@2222222222222222222');
+					console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>@2222222222222222222');
 					await ENTITY.UserE.updateOneEntity({ _id: userData._id }, { isHomePageFeatured: true });
 					await ENTITY.PropertyE.updateMultiple(updatePropertyAddedBy, { $set: { 'property_added_by.isHomePageFeatured': true } });
 					return;
