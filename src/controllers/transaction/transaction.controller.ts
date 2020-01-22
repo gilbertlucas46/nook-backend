@@ -260,9 +260,9 @@ class TransactionController extends BaseEntity {
 				amount: (subscriptionData['plan']['amount'] / 100),
 				subscriptionId: subscriptionData['id'],
 				planId: subscriptionData['plan']['id'],
-				// cardExpYear: createCard.exp_year,
-				// cardLast4: createCard.last4,
-				// cardBrand: createCard.brand,
+				cardExpYear: createCard.exp_year,
+				cardLast4: createCard.last4,
+				cardBrand: createCard.brand,
 				invoiceId: subscriptionData['latest_invoice'],
 				cardId: createCard['id'],
 			};
@@ -473,7 +473,7 @@ class TransactionController extends BaseEntity {
 					break;
 				case 'charge.failed':
 					console.log('33333333333333333333333333333333333333');
-					// await this.handleChargeFailed(step1, paymentIntent);
+					await this.updateTransaction(event);
 					break;
 				case 'customer.subscription.deleted':
 					console.log('6666666666666666666666666666666666666666666666666666');
