@@ -77,6 +77,8 @@ export const transactionSchema = new Schema({
 	last4: { type: String },
 	exp_year: { type: Number },
 	exp_month: { type: Number },
+	name: { type: String },
+	address: { type: String },
 
 }
 	, {
