@@ -384,7 +384,7 @@ class TransactionController extends BaseEntity {
 			const getSubscriptionInfo = {
 				subscriptionId: event['data']['object']['id'],
 				status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
-				userId: getUserId._id,
+				userId: new Types.ObjectId(getUserId._id),
 			};
 			const getsubscriptionInfo = await ENTITY.SubscriptionE.getOneEntity(getSubscriptionInfo, {});
 			console.log('getsubscriptionInfogetsubscriptionInfo', getsubscriptionInfo);
@@ -392,24 +392,24 @@ class TransactionController extends BaseEntity {
 			if (getsubscriptionInfo && getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
 				console.log('111111111111111111111111');
 				ENTITY.SubscriptionE.updateOneEntity(getSubscriptionInfo, { $set: { status: event['data']['object']['status'] } });
-				await ENTITY.UserE.updateOneEntity({ _id: getUserId._id, isHomePageFeatured: true }, { $set: { isHomePageFeatured: false } });
+				await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id), isHomePageFeatured: true }, { $set: { isHomePageFeatured: false } });
 				ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': getUserId._id }, { $set: { 'property_added_by.isHomePageFeatured': false } });
 			}
 			else if (getsubscriptionInfo && getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
 				console.log('222222222222222222222222222222');
 				ENTITY.SubscriptionE.updateOneEntity(getSubscriptionInfo, { $set: { status: event['data']['object']['status'] } });
-				await ENTITY.UserE.updateOneEntity({ _id: getUserId._id, isHomePageFeatured: true }, { $set: { isFeaturedProfile: false } });
+				await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id), isHomePageFeatured: true }, { $set: { isFeaturedProfile: false } });
 				ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': getUserId._id }, { $set: { 'property_added_by.isFeaturedProfile': false } });
 			}
 			else if (getsubscriptionInfo && getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY && getSubscriptionInfo['propertyId']) {
 				console.log('333333333333333333333333333333333333333333333333');
-				ENTITY.SubscriptionE.updateOneEntity({ userId: getUserId._id, subscriptionId: event['data']['object']['id'] }, { $set: { status: event['data']['object']['status'] } });
+				ENTITY.SubscriptionE.updateOneEntity({ userId: new Types.ObjectId(getUserId._id), subscriptionId: event['data']['object']['id'] }, { $set: { status: event['data']['object']['status'] } });
 				ENTITY.PropertyE.updateOneEntity({ _id: getSubscriptionInfo['propertyId'] }, { $set: { isHomePageFeatured: false } });
 
 			}
 			else if (getsubscriptionInfo && getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROPERTY && getSubscriptionInfo['propertyId']) {
 				console.log('444444444444444444444444444444444444444444444444444444444444');
-				ENTITY.SubscriptionE.updateOneEntity({ userId: getUserId._id, subscriptionId: event['data']['object']['id'] }, { $set: { status: event['data']['object']['status'] } });
+				ENTITY.SubscriptionE.updateOneEntity({ userId: new Types.ObjectId(getUserId._id), subscriptionId: event['data']['object']['id'] }, { $set: { status: event['data']['object']['status'] } });
 				ENTITY.PropertyE.updateOneEntity({ _id: getSubscriptionInfo['propertyId'] }, { $set: { isFeatured: false } });
 			}
 
