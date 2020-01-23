@@ -390,7 +390,7 @@ class TransactionController extends BaseEntity {
 				userId: new Types.ObjectId(getUserId._id),
 			};
 			const getsubscriptionInfo = await ENTITY.SubscriptionE.getOneEntity(getSubscriptionInfo, {});
-			console.log('getsubscriptionInfogetsubscriptionInfo', getsubscriptionInfo);
+			console.log('getsubscriptionInfogetsubscriptionInfo>>>>>', getsubscriptionInfo.featuredType, getsubscriptionInfo.featuredType === Constant.DATABASE.FEATURED_TYPE.PROFILE);
 
 			// if (getsubscriptionInfo && getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
 			// 	console.log('111111111111111111111111');
@@ -398,6 +398,10 @@ class TransactionController extends BaseEntity {
 			// 	await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id), isHomePageFeatured: true }, { $set: { isHomePageFeatured: false } });
 			// 	await ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': getUserId._id }, { $set: { 'property_added_by.isHomePageFeatured': false } });
 			// }
+			if (getSubscriptionInfo['featuredType'] === 'PROFILE') {
+				console.log('2222222222222223333333333333333333333333333>>>>>>>>', Constant.DATABASE.FEATURED_TYPE.PROFILE);
+
+			}
 			if (getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
 				console.log('222222222222222222222222222222');
 				ENTITY.SubscriptionE.updateOneEntity(getSubscriptionInfo, { $set: { status: event['data']['object']['status'] } });
