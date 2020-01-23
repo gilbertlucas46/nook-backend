@@ -28,7 +28,6 @@ export class PropertyController {
 			if (step1) {
 				return { isFeatured: true, subscriptionId: step1._id };
 			} else {
-				// return Promise.reject(Constant.STATUS_MSG.ERROR.E400.SUBSCRIPTION_NOT_EXIST({ isFeatured: false }));
 				return { isFeatured: false };
 			}
 		} else if (payload.isHomePageFeatured) {

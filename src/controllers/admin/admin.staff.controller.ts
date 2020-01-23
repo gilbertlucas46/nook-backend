@@ -42,9 +42,7 @@ class AdminStaffControllers {
                     userName: payload.firstName + '' + payload.lastName,
                 };
                 const mail = new MailManager();
-                await mail.welcomeStaffUSer(sendObj).catch((err) => {
-                    console.log('>>>>>>>>>>>>>>>>.erororoororooror', err);
-                });
+                await mail.welcomeStaffUSer(sendObj);
                 return;
             } else {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT);
@@ -85,7 +83,6 @@ class AdminStaffControllers {
                 const genCredentials = `${payload.firstName}_${generateString}`;
                 const hashPassword = await utils.encryptWordpressHashNode(genCredentials);
                 await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.adminId }, { $set: { password: hashPassword } });
-                // ENTITY.AdminStaffEntity.sendInvitationMail(payload.email, genCredentials);
                 return {};
             }
         } catch (error) {

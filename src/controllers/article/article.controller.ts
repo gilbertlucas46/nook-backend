@@ -105,8 +105,6 @@ class ArticleController {
                 _id: payload.articleId,
             };
             const dataToSet: any = {};
-            // if (payload.isFeatured) dataToSet.$set.isFeatured = payload.isFeatured;
-            // const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
             dataToSet.$set = {
                 ...payload,
                 userId: adminData._id,

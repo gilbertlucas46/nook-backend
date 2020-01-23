@@ -57,7 +57,6 @@ class LoanControllers extends BaseEntity {
                 const date = ('0' + (new Date(new Date().getTime()).getDate())).slice(-2);
                 const referenceId = 1;
                 const formattedTime = Contsant.SERVER.HLA + '-' + year + month + date + '-' + Contsant.SERVER.LOAN_PRE__ZEOS + referenceId;
-                console.log('formattedTimeformattedTimeformattedTimeformattedTime>1111111111111', formattedTime);
                 payload['referenceId'] = formattedTime;
             } else {
                 // const year = new Date(referenceNumber.createdAt).getFullYear().toString().substr(-2);
@@ -74,9 +73,7 @@ class LoanControllers extends BaseEntity {
                     }
                 }
                 // const num = await this.addOne(id);
-                console.log('numnumnumnumnumnum', num);
                 const formattedTime = referenceNumber['referenceId'].replace(referenceNumber['referenceId'].split('-')[2], num);
-                console.log('formattedTimeformattedTimeformattedTimeformattedTime22222222222222222', formattedTime);
                 payload['referenceId'] = formattedTime;
             }
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
@@ -97,11 +94,6 @@ class LoanControllers extends BaseEntity {
 
     async updateLoanApplication(payload: LoanRequest.AddLoan) {
         try {
-            // if (payload.saveAsDraft) {
-            //     payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value;
-            // } else {
-            //     payload['applicationStatus'] = Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value;
-            // }
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return data['referenceId'];
         } catch (error) {
@@ -221,22 +213,3 @@ class LoanControllers extends BaseEntity {
     }
 }
 export const LoanController = new LoanControllers();
-
-// async addOne(s) {
-//     let newNumber = '';
-//     let continueAdding = true;
-//     for (let i = s.length - 1; i >= 0; i--) {
-//         if (continueAdding) {
-//             const num = parseInt(s[i], 10) + 1;
-//             if (num < 10) {
-//                 newNumber += num;
-//                 continueAdding = false;
-//             } else {
-//                 newNumber += '0';
-//             }
-//         } else {
-//             newNumber += s[i];
-//         }
-//     }
-//     return newNumber.split('').reverse().join('');
-// }
