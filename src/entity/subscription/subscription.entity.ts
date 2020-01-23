@@ -85,8 +85,8 @@ export class SubscriptionClass extends BaseEntity {
 			//   return await this.DAOManager.count();
 			const query = {
 				'isFeatured': true,
-				'property_added_by.userId': userData._id,
-				'property_status.number': 2,
+				'property_added_by.userId': new Types.ObjectId(userData._id),
+				// 'property_status.number': 2,
 			};
 
 			const data = await this.DAOManager.count('Property', query);
