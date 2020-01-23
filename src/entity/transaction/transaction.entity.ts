@@ -88,13 +88,13 @@ export class TransactionClass extends BaseEntity {
 			// return data;
 			const updateDate = await this.DAOManager.findAndUpdate(this.modelName, criteria, {
 				$set: data,
-			}, {
-				upsert: true,
-				new: true,
 				$setOnInsert: {
 					createdAt: Date.now(),
 					invoiceNo: invoiceNumber(++global.counters.Transaction),
 				},
+			}, {
+				upsert: true,
+				new: true,
 			 });
 			console.log('updateDateupdateDate', updateDate);
 			return updateDate;

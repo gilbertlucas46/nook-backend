@@ -446,13 +446,15 @@ class TransactionController extends BaseEntity {
 			const createTransction = await ENTITY.TransactionE.updateOneEntity({
 				invoiceId: event['data']['object']['invoice']
 			},
-				createTransaction,
 				{
-					new: true, upsert: true,
+					$set: createTransaction,
 					$setOnInsert: {
 						createdAt: Date.now(),
 						invoiceNo: invoiceNumber(++global.counters.Transaction),
 					},
+				},
+				{
+					new: true, upsert: true,
 				});
 
 
