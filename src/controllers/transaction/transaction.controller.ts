@@ -390,7 +390,6 @@ class TransactionController extends BaseEntity {
 				userId: new Types.ObjectId(getUserId._id),
 			};
 			const getsubscriptionInfo = await ENTITY.SubscriptionE.getOneEntity(getSubscriptionCriteria, {});
-			console.log('getsubscriptionInfogetsubscriptionInfo>>>>>', typeof getsubscriptionInfo.featuredType, getsubscriptionInfo.featuredType === Constant.DATABASE.FEATURED_TYPE.PROFILE);
 
 			if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
 				console.log('111111111111111111111111');
@@ -415,7 +414,6 @@ class TransactionController extends BaseEntity {
 				ENTITY.SubscriptionE.updateOneEntity({ userId: new Types.ObjectId(getUserId._id), subscriptionId: event['data']['object']['id'] }, { $set: { status: event['data']['object']['status'] } });
 				ENTITY.PropertyE.updateOneEntity({ _id: getsubscriptionInfo['propertyId'] }, { $set: { isFeatured: false } });
 			}
-			console.log('>>>>>>>>>>>>>>>>>>');
 
 			const getPlanInfo = {
 				planId: event['data']['object']['id'],
