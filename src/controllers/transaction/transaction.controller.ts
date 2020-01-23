@@ -398,7 +398,7 @@ class TransactionController extends BaseEntity {
 			// 	await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id), isHomePageFeatured: true }, { $set: { isHomePageFeatured: false } });
 			// 	await ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': getUserId._id }, { $set: { 'property_added_by.isHomePageFeatured': false } });
 			// }
-			if (getsubscriptionInfo && getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
+			if (getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
 				console.log('222222222222222222222222222222');
 				ENTITY.SubscriptionE.updateOneEntity(getSubscriptionInfo, { $set: { status: event['data']['object']['status'] } });
 				await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id), isHomePageFeatured: true }, { $set: { isFeaturedProfile: false } });
