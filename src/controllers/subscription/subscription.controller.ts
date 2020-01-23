@@ -25,7 +25,6 @@ class SubscriptionController {
 							{
 								userId: userData._id,
 								status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
-								// endDate: { $gt: new Date().getTime() },
 							},
 							// {
 							// 	$or: [{
@@ -44,9 +43,6 @@ class SubscriptionController {
 		}
 	}
 
-
-
-	
 	async userDashboard(payload, userData) {
 		try {
 			const data = await ENTITY.SubscriptionE.getUserDashboard(payload, userData);

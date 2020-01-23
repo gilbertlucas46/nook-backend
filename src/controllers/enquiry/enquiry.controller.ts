@@ -49,7 +49,7 @@ export class EnquiryController {
                     email: payload.email,
                 };
                 mail.contactEmail(sendObj);
-                // return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
+
                 return {};
             }
             else {
@@ -62,9 +62,6 @@ export class EnquiryController {
                 if (userData._id) {
                     dataToSave['userId'] = userData._id;
                 }
-                // html = `<p> this user want an enquiry of your property | email: ${payload.email} |phoneNumber:${payload.phoneNumber} | propertyId:${payload.propertyId}    ...</p>`;
-                // mail = new MailManager(payload.propertyOwnerEmail, 'Enquiry', html);
-                // mail.sendMail();
                 await ENTITY.EnquiryE.createOneEntity(dataToSave);
                 const criteria = {
                     _id: payload.propertyId,

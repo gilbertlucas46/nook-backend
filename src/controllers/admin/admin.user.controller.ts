@@ -44,7 +44,6 @@ class AdminUserControllers {
                     };
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
                     const userResponse = UniversalFunctions.formatUserData(User);
-                    // AdminUserEntity.sendInvitationMail(payload.email, genCredentials);
                     const sendObj = {
                         receiverEmail: payload.email,
                         password: genCredentials,

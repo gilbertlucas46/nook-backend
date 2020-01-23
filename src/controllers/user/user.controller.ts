@@ -225,13 +225,11 @@ export class UserController {
 		try {
 			const criteria = { $or: [{ userName: payload.email }, { email: payload.email }] };
 			const userData = await ENTITY.UserE.getData(criteria, ['email', '_id', 'userName', 'firstName']);
-			console.log('userDatauserData', userData);
-
 			if (!userData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_EMAIL); }
 			else {
 				const passwordResetToken = await ENTITY.UserE.createPasswordResetToken(userData);
 				const url = config.get('host') + Constant.SERVER.FORGET_PASSWORD_URL + passwordResetToken;
-				// const html = `<html><head><title> Nook User | Forget Password</title></head><body>Please click here : <a href='${url}'>click</a></body></html>`;
+
 				const sendObj = {
 					receiverEmail: userData.email,
 					subject: 'reset password Nook',
@@ -338,9 +336,6 @@ export class UserController {
 	 */
 	async dashboard(userData: UserRequest.UserData) {
 		try {
-			// const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.PROFILE });
-			// console.log('step1step1', step1);
-
 			const step2 = await ENTITY.UserE.userDashboad(userData);
 			// step2.isFeaturedProfile = step1 ? true : false;
 			return step2;

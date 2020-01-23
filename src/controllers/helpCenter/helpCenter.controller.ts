@@ -171,7 +171,7 @@ export class HelpCenter {
         try {
             const { searchTerm, categoryId } = payload;
             let query: object = {};
-            let pipeline: any;
+            let pipeline: any = [];
             if (searchTerm) {
                 query = {
                     // $and:{status:}
@@ -195,9 +195,8 @@ export class HelpCenter {
             }
             const sortingType = {
                 title: 1,
-            }
-            // else {
-            // return Constant.DATABASE.HELP_CENTER_TYPE;
+            };
+
             pipeline = [
                 {
                     $facet: {
@@ -263,7 +262,7 @@ export class HelpCenter {
     async getRelatedArticles(payload, userData) {
         try {
             const { searchTerm, categoryId, id } = payload;
-            let query: any = {};
+            const query: any = {};
             let seacrhObject = {};
 
             query['categoryId'] = categoryId;
@@ -275,7 +274,7 @@ export class HelpCenter {
             }
             const sortingType = {
                 title: 1,
-            }
+            };
             if (searchTerm) {
                 seacrhObject = {
                     // $and:{status:}
@@ -302,10 +301,9 @@ export class HelpCenter {
                     $match: seacrhObject,
                 },
                 { $sort: sortingType },
-            ]
+            ];
 
             const data = await ENTITY.HelpCenterE.aggregate(pipeline);
-            console.log('categoryTypecategoryTypecategoryType', data);
             return data;
 
         } catch (error) {
