@@ -380,6 +380,9 @@ class TransactionController extends BaseEntity {
 			};
 			const getUserId = await ENTITY.UserE.getOneEntity(getUser, { _id: 1, stripeId: 1, isHomePageFeatured: 1, isFeaturedProfile: 1 });
 			console.log('getUserIdgetUserId', getUserId);
+			// if (event.data.object.plan.id === 'gold_00000000000000') {
+			//          pl
+			// }
 
 			const getSubscriptionInfo = {
 				subscriptionId: event['data']['object']['id'],
@@ -391,9 +394,9 @@ class TransactionController extends BaseEntity {
 
 			if (getsubscriptionInfo && getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
 				console.log('111111111111111111111111');
-				ENTITY.SubscriptionE.updateOneEntity(getSubscriptionInfo, { $set: { status: event['data']['object']['status'] } });
+				await ENTITY.SubscriptionE.updateOneEntity(getSubscriptionInfo, { $set: { status: event['data']['object']['status'] } });
 				await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id), isHomePageFeatured: true }, { $set: { isHomePageFeatured: false } });
-				ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': getUserId._id }, { $set: { 'property_added_by.isHomePageFeatured': false } });
+				await ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': getUserId._id }, { $set: { 'property_added_by.isHomePageFeatured': false } });
 			}
 			else if (getsubscriptionInfo && getSubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
 				console.log('222222222222222222222222222222');
@@ -412,6 +415,7 @@ class TransactionController extends BaseEntity {
 				ENTITY.SubscriptionE.updateOneEntity({ userId: new Types.ObjectId(getUserId._id), subscriptionId: event['data']['object']['id'] }, { $set: { status: event['data']['object']['status'] } });
 				ENTITY.PropertyE.updateOneEntity({ _id: getSubscriptionInfo['propertyId'] }, { $set: { isFeatured: false } });
 			}
+			console.log('>>>>>>>>>>>>>>>>>>');
 
 			const getPlanInfo = {
 				planId: event['data']['object']['id'],
