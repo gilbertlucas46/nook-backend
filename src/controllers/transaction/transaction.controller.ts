@@ -395,13 +395,13 @@ class TransactionController extends BaseEntity {
 			if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
 				console.log('111111111111111111111111');
 				await ENTITY.SubscriptionE.updateOneEntity(getSubscriptionCriteria, { $set: { status: event['data']['object']['status'] } });
-				await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id), isHomePageFeatured: true }, { $set: { isHomePageFeatured: false } });
+				await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id) }, { $set: { isHomePageFeatured: false } });
 				await ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': getUserId._id }, { $set: { 'property_added_by.isHomePageFeatured': false } });
 			}
 			else if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
 				console.log('222222222222222222222222222222');
 				ENTITY.SubscriptionE.updateOneEntity(getSubscriptionCriteria, { $set: { status: event['data']['object']['status'] } });
-				await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id), isHomePageFeatured: true }, { $set: { isFeaturedProfile: false } });
+				await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id) }, { $set: { isFeaturedProfile: false } });
 				ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': getUserId._id }, { $set: { 'property_added_by.isFeaturedProfile': false } });
 			}
 			else if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY && getSubscriptionCriteria['propertyId']) {
