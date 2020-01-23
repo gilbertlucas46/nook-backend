@@ -7,6 +7,7 @@ import { stripeService } from '@src/lib/stripe.manager';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../../utils';
 import { Types } from 'mongoose';
+import { invoiceNumber } from '../../utils';
 
 class TransactionController extends BaseEntity {
 
@@ -434,7 +435,6 @@ class TransactionController extends BaseEntity {
 	async updateTransaction(event) {
 		try {
 			const createTransaction = {
-				invoiceId: event['data']['object']['invoice'],
 				cardId: event['data']['object']['payment_method'],
 				brand: event['data']['object']['payment_method_details']['card']['brand'],
 				last4: event['data']['object']['payment_method_details']['last4'],
@@ -443,7 +443,20 @@ class TransactionController extends BaseEntity {
 			};
 			console.log('updateTransaction2222222222>>>>>>>>>>>>>>>>>>>>>>>', createTransaction);
 
-			const createTransction = await ENTITY.TransactionE.createOneEntity(createTransaction);
+			const createTransction = await ENTITY.TransactionE.updateOneEntity({
+				invoiceId: event['data']['object']['invoice']
+			},
+				createTransaction,
+				{
+					new: true, upsert: true,
+					$setOnInsert: {
+						createdAt: Date.now(),
+						invoiceNo: invoiceNumber(++global.counters.Transaction),
+					},
+				});
+
+
+			// const createTransction = await ENTITY.TransactionE.createOneEntity(createTransaction);
 			console.log('createTransctioncreateTransctioncreateTransction>>>>>>>>>>>>.', createTransction);
 			return createTransction;
 

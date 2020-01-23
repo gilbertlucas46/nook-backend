@@ -5,6 +5,7 @@ import * as ENTITY from '../../entity'
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { TransactionRequest } from '@src/interfaces/transaction.interface';
 import * as utils from '@src/utils';
+import { invoiceNumber } from '@src/utils';
 
 export class TransactionClass extends BaseEntity {
 
@@ -85,7 +86,16 @@ export class TransactionClass extends BaseEntity {
 
 			// const insertData = await this.DAOManager.saveData(this.modelName, data);
 			// return data;
-			const updateDate = await this.DAOManager.findAndUpdate(this.modelName, criteria, { $set: data }, { upsert: true, new: true });
+			const updateDate = await this.DAOManager.findAndUpdate(this.modelName, criteria, {
+				$set: data,
+			}, {
+				upsert: true,
+				new: true,
+				$setOnInsert: {
+					createdAt: Date.now(),
+					invoiceNo: invoiceNumber(++global.counters.Transaction),
+				},
+			 });
 			console.log('updateDateupdateDate', updateDate);
 			return updateDate;
 
