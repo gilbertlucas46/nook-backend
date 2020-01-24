@@ -403,13 +403,13 @@ class TransactionController extends BaseEntity {
 				await ENTITY.UserE.updateOneEntity({ _id: new Types.ObjectId(getUserId._id) }, { $set: { isFeaturedProfile: false } });
 				ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': getUserId._id }, { $set: { 'property_added_by.isFeaturedProfile': false } });
 			}
-			else if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY && getSubscriptionCriteria['propertyId']) {
+			else if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 				console.log('333333333333333333333333333333333333333333333333');
 				ENTITY.SubscriptionE.updateOneEntity({ userId: new Types.ObjectId(getUserId._id), subscriptionId: event['data']['object']['id'] }, { $set: { status: event['data']['object']['status'] } });
 				ENTITY.PropertyE.updateOneEntity({ _id: getSubscriptionCriteria['propertyId'] }, { $set: { isHomePageFeatured: false } });
 
 			}
-			else if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROPERTY && getsubscriptionInfo['propertyId']) {
+			else if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 				console.log('444444444444444444444444444444444444444444444444444444444444');
 				ENTITY.SubscriptionE.updateOneEntity({ userId: new Types.ObjectId(getUserId._id), subscriptionId: event['data']['object']['id'] }, { $set: { status: event['data']['object']['status'] } });
 				ENTITY.PropertyE.updateOneEntity({ _id: getsubscriptionInfo['propertyId'] }, { $set: { isFeatured: false } });
@@ -452,7 +452,7 @@ class TransactionController extends BaseEntity {
 			console.log('updateTransaction2222222222>>>>>>>>>>>>>>>>>>>>>>>', createTransaction);
 
 			const createTransction = await ENTITY.TransactionE.updateOneEntity({
-				invoiceId: event['data']['object']['invoice']
+				invoiceId: event['data']['object']['invoice'],
 			},
 				{
 					$set: createTransaction,
@@ -464,7 +464,6 @@ class TransactionController extends BaseEntity {
 				{
 					new: true, upsert: true,
 				});
-
 
 			// const createTransction = await ENTITY.TransactionE.createOneEntity(createTransaction);
 			console.log('createTransctioncreateTransctioncreateTransction>>>>>>>>>>>>.', createTransction);
