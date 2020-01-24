@@ -235,10 +235,12 @@ export class UserClass extends BaseEntity {
 			}, data, { new: true });
 			const salesforceData = flattenObject(doc.toObject ? doc.toObject() : doc);
 			// console.log(doc, salesforceData);
-			await fetch(config.get('zapier_personUrl'), {
+			const request = {
 				method: 'post',
 				body: JSON.stringify(salesforceData),
-			});
+			};
+			await fetch(config.get('zapier_personUrl'), request);
+			await fetch(config.get('zapier_accountUrl'), request);
 			return;
 		} catch (err) {
 			console.log(err);

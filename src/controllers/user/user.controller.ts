@@ -174,10 +174,12 @@ export class UserController {
 				if (!isProfileCompleted) {
 					// convert document to data
 					const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
-					await fetch(config.get('zapier_personUrl'), {
+					const request = {
 						method: 'post',
 						body: JSON.stringify(salesforceData),
-					});
+					};
+					await fetch(config.get('zapier_personUrl'), request);
+					await fetch(config.get('zapier_accountUrl'), request);
 				}
 			}
 
