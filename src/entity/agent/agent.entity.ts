@@ -35,7 +35,7 @@ export class AgentClass extends BaseEntity {
                 sortingType = {
                     isHomePageFeatured: -1,
                     isFeaturedProfile: -1,
-                    createdAt: -1,
+                    createdAt: sortType,
                 };
             }
             if (specializingIn_property_type) matchObject['specializingIn_property_type'] = specializingIn_property_type;

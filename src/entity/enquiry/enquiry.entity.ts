@@ -185,9 +185,6 @@ export class EnquiryClass extends BaseEntity {
             ];
 
             const pipeLine = [
-                // {
-                //     $match: query,
-                // },
                 {
                     $lookup: {
                         from: 'properties',

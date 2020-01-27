@@ -55,13 +55,12 @@ export class HelpCenterEntity extends BaseEntity {
             const pipeline: any[] = [
                 {
                     $match: {
-                        // $and: [{
                         categoryId: id,
                         $or: [
                             query,
                         ],
                     },
-            },
+                },
                 {
                     $project: {
                         _id: 1,

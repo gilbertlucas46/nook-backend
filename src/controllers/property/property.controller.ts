@@ -215,25 +215,6 @@ export class PropertyController {
 
 	async nearbyProperties(payload: PropertyRequest.SearchProperty) {
 		try {
-			// let propertyData = await ENTITY.PropertyE.aggregate([
-			//     {
-			//         '$geoNear': {
-			//             near: { type: "Point", "coordinates": [28.535517, 77.391029] },
-			//             maxDistance: 100000,
-			//             query: pipeLine,
-			//             distanceField: "calculatedDistance",
-			//             spherical: true
-			//         }
-			//     },
-			//     {
-			//         $project: {
-			//             _id: 1,
-			//             property_basic_details: 1,
-			//             createdAt: 1,
-			//             property_address: 1
-			//         }
-			//     }
-			// ]);
 			const data = await ENTITY.PropertyE.getPropertyList(payload);
 			return data;
 		} catch (err) {
