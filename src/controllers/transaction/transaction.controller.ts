@@ -339,9 +339,9 @@ class TransactionController extends BaseEntity {
 					const getPlanInfo = {
 						planId: event['data']['object']['plan']['id'],
 					};
-					console.log('getPlanInfo', getPlanInfo);
+					console.log('getPlanInfo?>>>>>', getPlanInfo);
 
-					const getPlanData = await ENTITY.SubscriptionPlanEntity.getOneEntity({ 'plans.planId': getPlanInfo }, {});
+					const getPlanData = await ENTITY.SubscriptionPlanEntity.getOneEntity({ 'plans.planId': getPlanInfo.planId }, {});
 					if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
 						//  cancel subscription
 						const propertyCriteria = {
