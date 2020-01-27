@@ -273,24 +273,6 @@ export class ArticleClass extends BaseEntity {
                 };
             }
 
-            // if (categoryId) {
-            //     query = {
-            //         categoryId: Types.ObjectId(categoryId),
-            //         $and: [{
-            //             $or: [{
-            //                 status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-            //             }, {
-            //                 status: Constant.DATABASE.ARTICLE_STATUS.BLOCK,
-            //             }],
-            //             _id: {
-            //                 $ne: {
-            //                     articleId: Types.ObjectId(articleId),
-            //                 },
-            //             },
-            //         }],
-            //     };
-            // }
-
             if (searchTerm) {
                 query = {
                     $or: [

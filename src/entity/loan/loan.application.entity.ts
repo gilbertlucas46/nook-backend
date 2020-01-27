@@ -68,11 +68,6 @@ class LoanApplicationE extends BaseEntity {
                     userId: userData._id,
                 };
             }
-            // else {
-            //     matchObject['saveAsDraft'] = false;
-            //     matchObject['applicationStatus'] = { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
-            //     // saveAsDraft: false,
-            // }
 
             sortingType = {
                 [sortBy]: sortType,
@@ -235,7 +230,7 @@ class LoanApplicationE extends BaseEntity {
     async sendApplication(data) {
         // console.log('inside Loan');
         if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
-            const salesforceData: {[key: string]: string | number} = flattenObject(data.toObject ? data.toObject() : data);
+            const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
             await fetch(config.get('zapier_loanUrl'), {
                 method: 'post',
                 body: JSON.stringify(salesforceData),

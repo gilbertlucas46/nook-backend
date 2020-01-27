@@ -42,7 +42,7 @@ class AdminStaffControllers {
                     userName: payload.firstName + '' + payload.lastName,
                 };
                 const mail = new MailManager();
-                await mail.welcomeStaffUSer(sendObj);
+                mail.welcomeStaffUSer(sendObj);
                 return;
             } else {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.REQUEST_ALREADY_SENT);

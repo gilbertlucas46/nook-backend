@@ -63,8 +63,6 @@ class LoanControllers extends BaseEntity {
                 // const month = (new Date(referenceNumber.createdAt).getMonth() + 1).toString().substr(-2);
                 // const date = ('0' + new Date(referenceNumber.createdAt).getDate()).slice(-2);  //.toString().substr(-2);
                 const id = referenceNumber['referenceId'].split('-')[2];
-                console.log('idididididididididididididididididididid', id);
-
                 let num = (parseInt(id) + 1).toString();
                 if (num.length < 4) {
                     const remainingChars = 4 - num.length;
