@@ -110,6 +110,7 @@ class TransactionController extends BaseEntity {
 						userId: userData._id,
 						cardDetail: fingerprint,
 					};
+
 					const createCard = await stripeService.createCard(getStripeId['stripeId'], payload);
 					const userCardInfo = await ENTITY.UserCardE.createOneEntity(dataToSave);
 					const setDefaultCard = await stripeService.setDefaultCard(getStripeId, payload);
@@ -327,7 +328,7 @@ class TransactionController extends BaseEntity {
 				const criteria = {
 					userId: new Types.ObjectId(userId._id),
 					subscriptionId: event['data']['object']['id'],
-					status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
+					// status: Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE,
 				};
 				if (event['data']['object']['status'] === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
 					const data = await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: dataToupdate });
@@ -338,6 +339,8 @@ class TransactionController extends BaseEntity {
 					const getPlanInfo = {
 						planId: event['data']['object']['plan']['id'],
 					};
+					console.log('getPlanInfo', getPlanInfo);
+
 					const getPlanData = await ENTITY.SubscriptionPlanEntity.getOneEntity({ 'plans.planId': getPlanInfo }, {});
 					if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
 						//  cancel subscription

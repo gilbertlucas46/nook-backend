@@ -664,13 +664,15 @@ export let adminProfileRoute: ServerRoute[] = [
 				payload: {
 					featuredType: Joi.string().valid([
 						Constant.DATABASE.FEATURED_TYPE.FREE,
-						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
 						Constant.DATABASE.FEATURED_TYPE.PROFILE,
 						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
 					]).required(),
 					plans: Joi.array().items(objectSchema).required(),
 					description: Joi.string().required(),
 				},
+				// "featuredType" must be one of FREE, HOMEPAGE, PROFILE, PROPERTY
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -747,16 +749,16 @@ export let adminProfileRoute: ServerRoute[] = [
 					id: Joi.string().required(),
 				},
 				payload: {
-					planId: Joi.string().required(),
-					// featuredType: Joi.string().valid([
-					// 	Constant.DATABASE.FEATURED_TYPE.FREE,
-					// 	Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
-					// 	Constant.DATABASE.FEATURED_TYPE.PROFILE,
-					// 	Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-					// ]),
+					// planId: Joi.string().required(),
+					featuredType: Joi.string().valid([
+						Constant.DATABASE.FEATURED_TYPE.FREE,
+						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
+						Constant.DATABASE.FEATURED_TYPE.PROFILE,
+						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					]),
 					amount: Joi.number(),
 					description: Joi.string(),
-					// plans: Joi.array().items(objectSchema),
+					plans: Joi.array().items(objectSchema),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
