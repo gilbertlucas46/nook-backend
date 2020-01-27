@@ -350,6 +350,7 @@ class TransactionController extends BaseEntity {
 						await ENTITY.UserE.updateOneEntity(getUser, { $set: { isHomePageFeatured: false } });
 						// await ENTITY.PropertyE.updateOneEntity()
 						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
+						await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
 						await ENTITY.UserE.updateOneEntity(getUser, { $set: { isFeaturedProfile: false } });
@@ -357,13 +358,15 @@ class TransactionController extends BaseEntity {
 							'property_added_by.isFeaturedProfile': true,
 						};
 						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
+						await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
-
-						// await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
+						await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
+						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: { isHomePageFeatured: false } });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-
+						await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
+						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: { isFeatured: false } });
 					}
 				}
 				return;
