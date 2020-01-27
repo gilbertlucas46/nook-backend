@@ -6,6 +6,7 @@ import { Types } from 'mongoose';
 import { sendSuccess } from '../../utils';
 import { stripeService } from '../../lib/stripe.manager';
 import { illegal } from 'boom';
+import { strip } from 'joi';
 /**
  * @author
  * @description this controller contains actions for admin's account related activities
@@ -146,21 +147,30 @@ export class AdminController {
 				_id: payload.id,
 			};
 			// delete payload['id'];
+
 			// const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+
+			const data = await ENTITY.SubscriptionPlanEntity.getOneEntity(criteria, {});
+			console.log('data<>>>>>>>>>>>>>>>>>', data);
+
+
+
 			// return data;
 			// if (payload.planId) {
 			const planInfo = await stripeService.getPlanInfo(payload);
 			console.log('planInfoplanInfoplanInfoplanInfo', planInfo, planInfo['id']);
 			// payload['product'] = planInfo.product;
 
-			// const deletePlan = await stripeService.deletePlan(payload);
+			const deletePlan = await stripeService.deletePlan(payload);
+			// const createPlan = await stripeService.createPlan(payload, planInfo);
+
 			const createPlan = await stripeService.createPlan(payload, planInfo);
 
 			// const getSubscriptionInfo = await ENTITY.SubscriptionPlanEntity.getOneEntity(criteria, {});
 			// console.log('getSubscriptionInfogetSubscriptionInfo', getSubscriptionInfo);
 
 			// delete payload['planId'];
-			// const data = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+			const data1 = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
 			return;
 			// }
 

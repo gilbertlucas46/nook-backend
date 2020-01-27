@@ -31,7 +31,7 @@ export class PropertyController {
 				return { isFeatured: false };
 			}
 		} else if (payload.isHomePageFeatured) {
-			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE });
+			const step1 = await ENTITY.SubscriptionE.checkSubscriptionExist({ userId: userData._id, featuredType: Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY });
 			if (step1) {
 				return { isHomePageFeatured: true, subscriptionId: step1._id };
 			} else {
