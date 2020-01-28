@@ -7,6 +7,7 @@ import * as Constant from '@src/constants/app.constant';
 import * as utils from '../../utils';
 import { Types } from 'mongoose';
 import { invoiceNumber } from '../../utils';
+import { ObjectId } from 'bson';
 
 class TransactionController extends BaseEntity {
 
@@ -344,28 +345,28 @@ class TransactionController extends BaseEntity {
 					if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE) {
 						//  cancel subscription
 						const propertyCriteria = {
-							'property_added_by.isHomePageFeatured': true,
+							'property_added_by.isHomePageFeatured': false,
 						};
 						await ENTITY.UserE.updateOneEntity(getUser, { $set: { isHomePageFeatured: false } });
 						// await ENTITY.PropertyE.updateOneEntity()
-						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
+						await ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
 						await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROFILE) {
 						await ENTITY.UserE.updateOneEntity(getUser, { $set: { isFeaturedProfile: false } });
 						const propertyCriteria = {
-							'property_added_by.isFeaturedProfile': true,
+							'property_added_by.isFeaturedProfile': false,
 						};
-						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
+						await ENTITY.PropertyE.updateMultiple({ 'property_added_by.userId': userId._id }, { $set: propertyCriteria });
 						await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
-						await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
-						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: { isHomePageFeatured: false } });
+						const data = await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
+						await ENTITY.PropertyE.updateOneEntity({ _id: new Types.ObjectId(data.propertyId), 'property_added_by.userId': userId._id }, { $set: { isHomePageFeatured: false } });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
-						await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
-						await ENTITY.PropertyE.updateOneEntity({ 'property_added_by.userId': userId._id }, { $set: { isFeatured: false } });
+						const data = await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
+						await ENTITY.PropertyE.updateOneEntity({ _id: new Types.ObjectId(data.propertyId), 'property_added_by.userId': userId._id }, { $set: { isFeatured: false } });
 					}
 				}
 				return;
