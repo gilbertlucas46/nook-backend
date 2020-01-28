@@ -3,7 +3,6 @@ import * as ENTITY from '../../entity';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../../utils/index';
 import * as UniversalFunctions from '@src/utils';
-import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { MailManager } from '@src/lib';

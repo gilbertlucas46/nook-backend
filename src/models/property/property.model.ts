@@ -103,7 +103,7 @@ export interface IProperty extends Document {
 		middleName?: string,
 		lastName?: string,
 		email?: string,
-		isFeatured?: boolean;
+		isFeaturedProfile?: boolean;
 		isHomePageFeatured?: boolean;
 	};
 	actions_performed_by_admin: {

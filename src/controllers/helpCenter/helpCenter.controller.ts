@@ -284,8 +284,6 @@ export class HelpCenter {
                         { categoryType: { $regex: searchTerm, $options: 'i' } },
                     ],
                 };
-                // const data = await ENTITY.HelpCenterE.getMultiple(query, {});
-                // return data;
 
             } else {
                 seacrhObject = {

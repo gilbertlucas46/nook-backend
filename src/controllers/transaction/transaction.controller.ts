@@ -2,7 +2,6 @@ import { TransactionRequest } from '@src/interfaces/transaction.interface';
 import * as ENTITY from '@src/entity';
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { stripeService } from '@src/lib/stripe.manager';
-// import * as Stripe from 'stripe';
 
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../../utils';

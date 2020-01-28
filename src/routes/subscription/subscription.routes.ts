@@ -120,9 +120,6 @@ export let subscriptionRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload = request.query as any;
-				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(payload.permission);
-				// }
 				const data = await subscriptionController.userDashboard(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -189,9 +186,7 @@ export let subscriptionRoute: ServerRoute[] = [
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				console.log('userDatauserData', userData);
 				const payload = request.query as any;
-				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await AdminStaffEntity.checkPermission(payload.permission);
-				// }
+
 				const data = await subscriptionController.userSubscriptionProperty(userData, payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
