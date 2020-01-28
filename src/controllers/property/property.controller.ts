@@ -3,9 +3,7 @@ import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
-import { exists } from 'fs';
 import { Types } from 'mongoose';
-import { ObjectId } from 'bson';
 export class PropertyController {
 
 	getTypeAndDisplayName(findObj, num: number) {
@@ -82,6 +80,8 @@ export class PropertyController {
 				email: userData.email,
 				middleName: userData.middleName || '',
 				userType: userData.type,
+				isFeaturedProfile: userData.isFeaturedProfile,
+				isHomePageFeatured: userData.isHomePageFeatured,
 			};
 
 			payload.propertyActions = [{
@@ -151,7 +151,6 @@ export class PropertyController {
 				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
 				return { updateData };
 			} else {
-
 				payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
 				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
 				let data: any;
@@ -270,6 +269,8 @@ export class PropertyController {
 				userName: userData.userName,
 				firstName: userData.firstName || '',
 				lastName: userData.lastName || '',
+				isFeaturedProfile: userData.isFeaturedProfile,
+				isHomePageFeatured: userData.isHomePageFeatured,
 			};
 			payload.propertyActions = [{
 				actionString: propertyAction.TYPE,

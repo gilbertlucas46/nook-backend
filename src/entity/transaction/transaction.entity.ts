@@ -93,9 +93,9 @@ export class TransactionClass extends BaseEntity {
 					invoiceNo: invoiceNumber(++global.counters.Transaction),
 				},
 			}, {
-				upsert: true,
-				new: true,
-			 });
+					upsert: true,
+					new: true,
+				});
 			console.log('updateDateupdateDate', updateDate);
 			return updateDate;
 
@@ -254,8 +254,7 @@ export class TransactionClass extends BaseEntity {
 				},
 			];
 
-			const data = await this.DAOManager.aggregateData(this.modelName, pipeLine)
-			console.log('data>>>>>>>>>>KKKKKKKKKKKKK', data);
+			const data = await this.DAOManager.aggregateData(this.modelName, pipeLine);
 			return data[0];
 			// return await this.DAOManager.paginatePipeline(this.modelName, response, populateQuery);
 		} catch (error) {
