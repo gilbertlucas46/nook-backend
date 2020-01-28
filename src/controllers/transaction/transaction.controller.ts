@@ -362,10 +362,14 @@ class TransactionController extends BaseEntity {
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 						const data = await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
+						console.log('data>>>>>>>>>', data);
+
 						await ENTITY.PropertyE.updateOneEntity({ _id: new Types.ObjectId(data.propertyId), 'property_added_by.userId': userId._id }, { $set: { isHomePageFeatured: false } });
 					}
 					else if (getPlanData.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 						const data = await ENTITY.SubscriptionE.updateOneEntity(criteria, { $set: { status: event['data']['object']['status'] } });
+						console.log('datadata', data);
+
 						await ENTITY.PropertyE.updateOneEntity({ _id: new Types.ObjectId(data.propertyId), 'property_added_by.userId': userId._id }, { $set: { isFeatured: false } });
 					}
 				}
