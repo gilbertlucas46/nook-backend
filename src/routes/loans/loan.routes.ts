@@ -221,7 +221,7 @@ export let loanRoute: ServerRoute[] = [
 					contactInfo: Joi.object().keys({
 						phoneNumber: Joi.string(),
 						email: Joi.string().email(),
-						mobileNumber: Joi.string().min(8).max(15),
+						mobileNumber: Joi.string().min(7).max(15),
 						currentAddress: Joi.object().keys({
 							address: Joi.string().max(300),
 							homeOwnership: Joi.string().valid([
@@ -584,7 +584,7 @@ export let loanRoute: ServerRoute[] = [
 					contactInfo: Joi.object().keys({
 						phoneNumber: Joi.string(),
 						email: Joi.string().email(),
-						mobileNumber: Joi.string().min(8).max(15),
+						mobileNumber: Joi.string().min(7).max(15),
 						currentAddress: Joi.object().keys({
 							address: Joi.string().max(300),
 							homeOwnership: Joi.string().valid([
