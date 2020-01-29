@@ -563,8 +563,8 @@ export const EMAIL_TEMPLATE = {
 		FORGOT_PWD_EMAIL: 'Reset Password Request',
 		RESET_PASSWORD: 'Reset password link',
 		VERIFY_EMAIL: 'Verify e-mail address',
-		Contact: 'Contact',
-		Enquiry: 'Enquiry',
+		Contact: 'Contact Enquiry Received from ',
+		Enquiry: 'Property Enquiry Received from ',
 	},
 };
 export let STATUS_MSG = {
