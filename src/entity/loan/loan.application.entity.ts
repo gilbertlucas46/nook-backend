@@ -70,22 +70,9 @@ class LoanApplicationE extends BaseEntity {
             }
 
             sortingType = {
-                [sortBy]: sortType,
+                createdAt: sortType,
             };
-            // switch (sortBy) {
-            // case 'Date':
-            // sortBy = 'Date';
-            // sortingType = {
-            //     createdAt: sortType,
-            // };
-
-            //  else {
-            //     sortBy = 'Date';
-            //     sortingType = {
-            //         createdAt: sortType,
-            //     };
-            // }
-
+           
             if (status) {
                 matchObject['applicationStatus'] = status;
             }
