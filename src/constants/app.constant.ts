@@ -122,7 +122,7 @@ export let DATABASE = {
 		RENTED: 'rented',
 		MORTGAGED: 'mortgaged',
 		USED_FREE: 'used_free',
-		LIVING_WITH_RELATIVE: 'living_with_relative',
+		LIVING_WITH_RELATIVE: 'living_with_relatives',
 	},
 
 	RELATIONSHIP: {
