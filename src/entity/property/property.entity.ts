@@ -817,6 +817,7 @@ export class PropertyClass extends BaseEntity {
 						propertyImages: 1,
 						isFeatured: 1,
 						property_status: 1,
+						isHomePageFeatured: 1,
 					},
 				},
 				{
