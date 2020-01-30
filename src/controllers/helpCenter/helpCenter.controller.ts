@@ -249,7 +249,6 @@ export class HelpCenter {
                         ],
                     },
                 },
-
             ];
             const data = await ENTITY.HelpCenterE.aggregate(pipeline);
             return data[0];
