@@ -312,4 +312,13 @@ export namespace AdminRequest {
 		plans?: object[];
 		description?: string;
 	}
+	export interface IUpdateSubscription {
+		id?: string;
+		amount: {
+			monthly: number,
+			yearly: number,
+		};
+		description?: string;
+	}
+
 }

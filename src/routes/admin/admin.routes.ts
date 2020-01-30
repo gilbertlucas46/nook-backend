@@ -723,9 +723,9 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				// console.log('adminData', adminData);
 
-				const payload: AdminRequest.ISubscriptionList = {
+				const payload: AdminRequest.IUpdateSubscription = {
 					...request.params as any,
-					...request.payload as AdminRequest.ISubscriptionList,
+					...request.payload as AdminRequest.IUpdateSubscription,
 				};
 				const checkPermission = adminData['permission'].some(data => {
 					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.Subscriptions;
@@ -734,7 +734,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
 				}
 				const data = await AdminService.updateSubscription(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
 			} catch (error) {
 				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
@@ -750,15 +750,19 @@ export let adminProfileRoute: ServerRoute[] = [
 				},
 				payload: {
 					// planId: Joi.string().required(),
-					featuredType: Joi.string().valid([
-						Constant.DATABASE.FEATURED_TYPE.FREE,
-						Constant.DATABASE.FEATURED_TYPE.HOMEPAGE,
-						Constant.DATABASE.FEATURED_TYPE.PROFILE,
-						Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-					]),
-					amount: Joi.number(),
+					// featuredType: Joi.string().valid([
+					// 	Constant.DATABASE.FEATURED_TYPE.FREE,
+					// 	Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
+					// 	Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
+					// 	Constant.DATABASE.FEATURED_TYPE.PROPERTY,
+					// 	Constant.DATABASE.FEATURED_TYPE.PROFILE,
+					// ]),
 					description: Joi.string(),
-					plans: Joi.array().items(objectSchema),
+					amount: Joi.object({
+						monthly: Joi.number(),
+						yearly: Joi.number(),
+					}),
+
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
