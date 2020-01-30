@@ -157,27 +157,18 @@ export class StripeManager {
 		}
 	}
 
-	async deletePlan(payload) {
+	async deletePlan(planId: string) {
 		try {
-			const data = await stripe.plans.del(
-				payload.planId,
-			);
+			const data = await stripe.plans.del(planId);
 			return data;
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
 
-	async createPlan(payload, planInfo) {
+	async createPlan(payload) {
 		try {
-			const data = await stripe.plans.create({
-				amount: payload.amount,
-				currency: planInfo['currency'],
-				interval: planInfo['interval'],
-				product: planInfo['product'],
-				nickname: planInfo['nickname'],
-				id: planInfo['id'],
-			});
+			const data = await stripe.plans.create(payload);
 			return data;
 		} catch (error) {
 			return Promise.reject(error);

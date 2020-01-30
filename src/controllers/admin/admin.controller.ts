@@ -7,6 +7,7 @@ import { sendSuccess } from '../../utils';
 import { stripeService } from '../../lib/stripe.manager';
 import { illegal } from 'boom';
 import { strip } from 'joi';
+import * as config from 'config';
 /**
  * @author
  * @description this controller contains actions for admin's account related activities
@@ -141,10 +142,10 @@ export class AdminController {
 		}
 	}
 
-	async updateSubscription(payload) {
+	async updateSubscription(payload: AdminRequest.IUpdateSubscription) {
 		try {
 			const criteria = {
-				_id: payload.id,
+				_id: new Types.ObjectId(payload.id),
 			};
 			// delete payload['id'];
 
@@ -152,25 +153,57 @@ export class AdminController {
 
 			const data = await ENTITY.SubscriptionPlanEntity.getOneEntity(criteria, {});
 			console.log('data<>>>>>>>>>>>>>>>>>', data);
+			// plans to update on stripe
+			const plansUpdate: Array<Promise<void>> = data.plans.filter(({ billingType, amount }) => {
+				return payload.amount[billingType.toLowerCase()] !== amount;
+			}).map(async ({ billingType, planId }) => {
+				await stripeService.deletePlan(planId);
+				console.log('>> Plan is Deleted');
+				const interval = billingType.toLowerCase();
+				await stripeService.createPlan({
+					id: planId,
+					currency: 'Php',
+					interval: interval.replace('ly', ''),
+					product: config.get('stripeProductId'),
+					nickname: `${data.featuredType}_${billingType}`,
+					amount: payload.amount[interval] * (billingType === 'MONTHLY' ? 1 : 12) * 100,
+				});
+				console.log('>> Plan is Created');
 
-
-
+			});
+			await Promise.all([
+				...plansUpdate,
+				ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, {
+					description: payload.description,
+					plans: data.plans.map((plan) => {
+						return {
+							...plan,
+							amount: payload.amount[plan.billingType.toLowerCase()],
+						};
+					}),
+				})
+			]);
+			console.log('>> Success! Plan Update is Done');
 			// return data;
 			// if (payload.planId) {
-			const planInfo = await stripeService.getPlanInfo(payload);
-			console.log('planInfoplanInfoplanInfoplanInfo', planInfo, planInfo['id']);
+			// const planInfo1 = await stripeService.getPlanInfo(payload);
+			// console.log('planInfoplanInfoplanInfoplanInfo', planInfo1, planInfo1['id']);
 			// payload['product'] = planInfo.product;
 
-			const deletePlan = await stripeService.deletePlan(payload);
+			// const planInfo2 = await stripeService.getPlanInfo(payload);
+			// console.log('planInfoplanInfoplanInfoplanInfo', planInfo2, planInfo2['id']);
+
+
+			// const deletePlan = await stripeService.deletePlan(payload);
 			// const createPlan = await stripeService.createPlan(payload, planInfo);
 
-			const createPlan = await stripeService.createPlan(payload, planInfo);
+			// const createPlan = await stripeService.createPlan(payload, planInfo);
 
 			// const getSubscriptionInfo = await ENTITY.SubscriptionPlanEntity.getOneEntity(criteria, {});
 			// console.log('getSubscriptionInfogetSubscriptionInfo', getSubscriptionInfo);
 
 			// delete payload['planId'];
-			const data1 = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
+			// const data1 = await ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, payload);
 			return;
 			// }
 
