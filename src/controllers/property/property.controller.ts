@@ -4,6 +4,7 @@ import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { PropertyRequest } from '@src/interfaces/property.interface';
 import { Types } from 'mongoose';
+import { loggers } from 'winston';
 export class PropertyController {
 
 	getTypeAndDisplayName(findObj, num: number) {
@@ -106,30 +107,30 @@ export class PropertyController {
 
 				if (payload.subscriptionId) {
 
-					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: new Types.ObjectId(payload.subscriptionId), propertyId: new Types.ObjectId('payload.propertyId') });
+					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: new Types.ObjectId(payload.subscriptionId), propertyId: new Types.ObjectId(payload.propertyId) });
 					console.log('step1step1', step1);
 
 					// updates to prev property added to this subscription
-					// const update: any = {};
+					const update: any = {};
 					if (step1) {
 
 						if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
 							payload.isFeatured = true;
 							console.log('regular property');
-							// update.isFeatured = false;
+							update.isFeatured = false;
 						}
 						if (step1.featuredType === 'HOMEPAGE_PROPERTY') {
 							console.log('home page property');
 							payload.isHomePageFeatured = true;
-							// update.isHomePageFeatured = false;
+							update.isHomePageFeatured = false;
 						}
 					}
-					// if (step1.propertyId) {
-					// 	ENTITY.PropertyE.updateOneEntity({
-					// 		_id: new Types.ObjectId(step1.propertyId),
-					// 	}, update);
-					// }
-					return {};
+					if (step1.propertyId) {
+						ENTITY.PropertyE.updateOneEntity({
+							_id: new Types.ObjectId(step1.propertyId),
+						}, update);
+					}
+					// return {};
 				} else {
 					// @TODO remove subscription from this property
 					const criteriaSubscription = {
@@ -282,21 +283,123 @@ export class PropertyController {
 				},
 			}];
 
+
 			if (payload.propertyId) {
-				const criteria = { _id: payload.propertyId };
-				const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
+				// const enquiryCriteria = {
+				// 	propertyId: payload.propertyId,
+				// };
+				// const enquiryDataToUpdate = {
+				// 	title: payload.property_basic_details.title,
+				// };
+				// // promiseArray.push(ENTITY.EnquiryE.updateOneEntity(criteria, enquiryDataToUpdate));
+
+				if (payload.subscriptionId) {
+
+					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: new Types.ObjectId(payload.subscriptionId), propertyId: new Types.ObjectId(payload.propertyId) });
+					console.log('step1step1', step1);
+
+					// updates to prev property added to this subscription
+					const update: any = {};
+					if (step1) {
+
+						if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+							payload.isFeatured = true;
+							console.log('regular property');
+							update.isFeatured = false;
+						}
+						if (step1.featuredType === 'HOMEPAGE_PROPERTY') {
+							console.log('home page property');
+							payload.isHomePageFeatured = true;
+							update.isHomePageFeatured = false;
+						}
+						console.log('>>>>>>>>>>>>>>>>>>KKKKKKKKKKKKK>>>>>>', step1.propertyId, '>>>>>>>>>', payload.propertyId);
+
+						// if (step1.propertyId !== payload.propertyId) {
+						// 	console.log('remove from previous>>>>>>>>>>>>>>>');
+						// 	const step2 = await ENTITY.PropertyE.updateOneEntity({ _id: new Types.ObjectId(step1.propertyId) }, update);
+						// }
+					}
+					if (step1.propertyId) {
+						console.log('>>>>>>>>>>>>>>>>>>KKKKKKKKKKKKK>>>>>>', step1.propertyId, '>>>>>>>>>', payload.propertyId);
+						ENTITY.PropertyE.updateOneEntity({
+							_id: new Types.ObjectId(step1.propertyId),
+						}, update);
+					}
+					// return {};
+				}
+				else {
+					// @TODO remove subscription from this property
+					const criteriaSubscription = {
+						propertyId: new Types.ObjectId(payload.propertyId),
+					};
+					const data = await ENTITY.SubscriptionE.updateOneEntity(criteriaSubscription, { $set: { propertyId: null } });
+					console.log('datadatadatadatadata', data);
+					if (data) {
+						if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+							payload.isHomePageFeatured = false;
+						}
+						if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+							payload.isFeatured = false;
+						}
+					}
+
+				}
+				const { propertyId, ...update } = payload;
+				console.log('>>>>>>>>>>>>>>>>>>KKKKKKKKKKKKK', propertyId);
+
+				const updateData = await ENTITY.PropertyE.updateOneEntity({ _id: propertyId }, update);
 				return updateData;
-			}
-			payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
-			const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
-			let data: any;
-			if (exist) {
-				data = await ENTITY.PropertyE.createOneEntity(payload);
-				ENTITY.PropertyE.updateOneEntity({ _id: data._id }, { 'property_basic_details.name': payload.property_basic_details.name + '-' + data.propertyId });
 			} else {
-				data = await ENTITY.PropertyE.createOneEntity(payload);
+				payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+				const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
+				let data: any;
+				if (exist) {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
+					ENTITY.PropertyE.updateOneEntity({ _id: data._id }, { 'property_basic_details.name': payload.property_basic_details.name + '-' + data.propertyId });
+				} else {
+					data = await ENTITY.PropertyE.createOneEntity(payload);
+				}
+
+				if (payload.subscriptionId) {
+					const step1 = await ENTITY.SubscriptionE.assignPropertyWithSubscription({ subscriptionId: payload.subscriptionId, propertyId: data._id });
+					const oldSubscription: any = {};
+					const update: any = {};
+					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
+						oldSubscription.isFeatured = false;
+						update.isFeatured = true;
+					}
+					if (step1.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
+						oldSubscription.isHomePageFeatured = false;
+						update.isHomePageFeatured = true;
+					}
+					if (data.propertyId) {
+						ENTITY.PropertyE.updateOneEntity({ _id: new Types.ObjectId(data._id) }, { $set: update });
+						// ENTITY.PropertyE.updateOneEntity({step1.propertyId})
+					}
+					if (step1.propertyId) {
+
+						ENTITY.PropertyE.updateOneEntity({ _id: step1.propertyId }, { $set: oldSubscription });
+					}
+					// const step2 = await ENTITY.UserPropertyE.updateFeaturedPropertyStatus(payload);
+				}
+				return data;
 			}
-			return data;
+
+			// if (payload.propertyId) {
+			// 	const criteria = { _id: payload.propertyId };
+			// 	const updateData = await ENTITY.PropertyE.updateOneEntity(criteria, payload);
+			// 	return updateData;
+			// }
+			// payload.property_basic_details.name = payload.property_basic_details.title.replace(/\s+/g, '-').toLowerCase();
+			// const exist = await ENTITY.PropertyE.getOneEntity({ 'property_basic_details.name': payload.property_basic_details.name }, {});
+			// let data: any;
+			// if (exist) {
+			// 	data = await ENTITY.PropertyE.createOneEntity(payload);
+			// 	ENTITY.PropertyE.updateOneEntity({ _id: data._id }, { 'property_basic_details.name': payload.property_basic_details.name + '-' + data.propertyId });
+			// } else {
+			// 	data = await ENTITY.PropertyE.createOneEntity(payload);
+			// }
+			// return data;
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);

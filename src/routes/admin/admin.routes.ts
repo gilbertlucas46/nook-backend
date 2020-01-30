@@ -749,14 +749,6 @@ export let adminProfileRoute: ServerRoute[] = [
 					id: Joi.string().required(),
 				},
 				payload: {
-					// planId: Joi.string().required(),
-					// featuredType: Joi.string().valid([
-					// 	Constant.DATABASE.FEATURED_TYPE.FREE,
-					// 	Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROFILE,
-					// 	Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY,
-					// 	Constant.DATABASE.FEATURED_TYPE.PROPERTY,
-					// 	Constant.DATABASE.FEATURED_TYPE.PROFILE,
-					// ]),
 					description: Joi.string(),
 					amount: Joi.object({
 						monthly: Joi.number(),

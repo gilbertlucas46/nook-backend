@@ -53,11 +53,15 @@ export let propertyRoute: ServerRoute[] = [
 		path: '/v1/user/property',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
+				console.log('LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL');
+
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: PropertyRequest.PropertyData = request.payload as any;
 				const registerResponse = await PropertyService.addProperty(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PROPERTY_ADDED, registerResponse));
 			} catch (error) {
+				console.log('errorerrorerrorerrorerrorerrorerror>>>>>>>>>>>>', error);
+
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -379,6 +383,7 @@ export let propertyRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
+					subscriptionId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					property_features: {
 						storeys_2: Joi.boolean().default(false),
@@ -439,6 +444,7 @@ export let propertyRoute: ServerRoute[] = [
 						},
 					},
 					property_basic_details: {
+						name: Joi.string(),
 						title: Joi.string().min(1).max(60).trim(),
 						description: Joi.string().min(1).max(2000).trim(),
 						type: Joi.string().valid([
