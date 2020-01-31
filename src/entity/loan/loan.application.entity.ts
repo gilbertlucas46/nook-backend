@@ -72,7 +72,7 @@ class LoanApplicationE extends BaseEntity {
             sortingType = {
                 createdAt: sortType,
             };
-           
+
             if (status) {
                 matchObject['applicationStatus'] = status;
             }
@@ -216,6 +216,8 @@ class LoanApplicationE extends BaseEntity {
      */
     async sendApplication(data) {
         // console.log('inside Loan');
+        const { creditCard } = data.personalInfo;
+        creditCard.status = Constant.CREDIT_CARD_STATUS[creditCard.status].label;
         if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
             const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
             await fetch(config.get('zapier_loanUrl'), {
