@@ -52,7 +52,7 @@ export class AdminController {
 	async getPropertyById(payload: AdminRequest.PropertyDetail) {
 		try {
 			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload.propertyId);
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
+			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND); }
 			return getPropertyData;
 		} catch (error) {
 			utils.consolelog('error', error, true);
