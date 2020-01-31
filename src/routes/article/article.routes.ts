@@ -453,9 +453,22 @@ export let articleRoutes: ServerRoute[] = [
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload: ArticleRequest.GetArticleById = request.params as any;
+                // console.log('adminData', adminData);
+
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
                 // }
+
+                const checkPermission = adminData['permission'].some(data => {
+
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.ARTICLE;
+                });
+                console.log('checkPermissioncheckPermission', checkPermission);
+
+                if (checkPermission === false) {
+                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                }
+
                 const registerResponse = await ArticleService.getArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
