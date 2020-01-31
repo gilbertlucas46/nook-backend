@@ -124,7 +124,7 @@ export class PropertyClass extends BaseEntity {
 				// },
 			];
 			const getPropertyData = await this.DAOManager.aggregateData(this.modelName, criteria, {});
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
+			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND); }
 			return getPropertyData[0];
 		} catch (error) {
 			return Promise.reject(error);
@@ -218,7 +218,7 @@ export class PropertyClass extends BaseEntity {
 			];
 
 			const getPropertyData = await this.DAOManager.aggregateData(this.modelName, criteria, {});
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); }
+			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND); }
 			return getPropertyData[0];
 		} catch (error) {
 			return Promise.reject(error);
@@ -732,7 +732,7 @@ export class PropertyClass extends BaseEntity {
 					'property_basic_details.name': propertyId,
 				};
 				const propertyData = await this.DAOManager.findOne(this.modelName, criteria, ['_id', 'property_added_by']);
-				if (!propertyData) return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
+				if (!propertyData) return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
 				userId = propertyData.property_added_by.userId;
 			}
 

@@ -218,7 +218,7 @@ export class AgentClass extends BaseEntity {
             };
 
             const propertyData = await this.DAOManager.findOne(this.modelName, criteria, ['_id', 'property_added_by']);
-            if (!propertyData) return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
+            if (!propertyData) return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
 
             const query = {
                 'property_added_by.userId': Types.ObjectId(propertyData.property_added_by.userId),
