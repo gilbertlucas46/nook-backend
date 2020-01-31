@@ -395,6 +395,64 @@ export class ArticleClass extends BaseEntity {
         }
     }
 
+
+    async getAdminArticle(payload: ArticleRequest.GetArticleById) {
+        try {
+
+            const matchPipeline = [
+                {
+                    $match: {
+                        _id: new Types.ObjectId(payload.articleId),
+                    },
+                },
+                {
+                    $project: {
+                        articleAction: 0,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'articlecategories',
+                        let: { cid: '$categoryId' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$cid'],
+                                    },
+                                },
+                            },
+                        ],
+                        as: 'categoryData',
+                    },
+                },
+                {
+                    $addFields: {
+                        categoryType: {
+                            $let: {
+                                vars: {
+                                    category: { $arrayElemAt: ['$categoryData', 0] },
+                                },
+                                in: '$$category.name',
+                            },
+                        },
+                    },
+                },
+                {
+                    $project: {
+                        categoryData: 0,
+                    },
+                },
+            ];
+
+            const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline);
+            return data;
+
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
     // async sellingArticle() {
     //     try {
     //         const criteria = {
