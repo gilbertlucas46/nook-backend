@@ -66,10 +66,9 @@ class ArticleController {
 
     async getArticleById(payload: ArticleRequest.GetArticleById) {
         try {
-            const criteria = {
-                _id: payload.articleId,
-            };
-            const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
+
+            const article = await ENTITY.ArticleE.getAdminArticle(payload);
+
             if (!article) return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             return article;
         } catch (error) {

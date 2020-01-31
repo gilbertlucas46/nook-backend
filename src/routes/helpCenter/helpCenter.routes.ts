@@ -16,6 +16,15 @@ export let helpCenterRoute: ServerRoute[] = [
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
                 // }
+
+                const checkPermission = adminData['permission'].some(data => {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
+                });
+
+                if (checkPermission === false) {
+                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                }
+
                 const data = await HelpCenterService.createHelpCenter(payload, adminData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
             } catch (error) {
