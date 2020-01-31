@@ -185,7 +185,7 @@ class LoanControllers extends BaseEntity {
                 },
             };
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
-            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             else return data;
         } catch (error) {
             utils.consolelog('error', error, true);

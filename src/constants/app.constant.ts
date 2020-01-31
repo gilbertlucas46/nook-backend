@@ -815,6 +815,13 @@ export let STATUS_MSG = {
 				message: 'Result not found',
 			},
 		},
+		E422: {
+			UNPROCESSABLE_ENTITY: {
+				statusCode: 404,
+				type: 'UNPROCESSABLE_ENTITY',
+				message: 'UNPROCESSABLE_ENTITY',
+			},
+		},
 		E500: {
 			IMP_ERROR: {
 				statusCode: 500,

@@ -36,7 +36,7 @@ class CategoryController {
                 const data = await ENTITY.ArticleCategoryE.removeEntity(criteria);
                 return data;
             } else {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.DELETE_ARTICLE_FIRST);
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E422.UNPROCESSABLE_ENTITY);
             }
         } catch (error) {
             return Promise.reject(error);
