@@ -469,7 +469,7 @@ export let articleRoutes: ServerRoute[] = [
                     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
                 }
 
-                const registerResponse = await ArticleService.getArticleById(payload);
+                const registerResponse = await ArticleService.getAdminArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
