@@ -58,19 +58,20 @@ export class AgentClass extends BaseEntity {
                         { firstName: regExp },
                         { lastName: regExp },
                     );
-                } else {
-                    $or.push(
-                        { email: regExp },
-                        { userName: regExp },
-                        { firstName: regExp },
-                        { lastName: regExp },
-                        { title: regExp },
-                        { license: regExp },
-                        { taxNumber: regExp },
-                        { faxNumber: regExp },
-                        { aboutMe: regExp },
-                    );
                 }
+                // else {
+                //     $or.push(
+                //         { email: regExp },
+                //         { userName: regExp },
+                //         { firstName: regExp },
+                //         { lastName: regExp },
+                //         { title: regExp },
+                //         { license: regExp },
+                //         { taxNumber: regExp },
+                //         { faxNumber: regExp },
+                //         { aboutMe: regExp },
+                //     );
+                // }
                 matchObject = {
                     $and: [
                         matchObject,
@@ -157,7 +158,9 @@ export class AgentClass extends BaseEntity {
                 { name: regExp },
             );
             matchObject = {
+                // $and: [
                 $or,
+                // ],
             };
 
             const cityPipeline = [
@@ -192,7 +195,6 @@ export class AgentClass extends BaseEntity {
                 {
                     $unwind: {
                         path: '$agents',
-                        preserveNullAndEmptyArrays: true,
                     },
                 },
                 { $replaceRoot: { newRoot: '$agents' } },
