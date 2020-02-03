@@ -181,6 +181,7 @@ export class AgentClass extends BaseEntity {
                         pipeline: [{
                             $match: {
                                 type: Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+                                status: Constant.DATABASE.STATUS.USER.ACTIVE,
                                 $expr: {
                                     $toBool: {
                                         $size: { $setIntersection: ['$serviceAreas', '$$cities'] },
@@ -294,45 +295,6 @@ export class AgentClass extends BaseEntity {
                         status: Constant.DATABASE.STATUS.USER.ACTIVE,
                     },
                 },
-                {
-                    $project: {
-                        _id: 1,
-                        userName: 1,
-                        serviceAreas:
-                        {
-                            $cond: {
-                                if: { $isArray: '$serviceAreas' }, then: '$serviceAreas', else: [],
-                            },
-                        },
-                        email: 1,
-                        firstName: 1,
-                        middleName: 1,
-                        lastName: 1,
-                        phoneNumber: 1,
-                        title: 1,
-                        license: 1,
-                        taxnumber: 1,
-                        faxNumber: 1,
-                        fullPhoneNumber: 1,
-                        language: 1,
-                        companyName: 1,
-                        address: 1,
-                        aboutMe: 1,
-                        profilePicUrl: 1,
-                        backGroundImageUrl: 1,
-                        isEmailVerified: 1,
-                        isPhoneVerified: 1,
-                        countryCode: 1,
-                        status: 1,
-                        createdAt: 1,
-                        updatedAt: 1,
-                        type: 1,
-                        isFeaturedProfile: 1,
-                        isHomePageFeatured: 1,
-                        specializingIn_property_type: 1,
-                        specializingIn_property_category: 1,
-                    },
-                },
                 // {
                 //     $unwind: {
                 //         path: '$serviceAreas',
@@ -343,7 +305,11 @@ export class AgentClass extends BaseEntity {
                     $lookup: {
                         from: 'cities',
                         let: {
-                            cityId: '$serviceAreas',
+                            cityId: {
+                                $cond: {
+                                    if: { $isArray: '$serviceAreas' }, then: '$serviceAreas', else: [],
+                                },
+                            },
                         },
                         pipeline: [
                             {
