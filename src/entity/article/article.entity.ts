@@ -446,7 +446,7 @@ export class ArticleClass extends BaseEntity {
             ];
 
             const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline);
-            return data;
+            return data[0];
 
         } catch (error) {
             return Promise.reject(error);
