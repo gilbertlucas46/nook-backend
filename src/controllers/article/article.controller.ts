@@ -67,7 +67,10 @@ class ArticleController {
     async getArticleById(payload: ArticleRequest.GetArticleById) {
         try {
 
-            const article = await ENTITY.ArticleE.getAdminArticle(payload);
+            const criteria = {
+                _id: payload.articleId,
+            };
+            const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
 
             if (!article) return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             return article;
@@ -165,6 +168,30 @@ class ArticleController {
             return Promise.reject(error);
         }
     }
+
+    /**
+     * @param payload articleID
+     * for admin article
+     */
+    async getAdminArticleById(payload: ArticleRequest.GetArticleById) {
+        try {
+            const criteria = {
+                _id: payload.articleId,
+            };
+
+            const article = await ENTITY.ArticleE.getAdminArticle(payload);
+            console.log('articlearticle', article);
+
+            if (!article) return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
+            return article;
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
 }
+
+
+
 
 export const ArticleService = new ArticleController();
