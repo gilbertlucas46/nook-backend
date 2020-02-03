@@ -59,19 +59,19 @@ export class AgentClass extends BaseEntity {
                         { lastName: regExp },
                     );
                 }
-                // else {
-                //     $or.push(
-                //         { email: regExp },
-                //         { userName: regExp },
-                //         { firstName: regExp },
-                //         { lastName: regExp },
-                //         { title: regExp },
-                //         { license: regExp },
-                //         { taxNumber: regExp },
-                //         { faxNumber: regExp },
-                //         { aboutMe: regExp },
-                //     );
-                // }
+                else {
+                    $or.push(
+                        { email: regExp },
+                        { userName: regExp },
+                        { firstName: regExp },
+                        { lastName: regExp },
+                        { title: regExp },
+                        { license: regExp },
+                        { taxNumber: regExp },
+                        { faxNumber: regExp },
+                        { aboutMe: regExp },
+                    );
+                }
                 matchObject = {
                     $and: [
                         matchObject,
