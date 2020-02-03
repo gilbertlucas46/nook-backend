@@ -178,7 +178,6 @@ class ArticleController {
             const criteria = {
                 _id: payload.articleId,
             };
-
             const article = await ENTITY.ArticleE.getAdminArticle(payload);
             console.log('articlearticle', article);
 
