@@ -43,14 +43,14 @@ export class UserController {
 					};
 					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
 					// const userResponse = UniversalFunctions.formatUserData(User);
-					const mail = new MailManager();
-					const sendObj = {
-						receiverEmail: payload.email,
-						subject: 'nook welcomes you',
-						userName: payload.userName,
-					};
+					// const mail = new MailManager();
+					// const sendObj = {
+					// 	receiverEmail: payload.email,
+					// 	subject: 'nook welcomes you',
+					// 	userName: payload.userName,
+					// };
 					const token = ENTITY.UserE.createRegisterToken(User._id);
-					mail.welcomeMail(sendObj);
+					// mail.welcomeMail(sendObj);
 					return token;
 					// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 				}
