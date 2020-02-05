@@ -13,6 +13,12 @@ export let adminUserRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = request.payload as AdminRequest.IAddUser;
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.USERS;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				}
 				const registerResponse = await AdminUserController.addUser(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
 			} catch (error) {
@@ -71,7 +77,7 @@ export let adminUserRoutes: ServerRoute[] = [
 					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.USERS;
 				});
 				if (checkPermission === false) {
-					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
 				}
 				const registerResponse = await AdminUserController.getUserList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -132,6 +138,13 @@ export let adminUserRoutes: ServerRoute[] = [
 				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
 				// }
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.USERS;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				}
+
 				const registerResponse = await AdminUserController.updateUser(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
