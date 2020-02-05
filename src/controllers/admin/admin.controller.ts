@@ -181,7 +181,7 @@ export class AdminController {
 							amount: payload.amount[plan.billingType.toLowerCase()],
 						};
 					}),
-				})
+				}),
 			]);
 			console.log('>> Success! Plan Update is Done');
 			// return data;

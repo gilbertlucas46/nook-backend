@@ -119,8 +119,14 @@ export let loanReferral: any = [
         path: '/v1/admin/referral',
         handler: async (request, h: ResponseToolkit) => {
             try {
-                const adminData = request.auth && request.auth.credentials && (request.auth.credentials).userData;
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials).adminData;
                 const payload: loanReferralRequest.IAdminLoanReferral = request.query;
+                const checkPermission = adminData['permission'].some(data => {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.loanReferrals;
+                });
+                if (checkPermission === false) {
+                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                }
                 const data = await referralController.getAdminReferral(payload, adminData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
@@ -163,11 +169,17 @@ export let loanReferral: any = [
         path: '/v1/admin/referral/{id}',
         handler: async (request, h: ResponseToolkit) => {
             try {
-                const adminData = request.auth && request.auth.credentials && (request.auth.credentials).userData;
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials).adminData;
                 const payload = {
                     ...request.payload,
                     ...request.params,
                 };
+                const checkPermission = adminData['permission'].some(data => {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.loanReferrals;
+                });
+                if (checkPermission === false) {
+                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                }
                 const data = await referralController.updateReferral(payload, adminData);
                 return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
