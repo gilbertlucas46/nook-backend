@@ -133,9 +133,6 @@ export class PropertyClass extends BaseEntity {
 
 	async userPropertyDetail(propertyId, userData) {
 		try {
-
-			console.log('propertyIdpropertyId', propertyId, 'userID>>>>>>>>', userData._id);
-
 			const criteria = [
 				{
 					$match: {
@@ -197,16 +194,6 @@ export class PropertyClass extends BaseEntity {
 								{ $size: '$saveProp' },
 								0,
 							],
-							// $cond: {
-							// 	if: {
-							// 		$gt: [
-							// 			{ $size: '$saveProp' },
-							// 			0,
-							// 		],
-							// 	},
-							// 	then: true,
-							// 	else: false,
-							// },
 						},
 					},
 				},
@@ -429,28 +416,6 @@ export class PropertyClass extends BaseEntity {
 				},
 			];
 			const pipeLine = [
-				// matchObject,
-				// searchCriteria,
-				// { $sort: sortingType },
-				// {
-				// 	$project: {
-				// 		_id: 1,
-				// 		property_features: 1,
-				// 		updatedAt: 1,
-				// 		createdAt: 1,
-				// 		approvedAt: 1,
-				// 		property_details: 1,
-				// 		property_address: 1,
-				// 		propertyId: '$_id',
-				// 		propertyShortId: '$propertyId',
-				// 		property_basic_details: 1,
-				// 		property_added_by: 1,
-				// 		propertyImages: 1,
-				// 		isFeatured: 1,
-				// 		isHomePageFeatured: 1,
-				// 		property_status: 1,
-				// 	},
-				// },
 				{
 					$lookup: {
 						from: 'savedproperties',
@@ -726,8 +691,6 @@ export class PropertyClass extends BaseEntity {
 			};
 
 			if (!userId) {
-				console.log('1111111111111111');
-
 				const criteria = {
 					'property_basic_details.name': propertyId,
 				};
