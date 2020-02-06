@@ -38,13 +38,13 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'login to application',
 			tags: ['api', 'anonymous', 'Admin', 'login'],
-			auth: 'DoubleAuth',
+			// auth: 'DoubleAuth',
 			validate: {
 				payload: {
 					email: Joi.string().email().lowercase().trim().required(),
 					password: Joi.string().min(6).max(16).trim().required(),
 				},
-				headers: UniversalFunctions.authorizationHeaderObj,
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
