@@ -15,8 +15,8 @@ const transporter = nodemailer.createTransport({
 		user: config.get('smtp.mailUserName'), // config.get('MAIL_USERNAME'),
 		pass: config.get('smtp.mailPassword'), // '12345Appinventiv'
 	},
-	debug: true,
-	logger: true,
+	// debug: true,
+	// logger: true,
 });
 
 export class MailManager {
@@ -29,7 +29,7 @@ export class MailManager {
 		try {
 			// let senderEmail = this.senderEmail
 			const mailOptions: Mail.Options = {
-				from: 'Nook < '+ config.get('smtp.mailFromAddress') +'>', // sender email
+				from: 'Nook < ' + config.get('smtp.mailFromAddress') + '>', // sender email
 				to: params.receiverEmail, // || this.receiverEmail,
 				subject: params.subject, // || this.subject,
 				// 	text: 'params.content', // || this.content,
@@ -120,7 +120,7 @@ export class MailManager {
 					userName: params.firstName ? params.firstName : params.userName,
 					contactUrl: config.get('homePage') + '/layout/enquiries/received?type=contact',
 				});
-			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject +params.name, content: mailContent });
+			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject + params.name, content: mailContent });
 		} catch (error) {
 			return Promise.reject(error);
 		}
@@ -128,8 +128,8 @@ export class MailManager {
 
 	async enquiryEmail(params) {
 		try {
-			console.log('paramsparamsparams',params);
-			
+			console.log('paramsparamsparams', params);
+
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
 				.compileFile({
 					nookLogoUrl: config['host'] + '/images/nooklogo.png',
@@ -149,8 +149,8 @@ export class MailManager {
 					propertyUrl: params.propertyUrl,
 					enquiryUrl: config.get('homePage') + '/layout/enquiries/received',
 				});
-				
-			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject + params.name , content: mailContent });
+
+			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject + params.name, content: mailContent });
 		} catch (error) {
 			return Promise.reject(error);
 		}
