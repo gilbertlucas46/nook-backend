@@ -55,7 +55,7 @@ class TransactionController extends BaseEntity {
 				if (createSubscript.status === Constant.DATABASE.SUBSCRIPTION_STATUS.ACTIVE) {
 					const data: any = await this.createSubscription(createSubscript, payload, createCard);
 					const dataToUpdate = {
-						latestInvoice: createSubscript.latestInvoice,
+						latestInvoice: createSubscript.latest_invoice,
 					};
 					// await ENTITY.TransactionE.updateOneEntity({ invoiceId: createSubscript.latestInvoice }, {})
 				}
