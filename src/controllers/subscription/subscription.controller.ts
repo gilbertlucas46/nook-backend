@@ -5,7 +5,6 @@ import { formatUserData } from '@src/utils';
 import { stripeService } from '../../lib';
 
 class SubscriptionController {
-	t
 
 	async subscriptionList(payload) {
 		try {
