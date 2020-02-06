@@ -37,7 +37,7 @@ export let subAdminRoutes: ServerRoute[] = [
 					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.STAFF;
 				});
 				if (checkPermission === false) {
-					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
 				}
 				const registerResponse = await AdminStaffController.createStaff(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {}));
@@ -78,6 +78,13 @@ export let subAdminRoutes: ServerRoute[] = [
 					...request.payload as any,
 					...request.params,
 				};
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.STAFF;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				}
+
 				const data = await AdminStaffController.updateStaff(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -198,6 +205,12 @@ export let subAdminRoutes: ServerRoute[] = [
 				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
 				// }
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.STAFF;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				}
 				const registerResponse = await AdminStaffController.getStaffList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -261,6 +274,12 @@ export let subAdminRoutes: ServerRoute[] = [
 				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
 				// }
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.STAFF;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				}
 				const registerResponse = await AdminProfileService.profile(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {

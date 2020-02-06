@@ -143,6 +143,12 @@ export let enquiryRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: EnquiryRequest.GetEnquiry = request.query as any;
+				const checkPermission = adminData['permission'].some(data => {
+					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.ENQUIRY;
+				});
+				if (checkPermission === false) {
+					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				}
 				const registerResponse = await EnquiryService.adminGetEnquiryList(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {

@@ -17,8 +17,9 @@ export let adminProperty: ServerRoute[] = [
                     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.PROPERTIES;
                 });
                 if (checkPermission === false) {
-                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E404);
+                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
                 }
+
                 const responseData = await PropertyService.adminAddProperty(payload, adminData);
                 // const registerResponse = await AdminUserController.addUser(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, responseData));
