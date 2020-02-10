@@ -69,12 +69,12 @@ class TransactionController extends BaseEntity {
 					},
 					{
 						$project: {
-							fingerprint: '$cardDetail.fingerprint',
+							fingerprint: '$cardDetail.card.fingerprint',
 						},
 					},
 					{
 						$group: {
-							_id: '$cardDetail.fingerprint',
+							_id: '$cardDetail.card.fingerprint',
 							fingerprint: {
 								$push: '$fingerprint',
 							},
