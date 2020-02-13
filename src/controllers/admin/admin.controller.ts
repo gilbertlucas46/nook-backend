@@ -144,6 +144,8 @@ export class AdminController {
 
 	async updateSubscription(payload: AdminRequest.IUpdateSubscription) {
 		try {
+			console.log('payloadpayloadpayload', payload);
+
 			const criteria = {
 				_id: new Types.ObjectId(payload.id),
 			};
@@ -154,17 +156,22 @@ export class AdminController {
 			const data = await ENTITY.SubscriptionPlanEntity.getOneEntity(criteria, {});
 			console.log('data<>>>>>>>>>>>>>>>>>', data);
 			// plans to update on stripe
-			const plansUpdate: Array<Promise<void>> = data.plans.filter(({ billingType, amount }) => {
+			const plansUpdate: Array<Promise<void>> = data.plans.filter(({ billingType, amount, productId }) => {
+				console.log('billingType', billingType);
+				console.log('amountamount', amount, productId);
 				return payload.amount[billingType.toLowerCase()] !== amount;
-			}).map(async ({ billingType, planId }) => {
+			}).map(async ({ billingType, planId, productId }) => {
+				console.log('billingType>>>>>>', billingType);
+				console.log('amountamount', planId, productId);
+
 				await stripeService.deletePlan(planId);
-				console.log('>> Plan is Deleted');
+				console.log('>> Plan is Deleted>>>>>>>>');
 				const interval = billingType.toLowerCase();
 				await stripeService.createPlan({
 					id: planId,
 					currency: 'Php',
 					interval: interval.replace('ly', ''),
-					product: config.get('stripeProductId'),
+					product: productId,   //config.get('stripeProductId'),
 					nickname: `${data.featuredType}_${billingType}`,
 					amount: payload.amount[interval] * (billingType === 'MONTHLY' ? 1 : 12) * 100,
 				});
