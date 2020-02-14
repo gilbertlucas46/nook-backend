@@ -759,8 +759,6 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				// console.log('adminData', adminData);
-
 				const payload: AdminRequest.IUpdateSubscription = {
 					...request.params as any,
 					...request.payload as AdminRequest.IUpdateSubscription,
@@ -787,12 +785,18 @@ export let adminProfileRoute: ServerRoute[] = [
 					id: Joi.string().required(),
 				},
 				payload: {
+					featuredType: Joi.any(),
 					description: Joi.string(),
+					// plans: Joi.any(),
 					amount: Joi.object({
-						monthly: Joi.number(),
-						yearly: Joi.number(),
+						monthly: Joi.number().min(0).max(99999),
+						yearly: Joi.number().min(0).max(99999),
 					}),
-
+					// message: "This value must be less than or equal to 99999999 (it currently is '120000000')."
+					// Joi.object({}
+					// 	monthly: Joi.number(),
+					// 	yearly: Joi.number(),
+					// }),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
