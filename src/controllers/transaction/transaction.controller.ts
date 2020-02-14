@@ -103,7 +103,7 @@ class TransactionController extends BaseEntity {
 				// 	});
 				// }
 
-				if (checkCardAdded || cardData.length === 0) {
+				if (!checkCardAdded || cardData.length === 0) {
 					const dataToSave = {
 						name: payload.name,
 						address: payload.name,

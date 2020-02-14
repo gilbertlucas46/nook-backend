@@ -24,7 +24,7 @@ export let sendError = (data: any) => {
 		let errorToSend = '';
 		if (typeof data === 'object') {
 			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
-
+			logger.log('DB_ERROR', `message - ${data.message}, time-${new Date().toISOString()}`);
 			if (data.name === 'MongoError') {
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + CONSTANT.STATUS_MSG.ERROR.ENQUIRY_ALREADY_SENT;
 				//logger for mongoerror (error in query)
@@ -58,6 +58,7 @@ export let sendError = (data: any) => {
 			customErrorMessage = customErrorMessage && customErrorMessage.replace(/'/g, '');
 			customErrorMessage = customErrorMessage && customErrorMessage.replace('[', '');
 			customErrorMessage = customErrorMessage && customErrorMessage.replace(']', '');
+			logger.log('DB_ERROR', `message - ${data.message}, time-${new Date().toISOString()}`);
 		}
 		throw Boom.badRequest(customErrorMessage);
 	}

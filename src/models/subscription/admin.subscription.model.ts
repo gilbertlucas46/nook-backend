@@ -16,6 +16,7 @@ const adminSubcription = new Schema({
     },
     plans: [
         {
+            productId: { type: String },
             planId: { type: String },
             billingType: {
                 type: String, enum: [
