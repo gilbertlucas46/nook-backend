@@ -52,7 +52,8 @@ export class AdminController {
 	async getPropertyById(payload: AdminRequest.PropertyDetail) {
 		try {
 			const getPropertyData = await ENTITY.PropertyE.getPropertyDetailsById(payload.propertyId);
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND); }
+			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE); }
+			// if (!propertyData) return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
 			return getPropertyData;
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -179,7 +180,7 @@ export class AdminController {
 				console.log('>> Plan is Created');
 
 			});
-			
+
 			await Promise.all([
 				...plansUpdate,
 				ENTITY.SubscriptionPlanEntity.updateOneEntity(criteria, {
@@ -192,7 +193,7 @@ export class AdminController {
 					}),
 				}),
 			]);
-			
+
 			console.log('>> Success! Plan Update is Done');
 			// return data;
 			// if (payload.planId) {
