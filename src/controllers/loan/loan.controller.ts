@@ -157,7 +157,7 @@ class LoanControllers extends BaseEntity {
         try {
             const criteria = { _id: payload.loanId };
             const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
-            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
+            if (!data) return Promise.reject(Contsant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             else return data;
         } catch (error) {
             utils.consolelog('error', error, true);
