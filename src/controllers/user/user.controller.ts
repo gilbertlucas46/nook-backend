@@ -77,6 +77,8 @@ export class UserController {
 			if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
 			const checkData = { $or: [{ email: unique }, { userName: payload.email }] };
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
+			console.log('userData.isProfileCompleteuserData.isProfileComplete', userData.isProfileComplete);
+
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
 					if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
@@ -87,7 +89,16 @@ export class UserController {
 					}
 					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
 						return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD;
-					} else {
+					}
+					if (!userData.isProfileComplete) {
+						// const accessToken = await ENTITY.UserE.createToken(payload, userData);
+						const formatedData = utils.formatUserData(userData);
+						const incompleteToken = ENTITY.UserE.createRegisterToken(userData._id);
+						await ENTITY.SessionE.createSession(payload, userData, incompleteToken, 'user');
+						// mail.welcomeMail(sendObj);
+						return { formatedData, incompleteToken };
+					}
+					else {
 						const accessToken = await ENTITY.UserE.createToken(payload, userData);
 						await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
 						const formatedData = utils.formatUserData(userData);
