@@ -124,7 +124,7 @@ export class PropertyClass extends BaseEntity {
 				// },
 			];
 			const getPropertyData = await this.DAOManager.aggregateData(this.modelName, criteria, {});
-			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND); }
+			if (!getPropertyData) { return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE); }
 			return getPropertyData[0];
 		} catch (error) {
 			return Promise.reject(error);
@@ -977,7 +977,7 @@ export class PropertyClass extends BaseEntity {
 			];
 
 			const popularCities = await this.DAOManager.aggregateData(this.modelName, pipeline);
-			if (!popularCities) return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
+			if (!popularCities) return Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE;
 			return popularCities;
 
 		} catch (error) {

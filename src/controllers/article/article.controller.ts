@@ -72,7 +72,7 @@ class ArticleController {
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
 
-            if (!article) return Promise.reject(Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
+            if (!article) return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             return article;
         } catch (error) {
             utils.consolelog('error', error, true);
