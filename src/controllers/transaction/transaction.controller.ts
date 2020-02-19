@@ -416,7 +416,7 @@ class TransactionController extends BaseEntity {
 			else if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 				console.log('333333333333333333333333333333333333333333333333');
 				ENTITY.SubscriptionE.updateOneEntity({ userId: new Types.ObjectId(getUserId._id), subscriptionId: event['data']['object']['id'] }, { $set: { status: event['data']['object']['status'] } });
-				ENTITY.PropertyE.updateOneEntity({ _id: getSubscriptionCriteria['propertyId'] }, { $set: { isHomePageFeatured: false } });
+				ENTITY.PropertyE.updateOneEntity({ _id: getsubscriptionInfo['propertyId'] }, { $set: { isHomePageFeatured: false } });
 
 			}
 			else if (getsubscriptionInfo && getsubscriptionInfo['featuredType'] === Constant.DATABASE.FEATURED_TYPE.PROPERTY) {
