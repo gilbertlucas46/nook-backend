@@ -6,8 +6,10 @@ export class SessionClass extends BaseEntity {
 	constructor() {
 		super('Session');
 	}
-	async createSession(sessionData: UserRequest.Session, userData, accessToken: string, type: string) {
+	// UserRequest.Session,
+	async createSession(sessionData: any, userData, accessToken: string, type: string) {
 		try {
+			console.log('sourcesourcesourcesource', sessionData.source);
 			let columnName: string;
 			const sessionInfo = {
 				_id: mongoose.Types.ObjectId().toString(),

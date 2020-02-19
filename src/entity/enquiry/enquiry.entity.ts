@@ -40,11 +40,11 @@ export class EnquiryClass extends BaseEntity {
             else if (userData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE || userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE) {
                 query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
             }
-            // else {
-            //     console.log('else condition');
-            //     query['userId'] = userData._id;
-            //     query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
-            // }
+            else {
+                console.log('else condition');
+                query['propertyOwnerId'] = userData._id;
+                query['enquiryType'] = Constant.DATABASE.ENQUIRY_TYPE.PROPERTY;
+            }
             if (searchTerm) {
                 query = {
                     userId: userData._id,
