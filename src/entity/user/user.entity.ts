@@ -8,7 +8,8 @@ import * as Constant from '@src/constants';
 import { Types } from 'mongoose';
 import { flattenObject } from '@src/utils';
 import fetch from 'node-fetch';
-
+import * as utils from '../../utils';
+import { SessionE } from '..';
 export class UserClass extends BaseEntity {
 	constructor() {
 		super('User');
@@ -233,15 +234,24 @@ export class UserClass extends BaseEntity {
 			const doc = await this.DAOManager.findAndUpdate(this.modelName, {
 				_id: new Types.ObjectId(id),
 			}, data, { new: true });
+			console.log('docdocdocdocdocdocdocdocdocdocdocdocdocdoc', doc);
 			const salesforceData = flattenObject(doc.toObject ? doc.toObject() : doc);
 			// console.log(doc, salesforceData);
 			const request = {
 				method: 'post',
 				body: JSON.stringify(salesforceData),
 			};
-			await fetch(config.get('zapier_personUrl'), request);
-			await fetch(config.get('zapier_accountUrl'), request);
-			return;
+			const accessToken = await UserE.createToken({}, doc);
+			console.log('accessTokenaccessTokenaccessToken', accessToken);
+
+			await SessionE.createSession({}, doc, accessToken, 'user');
+
+			const formatedData = utils.formatUserData(doc);
+			// return { accessToken };
+
+			// await fetch(config.get('zapier_personUrl'), request);
+			// await fetch(config.get('zapier_accountUrl'), request);
+			return { formatedData, accessToken };
 		} catch (err) {
 			console.log(err);
 			// @TODO handle error messages for token and update failed
