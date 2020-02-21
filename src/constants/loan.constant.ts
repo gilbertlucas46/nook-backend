@@ -34,6 +34,20 @@ export const CREDIT_CARD_STATUS = {
         value: 'NO',
     },
 };
+export const GENDER = {
+    MALE: {
+        labe: 'Male',
+        value: 'MALE',
+    },
+    FEMALE: {
+        label: 'Female',
+        value: 'FEMALE',
+    },
+    OTHER: {
+        label: 'Other',
+        value: 'OTHER',
+    }
+}
 
 export const LOAN_TERMS: number[] = [1, 2, 3, 4, 5, 10, 15, 20, 25, 30];
 

@@ -586,8 +586,8 @@ export let userRoute: ServerRoute[] = [
 		async handler(request, h) {
 			try {
 				const { token } = request.query;
-				await UserService.completeRegistration(token as string, request.payload as object);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
+				const data = await UserService.completeRegistration(token as string, request.payload as object);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
