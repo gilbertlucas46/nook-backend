@@ -29,9 +29,12 @@ const schema = new Schema({
         },
         gender: {
             type: Schema.Types.String, enum: [
-                CONSTANT.DATABASE.GENDER.MALE,
-                CONSTANT.DATABASE.GENDER.FEMALE,
-                CONSTANT.DATABASE.GENDER.OTHER,
+                CONSTANT.GENDER.FEMALE.value,
+                CONSTANT.GENDER.MALE.value,
+                CONSTANT.GENDER.OTHER.value,
+                // CONSTANT.DATABASE.GENDER.MALE,
+                // CONSTANT.DATABASE.GENDER.FEMALE,
+                // CONSTANT.DATABASE.GENDER.OTHER,
             ],
         },
         educationBackground: {
@@ -113,7 +116,15 @@ const schema = new Schema({
         rate: { type: Schema.Types.Number },
         monthlyRepayment: { type: Schema.Types.Number },
         hasCoBorrower: { type: Boolean },
-        loanType: { type: String },
+        loanType: {
+            type: String, enum: [
+                CONSTANT.LOAN_TYPES.CONSTRUCTION.value,
+                CONSTANT.LOAN_TYPES.LOAN_TAKE_OUT.value,
+                CONSTANT.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
+                CONSTANT.LOAN_TYPES.REFINANCING.value,
+                CONSTANT.LOAN_TYPES.RENOVATION.value,
+            ],
+        },
         loanPercent: { type: Number },
         loanAmount: { type: Number },
     },

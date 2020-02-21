@@ -5,7 +5,7 @@ import * as Constant from '@src/constants/app.constant';
 import { LoanController } from '@src/controllers';
 import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE, INDUSTRIES } from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
-
+import * as LoanConstant from '../../constants/loan.constant';
 export let loanRoute: ServerRoute[] = [
 	// {
 	// 	method: 'POST',
@@ -157,9 +157,12 @@ export let loanRoute: ServerRoute[] = [
 							remainingTotal: Joi.number(),
 						}),
 						gender: Joi.string().valid([
-							Constant.DATABASE.GENDER.MALE,
-							Constant.DATABASE.GENDER.FEMALE,
-							Constant.DATABASE.GENDER.OTHER,
+							LoanConstant.GENDER.MALE.value,
+							LoanConstant.GENDER.FEMALE.value,
+							LoanConstant.GENDER.OTHER.value,
+							//   DATABASE.GENDER.FEMALE,
+							// Constant.DATABASE.GENDER.FEMALE,
+							// Constant.DATABASE.GENDER.OTHER,
 						]),
 						educationBackground: Joi.string().valid([
 							Constant.DATABASE.EDUCATION_BACKGROUND.POST_GRAD,
@@ -241,7 +244,13 @@ export let loanRoute: ServerRoute[] = [
 						rate: Joi.number().max(100),
 						monthlyRepayment: Joi.number(),
 						hasCoBorrower: Joi.boolean(),
-						loanType: Joi.string(),
+						loanType: Joi.string().valid([
+							LoanConstant.LOAN_TYPES.CONSTRUCTION.value,
+							LoanConstant.LOAN_TYPES.LOAN_TAKE_OUT.value,
+							LoanConstant.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
+							LoanConstant.LOAN_TYPES.REFINANCING.value,
+							LoanConstant.LOAN_TYPES.RENOVATION.value,
+						]),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
 					}),
@@ -523,9 +532,12 @@ export let loanRoute: ServerRoute[] = [
 							remainingTotal: Joi.number(),
 						}),
 						gender: Joi.string().valid([
-							Constant.DATABASE.GENDER.MALE,
-							Constant.DATABASE.GENDER.FEMALE,
-							Constant.DATABASE.GENDER.OTHER,
+							LoanConstant.GENDER.FEMALE.value,
+							LoanConstant.GENDER.MALE.value,
+							LoanConstant.GENDER.OTHER.value,
+							// Constant.DATABASE.GENDER.MALE,
+							// Constant.DATABASE.GENDER.FEMALE,
+							// Constant.DATABASE.GENDER.OTHER,
 						]),
 						educationBackground: Joi.string().valid([
 							Constant.DATABASE.EDUCATION_BACKGROUND.POST_GRAD,
@@ -604,14 +616,50 @@ export let loanRoute: ServerRoute[] = [
 						rate: Joi.number().max(100),
 						monthlyRepayment: Joi.number(),
 						hasCoBorrower: Joi.boolean(),
-						loanType: Joi.string(),
+						loanType: Joi.string().valid([
+							LoanConstant.LOAN_TYPES.CONSTRUCTION.value,
+							LoanConstant.LOAN_TYPES.LOAN_TAKE_OUT.value,
+							LoanConstant.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
+							LoanConstant.LOAN_TYPES.REFINANCING.value,
+							LoanConstant.LOAN_TYPES.RENOVATION.value,
+						]),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
 					}),
 
 					employmentInfo: Joi.object().keys({
-						type: Joi.string(),
-						rank: Joi.string(),
+						type: Joi.string().valid([
+							LoanConstant.EMPLOYMENT_TYPE.BPO,
+							LoanConstant.EMPLOYMENT_TYPE.GOVT,
+							LoanConstant.EMPLOYMENT_TYPE.OFW,
+							LoanConstant.EMPLOYMENT_TYPE.PRIVATE,
+							LoanConstant.EMPLOYMENT_TYPE.PROFESSIONAL,
+							LoanConstant.EMPLOYMENT_TYPE.SELF,
+						]),
+						rank: Joi.string().valid([
+							EMPLOYMENT_RANK.ASSISSTANT_VICE_PRESIDENT.value,
+							EMPLOYMENT_RANK.ASSISTANT_MANAGER.value,
+							EMPLOYMENT_RANK.CHAIRMAN.value,
+							EMPLOYMENT_RANK.CHIEF_EXECUTIVE_OFFICER.value,
+							EMPLOYMENT_RANK.CLERK.value,
+							EMPLOYMENT_RANK.DIRECTOR.value,
+							EMPLOYMENT_RANK.EXECUTIVE_VICE_PRESIDENT.value,
+							EMPLOYMENT_RANK.FIRST_VICE_PRESIDENT.value,
+							EMPLOYMENT_RANK.GENERAL_EMPLOYEE.value,
+							EMPLOYMENT_RANK.MANAGER.value,
+							EMPLOYMENT_RANK.NON_PROFESIONNAL.value,
+							EMPLOYMENT_RANK.OWNER.value,
+							EMPLOYMENT_RANK.PRESIDENT.value,
+							EMPLOYMENT_RANK.PROFESSIONAL.value,
+							EMPLOYMENT_RANK.RANK_FILE.value,
+							EMPLOYMENT_RANK.SENIOR_ASSISTANT_MANAGER.value,
+							EMPLOYMENT_RANK.SENIOR_ASSISTANT_VICE_PRESIDENT.value,
+							EMPLOYMENT_RANK.SENIOR_MANAGER.value,
+							EMPLOYMENT_RANK.SENIOR_VICE_PRESIDENT.value,
+							EMPLOYMENT_RANK.SUPERVISOR.value,
+							EMPLOYMENT_RANK.VICE_PRESIDENT.value,
+
+						]),
 						tenure: Joi.string(),
 						tin: Joi.string(),
 						companyName: Joi.string().min(1).max(300),
