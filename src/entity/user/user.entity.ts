@@ -249,8 +249,8 @@ export class UserClass extends BaseEntity {
 			const formatedData = utils.formatUserData(doc);
 			// return { accessToken };
 
-			// await fetch(config.get('zapier_personUrl'), request);
-			// await fetch(config.get('zapier_accountUrl'), request);
+			await fetch(config.get('zapier_personUrl'), request);
+			await fetch(config.get('zapier_accountUrl'), request);
 			return { formatedData, accessToken };
 		} catch (err) {
 			console.log(err);
