@@ -77,7 +77,6 @@ export class UserController {
 			if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
 			const checkData = { $or: [{ email: unique }, { userName: payload.email }] };
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
-			console.log('userData.isProfileCompleteuserData.isProfileComplete', userData.isProfileComplete);
 
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
