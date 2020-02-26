@@ -18,9 +18,14 @@ class LoanApplicationE extends BaseEntity {
      */
     async saveLoanApplication(payload) {
         try {
+
             const data = await this.createOneEntity(payload);
             // send data to sales-force
-            this.sendApplication(data);
+            if (config.get['environment'] === 'production') {
+                console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
+
+                this.sendApplication(data);
+            }
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -35,7 +40,10 @@ class LoanApplicationE extends BaseEntity {
         try {
             const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
             // send data to sales-force
-            this.sendApplication(data);
+            if (config.get['environment'] === 'production') {
+                console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
+                this.sendApplication(data);
+            }
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
