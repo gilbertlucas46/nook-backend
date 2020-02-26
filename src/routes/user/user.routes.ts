@@ -67,7 +67,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					email: Joi.string().trim().min(4).max(100),
+					email: Joi.string().trim().min(4).max(100).lowercase(),
 					password: Joi.string().trim().min(6).max(16).required(),
 					deviceToken: Joi.string(),
 				},
