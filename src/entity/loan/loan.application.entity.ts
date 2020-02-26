@@ -21,11 +21,11 @@ class LoanApplicationE extends BaseEntity {
 
             const data = await this.createOneEntity(payload);
             // send data to sales-force
-            if (config.get['environment'] === 'production') {
-                console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
+            // if (config.get['environment'] === 'production') {
+            //     console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
 
-                this.sendApplication(data);
-            }
+            this.sendApplication(data);
+            // }
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -40,10 +40,10 @@ class LoanApplicationE extends BaseEntity {
         try {
             const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
             // send data to sales-force
-            if (config.get['environment'] === 'production') {
-                console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
-                this.sendApplication(data);
-            }
+            // if (config.get['environment'] === 'production') {
+            //     console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
+            this.sendApplication(data);
+            // }
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
