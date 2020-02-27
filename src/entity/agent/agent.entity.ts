@@ -291,7 +291,7 @@ export class AgentClass extends BaseEntity {
                 {
                     $match: {
                         userName,
-                        type: Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+                        //type: Constant.DATABASE.USER_TYPE.AGENT.TYPE, //commented to fix a client bug - RP 
                         status: Constant.DATABASE.STATUS.USER.ACTIVE,
                     },
                 },
