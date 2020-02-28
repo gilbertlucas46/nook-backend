@@ -50,7 +50,6 @@ class LoanControllers extends BaseEntity {
             });
 
             const referenceNumber = await ENTITY.LoanApplicationEntity.getReferenceId(criteria1);
-            console.log('new Datenew Datenew Date', new Date());
             if (!referenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
                 const month = ('0' + (new Date(new Date().getTime()).getMonth() + 1)).slice(-2);
