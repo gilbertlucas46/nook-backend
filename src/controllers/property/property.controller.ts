@@ -137,7 +137,7 @@ export class PropertyController {
 						propertyId: new Types.ObjectId(payload.propertyId),
 					};
 					const data = await ENTITY.SubscriptionE.updateOneEntity(criteriaSubscription, { $set: { propertyId: null } });
-					console.log('datadatadatadatadata', data);
+					// console.log('datadatadatadatadata', data);
 					if (data) {
 						if (data.featuredType === Constant.DATABASE.FEATURED_TYPE.HOMEPAGE_PROPERTY) {
 							payload.isHomePageFeatured = false;

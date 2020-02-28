@@ -29,7 +29,7 @@ class Referal extends BaseEntity {
                 },
             }, function optionalCallback(err, httpResponse, body) {
                 if (err) { return console.log(err); }
-                console.log('body ----', body);
+                // console.log('body ----', body);
             });
         } catch (error) {
             utils.consolelog('error', error, true);
