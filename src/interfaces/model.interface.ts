@@ -1,23 +1,23 @@
 export type ModelNames = 'User' |
-    'Property' |
+    // 'Property' |
     'Admin' |
     'Session' |
     'AdminSession' |
     'Region' |
     'City' |
-    'Enquiry' |
+    // 'Enquiry' |
     'Article' |
     'HelpCenter' |
-    'SavedProperty' |
+    // 'SavedProperty' |
     'Bank' |
     'Userloancriteria' |
     'HomeLoan' |
     'HelpCenterStatus' |
     'LoanApplication' |
-    'Payment' |
+    // 'Payment' |     
     'LoanReferral' |
-    'Transaction' |
+    // 'Transaction' |
     'AdminSubscription' |
-    'ArticleCategories' |
-    'Card'
+    'ArticleCategories' |s
+    // 'Card'               
     ;

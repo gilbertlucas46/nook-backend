@@ -1,6 +1,6 @@
 import * as ENTITY from '@src/entity';
 import * as utils from '@src/utils/index';
-import { PropertyRequest } from '@src/interfaces/property.interface';
+// import { PropertyRequest } from '@src/interfaces/property.interface';
 
 class CityController {
     constructor() { }
@@ -9,14 +9,14 @@ class CityController {
      * @param payload
      */
 
-    async popularCities(payload: PropertyRequest.PopularCity)  {
-        try {
-            return await ENTITY.cityEntity.getPopularCity(payload);
-        } catch (error) {
-            utils.consolelog('error', error, true);
-            return Promise.reject(error);
-        }
-    }
+    // async popularCities(payload: PropertyRequest.PopularCity)  {
+    //     try {
+    //         return await ENTITY.cityEntity.getPopularCity(payload);
+    //     } catch (error) {
+    //         utils.consolelog('error', error, true);
+    //         return Promise.reject(error);
+    //     }
+    // }
     async featuredCities() {
         try {
             return await ENTITY.cityEntity.featuredList();
@@ -25,14 +25,14 @@ class CityController {
             return Promise.reject(error);
         }
     }
-    async cityData(payload ) {
-        try {
-            return await ENTITY.PropertyE.getPropertyViaCity(payload);
-        } catch (error) {
-            utils.consolelog('error', error, true);
-            return Promise.reject(error);
-        }
-    }
+    // async cityData(payload ) {
+    //     try {
+    //         return await ENTITY.PropertyE.getPropertyViaCity(payload);
+    //     } catch (error) {
+    //         utils.consolelog('error', error, true);
+    //         return Promise.reject(error);
+    //     }
+    // }
 }
 
 export let CityService = new CityController();

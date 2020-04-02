@@ -151,7 +151,7 @@ class AdminUserControllers {
                 approvedAt: new Date().getTime(),
             };
 
-            ENTITY.PropertyE.updateMultiple(propertyCriteria, dataToSet);
+            // ENTITY.PropertyE.updateMultiple(propertyCriteria, dataToSet);
             return data;
         } catch (error) {
             return Promise.reject(error);

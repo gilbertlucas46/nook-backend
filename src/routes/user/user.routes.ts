@@ -2,11 +2,11 @@ import { ServerRoute, Request } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { UserService, PropertyService, CityService } from '@src/controllers';
+import { UserService, CityService } from '@src/controllers';
 import * as config from 'config';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
-import { PropertyRequest } from '@src/interfaces/property.interface';
+// import { PropertyRequest } from '@src/interfaces/property.interface';
 export let userRoute: ServerRoute[] = [
 
 	/**
@@ -67,7 +67,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					email: Joi.string().trim().min(4).max(100),
+					email: Joi.string().trim().min(4).max(100).lowercase(),
 					password: Joi.string().trim().min(6).max(16).required(),
 					deviceToken: Joi.string(),
 				},
@@ -81,35 +81,35 @@ export let userRoute: ServerRoute[] = [
 			},
 		},
 	},
-	/**
-	 * @description:get user's property via id
-	 */
-	{
-		method: 'GET',
-		path: '/v1/user/property/{_id}',
-		async handler(request, h) {
-			try {
-				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const payload: PropertyRequest.PropertyDetail = request.params as any;
-				const propertyDetail = await UserService.propertyDetail(payload, userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
-			} catch (error) {
-				return (UniversalFunctions.sendError(error));
-			}
-		},
-		options: {
-			description: 'get detail of property ',
-			tags: ['api', 'anonymous', 'user', 'register'],
-			auth: 'DoubleAuth',
-			validate: {
-				params: {
-					_id: Joi.string().trim().required(),
-				},
-				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction,
-			},
-		},
-	},
+	// /**
+	//  * @description:get user's property via id
+	//  */
+	// {
+	// 	method: 'GET',
+	// 	path: '/v1/user/property/{_id}',
+	// 	async handler(request, h) {
+	// 		try {
+	// 			const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+	// 			const payload: PropertyRequest.PropertyDetail = request.params as any;
+	// 			const propertyDetail = await UserService.propertyDetail(payload, userData);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
+	// 		} catch (error) {
+	// 			return (UniversalFunctions.sendError(error));
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'get detail of property ',
+	// 		tags: ['api', 'anonymous', 'user', 'register'],
+	// 		auth: 'DoubleAuth',
+	// 		validate: {
+	// 			params: {
+	// 				_id: Joi.string().trim().required(),
+	// 			},
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 	},
+	// },
 	/**
 	 *
 	 * @description: forget passsword to send the link over mail
@@ -369,88 +369,88 @@ export let userRoute: ServerRoute[] = [
 	/**
 	 * @description : user dashboard count
 	 */
-	{
-		method: 'GET',
-		path: '/v1/user/dashboard',
-		handler: async (request, h) => {
-			try {
-				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const responseData = await UserService.dashboard(userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
-			} catch (error) {
-				UniversalFunctions.consolelog(error, 'error', true);
-				return UniversalFunctions.sendError(error);
-			}
-		},
-		options: {
-			description: 'Get user dashboard data',
-			tags: ['api', 'anonymous', 'user', 'reset'],
-			auth: 'UserAuth',
-			validate: {
-				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction,
-			},
-			plugins: {
-				'hapi-swagger': {
-					responseMessages: Constant.swaggerDefaultResponseMessages,
-				},
-			},
-		},
-	},
-	/**
-	 * @description user all property except the current property
-	 */
-	{
-		method: 'GET',
-		path: '/v1/user/suggested-property',
-		async handler(request, h) {
-			try {
-				const payload: PropertyRequest.UserProperty = request.query as any;
-				const propertyDetail = await UserService.userProperty(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
-			} catch (error) {
-				UniversalFunctions.consolelog(error, 'error', true);
-				return (UniversalFunctions.sendError(error));
-			}
-		},
-		options: {
-			description: 'get user usggested-property ',
-			tags: ['api', 'anonymous', 'user', 'register'],
-			auth: 'DoubleAuth',
-			validate: {
-				query: {
-					propertyType: Joi.number().valid([
-						Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
-						Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-						Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
-					]).default(Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER),
-					page: Joi.number(),
-					limit: Joi.number(),
-					sortType: Joi.number().valid([
-						Constant.ENUM.SORT_TYPE,
-					]),
-					propertyFor: Joi.number().valid([
-						Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
-						Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-					]),
-					sortBy: Joi.string().valid(['price', 'date', 'isFeatured']),
-					propertyId: Joi.string().trim(),
-					userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
-				},
+	// {
+	// 	method: 'GET',
+	// 	path: '/v1/user/dashboard',
+	// 	handler: async (request, h) => {
+	// 		try {
+	// 			const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+	// 			const responseData = await UserService.dashboard(userData);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
+	// 		} catch (error) {
+	// 			UniversalFunctions.consolelog(error, 'error', true);
+	// 			return UniversalFunctions.sendError(error);
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'Get user dashboard data',
+	// 		tags: ['api', 'anonymous', 'user', 'reset'],
+	// 		auth: 'UserAuth',
+	// 		validate: {
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 		plugins: {
+	// 			'hapi-swagger': {
+	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
+	// 			},
+	// 		},
+	// 	},
+	// },
+	// /**
+	//  * @description user all property except the current property
+	//  */
+	// {
+	// 	method: 'GET',
+	// 	path: '/v1/user/suggested-property',
+	// 	async handler(request, h) {
+	// 		try {
+	// 			const payload: PropertyRequest.UserProperty = request.query as any;
+	// 			const propertyDetail = await UserService.userProperty(payload);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, propertyDetail));
+	// 		} catch (error) {
+	// 			UniversalFunctions.consolelog(error, 'error', true);
+	// 			return (UniversalFunctions.sendError(error));
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'get user usggested-property ',
+	// 		tags: ['api', 'anonymous', 'user', 'register'],
+	// 		auth: 'DoubleAuth',
+	// 		validate: {
+	// 			query: {
+	// 				propertyType: Joi.number().valid([
+	// 					Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
+	// 					Constant.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
+	// 					Constant.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
+	// 					Constant.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
+	// 					Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
+	// 					Constant.DATABASE.PROPERTY_ACTIONS.ISFEATURED.NUMBER,
+	// 				]).default(Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER),
+	// 				page: Joi.number(),
+	// 				limit: Joi.number(),
+	// 				sortType: Joi.number().valid([
+	// 					Constant.ENUM.SORT_TYPE,
+	// 				]),
+	// 				propertyFor: Joi.number().valid([
+	// 					Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+	// 					Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+	// 				]),
+	// 				sortBy: Joi.string().valid(['price', 'date', 'isFeatured']),
+	// 				propertyId: Joi.string().trim(),
+	// 				userId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
+	// 			},
 
-				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction,
-			},
-			plugins: {
-				'hapi-swagger': {
-					responseMessages: Constant.swaggerDefaultResponseMessages,
-				},
-			},
-		},
-	},
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 		plugins: {
+	// 			'hapi-swagger': {
+	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
+	// 			},
+	// 		},
+	// 	},
+	// },
 	/**
 	 * @description: update user Account
 	 */
@@ -491,95 +491,95 @@ export let userRoute: ServerRoute[] = [
 			},
 		},
 	},
-	/**
-	 * @description:Recent Property city based data
-	 */
-	{
-		method: 'GET',
-		path: '/v1/user/city-based',
-		async handler(request, h) {
-			try {
-				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
-				const payload: UserRequest.RecentProperty = request.query as any;
-				const cityBasedData = await PropertyService.getCityBasedData(payload);
-				const userResponse = UniversalFunctions.formatUserData(cityBasedData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
-			} catch (error) {
-				UniversalFunctions.consolelog(error, 'error', true);
-				return (UniversalFunctions.sendError(error));
-			}
-		},
-		options: {
-			description: 'recent-property list',
-			tags: ['api', 'anonymous', 'user', 'city vise Property'],
-			auth: 'DoubleAuth',
-			validate: {
-				query: {
-					propertyType: Joi.string().trim().valid([
-						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
-						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
-						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
-					]),
-					propertyFor: Joi.number().valid([
-						Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
-						Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-					]),
-					All: Joi.boolean(),
-					cityId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
-					page: Joi.number(),
-					limit: Joi.number(),
-					sortType: Joi.number().valid([
-						Constant.ENUM.SORT_TYPE,
-					]),
-					sortBy: Joi.string().valid('price', 'date', 'isFeatured').default('price'),
-					// propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-				},
-				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction,
-			},
-			plugins: {
-				'hapi-swagger': {
-					responseMessages: Constant.swaggerDefaultResponseMessages,
-				},
-			},
-		},
-	},
+	// /**
+	//  * @description:Recent Property city based data
+	//  */
+	// {
+	// 	method: 'GET',
+	// 	path: '/v1/user/city-based',
+	// 	async handler(request, h) {
+	// 		try {
+	// 			const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
+	// 			const payload: UserRequest.RecentProperty = request.query as any;
+	// 			const cityBasedData = await PropertyService.getCityBasedData(payload);
+	// 			const userResponse = UniversalFunctions.formatUserData(cityBasedData);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
+	// 		} catch (error) {
+	// 			UniversalFunctions.consolelog(error, 'error', true);
+	// 			return (UniversalFunctions.sendError(error));
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'recent-property list',
+	// 		tags: ['api', 'anonymous', 'user', 'city vise Property'],
+	// 		auth: 'DoubleAuth',
+	// 		validate: {
+	// 			query: {
+	// 				propertyType: Joi.string().trim().valid([
+	// 					Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
+	// 					Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
+	// 					Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
+	// 				]),
+	// 				propertyFor: Joi.number().valid([
+	// 					Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
+	// 					Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
+	// 				]),
+	// 				All: Joi.boolean(),
+	// 				cityId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
+	// 				page: Joi.number(),
+	// 				limit: Joi.number(),
+	// 				sortType: Joi.number().valid([
+	// 					Constant.ENUM.SORT_TYPE,
+	// 				]),
+	// 				sortBy: Joi.string().valid('price', 'date', 'isFeatured').default('price'),
+	// 				// propertyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+	// 			},
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 		plugins: {
+	// 			'hapi-swagger': {
+	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
+	// 			},
+	// 		},
+	// 	},
+	// },
 
-	{
-		method: 'GET',
-		path: '/v1/user/featuredCount',
-		async handler(request, h) {
-			try {
-				// const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
-				// const payload: UserRequest.RecentProperty = request.query as any;
-				// const cityBasedData = await PropertyService.featureDashboard(payload);
-				// const userResponse = UniversalFunctions.formatUserData(cityBasedData);
-				// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
-				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				const responseData = await UserService.featureDashboard(userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
-			} catch (error) {
-				UniversalFunctions.consolelog(error, 'error', true);
-				return (UniversalFunctions.sendError(error));
-			}
-		},
-		options: {
-			description: 'feature subscription count',
-			tags: ['api', 'anonymous', 'user', 'feature subscription count'],
-			auth: 'UserAuth',
-			validate: {
-				query: {
-				},
-				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction,
-			},
-			plugins: {
-				'hapi-swagger': {
-					responseMessages: Constant.swaggerDefaultResponseMessages,
-				},
-			},
-		},
-	},
+	// {
+	// 	method: 'GET',
+	// 	path: '/v1/user/featuredCount',
+	// 	async handler(request, h) {
+	// 		try {
+	// 			// const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
+	// 			// const payload: UserRequest.RecentProperty = request.query as any;
+	// 			// const cityBasedData = await PropertyService.featureDashboard(payload);
+	// 			// const userResponse = UniversalFunctions.formatUserData(cityBasedData);
+	// 			// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
+	// 			const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+	// 			const responseData = await UserService.featureDashboard(userData);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
+	// 		} catch (error) {
+	// 			UniversalFunctions.consolelog(error, 'error', true);
+	// 			return (UniversalFunctions.sendError(error));
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'feature subscription count',
+	// 		tags: ['api', 'anonymous', 'user', 'feature subscription count'],
+	// 		auth: 'UserAuth',
+	// 		validate: {
+	// 			query: {
+	// 			},
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 		plugins: {
+	// 			'hapi-swagger': {
+	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
+	// 			},
+	// 		},
+	// 	},
+	// },
 	{
 		method: 'PATCH',
 		path: '/v1/user/complete-registration',

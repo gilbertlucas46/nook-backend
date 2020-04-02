@@ -7,7 +7,7 @@ import * as utils from '@src/utils/index';
 import * as Jwt from 'jsonwebtoken';
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
-import { PropertyRequest } from '@src/interfaces/property.interface';
+// import { PropertyRequest } from '@src/interfaces/property.interface';
 import { flattenObject } from '@src/utils';
 import fetch from 'node-fetch';
 import { Types } from 'mongoose';
@@ -77,7 +77,6 @@ export class UserController {
 			if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
 			const checkData = { $or: [{ email: unique }, { userName: payload.email }] };
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
-			console.log('userData.isProfileCompleteuserData.isProfileComplete', userData.isProfileComplete);
 
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
@@ -118,25 +117,7 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-	/**
-	 * @function propertyDetail
-	 * @description function to get Detail of the property
-	 * @payload payload :PropertyDetail
-	 * return Proeperty Data
-	 */
-	async propertyDetail(payload: PropertyRequest.PropertyDetail, userData) {
-		try {
-			const getPropertyData = await ENTITY.PropertyE.userPropertyDetail(payload._id, userData);
-			// if (getPropertyData.property_status.number === Constant.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER) {
-			// 	return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PROPERTY_SOLD);
-			// }
-			if (!getPropertyData) { return utils.sendSuccess(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE, {}); }
-			return getPropertyData;
-		} catch (error) {
-			utils.consolelog('error', error, true);
-			return Promise.reject(error);
-		}
-	}
+
 	/**
 	 * @function updateProfile
 	 * @description function to update the user profile
@@ -162,21 +143,21 @@ export class UserController {
 				|| getUser.type !== updateUser.type || getUser.isFeaturedProfile !== updateUser.isFeaturedProfile || getUser.isHomePageFeatured !== updateUser.isHomePageFeatured) {
 
 				const propertyCriteria = { 'property_added_by.userId': new Types.ObjectId(updateUser._id) };
-				const updatePropertyData = {
-					property_added_by: {
-						userId: getUser._id,
-						userName: getUser.userName,
-						phoneNumber: updateUser.phoneNumber,
-						profilePicUrl: updateUser.profilePicUrl,
-						firstName: updateUser.firstName,
-						lastName: updateUser.lastName,
-						userType: updateUser.type,
-						email: getUser.email,
-						isFeaturedProfile: getUser.isFeaturedProfile,
-						isHomePageFeatured: getUser.isHomePageFeatured,
-					},
-				};
-				ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
+				// const updatePropertyData = {
+				// 	property_added_by: {
+				// 		userId: getUser._id,
+				// 		userName: getUser.userName,
+				// 		phoneNumber: updateUser.phoneNumber,
+				// 		profilePicUrl: updateUser.profilePicUrl,
+				// 		firstName: updateUser.firstName,
+				// 		lastName: updateUser.lastName,
+				// 		userType: updateUser.type,
+				// 		email: getUser.email,
+				// 		isFeaturedProfile: getUser.isFeaturedProfile,
+				// 		isHomePageFeatured: getUser.isHomePageFeatured,
+				// 	},
+				// };
+				// ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
 			}
 			/**
 			 *  push contract to salesforce
@@ -347,30 +328,30 @@ export class UserController {
 	 * @payload  UserData
 	 * return Array
 	 */
-	async dashboard(userData: UserRequest.UserData) {
-		try {
-			const step2 = await ENTITY.UserE.userDashboad(userData);
-			// step2.isFeaturedProfile = step1 ? true : false;
-			return step2;
-		} catch (error) {
-			utils.consolelog('error', error, true);
-			return Promise.reject(error);
-		}
-	}
+	// async dashboard(userData: UserRequest.UserData) {
+	// 	try {
+	// 		const step2 = await ENTITY.UserE.userDashboad(userData);
+	// 		// step2.isFeaturedProfile = step1 ? true : false;
+	// 		return step2;
+	// 	} catch (error) {
+	// 		utils.consolelog('error', error, true);
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 	/**
 	 * @function userProperty
 	 * @description property of the particular user
 	 * @payload  UserProperty
 	 * return Array
 	 */
-	async userProperty(payload: PropertyRequest.UserProperty) {
-		try {
-			return await ENTITY.PropertyE.suggested_property(payload);
-		} catch (error) {
-			utils.consolelog('error', error, true);
-			return Promise.reject(error);
-		}
-	}
+	// async userProperty(payload: PropertyRequest.UserProperty) {
+	// 	try {
+	// 		return await ENTITY.PropertyE.suggested_property(payload);
+	// 	} catch (error) {
+	// 		utils.consolelog('error', error, true);
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 	/**
 	 * @function updateAccount
 	 * @description updayte user account to the agent/owner/guest
@@ -394,16 +375,16 @@ export class UserController {
 		}
 	}
 
-	async featureDashboard(userData) {
-		try {
-			const step1 = await ENTITY.SubscriptionE.checkFeaturePropertyCount(userData);
-			// const step2 = await ENTITY.UserE.userDashboad(userData);
-			// step2.isFeaturedProfile = step1 ? true : false;
-			return step1;
-		} catch (error) {
-			return Promise.reject(error);
-		}
-	}
+	// async featureDashboard(userData) {
+	// 	try {
+	// 		const step1 = await ENTITY.SubscriptionE.checkFeaturePropertyCount(userData);
+	// 		// const step2 = await ENTITY.UserE.userDashboad(userData);
+	// 		// step2.isFeaturedProfile = step1 ? true : false;
+	// 		return step1;
+	// 	} catch (error) {
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 	async completeRegistration(token: string, data: object) {
 		return await ENTITY.UserE.completeRegisterProcess(token, {
 			...data,
