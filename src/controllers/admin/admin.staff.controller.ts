@@ -90,19 +90,6 @@ class AdminStaffControllers {
         }
     }
 
-    // async deleteStaff(payload: any, adminData: any) {
-    //     try {
-    //         if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-    //             return Promise.reject(Constant.STATUS_MSG.ERROR.E401);
-    //         } else {
-    //             await ENTITY.AdminStaffEntity.updateOneEntity({ _id: payload.id }, { staffStatus: CONSTANT.DATABASE.STATUS.USER.DELETED });
-    //             return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
-    //         }
-    //     } catch (error) {
-    //         return Promise.reject(error);
-    //     }
-    // }
-
     async getStaffList(payload) {
         try {
             const staffList = await ENTITY.AdminStaffEntity.staffListing(payload);

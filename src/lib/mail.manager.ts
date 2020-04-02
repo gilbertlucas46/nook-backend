@@ -103,58 +103,58 @@ export class MailManager {
 		}
 	}
 
-	async contactEmail(params) {
-		try {
-			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
-				.compileFile({
-					// faceBookUrl: config['host'] + '/images/facebook.png',
-					// instaUrl: config['host'] + '/images/instagram-2.png',
-					// twitterUrl: config['host'] + '/images/twitter-2.png',
-					name: params.name,
-					address: params.address,
-					description: params.message,
-					phone: params.phone,
-					// Id: params.propertyId, // shortId
-					email: params.email,
-					title: params.title,
-					userName: params.firstName ? params.firstName : params.userName,
-					contactUrl: config.get('homePage') + '/layout/enquiries/received?type=contact',
-				});
-			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject + params.name, content: mailContent });
-		} catch (error) {
-			return Promise.reject(error);
-		}
-	}
+	// async contactEmail(params) {
+	// 	try {
+	// 		const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
+	// 			.compileFile({
+	// 				// faceBookUrl: config['host'] + '/images/facebook.png',
+	// 				// instaUrl: config['host'] + '/images/instagram-2.png',
+	// 				// twitterUrl: config['host'] + '/images/twitter-2.png',
+	// 				name: params.name,
+	// 				address: params.address,
+	// 				description: params.message,
+	// 				phone: params.phone,
+	// 				// Id: params.propertyId, // shortId
+	// 				email: params.email,
+	// 				title: params.title,
+	// 				userName: params.firstName ? params.firstName : params.userName,
+	// 				contactUrl: config.get('homePage') + '/layout/enquiries/received?type=contact',
+	// 			});
+	// 		await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject + params.name, content: mailContent });
+	// 	} catch (error) {
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 
-	async enquiryEmail(params) {
-		try {
-			console.log('paramsparamsparams', params);
+	// async enquiryEmail(params) {
+	// 	try {
+	// 		console.log('paramsparamsparams', params);
 
-			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
-				.compileFile({
-					nookLogoUrl: config['host'] + '/images/nooklogo.png',
-					faceBookUrl: config['host'] + '/images/facebook.png',
-					instaUrl: config['host'] + '/images/instagram-2.png',
-					twitterUrl: config['host'] + '/images/twitter-2.png',
+	// 		const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
+	// 			.compileFile({
+	// 				nookLogoUrl: config['host'] + '/images/nooklogo.png',
+	// 				faceBookUrl: config['host'] + '/images/facebook.png',
+	// 				instaUrl: config['host'] + '/images/instagram-2.png',
+	// 				twitterUrl: config['host'] + '/images/twitter-2.png',
 
-					// receieverUserName: params['userName'],
-					receiverName: params['receiverName'] ? params['receiverName'] : params['receieverUserName'], //  params['receiverName'],
-					name: params.name,
-					// address: params.address,
-					description: params.message,
-					phone: params.phone,
-					email: params.email,
-					Id: params.propertyId, // shortId
-					title: params.title,
-					propertyUrl: params.propertyUrl,
-					enquiryUrl: config.get('homePage') + '/layout/enquiries/received',
-				});
+	// 				// receieverUserName: params['userName'],
+	// 				receiverName: params['receiverName'] ? params['receiverName'] : params['receieverUserName'], //  params['receiverName'],
+	// 				name: params.name,
+	// 				// address: params.address,
+	// 				description: params.message,
+	// 				phone: params.phone,
+	// 				email: params.email,
+	// 				Id: params.propertyId, // shortId
+	// 				title: params.title,
+	// 				propertyUrl: params.propertyUrl,
+	// 				enquiryUrl: config.get('homePage') + '/layout/enquiries/received',
+	// 			});
 
-			await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject + params.name, content: mailContent });
-		} catch (error) {
-			return Promise.reject(error);
-		}
-	}
+	// 		await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject + params.name, content: mailContent });
+	// 	} catch (error) {
+	// 		return Promise.reject(error);
+	// 	}
+	// }
 
 	async welcomeStaffUSer(params) {
 		try {

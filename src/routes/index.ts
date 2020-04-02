@@ -8,7 +8,7 @@ import { contentRoutes } from './content/content.routes';
 // import { enquiryRoutes } from './enquiry/enquiry.routes';
 import { articleRoutes } from './article/article.routes';
 import { cityRoutes } from './city/city.routes';
-import { agentRoute } from './user/agent.routes';
+// import { agentRoute } from './user/agent.routes';
 import { helpCenterRoute } from './helpCenter/helpCenter.routes';
 // import { savedProperty } from './property/savedProperty.routes';
 import { loanRoute } from './loans/loan.routes';
@@ -28,7 +28,7 @@ export let Routes: ServerRoute[] = [
 	// ...enquiryRoutes,
 	...articleRoutes,
 	...cityRoutes,
-	...agentRoute,
+	// ...agentRoute,
 	...helpCenterRoute,
 	// ...savedProperty,
 	...subAdminRoutes,
