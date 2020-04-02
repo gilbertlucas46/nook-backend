@@ -200,19 +200,19 @@ export class HelpCenter {
             pipeline = [
                 {
                     $facet: {
-                        PROPERTIES: [
-                            {
-                                $match: {
+                        // PROPERTIES: [
+                        //     {
+                        //         $match: {
 
-                                    categoryType: 'PROPERTIES',
-                                    $or: [
-                                        query,
-                                    ],
-                                },
-                            },
-                            { $project: { _id: 1, title: 1, categoryId: 1 } },
-                            { $sort: sortingType },
-                        ],
+                        //             categoryType: 'PROPERTIES',
+                        //             $or: [
+                        //                 query,
+                        //             ],
+                        //         },
+                        //     },
+                        //     { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        //     { $sort: sortingType },
+                        // ],
 
                         ACCOUNT: [{
                             $match: {

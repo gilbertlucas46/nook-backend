@@ -6,8 +6,8 @@ declare namespace NodeJS {
 	 */
 	export interface Counters {
 		LoanApplication?: number;
-		Transaction?: number;
-		Property?: number;
+		// Transaction?: number;
+		// Property?: number;
 	}
 
 

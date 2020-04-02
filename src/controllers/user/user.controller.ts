@@ -338,20 +338,7 @@ export class UserController {
 	// 		return Promise.reject(error);
 	// 	}
 	// }
-	/**
-	 * @function userProperty
-	 * @description property of the particular user
-	 * @payload  UserProperty
-	 * return Array
-	 */
-	// async userProperty(payload: PropertyRequest.UserProperty) {
-	// 	try {
-	// 		return await ENTITY.PropertyE.suggested_property(payload);
-	// 	} catch (error) {
-	// 		utils.consolelog('error', error, true);
-	// 		return Promise.reject(error);
-	// 	}
-	// }
+
 	/**
 	 * @function updateAccount
 	 * @description updayte user account to the agent/owner/guest

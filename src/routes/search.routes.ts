@@ -2,7 +2,7 @@ import { ServerRoute, Request } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
-import { searchController } from '@src/controllers';
+// import { searchController } from '@src/controllers';
 export let searchRoutes: ServerRoute[] = [
 	/**
 	 * @description: register user based on unique mail and userName
