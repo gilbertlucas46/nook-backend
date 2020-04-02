@@ -355,11 +355,11 @@ export let DATABASE = {
 			TYPE: 'FAQ',
 			DISPLAY_NAME: 'FAQ'
 		},
-		HOME_LOANS: {
-			NUMBER: 3,
-			TYPE: 'HOME_LOANS',
-			DISPLAY_NAME: 'Home Loans',
-		},
+		// HOME_LOANS: {
+		// 	NUMBER: 3,
+		// 	TYPE: 'HOME_LOANS',
+		// 	DISPLAY_NAME: 'Home Loans',
+		// },
 		// PROPERTIES: {
 		// 	NUMBER: 2,
 		// 	TYPE: 'PROPERTIES',
@@ -370,11 +370,11 @@ export let DATABASE = {
 		// 	TYPE: 'BILLING',
 		// 	DISPLAY_NAME: 'BILLING',
 		// },
-		// HOME_LOANS: {
-		// 	NUMBER: 4,
-		// 	TYPE: 'HOME_LOANS',
-		// 	DISPLAY_NAME: 'Home Loans',
-		// },
+		HOME_LOANS: {
+			NUMBER: 4,
+			TYPE: 'HOME_LOANS',
+			DISPLAY_NAME: 'Home Loans',
+		},
 
 	},
 
