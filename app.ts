@@ -31,7 +31,7 @@ const originArray: string[] = [
 	'http://localhost:4200',
 	'http://10.10.7.255:4200',
 	'http://10.10.8.213:4200',
-
+	'https://nookdev.appskeeper.com/documentation#!',
 ];
 
 
