@@ -234,8 +234,11 @@ export class ArticleClass extends BaseEntity {
 
     async getArticlelist(payload: ArticleRequest.GetArticle, Admindata) {
         try {
+
             let { sortType } = payload;
             const { articleId, searchTerm, fromDate, toDate, categoryId, status, page, limit } = payload;
+            console.log('payloadpayloadpayloadpayload', payload.categoryId, categoryId);
+
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
             let query: any = {};
@@ -272,6 +275,13 @@ export class ArticleClass extends BaseEntity {
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                 };
             }
+            if (Admindata && categoryId) {
+                console.log('11111111111111111111111111111111');
+                query = {
+                    categoryId: Types.ObjectId(categoryId),
+                    status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+                };
+            }
 
             if (searchTerm) {
                 query = {
@@ -284,6 +294,7 @@ export class ArticleClass extends BaseEntity {
             if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             if (fromDate && !toDate) { query['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
+            console.log('queryqueryqueryqueryqueryqueryqueryqueryquery', query);
 
             const matchPipeline = [
                 { $match: query },
