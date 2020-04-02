@@ -52,18 +52,22 @@ const helpCenterSchema = new Schema({
         type: Number,
         enum: [
             Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-            Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+            // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
             Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-            Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+            // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+            Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
+
         ],
     },
     categoryType: {
         type: String,
         enum: [
             Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.TYPE,
-            Constant.DATABASE.HELP_CENTER_TYPE.BILLING.TYPE,
+            // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.TYPE,
             Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.TYPE,
-            Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.TYPE,
+            // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.FAQ.TYPE,
+
         ],
         index: true,
     },

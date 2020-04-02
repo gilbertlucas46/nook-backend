@@ -43,9 +43,10 @@ export let helpCenterRoute: ServerRoute[] = [
                     description: Joi.string().trim(),
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -195,9 +196,12 @@ export let helpCenterRoute: ServerRoute[] = [
                     description: Joi.string(),
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
+
+                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -255,9 +259,10 @@ export let helpCenterRoute: ServerRoute[] = [
                 params: {
                     id: Joi.number().valid([
                         Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -287,9 +292,11 @@ export let helpCenterRoute: ServerRoute[] = [
                 params: {
                     id: Joi.number().valid([
                         Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
+
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -358,9 +365,10 @@ export let helpCenterRoute: ServerRoute[] = [
                     // helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
                     ]),
                     searchTerm: Joi.string(),
                 },
@@ -392,9 +400,10 @@ export let helpCenterRoute: ServerRoute[] = [
                     // helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     categoryId: Joi.number().valid([
                         Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
                     ]).required(),
                     searchTerm: Joi.string(),
                     id: Joi.string().regex(/^[0-9a-fA-F]{24}$/),

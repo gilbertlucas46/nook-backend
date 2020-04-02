@@ -2,7 +2,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { ICity, CityDocument } from '@src/models/city';
 import { Location } from '@src/interfaces/region.interface';
 import * as Constant from '@src/constants/app.constant';
-import { PropertyRequest } from '@src/interfaces/property.interface';
+// import { PropertyRequest } from '@src/interfaces/property.interface';
 
 class CityEntity extends BaseEntity {
 	constructor() {
@@ -75,66 +75,66 @@ class CityEntity extends BaseEntity {
 		return this.DAOManager.findOne(this.modelName, { _id: payload.cityId }, {}, {});
 	}
 
-	async getPopularCity(payload: PropertyRequest.PopularCity) {
-		let { limit, propertyType } = payload;
-		if (!limit) limit = 3;
-		if (!propertyType) propertyType = 1;
+	// async getPopularCity(payload: PropertyRequest.PopularCity) {
+	// 	let { limit, propertyType } = payload;
+	// 	if (!limit) limit = 3;
+	// 	if (!propertyType) propertyType = 1;
 
-		const pipeline: any[] = [
-			{
-				$match: {
-					isFeatured: true,
-				},
-			},
-			{
-				$project: {
-					cityId: '$_id',
-					images: 1,
-					name: 1,
-				},
-			},
-			{
-				$lookup: {
-					from: 'properties',
-					let: { cityId: '$cityId' },
-					pipeline: [
-						{
-							$match: {
-								$expr: {
-									$and: [
-										{ $eq: ['$property_address.cityId', '$$cityId'] },
-										{ $eq: ['$property_status.number', Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER] },
-										{ $eq: ['$property_basic_details.property_for_number', propertyType] },
-									],
-								},
-							},
-						},
-						{ $count: 'count' },
-					],
-					as: 'propertyData',
-				},
-			},
-			{
-				$addFields: {
-					propertyCount: { $sum: '$propertyData.count' },
-				},
-			},
-			{
-				$project: {
-					propertyData: 0,
-				},
-			},
-			{
-				$sort: {
-					propertyCount: -1,
-				},
-			},
-			{
-				$limit: limit,
-			},
-		];
-		return this.DAOManager.aggregateData(this.modelName, pipeline, {});
-	}
+	// 	const pipeline: any[] = [
+	// 		{
+	// 			$match: {
+	// 				isFeatured: true,
+	// 			},
+	// 		},
+	// 		{
+	// 			$project: {
+	// 				cityId: '$_id',
+	// 				images: 1,
+	// 				name: 1,
+	// 			},
+	// 		},
+	// 		{
+	// 			$lookup: {
+	// 				from: 'properties',
+	// 				let: { cityId: '$cityId' },
+	// 				pipeline: [
+	// 					{
+	// 						$match: {
+	// 							$expr: {
+	// 								$and: [
+	// 									{ $eq: ['$property_address.cityId', '$$cityId'] },
+	// 									{ $eq: ['$property_status.number', Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER] },
+	// 									{ $eq: ['$property_basic_details.property_for_number', propertyType] },
+	// 								],
+	// 							},
+	// 						},
+	// 					},
+	// 					{ $count: 'count' },
+	// 				],
+	// 				as: 'propertyData',
+	// 			},
+	// 		},
+	// 		{
+	// 			$addFields: {
+	// 				propertyCount: { $sum: '$propertyData.count' },
+	// 			},
+	// 		},
+	// 		{
+	// 			$project: {
+	// 				propertyData: 0,
+	// 			},
+	// 		},
+	// 		{
+	// 			$sort: {
+	// 				propertyCount: -1,
+	// 			},
+	// 		},
+	// 		{
+	// 			$limit: limit,
+	// 		},
+	// 	];
+	// 	return this.DAOManager.aggregateData(this.modelName, pipeline, {});
+	// }
 }
 
 export const cityEntity = new CityEntity();
