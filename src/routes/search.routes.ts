@@ -7,36 +7,36 @@ export let searchRoutes: ServerRoute[] = [
 	/**
 	 * @description: register user based on unique mail and userName
 	 */
-    {
-        method: 'POST',
-        path: '/v1/user/search',
-        async handler(request, h) {
-            try {
-                const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
-                const payload: any = request.query;
-                const registerResponse = await searchController.search(payload, userData);
-                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
-            } catch (error) {
-                UniversalFunctions.consolelog(error, 'error', true);
-                return (UniversalFunctions.sendError(error));
-            }
-        },
-        options: {
-            description: 'Register to applications',
-            tags: ['api', 'anonymous', 'user', 'register'],
-            auth: 'UserAuth',
-            validate: {
-                query: {
-                    text: Joi.string(),
-                },
-                headers: UniversalFunctions.authorizationHeaderObj,
-                failAction: UniversalFunctions.failActionFunction,
-            },
-            plugins: {
-                'hapi-swagger': {
-                    responseMessages: Constant.swaggerDefaultResponseMessages,
-                },
-            },
-        },
-    },
+    // {
+    //     method: 'POST',
+    //     path: '/v1/user/search',
+    //     async handler(request, h) {
+    //         try {
+    //             const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
+    //             const payload: any = request.query;
+    //             const registerResponse = await searchController.search(payload, userData);
+    //             return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
+    //         } catch (error) {
+    //             UniversalFunctions.consolelog(error, 'error', true);
+    //             return (UniversalFunctions.sendError(error));
+    //         }
+    //     },
+    //     options: {
+    //         description: 'Register to applications',
+    //         tags: ['api', 'anonymous', 'user', 'register'],
+    //         auth: 'UserAuth',
+    //         validate: {
+    //             query: {
+    //                 text: Joi.string(),
+    //             },
+    //             headers: UniversalFunctions.authorizationHeaderObj,
+    //             failAction: UniversalFunctions.failActionFunction,
+    //         },
+    //         plugins: {
+    //             'hapi-swagger': {
+    //                 responseMessages: Constant.swaggerDefaultResponseMessages,
+    //             },
+    //         },
+    //     },
+    // },
 ];

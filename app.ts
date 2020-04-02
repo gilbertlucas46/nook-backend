@@ -6,7 +6,7 @@ import * as config from 'config';
 // import * as Constant from './src/constants';
 // import * as cron from 'node-cron';
 // import * as ENTITY from './src/entity';
-import { ExpireServices, job1 } from './src/scheduler/propertyExpire';
+// import { ExpireServices, job1 } from './src/scheduler/propertyExpire';
 
 // let env = (process.env.NODE_ENV) ? process.env.NODE_ENV : 'default';
 
@@ -68,7 +68,7 @@ const init = async () => {
 	await server.start();
 	const db = new Bootstrap.Bootstrap();
 	await db.bootstrap();
-	ExpireServices.updateProperty();
+	// ExpireServices.updateProperty();
 };
 
 init().then(_ => {

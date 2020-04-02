@@ -1,7 +1,7 @@
 import { Database } from '../databases';
-import { AdminE, regionEntity, SubscriptionPlanEntity, ArticleCategoryE } from '@src/entity';
+import { AdminE, regionEntity, ArticleCategoryE } from '@src/entity';
 import { LoanApplication } from '@src/models';
-import { Transaction, Property } from '@src/models';
+// import { Transaction, Property } from '@src/models';
 
 export class Bootstrap {
 	private dataBaseService = new Database();
@@ -9,8 +9,8 @@ export class Bootstrap {
 		await this.dataBaseService.connectDatabase();
 		await this.initRegions();
 		AdminE.adminAccountCreator();
-		await this.initCounters();
-		await this.subscriptionPlan();
+		// await this.initCounters();
+		// await this.subscriptionPlan();
 		// await this.bootstrapCounters();
 		ArticleCategoryE.addSellingArticle();
 	}
@@ -37,26 +37,26 @@ export class Bootstrap {
 		};
 	}
 
-	async initCounters() {
-		const lastTransaction = await Transaction.findOne({}).sort({ createdAt: -1 }).select({ invoiceNo: 1, _id: 0 }).exec();
-		let transactionCounter = 0;
-		if (lastTransaction) {
-			const invoiceNo = lastTransaction['invoiceNo'] || 'INV' + new Date().getFullYear();
-			transactionCounter = parseInt(invoiceNo.substr(7));
-		}
-		const lastProperty = await Property.findOne({}).sort({ propertyId: -1 }).select({ propertyId: 1, _id: 0 }).exec();
-		let propertyCounter = 0;
-		if (lastProperty['propertyId']) {
-			propertyCounter = lastProperty['propertyId'] || 0;
-		}
+	// async initCounters() {
+	// 	const lastTransaction = await Transaction.findOne({}).sort({ createdAt: -1 }).select({ invoiceNo: 1, _id: 0 }).exec();
+	// 	let transactionCounter = 0;
+	// 	if (lastTransaction) {
+	// 		const invoiceNo = lastTransaction['invoiceNo'] || 'INV' + new Date().getFullYear();
+	// 		transactionCounter = parseInt(invoiceNo.substr(7));
+	// 	}
+	// 	const lastProperty = await Property.findOne({}).sort({ propertyId: -1 }).select({ propertyId: 1, _id: 0 }).exec();
+	// 	let propertyCounter = 0;
+	// 	if (lastProperty['propertyId']) {
+	// 		propertyCounter = lastProperty['propertyId'] || 0;
+	// 	}
 
-		global.counters = {
-			Transaction: transactionCounter,
-			Property: propertyCounter,
-		};
-	}
+	// 	global.counters = {
+	// 		Transaction: transactionCounter,
+	// 		Property: propertyCounter,
+	// 	};
+	// }
 
-	async subscriptionPlan() {
-		await SubscriptionPlanEntity.bootstrap();
-	}
+	// async subscriptionPlan() {
+	// 	await SubscriptionPlanEntity.bootstrap();
+	// }
 }

@@ -306,17 +306,17 @@ export let DATABASE = {
 
 	PERMISSION: {
 		TYPE: {
-			DASHBOARD: 'dashboard',
+			// DASHBOARD: 'dashboard',
 			HELP_CENTER: 'help-center',
 			USERS: 'users',
 			STAFF: 'staffs',
 			ARTICLE: 'articles',
 			LOAN: 'loans',
-			PROPERTIES: 'properties',
+			// PROPERTIES: 'properties',
 			Article_Category: 'article-categories',
-			Subscriptions: 'subscriptions',
+			// Subscriptions: 'subscriptions',
 			loanReferrals: 'loan-referrals',
-			ENQUIRY: 'enquiries',
+			// ENQUIRY: 'enquiries',
 
 		},
 	},
@@ -350,21 +350,32 @@ export let DATABASE = {
 			TYPE: 'ACCOUNT',
 			DISPLAY_NAME: 'ACCOUNT',
 		},
-		PROPERTIES: {
+		FAQ: {
 			NUMBER: 2,
-			TYPE: 'PROPERTIES',
-			DISPLAY_NAME: 'PROPERTIES',
-		},
-		BILLING: {
-			NUMBER: 3,
-			TYPE: 'BILLING',
-			DISPLAY_NAME: 'BILLING',
+			TYPE: 'FAQ',
+			DISPLAY_NAME: 'FAQ'
 		},
 		HOME_LOANS: {
-			NUMBER: 4,
+			NUMBER: 3,
 			TYPE: 'HOME_LOANS',
 			DISPLAY_NAME: 'Home Loans',
 		},
+		// PROPERTIES: {
+		// 	NUMBER: 2,
+		// 	TYPE: 'PROPERTIES',
+		// 	DISPLAY_NAME: 'PROPERTIES',
+		// },
+		// BILLING: {
+		// 	NUMBER: 3,
+		// 	TYPE: 'BILLING',
+		// 	DISPLAY_NAME: 'BILLING',
+		// },
+		// HOME_LOANS: {
+		// 	NUMBER: 4,
+		// 	TYPE: 'HOME_LOANS',
+		// 	DISPLAY_NAME: 'Home Loans',
+		// },
+
 	},
 
 	SUBSCRIPTION_STATUS: {
