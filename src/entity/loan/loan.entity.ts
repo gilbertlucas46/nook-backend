@@ -10,7 +10,7 @@ class LoanEntities extends BaseEntity {
         super('Bank');
     }
 
-    async preloan(payload: LoanRequest.PreLoan) {
+    async preloan(payload: LoanRequest.PreLoan, userData) {
         try {
             let totalMonthlyIncome = payload.work.income;
             let preLoanMonthlyAmount = 0;
@@ -178,6 +178,14 @@ class LoanEntities extends BaseEntity {
                         loanForCancelledCreditCard: 1,
                         fixingPeriod: 1,
                         grossIncome: 1,
+                        // userId: {
+                        //     $let: {
+                        //         vars: {
+                        //             userData,
+                        //         },
+                        //         in: userData._id,
+                        //     },
+                        // },
                     },
                 },
                 {
@@ -222,7 +230,22 @@ class LoanEntities extends BaseEntity {
                 },
             );
 
-            return await this.DAOManager.aggregateData(this.modelName, queryPipeline);
+            const data = await this.DAOManager.aggregateData(this.modelName, queryPipeline);
+            console.log('dataaaaaaaaaaaaaaaaaaaaaaaaaaa', data);
+            if (userData && userData._id) {
+                const dataToSave = {
+                    userId: userData._id,
+                    prequalifiedBanks: data,
+                };
+                console.log('dataToSavedataToSavedataToSavedataToSavedataToSave', dataToSave);
+
+                const savePrQualification = await this.DAOManager.insert('PreQualification', dataToSave, {});
+                console.log('savePrQualificationsavePrQualificationsavePrQualification', savePrQualification);
+                return data;
+            }
+
+            return data;
+
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -231,7 +254,3 @@ class LoanEntities extends BaseEntity {
 }
 
 export const LoanEntity = new LoanEntities();
-
-
-
-

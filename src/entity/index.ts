@@ -26,3 +26,4 @@ export { ArticleCategoryE } from './article/adminArticle.entity';
 // export { UserCardE } from './card/user.card';
 // export { BankE } from './banks/banks.entity';
 // export { loanCriteriaE } from './banks/userloan.criteria';
+export { PreQualificationBankE } from './loan/prequalification.entity';
