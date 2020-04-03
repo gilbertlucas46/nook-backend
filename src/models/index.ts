@@ -13,3 +13,4 @@ export { HelpCenterStatus } from './helpCentre/helpCenter.model';
 export { LoanReferral } from './referral/loan.referral.model';
 export { Webhook } from './webhook/webhook.model';
 export { ArticleCategories } from './article/article.category.model';
+export { PreQualification } from './loan/preQualification.model';

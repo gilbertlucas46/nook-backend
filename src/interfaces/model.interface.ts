@@ -14,10 +14,11 @@ export type ModelNames = 'User' |
     'HomeLoan' |
     'HelpCenterStatus' |
     'LoanApplication' |
-    // 'Payment' |     
+    // 'Payment' |o
     'LoanReferral' |
     // 'Transaction' |
     'AdminSubscription' |
-    'ArticleCategories' |s
-    // 'Card'               
+    'ArticleCategories' |
+    // 'Card' |
+    'PreQualification'
     ;

@@ -7,7 +7,7 @@ import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Constant from '../../constants/app.constant';
 import * as utils from 'src/utils';
-
+import { PreQualificationBankE } from '@src/entity/loan/prequalification.entity'
 
 class LoanControllers extends BaseEntity {
 
@@ -105,9 +105,9 @@ class LoanControllers extends BaseEntity {
      * return []
      */
 
-    async checkPreloanApplication(payload) {
+    async checkPreloanApplication(payload: LoanRequest.PreLoan, userData) {
         try {
-            return await LoanEntity.preloan(payload);
+            return await LoanEntity.preloan(payload, userData);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -205,6 +205,18 @@ class LoanControllers extends BaseEntity {
             return bankList.sort(() => 0.5 - Math.random());
         } catch (error) {
             utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    /**
+     *
+     */
+    async preQualificationList(payload, adminData) {
+        try {
+            const data = await PreQualificationBankE.preloanList(payload, adminData);
+            return data;
+        } catch (error) {
             return Promise.reject(error);
         }
     }
