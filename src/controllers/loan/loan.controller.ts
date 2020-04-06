@@ -220,5 +220,14 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    async preQualificationDetail(payload) {
+        try {
+            const data = await PreQualificationBankE.preLoanDetail(payload);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 export const LoanController = new LoanControllers();

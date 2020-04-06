@@ -263,18 +263,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-	/**
-	 *
-	 * @param payload property and filtering
-	 */
-
-	/**
-	 * @Description: property detail by id
-	 */
-
-	/**
-	 * @Description:approve property request accept or decline
-	 */
 
 	/**
 	 * @Description:admin logout
@@ -546,29 +534,12 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				query: {
-					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					// userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					fromDate: Joi.number(),
+					toDate: Joi.number(),
 					sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]).default(-1),
-					// status: Joi.string().valid([
-					// 	// Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
-					// 	// Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
-					// 	// Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED,
-					// 	Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
-					// 	Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
-					// 	Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
-					// 	// Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
-					// 	Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
-					// 	Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
-					// 	Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
-					// ]),
-					// amountFrom: Joi.number(),
-					// amountTo: Joi.number(),
-					// fromDate: Joi.number(),
-					// toDate: Joi.number(),
-					// sortBy: Joi.string().default('createdAt'),
-					// limit: Joi.number(),
-					// page: Joi.number().min(1).default(1),
-					// // type: Joi.string().valid('admin', 'user')
-					// searchTerm: Joi.string(),
+					propertyValue: Joi.number(),
+					propertyType: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -583,8 +554,48 @@ export let adminProfileRoute: ServerRoute[] = [
 
 	/**
 	 * @description subscription list
-
-
+     */
+	{
+		method: 'GET',
+		path: '/v1/admin/prequalification/{id}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload: any = request.params;
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await ENTITY.AdminStaffEntity.checkPermission(adminData.permission);
+				// }
+				// const checkPermission = adminData['permission'].some(data => {
+				// 	return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.LOAN;
+				// });
+				// if (checkPermission === false) {
+				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				// }
+				const data = await LoanController.preQualificationDetail(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				utils.consolelog('Error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Admin preQualification by Id',
+			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
 	/**
 	 * @description update the description list
 	 */

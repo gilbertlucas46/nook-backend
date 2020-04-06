@@ -128,149 +128,15 @@ export class AdminClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-	/**
-	 *
-	 * @param adminData
-	 * @description : admin dashboard
-	 */
-	// async adminDashboard(adminData) {
-	// 	try {
-	// const pipeline = [
-	// {
-	// 	$facet: {
-	// 		adminTotalProperty: [
-	// 			{
-	// 				$match: {
-	// 					'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
-	// 				},
-	// 			},
-	// 			{ $count: 'Total' },
-	// 		],
-	// 		totalUser: [
-	// 			{
-	// 				$match: {
-	// 					status: {
-	// 						$or: [
-	// 							CONSTANT.DATABASE.STATUS.USER.ACTIVE,
-	// 							CONSTANT.DATABASE.STATUS.USER.BLOCKED,
-	// 						],
-	// 					},
-	// 				},
-	// 			},
-	// 			{ $count: 'Total' },
-	// 		],
 
-	// adminActiveProperty: [
-	// 	{
-	// 		$match: {
-	// 			'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-	// 		},
-	// 	},
-	// 	{ $count: 'Total' },
-	// ],
-
-	// adminDeclineProperty: [
-	// 	{
-	// 		$match: {
-	// 			'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
-	// 		},
-	// 	},
-	// 	{ $count: 'Total' },
-	// ],
-
-	// adminPendingProperty: [
-	// 	{
-	// 		$match: {
-	// 			'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
-	// 		},
-	// 	},
-	// 	{ $count: 'Total' },
-	// ],
-	// },
-	// },
-	// {
-	// 	$project: {
-	// 		totalProperty: {
-	// 			$cond: { if: { $size: ['$adminTotalProperty'] }, then: { $arrayElemAt: ['$adminTotalProperty.Total', 0] }, else: 0 },
-	// 		},
-	// activeProperty: {
-	// 	$cond: { if: { $size: ['$adminActiveProperty'] }, then: { $arrayElemAt: ['$adminActiveProperty.Total', 0] }, else: 0 },
-	// },
-
-	// declineProperty: {
-	// 	$cond: { if: { $size: ['$adminDeclineProperty'] }, then: { $arrayElemAt: ['$adminDeclineProperty.Total', 0] }, else: 0 },
-	// },
-
-	// pendingProperty: {
-	// 	$cond: { if: { $size: ['$adminPendingProperty'] }, then: { $arrayElemAt: ['$adminPendingProperty.Total', 0] }, else: 0 },
-	// },
-	// 		},
-	// 	},
-	// ];
-	// 		const query = {
-	// 			$and: [
-	// 				{ propertyOwnerId: adminData._id },
-	// 				{ createdAt: { $gt: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
-	// 			],
-	// 		};
-
-	// 		const data = await this.DAOManager.aggregateData('Property', pipeline);
-	// 		return {
-	// 			...data[0],
-	// 		};
-
-	// 	} catch (error) {
-	// 		return Promise.reject(error);
-	// 	}
-	// }
 	async adminDashboard(adminData) {
 		try {
-			// const propertyQuery = {
-			// 	'property_status.number': { $ne: CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER },
-			// };
 
-			// const totalUser = {
-			// 	$or: [{
-			// 		status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
-			// 	}, {
-			// 		status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
-			// 	},
-			// 	],
-			// };
 			const totalArticles = {
 				status: {
 					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
 				},
 			};
-			// };
-			// const loanQuery = {
-			// 	saveAsDraft: {
-			// 		$ne: true,
-			// 	},
-			// };
-
-			// const propertPromise = new Promise((resolve) => {
-			// 	resolve(this.DAOManager.count('Property', propertyQuery));
-			// });
-			// const userPromise = new Promise((resolve) => {
-			// 	resolve(this.DAOManager.count('User', totalUser));
-			// });
-			// const articlePromise = new Promise((resolve) => {
-			// 	resolve(this.DAOManager.count('Article', totalArticles));
-			// });
-			// const enquiryPromise = new Promise((resolve) => {
-			// 	resolve(this.DAOManager.count('Enquiry', {}));
-			// });
-			// const loanPromsie = new Promise((resolve) => {
-			// 	resolve(this.DAOManager.count('LoanApplication', loanQuery));
-			// });
-			// return Promise.all([propertPromise, userPromise, articlePromise, enquiryPromise, loanPromsie])
-			// 	.then(([propertyCount, userCount, articleCount, enquiryCount, loanCount]) => {
-			// 		return { propertyCount, userCount, articleCount, enquiryCount, loanCount };
-			// 	});
-
-			// const totalEnquiry = {
-			// 	enquiryType: CONSTANT.DATABASE.ENQUIRY_TYPE.PROPERTY,
 			// };
 
 			const totalNookStaff = {
@@ -283,60 +149,7 @@ export class AdminClass extends BaseEntity {
 				],
 			};
 			const pipeline = [];
-			// const Allproperty = [
-			// 	{
-			// 		$facet: {
-			// 			DECLINED: [
-			// 				{
-			// 					$match: {
-			// 						'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER,
-			// 					},
-			// 				},
-			// 			],
-			// 			PENDING: [{
-			// 				$match: {
-			// 					'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER,
-			// 				},
-			// 			}],
-			// 			ACTIVE: [{
-			// 				$match: {
-			// 					'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER,
-			// 				},
-			// 			}],
-			// 			EXPIRED: [{
-			// 				$match: {
-			// 					'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER,
-			// 				},
-			// 			}],
-			// 			SOLD_RENTED: [{
-			// 				$match: {
-			// 					'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER,
-			// 				},
-			// 			}],
-			// 			FEATURED: [{
-			// 				$match: {
-			// 					isFeatured: true,
-			// 				},
-			// 			}],
-			// 			DRAFT: [{
-			// 				$match: {
-			// 					'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DRAFT.NUMBER,
-			// 				},
-			// 			}],
-			// 		},
-			// 	},
-			// 	{
-			// 		$project: {
-			// 			DECLINED: { $size: '$DECLINED' },
-			// 			PENDING: { $size: '$PENDING' },
-			// 			ACTIVE: { $size: '$ACTIVE' },
-			// 			EXPIRED: { $size: '$EXPIRED' },
-			// 			SOLD_RENTED: { $size: '$SOLD_RENTED' },
-			// 			FEATURED: { $size: '$FEATURED' },
-			// 			DRAFT: { $size: '$DRAFT' },
-			// 		},
-			// 	},
-			// ];
+
 
 			const UsersList = [
 				{
@@ -437,16 +250,13 @@ export class AdminClass extends BaseEntity {
 					DRAFT: { $size: '$DRAFT' },
 				},
 			}];
-			// pipeline.push(this.DAOManager.aggregateData('Property', Allproperty));
 			pipeline.push(this.DAOManager.aggregateData('User', UsersList));
 			pipeline.push(this.DAOManager.aggregateData('LoanApplication', LoanList));
 			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
 			pipeline.push(this.DAOManager.count('Article', totalArticles));
 			pipeline.push(this.DAOManager.count('LoanReferral', {}));
-			// pipeline.push(this.DAOManager.count('Enquiry', totalEnquiry));
 			const [userCount, loanCount, staffcount, articleCount] = await Promise.all(pipeline);
 			return {
-				// propertyCount: propertyCount[0],
 				userCount: userCount[0],
 				loanCount: loanCount[0],
 				staffcount,
@@ -459,115 +269,6 @@ export class AdminClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-
-	// async getPropertyList(payload: AdminRequest.AdminPropertyList) {
-	// 	try {
-	// 		const pipeline = [];
-	// 		let { page, limit, sortBy, sortType } = payload;
-	// 		const { searchTerm, property_status, fromDate, toDate, byCity, byRegion, propertyType } = payload;
-	// 		let firstname;
-	// 		let lastname;
-	// 		if (!limit) { limit = CONSTANT.SERVER.LIMIT; }
-	// 		if (!page) { page = 1; }
-	// 		let sortingType = {};
-	// 		sortType = !sortType ? -1 : sortType;
-	// 		let matchObject: any = {};
-	// 		const skip = (limit * (page - 1));
-	// 		if (property_status === CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER) {  // for active
-	// 			sortingType = {
-	// 				updatedAt: sortType,
-	// 			};
-	// 		} else {
-	// 			sortingType = {
-	// 				createdAt: sortType,
-	// 			};
-	// 		}
-
-	// 		if (sortBy) {
-	// 			switch (sortBy) {
-	// 				case 'price':
-	// 					sortBy = 'price';
-	// 					sortingType = {
-	// 						'property_basic_details.sale_rent_price': sortType,
-	// 					};
-	// 					break;
-	// 				case 'isFeatured':
-	// 					sortBy = 'isFeatured';
-	// 					sortingType = {
-	// 						isFeatured: sortType,
-	// 					};
-	// 					break;
-	// 				default:
-	// 					sortBy = 'createdAt';
-	// 					sortingType = {
-	// 						updatedAt: sortType,
-	// 					};
-	// 					break;
-	// 			}
-	// 		}
-	// 		function hasWhiteSpace(s) {
-	// 			return s.indexOf(' ') >= 0;
-	// 		}
-	// 		if (searchTerm) {
-	// 			const check = await hasWhiteSpace(searchTerm);
-	// 			if (check) {
-	// 				firstname = searchTerm.split(' ')[0];
-	// 				lastname = searchTerm.split(' ')[1];
-	// 			} else {
-	// 				firstname = searchTerm;
-	// 				lastname = searchTerm;
-	// 			}
-	// 			const regex = new RegExp(searchTerm, 'gi');
-	// 			matchObject = {
-	// 				$or: [
-	// 					{ 'property_address.address': regex },
-	// 					{ 'property_address.cityName': regex },
-	// 					{ 'property_added_by.email': regex },
-	// 					{ 'property_basic_details.title': regex },
-	// 					// { propertyId: new RegExp('.*' + searchTerm.substring(2) + '.*', 'i') },
-	// 					{ $where: `/${searchTerm.substr(2)}/.test(this.propertyId)` },
-	// 					{ 'property_added_by.firstName': new RegExp('.*' + firstname + '.*', 'i') },
-	// 					{ 'property_added_by.lastName': new RegExp('.*' + lastname + '.*', 'i') },
-	// 				],
-	// 			};
-	// 		}
-
-	// 		// List of all properties for admin.
-	// 		if (!property_status) {
-	// 			matchObject = {
-	// 				$or: [
-	// 					{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.PENDING.NUMBER },
-	// 					{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER },
-	// 					{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER },
-	// 					{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.SOLD_RENTED.NUMBER },
-	// 					{ 'property_status.number': CONSTANT.DATABASE.PROPERTY_STATUS.EXPIRED.NUMBER },
-	// 				],
-	// 			};
-	// 		}
-
-	// 		if (property_status) {
-	// 			matchObject['property_status.number'] = payload.property_status;
-	// 		}
-	// 		if (propertyType) matchObject['property_basic_details.type'] = payload.propertyType;
-	// 		if (byCity) { matchObject['cityId'] = byCity; }
-	// 		if (byRegion) { matchObject['regionId'] = byRegion; }
-
-	// 		// Date filters
-	// 		if (fromDate && toDate) { matchObject['createdAt'] = { $gte: fromDate, $lte: toDate }; }
-	// 		if (fromDate && !toDate) { matchObject['createdAt'] = { $gte: fromDate }; }
-	// 		if (!fromDate && toDate) { matchObject['createdAt'] = { $lte: toDate }; }
-
-	// 		pipeline.push(this.DAOManager.findAll('Property', matchObject, { propertyActions: 0 }, { limit, skip, sort: sortingType }));
-	// 		pipeline.push(this.DAOManager.count('Property', matchObject));
-	// 		const [data, total] = await Promise.all(pipeline);
-	// 		return {
-	// 			data,
-	// 			total,
-	// 		};
-	// 	} catch (error) {
-	// 		return Promise.reject(error);
-	// 	}
-	// }
 }
 
 export const AdminE = new AdminClass();

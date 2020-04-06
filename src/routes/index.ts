@@ -19,6 +19,9 @@ import { searchRoutes } from './search.routes';
 // import { subscriptionRoute } from './subscription/subscription.routes';
 import { adminUserRoutes } from './admin/admin.user.routes';
 // import { adminProperty } from './admin/admin.property.routes';
+import { preQualificationroutes } from './preQualification/preQualification.routes';
+
+
 // const arr = [];
 export let Routes: ServerRoute[] = [
 	...userRoute,
@@ -39,6 +42,7 @@ export let Routes: ServerRoute[] = [
 	...searchRoutes,
 	// ...subscriptionRoute,
 	...adminUserRoutes,
+	...preQualificationroutes,
 	// ...adminProperty,
 	// {
 	// 	method: ['*'],

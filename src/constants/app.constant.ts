@@ -182,61 +182,61 @@ export let DATABASE = {
 		},
 	},
 
-	PROPERTY_STATUS: {
-		DRAFT: {
-			NUMBER: 1,
-			TYPE: 'DRAFT',
-			DISPLAY_NAME: 'Draft',
-		},
-		PENDING: {
-			NUMBER: 2,
-			TYPE: 'PENDING',
-			DISPLAY_NAME: 'Pending',
-		},
-		ACTIVE: {
-			NUMBER: 3,
-			TYPE: 'ACTIVE',
-			DISPLAY_NAME: 'Active',
-		},
-		DECLINED: {
-			NUMBER: 4,
-			TYPE: 'DECLINED',
-			DISPLAY_NAME: 'Declined',
-		},
-		SOLD_RENTED: {
-			NUMBER: 5,
-			TYPE: 'SOLD/RENTED',
-			DISPLAY_NAME: 'Sold/Rented',
-		},
-		EXPIRED: {
-			NUMBER: 6,
-			TYPE: 'EXPIRED',
-			DISPLAY_NAME: 'Expired',
-		},
-		ADMIN_PROPERTIES_LIST: {
-			NUMBER: 7,
-			TYPE: 'ADMIN_PROPERTY_LIST',
-			DISPLAY_NAME: 'Admin Property List',
-		},
-		USER_PROPERTIES_LIST: {
-			NUMBER: 8,
-			TYPE: 'USER_PROPERTY_LIST',
-			DISPLAY_NAME: 'User Property List',
-		},
-	},
+	// PROPERTY_STATUS: {
+	// 	DRAFT: {
+	// 		NUMBER: 1,
+	// 		TYPE: 'DRAFT',
+	// 		DISPLAY_NAME: 'Draft',
+	// 	},
+	// 	PENDING: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'PENDING',
+	// 		DISPLAY_NAME: 'Pending',
+	// 	},
+	// 	ACTIVE: {
+	// 		NUMBER: 3,
+	// 		TYPE: 'ACTIVE',
+	// 		DISPLAY_NAME: 'Active',
+	// 	},
+	// 	DECLINED: {
+	// 		NUMBER: 4,
+	// 		TYPE: 'DECLINED',
+	// 		DISPLAY_NAME: 'Declined',
+	// 	},
+	// 	SOLD_RENTED: {
+	// 		NUMBER: 5,
+	// 		TYPE: 'SOLD/RENTED',
+	// 		DISPLAY_NAME: 'Sold/Rented',
+	// 	},
+	// 	EXPIRED: {
+	// 		NUMBER: 6,
+	// 		TYPE: 'EXPIRED',
+	// 		DISPLAY_NAME: 'Expired',
+	// 	},
+	// 	ADMIN_PROPERTIES_LIST: {
+	// 		NUMBER: 7,
+	// 		TYPE: 'ADMIN_PROPERTY_LIST',
+	// 		DISPLAY_NAME: 'Admin Property List',
+	// 	},
+	// 	USER_PROPERTIES_LIST: {
+	// 		NUMBER: 8,
+	// 		TYPE: 'USER_PROPERTY_LIST',
+	// 		DISPLAY_NAME: 'User Property List',
+	// 	},
+	// },
 
-	PROPERTY_FOR: {
-		RENT: {
-			NUMBER: 1,
-			TYPE: 'RENT',
-			DISPLAY_NAME: 'For Rent',
-		},
-		SALE: {
-			NUMBER: 2,
-			TYPE: 'SALE',
-			DISPLAY_NAME: 'For Sale',
-		},
-	},
+	// PROPERTY_FOR: {
+	// 	RENT: {
+	// 		NUMBER: 1,
+	// 		TYPE: 'RENT',
+	// 		DISPLAY_NAME: 'For Rent',
+	// 	},
+	// 	SALE: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'SALE',
+	// 		DISPLAY_NAME: 'For Sale',
+	// 	},
+	// },
 
 	ACTIONS_PERFORMED_BY_NOOK: {
 		APPROVED: {
@@ -256,57 +256,57 @@ export let DATABASE = {
 		},
 	},
 
-	PROPERTY_ACTIONS: {
-		DRAFT: {
-			NUMBER: 1,
-			TYPE: 'DRAFT',
-			DISPLAY_NAME: 'Draft',
-		},
-		POSTED: {
-			NUMBER: 2,
-			TYPE: 'POSTED',
-			DISPLAY_NAME: 'Posted',
-		},
-		APPROVED: {
-			NUMBER: 3,
-			TYPE: 'APPROVED',
-			DISPLAY_NAME: 'Approved',
-		},
-		REJECTED: {
-			NUMBER: 4,
-			TYPE: 'REJECTED',
-			DISPLAY_NAME: 'Rejected',
-		},
-		BLOCKED: {
-			NUMBER: 5,
-			TYPE: 'BLOCKED',
-			DISPLAY_NAME: 'Blocked',
-		},
-		SOLD_RENTED: {
-			NUMBER: 6,
-			TYPE: 'SOLD/RENTED',
-			DISPLAY_NAME: 'Sold/Rented',
-		},
-		EXPIRED: {
-			NUMBER: 7,
-			TYPE: 'EXPIRED',
-			DISPLAY_NAME: 'Expired',
-		},
-		PENDING: {
-			NUMBER: 2,
-			TYPE: 'PENDING',
-			DISPLAY_NAME: 'Pending',
-		},
-		ISFEATURED: {
-			NUMBER: 8,
-			TYPE: 'ISFEATURED',
-			DISPLAY_NAME: 'IsFEATURED',
-		},
-	},
+	// PROPERTY_ACTIONS: {
+	// 	DRAFT: {
+	// 		NUMBER: 1,
+	// 		TYPE: 'DRAFT',
+	// 		DISPLAY_NAME: 'Draft',
+	// 	},
+	// 	POSTED: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'POSTED',
+	// 		DISPLAY_NAME: 'Posted',
+	// 	},
+	// 	APPROVED: {
+	// 		NUMBER: 3,
+	// 		TYPE: 'APPROVED',
+	// 		DISPLAY_NAME: 'Approved',
+	// 	},
+	// 	REJECTED: {
+	// 		NUMBER: 4,
+	// 		TYPE: 'REJECTED',
+	// 		DISPLAY_NAME: 'Rejected',
+	// 	},
+	// 	BLOCKED: {
+	// 		NUMBER: 5,
+	// 		TYPE: 'BLOCKED',
+	// 		DISPLAY_NAME: 'Blocked',
+	// 	},
+	// 	SOLD_RENTED: {
+	// 		NUMBER: 6,
+	// 		TYPE: 'SOLD/RENTED',
+	// 		DISPLAY_NAME: 'Sold/Rented',
+	// 	},
+	// 	EXPIRED: {
+	// 		NUMBER: 7,
+	// 		TYPE: 'EXPIRED',
+	// 		DISPLAY_NAME: 'Expired',
+	// 	},
+	// 	PENDING: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'PENDING',
+	// 		DISPLAY_NAME: 'Pending',
+	// 	},
+	// 	ISFEATURED: {
+	// 		NUMBER: 8,
+	// 		TYPE: 'ISFEATURED',
+	// 		DISPLAY_NAME: 'IsFEATURED',
+	// 	},
+	// },
 
 	PERMISSION: {
 		TYPE: {
-			// DASHBOARD: 'dashboard',
+			// DASHBOARD: 'dashboard',en
 			HELP_CENTER: 'help-center',
 			USERS: 'users',
 			STAFF: 'staffs',
@@ -321,18 +321,18 @@ export let DATABASE = {
 		},
 	},
 
-	PROPERTY_LABEL: {
-		NONE: 'None',
-		FORECLOSURE: 'Foreclosure',
-		OFFICE: 'Office',
-		PARKING: 'Parking',
-		PRE_SELLING: 'Pre-Selling',
-		READY_FOR_OCCUPANCY: 'Ready For Occupancy',
-		RENT_TO_OWN: 'Rent To Own',
-		RETAIL: 'Retail',
-		SERVICED_OFFICE: 'Serviced Office',
-		WAREHOUSE: 'Warehouse',
-	},
+	// PROPERTY_LABEL: {
+	// 	NONE: 'None',
+	// 	FORECLOSURE: 'Foreclosure',
+	// 	OFFICE: 'Office',
+	// 	PARKING: 'Parking',
+	// 	PRE_SELLING: 'Pre-Selling',
+	// 	READY_FOR_OCCUPANCY: 'Ready For Occupancy',
+	// 	RENT_TO_OWN: 'Rent To Own',
+	// 	RETAIL: 'Retail',
+	// 	SERVICED_OFFICE: 'Serviced Office',
+	// 	WAREHOUSE: 'Warehouse',
+	// },
 
 	ArticleCategoryStatus: {
 		ACTIVE: 'Active',
@@ -353,7 +353,7 @@ export let DATABASE = {
 		FAQ: {
 			NUMBER: 2,
 			TYPE: 'FAQ',
-			DISPLAY_NAME: 'FAQ'
+			DISPLAY_NAME: 'FAQ',
 		},
 		// HOME_LOANS: {
 		// 	NUMBER: 3,
@@ -378,20 +378,20 @@ export let DATABASE = {
 
 	},
 
-	SUBSCRIPTION_STATUS: {
-		ACTIVE: 'active',
-		CANCEL: 'cancel',
-		EXPIRE: 'expire',
-		PENDING: 'pending',
-	},
-	PROPERTY_TYPE: {
-		'NONE': 'None',
-		'APPARTMENT/CONDO': 'Apartment/Condo',
-		'COMMERCIAL': 'Commercial',
-		'HOUSE_LOT': 'House & Lot',
-		'LAND': 'Land',
-		'ROOM': 'Room',
-	},
+	// SUBSCRIPTION_STATUS: {
+	// 	ACTIVE: 'active',
+	// 	CANCEL: 'cancel',
+	// 	EXPIRE: 'expire',
+	// 	PENDING: 'pending',
+	// },
+	// PROPERTY_TYPE: {
+	// 	'NONE': 'None',
+	// 	'APPARTMENT/CONDO': 'Apartment/Condo',
+	// 	'COMMERCIAL': 'Commercial',
+	// 	'HOUSE_LOT': 'House & Lot',
+	// 	'LAND': 'Land',
+	// 	'ROOM': 'Room',
+	// },
 
 	PRICE_LABEL: {
 		DAILY: 'daily',
@@ -413,15 +413,15 @@ export let DATABASE = {
 		RECEIVED: 'received',
 	},
 
-	ENQUIRY_TYPE: {
-		PROPERTY: 'property',
-		CONTACT: 'contact',
-	},
+	// ENQUIRY_TYPE: {
+	// 	PROPERTY: 'property',
+	// 	CONTACT: 'contact',
+	// },
 
-	ENQUIRY_STATUS: {
-		PENDING: 'PENDING',
-		RESOLVED: 'RESOLVED',
-	},
+	// ENQUIRY_STATUS: {
+	// 	PENDING: 'PENDING',
+	// 	RESOLVED: 'RESOLVED',
+	// },
 
 	// DEVICE_TYPES: {
 	// 	IOS: 'IOS',
@@ -454,28 +454,28 @@ export let DATABASE = {
 		},
 	},
 
-	AGENT_SPECIALIZING: {
-		LICENSED_BROKER: {
-			NUMBER: 1,
-			TYPE: 'LICENSED BROKER',
-			DISPLAY_NAME: 'Licensed Broker',
-		},
-		PROPERTY_CONSULTANT: {
-			NUMBER: 2,
-			TYPE: 'PROPERTY_CONSULTANT',
-			DISPLAY_NAME: 'Property_Consultant',
-		},
-		REAL_ESTATE_BROKER: {
-			NUMBER: 3,
-			TYPE: 'REAL_ESTATE_BROKER',
-			DISPLAY_NAME: 'Real Estate Broker',
-		},
-		SALES_MANAGER: {
-			NUMBER: 4,
-			TYPE: 'SALES_MANAGER',
-			DISPLAY_NAME: 'Sales Manager',
-		},
-	},
+	// AGENT_SPECIALIZING: {
+	// 	LICENSED_BROKER: {
+	// 		NUMBER: 1,
+	// 		TYPE: 'LICENSED BROKER',
+	// 		DISPLAY_NAME: 'Licensed Broker',
+	// 	},
+	// 	PROPERTY_CONSULTANT: {
+	// 		NUMBER: 2,
+	// 		TYPE: 'PROPERTY_CONSULTANT',
+	// 		DISPLAY_NAME: 'Property_Consultant',
+	// 	},
+	// 	REAL_ESTATE_BROKER: {
+	// 		NUMBER: 3,
+	// 		TYPE: 'REAL_ESTATE_BROKER',
+	// 		DISPLAY_NAME: 'Real Estate Broker',
+	// 	},
+	// 	SALES_MANAGER: {
+	// 		NUMBER: 4,
+	// 		TYPE: 'SALES_MANAGER',
+	// 		DISPLAY_NAME: 'Sales Manager',
+	// 	},
+	// },
 
 	ACTION: {
 		DEEPLINK: {
@@ -508,14 +508,15 @@ export let DATABASE = {
 		FORGOT: 'FORGOT',
 	},
 
-	FEATURED_TYPE: {
-		FREE: 'FREE',
-		PROFILE: 'PROFILE',
-		PROPERTY: 'PROPERTY',
-		HOMEPAGE: 'HOMEPAGE',
-		HOMEPAGE_PROFILE: 'HOMEPAGE_PROFILE',
-		HOMEPAGE_PROPERTY: 'HOMEPAGE_PROPERTY',
-	},
+	// FEATURED_TYPE: {
+	// 	FREE: 'FREE',
+	// 	PROFILE: 'PROFILE',
+	// 	PROPERTY: 'PROPERTY',
+	// 	HOMEPAGE: 'HOMEPAGE',
+	// 	HOMEPAGE_PROFILE: 'HOMEPAGE_PROFILE',
+	// 	HOMEPAGE_PROPERTY: 'HOMEPAGE_PROPERTY',
+	// },
+
 	// BILLING_TYPE: {
 	// 	MONTHLY: 'MONTHLY',
 	// 	YEARLY: 'YEARLY',
@@ -524,43 +525,43 @@ export let DATABASE = {
 		MONTHLY: 'month',
 		YEARLY: 'year',
 	},
-	SCREEN_TYPE: {
-		HOMEPAGE: 'HOMEPAGE',
-		HOMEPAGE_PROFILE: 'HOMEPAGE_PROFILE',
-		HOMEPAGE_PROPERTY: 'HOMEPAGE_PROPERTY',
-		SEARCH: 'SEARCH',
-	},
+	// SCREEN_TYPE: {
+	// 	HOMEPAGE: 'HOMEPAGE',
+	// 	HOMEPAGE_PROFILE: 'HOMEPAGE_PROFILE',
+	// 	HOMEPAGE_PROPERTY: 'HOMEPAGE_PROPERTY',
+	// 	SEARCH: 'SEARCH',
+	// },
 	// type = YEARLY, MONTHLY
-	SUBSCRIPTION_TYPE: (type) => [{
-		type: 'FREE',
-		featuredType: 'FREE',
-		amount: 0,
-		description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
-		details: 'Finally a property portal that is completely free to use for all brokers, agents and property owners. List an unlimited number of properties; receive an unlimited number of property enquiries from potential tenants and buyers; and have your own profile page to promote yourself in order to find new clients who want you to sell or lease their property. There is no trial period needed, Nook is free forever. Just create an account and start posting your property listings for free.',
-	}, {
-		type: 'FEATURED PROPERTY',
-		featuredType: 'PROPERTY',
-		amount: type === 'MONTHLY' ? 890 : 990,
-		description: 'Featured Property Upgrade - Search Results',
-		details: 'Have a property for sale or lease that you want to feature more prominently? Want more people to view your property and send more enquiries? Want to sell or lease faster? Then upgrade your property to a Featured Property for a small fee to have it appear at the top of search results for your chosen location.',
-	}, {
-		type: 'FEATURED PROFILE',
-		featuredType: 'PROFILE',
-		amount: type === 'MONTHLY' ? 890 : 990,
-		description: 'Featured Profile Upgrade - Search Results',
-		details: 'Would you like more clients to be giving you more properties to sell or lease out? Want an easier way for these new clients to find you? Simply upgrade your broker/agent profile page for a small fee to a Featured Profile and have it appear at the top of search results for your chosen location. Have the clients come to you.',
-	}, {
-		type: 'HOMEPAGE FEATURE',
-		featuredType: 'HOMEPAGE',
-		amount: type === 'MONTHLY' ? 890 : 1799,
-		description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
-		details: 'Would you like the maximum level of exposure for your property or your broker/agent profile page? Would you like a high number of people enquiring so you sell/lease faster and find new clients easier? Upgrade your property or broker/agent profile to a Homepage Feature for a small fee and get the most amount of website traffic now.',
-	}],
-	TRANSACTION_STATUS: {
-		SUCCEEDED: 'succeeded',
-		PENDING: 'pending',
-		FAILED: 'failed',
-	},
+	// SUBSCRIPTION_TYPE: (type) => [{
+	// 	type: 'FREE',
+	// 	featuredType: 'FREE',
+	// 	amount: 0,
+	// 	description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
+	// 	details: 'Finally a property portal that is completely free to use for all brokers, agents and property owners. List an unlimited number of properties; receive an unlimited number of property enquiries from potential tenants and buyers; and have your own profile page to promote yourself in order to find new clients who want you to sell or lease their property. There is no trial period needed, Nook is free forever. Just create an account and start posting your property listings for free.',
+	// }, {
+	// 	type: 'FEATURED PROPERTY',
+	// 	featuredType: 'PROPERTY',
+	// 	amount: type === 'MONTHLY' ? 890 : 990,
+	// 	description: 'Featured Property Upgrade - Search Results',
+	// 	details: 'Have a property for sale or lease that you want to feature more prominently? Want more people to view your property and send more enquiries? Want to sell or lease faster? Then upgrade your property to a Featured Property for a small fee to have it appear at the top of search results for your chosen location.',
+	// }, {
+	// 	type: 'FEATURED PROFILE',
+	// 	featuredType: 'PROFILE',
+	// 	amount: type === 'MONTHLY' ? 890 : 990,
+	// 	description: 'Featured Profile Upgrade - Search Results',
+	// 	details: 'Would you like more clients to be giving you more properties to sell or lease out? Want an easier way for these new clients to find you? Simply upgrade your broker/agent profile page for a small fee to a Featured Profile and have it appear at the top of search results for your chosen location. Have the clients come to you.',
+	// }, {
+	// 	type: 'HOMEPAGE FEATURE',
+	// 	featuredType: 'HOMEPAGE',
+	// 	amount: type === 'MONTHLY' ? 890 : 1799,
+	// 	description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
+	// 	details: 'Would you like the maximum level of exposure for your property or your broker/agent profile page? Would you like a high number of people enquiring so you sell/lease faster and find new clients easier? Upgrade your property or broker/agent profile to a Homepage Feature for a small fee and get the most amount of website traffic now.',
+	// }],
+	// TRANSACTION_STATUS: {
+	// 	SUCCEEDED: 'succeeded',
+	// 	PENDING: 'pending',
+	// 	FAILED: 'failed',
+	// },
 };
 
 export const EMAIL_TEMPLATE = {
@@ -694,21 +695,21 @@ export let STATUS_MSG = {
 				type: 'INVALID_ID',
 				message: 'Invalid Id Provided ',
 			},
-			INVALID_PROPERTY_STATUS: {
-				statusCode: 400,
-				type: 'INVALID_PROPERTY_STATUS',
-				message: 'Invalid Property Status ',
-			},
+			// INVALID_PROPERTY_STATUS: {
+			// 	statusCode: 400,
+			// 	type: 'INVALID_PROPERTY_STATUS',
+			// 	message: 'Invalid Property Status ',
+			// },
 			INVALID__STATUS: {
 				statusCode: 400,
 				type: 'INVALID__STATUS',
 				message: 'Invalid Status ',
 			},
-			PROPERTY_SOLD: {
-				statusCode: 400,
-				type: 'PROPERTY_SOLD',
-				message: 'OOPs Property Sold ',
-			},
+			// PROPERTY_SOLD: {
+			// 	statusCode: 400,
+			// 	type: 'PROPERTY_SOLD',
+			// 	message: 'OOPs Property Sold ',
+			// },
 			APP_ERROR: {
 				statusCode: 400,
 				type: 'APP_ERROR',
@@ -951,21 +952,21 @@ export let STATUS_MSG = {
 				type: 'CREATED',
 				message: 'Successfully send your referral to nook ',
 			},
-			PROPERTY_ADDED: {
-				statusCode: 201,
-				type: 'PROPERTY_ADDED',
-				message: 'Property Added Successfully',
-			},
-			ENQUIRY_SUBMITTED: {
-				statusCode: 201,
-				type: 'ENQUIRY_SUBMITTED',
-				message: 'Enquiry Submitted',
-			},
-			PROPERTY_SAVE_AS_DRAFT: {
-				statusCode: 201,
-				type: 'PROPERTY_SAVE_AS_DRAFT',
-				message: 'Property Added as Draft',
-			},
+			// PROPERTY_ADDED: {
+			// 	statusCode: 201,
+			// 	type: 'PROPERTY_ADDED',
+			// 	message: 'Property Added Successfully',
+			// },
+			// ENQUIRY_SUBMITTED: {
+			// 	statusCode: 201,
+			// 	type: 'ENQUIRY_SUBMITTED',
+			// 	message: 'Enquiry Submitted',
+			// },
+			// PROPERTY_SAVE_AS_DRAFT: {
+			// 	statusCode: 201,
+			// 	type: 'PROPERTY_SAVE_AS_DRAFT',
+			// 	message: 'Property Added as Draft',
+			// },
 			ARTICLE_CREATED: {
 				statusCode: 201,
 				type: 'CREATED',

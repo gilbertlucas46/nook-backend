@@ -10,13 +10,9 @@ export interface IUser extends Document {
 	phoneNumber: string;
 	type: string;
 	title?: string;
-	license?: string;
-	taxNumber?: string;
-	faxNumber?: string;
+
 	fullPhoneNumber?: string;
 	language?: string;
-	companyName?: string;
-	address?: string;
 	aboutMe?: string;
 	profilePicUrl?: string;
 	isEmailVerified?: boolean;
@@ -25,12 +21,6 @@ export interface IUser extends Document {
 	passwordResetToken?: string;
 	passwordResetTokenExpirationTime?: Date;
 	backGroundImageUrl: string;
-	isFeaturedProfile: boolean;
-	isHomePageFeatured: boolean;
-	specializingIn_property_type?: number[];
-	specializingIn_property_category?: string[];
-	serviceAreas?: Types.ObjectId[];
-	stripeId?: string;
 }
 
 const userSchema = new Schema({
@@ -42,13 +32,8 @@ const userSchema = new Schema({
 	middleName: { type: String },
 	lastName: { type: String },
 	phoneNumber: { type: String },
-	title: { type: String },
-	license: { type: String },
-	taxnumber: { type: String },
-	faxNumber: { type: String },
 	fullPhoneNumber: { type: String },
 	language: { type: String },
-	companyName: { type: String },
 	address: { type: String },
 	aboutMe: { type: String },
 	profilePicUrl: { type: String },
@@ -70,8 +55,8 @@ const userSchema = new Schema({
 	type: {
 		type: String,
 		enum: [
-			CONSTANT.DATABASE.USER_TYPE.AGENT.TYPE,
-			CONSTANT.DATABASE.USER_TYPE.OWNER.TYPE,
+			// CONSTANT.DATABASE.USER_TYPE.AGENT.TYPE,
+			// CONSTANT.DATABASE.USER_TYPE.OWNER.TYPE,
 			CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
 			// CONSTANT.DATABASE.USER_TYPE.GUEST.TYPE,
 		],
@@ -81,32 +66,7 @@ const userSchema = new Schema({
 	isProfileComplete: { type: Boolean, default: false },
 	passwordResetToken: { type: String },
 	passwordResetTokenExpirationTime: { type: Date },
-	isFeaturedProfile: { type: Boolean, default: false },
-	isHomePageFeatured: { type: Boolean, default: false },
-	specializingIn_property_type: [{
-		type: Number,
-		enum: [
-			CONSTANT.DATABASE.PROPERTY_FOR.RENT.NUMBER,
-			CONSTANT.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-		],
-		index: true,
-	}],
-	stripeId: { type: String, index: true, unique: true },
-	specializingIn_property_category: [{
-		type: String,
-		enum: [
-			CONSTANT.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
-			CONSTANT.DATABASE.PROPERTY_TYPE.COMMERCIAL,
-			CONSTANT.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
-			CONSTANT.DATABASE.PROPERTY_TYPE.LAND,
-			CONSTANT.DATABASE.PROPERTY_TYPE.ROOM,
-		],
-		index: true,
-	},
-	],
-	serviceAreas: [{
-		type: Schema.Types.ObjectId, ref: 'City',  // Refer to city schema
-	}],
+
 }, {
 		versionKey: false,
 	},

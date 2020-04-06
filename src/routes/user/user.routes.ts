@@ -6,7 +6,6 @@ import { UserService, CityService } from '@src/controllers';
 import * as config from 'config';
 import * as utils from '@src/utils';
 import { UserRequest } from '@src/interfaces/user.interface';
-// import { PropertyRequest } from '@src/interfaces/property.interface';
 export let userRoute: ServerRoute[] = [
 
 	/**
@@ -177,8 +176,8 @@ export let userRoute: ServerRoute[] = [
 					lastName: Joi.string().trim().min(3).max(30),
 					phoneNumber: Joi.string().trim().min(7).max(15),
 					type: Joi.string().trim().valid([
-						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
-						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+						// Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+						// Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
 					]),
 					title: Joi.string().trim().allow(null).allow(''),
@@ -187,26 +186,10 @@ export let userRoute: ServerRoute[] = [
 					faxNumber: Joi.string().allow('').allow(null),
 					fullPhoneNumber: Joi.string().allow('').allow(null),
 					language: Joi.string().allow('').allow(null),
-					companyName: Joi.string().allow('').allow(null),
 					address: Joi.string().allow('').allow(null),
 					aboutMe: Joi.string().allow('').allow(null),
 					profilePicUrl: Joi.string().allow('').allow(null),
 					backGroundImageUrl: Joi.string().allow('').allow(null),
-					specializingIn_property_type: Joi.array().items(
-						Joi.number().valid([
-							Constant.DATABASE.PROPERTY_FOR.RENT.NUMBER,
-							Constant.DATABASE.PROPERTY_FOR.SALE.NUMBER,
-						]),
-					),
-					specializingIn_property_category: Joi.array().items(Joi.string().valid([
-						Constant.DATABASE.PROPERTY_TYPE['APPARTMENT/CONDO'],
-						Constant.DATABASE.PROPERTY_TYPE.COMMERCIAL,
-						Constant.DATABASE.PROPERTY_TYPE.HOUSE_LOT,
-						Constant.DATABASE.PROPERTY_TYPE.LAND,
-						Constant.DATABASE.PROPERTY_TYPE.ROOM,
-					]),
-					),
-					serviceAreas: Joi.array().items(Joi.string()),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

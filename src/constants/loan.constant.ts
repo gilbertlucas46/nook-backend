@@ -19,6 +19,10 @@ export const LOAN_TYPES = {
         label: 'Loan Take-out',
         value: 'LOAN_TAKE_OUT',
     },
+    NEW_CONSTRUCTION: {
+        label: 'New Construction',
+        value: 'NEW_CONSTRUCTION',
+    },
 };
 export const CREDIT_CARD_STATUS = {
     YES: {
@@ -95,6 +99,10 @@ export const LOAN_PROPERTY_STATUS = {
         label: 'I Own It - Refinancing Loan',
         value: 'REFINANCING',
     },
+    // NEW_CONSTRUCTION: {
+    //     label: 'New Construction',
+    //     value: 'NEW_CONSTRUCTION',
+    // }
 };
 
 export const EMPLOYMENT_TYPE = {
@@ -339,3 +347,4 @@ export const INDUSTRIES = {
         value: 'TRANSPORTATION',
     },
 };
+
