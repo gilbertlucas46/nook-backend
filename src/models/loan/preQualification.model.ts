@@ -30,8 +30,15 @@ const prequalification = new Schema({
         monthlyPayment: { type: Number }, // 437200.5250656446
         processingTime: { type: String },  // "As fast as 5 working days upon submission of complete documents"
         totalLoanMonthly: { type: Number }, // 437200.5250656446
-
     }],
+    status: {
+        type: String, enum: [
+            CONSTANT.DATABASE.ARTICLE_STATUS.PENDING,
+            CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
+            CONSTANT.DATABASE.ARTICLE_STATUS.BLOCK,
+        ], index: true,
+        default: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
+    },
     createdAt: { type: Number },
     updatedAt: { type: Number },
 

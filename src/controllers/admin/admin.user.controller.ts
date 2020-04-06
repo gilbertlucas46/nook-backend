@@ -130,28 +130,19 @@ class AdminUserControllers {
             };
             const dataToSet: any = {};
             const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
-            if (payload.status === Constant.DATABASE.STATUS.USER.ACTIVE) {
-                result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
-            } else if (payload.status === Constant.DATABASE.STATUS.USER.BLOCKED || payload.status === Constant.DATABASE.STATUS.USER.DELETE) {
-                result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER);
-            } else {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
-            }
-            const propertyCriteria = {
-                'property_added_by.userId': payload.userId,
-            };
+            // if (payload.status === Constant.DATABASE.STATUS.USER.ACTIVE) {
+            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
+            // } else if (payload.status === Constant.DATABASE.STATUS.USER.BLOCKED || payload.status === Constant.DATABASE.STATUS.USER.DELETE) {
+            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER);
+            // } else {
+            //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
+            // }
 
             dataToSet.$set = {
                 isUserBlockedByAdmin: payload.status !== payload.status['ACTIVE'],
-                property_status: {
-                    number: result.NUMBER,
-                    status: result.TYPE,
-                    displayName: result.DISPLAY_NAME,
-                },
                 approvedAt: new Date().getTime(),
             };
 
-            // ENTITY.PropertyE.updateMultiple(propertyCriteria, dataToSet);
             return data;
         } catch (error) {
             return Promise.reject(error);

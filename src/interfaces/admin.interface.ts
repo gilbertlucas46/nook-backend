@@ -69,47 +69,12 @@ export namespace AdminRequest {
 		type: string;
 		permission: [string];
 	}
-	export interface PropertyDetail {
-		propertyId: string;
-		permissionType: string;
-	}
-
-	export interface UpdatePropertyStatus {
-		status: number;
-		propertyId: string;
-		permissionType?: string;
-	}
 
 	export interface Logout {
 		email?: string;
 		deviceId?: string;
 
 	}
-
-	export interface SearchProperty {
-		page?: number;
-		limit?: number;
-		sortBy?: string;
-		searchTerm?: string;
-		sortType?: number;
-		fromDate?: number;
-		toDate?: number;
-		propertyType?: number;
-		propertyId?: string;
-		property_type?: string;
-		label?: string[];
-		maxPrice?: number;
-		minPrice?: number;
-		bedrooms?: number;
-		bathrooms?: number;
-		minArea?: number;
-		maxArea?: number;
-		property_status?: number;
-		property_features?: string[];
-		byRegion?: string;
-		byCity?: string;
-	}
-
 	// export interface VerifyLink {
 	// 	link: string;
 	// }
@@ -119,23 +84,7 @@ export namespace AdminRequest {
 		password: string;
 	}
 
-	export interface AdminPropertyList {
-		page: number;
-		limit: number;
-		sortBy?: string;
-		sortType?: number;
-		searchTerm?: string;
-		fromDate?: number;
-		toDate?: number;
-		property_status?: number;
-		permissionType?: string;
-		propertyType?: any;
-		// label?: [];
-		minPrice?: number;
-		maxPrice?: number;
-		byCity?: string;
-		byRegion?: string;
-	}
+
 	export interface IUpdateLoanRequest {
 		loanId: string;
 		status: string;
@@ -170,20 +119,6 @@ export namespace AdminRequest {
 		phoneNumber?: string;
 		type?: string;
 		userName: string;
-	}
-
-	export interface IsearchUser {
-		page?: number;
-		limit?: number;
-		sortBy?: string;
-		searchTerm?: string;
-		sortType?: number;
-		fromDate?: number;
-		toDate?: number;
-		propertyType: number;
-		userId?: string;
-		type?: string;
-		status?: string;
 	}
 
 	export interface IAddUser {

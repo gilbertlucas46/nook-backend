@@ -4,7 +4,6 @@ import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
 import { CityService } from '@src/controllers';
-// import { PropertyRequest } from '@src/interfaces/property.interface';
 
 export let cityRoutes: ServerRoute[] = [
     {

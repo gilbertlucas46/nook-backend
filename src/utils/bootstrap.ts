@@ -1,7 +1,6 @@
 import { Database } from '../databases';
 import { AdminE, regionEntity, ArticleCategoryE } from '@src/entity';
 import { LoanApplication } from '@src/models';
-// import { Transaction, Property } from '@src/models';
 
 export class Bootstrap {
 	private dataBaseService = new Database();

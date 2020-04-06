@@ -7,7 +7,6 @@ import * as utils from '@src/utils/index';
 import * as Jwt from 'jsonwebtoken';
 import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
-// import { PropertyRequest } from '@src/interfaces/property.interface';
 import { flattenObject } from '@src/utils';
 import fetch from 'node-fetch';
 import { Types } from 'mongoose';
@@ -134,31 +133,9 @@ export class UserController {
 			if (!isProfileCompleted) {
 				payload.isProfileComplete = true;
 			}
-			const getUser = await ENTITY.UserE.getOneEntity(criteria, {});
 
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
-			if (getUser.firstName !== updateUser.firstName || getUser.lastName !== updateUser.lastName ||
-				getUser.profilePicUrl !== updateUser.profilePicUrl || getUser.phoneNumber !== updateUser.phoneNumber
-				|| getUser.type !== updateUser.type || getUser.isFeaturedProfile !== updateUser.isFeaturedProfile || getUser.isHomePageFeatured !== updateUser.isHomePageFeatured) {
-
-				const propertyCriteria = { 'property_added_by.userId': new Types.ObjectId(updateUser._id) };
-				// const updatePropertyData = {
-				// 	property_added_by: {
-				// 		userId: getUser._id,
-				// 		userName: getUser.userName,
-				// 		phoneNumber: updateUser.phoneNumber,
-				// 		profilePicUrl: updateUser.profilePicUrl,
-				// 		firstName: updateUser.firstName,
-				// 		lastName: updateUser.lastName,
-				// 		userType: updateUser.type,
-				// 		email: getUser.email,
-				// 		isFeaturedProfile: getUser.isFeaturedProfile,
-				// 		isHomePageFeatured: getUser.isHomePageFeatured,
-				// 	},
-				// };
-				// ENTITY.PropertyE.updateMultiple(propertyCriteria, updatePropertyData);
-			}
 			/**
 			 *  push contract to salesforce
 			 */
@@ -361,17 +338,6 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-
-	// async featureDashboard(userData) {
-	// 	try {
-	// 		const step1 = await ENTITY.SubscriptionE.checkFeaturePropertyCount(userData);
-	// 		// const step2 = await ENTITY.UserE.userDashboad(userData);
-	// 		// step2.isFeaturedProfile = step1 ? true : false;
-	// 		return step1;
-	// 	} catch (error) {
-	// 		return Promise.reject(error);
-	// 	}
-	// }
 	async completeRegistration(token: string, data: object) {
 		return await ENTITY.UserE.completeRegisterProcess(token, {
 			...data,
