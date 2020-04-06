@@ -6,7 +6,6 @@ import * as CONSTANT from '../../constants';
 import { AdminStaffController } from '../../controllers';
 import { AdminProfileService } from '@src/controllers/admin/adminProfile.controller';
 import { AdminRequest } from '@src/interfaces/admin.interface';
-
 const objectSchema = Joi.object({
 	moduleName: Joi.string().min(1).valid([
 		// CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,

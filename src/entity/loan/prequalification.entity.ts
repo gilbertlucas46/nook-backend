@@ -236,7 +236,7 @@ class PreLoanEntities extends BaseEntity {
             console.log('data>>>>>>>>>>>>>>>>>>>>>>>', data);
 
             if (data.length > 0) {
-
+                // const getPreQualficationId =await
                 const dataToSave = {
                     ...payload,
                     userId: userData._id,
@@ -257,13 +257,13 @@ class PreLoanEntities extends BaseEntity {
 
     async preloanList(payload, adminData) {
         try {
-            const { fromDate, toDate, status, propertyValue, propertyType, page, limit } = payload;
+            const { fromDate, toDate, status, propertyValue, propertyType, page, limit, searchTerm } = payload;
             // const paginateOptions = {
             //     page: page || 1,
             //     limit: limit || Constant.SERVER.LIMIT,
             // };
             const matchObject: any = {};
-
+            let searchObject: any = {};
             const { sortType } = payload;
             // console.log('userIduserIduserId', userId);
 
@@ -275,7 +275,17 @@ class PreLoanEntities extends BaseEntity {
                 _id: sortType,
             };
 
+            if (searchTerm) {
+                searchObject = {
+                    $or: [
+                        { refrenceId: { $regex: searchTerm } },
+                    ],
+                };
+            } else {
+                searchObject = {
 
+                };
+            }
             if (fromDate && toDate) {
                 matchObject['createdAt'] = {
                     $gte: fromDate,
@@ -302,6 +312,7 @@ class PreLoanEntities extends BaseEntity {
                     propertyType,
                 };
             }
+
             // const query = {
             //     userId: Types.ObjectId(userId),
             // };
@@ -309,6 +320,9 @@ class PreLoanEntities extends BaseEntity {
             const matchPipeline = [
                 {
                     $match: matchObject,
+                },
+                {
+                    $match: searchObject,
                 },
                 // { $sort: sortingType },
                 {

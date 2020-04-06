@@ -25,12 +25,7 @@ export namespace UserRequest {
 		session?: boolean;
 		isProfileComplete: boolean;
 		backGroundImageUrl?: string;
-		isFeaturedProfile?: boolean;
-		specializingIn_property_type?: number[];
-		specializingIn_property_category?: string[];
-		serviceAreas?: string[];
-		subscriptionexpirarionTime?: number;
-		isHomePageFeatured?: boolean;
+
 	}
 
 	export interface Register {
@@ -75,9 +70,6 @@ export namespace UserRequest {
 		profilePicUrl?: string;
 		isProfileComplete?: boolean;
 		backGroundImageUrl?: string;
-		specializingIn_property_type?: number[];
-		specializingIn_property_category?: string[];
-		serviceAreas?: string[];
 	}
 
 	export interface Login extends Session, Login1 { }
@@ -98,14 +90,4 @@ export namespace UserRequest {
 		userType: string;
 	}
 
-	export interface RecentProperty {
-		propertyType?: string;
-		propertyFor?: number;
-		All?: boolean;
-		cityId: string;
-		page?: number;
-		limit?: number;
-		sortType?: number;
-		sortBy?: string;
-	}
 }
