@@ -13,18 +13,11 @@ class PreqQualificationController extends BaseEntity {
 
     async addPreQualifiedBanks(payload, userData) {
         try {
-            const dataToSave = {
-                userId: userData._id,
-                prequalifiedBanks: payload.prequalifiedBanks,
-                createdAt: new Date().getTime(),
-                updatedAt: new Date().getTime(),
-            };
-            const savePrQualification = await ENTITY.PreQualificationBankE.createMulti(dataToSave);
-            console.log('savePrQualificationsavePrQualificationsavePrQualification', savePrQualification);
-            if (savePrQualification) {
-                return {};
 
-            }
+            // const savePrQualification = await ENTITY.PreQualificationBankE.createMulti(dataToSave);
+            const data = await ENTITY.PreQualificationBankE.addBanks(payload, userData);
+            // console.log('savePrQualificationsavePrQualificationsavePrQualification', savePrQualification);
+            return {};
             return CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR;
         } catch (error) {
             return Promise.reject(error);
