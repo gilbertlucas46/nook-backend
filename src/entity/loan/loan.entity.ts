@@ -231,18 +231,7 @@ class LoanEntities extends BaseEntity {
             );
 
             const data = await this.DAOManager.aggregateData(this.modelName, queryPipeline);
-            console.log('dataaaaaaaaaaaaaaaaaaaaaaaaaaa', data);
-            if (userData && userData._id) {
-                const dataToSave = {
-                    userId: userData._id,
-                    prequalifiedBanks: data,
-                };
-                console.log('dataToSavedataToSavedataToSavedataToSavedataToSave', dataToSave);
-
-                const savePrQualification = await this.DAOManager.insert('PreQualification', dataToSave, {});
-                console.log('savePrQualificationsavePrQualificationsavePrQualification', savePrQualification);
-                return data;
-            }
+            console.log('datadatadatadata', data);
 
             return data;
 
