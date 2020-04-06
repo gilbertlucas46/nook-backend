@@ -535,6 +535,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				query: {
 					// userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					page: Joi.number(),
+					limit: Joi.number(),
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
 					sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]).default(-1),

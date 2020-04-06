@@ -12,7 +12,7 @@ class PreLoanEntities extends BaseEntity {
 
     async preloanList(payload, adminData) {
         try {
-            const { fromDate, toDate, status, propertyValue, propertyType } = payload;
+            const { fromDate, toDate, status, propertyValue, propertyType, page, limit } = payload;
             // const paginateOptions = {
             //     page: page || 1,
             //     limit: limit || Constant.SERVER.LIMIT,
@@ -23,8 +23,8 @@ class PreLoanEntities extends BaseEntity {
             // console.log('userIduserIduserId', userId);
 
             const paginateOptions = {
-                page: 1,
-                limit: 1, // Constant.SERVER.LIMIT,
+                page: page || 1,
+                limit: limit || Constant.SERVER.LIMIT,
             };
             const sortingType = {
                 _id: sortType,
@@ -72,12 +72,12 @@ class PreLoanEntities extends BaseEntity {
                         createdAt: 1,
                         updatedAt: 1,
                         // prequalifiedBanks: 0,
-                        propertyValue: 0,
+                        propertyValue: '0',
                         propertyType: '0',
                         refrenceId: 'PQ-1111',
                         No_Of_Banks: { $size: '$prequalifiedBanks' },
-                    }
-                }
+                    },
+                },
             ];
             // const pipeline = [
             //     {
@@ -86,8 +86,8 @@ class PreLoanEntities extends BaseEntity {
             //     },
             // ];
             // const data = this.DAOManager.paginatePipeline(this.modelName, query);
-            // const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
-            const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline);
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+            // const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline, paginateOptions.limit, paginateOptions.skip);
             console.log('datadatadatadatadatadatadata', data);
             return data;
         } catch (error) {
