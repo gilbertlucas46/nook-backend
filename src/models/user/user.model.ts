@@ -34,13 +34,11 @@ const userSchema = new Schema({
 	phoneNumber: { type: String },
 	fullPhoneNumber: { type: String },
 	language: { type: String },
-	address: { type: String },
 	aboutMe: { type: String },
 	profilePicUrl: { type: String },
 	backGroundImageUrl: { type: String },
 	isEmailVerified: { type: Boolean },
 	isPhoneVerified: { type: Boolean },
-	countryCode: { type: String },
 	status: {
 		type: String, enum: [
 			CONSTANT.DATABASE.STATUS.USER.ACTIVE,

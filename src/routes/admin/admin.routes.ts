@@ -542,6 +542,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]).default(-1),
 					propertyValue: Joi.number(),
 					propertyType: Joi.string(),
+					searchTerm: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
