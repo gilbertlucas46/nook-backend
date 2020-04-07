@@ -321,7 +321,7 @@ class PreLoanEntities extends BaseEntity {
             if (searchTerm) {
                 searchObject = {
                     $or: [
-                        { refrenceId: { $regex: searchTerm } },
+                        { referenceId: { $regex: searchTerm } },
                     ],
                 };
             } else {
@@ -376,7 +376,7 @@ class PreLoanEntities extends BaseEntity {
                         // prequalifiedBanks: 0,
                         propertyValue: '$property.type',
                         propertyType: '$property.value',
-                        refrenceId: 1,
+                        referenceId: 1,
                         No_Of_Banks: { $size: '$prequalifiedBanks' },
                     },
                 },
