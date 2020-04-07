@@ -16,6 +16,7 @@ export let preloanRoute: ServerRoute[] = [
         // const payload = request.payload as AdminRequest.ProfileUpdate;
 
         const payload: LoanRequest.PreLoan = request.payload as LoanRequest.PreLoan;
+        console.log('payloadpayload', payload);
         if (request.query.bankId) payload.bankId = request.query.bankId as string;
         const bankData = await LoanController.checkPreloanApplication(payload, userData);
         return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, bankData));

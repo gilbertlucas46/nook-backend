@@ -237,6 +237,41 @@ class PreLoanEntities extends BaseEntity {
 
             if (data.length > 0) {
                 // const getPreQualficationId =await
+
+                payload['userId'] = userData._id;
+                const criteria1 = ({
+                    createdAt: {
+                        $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
+                    },
+                });
+
+                const referenceNumber = await this.getReferenceId(criteria1);
+                console.log('referenceNumberreferenceNumber', referenceNumber);
+
+                if (!referenceNumber) {
+                    const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
+                    const month = ('0' + (new Date(new Date().getTime()).getMonth() + 1)).slice(-2);
+                    const date = ('0' + (new Date(new Date().getTime()).getDate())).slice(-2);
+                    const referenceId = 1;
+                    const formattedTime = Constant.SERVER.PQ + '-' + year + month + date + '-' + Constant.SERVER.LOAN_PRE__ZEOS + referenceId;
+                    payload['referenceId'] = formattedTime;
+                } else {
+                    // const year = new Date(referenceNumber.createdAt).getFullYear().toString().substr(-2);
+                    // const month = (new Date(referenceNumber.createdAt).getMonth() + 1).toString().substr(-2);
+                    // const date = ('0' + new Date(referenceNumber.createdAt).getDate()).slice(-2);  //.toString().substr(-2);
+                    const id = referenceNumber['referenceId'].split('-')[2];
+                    let num = (parseInt(id) + 1).toString();
+                    if (num.length < 4) {
+                        const remainingChars = 4 - num.length;
+                        for (let i = 0; i < remainingChars; i++) {
+                            num = '0' + num;
+                        }
+                    }
+                    // const num = await this.addOne(id);
+                    const formattedTime = referenceNumber['referenceId'].replace(referenceNumber['referenceId'].split('-')[2], num);
+                    payload['referenceId'] = formattedTime;
+                }
+
                 const dataToSave = {
                     ...payload,
                     userId: userData._id,
@@ -244,13 +279,21 @@ class PreLoanEntities extends BaseEntity {
                     createdAt: new Date().getTime(),
                     updatedAt: new Date().getTime(),
                 };
-                const a = await this.DAOManager.insert(this.modelName, dataToSave);
+
+                const a = this.DAOManager.insert(this.modelName, dataToSave);
                 console.log('daaaaaaaaaaaaaaaaaaaa', a);
             }
-
             return data;
-
         } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    async getReferenceId(criteria) {
+        try {
+            const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { sort: { _id: - 1 }, limit: 1 });
+            return data[0];
+        } catch (error) {
+            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -333,7 +376,7 @@ class PreLoanEntities extends BaseEntity {
                         // prequalifiedBanks: 0,
                         propertyValue: '$property.type',
                         propertyType: '$property.value',
-                        refrenceId: 'PQ-1111',
+                        refrenceId: 1,
                         No_Of_Banks: { $size: '$prequalifiedBanks' },
                     },
                 },
