@@ -157,6 +157,8 @@ const prequalification = new Schema({
         ], index: true,
         default: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
     },
+    createdAt: { type: Number },
+    updatedAt: { type: Number },
     referenceId: { type: String },
 });
 // schema.pre('save', function (this: any, next: () => void) {

@@ -1047,6 +1047,7 @@ export let SERVER = {
 	MAX_LIMIT: 1000,
 	RANDOM_NUMBER: 4,
 	HLA: 'HLA',
+	PQ: 'PQ',
 	LOAN_PRE__ZEOS: '000',
 };
 

@@ -229,5 +229,14 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    // async updateLoanApplication(payload) {
+    //     try {
+
+    //     } catch (error) {
+    //         return Promise.reject(error);
+    //     }
+    // }
+
 }
 export const LoanController = new LoanControllers();
