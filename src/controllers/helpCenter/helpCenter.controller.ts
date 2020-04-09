@@ -225,9 +225,20 @@ export class HelpCenter {
                         { $project: { _id: 1, title: 1, categoryId: 1 } },
                         { $sort: sortingType },
                         ],
-                        BILLING: [{
+                        // BILLING: [{
+                        //     $match: {
+                        //         categoryType: 'BILLING',
+                        //         $or: [
+                        //             query,
+                        //         ],
+                        //     },
+                        // },
+                        // { $project: { _id: 1, title: 1, categoryId: 1 } },
+                        // { $sort: sortingType },
+                        // ],
+                        HOME_LOANS: [{
                             $match: {
-                                categoryType: 'BILLING',
+                                categoryType: 'HOME_LOANS',
                                 $or: [
                                     query,
                                 ],
@@ -236,9 +247,10 @@ export class HelpCenter {
                         { $project: { _id: 1, title: 1, categoryId: 1 } },
                         { $sort: sortingType },
                         ],
-                        HOME_LOANS: [{
+
+                        FAQ: [{
                             $match: {
-                                categoryType: 'HOME_LOANS',
+                                categoryType: 'FAQ',
                                 $or: [
                                     query,
                                 ],

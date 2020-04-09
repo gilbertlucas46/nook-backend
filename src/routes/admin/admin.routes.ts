@@ -345,7 +345,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.query;
+				const payload: LoanRequest.IGetAdminLoanList = request.query as any;
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await ENTITY.AdminStaffEntity.checkPermission(adminData.permission);
 				// }
@@ -444,7 +444,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
-					]),
+					]).required(),
 					// type: Joi.string().valid('admin', 'user')
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -558,7 +558,7 @@ export let adminProfileRoute: ServerRoute[] = [
 
 	/**
 	 * @description subscription list
-     */
+	 */
 	{
 		method: 'GET',
 		path: '/v1/admin/prequalification/{id}',
@@ -601,18 +601,27 @@ export let adminProfileRoute: ServerRoute[] = [
 		},
 	},
 	/**
-	 * @description update the description list
+	 * @description update the loan by admin
 	 */
 
 	{
-		method: 'PUT',
-		path: '/v1/admin/loan',
+		method: 'PATCH',
+		path: '/v1/admin/loan/{loanId}',
 		handler: async (request, h: Hapi.ResponseToolkit) => {
 			try {
-				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminDta;
-				// const payload = request.payload as any;
-				// const data = await LoanController.updateLoanApplication(payload, adminData);
-				// return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				console.log('adminData><<<<<<<<<<<', adminData);
+
+				// const payload =
+				// const loanId =
+				const payload = {
+					...request.payload as any,
+					...request.params as any,
+				};
+				console.log('payload', payload);
+
+				const data = await LoanController.adminUpdateLoanApplication(payload, adminData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
@@ -623,7 +632,11 @@ export let adminProfileRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'loan', 'update'],
 			auth: 'AdminAuth',
 			validate: {
+				params: {
+					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+				},
 				payload: {
+					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
@@ -735,6 +748,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						]),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
+						propertyValue: Joi.number(),
 					}),
 
 					employmentInfo: Joi.object().keys({

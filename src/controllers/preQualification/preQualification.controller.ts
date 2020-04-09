@@ -1,7 +1,8 @@
 import * as ENTITY from '@src/entity'
 import { BaseEntity } from '@src/entity/base/base.entity';
 import { PreQualificationBankE } from '@src/entity/loan/prequalification.entity';
-import * as CONSTANT from '../../constants'
+import * as CONSTANT from '../../constants';
+import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
 class PreqQualificationController extends BaseEntity {
 
     /**
@@ -33,6 +34,17 @@ class PreqQualificationController extends BaseEntity {
         try {
             const data = await PreQualificationBankE.preloanList(payload, adminData);
             return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getPreQualifiedBanks(payload: PreQualificationRequest.IPrequalificationList, userData) {
+        try {
+            const data = await PreQualificationBankE.userPreLoanList(payload, userData);
+
+            return data;
+
         } catch (error) {
             return Promise.reject(error);
         }

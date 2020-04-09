@@ -403,7 +403,7 @@ class PreLoanEntities extends BaseEntity {
         try {
             const query = {
                 _id: payload.id,
-            }
+            };
             const data = await this.DAOManager.findOne(this.modelName, query, {});
             console.log('dataaaaa', data);
             return data;
@@ -412,6 +412,60 @@ class PreLoanEntities extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    async userPreLoanList(payload, userData) {
+        try {
+            const { fromDate,
+                toDate,
+                limit = Constant.SERVER.LIMIT,
+                page = 1,
+            } = payload;
+            const skip = (limit * (page - 1));
+
+            const paginateOptions = {
+                page: page || 1,
+                limit: limit || Constant.SERVER.LIMIT,
+            }
+
+            const matchCondition: any = {};
+            if (fromDate && toDate) { matchCondition['createdAt'] = { $gte: fromDate, $lte: toDate }; }
+            if (fromDate && !toDate) { matchCondition['createdAt'] = { $gte: fromDate }; }
+            if (!fromDate && toDate) { matchCondition['createdAt'] = { $lte: toDate }; }
+
+            matchCondition['userId'] = userData._id;
+
+            const matchPipeline = [
+                {
+                    $match: matchCondition,
+                },
+                // { $sort: sortingType },
+                {
+                    $project: {
+                        _id: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                        // prequalifiedBanks: 0,
+                        propertyValue: '$property.type',
+                        propertyType: '$property.value',
+                        referenceId: 1,
+                        No_Of_Banks: { $size: '$prequalifiedBanks' },
+                    },
+                },
+            ];
+            // const pipeline = [
+            //     {
+            //         $lookup: 'users',
+            //         from: '',
+            //     },
+            // ];
+            // const data = this.DAOManager.paginatePipeline(this.modelName, query);
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName); return data;
+
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 }
 
 export const PreQualificationBankE = new PreLoanEntities();

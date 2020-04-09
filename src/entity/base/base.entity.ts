@@ -51,6 +51,7 @@ export class BaseEntity {
 
 	async updateOneEntity(criteria: object, dataToUpdate: object, option?) {
 		try {
+			console.log('optionoptionoptionoption', option);
 			if (option === undefined) {
 				option = {
 					new: true,
@@ -59,7 +60,16 @@ export class BaseEntity {
 						updatedAt: new Date().getTime(),
 					},
 				};
-			} else {
+			}
+			else if (option === false) {
+				dataToUpdate['updatedAt'] = new Date().getTime();
+				// option['new'] = false;
+				// option['lean'] = true;
+				// '$setOnInsert' = {
+				// 	updatedAt: new Date().getTime(),
+				// };
+			}
+			else {
 				option['new'] = true;
 				option['lean'] = true;
 				if (!option['$setOnInsert']) {

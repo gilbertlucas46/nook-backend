@@ -4,7 +4,7 @@ import { PreQualificationService } from '@src/controllers/preQualification/preQu
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as Joi from 'joi';
-// import * as 
+import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
 // import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS } from '../../constants';
 import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, CREDIT_CARD_STATUS, EMPLOYMENT_TENURE, NATIONALITY } from '@src/constants';
 
@@ -85,6 +85,7 @@ export let preQualificationroutes: ServerRoute[] = [
                             LOAN_PROPERTY_STATUS.PRE_SELLING.value,
                             LOAN_PROPERTY_STATUS.READY_FOR_OCCUPANCY.value,
                             LOAN_PROPERTY_STATUS.RESELLING.value,
+                            LOAN_PROPERTY_STATUS.FORECLOSED,
                         ]).required(),
                         developer: Joi.string(),
                     }),
@@ -170,6 +171,44 @@ export let preQualificationroutes: ServerRoute[] = [
                         fixingPeriod: Joi.number(),
                     }),
                     // prequalifiedBanks: Joi.array().items(objectSchema),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+    /**
+     * @description user get preQulification loan list
+     */
+
+    {
+        method: 'GET',
+        path: '/v1/user/prequalification',
+        handler: async (request, h) => {
+            try {
+                const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+                const payload: PreQualificationRequest.IPrequalificationList = request.query as any;
+
+                const data = await PreQualificationService.getPreQualifiedBanks(payload, userData);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'user prqualification Bank list ',
+            tags: ['api', 'anonymous', 'user', 'bank', 'list', 'prequalification'],
+            auth: 'UserAuth',
+            validate: {
+                query: {
+                    limit: Joi.number(),
+                    page: Joi.number(),
+                    sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+                    sortBy: Joi.string().default('date'),
+                    fromDate: Joi.number(),
+                    toDate: Joi.number(),
+                    // status: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

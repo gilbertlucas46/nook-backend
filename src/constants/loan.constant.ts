@@ -99,6 +99,10 @@ export const LOAN_PROPERTY_STATUS = {
         label: 'I Own It - Refinancing Loan',
         value: 'REFINANCING',
     },
+    RENOVATION: {
+        label: 'Removation',
+        value: 'Renovatoin',
+    },
     // NEW_CONSTRUCTION: {
     //     label: 'New Construction',
     //     value: 'NEW_CONSTRUCTION',
@@ -217,6 +221,11 @@ export const EMPLOYMENT_RANK = {
         label: 'Vice President',
         value: 'VICE_PRESIDENT',
     },
+};
+
+export const TRADE_REFERENCE = {
+    CUSTOMER: 'Customer',
+    SUPPLIER: 'Supplier',
 };
 
 export const EMPLOYMENT_TENURE = {

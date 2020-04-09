@@ -1,8 +1,8 @@
 import { Schema, Document, model, Types } from 'mongoose';
-import * as CONSTANT from './../../constants';
-import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../constants';
+import * as CONSTANT from '../../constants';
+import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from '../../constants';
 
-const schema = new Schema({
+const loanApplicationHistory = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     // saveAsDraft: { type: Schema.Types.Boolean, default: false },
     applicationStatus: {
@@ -215,15 +215,15 @@ const schema = new Schema({
     applicationStage: [{
         userType: { type: String },
         status: { type: String },
-        adminId: { type: Schema.Types.ObjectId, ref: 'admin' },
+        adminId: { type: Schema.Types.ObjectId },
         adminName: { type: String },
         approvedAt: { type: Number, default: new Date().getTime() },
     }],
     changesMadeBy: {
         adminId: { type: Schema.Types.ObjectId },
         adminName: { type: String },
-    },  // admin ,user, staff
-    referenceId: { type: String, index: true, unique: true },
+    },
+    referenceId: { type: String, index: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },
 },
@@ -239,4 +239,4 @@ const schema = new Schema({
 //     next();
 // });
 
-export const LoanApplication = model('loanapplications', schema);
+export const LoanApplicationHistory = model('loanapplicationhistory', loanApplicationHistory);
