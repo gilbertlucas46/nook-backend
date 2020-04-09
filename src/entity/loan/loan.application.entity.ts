@@ -72,7 +72,7 @@ class LoanApplicationE extends BaseEntity {
             let sortingType = {};
             const promiseArray = [];
             let matchObject: any = {};
-            if (userData.type === 'TENANT' || userData.type === 'OWNER' || userData.type === 'AGENT') {
+            if (userData._id) {
                 matchObject = {
                     userId: userData._id,
                 };

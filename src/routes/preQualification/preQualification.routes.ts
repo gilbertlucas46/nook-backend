@@ -43,19 +43,7 @@ export let preQualificationroutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-                const payload = request.payload as any;
-
-                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
-                // }
-
-                // const checkPermission = adminData['permission'].some(data => {
-                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
-                // });
-
-                // if (checkPermission === false) {
-                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-                // }
+                const payload: PreQualificationRequest.IPreLoanAdd = request.payload as any;
 
                 const data = await PreQualificationService.addPreQualifiedBanks(payload, userData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
@@ -208,7 +196,6 @@ export let preQualificationroutes: ServerRoute[] = [
                     sortBy: Joi.string().default('date'),
                     fromDate: Joi.number(),
                     toDate: Joi.number(),
-                    // status: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

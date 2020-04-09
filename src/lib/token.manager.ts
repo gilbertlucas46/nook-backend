@@ -10,7 +10,9 @@ const adminCert: string = config.get('jwtSecret.admin.accessToken');
 import * as utils from '../utils';
 
 export let setToken = async (tokenData: any) => {
-	if (!tokenData.id || !tokenData.tokenType) {
+	console.log('tokenDatatokenDatatokenData', tokenData);
+
+	if (!tokenData.id) {
 		return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
 	} else {
 		try {
@@ -26,13 +28,13 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 	try {
 		const result: any = Jwt.verify(token, cert, { algorithms: ['HS256'] });
 		utils.consolelog('resultToken', result, true);
-		if (result.tokenType) {
-			if (result.tokenType === 'TENANT' || 'AGENT' || 'OWNER') {
+		if (result) {
+			if (result !== {}) {
 				const userData: any = {};
 				const userCriteria = { _id: result.id };
 				const checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {});
 				if (!checkUserExist) {
-					return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN;
+					return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 				}
 				const sessionCriteria = {
 					userId: result.id,
@@ -47,7 +49,7 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 				userData.userData = checkUserExist;
 				return userData;
 			} else {
-				return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN;
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 			}
 		} else {
 			return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
@@ -61,11 +63,11 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 export let verifyAdminToken = async (token, tokenType, request?: any) => {
 	try {
 		const result: any = Jwt.verify(token, adminCert, { algorithms: ['HS256'] });
-		if (!result) { return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN; }
+		if (!result) { return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN); }
 		const adminData: any = {};
 		const criteria = { _id: result._id };
 		const checkAdminExist = await ENTITY.AdminE.getOneEntity(criteria, {});
-		if (!checkAdminExist) { return Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN; }
+		if (!checkAdminExist) { return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN); }
 		const sessionCriteria = {
 			adminId: result._id,
 			isLogin: true,

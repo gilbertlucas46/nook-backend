@@ -259,7 +259,7 @@ class LoanControllers extends BaseEntity {
             if (oldData) {
                 return {};
             }
-            return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
+            return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             // return data;
         } catch (error) {
             return Promise.reject(error);

@@ -66,11 +66,11 @@ class AdminUserControllers {
             const checkUserName = { userName: payload.userName.trim().toLowerCase() };
             const userNameCheck: AdminRequest.IcreateUser = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
             if (userNameCheck && userNameCheck._id) {
-                return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
             } else {
                 const UserCheck: AdminRequest.IcreateUser = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']);
                 if (UserCheck && UserCheck._id) {
-                    return Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN;
+                    return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
                 } else {
                     const generateString = generateRandomString(4);
                     const genCredentials = `${(payload.userName).replace(/ /g, '')}${generateString}`;
@@ -81,7 +81,7 @@ class AdminUserControllers {
                         password: hashPassword,
                         isEmailVerified: true,
                         isProfileComplete: false,
-                        type: payload.type,
+                        // type: payload.type,
                     };
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
                     const userResponse = UniversalFunctions.formatUserData(User);

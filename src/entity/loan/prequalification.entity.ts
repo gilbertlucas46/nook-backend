@@ -4,13 +4,14 @@ import * as Constant from '@src/constants';
 import { NATIONALITY } from '@src/constants';
 import { Types } from 'mongoose';
 import * as utils from '@src/utils';
+import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
 
 class PreLoanEntities extends BaseEntity {
     constructor() {
         super('PreQualification');
     }
 
-    async addBanks(payload, userData) {
+    async addBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
         try {
             console.log('payload>>>>>>>>>>>>>>>', payload);
 
@@ -459,7 +460,8 @@ class PreLoanEntities extends BaseEntity {
             //     },
             // ];
             // const data = this.DAOManager.paginatePipeline(this.modelName, query);
-            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName); return data;
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+            return data;
 
         } catch (error) {
             return Promise.reject(error);

@@ -128,6 +128,10 @@ export class AdminClass extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+	/**
+	 * @description admin dashoard
+	 * @param adminData 
+	 */
 
 	async adminDashboard(adminData) {
 		try {
@@ -150,53 +154,15 @@ export class AdminClass extends BaseEntity {
 			};
 			const pipeline = [];
 
-
-			const UsersList = [
-				{
-					$facet: {
-						TENANT: [{
-							$match: {
-								type: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
-								$or: [{
-									status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
-								}, {
-									status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
-								},
-								],
-							},
-						}],
-						OWNER: [{
-							$match: {
-								type: CONSTANT.DATABASE.USER_TYPE.OWNER.TYPE,
-								$or: [{
-									status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
-								}, {
-									status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
-								},
-								],
-							},
-						}],
-						AGENT: [{
-							$match: {
-								type: CONSTANT.DATABASE.USER_TYPE.AGENT.TYPE,
-								$or: [{
-									status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
-								}, {
-									status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
-								},
-								],
-							},
-						}],
-					},
+			const UsersList = {
+				$or: [{
+					status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
 				},
 				{
-					$project: {
-						TENANT: { $size: '$TENANT' },
-						OWNER: { $size: '$OWNER' },
-						AGENT: { $size: '$AGENT' },
-					},
+					status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
 				},
-			];
+				],
+			};
 
 			const LoanList = [{
 				$facet: {
@@ -250,14 +216,14 @@ export class AdminClass extends BaseEntity {
 					DRAFT: { $size: '$DRAFT' },
 				},
 			}];
-			pipeline.push(this.DAOManager.aggregateData('User', UsersList));
+			pipeline.push(this.DAOManager.count('User', UsersList));
 			pipeline.push(this.DAOManager.aggregateData('LoanApplication', LoanList));
 			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
 			pipeline.push(this.DAOManager.count('Article', totalArticles));
 			pipeline.push(this.DAOManager.count('LoanReferral', {}));
 			const [userCount, loanCount, staffcount, articleCount] = await Promise.all(pipeline);
 			return {
-				userCount: userCount[0],
+				userCount,
 				loanCount: loanCount[0],
 				staffcount,
 				articleCount,

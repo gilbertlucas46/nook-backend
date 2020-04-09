@@ -113,10 +113,9 @@ class AdminUserE extends BaseEntity {
             }
 
             if (userId) { matchObject.$match._id = Types.ObjectId(userId); }
-            if (type) { matchObject.$match['type'] = type; }
-            if (isByAdmin) {
-                matchObject.$match['type'] = { $ne: Constant.DATABASE.USER_TYPE.TENANT.TYPE };
-            }
+            // if (isByAdmin) {
+            //     matchObject.$match['type'] = { $ne: Constant.DATABASE.USER_TYPE.TENANT.TYPE };
+            // }
             if (status) { matchObject.$match['status'] = status; }
 
             // Date filters
