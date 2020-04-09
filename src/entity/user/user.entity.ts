@@ -110,6 +110,43 @@ export class UserClass extends BaseEntity {
 			return Promise.reject(err);
 		}
 	}
+
+	/**
+	 * @description user Dashboard
+	 * @param userData 
+	 */
+	async userDashboad(userData: UserRequest.UserData) {
+		try {
+			console.log('userDatauserData', userData);
+
+			const promise = [];
+			if (userData) {
+				const loanAppplication = {
+					userId: userData._id,
+					applicationStatus: { $ne: 'DRAFT' },
+					// { createdAt: { $gt: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
+				};
+				const totalPreQualificationCount = {
+					userId: userData._id,
+				};
+				console.log('loanAppplicationloanAppplication');
+
+				promise.push(this.DAOManager.count('PreQualification', totalPreQualificationCount));
+				promise.push(this.DAOManager.count('LoanApplication', loanAppplication));
+				const [totalPreQualification, totalApplication] = await Promise.all(promise);
+				console.log('totalPreQualificationtotalPreQualificationtotalPreQualification', totalPreQualification);
+
+				return {
+					totalApplication,
+					totalPreQualification,
+				};
+
+			}
+
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
 }
 
 export const UserE = new UserClass();

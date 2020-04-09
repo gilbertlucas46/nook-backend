@@ -352,34 +352,38 @@ export let userRoute: ServerRoute[] = [
 	/**
 	 * @description : user dashboard count
 	 */
-	// {
-	// 	method: 'GET',
-	// 	path: '/v1/user/dashboard',
-	// 	handler: async (request, h) => {
-	// 		try {
-	// 			const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-	// 			const responseData = await UserService.dashboard(userData);
-	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
-	// 		} catch (error) {
-	// 			UniversalFunctions.consolelog(error, 'error', true);
-	// 			return UniversalFunctions.sendError(error);
-	// 		}
-	// 	},
-	// 	options: {
-	// 		description: 'Get user dashboard data',
-	// 		tags: ['api', 'anonymous', 'user', 'reset'],
-	// 		auth: 'UserAuth',
-	// 		validate: {
-	// 			headers: UniversalFunctions.authorizationHeaderObj,
-	// 			failAction: UniversalFunctions.failActionFunction,
-	// 		},
-	// 		plugins: {
-	// 			'hapi-swagger': {
-	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
-	// 			},
-	// 		},
-	// 	},
-	// },
+	{
+		method: 'GET',
+		path: '/v1/user/dashboard',
+		handler: async (request, h) => {
+			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				console.log('userDatauserData', userData);
+
+				const responseData = await UserService.dashboard(userData);
+				console.log('responseDataresponseData', responseData);
+
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return UniversalFunctions.sendError(error);
+			}
+		},
+		options: {
+			description: 'Get user dashboard data',
+			tags: ['api', 'anonymous', 'user', 'reset'],
+			auth: 'UserAuth',
+			validate: {
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
 	// /**
 	//  * @description user all property except the current property
 	//  */
