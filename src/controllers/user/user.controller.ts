@@ -80,6 +80,7 @@ export class UserController {
 
 			if (userData && userData._id) {
 				if (userData.isEmailVerified) {
+					console.log('111111111111111111111111111111');
 					if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
 						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
 					}
@@ -87,9 +88,10 @@ export class UserController {
 						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
 					}
 					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
-						return Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD;
+						return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
 					}
 					if (!userData.isProfileComplete) {
+						console.log('22222222222222222222222222222222222');
 						// const accessToken = await ENTITY.UserE.createToken(payload, userData);
 						const formatedData = utils.formatUserData(userData);
 						const incompleteToken = ENTITY.UserE.createRegisterToken(userData._id);
@@ -98,19 +100,22 @@ export class UserController {
 						return { formatedData, incompleteToken };
 					}
 					else {
+						console.log('333333333333333333333333333333333333333333');
 						const accessToken = await ENTITY.UserE.createToken(payload, userData);
 						await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
 						const formatedData = utils.formatUserData(userData);
 						return { formatedData, accessToken };
 					}
 				} else {
+					console.log(444444444444444444444444444444444444);
+
 					const accessToken = await ENTITY.UserE.createToken(payload, userData);
 					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
 					const formatedData = utils.formatUserData(userData);
 					return { formatedData, accessToken };
 				}
 			} else {
-				return Constant.STATUS_MSG.ERROR.E400.INVALID_LOGIN;
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_LOGIN);
 			}
 		} catch (error) {
 			utils.consolelog('error', error, true);
@@ -252,7 +257,7 @@ export class UserController {
 		try {
 			const result: any = Jwt.verify(payload.link, pswdCert, { algorithms: ['HS256'] });
 			const userData = await ENTITY.UserE.getOneEntity(result.email, {});
-			if (!userData) { return Constant.STATUS_MSG.ERROR.E400.INVALID_ID; } else {
+			if (!userData) { return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID); } else {
 				const criteria = { email: result };
 				const userExirationTime: any = await ENTITY.UserE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
 				const today: any = new Date();

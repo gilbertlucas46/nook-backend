@@ -50,17 +50,17 @@ const userSchema = new Schema({
 	},
 	createdAt: { type: Number, required: true, index: true },
 	updatedAt: { type: Number, required: true, index: true },
-	type: {
-		type: String,
-		enum: [
-			// CONSTANT.DATABASE.USER_TYPE.AGENT.TYPE,
-			// CONSTANT.DATABASE.USER_TYPE.OWNER.TYPE,
-			CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
-			// CONSTANT.DATABASE.USER_TYPE.GUEST.TYPE,
-		],
-		default: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
-		index: true,
-	},
+	// type: {
+	// 	type: String,
+	// 	enum: [
+	// 		// CONSTANT.DATABASE.USER_TYPE.AGENT.TYPE,
+	// 		// CONSTANT.DATABASE.USER_TYPE.OWNER.TYPE,
+	// 		CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
+	// 		// CONSTANT.DATABASE.USER_TYPE.GUEST.TYPE,
+	// 	],
+	// 	default: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
+	// 	index: true,
+	// },
 	isProfileComplete: { type: Boolean, default: false },
 	passwordResetToken: { type: String },
 	passwordResetTokenExpirationTime: { type: Date },

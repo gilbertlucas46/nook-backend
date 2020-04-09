@@ -38,11 +38,11 @@ export let adminUserRoutes: ServerRoute[] = [
 					middleName: Joi.string().trim().allow('').required(),
 					lastName: Joi.string().min(3).max(30).trim().required(),
 					phoneNumber: Joi.string().min(7).max(15).trim().required(),
-					type: Joi.string().valid([
-						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
-						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
-						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
-					]),
+					// type: Joi.string().valid([
+					// 	Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+					// 	Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+					// 	Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+					// ]),
 					faxNumber: Joi.string().allow(''),
 					language: Joi.string().allow(''),
 					title: Joi.string().allow(''),
@@ -100,11 +100,11 @@ export let adminUserRoutes: ServerRoute[] = [
 						Constant.DATABASE.STATUS.ADMIN.BLOCKED,
 						Constant.DATABASE.STATUS.ADMIN.DELETE,
 					]),
-					type: Joi.string().valid([
-						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
-						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
-						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
-					]),
+					// type: Joi.string().valid([
+					// 	Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+					// 	Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+					// 	Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+					// ]),
 					sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
 					searchTerm: Joi.string(),
 					fromDate: Joi.number(),

@@ -155,30 +155,26 @@ export let DATABASE = {
 			TYPE: 'ADMIN',
 			DISPLAY_NAME: 'Admin',
 		},
-		AGENT: {
-			NUMBER: 1,
-			TYPE: 'AGENT',
-			DISPLAY_NAME: 'Agent',
-		},
-		TENANT: {
-			NUMBER: 3,
-			TYPE: 'TENANT',
-			DISPLAY_NAME: 'Tenant',
-		},
-		OWNER: {
-			NUMBER: 4,
-			TYPE: 'OWNER',
-			DISPLAY_NAME: 'Owner',
-		},
+		// AGENT: {
+		// 	NUMBER: 1,
+		// 	TYPE: 'AGENT',
+		// 	DISPLAY_NAME: 'Agent',
+		// },
+		// TENANT: {
+		// 	NUMBER: 3,
+		// 	TYPE: 'TENANT',
+		// 	DISPLAY_NAME: 'Tenant',
+		// },
+		// OWNER: {
+		// 	NUMBER: 4,
+		// 	TYPE: 'OWNER',
+		// 	DISPLAY_NAME: 'Owner',
+		// },
+
 		STAFF: {
 			NUMBER: 5,
 			TYPE: 'STAFF',
 			DISPLAY_NAME: 'Staff',
-		},
-		GUEST: {
-			NUMBER: 6,
-			TYPE: 'GUEST',
-			DISPLAY_NAME: 'Guest',
 		},
 	},
 

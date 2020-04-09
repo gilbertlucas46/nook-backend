@@ -62,7 +62,7 @@ export class AdminProfileController {
 			const criteria = { _id: payload.id };
 			const data = await ENTITY.AdminE.getData(criteria, ['email', '_id', 'phoneNumber', 'countryCode', 'permission', 'type', 'firstName', 'lastName']);
 			if (!data) {
-				return Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE;
+				return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
 			}
 			return data;
 		} catch (error) {
@@ -183,7 +183,7 @@ export class AdminProfileController {
 			};
 			const adminData = await ENTITY.AdminE.getOneEntity(findByEmail, {});
 			if (!adminData) {
-				return Constant.STATUS_MSG.ERROR.E400.INVALID_ID;
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
 			} else {
 				const criteria = { email: result };
 				const userExirationTime: any = await ENTITY.AdminE.getOneEntity(criteria, ['passwordResetTokenExpirationTime', 'passwordResetToken']);
@@ -210,8 +210,8 @@ export class AdminProfileController {
 				isLogin: false,
 			};
 			const sessionClose = await ENTITY.SessionE.updateOneEntity(criteria, dataToUpdate);
-			if (!sessionClose) return Constant.STATUS_MSG.ERROR.E401.INVALID_SESSION_REQUEST;
-			return Constant.STATUS_MSG.SUCCESS.S200.LOGOUT;
+			if (!sessionClose) return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_SESSION_REQUEST);
+			return Promise.reject(Constant.STATUS_MSG.SUCCESS.S200.LOGOUT);
 
 		} catch (error) {
 			utils.consolelog('error', error, true);

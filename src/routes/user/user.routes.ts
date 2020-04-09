@@ -175,11 +175,11 @@ export let userRoute: ServerRoute[] = [
 					middleName: Joi.string().trim().allow(''),
 					lastName: Joi.string().trim().min(3).max(30),
 					phoneNumber: Joi.string().trim().min(7).max(15),
-					type: Joi.string().trim().valid([
-						// Constant.DATABASE.USER_TYPE.AGENT.TYPE,
-						// Constant.DATABASE.USER_TYPE.OWNER.TYPE,
-						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
-					]),
+					// type: Joi.string().trim().valid([
+					// 	// Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+					// 	// Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+					// 	Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+					// ]),
 					title: Joi.string().trim().allow(null).allow(''),
 					license: Joi.string().allow('').allow(null),
 					taxnumber: Joi.string().allow('').allow(null),
@@ -211,6 +211,8 @@ export let userRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				// const responseData = await UserService.getProfile(userData);
+				console.log('userDatauserData', userData);
+
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userData));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
@@ -358,11 +360,7 @@ export let userRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-				console.log('userDatauserData', userData);
-
 				const responseData = await UserService.dashboard(userData);
-				console.log('responseDataresponseData', responseData);
-
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
@@ -441,43 +439,43 @@ export let userRoute: ServerRoute[] = [
 	/**
 	 * @description: update user Account
 	 */
-	{
-		method: 'PATCH',
-		path: '/v1/user/update-account',
-		async handler(request, h) {
-			try {
-				const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
-				const payload = request.payload as UserRequest.UpdateAccount;
-				const propertyDetail = await UserService.updateAccount(payload, userData);
-				const userResponse = UniversalFunctions.formatUserData(propertyDetail);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
-			} catch (error) {
-				UniversalFunctions.consolelog(error, 'error', true);
-				return (UniversalFunctions.sendError(error));
-			}
-		},
-		options: {
-			description: 'update account type ',
-			tags: ['api', 'anonymous', 'user', 'updateAccount'],
-			auth: 'UserAuth',
-			validate: {
-				payload: {
-					userType: Joi.string().trim().valid([
-						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
-						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
-						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
-					]),
-				},
-				headers: UniversalFunctions.authorizationHeaderObj,
-				failAction: UniversalFunctions.failActionFunction,
-			},
-			plugins: {
-				'hapi-swagger': {
-					responseMessages: Constant.swaggerDefaultResponseMessages,
-				},
-			},
-		},
-	},
+	// {
+	// 	method: 'PATCH',
+	// 	path: '/v1/user/update-account',
+	// 	async handler(request, h) {
+	// 		try {
+	// 			const userData = request.auth && request.auth.credentials && request.auth.credentials['userData'];
+	// 			const payload = request.payload as UserRequest.UpdateAccount;
+	// 			const propertyDetail = await UserService.updateAccount(payload, userData);
+	// 			const userResponse = UniversalFunctions.formatUserData(propertyDetail);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userResponse));
+	// 		} catch (error) {
+	// 			UniversalFunctions.consolelog(error, 'error', true);
+	// 			return (UniversalFunctions.sendError(error));
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'update account type ',
+	// 		tags: ['api', 'anonymous', 'user', 'updateAccount'],
+	// 		auth: 'UserAuth',
+	// 		validate: {
+	// 			payload: {
+	// 				// userType: Joi.string().trim().valid([
+	// 				// 	Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+	// 				// 	Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+	// 				// 	Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+	// 				// ]),
+	// 			},
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 		plugins: {
+	// 			'hapi-swagger': {
+	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
+	// 			},
+	// 		},
+	// 	},
+	// },
 
 	{
 		method: 'PATCH',
@@ -504,11 +502,11 @@ export let userRoute: ServerRoute[] = [
 					firstName: Joi.string().trim().min(3).max(30).required(),
 					lastName: Joi.string().trim().min(3).max(30).required(),
 					phoneNumber: Joi.string().trim().min(7).max(15).required(),
-					type: Joi.string().trim().valid([
-						Constant.DATABASE.USER_TYPE.AGENT.TYPE,
-						Constant.DATABASE.USER_TYPE.OWNER.TYPE,
-						Constant.DATABASE.USER_TYPE.TENANT.TYPE,
-					]).required(),
+					// type: Joi.string().trim().valid([
+					// 	Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+					// 	Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+					// 	Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+					// ]).required(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
