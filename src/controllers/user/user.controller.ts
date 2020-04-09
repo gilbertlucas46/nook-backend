@@ -25,11 +25,12 @@ export class UserController {
 			const checkUserName = { userName: payload.userName.trim().toLowerCase() };
 			const userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
 			if (userNameCheck && userNameCheck._id) {
-				return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
+				// return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
 			} else {
 				const UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']);
 				if (UserCheck && UserCheck._id) {
-					return Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN;
+					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
 				} else {
 					const makePassword = await utils.encryptWordpressHashNode(payload.password);
 					const userData = {
