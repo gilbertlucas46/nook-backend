@@ -166,6 +166,7 @@ export namespace LoanRequest {
         employmentInfo?: EmploymentInfo;
         dependentsInfo?: DependentsInfo[];
         propertyDocuments?: PropertyDocuments;
+        applicationStatus?: string;
     }
     export interface LoanById {
         loanId: string;
@@ -236,5 +237,16 @@ export namespace LoanRequest {
         amountFrom?: number;
         amountTo?: number;
         searchTerm?: string;
+    }
+
+    export interface IAdminPrequalificationList {
+        page: number;
+        limit: number;
+        fromDate: number;
+        toDate: number;
+        sortType: number;
+        propertyValue: number;
+        propertyType: number;
+        searchTerm: number;
     }
 }

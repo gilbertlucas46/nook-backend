@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
 import { LoanController } from '@src/controllers';
-import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE, INDUSTRIES } from '@src/constants';
+import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE, INDUSTRIES, TRADE_REFERENCE } from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import * as LoanConstant from '../../constants/loan.constant';
 export let loanRoute: ServerRoute[] = [
@@ -255,6 +255,17 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.SON,
 							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
+					}),
+
+					tradeReferences: Joi.array().items({
+						companyName: Joi.string(),
+						type: Joi.string().valid([
+							TRADE_REFERENCE.CUSTOMER,
+							TRADE_REFERENCE.SUPPLIER,
+						]),
+						contactPerson: Joi.string(),
+						contactNumber: Joi.string(),
+						Position: Joi.string(),
 					}),
 
 					propertyDocuments: Joi.object().keys({

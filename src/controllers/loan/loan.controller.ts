@@ -73,6 +73,12 @@ class LoanControllers extends BaseEntity {
                 const formattedTime = referenceNumber['referenceId'].replace(referenceNumber['referenceId'].split('-')[2], num);
                 payload['referenceId'] = formattedTime;
             }
+            payload['applicationStage'] = {
+                userType: userData.type,
+                status: payload.applicationStatus,
+                adminId: userData._id,
+                adminName: userData.firstName + '' + userData.lastName,
+            };
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
 
             return data['referenceId'];
@@ -177,12 +183,16 @@ class LoanControllers extends BaseEntity {
             const dataToUpdate: any = {};
             dataToUpdate.$set = { applicationStatus: payload.status };
             dataToUpdate.$push = {
-                approvedBy: {
+                applicationStage: {
+                    userType: adminData.type,
+                    status: payload.status,
                     adminId: adminData._id,
                     adminName: adminData ? adminData.name : '',
                     approvedAt: new Date().getTime(),
                 },
             };
+            console.log('dataToUpdatedataToUpdatedataToUpdate', dataToUpdate);
+
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             else return data;
@@ -230,13 +240,31 @@ class LoanControllers extends BaseEntity {
         }
     }
 
-    // async updateLoanApplication(payload) {
-    //     try {
+    async adminUpdateLoanApplication(payload, adminData) {
+        try {
+            console.log('adminDataadminDataadminDataadminData', adminData);
 
-    //     } catch (error) {
-    //         return Promise.reject(error);
-    //     }
-    // }
+            const query = {
+                _id: payload.loanId,
+            };
+
+            const oldData = await ENTITY.LoanApplicationEntity.updateOneEntity(query, payload, false);
+
+            payload['changesMadeBy'] = {
+                adminId: adminData['_id'],
+                adminName: adminData['name'],
+            };
+
+            const createHistory = await this.DAOManager.insert('LoanApplicationHistory', payload);
+            if (oldData) {
+                return {};
+            }
+            return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
+            // return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 
 }
 export const LoanController = new LoanControllers();

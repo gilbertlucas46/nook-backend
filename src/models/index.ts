@@ -14,3 +14,4 @@ export { LoanReferral } from './referral/loan.referral.model';
 export { Webhook } from './webhook/webhook.model';
 export { ArticleCategories } from './article/article.category.model';
 export { PreQualification } from './loan/preQualification.model';
+export { LoanApplicationHistory } from './loan/loan.application.History.model';

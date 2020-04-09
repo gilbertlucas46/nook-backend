@@ -20,5 +20,6 @@ export type ModelNames = 'User' |
     'AdminSubscription' |
     'ArticleCategories' |
     // 'Card' |
-    'PreQualification'
+    'PreQualification' |
+    'LoanApplicationHistory'
     ;
