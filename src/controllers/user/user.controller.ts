@@ -305,16 +305,18 @@ export class UserController {
 	 * @payload  UserData
 	 * return Array
 	 */
-	// async dashboard(userData: UserRequest.UserData) {
-	// 	try {
-	// 		const step2 = await ENTITY.UserE.userDashboad(userData);
-	// 		// step2.isFeaturedProfile = step1 ? true : false;
-	// 		return step2;
-	// 	} catch (error) {
-	// 		utils.consolelog('error', error, true);
-	// 		return Promise.reject(error);
-	// 	}
-	// }
+	async dashboard(userData: UserRequest.UserData) {
+		try {
+			const step2 = await ENTITY.UserE.userDashboad(userData);
+			console.log('step2step2step2step2', step2);
+
+			// // step2.isFeaturedProfile = step1 ? true : false;
+			return step2;
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
 
 	/**
 	 * @function updateAccount
