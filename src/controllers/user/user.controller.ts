@@ -380,7 +380,7 @@ export class UserController {
 					// isProfileComplete: true,
 					// type: payload.type,
 				};
-				const User = await ENTITY.UserE.createOneEntity(userData);
+				const formatedData = await ENTITY.UserE.createOneEntity(userData);
 
 				// SessionE.createSession({}, doc, accessToken, 'user');
 
@@ -389,11 +389,11 @@ export class UserController {
 				// 	subject: 'nook welcomes you',
 				// 	userName: payload.userName,
 				// };
-				const token = ENTITY.UserE.createRegisterToken(User._id);
-				ENTITY.SessionE.createSession({}, User, token, User);
+				const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
+				ENTITY.SessionE.createSession({}, formatedData, accessToken, 'User');
 
 				// mail.welcomeMail(sendObj);
-				return { User, token };
+				return { formatedData, accessToken };
 				// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 			}
 		}
