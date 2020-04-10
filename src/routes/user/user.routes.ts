@@ -153,11 +153,11 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/profile',
 		handler: async (request, h) => {
 			try {
-				// let userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: UserRequest.ProfileUpdate = request.payload as any;
 				console.log('payloadpayloadpayload', payload);
 
-				const responseData = await UserService.updateProfile(payload);
+				const responseData = await UserService.updateProfile(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);

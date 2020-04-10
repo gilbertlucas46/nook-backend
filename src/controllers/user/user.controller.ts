@@ -131,9 +131,10 @@ export class UserController {
 	 * @payload  ProfileUpdate
 	 * return object
 	 */
-	async updateProfile(payload: UserRequest.ProfileUpdate) {
+	async updateProfile(payload: UserRequest.ProfileUpdate, userData) {
 		try {
-			const criteria = { _id: payload._id };
+
+			const criteria = { _id: userData._id };
 
 			// const isProfileCompleted = await ENTITY.UserE.count({
 			// 	_id: payload._id,
