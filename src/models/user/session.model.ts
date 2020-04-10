@@ -1,4 +1,4 @@
-import { Schema, model, Document} from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 export interface ISession extends Document {
 	userId?: string;
 	validAttempt: boolean;
@@ -13,14 +13,15 @@ export interface ISession extends Document {
 const sessionSchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true },
 	userId: { type: Schema.Types.ObjectId, ref: 'User' },
-	validAttempt: { type: Boolean, required: true, default: false },
-	ipAddress: { type: String },
-	deviceToken: { type: String },
+	// validAttempt: { type: Boolean, required: true, default: false },
+	// ipAddress: { type: String },
+	// deviceToken: { type: String },
 	source: { type: String },
 	loginStatus: { type: Boolean, required: true, default: true },
 	lastActivityTime: { type: Number },
 	createdAt: { type: Number, required: true },
 	updatedAt: { type: Number, required: true },
+	type: { type: String },
 });
 
 sessionSchema.index({ userId: 1, loginStatus: 1 });

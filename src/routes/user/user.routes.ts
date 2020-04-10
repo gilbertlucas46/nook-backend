@@ -18,7 +18,7 @@ export let userRoute: ServerRoute[] = [
 			try {
 				const payload: UserRequest.Register = request.payload as any;
 				const registerResponse = await UserService.register(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
@@ -170,7 +170,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					_id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					// _id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					firstName: Joi.string().trim().min(3).max(30),
 					middleName: Joi.string().trim().allow(''),
 					lastName: Joi.string().trim().min(3).max(30),
@@ -180,13 +180,9 @@ export let userRoute: ServerRoute[] = [
 					// 	// Constant.DATABASE.USER_TYPE.OWNER.TYPE,
 					// 	Constant.DATABASE.USER_TYPE.TENANT.TYPE,
 					// ]),
-					title: Joi.string().trim().allow(null).allow(''),
-					license: Joi.string().allow('').allow(null),
-					taxnumber: Joi.string().allow('').allow(null),
-					faxNumber: Joi.string().allow('').allow(null),
-					fullPhoneNumber: Joi.string().allow('').allow(null),
+					// fullPhoneNumber: Joi.string().allow('').allow(null),
 					language: Joi.string().allow('').allow(null),
-					address: Joi.string().allow('').allow(null),
+					// address: Joi.string().allow('').allow(null),
 					aboutMe: Joi.string().allow('').allow(null),
 					profilePicUrl: Joi.string().allow('').allow(null),
 					backGroundImageUrl: Joi.string().allow('').allow(null),
@@ -482,8 +478,9 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/complete-registration',
 		async handler(request, h) {
 			try {
-				const { token } = request.query;
-				const data = await UserService.completeRegistration(token as string, request.payload as object);
+				// const { token } = request.query;
+				const payload = request.payload as UserRequest.CompleteRegister;
+				const data = await UserService.completeRegistration(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
@@ -495,10 +492,13 @@ export let userRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'complete registration'],
 			auth: 'DoubleAuth',
 			validate: {
-				query: {
-					token: Joi.string().required(),
-				},
+				// query: {
+				// 	token: Joi.string().required(),
+				// },
 				payload: {
+					userName: Joi.string().min(3).max(32).trim().required().lowercase(),
+					email: Joi.string().trim().email().lowercase(),
+					password: Joi.string().min(6).max(16).trim().required(),
 					firstName: Joi.string().trim().min(3).max(30).required(),
 					lastName: Joi.string().trim().min(3).max(30).required(),
 					phoneNumber: Joi.string().trim().min(7).max(15).required(),

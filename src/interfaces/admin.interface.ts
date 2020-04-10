@@ -131,8 +131,8 @@ export namespace AdminRequest {
 		phoneNumber: string;
 		type?: string;
 		language?: string;
-		title?: string;
-		license?: string;
+		// title?: string;
+		// license?: string;
 		companyName?: string;
 		address?: string;
 		aboutMe?: string;

@@ -18,12 +18,13 @@ export class SessionClass extends BaseEntity {
 				// ipAddress: sessionData.ipAddress,
 				source: sessionData.source,
 				loginStatus: true,
+				type,
 				// deviceToken: sessionData.deviceToken,
 			};
-			if (type === 'user') {
-				columnName = 'userId';
-				sessionInfo[columnName] = userData._id;
-			}
+			// if (type === 'user') {
+			// 	// columnName = 'userId';
+			// 	sessionInfo[columnName] = userData._id;
+			// }
 			const session = await this.DAOManager.saveData(this.modelName, sessionInfo);
 			if (session && session._id) { return session; }
 
