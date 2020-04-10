@@ -15,9 +15,9 @@ export interface IUser extends Document {
 	language?: string;
 	aboutMe?: string;
 	profilePicUrl?: string;
-	isEmailVerified?: boolean;
-	isPhoneVerified?: boolean;
-	isProfileComplete: boolean;
+	// isEmailVerified?: boolean;
+	// isPhoneVerified?: boolean;
+	// isProfileComplete: boolean;
 	passwordResetToken?: string;
 	passwordResetTokenExpirationTime?: Date;
 	backGroundImageUrl: string;
@@ -37,8 +37,9 @@ const userSchema = new Schema({
 	aboutMe: { type: String },
 	profilePicUrl: { type: String },
 	backGroundImageUrl: { type: String },
-	isEmailVerified: { type: Boolean },
-	isPhoneVerified: { type: Boolean },
+	// isEmailVerified: { type: Boolean },
+	// isPhoneVerified: { type: Boolean },
+	type: { type: String, default: 'User' },
 	status: {
 		type: String, enum: [
 			CONSTANT.DATABASE.STATUS.USER.ACTIVE,
@@ -61,7 +62,7 @@ const userSchema = new Schema({
 	// 	default: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
 	// 	index: true,
 	// },
-	isProfileComplete: { type: Boolean, default: false },
+	// isProfileComplete: { type: Boolean, default: false },
 	passwordResetToken: { type: String },
 	passwordResetTokenExpirationTime: { type: Date },
 

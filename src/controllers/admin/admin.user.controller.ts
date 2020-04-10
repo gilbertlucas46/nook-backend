@@ -39,8 +39,6 @@ class AdminUserControllers {
                     const userData = {
                         ...payload,
                         password: hashPassword,
-                        isEmailVerified: true,
-                        isProfileComplete: true,
                     };
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
                     const userResponse = UniversalFunctions.formatUserData(User);
@@ -79,8 +77,8 @@ class AdminUserControllers {
                         userName: payload.userName.trim().toLowerCase(),
                         email: payload.email.trim().toLowerCase(),
                         password: hashPassword,
-                        isEmailVerified: true,
-                        isProfileComplete: false,
+                        // isEmailVerified: true,
+                        // isProfileComplete: false,
                         // type: payload.type,
                     };
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);

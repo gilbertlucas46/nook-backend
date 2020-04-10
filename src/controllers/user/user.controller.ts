@@ -32,16 +32,17 @@ export class UserController {
 				if (UserCheck && UserCheck._id) {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
 				} else {
-					const makePassword = await utils.encryptWordpressHashNode(payload.password);
-					const userData = {
-						userName: payload.userName.trim().toLowerCase(),
-						email: payload.email.trim().toLowerCase(),
-						password: makePassword,
-						isEmailVerified: true,
-						isProfileComplete: false,
-						type: payload.type,
-					};
-					const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
+					// const makePassword = await utils.encryptWordpressHashNode(payload.password);
+					// const userData = {
+					// 	userName: payload.userName.trim().toLowerCase(),
+					// 	email: payload.email.trim().toLowerCase(),
+					// 	password: makePassword,
+					// 	isEmailVerified: true,
+					// 	isProfileComplete: false,
+					// 	type: payload.type,
+					// };
+					// const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
+
 					// const userResponse = UniversalFunctions.formatUserData(User);
 					// const mail = new MailManager();
 					// const sendObj = {
@@ -49,9 +50,9 @@ export class UserController {
 					// 	subject: 'nook welcomes you',
 					// 	userName: payload.userName,
 					// };
-					const token = ENTITY.UserE.createRegisterToken(User._id);
+					// const token = ENTITY.UserE.createRegisterToken(User._id);
 					// mail.welcomeMail(sendObj);
-					return token;
+					return;
 					// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 				}
 			}
@@ -68,52 +69,53 @@ export class UserController {
 	 */
 	async login(payload: UserRequest.Login) {
 		try {
-			let unique = payload.email;
+			const unique = payload.email;
 			// check if entered value is email or username
-			const checkEmailOrUserName = (unique) => {
-				const re = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-				return re.test(String(unique).toLowerCase());
-			};
-			if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
+			// const checkEmailOrUserName = (unique) => {
+			// 	const re = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			// 	return re.test(String(unique).toLowerCase());
+			// };
+			// if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
 			const checkData = { $or: [{ email: unique }, { userName: payload.email }] };
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 
 			if (userData && userData._id) {
-				if (userData.isEmailVerified) {
-					console.log('111111111111111111111111111111');
-					if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
-						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
-					}
-					if (userData.status === Constant.DATABASE.STATUS.USER.DELETE) {
-						return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
-					}
-					if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
-						return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
-					}
-					if (!userData.isProfileComplete) {
-						console.log('22222222222222222222222222222222222');
-						// const accessToken = await ENTITY.UserE.createToken(payload, userData);
-						const formatedData = utils.formatUserData(userData);
-						const incompleteToken = ENTITY.UserE.createRegisterToken(userData._id);
-						await ENTITY.SessionE.createSession(payload, userData, incompleteToken, 'user');
-						// mail.welcomeMail(sendObj);
-						return { formatedData, incompleteToken };
-					}
-					else {
-						console.log('333333333333333333333333333333333333333333');
-						const accessToken = await ENTITY.UserE.createToken(payload, userData);
-						await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
-						const formatedData = utils.formatUserData(userData);
-						return { formatedData, accessToken };
-					}
-				} else {
-					console.log(444444444444444444444444444444444444);
-
+				// if (userData.isEmailVerified) {
+				console.log('111111111111111111111111111111');
+				if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
+					return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
+				}
+				if (userData.status === Constant.DATABASE.STATUS.USER.DELETE) {
+					return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED);
+				}
+				if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
+					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
+				}
+				// if (!userData.isProfileComplete) {
+				// 	console.log('22222222222222222222222222222222222');
+				// 	// const accessToken = await ENTITY.UserE.createToken(payload, userData);
+				// 	const formatedData = utils.formatUserData(userData);
+				// 	const incompleteToken = ENTITY.UserE.createRegisterToken(userData._id);
+				// 	await ENTITY.SessionE.createSession(payload, userData, incompleteToken, 'user');
+				// 	// mail.welcomeMail(sendObj);
+				// 	return { formatedData, incompleteToken };
+				// }
+				else {
+					console.log('333333333333333333333333333333333333333333');
 					const accessToken = await ENTITY.UserE.createToken(payload, userData);
-					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
+					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'User');
 					const formatedData = utils.formatUserData(userData);
 					return { formatedData, accessToken };
 				}
+				// }
+				//  else {
+				// 	console.log(444444444444444444444444444444444444);
+
+				// 	const accessToken = await ENTITY.UserE.createToken(payload, userData);
+				// 	await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
+				// 	const formatedData = utils.formatUserData(userData);
+				// 	return { formatedData, accessToken };
+				// }
 			} else {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_LOGIN);
 			}
@@ -132,13 +134,15 @@ export class UserController {
 	async updateProfile(payload: UserRequest.ProfileUpdate) {
 		try {
 			const criteria = { _id: payload._id };
-			const isProfileCompleted = await ENTITY.UserE.count({
-				_id: payload._id,
-				isProfileComplete: true,
-			});
-			if (!isProfileCompleted) {
-				payload.isProfileComplete = true;
-			}
+
+			// const isProfileCompleted = await ENTITY.UserE.count({
+			// 	_id: payload._id,
+			// 	isProfileComplete: true,
+			// });
+
+			// if (!isProfileCompleted) {
+			// 	payload.isProfileComplete = true;
+			// }
 
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
 
@@ -146,16 +150,16 @@ export class UserController {
 			 *  push contract to salesforce
 			 */
 			if (config.get['environment'] === 'production') {
-				if (!isProfileCompleted) {
-					// convert document to data
-					const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
-					const request = {
-						method: 'post',
-						body: JSON.stringify(salesforceData),
-					};
-					await fetch(config.get('zapier_personUrl'), request);
-					await fetch(config.get('zapier_accountUrl'), request);
-				}
+				// if (!isProfileCompleted) {
+				// convert document to data
+				const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
+				const request = {
+					method: 'post',
+					body: JSON.stringify(salesforceData),
+				};
+				await fetch(config.get('zapier_personUrl'), request);
+				await fetch(config.get('zapier_accountUrl'), request);
+				// }
 			}
 
 			return updateUser;
@@ -346,12 +350,53 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-	async completeRegistration(token: string, data: object) {
-		return await ENTITY.UserE.completeRegisterProcess(token, {
-			...data,
-			isProfileComplete: true,
-		});
+	async completeRegistration(payload: UserRequest.CompleteRegister) {
+		// return await ENTITY.UserE.completeRegisterProcess(token, {
+		// 	...payload,
+		// 	isProfileComplete: true,
+		// });
+		console.log('payloadpayloadpayloadpayload', payload);
+
+		const checkMail = { email: payload.email };
+		const checkUserName = { userName: payload.userName };
+		const userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
+		if (userNameCheck && userNameCheck._id) {
+			return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
+			// return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
+		} else {
+			const UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']);
+			if (UserCheck && UserCheck._id) {
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
+			} else {
+				const makePassword = await utils.encryptWordpressHashNode(payload.password);
+				const userData = {
+					userName: payload.userName.trim().toLowerCase(),
+					email: payload.email.trim().toLowerCase(),
+					password: makePassword,
+					firstName: payload.firstName,
+					lastName: payload.lastName,
+					phoneNumber: payload.phoneNumber,
+					// isEmailVerified: true,
+					// isProfileComplete: true,
+					// type: payload.type,
+				};
+				const User = await ENTITY.UserE.createOneEntity(userData);
+
+				// SessionE.createSession({}, doc, accessToken, 'user');
+
+				// const formatedData = utils.formatUserData(doc);
+				// 	receiverEmail: payload.email,
+				// 	subject: 'nook welcomes you',
+				// 	userName: payload.userName,
+				// };
+				const token = ENTITY.UserE.createRegisterToken(User._id);
+				ENTITY.SessionE.createSession({}, User, token, User);
+
+				// mail.welcomeMail(sendObj);
+				return { User, token };
+				// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
+			}
+		}
 	}
 }
-
 export let UserService = new UserController();

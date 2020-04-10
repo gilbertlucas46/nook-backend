@@ -10,18 +10,18 @@ export namespace UserRequest {
 		phoneNumber?: string;
 		type?: string;
 		// roleType:{
-		title?: string;
-		license?: string;
-		taxnumber?: string;
-		faxNumber?: string;
+		// title?: string;
+		// license?: string;
+		// taxnumber?: string;
+		// faxNumber?: string;
 		fullPhoneNumber?: string;
 		language?: string;
 		companyName?: string;
-		address?: string;
+		// address?: string;
 		aboutMe?: string;
 		profilePicUrl?: string;
-		isEmailVerified?: boolean;
-		isPhoneVerified?: boolean;
+		// isEmailVerified?: boolean;
+		// isPhoneVerified?: boolean;
 		session?: boolean;
 		isProfileComplete: boolean;
 		backGroundImageUrl?: string;
@@ -58,17 +58,17 @@ export namespace UserRequest {
 		lastName: string;
 		phoneNumber?: string;
 		type?: string;
-		title?: string;
-		license?: string;
-		taxnumber?: string;
-		faxNumber?: string;
-		fullPhoneNumber?: string;
+		// title?: string;
+		// license?: string;
+		// taxnumber?: string;
+		// faxNumber?: string;
+		// fullPhoneNumber?: string;
 		language?: string;
 		companyName?: string;
-		address?: string;
+		// address?: string;
 		aboutMe?: string;
-		profilePicUrl?: string;
-		isProfileComplete?: boolean;
+		// profilePicUrl?: string;
+		// isProfileComplete?: boolean;
 		backGroundImageUrl?: string;
 	}
 
@@ -90,4 +90,15 @@ export namespace UserRequest {
 		userType: string;
 	}
 
+
+	export interface CompleteRegister {
+		_id?: string;
+		userName: string;
+		email: string;
+		password: string;
+		firstName: string;
+		lastName: string;
+		phoneNumber: string;
+
+	}
 }
