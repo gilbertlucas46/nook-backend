@@ -46,6 +46,10 @@ export let sendError = (data: any) => {
 
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + data.message + data.message;
 			}
+			// else if (data.hasOwnProperty('TokenExpiredError')) {
+			// 	console.log('22222222222222222222222233333333333333333>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
+			// }
 		} else {
 			logger.log('info', `message - ${data}, time-${new Date().toISOString()}`);
 			errorToSend = data;
