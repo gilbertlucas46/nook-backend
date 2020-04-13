@@ -407,6 +407,9 @@ class PreLoanEntities extends BaseEntity {
             };
             const data = await this.DAOManager.findOne(this.modelName, query, {});
             console.log('dataaaaa', data);
+            if (!data) {
+                return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
+            }
             return data;
 
         } catch (error) {
