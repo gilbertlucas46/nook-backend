@@ -61,8 +61,11 @@ const schema = new Schema({
             middleName: { type: Schema.Types.String, trim: true },
             lastName: { type: Schema.Types.String, trim: true },
             birthDate: { type: Schema.Types.Number },
-            monthlyIncome: { type: Schema.Types.Number, default: 0 },
+            // monthlyIncome: { type: Schema.Types.Number, default: 0 },
             isCoborrower: { type: Boolean, default: false },
+            motherMaidenName: { type: String },
+            age: { type: String },
+            birthPlace: { type: String },
         },
         coBorrowerInfo: {
             firstName: { type: Schema.Types.String, trim: true },
@@ -81,6 +84,9 @@ const schema = new Schema({
                     CONSTANT.DATABASE.RELATIONSHIP.DAUGHTER,
                 ],
             },
+            age: { type: String },
+            birthPlace: { type: String },
+            motherMaidenName: { type: String },
         },
     },
 
@@ -95,7 +101,9 @@ const schema = new Schema({
         phoneNumber: { type: Schema.Types.String, trim: true },
         email: { type: Schema.Types.String, trim: true },
         mobileNumber: { type: Schema.Types.String, trim: true },
-        currentAddress: {
+        mailingAddress: { type: Boolean, enum: ['Permanent Address', 'Present Address'] },
+        // address: {
+        permanentAddress: {
             address: { type: Schema.Types.String, index: true },
             homeOwnership: {
                 type: Schema.Types.String, enum: [
@@ -106,7 +114,14 @@ const schema = new Schema({
                     CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
                 ],
             },
+            lengthOfStay: { type: Number },
         },
+        presentAddress: {
+            address: { type: Schema.Types.String, index: true },
+            lengthOfStay: { type: Number },
+        },
+
+        // },
     },
 
     loanDetails: {
@@ -147,6 +162,13 @@ const schema = new Schema({
         officePhone: { type: Schema.Types.String, trim: true },
         officeEmail: { type: Schema.Types.String, trim: true },
         officeAddress: { type: Schema.Types.String, trim: true },
+        // Gross Monthly Income (PhP)
+        grossMonthlyIncome: { type: String },
+        Province_State: { type: String },
+        Country: { type: String },
+
+
+
 
         coBorrowerInfo: {
             employmentType: { type: Schema.Types.String, enum: Object.keys(CONSTANT.EMPLOYMENT_TYPE) },
@@ -159,6 +181,10 @@ const schema = new Schema({
             officePhone: { type: Schema.Types.String, trim: true },
             officeEmail: { type: Schema.Types.String, trim: true },
             officeAddress: { type: Schema.Types.String, trim: true },
+            grossMonthlyIncome: { type: Number, default: 0 },
+            Province_State: { type: String },
+            Country: { type: String, default: 'Philippines' },
+
         },
     },
 
@@ -180,7 +206,7 @@ const schema = new Schema({
         },
         contactPerson: { type: Schema.Types.String },
         contactNumber: { type: Schema.Types.String, trim: true },
-        Position: { type: String },
+        position: { type: String },
     }],
 
     propertyDocuments: {

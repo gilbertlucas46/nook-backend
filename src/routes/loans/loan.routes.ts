@@ -74,6 +74,9 @@ export let loanRoute: ServerRoute[] = [
 							birthDate: Joi.number(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
+							motherMaidenName: Joi.string(),
+							age: Joi.number(),
+							birthPlace: Joi.string(),
 						},
 						coBorrowerInfo: {
 							firstName: Joi.string().max(32),
@@ -91,6 +94,9 @@ export let loanRoute: ServerRoute[] = [
 								Constant.DATABASE.RELATIONSHIP.SON,
 								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 							]),
+							age: Joi.number(),
+							birthPlace: Joi.string(),
+							motherMaidenName: Joi.string(),
 						},
 					}),
 
@@ -265,7 +271,7 @@ export let loanRoute: ServerRoute[] = [
 						]),
 						contactPerson: Joi.string(),
 						contactNumber: Joi.string(),
-						Position: Joi.string(),
+						position: Joi.string(),
 					}),
 
 					propertyDocuments: Joi.object().keys({
@@ -461,6 +467,9 @@ export let loanRoute: ServerRoute[] = [
 							birthDate: Joi.number(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
+							motherMaidenName: Joi.string(),
+							age: Joi.number(),
+							birthPlace: Joi.string(),
 						},
 						coBorrowerInfo: {
 							firstName: Joi.string().max(32),
@@ -478,6 +487,9 @@ export let loanRoute: ServerRoute[] = [
 								Constant.DATABASE.RELATIONSHIP.SON,
 								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 							]),
+							age: { type: String },
+							birthPlace: { type: String },
+							motherMaidenName: { type: String },
 						},
 					}),
 
@@ -503,8 +515,10 @@ export let loanRoute: ServerRoute[] = [
 						phoneNumber: Joi.string(),
 						email: Joi.string().email(),
 						mobileNumber: Joi.string().min(7).max(15),
-						currentAddress: Joi.object().keys({
-							address: Joi.string().max(300),
+						mailingAddress: { type: Boolean, enum: ['Permanent Address', 'Present Address'] },
+						// address: {
+						permanentAddress: {
+							address: Joi.string(),
 							homeOwnership: Joi.string().valid([
 								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
 								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
@@ -512,7 +526,26 @@ export let loanRoute: ServerRoute[] = [
 								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
 								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
 							]),
-						}),
+							lengthOfStay: { type: Number },
+						},
+						presentAddress: {
+							address: Joi.string(),
+							lengthOfStay: Joi.string(),
+						},
+						// },
+						// phoneNumber: Joi.string(),
+						// email: Joi.string().email(),
+						// mobileNumber: Joi.string().min(7).max(15),
+						// currentAddress: Joi.object().keys({
+						// 	address: Joi.string().max(300),
+						// 	homeOwnership: Joi.string().valid([
+						// 		Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+						// 		Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+						// 		Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+						// 		Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+						// 		Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+						// 	]),
+						// }),
 					}),
 
 					loanDetails: Joi.object().keys({

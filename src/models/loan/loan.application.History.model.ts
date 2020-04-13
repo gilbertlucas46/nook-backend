@@ -63,6 +63,9 @@ const loanApplicationHistory = new Schema({
             birthDate: { type: Schema.Types.Number },
             monthlyIncome: { type: Schema.Types.Number, default: 0 },
             isCoborrower: { type: Boolean, default: false },
+            motherMaidenName: { type: String },
+            age: { type: String },
+            birthPlace: { type: String },
         },
         coBorrowerInfo: {
             firstName: { type: Schema.Types.String, trim: true },
@@ -180,7 +183,7 @@ const loanApplicationHistory = new Schema({
         },
         contactPerson: { type: Schema.Types.String },
         contactNumber: { type: Schema.Types.String, trim: true },
-        Position: { type: String },
+        position: { type: String },
     }],
 
     propertyDocuments: {

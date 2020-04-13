@@ -16,7 +16,7 @@ export let setToken = async (tokenData: any) => {
 		return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
 	} else {
 		try {
-			const tokenToSend = Jwt.sign(tokenData, cert, { algorithm: 'HS256' });
+			const tokenToSend = Jwt.sign(tokenData, cert, { algorithm: 'HS256', expiresIn: '30s' });
 			return { accessToken: tokenToSend };
 		} catch (error) {
 			return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
@@ -26,7 +26,13 @@ export let setToken = async (tokenData: any) => {
 
 export let verifyToken = async (token, tokenType, request?: any) => {
 	try {
-		const result: any = Jwt.verify(token, cert, { algorithms: ['HS256'] });
+		console.log(111111111111111111111111111111111111111111111111111111);
+		let result;
+		try {
+			result = Jwt.verify(token, cert, { algorithms: ['HS256'] });
+		} catch (error) {
+			return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
+		}
 		utils.consolelog('resultToken', result, true);
 		if (result) {
 			if (result !== {}) {
