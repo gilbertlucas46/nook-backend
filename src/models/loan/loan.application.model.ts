@@ -101,10 +101,8 @@ const schema = new Schema({
         phoneNumber: { type: Schema.Types.String, trim: true },
         email: { type: Schema.Types.String, trim: true },
         mobileNumber: { type: Schema.Types.String, trim: true },
-        mailingAddress: { type: Boolean, enum: ['Permanent Address', 'Present Address'] },
-        // address: {
-        permanentAddress: {
-            address: { type: Schema.Types.String, index: true },
+        currentAddress: {
+            address: { type: Schema.Types.String },
             homeOwnership: {
                 type: Schema.Types.String, enum: [
                     CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
@@ -114,16 +112,33 @@ const schema = new Schema({
                     CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
                 ],
             },
-            lengthOfStay: { type: Number },
         },
-        presentAddress: {
-            address: { type: Schema.Types.String, index: true },
-            lengthOfStay: { type: Number },
-        },
+        // mailingAddress: {
+        //     permanentAddress: { type: Boolean },
+        //     presentAddress: { type: Boolean }
+        // }
+        // { type: Boolean, enum: ['Permanent Address', 'Present Address'] },
+        // address: {
+        // permanentAddress: {
+        //     address: { type: Schema.Types.String, index: true },
+        //     homeOwnership: {
+        //         type: Schema.Types.String, enum: [
+        //             CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+        //             CONSTANT.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+        //             CONSTANT.DATABASE.HOME_OWNERSHIP.OWNED,
+        //             CONSTANT.DATABASE.HOME_OWNERSHIP.RENTED,
+        //             CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
+        //         ],
+        //     },
+        //     lengthOfStay: { type: Number },
+        // },
+        // presentAddress: {
+        //     address: { type: Schema.Types.String, index: true },
+        //     lengthOfStay: { type: Number },
+        // },
 
         // },
     },
-
     loanDetails: {
         maxLoanTerm: { type: Schema.Types.Number },
         fixedPeriod: { type: Schema.Types.Number },

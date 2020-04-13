@@ -164,6 +164,10 @@ export class AdminClass extends BaseEntity {
 				],
 			};
 
+			const referral = {
+
+			};
+
 			const LoanList = [{
 				$facet: {
 					NEW: [{
@@ -221,13 +225,13 @@ export class AdminClass extends BaseEntity {
 			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
 			pipeline.push(this.DAOManager.count('Article', totalArticles));
 			pipeline.push(this.DAOManager.count('LoanReferral', {}));
-			const [userCount, loanCount, staffcount, articleCount] = await Promise.all(pipeline);
+			const [userCount, loanCount, staffcount, articleCount, referralCount] = await Promise.all(pipeline);
 			return {
 				userCount,
 				loanCount: loanCount[0],
 				staffcount,
 				articleCount,
-				// referralCount,
+				referralCount,
 				// enquiryCount,
 			};
 

@@ -487,9 +487,9 @@ export let loanRoute: ServerRoute[] = [
 								Constant.DATABASE.RELATIONSHIP.SON,
 								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 							]),
-							age: { type: String },
-							birthPlace: { type: String },
-							motherMaidenName: { type: String },
+							age: Joi.string(),
+							birthPlace: Joi.string(),
+							motherMaidenName: Joi.string(),
 						},
 					}),
 
@@ -515,29 +515,13 @@ export let loanRoute: ServerRoute[] = [
 						phoneNumber: Joi.string(),
 						email: Joi.string().email(),
 						mobileNumber: Joi.string().min(7).max(15),
-						mailingAddress: { type: Boolean, enum: ['Permanent Address', 'Present Address'] },
+						// mailingAddress: Joi.object().keys({
+						// 	permanentAddress: Joi.boolean(),
+						// 	presentAddress: Joi.boolean(),
+						// }),
 						// address: {
-						permanentAddress: {
-							address: Joi.string(),
-							homeOwnership: Joi.string().valid([
-								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
-								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
-								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
-								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
-								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
-							]),
-							lengthOfStay: { type: Number },
-						},
-						presentAddress: {
-							address: Joi.string(),
-							lengthOfStay: Joi.string(),
-						},
-						// },
-						// phoneNumber: Joi.string(),
-						// email: Joi.string().email(),
-						// mobileNumber: Joi.string().min(7).max(15),
-						// currentAddress: Joi.object().keys({
-						// 	address: Joi.string().max(300),
+						// permanentAddress: {
+						// 	address: Joi.string(),
 						// 	homeOwnership: Joi.string().valid([
 						// 		Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
 						// 		Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
@@ -545,7 +529,27 @@ export let loanRoute: ServerRoute[] = [
 						// 		Constant.DATABASE.HOME_OWNERSHIP.RENTED,
 						// 		Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
 						// 	]),
-						// }),
+						// 	lengthOfStay: { type: Number },
+						// },
+						// presentAddress: {
+						// 	address: Joi.string(),
+						// 	lengthOfStay: Joi.string(),
+						// },
+						// },
+						// phoneNumber: Joi.string(),
+						// email: Joi.string().email(),
+						// mobileNumber: Joi.string().min(7).max(15),
+
+						currentAddress: Joi.object().keys({
+							address: Joi.string().max(300),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]),
+						}),
 					}),
 
 					loanDetails: Joi.object().keys({
