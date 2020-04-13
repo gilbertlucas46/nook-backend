@@ -164,8 +164,8 @@ export class AdminClass extends BaseEntity {
 				],
 			};
 
-			const referral = {
-
+			const preQualification = {
+				status: 'Active',
 			};
 
 			const LoanList = [{
@@ -225,13 +225,16 @@ export class AdminClass extends BaseEntity {
 			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
 			pipeline.push(this.DAOManager.count('Article', totalArticles));
 			pipeline.push(this.DAOManager.count('LoanReferral', {}));
-			const [userCount, loanCount, staffcount, articleCount, referralCount] = await Promise.all(pipeline);
+			pipeline.push(this.DAOManager.count('PreQualification', preQualification));
+
+			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount] = await Promise.all(pipeline);
 			return {
 				userCount,
 				loanCount: loanCount[0],
 				staffcount,
 				articleCount,
 				referralCount,
+				preQualificationCount,
 				// enquiryCount,
 			};
 
