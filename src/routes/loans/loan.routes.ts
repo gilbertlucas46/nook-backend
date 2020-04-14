@@ -603,6 +603,9 @@ export let loanRoute: ServerRoute[] = [
 							INDUSTRIES.SAFETY_SECURITY_LEGAL.value,
 							INDUSTRIES.TRANSPORTATION.value,
 						]),
+						grossMonthlyIncome: Joi.string(),
+						provinceState: Joi.string(),
+						country: Joi.string(),
 						coBorrowerInfo: {
 							employmentType: Joi.string().valid([
 								EMPLOYMENT_TYPE.BPO.value,

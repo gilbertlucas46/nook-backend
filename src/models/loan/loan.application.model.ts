@@ -198,7 +198,7 @@ const schema = new Schema({
             officeAddress: { type: Schema.Types.String, trim: true },
             grossMonthlyIncome: { type: Number, default: 0 },
             provinceState: { type: String },
-            Country: { type: String, default: 'Philippines' },
+            country: { type: String, default: 'Philippines' },
 
         },
     },
