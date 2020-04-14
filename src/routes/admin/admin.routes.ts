@@ -302,9 +302,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.DASHBOARD);
-				// }
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.DASHBOARD);
 				const registerResponse = await AdminService.dashboard(adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 
@@ -576,6 +574,8 @@ export let adminProfileRoute: ServerRoute[] = [
 				// if (checkPermission === false) {
 				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
 				// }
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION);
+
 				const data = await LoanController.preQualificationDetail(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {

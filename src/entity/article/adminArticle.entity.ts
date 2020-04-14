@@ -96,29 +96,29 @@ export class CategoryClass extends BaseEntity {
         }
     }
 
-    async addSellingArticle() {
-        try {
-            const criteria = {
-                name: 'SELLING',
-            };
-            const insert = {
-                // $set: {
-                _id: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
-                name: 'SELLING',
-                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
-                // },
-            };
-            const checkData = await this.DAOManager.findOne(this.modelName, criteria, {});
-            // this.DAOManager.
-            if (!checkData) {
-                this.DAOManager.save(this.modelName, insert);
-                return;
-            }
-            return;
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    }
+    // async addSellingArticle() {
+    //     try {
+    //         const criteria = {
+    //             name: 'SELLING',
+    //         };
+    //         const insert = {
+    //             // $set: {
+    //             _id: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+    //             name: 'SELLING',
+    //             status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+    //             // },
+    //         };
+    //         const checkData = await this.DAOManager.findOne(this.modelName, criteria, {});
+    //         // this.DAOManager.
+    //         if (!checkData) {
+    //             this.DAOManager.save(this.modelName, insert);
+    //             return;
+    //         }
+    //         return;
+    //     } catch (error) {
+    //         return Promise.reject(error);
+    //     }
+    // }
 }
 
 export const ArticleCategoryE = new CategoryClass();

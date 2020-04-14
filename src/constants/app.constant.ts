@@ -155,22 +155,6 @@ export let DATABASE = {
 			TYPE: 'ADMIN',
 			DISPLAY_NAME: 'Admin',
 		},
-		// AGENT: {
-		// 	NUMBER: 1,
-		// 	TYPE: 'AGENT',
-		// 	DISPLAY_NAME: 'Agent',
-		// },
-		// TENANT: {
-		// 	NUMBER: 3,
-		// 	TYPE: 'TENANT',
-		// 	DISPLAY_NAME: 'Tenant',
-		// },
-		// OWNER: {
-		// 	NUMBER: 4,
-		// 	TYPE: 'OWNER',
-		// 	DISPLAY_NAME: 'Owner',
-		// },
-
 		STAFF: {
 			NUMBER: 5,
 			TYPE: 'STAFF',
@@ -178,61 +162,6 @@ export let DATABASE = {
 		},
 	},
 
-	// PROPERTY_STATUS: {
-	// 	DRAFT: {
-	// 		NUMBER: 1,
-	// 		TYPE: 'DRAFT',
-	// 		DISPLAY_NAME: 'Draft',
-	// 	},
-	// 	PENDING: {
-	// 		NUMBER: 2,
-	// 		TYPE: 'PENDING',
-	// 		DISPLAY_NAME: 'Pending',
-	// 	},
-	// 	ACTIVE: {
-	// 		NUMBER: 3,
-	// 		TYPE: 'ACTIVE',
-	// 		DISPLAY_NAME: 'Active',
-	// 	},
-	// 	DECLINED: {
-	// 		NUMBER: 4,
-	// 		TYPE: 'DECLINED',
-	// 		DISPLAY_NAME: 'Declined',
-	// 	},
-	// 	SOLD_RENTED: {
-	// 		NUMBER: 5,
-	// 		TYPE: 'SOLD/RENTED',
-	// 		DISPLAY_NAME: 'Sold/Rented',
-	// 	},
-	// 	EXPIRED: {
-	// 		NUMBER: 6,
-	// 		TYPE: 'EXPIRED',
-	// 		DISPLAY_NAME: 'Expired',
-	// 	},
-	// 	ADMIN_PROPERTIES_LIST: {
-	// 		NUMBER: 7,
-	// 		TYPE: 'ADMIN_PROPERTY_LIST',
-	// 		DISPLAY_NAME: 'Admin Property List',
-	// 	},
-	// 	USER_PROPERTIES_LIST: {
-	// 		NUMBER: 8,
-	// 		TYPE: 'USER_PROPERTY_LIST',
-	// 		DISPLAY_NAME: 'User Property List',
-	// 	},
-	// },
-
-	// PROPERTY_FOR: {
-	// 	RENT: {
-	// 		NUMBER: 1,
-	// 		TYPE: 'RENT',
-	// 		DISPLAY_NAME: 'For Rent',
-	// 	},
-	// 	SALE: {
-	// 		NUMBER: 2,
-	// 		TYPE: 'SALE',
-	// 		DISPLAY_NAME: 'For Sale',
-	// 	},
-	// },
 
 	ACTIONS_PERFORMED_BY_NOOK: {
 		APPROVED: {

@@ -42,6 +42,28 @@ export function checkPermission(adminData, modelName) {
             });
         }
 
+        if (modelName === Constant.DATABASE.PERMISSION.TYPE.DASHBOARD) {
+            checkReponse = adminData['permission'].some(data => {
+                if (data.moduleName === Constant.DATABASE.PERMISSION.TYPE.DASHBOARD) {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.DASHBOARD;
+                }
+            });
+        }
+        if (modelName === Constant.DATABASE.PERMISSION.TYPE.USERS) {
+            checkReponse = adminData['permission'].some(data => {
+                if (data.moduleName === Constant.DATABASE.PERMISSION.TYPE.USERS) {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.USERS;
+                }
+            });
+        }
+
+        if (modelName === Constant.DATABASE.PERMISSION.TYPE.STAFF) {
+            checkReponse = adminData['permission'].some(data => {
+                if (data.moduleName === Constant.DATABASE.PERMISSION.TYPE.STAFF) {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.STAFF;
+                }
+            });
+        }
 
         if (!checkReponse || checkReponse === undefined) {
             return Promise.reject(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
