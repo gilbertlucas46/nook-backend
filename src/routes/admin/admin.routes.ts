@@ -11,13 +11,6 @@ import * as Hapi from 'hapi';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import * as LoanConstant from '../../constants/loan.constant';
 
-const objectSchema = Joi.object({
-	billingType: Joi.string().valid([
-		Constant.DATABASE.BILLING_TYPE.YEARLY,
-		Constant.DATABASE.BILLING_TYPE.MONTHLY,
-	]),
-	amount: Joi.number(),
-});
 
 export let adminProfileRoute: ServerRoute[] = [
 	/**
@@ -349,12 +342,16 @@ export let adminProfileRoute: ServerRoute[] = [
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await ENTITY.AdminStaffEntity.checkPermission(adminData.permission);
 				// }
-				const checkPermission = adminData['permission'].some(data => {
-					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.LOAN;
-				});
-				if (checkPermission === false) {
-					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-				}
+				// const checkPermission = adminData['permission'].some(data => {
+				// 	return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.LOAN;
+				// });
+				// if (checkPermission === false) {
+				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				// }
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
+				console.log('permissio>:::::::::::::::::::::::::::', permission);
+
+
 				const registerResponse = await LoanController.adminLoansList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -413,12 +410,12 @@ export let adminProfileRoute: ServerRoute[] = [
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await AdminStaffEntity.checkPermission(payload.permission);
 				// }
-				const checkPermission = adminData['permission'].some(data => {
-					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.LOAN;
-				});
-				if (checkPermission === false) {
-					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-				}
+
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
+				console.log('permissio>:::::::::::::::::::::::::::', permission);
+
+
+
 				const registerResponse = await LoanController.adminUpdateLoanStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -470,12 +467,15 @@ export let adminProfileRoute: ServerRoute[] = [
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await AdminStaffEntity.checkPermission(payload.permission);
 				// }
-				const checkPermission = adminData['permission'].some(data => {
-					return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.LOAN;
-				});
-				if (checkPermission === false) {
-					return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-				}
+				// const checkPermission = adminData['permission'].some(data => {
+				// 	return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.LOAN;
+				// });
+				// if (checkPermission === false) {
+				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				// }
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
+				console.log('permissio>:::::::::::::::::::::::::::', permission);
+
 
 				const registerResponse = await LoanController.loanById(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -522,6 +522,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				// if (checkPermission === false) {
 				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
 				// }
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION);
 				const data = await LoanController.preQualificationList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -619,6 +620,8 @@ export let adminProfileRoute: ServerRoute[] = [
 					...request.params as any,
 				};
 				console.log('payload', payload);
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
+				console.log('permissio>:::::::::::::::::::::::::::', permission);
 
 				const data = await LoanController.adminUpdateLoanApplication(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));

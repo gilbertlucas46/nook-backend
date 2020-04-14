@@ -17,13 +17,15 @@ export let helpCenterRoute: ServerRoute[] = [
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
                 // }
 
-                const checkPermission = adminData['permission'].some(data => {
-                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
-                });
+                // const checkPermission = adminData['permission'].some(data => {
+                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
+                // });
 
-                if (checkPermission === false) {
-                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-                }
+                // if (checkPermission === false) {
+                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                // }
+                const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+
 
                 const data = await HelpCenterService.createHelpCenter(payload, adminData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
@@ -88,12 +90,14 @@ export let helpCenterRoute: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
                 const payload: helpCenterRequest.GetHelpCenter = request.params as any;
-                const checkPermission = adminData['permission'].some(data => {
-                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
-                });
-                if (checkPermission === false) {
-                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-                }
+                // const checkPermission = adminData['permission'].some(data => {
+                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
+                // });
+                // if (checkPermission === false) {
+                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                // }
+                const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+
                 const data = await HelpCenterService.getHelpCenter(payload);
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
@@ -128,12 +132,14 @@ export let helpCenterRoute: ServerRoute[] = [
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
                 // }
-                const checkPermission = adminData['permission'].some(data => {
-                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
-                });
-                if (checkPermission === false) {
-                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-                }
+                // const checkPermission = adminData['permission'].some(data => {
+                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
+                // });
+                // if (checkPermission === false) {
+                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                // }
+                const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+
                 const data = await HelpCenterService.deleteHelpCenter(payload);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, data);
             } catch (error) {
@@ -165,12 +171,14 @@ export let helpCenterRoute: ServerRoute[] = [
                     ...request.params as any,
                     ...request.payload as helpCenterRequest.IupdateHelpCenter,
                 };
-                const checkPermission = adminData['permission'].some(data => {
-                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
-                });
-                if (checkPermission === false) {
-                    return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-                }
+                // const checkPermission = adminData['permission'].some(data => {
+                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
+                // });
+                // if (checkPermission === false) {
+                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                // }
+                const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
                 // }
@@ -220,6 +228,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
                 // }
+                const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
                 const data = await HelpCenterService.getHelpCenterCategoryBygroup();
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
@@ -243,6 +252,10 @@ export let helpCenterRoute: ServerRoute[] = [
         handler: async (request) => {
             try {
                 const payload = request.params;
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
+
+                const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+
                 const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
                 const responseData = UniversalFunction.formatUserData(data);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);

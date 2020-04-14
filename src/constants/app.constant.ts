@@ -302,7 +302,7 @@ export let DATABASE = {
 
 	PERMISSION: {
 		TYPE: {
-			// DASHBOARD: 'dashboard',en
+			DASHBOARD: 'dashboard',
 			HELP_CENTER: 'help-center',
 			USERS: 'users',
 			STAFF: 'staffs',
@@ -312,6 +312,7 @@ export let DATABASE = {
 			Article_Category: 'article-categories',
 			// Subscriptions: 'subscriptions',
 			loanReferrals: 'loan-referrals',
+			PRE_QUALIFICATION: 'pre-qualifications',
 			// ENQUIRY: 'enquiries',
 
 		},
