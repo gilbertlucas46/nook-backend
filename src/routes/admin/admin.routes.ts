@@ -787,6 +787,9 @@ export let adminProfileRoute: ServerRoute[] = [
 							LoanConstant.INDUSTRIES.SAFETY_SECURITY_LEGAL.value,
 							LoanConstant.INDUSTRIES.TRANSPORTATION.value,
 						]),
+						grossMonthlyIncome: { type: String },
+						provinceState: { type: String },
+						country: { type: String },
 						coBorrowerInfo: {
 							employmentType: Joi.string().valid([
 								LoanConstant.EMPLOYMENT_TYPE.BPO.value,
@@ -863,6 +866,16 @@ export let adminProfileRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.SON,
 							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 						]),
+					}),
+					tradeReferences: Joi.array().items({
+						companyName: Joi.string(),
+						type: Joi.string().valid([
+							LoanConstant.TRADE_REFERENCE.CUSTOMER,
+							LoanConstant.TRADE_REFERENCE.SUPPLIER,
+						]),
+						contactPerson: Joi.string(),
+						contactNumber: Joi.string(),
+						position: Joi.string(),
 					}),
 
 					propertyDocuments: Joi.object().keys({
