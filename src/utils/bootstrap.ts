@@ -11,7 +11,7 @@ export class Bootstrap {
 		// await this.initCounters();
 		// await this.subscriptionPlan();
 		// await this.bootstrapCounters();
-		ArticleCategoryE.addSellingArticle();
+		// ArticleCategoryE.addSellingArticle();
 	}
 	async initRegions() {
 		await regionEntity.bootstrap();
@@ -31,9 +31,9 @@ export class Bootstrap {
 			const userId = lastUser.referenceId || 'USR0';
 			userCounter = parseInt(userId.substr(3), 10);
 		}
-		global.counters = {
-			LoanApplication: userCounter,
-		};
+		// global.counters = {
+		// 	LoanApplication: userCounter,
+		// };
 	}
 
 	// async initCounters() {
