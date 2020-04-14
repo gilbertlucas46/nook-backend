@@ -34,6 +34,14 @@ export function checkPermission(adminData, modelName) {
                 }
             });
         }
+        if (modelName === Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION) {
+            checkReponse = adminData['permission'].some(data => {
+                if (data.moduleName === Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION) {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION;
+                }
+            });
+        }
+
 
         if (!checkReponse || checkReponse === undefined) {
             return Promise.reject(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
