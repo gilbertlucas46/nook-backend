@@ -49,10 +49,10 @@ export class AdminClass extends BaseEntity {
 			password: await utils.encryptWordpressHashNode('admin@nook'),
 			profilePicUrl: '',
 			permission: [
-				// {
-				// 	moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
-				// 	accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
-				// },
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
 				{
 
 					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
@@ -83,6 +83,10 @@ export class AdminClass extends BaseEntity {
 				},
 				{
 					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION,
 					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
 				},
 			],
