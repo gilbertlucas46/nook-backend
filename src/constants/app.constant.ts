@@ -264,10 +264,16 @@ export let DATABASE = {
 		ACTIVE: 'Active',
 		BLOCK: 'Block',
 	},
+	PREQUALIFICATION_STATUS: {
+		PENDING: 'Pending',
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
+	},
 	ARTICLE_STATUS: {
 		PENDING: 'Pending',
 		ACTIVE: 'Active',
 		BLOCK: 'Block',
+		// BLOCKED: 'Blocked',
 	},
 
 	HELP_CENTER_TYPE: {

@@ -235,8 +235,8 @@ export class ArticleClass extends BaseEntity {
     async getArticlelist(payload: ArticleRequest.GetArticle, Admindata) {
         try {
 
-            let { sortType } = payload;
-            const { articleId, searchTerm, fromDate, toDate, categoryId, status, page, limit } = payload;
+            let { sortType, status } = payload;
+            const { articleId, searchTerm, fromDate, toDate, categoryId, page, limit } = payload;
             console.log('payloadpayloadpayloadpayload', payload.categoryId, categoryId);
 
             let sortingType = {};
@@ -251,12 +251,16 @@ export class ArticleClass extends BaseEntity {
                 limit: limit || Constant.SERVER.LIMIT,
             };
 
+
             if (Admindata && !status) {
                 query['$or'] = [
                     { status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE },
                     { status: Constant.DATABASE.ARTICLE_STATUS.BLOCK },
                 ];
             } else if (status) {
+                if (status === 'Blocked') {
+                    status = 'Block';
+                }
                 query = {
                     status,
                 };
