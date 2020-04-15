@@ -16,7 +16,7 @@ export let setToken = async (tokenData: any) => {
 		return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
 	} else {
 		try {
-			const tokenToSend = Jwt.sign(tokenData, cert, { algorithm: 'HS256', expiresIn: '30s' });
+			const tokenToSend = Jwt.sign(tokenData, cert, { algorithm: 'HS256' });
 			return { accessToken: tokenToSend };
 		} catch (error) {
 			return Promise.reject(Constant.STATUS_MSG.ERROR.E501.TOKENIZATION_ERROR);
