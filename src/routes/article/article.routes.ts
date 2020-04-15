@@ -479,6 +479,7 @@ export let articleRoutes: ServerRoute[] = [
                     status: Joi.string().valid([
                         Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                         Constant.DATABASE.ARTICLE_STATUS.BLOCK,
+                        'Blocked',
                         Constant.DATABASE.ARTICLE_STATUS.PENDING,
                     ]),
                     categoryId: Joi.string(),

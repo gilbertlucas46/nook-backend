@@ -151,11 +151,11 @@ const prequalification = new Schema({
     }],
     status: {
         type: String, enum: [
-            CONSTANT.DATABASE.ARTICLE_STATUS.PENDING,
-            CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
-            CONSTANT.DATABASE.ARTICLE_STATUS.BLOCK,
+            CONSTANT.DATABASE.PREQUALIFICATION_STATUS.PENDING,
+            CONSTANT.DATABASE.PREQUALIFICATION_STATUS.ACTIVE,
+            CONSTANT.DATABASE.PREQUALIFICATION_STATUS.BLOCK,
         ], index: true,
-        default: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
+        default: CONSTANT.DATABASE.PREQUALIFICATION_STATUS.ACTIVE,
     },
     createdAt: { type: Number },
     updatedAt: { type: Number },
