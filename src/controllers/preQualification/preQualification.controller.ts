@@ -48,5 +48,19 @@ class PreqQualificationController extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    async preQualificationById(payload, userData) {
+        try {
+            const criteria = {
+                _id: payload.id,
+                userId: userData._id,
+            };
+            const data = await PreQualificationBankE.getOneEntity(criteria, {});
+            console.log('datadatadatadatadatadatadatadatadata', data);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 export const PreQualificationService = new PreqQualificationController();

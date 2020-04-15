@@ -202,4 +202,34 @@ export let preQualificationroutes: ServerRoute[] = [
             },
         },
     },
+
+    {
+        method: 'GET',
+        path: '/v1/user/prequalification/{id}',
+        handler: async (request, h) => {
+            try {
+                const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+                const payload = request.params as any;
+
+                const data = await PreQualificationService.preQualificationById(payload, userData);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'user prqualification Bank list by id',
+            tags: ['api', 'anonymous', 'user', 'bank', 'list', 'prequalification'],
+            auth: 'UserAuth',
+            validate: {
+                params: {
+                    // limit: Joi.number(),
+                    id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
 ];
