@@ -113,7 +113,7 @@ export let articleRoutes: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload: ArticleRequest.CategoryUpdate = {
-                    ...request.query as any,
+                    ...request.params as any,
                     ...request.payload as ArticleRequest.CategoryUpdate,
                 };
                 // const checkPermission = adminData['permission'].some(data => {
@@ -137,7 +137,7 @@ export let articleRoutes: ServerRoute[] = [
             tags: ['api', 'anonymous', 'admin', 'category', 'update'],
             auth: 'AdminAuth',
             validate: {
-                query: {
+                params: {
                     id: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).required(),
                 },
                 payload: {
