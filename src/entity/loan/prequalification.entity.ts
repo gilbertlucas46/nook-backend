@@ -436,7 +436,7 @@ class PreLoanEntities extends BaseEntity {
             if (fromDate && !toDate) { matchCondition['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { matchCondition['createdAt'] = { $lte: toDate }; }
 
-            matchCondition['userId'] = userData._id;
+            matchCondition['userId'] = Types.ObjectId(userData._id);
 
             const matchPipeline = [
                 {
