@@ -250,7 +250,9 @@ export class ArticleClass extends BaseEntity {
                 page: page || 1,
                 limit: limit || Constant.SERVER.LIMIT,
             };
-
+            if (status === 'Blocked') {
+                status = 'Block';
+            }
 
             if (Admindata && !status) {
                 query['$or'] = [
@@ -258,9 +260,9 @@ export class ArticleClass extends BaseEntity {
                     { status: Constant.DATABASE.ARTICLE_STATUS.BLOCK },
                 ];
             } else if (status) {
-                if (status === 'Blocked') {
-                    status = 'Block';
-                }
+                // if (status === 'Blocked') {
+                //     status = 'Block';
+                // }
                 query = {
                     status,
                 };
