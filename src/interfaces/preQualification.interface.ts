@@ -10,6 +10,7 @@ export namespace PreQualificationRequest {
     }
 
     export interface IPreLoanAdd {
+        preQualificationId?: string;
         bankId?: string;
         property: {
             value: number;
