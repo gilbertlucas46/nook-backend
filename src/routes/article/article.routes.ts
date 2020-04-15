@@ -417,7 +417,7 @@ export let articleRoutes: ServerRoute[] = [
                         Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                         Constant.DATABASE.ARTICLE_STATUS.BLOCK,
                     ]),
-                    categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    // categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     isFeatured: Joi.boolean().default(false),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
