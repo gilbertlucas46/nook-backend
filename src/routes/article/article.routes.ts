@@ -113,7 +113,7 @@ export let articleRoutes: ServerRoute[] = [
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload: ArticleRequest.CategoryUpdate = {
-                    ...request.params as any,
+                    ...request.query as any,
                     ...request.payload as ArticleRequest.CategoryUpdate,
                 };
                 // const checkPermission = adminData['permission'].some(data => {

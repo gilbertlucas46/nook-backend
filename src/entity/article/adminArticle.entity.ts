@@ -3,6 +3,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '@src/constants';
 import { Types } from 'mongoose';
+import { types } from 'util';
 export class CategoryClass extends BaseEntity {
     constructor() {
         super('ArticleCategories');
@@ -76,14 +77,16 @@ export class CategoryClass extends BaseEntity {
     async updateCategoryList(payload) {
         try {
             const criteria = {
-                _id: payload.id,
+                _id: Types.ObjectId(payload.id),
             };
             delete payload['id'];
             const articleStatusCriteria = {
-                categoryId: payload.id,
+                categoryId: Types.ObjectId(payload.id),
             };
             if (payload.name) {
-                return await this.DAOManager.findAndUpdate(this.modelName, criteria, { name: payload.name });
+                const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, { name: payload.name });
+                console.log('dartaaaaaaaaaaa', data);
+                return data;
 
             } else if (payload.status) {
                 const statusData = await this.DAOManager.findAndUpdate(this.modelName, criteria, { status: payload.status });
