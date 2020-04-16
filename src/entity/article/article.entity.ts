@@ -244,15 +244,15 @@ export class ArticleClass extends BaseEntity {
             let query: any = {};
             sortingType = {
                 isFeatured: sortType,
-                updatedAt: sortType,
+                createdAt: sortType,
             };
             const paginateOptions = {
                 page: page || 1,
                 limit: limit || Constant.SERVER.LIMIT,
             };
-            if (status === 'Blocked') {
-                status = 'Block';
-            }
+            // if (status === 'Blocked') {
+            //     status = 'Block';
+            // }
 
             if (Admindata && !status) {
                 query['$or'] = [
