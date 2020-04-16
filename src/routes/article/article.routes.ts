@@ -563,9 +563,10 @@ export let articleRoutes: ServerRoute[] = [
                 // if (checkPermission === false) {
                 //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
                 // }
-                // const deletResponse = await ArticleService.deleteArticle(payload);
-                // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
+
                 const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
+                const deletResponse = await ArticleService.deleteArticle(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DELETED, {}));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
                 return (UniversalFunctions.sendError(error));
