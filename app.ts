@@ -34,7 +34,6 @@ const originArray: string[] = [
 	// 'http://nookdev.appskeeper.com/documentation#!',
 ];
 
-
 const server = new Server({
 	port: config.get('port'),
 	routes: {

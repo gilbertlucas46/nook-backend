@@ -122,16 +122,38 @@ export let loanRoute: ServerRoute[] = [
 						phoneNumber: Joi.string(),
 						email: Joi.string().email(),
 						mobileNumber: Joi.string().min(7).max(15),
-						currentAddress: Joi.object().keys({
-							address: Joi.string().max(300),
-							homeOwnership: Joi.string().valid([
-								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
-								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
-								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
-								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
-								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
-							]),
-						}),
+						// currentAddress: Joi.object().keys({
+						// 	address: Joi.string().max(300),
+						// 	homeOwnership: Joi.string().valid([
+						// 		Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+						// 		Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+						// 		Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+						// 		Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+						// 		Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+						// 	]),
+						// }),
+						mailingAddress: {
+							permanentAddress: Joi.boolean(),
+							presentAddress: Joi.boolean(),
+						},
+						// { type: Boolean, enum: ['Permanent Address', 'Present Address'] },
+						address: {
+							permanentAddress: {
+								address: Joi.string(),
+								homeOwnership: Joi.string().valid([
+									Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+									Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+									Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+									Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+									Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+								]),
+								lengthOfStay: Joi.number(),
+							},
+							presentAddress: {
+								address: Joi.string(),
+								lengthOfStay: Joi.number(),
+							},
+						},
 					}),
 
 					loanDetails: Joi.object().keys({
