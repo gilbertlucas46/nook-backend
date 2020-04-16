@@ -243,8 +243,8 @@ export class ArticleClass extends BaseEntity {
             sortType = !sortType ? -1 : sortType;
             let query: any = {};
             sortingType = {
-                isFeatured: sortType,
                 createdAt: sortType,
+                isFeatured: sortType,
             };
             const paginateOptions = {
                 page: page || 1,
