@@ -4,6 +4,7 @@ export namespace ArticleRequest {
         userRole: string;
         imageUrl: string;
         title: string;
+        name?: string;
         description: string;
         status: number;
         categoryType: string;
@@ -34,6 +35,7 @@ export namespace ArticleRequest {
         articleId: string;
     }
     export interface UpdateArticle {
+        name?: string;
         categoryId: string;
         imageUrl: string;
         title: string;
@@ -48,6 +50,8 @@ export namespace ArticleRequest {
 
     export interface AddCategoriesName {
         name: string;
+        containsQmark?: boolean;
+        title?: string;
     }
 
     export interface CategoryList {
