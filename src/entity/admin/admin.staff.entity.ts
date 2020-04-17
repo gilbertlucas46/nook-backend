@@ -43,7 +43,8 @@ class AdminStaffE extends BaseEntity {
             sortCondition[payload.sortBy] = parseInt(payload.sortType);
             // pipeline.push({ $sort: sortCondition });
         }
-        let matchCondition: any = {};
+        let searchCondition: any = {};
+        const matchCondition: any = {};
         matchCondition['type'] = CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE;
 
         if (permissionType) {
@@ -60,14 +61,20 @@ class AdminStaffE extends BaseEntity {
                 },
                 ];
         }
+
+
         if (searchTerm) {
-            matchCondition = {
-                $or: [
-                    { name: new RegExp('.*' + searchTerm + '.*', 'i') },
-                    { email: new RegExp('.*' + searchTerm + '.*', 'i') },
-                    { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
-                ],
-            };
+            searchCondition['$or'] = [
+                // $or: [
+                { name: new RegExp('.*' + searchTerm + '.*', 'i') },
+                { email: new RegExp('.*' + searchTerm + '.*', 'i') },
+                { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                // ],
+            ]
+        } else {
+            searchCondition = {
+
+            }
         }
 
         if (fromDate || toDate) {
@@ -82,6 +89,9 @@ class AdminStaffE extends BaseEntity {
         pipeline.push(
             {
                 $match: matchCondition,
+            },
+            {
+                $match: searchCondition,
             },
             {
                 $project: {
