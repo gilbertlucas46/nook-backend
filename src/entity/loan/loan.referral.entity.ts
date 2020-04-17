@@ -18,7 +18,7 @@ class LoanReferral extends BaseEntity {
 
     async getReferral(payload) {
         try {
-            return await this.DAOManager.getData1<LoanReferralDocument>(this.modelName, payload, {});
+            // return await this.DAOManager.getData1<LoanReferralDocument>(this.modelName, payload, {});
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -73,11 +73,15 @@ class LoanReferral extends BaseEntity {
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             let sortingType = {};
-            sortType = !sortType ? -1 : sortType;
-            const skip = (limit * (page - 1));
-            const promiseArray = [];
+            // sortType = !sortType ? -1 : sortType;
+            // const skip = (limit * (page - 1));
+            // const promiseArray = [];
             sortingType = {
                 [sortBy]: sortType,
+            };
+            const paginateOptions = {
+                limit: limit || 10,
+                page: page || 1,
             };
 
             if (searchTerm) {
@@ -94,12 +98,48 @@ class LoanReferral extends BaseEntity {
             if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             if (fromDate && !toDate) { query['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
-            promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
-            promiseArray.push(this.DAOManager.count(this.modelName, query));
-            const [data, total] = await Promise.all(promiseArray);
-            return {
-                data, total,
-            };
+            // promiseArray.push(this.DAOManager.findAll(this.modelName, query, {}, { limit, skip, sort: sortingType }));
+            // promiseArray.push(this.DAOManager.count(this.modelName, query));
+
+            const matchCondition = [
+                { $match: query }
+            ];
+            const pipeline = [
+                {
+                    $lookup: {
+                        from: 'users',
+                        let: { uid: '$userId' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$uid'],
+                                    }
+                                },
+                            },
+                        ],
+                        as: 'userData',
+                    },
+                }, {
+                    $unwind: {
+                        path: '$userData',
+                        preserveNullAndEmptyArrays: true,
+                    },
+
+                }
+            ];
+
+            const data = await this.DAOManager.paginatePipeline(matchCondition, paginateOptions, pipeline).aggregate(this.modelName);
+            console.log('dataaaaaaaaaaaaaaaa', data);
+            return data;
+
+            // const [data, total] = await Promise.all(promiseArray);
+            // return {
+            //     data, total,
+            // };
+            // const data
+
+
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

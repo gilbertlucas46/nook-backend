@@ -7,6 +7,8 @@ import { ArticleService, CategoryService } from '@src/controllers';
 import * as ENTITY from '../../entity';
 import { ArticleRequest } from '@src/interfaces/article.interface';
 
+
+
 export let articleRoutes: ServerRoute[] = [
     /**
      * @description:admin add the article name
@@ -42,7 +44,8 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 payload: {
-                    name: Joi.string().uppercase(),
+                    name: Joi.string(),
+                    // containsQmark: Joi.boolean(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -518,7 +521,6 @@ export let articleRoutes: ServerRoute[] = [
                 //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
                 // }
                 const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-
 
                 const registerResponse = await ArticleService.getAdminArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
