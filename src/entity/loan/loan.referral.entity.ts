@@ -137,8 +137,8 @@ class LoanReferral extends BaseEntity {
                         phoneNumber: 1,
                         notes: 1,
                         referredByEmail: '$userData.email',
-                        referredUserId: 'userData._id',
-                        referredPhoneNumber: 'userData.phoneNumber',
+                        referredUserId: '$userData._id',
+                        referredPhoneNumber: '$userData.phoneNumber',
                     },
                 },
             ];
