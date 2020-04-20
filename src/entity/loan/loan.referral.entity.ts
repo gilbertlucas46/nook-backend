@@ -125,8 +125,21 @@ class LoanReferral extends BaseEntity {
                         path: '$userData',
                         preserveNullAndEmptyArrays: true,
                     },
-
-                }
+                },
+                {
+                    $project: {
+                        createdAt: 1,
+                        firstName: 1,
+                        lastName: 1,
+                        middleName: 1,
+                        userName: 1,
+                        phoneNumber: 1,
+                        notes: 1,
+                        referredBy: '$userData.email',
+                        referredUserId: 'userData._id',
+                        referredPhoneNumber: 'userData.phoneNumber',
+                    },
+                },
             ];
 
             const data = await this.DAOManager.paginatePipeline(matchCondition, paginateOptions, pipeline).aggregate(this.modelName);
