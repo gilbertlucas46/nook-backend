@@ -126,8 +126,12 @@ class ArticleController {
             const checkOldArticleCriteria = {
                 _id: payload.articleId,
             };
-            const getOldArticleData = await ENTITY.ArticleE.getOneEntity(checkOldArticleCriteria, {});
-            if (getOldArticleData.name === payload.name) {
+            const oldArticleByName = {
+                name: payload.name,
+            };
+            // const getArticleDataByName = await ENTITY.ArticleE.getOneEntity(checkOldArticleCriteria,{});
+            const getOldArticleData = await ENTITY.ArticleE.getOneEntity(oldArticleByName, {});
+            if (getOldArticleData.name === payload.name && getOldArticleData._id !== payload.articleId) {
                 const dataToSet: any = {};
                 dataToSet.$set = {
                     ...payload,
@@ -141,7 +145,7 @@ class ArticleController {
                         actionTime: new Date().getTime(),
                     },
                 };
-                const data = await ENTITY.ArticleE.createOneEntity(dataToSet);
+                const data = await ENTITY.ArticleE.updateOneEntity({ _id: payload.articleId }, dataToSet);
                 return data;
             } else {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
