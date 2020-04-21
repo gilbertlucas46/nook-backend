@@ -15,6 +15,7 @@ export namespace LoanRequest {
             income: number;
         };
         other: {
+            dob: number;
             age: number;
             nationality: string;
             localVisa: boolean,
