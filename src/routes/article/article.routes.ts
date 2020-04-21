@@ -44,7 +44,7 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 payload: {
-                    name: Joi.string(),
+                    title: Joi.string().uppercase(),
                     // containsQmark: Joi.boolean(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -144,7 +144,7 @@ export let articleRoutes: ServerRoute[] = [
                     id: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).required(),
                 },
                 payload: {
-                    name: Joi.string(),
+                    title: Joi.string(),
                     status: Joi.string().valid([
                         Constant.DATABASE.ArticleCategoryStatus.ACTIVE,
                         Constant.DATABASE.ArticleCategoryStatus.BLOCK,
