@@ -93,6 +93,7 @@ export let preloanRoute: ServerRoute[] = [
 
           other: Joi.object().keys({
             age: Joi.number().min(21).max(65),
+            dob: Joi.number(),
             nationality: Joi.string().valid([
               NATIONALITY.FILIPINO.value,
               NATIONALITY.FOREIGNER.value,
