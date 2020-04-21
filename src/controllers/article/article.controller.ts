@@ -40,11 +40,14 @@ class ArticleController {
             const checkAlreadyAddedCriteria = {
                 name: payload.name,
             };
-            const checkArticleName = ENTITY.ArticleE.getOneEntity(checkAlreadyAddedCriteria, {});
+            const checkArticleName = await ENTITY.ArticleE.getOneEntity(checkAlreadyAddedCriteria, {});
+            console.log('checkArticleNamecheckArticleNamecheckArticleName', checkArticleName);
+
             if (!checkArticleName) {
                 const dataToSave = {
                     name: payload.name,
                     title: payload.title,
+                    ...payload,
                 };
                 return await ENTITY.ArticleE.createOneEntity(dataToSave);
             } else {

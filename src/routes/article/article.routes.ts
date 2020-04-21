@@ -409,7 +409,7 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 params: {
-                    articleId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    articleId: Joi.string().required(),
                 },
                 payload: {
                     title: Joi.string(),
