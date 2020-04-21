@@ -182,4 +182,46 @@ export let adminUserRoutes: ServerRoute[] = [
 			},
 		},
 	},
+	/**
+	 *  @description add the user
+	 */
+	{
+		method: 'Get',
+		path: '/v1/admin/users/{userId}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				console.log('adminDataadminDataadminDataadminData', adminData);
+
+				const payload = {
+					...request.params,
+				};
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.USERS);
+				console.log('permissionpermission', permission);
+
+				const registerResponse = await AdminUserController.adminGetUser(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Get Admin Profile',
+			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
 ];

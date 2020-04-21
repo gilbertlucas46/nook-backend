@@ -152,10 +152,10 @@ class LoanApplicationE extends BaseEntity {
             if (status) {
                 matchObject['applicationStatus'] = status;
             }
-            else {
-                matchObject['applicationStatus'] =
-                    { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
-            }
+            // else {
+            //     matchObject['applicationStatus'] =
+            //         { $ne: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value };
+            // }
 
             if (amountFrom && amountTo) {
                 matchObject['loanDetails.loanAmount'] = {

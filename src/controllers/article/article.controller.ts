@@ -35,7 +35,21 @@ class ArticleController {
             payload.userId = userData._id;
             payload.userRole = userData.type;
             payload.addedBy = userData.type;
-            return await ENTITY.ArticleE.createOneEntity(payload);
+
+            payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+            const checkAlreadyAddedCriteria = {
+                name: payload.name,
+            };
+            const checkArticleName = ENTITY.ArticleE.getOneEntity(checkAlreadyAddedCriteria, {});
+            if (!checkArticleName) {
+                const dataToSave = {
+                    name: payload.name,
+                    title: payload.title,
+                };
+                return await ENTITY.ArticleE.createOneEntity(dataToSave);
+            } else {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
+            }
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -103,24 +117,42 @@ class ArticleController {
 
     async updateArticle(payload: ArticleRequest.UpdateArticle, adminData) {
         try {
-            const criteria = {
+            // const criteria = {
+            //     _id: payload.articleId,
+            // };
+            if (payload.title) {
+                payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+            }
+            const checkOldArticleCriteria = {
                 _id: payload.articleId,
             };
-            const dataToSet: any = {};
-            dataToSet.$set = {
-                ...payload,
-                userId: adminData._id,
-                addedBy: adminData.type,
+            const oldArticleByName = {
+                name: payload.name,
             };
-            dataToSet.$push = {
-                articleAction: {
-                    addedBy: adminData.type,
+            // const getArticleDataByName = await ENTITY.ArticleE.getOneEntity(checkOldArticleCriteria,{});
+            const getOldArticleData = await ENTITY.ArticleE.getOneEntity(oldArticleByName, {});
+            if (getOldArticleData.name === payload.name && getOldArticleData._id !== payload.articleId) {
+                const dataToSet: any = {};
+                dataToSet.$set = {
+                    ...payload,
                     userId: adminData._id,
-                    actionTime: new Date().getTime(),
-                },
-            };
-            const data = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
-            return data;
+                    addedBy: adminData.type,
+                };
+                dataToSet.$push = {
+                    articleAction: {
+                        addedBy: adminData.type,
+                        userId: adminData._id,
+                        actionTime: new Date().getTime(),
+                    },
+                };
+                const data = await ENTITY.ArticleE.updateOneEntity({ _id: payload.articleId }, dataToSet);
+                return data;
+            } else {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
+            }
+
+            // const data = await ENTITY.ArticleE.updateOneEntity(criteria, dataToSet);
+            // return data;
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
