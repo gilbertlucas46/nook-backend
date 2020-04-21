@@ -146,6 +146,38 @@ class AdminUserControllers {
             return Promise.reject(error);
         }
     }
+
+    async adminGetUser(payload) {
+        try {
+            const criteria = {
+                _id: payload.userId,
+            };
+            const projection = {
+                _id: 1,
+                status: 1,
+                type: 1,
+                userName: 1,
+                email: 1,
+                profilePicUrl: 1,
+                firstName: 1,
+                phoneNumber: 1,
+                lastName: 1,
+                middleName: 1,
+                language: 1,
+                aboutMe: 1,
+                backGroundImageUrl: 1,
+                createdAt: 1,
+                updatedAt: 1,
+            };
+            const data = await ENTITY.UserE.getOneEntity(criteria, projection);
+            if (!data) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
+            }
+            return data;
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
 }
 
 export let AdminUserController = new AdminUserControllers();

@@ -28,6 +28,7 @@ export interface IArticle extends Document {
 const articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, required: true, auto: true },
     title: { type: String },
+    name: { type: String, unique: true },
     categoryId: { type: Schema.Types.ObjectId, required: true },
     addedBy: { type: String },
     categoryType: { type: String },
@@ -61,6 +62,6 @@ const articleSchema = new Schema({
         actionTime: { type: Number },
     }],
 }, {
-    versionKey: false,
-});
+        versionKey: false,
+    });
 export const Article = model<IArticle>('Article', articleSchema);

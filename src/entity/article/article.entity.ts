@@ -341,6 +341,7 @@ export class ArticleClass extends BaseEntity {
                         createdAt: 1,
                         updatedAt: 1,
                         addedBy: 1,
+                        name: 1,
 
                     },
                 },
