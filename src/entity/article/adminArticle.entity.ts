@@ -16,7 +16,7 @@ export class CategoryClass extends BaseEntity {
     async addArticleName(payload: ArticleRequest.AddCategoriesName) {
         try {
             // const { name } = payload;
-            const checkContainQmark = payload.name.includes('?');
+            const checkContainQmark = payload.title.includes('?');
             console.log('3333333333333333333333333333333');
             let name1;
             // let name1 = urlSlug(name,
@@ -29,17 +29,19 @@ export class CategoryClass extends BaseEntity {
 
             console.log('nameeeeeeeee', name1);
             // console.log('nmae22222222222', name2);
-            payload.title = payload.name.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+            payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
             console.log('payload.titlepayload.titlepayload.title', payload.title);
 
             // if (checkContainQmark) {
             //     payload.title = payload.title.concat(' ?');
             // }
             const criteria = {
-                title: payload.title,
+                name: payload.name,
                 // name: payload.name,
             };
             const checkName = await this.DAOManager.findOne(this.modelName, criteria, {});
+            console.log('checkNamecheckNamecheckName', checkName);
+
             if (!checkName) {
                 const dataToSave = {
                     title: payload.title,
@@ -118,7 +120,7 @@ export class CategoryClass extends BaseEntity {
 
     async updateCategoryList(payload) {
         try {
-            let { name, status } = payload
+            let { name, status, title } = payload
             const criteria = {
                 _id: Types.ObjectId(payload.id),
             };
@@ -126,23 +128,30 @@ export class CategoryClass extends BaseEntity {
             const articleStatusCriteria = {
                 categoryId: Types.ObjectId(payload.id),
             };
-            let title;
-            payload.title = payload.name.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+            // let title;
 
-            if (name) {
-                // const checkContainQmark = name.includes('?');
+            if (title) {
+                payload.name = title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+
+
+                const criteria1 = {
+                    name: payload.name,
+                };
+                // const checkContainQmark = title.includes('?');
                 // if (checkContainQmark) {
                 //     payload.title = checkContainQmark.concat(' ?');
                 // }
 
-                const checkAlreadyAdded = await this.DAOManager.findOne(this.modelName, criteria, {});
+                const checkAlreadyAdded = await this.DAOManager.findOne(this.modelName, criteria1, {});
+                console.log('checkAlreadyAddedcheckAlreadyAddedcheckAlreadyAdded', checkAlreadyAdded);
+
                 // checkAlreadyAdded.
-                if (checkAlreadyAdded.title === payload.title) {
+                if (checkAlreadyAdded != null && checkAlreadyAdded.name === payload.name) {
                     // if(urlSlug.revert(checkAlreadyAdded.name, '-', urlSlug.transformers.titlecase) === urlSlug(name, '-', false)) {
                     return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
                 } else {
                     const dataToUpdate = {
-                        name,
+                        name: payload.name,
                         title: payload.title,
                     };
                     const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate);
