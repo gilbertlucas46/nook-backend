@@ -10,10 +10,46 @@ export class CategoryClass extends BaseEntity {
     }
 
     async addArticleName(payload: ArticleRequest.AddCategoriesName) {
-        const criteria = {
-            name: payload.name,
-        };
-        return await this.DAOManager.insert(this.modelName, criteria);
+        try {
+            // const { name } = payload;
+            const checkContainQmark = payload.title.includes('?');
+            console.log('3333333333333333333333333333333');
+            let name1;
+            // let name1 = urlSlug(name,
+            //     // {
+            //     '-',
+            //     false,
+            //     // transformer: urlSlug.transformers.uppercase,
+            //     // }
+            // );
+
+            console.log('nameeeeeeeee', name1);
+            // console.log('nmae22222222222', name2);
+            payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+            console.log('payload.titlepayload.titlepayload.title', payload.title);
+
+            // if (checkContainQmark) {
+            //     payload.title = payload.title.concat(' ?');
+            // }
+            const criteria = {
+                name: payload.name,
+                // name: payload.name,
+            };
+            const checkName = await this.DAOManager.findOne(this.modelName, criteria, {});
+            console.log('checkNamecheckNamecheckName', checkName);
+
+            if (!checkName) {
+                const dataToSave = {
+                    title: payload.title,
+                    name: payload.name,
+                };
+                return await this.DAOManager.insert(this.modelName, dataToSave);
+            } else {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
+            }       // return 1
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 
     async getCategoryList(payload) {
@@ -76,6 +112,7 @@ export class CategoryClass extends BaseEntity {
 
     async updateCategoryList(payload) {
         try {
+            let { name, status, title } = payload
             const criteria = {
                 _id: Types.ObjectId(payload.id),
             };
@@ -83,10 +120,41 @@ export class CategoryClass extends BaseEntity {
             const articleStatusCriteria = {
                 categoryId: Types.ObjectId(payload.id),
             };
-            if (payload.name) {
-                const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, { name: payload.name });
-                console.log('dartaaaaaaaaaaa', data);
-                return data;
+            // let title;
+
+            if (title) {
+                payload.name = title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+
+
+                const criteria1 = {
+                    name: payload.name,
+                };
+                // const checkContainQmark = title.includes('?');
+                // if (checkContainQmark) {
+                //     payload.title = checkContainQmark.concat(' ?');
+                // }
+
+                const checkAlreadyAdded = await this.DAOManager.findOne(this.modelName, criteria1, {});
+                console.log('checkAlreadyAddedcheckAlreadyAddedcheckAlreadyAdded', checkAlreadyAdded);
+
+                // checkAlreadyAdded.
+                if (checkAlreadyAdded != null && checkAlreadyAdded.name === payload.name) {
+                    // if(urlSlug.revert(checkAlreadyAdded.name, '-', urlSlug.transformers.titlecase) === urlSlug(name, '-', false)) {
+                    return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
+                } else {
+                    const dataToUpdate = {
+                        name: payload.name,
+                        title: payload.title,
+                    };
+                    const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate);
+                    console.log('data>A>>>>>', data);
+
+                    return data;
+                }
+                //     '-',
+                //     urlSlug.transformers.titlecase) ===payload.)
+                // console.log('dartaaaaaaaaaaa', data);
+                // return data;
 
             } else if (payload.status) {
                 const statusData = await this.DAOManager.findAndUpdate(this.modelName, criteria, { status: payload.status });

@@ -382,6 +382,9 @@ class PreLoanEntities extends BaseEntity {
                     $match: matchObject,
                 },
                 {
+                    $sort: sortingType,
+                },
+                {
                     $match: searchObject,
                 },
                 // { $sort: sortingType },

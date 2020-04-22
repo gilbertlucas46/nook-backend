@@ -72,6 +72,7 @@ const prequalification = new Schema({
     },
     other: {
         type: {
+            dob: { type: Number },
             age: { type: Number },
             nationality: {
                 type: String, enum: [
