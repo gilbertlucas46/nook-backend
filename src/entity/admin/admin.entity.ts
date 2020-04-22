@@ -134,7 +134,7 @@ export class AdminClass extends BaseEntity {
 	}
 	/**
 	 * @description admin dashoard
-	 * @param adminData 
+	 * @param adminData
 	 */
 
 	async adminDashboard(adminData) {
@@ -167,6 +167,32 @@ export class AdminClass extends BaseEntity {
 				},
 				],
 			};
+
+			const lastMonthUser = [{
+				$facet: {
+					last30DaysUser: [{
+						$match: {
+							createdAt: { $gt: (new Date().getTime() - 1000 * 60 * 60 * 24 * 30), $lt: new Date().getTime() },
+						},
+					}],
+					totalUsers: [{
+						$match: {
+							$or: [{
+								status: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
+							},
+							{
+								status: CONSTANT.DATABASE.STATUS.USER.BLOCKED,
+							},
+							],
+						},
+					}],
+				},
+			}, {
+				$project: {
+					last30DaysUser: { $size: '$last30DaysUser' },
+					totalUsers: { $size: '$totalUsers' },
+				}
+			}];
 
 			const preQualification = {
 				status: 'Active',
@@ -224,21 +250,51 @@ export class AdminClass extends BaseEntity {
 					DRAFT: { $size: '$DRAFT' },
 				},
 			}];
-			pipeline.push(this.DAOManager.count('User', UsersList));
+
+			const graphLoanApplication = [
+				{
+					$project:
+						{ month_joined: { $month: { $toDate: '$createdAt' } } },
+				},
+				{ $group: { _id: { month_joined: '$month_joined' }, number: { $sum: 1 } } },
+				{ $sort: { '_id.month_joined': 1 } },
+			];
+
+			const graphPreQualification = [
+				{
+
+					$project:
+						{ month_joined1: { $month: { $toDate: '$createdAt' } } },
+				},
+				{ $group: { _id: { month_joined: '$month_joined1' }, number: { $sum: 1 } } },
+				{ $sort: { '_id.month_joined1': 1 } },
+			];
+
+
+
+			pipeline.push(this.DAOManager.aggregateData('User', lastMonthUser));
 			pipeline.push(this.DAOManager.aggregateData('LoanApplication', LoanList));
 			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
 			pipeline.push(this.DAOManager.count('Article', totalArticles));
 			pipeline.push(this.DAOManager.count('LoanReferral', {}));
 			pipeline.push(this.DAOManager.count('PreQualification', preQualification));
 
-			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount] = await Promise.all(pipeline);
+
+			pipeline.push(this.DAOManager.aggregateData('LoanApplication', graphLoanApplication));
+			pipeline.push(this.DAOManager.aggregateData('PreQualification', graphPreQualification));
+
+
+			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount, loanGraph, preQualificationGraph] = await Promise.all(pipeline);
 			return {
-				userCount,
+				userCount: userCount[0],
 				loanCount: loanCount[0],
 				staffcount,
 				articleCount,
 				referralCount,
 				preQualificationCount,
+				loanGraph,
+				preQualificationGraph,
+
 				// enquiryCount,
 			};
 
