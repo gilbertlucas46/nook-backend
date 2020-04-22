@@ -879,6 +879,11 @@ export let STATUS_MSG = {
 				type: 'CREATED',
 				message: 'Created Successfully',
 			},
+			PREQUALIFICATION_SAVED: {
+				statusCode: 201,
+				type: 'SAVED',
+				message: 'Saved Successfully',
+			},
 			LOAN_REFERRAL: {
 				statusCode: 201,
 				type: 'CREATED',
