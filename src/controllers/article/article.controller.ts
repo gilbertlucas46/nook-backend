@@ -85,7 +85,7 @@ class ArticleController {
         try {
 
             const criteria = {
-                _id: payload.articleId,
+                name: payload.articleId,
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
 
