@@ -252,6 +252,11 @@ export class AdminClass extends BaseEntity {
 			}];
 
 			const graphLoanApplication = [
+				// {
+				// 	$facet: [{
+				// 		match: {}
+				// 	}]
+				// },
 				{
 					$project:
 						{ month_joined: { $month: { $toDate: '$createdAt' } } },
@@ -282,9 +287,22 @@ export class AdminClass extends BaseEntity {
 
 			pipeline.push(this.DAOManager.aggregateData('LoanApplication', graphLoanApplication));
 			pipeline.push(this.DAOManager.aggregateData('PreQualification', graphPreQualification));
-
-
 			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount, loanGraph, preQualificationGraph] = await Promise.all(pipeline);
+
+			const loanGraph1 = {};
+			const preQualificationGraph1 = {};
+			// Obj[key]=value
+			loanGraph.map(data => {
+				console.log('data>>>>>>>>>', data)
+				loanGraph1[data['_id']['month_joined']] = data.number;
+
+			});
+			preQualificationGraph.map(data => {
+				console.log('data>>>>>>>>>', data)
+				preQualificationGraph1[data['_id']['month_joined']] = data.number;
+
+			});
+
 			return {
 				userCount: userCount[0],
 				loanCount: loanCount[0],
@@ -292,9 +310,9 @@ export class AdminClass extends BaseEntity {
 				articleCount,
 				referralCount,
 				preQualificationCount,
-				loanGraph,
-				preQualificationGraph,
-
+				// loanGraph,
+				loanGraph1,
+				preQualificationGraph1,
 				// enquiryCount,
 			};
 
