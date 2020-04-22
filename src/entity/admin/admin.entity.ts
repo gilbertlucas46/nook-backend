@@ -200,6 +200,14 @@ export class AdminClass extends BaseEntity {
 
 			const LoanList = [{
 				$facet: {
+					// TOTAL_LOAN_APPLICATION: [{
+					// 	$group: { _id: null, myCount: { $sum: 1 } },
+					// },
+					// {
+					// 	$project: { _id: 0 },
+					// },
+
+					// ],
 					NEW: [{
 						$match: {
 							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
@@ -281,13 +289,14 @@ export class AdminClass extends BaseEntity {
 			pipeline.push(this.DAOManager.aggregateData('LoanApplication', LoanList));
 			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
 			pipeline.push(this.DAOManager.count('Article', totalArticles));
-			pipeline.push(this.DAOManager.count('LoanReferral', {}));
+			pipeline.push(this.DAOManager.count('LoanReferral', {}))
 			pipeline.push(this.DAOManager.count('PreQualification', preQualification));
 
 
 			pipeline.push(this.DAOManager.aggregateData('LoanApplication', graphLoanApplication));
 			pipeline.push(this.DAOManager.aggregateData('PreQualification', graphPreQualification));
-			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount, loanGraph, preQualificationGraph] = await Promise.all(pipeline);
+			pipeline.push(this.DAOManager.count('LoanApplication', {}));
+			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount, loanGraph, preQualificationGraph, totalLoanApplication] = await Promise.all(pipeline);
 
 			const loanGraph1 = {};
 			const preQualificationGraph1 = {};
@@ -310,10 +319,9 @@ export class AdminClass extends BaseEntity {
 				articleCount,
 				referralCount,
 				preQualificationCount,
-				// loanGraph,
 				loanGraph1,
 				preQualificationGraph1,
-				// enquiryCount,
+				totalLoanApplication,
 			};
 
 		} catch (error) {
