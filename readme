@@ -43,7 +43,7 @@ ssh-- ssh nook_stgusr@nookstg.appskeeper.com
 URL-- nookstg.appskeeper.com
 username-- nook_stgusr
 password-- WdopIos!$#@1
-nodeport-- 7363
+nodeport-- 7395
 
 Mongo staging server details--
 Host-- appskeeper.com
