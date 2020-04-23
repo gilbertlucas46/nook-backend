@@ -353,7 +353,7 @@ export class AdminClass extends BaseEntity {
 				preQualificationGraph1,
 				totalLoanApplication,
 				userGraph,
-				a,
+
 			};
 
 		} catch (error) {
