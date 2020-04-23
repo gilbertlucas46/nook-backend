@@ -38,7 +38,7 @@ class ArticleController {
 
 
 
-            const removeSpecialCharacter = payload.title.replace(/[^\w\s]/gi, '');
+            const removeSpecialCharacter = payload.title.replace(/[^\w\s]/gi, '').trim();
 
             payload.name = removeSpecialCharacter.replace(/\s+/g, '-').toLowerCase().trim();
 
@@ -133,7 +133,7 @@ class ArticleController {
             //     _id: payload.articleId,
             // };
             if (payload.title) {
-                const removeSpecialCharacter = payload.title.replace(/[^\w\s]/gi, '');
+                const removeSpecialCharacter = payload.title.replace(/[^\w\s]/gi, '').trim();
 
                 payload.name = removeSpecialCharacter.replace(/\s+/g, '-').toLowerCase().trim();
 
@@ -147,6 +147,8 @@ class ArticleController {
             };
             // const getArticleDataByName = await ENTITY.ArticleE.getOneEntity(checkOldArticleCriteria,{});
             const getOldArticleData = await ENTITY.ArticleE.getOneEntity(oldArticleByName, {});
+            console.log('getOldArticleDatagetOldArticleData', getOldArticleData);
+
             if (getOldArticleData.name === payload.name && getOldArticleData._id !== payload.articleId) {
                 const dataToSet: any = {};
                 dataToSet.$set = {
