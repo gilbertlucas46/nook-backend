@@ -302,8 +302,9 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = request.query as any;
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.DASHBOARD);
-				const registerResponse = await AdminService.dashboard(adminData);
+				const registerResponse = await AdminService.dashboard(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 
 			} catch (error) {
@@ -316,6 +317,11 @@ export let adminProfileRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'Admin', 'dashboard'],
 			auth: 'AdminAuth',
 			validate: {
+				query: {
+					userGraph: Joi.number().default(new Date(new Date().getFullYear(), 0, 1).getTime()),
+					preQualificationGraph: Joi.number().default(new Date(new Date().getFullYear(), 0, 1).getTime()),
+					loanGraph: Joi.number().default(new Date(new Date().getFullYear(), 0, 1).getTime()),
+				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},

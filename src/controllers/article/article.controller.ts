@@ -36,7 +36,13 @@ class ArticleController {
             payload.userRole = userData.type;
             payload.addedBy = userData.type;
 
-            payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+
+
+            const removeSpecialCharacter = payload.title.replace(/[^\w\s]/gi, '').trim();
+
+            payload.name = removeSpecialCharacter.replace(/\s+/g, '-').toLowerCase().trim();
+
+            // payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
             const checkAlreadyAddedCriteria = {
                 name: payload.name,
             };
@@ -83,13 +89,20 @@ class ArticleController {
 
     async getArticleById(payload: ArticleRequest.GetArticleById) {
         try {
+            // const removeSpecialCharacter = payload.articleId.replace(/[^\w\s]/gi, '');
+            // console.log('removeSpecialCharacterremoveSpecialCharacter', removeSpecialCharacter);
+
+            // payload['name'] = removeSpecialCharacter.replace(/\s+/g, '-');
 
             const criteria = {
-                _id: payload.articleId,
+                name: payload.articleId,
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
+            console.log('articlearticle', article);
 
-            if (!article) return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
+
+            if (!article)
+                return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             return article;
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -124,7 +137,11 @@ class ArticleController {
             //     _id: payload.articleId,
             // };
             if (payload.title) {
-                payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+                const removeSpecialCharacter = payload.title.replace(/[^\w\s]/gi, '').trim();
+
+                payload.name = removeSpecialCharacter.replace(/\s+/g, '-').toLowerCase().trim();
+
+                // payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
             }
             const checkOldArticleCriteria = {
                 _id: payload.articleId,
@@ -134,7 +151,9 @@ class ArticleController {
             };
             // const getArticleDataByName = await ENTITY.ArticleE.getOneEntity(checkOldArticleCriteria,{});
             const getOldArticleData = await ENTITY.ArticleE.getOneEntity(oldArticleByName, {});
-            if (getOldArticleData.name === payload.name && getOldArticleData._id !== payload.articleId) {
+            console.log('getOldArticleDatagetOldArticleData', getOldArticleData);
+
+            if (!getOldArticleData || getOldArticleData._id !== payload.articleId) {  // .name === payload.name && 
                 const dataToSet: any = {};
                 dataToSet.$set = {
                     ...payload,

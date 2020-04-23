@@ -30,9 +30,9 @@ export class AdminController {
 	 * @payload  adminData:adminData
 	 * return {}
 	 */
-	async dashboard(adminData) {
+	async dashboard(payload, adminData) {
 		try {
-			return await ENTITY.AdminE.adminDashboard(adminData);
+			return await ENTITY.AdminE.adminDashboard(payload, adminData);
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
