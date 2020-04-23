@@ -243,7 +243,7 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 payload: {
-                    title: Joi.string(),
+                    title: Joi.string().trim(),
                     description: Joi.string().required(),
                     shortDescription: Joi.string(),
                     // viewCount: Joi.number(),
@@ -347,6 +347,10 @@ export let articleRoutes: ServerRoute[] = [
         path: '/v1/articles/{articleId}',
         handler: async (request, h) => {
             try {
+                // const payload = {
+                //     ...request.params,
+                //     // ...request.payload as any,
+                // };
                 const payload: ArticleRequest.GetArticleById = request.params as any;
                 const registerResponse = await ArticleService.getArticleById(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -361,8 +365,11 @@ export let articleRoutes: ServerRoute[] = [
             auth: 'DoubleAuth',
             validate: {
                 params: {
-                    articleId: Joi.string(),
+                    articleId: Joi.string().lowercase().trim(),
                 },
+                // payload: {
+                //         name:Joi.string()
+                // },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
@@ -412,7 +419,7 @@ export let articleRoutes: ServerRoute[] = [
                     articleId: Joi.string().required(),
                 },
                 payload: {
-                    title: Joi.string(),
+                    title: Joi.string().trim(),
                     description: Joi.string(),
                     shortDescription: Joi.string(),
                     imageUrl: Joi.string(),
