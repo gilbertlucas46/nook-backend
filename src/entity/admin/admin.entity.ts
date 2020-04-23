@@ -137,7 +137,7 @@ export class AdminClass extends BaseEntity {
 	 * @param adminData
 	 */
 
-	async adminDashboard(adminData) {
+	async adminDashboard(payload, adminData) {
 		try {
 
 			const totalArticles = {
@@ -175,6 +175,17 @@ export class AdminClass extends BaseEntity {
 							createdAt: { $gt: (new Date().getTime() - 1000 * 60 * 60 * 24 * 30), $lt: new Date().getTime() },
 						},
 					}],
+					// graphUser: [
+					// 	{
+					// 		$match: { createdAt: { $gt: payload.userGraph } },
+					// 	},
+					// 	{
+					// 		$project:
+					// 			{ month_joined1: { $month: { $toDate: '$createdAt' } } },
+					// 	},
+					// 	{ $group: { _id: { month_joined: '$month_joined1' }, number: { $sum: 1 } } },
+					// 	{ $sort: { '_id.month_joined1': 1 } },
+					// ],
 					totalUsers: [{
 						$match: {
 							$or: [{
@@ -191,11 +202,12 @@ export class AdminClass extends BaseEntity {
 				$project: {
 					last30DaysUser: { $size: '$last30DaysUser' },
 					totalUsers: { $size: '$totalUsers' },
-				}
+				},
 			}];
 
 			const preQualification = {
 				status: 'Active',
+				createdAt: { $gt: payload.preQualificationGraph },
 			};
 
 			const LoanList = [{
@@ -260,11 +272,11 @@ export class AdminClass extends BaseEntity {
 			}];
 
 			const graphLoanApplication = [
-				// {
-				// 	$facet: [{
-				// 		match: {}
-				// 	}]
-				// },
+				{
+					$match: {
+						createdAt: { $gt: payload.loanGraph },
+					},
+				},
 				{
 					$project:
 						{ month_joined: { $month: { $toDate: '$createdAt' } } },
@@ -275,41 +287,58 @@ export class AdminClass extends BaseEntity {
 
 			const graphPreQualification = [
 				{
-
+					$match: { createdAt: { $gt: payload.preQualificationGraph } },
+				},
+				{
 					$project:
 						{ month_joined1: { $month: { $toDate: '$createdAt' } } },
 				},
 				{ $group: { _id: { month_joined: '$month_joined1' }, number: { $sum: 1 } } },
 				{ $sort: { '_id.month_joined1': 1 } },
 			];
-
-
+			const userGraphQuery = [
+				{
+					$match: { createdAt: { $gt: payload.userGraph } },
+				},
+				{
+					$project:
+						{ month_joined1: { $month: { $toDate: '$createdAt' } } },
+				},
+				{ $group: { _id: { month_joined: '$month_joined1' }, userCount: { $sum: 1 } } },
+				{ $sort: { '_id.month_joined1': 1 } },
+			];
 
 			pipeline.push(this.DAOManager.aggregateData('User', lastMonthUser));
 			pipeline.push(this.DAOManager.aggregateData('LoanApplication', LoanList));
 			pipeline.push(this.DAOManager.count('Admin', totalNookStaff));
 			pipeline.push(this.DAOManager.count('Article', totalArticles));
-			pipeline.push(this.DAOManager.count('LoanReferral', {}))
+			pipeline.push(this.DAOManager.count('LoanReferral', {}));
 			pipeline.push(this.DAOManager.count('PreQualification', preQualification));
 
 
 			pipeline.push(this.DAOManager.aggregateData('LoanApplication', graphLoanApplication));
 			pipeline.push(this.DAOManager.aggregateData('PreQualification', graphPreQualification));
-			pipeline.push(this.DAOManager.count('LoanApplication', {}));
-			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount, loanGraph, preQualificationGraph, totalLoanApplication] = await Promise.all(pipeline);
+			pipeline.push(this.DAOManager.count('LoanApplication', { createdAt: { $gt: payload.loanGraph } }));
+			pipeline.push(this.DAOManager.aggregateData('User', userGraphQuery));
+			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount, loanGraph, preQualificationGraph, totalLoanApplication, userGraphData] = await Promise.all(pipeline);
 
 			const loanGraph1 = {};
 			const preQualificationGraph1 = {};
+			const userGraph = {};
 			// Obj[key]=value
 			loanGraph.map(data => {
-				console.log('data>>>>>>>>>', data)
+				console.log('data>>>>>>>>>1111', data);
 				loanGraph1[data['_id']['month_joined']] = data.number;
 
 			});
 			preQualificationGraph.map(data => {
-				console.log('data>>>>>>>>>', data)
+				console.log('data>>>>>>>>>222', data);
 				preQualificationGraph1[data['_id']['month_joined']] = data.number;
 
+			});
+			userGraphData.map(data => {
+				console.log('data>>>>>>>>>3333', data);
+				userGraph[data['_id']['month_joined']] = data.userCount;
 			});
 
 			return {
@@ -322,6 +351,7 @@ export class AdminClass extends BaseEntity {
 				loanGraph1,
 				preQualificationGraph1,
 				totalLoanApplication,
+				userGraph,
 			};
 
 		} catch (error) {
