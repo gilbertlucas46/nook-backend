@@ -89,16 +89,20 @@ class ArticleController {
 
     async getArticleById(payload: ArticleRequest.GetArticleById) {
         try {
-            const removeSpecialCharacter = payload.articleId.replace(/[^\w\s]/gi, '');
+            // const removeSpecialCharacter = payload.articleId.replace(/[^\w\s]/gi, '');
+            // console.log('removeSpecialCharacterremoveSpecialCharacter', removeSpecialCharacter);
 
             // payload['name'] = removeSpecialCharacter.replace(/\s+/g, '-');
 
             const criteria = {
-                name: removeSpecialCharacter,
+                name: payload.articleId,
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
+            console.log('articlearticle', article);
 
-            if (!article) return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
+
+            if (!article)
+                return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             return article;
         } catch (error) {
             utils.consolelog('error', error, true);
