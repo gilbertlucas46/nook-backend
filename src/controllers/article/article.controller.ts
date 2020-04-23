@@ -36,7 +36,13 @@ class ArticleController {
             payload.userRole = userData.type;
             payload.addedBy = userData.type;
 
-            payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+
+
+            const removeSpecialCharacter = payload.title.replace(/[^\w\s]/gi, '');
+
+            payload.name = removeSpecialCharacter.replace(/\s+/g, '-').toLowerCase().trim();
+
+            // payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
             const checkAlreadyAddedCriteria = {
                 name: payload.name,
             };
@@ -83,9 +89,11 @@ class ArticleController {
 
     async getArticleById(payload: ArticleRequest.GetArticleById) {
         try {
+            const removeSpecialCharacter = payload.articleId.replace(/[^\w\s]/gi, '');
 
+            payload['name'] = removeSpecialCharacter.replace(/\s+/g, '-');
             const criteria = {
-                name: payload.articleId,
+                name: payload['name'],
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
 
@@ -124,7 +132,11 @@ class ArticleController {
             //     _id: payload.articleId,
             // };
             if (payload.title) {
-                payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
+                const removeSpecialCharacter = payload.title.replace(/[^\w\s]/gi, '');
+
+                payload.name = removeSpecialCharacter.replace(/\s+/g, '-').toLowerCase().trim();
+
+                // payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
             }
             const checkOldArticleCriteria = {
                 _id: payload.articleId,
