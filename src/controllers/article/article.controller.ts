@@ -91,9 +91,10 @@ class ArticleController {
         try {
             const removeSpecialCharacter = payload.articleId.replace(/[^\w\s]/gi, '');
 
-            payload['name'] = removeSpecialCharacter.replace(/\s+/g, '-');
+            // payload['name'] = removeSpecialCharacter.replace(/\s+/g, '-');
+
             const criteria = {
-                name: payload['name'],
+                name: removeSpecialCharacter,
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
 
