@@ -149,7 +149,7 @@ class ArticleController {
             const getOldArticleData = await ENTITY.ArticleE.getOneEntity(oldArticleByName, {});
             console.log('getOldArticleDatagetOldArticleData', getOldArticleData);
 
-            if (getOldArticleData.name === payload.name && getOldArticleData._id !== payload.articleId) {
+            if (!getOldArticleData || getOldArticleData._id !== payload.articleId) {  // .name === payload.name && 
                 const dataToSet: any = {};
                 dataToSet.$set = {
                     ...payload,
