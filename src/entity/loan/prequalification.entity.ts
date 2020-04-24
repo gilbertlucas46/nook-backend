@@ -386,20 +386,60 @@ class PreLoanEntities extends BaseEntity {
                 },
                 {
                     $match: searchObject,
+                }];
+            // { $sort: sortingType },
+            const pipeline = [
+                {
+                    $lookup: {
+                        from: 'users',
+                        let: { uid: '$userId' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$uid'],
+                                    },
+                                },
+                            },
+                        ],
+                        as: 'userData',
+                    },
                 },
-                // { $sort: sortingType },
+                {
+                    $unwind: {
+                        path: '$userData',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
                 {
                     $project: {
                         _id: 1,
                         createdAt: 1,
                         updatedAt: 1,
                         // prequalifiedBanks: 0,
-                        propertyValue: '$property.type',
-                        propertyType: '$property.value',
+                        propertyValue: '$property.value',
+                        propertyType: '$property.type',
                         referenceId: 1,
+                        firstName: '$userData.firstName',
+                        lastName: '$userData.lastName',
+                        middleName: '$userData.middleName',
+                        userName: '$userData.userName',
                         No_Of_Banks: { $size: '$prequalifiedBanks' },
                     },
-                },
+                }
+
+                // {
+                //     $project: {
+                //         _id: 1,
+                //         createdAt: 1,
+                //         updatedAt: 1,
+                //         // prequalifiedBanks: 0,
+                //         propertyValue: '$property.type',
+                //         propertyType: '$property.value',
+                //         referenceId: 1,
+                //         No_Of_Banks: { $size: '$prequalifiedBanks' },
+                //     },
+                // },
             ];
             // const pipeline = [
             //     {
@@ -408,7 +448,7 @@ class PreLoanEntities extends BaseEntity {
             //     },
             // ];
             // const data = this.DAOManager.paginatePipeline(this.modelName, query);
-            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
             // const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline, paginateOptions.limit, paginateOptions.skip);
             console.log('datadatadatadatadatadatadata', data);
             return data;
