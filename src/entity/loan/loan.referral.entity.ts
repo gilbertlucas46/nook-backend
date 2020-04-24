@@ -102,7 +102,10 @@ class LoanReferral extends BaseEntity {
             // promiseArray.push(this.DAOManager.count(this.modelName, query));
 
             const matchCondition = [
-                { $match: query }
+                { $match: query },
+                {
+                    $sort: sortingType,
+                },
             ];
             const pipeline = [
                 {
