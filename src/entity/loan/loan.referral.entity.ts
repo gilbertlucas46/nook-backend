@@ -104,7 +104,9 @@ class LoanReferral extends BaseEntity {
             const matchCondition = [
                 { $match: query },
                 {
-                    $sort: sortingType,
+                    $sort: {
+                        _id: -1,
+                    },
                 },
             ];
             const pipeline = [
