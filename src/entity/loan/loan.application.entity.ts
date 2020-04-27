@@ -310,12 +310,14 @@ class LoanApplicationE extends BaseEntity {
         if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
             const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
             console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
+            if (config.get['environment'] === 'production') {
 
-            await fetch(config.get('zapier_loanUrl'), {
-                method: 'post',
-                body: JSON.stringify(salesforceData),
-            });
-            console.log(config.get('zapier_loanUrl'), salesforceData);
+                await fetch(config.get('zapier_loanUrl'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceData),
+                });
+                console.log(config.get('zapier_loanUrl'), salesforceData);
+            }
         }
     }
 }

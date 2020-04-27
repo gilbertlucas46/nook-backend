@@ -182,9 +182,6 @@ const schema = new Schema({
         provinceState: { type: String },
         country: { type: String },
 
-
-
-
         coBorrowerInfo: {
             employmentType: { type: Schema.Types.String, enum: Object.keys(CONSTANT.EMPLOYMENT_TYPE) },
             tin: { type: Schema.Types.String, trim: true },
