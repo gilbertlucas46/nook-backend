@@ -129,7 +129,7 @@ export let preloanRoute: ServerRoute[] = [
 
           loan: Joi.object().keys({
             type: Joi.string(),
-            term: Joi.number(),
+            term: Joi.number().default(1),
             percent: Joi.number(),
             amount: Joi.number(),
             fixingPeriod: Joi.number(),
