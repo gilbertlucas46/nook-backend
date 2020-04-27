@@ -323,9 +323,9 @@ export class AdminClass extends BaseEntity {
 			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount, loanGraph, preQualificationGraph, totalLoanApplication, userGraphData] = await Promise.all(pipeline);
 			console.log('loanGraphloanGraphloanGraphloanGraphloanGraph', loanGraph);
 
-			const loanGraph1 = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0 };
-			const preQualificationGraph1 = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0 };
-			const userGraph = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0 };
+			const loanGraph1 = {};
+			const preQualificationGraph1 = {};
+			const userGraph = {};
 			// Obj[key]=value
 			loanGraph.map(data => {
 				console.log('data>>>>>>>>>1111', data);

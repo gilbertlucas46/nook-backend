@@ -100,8 +100,8 @@ export const LOAN_PROPERTY_STATUS = {
         value: 'REFINANCING',
     },
     RENOVATION: {
-        label: 'Removation',
-        value: 'Renovatoin',
+        label: 'Renovation',
+        value: 'RENOVATION',
     },
     // NEW_CONSTRUCTION: {
     //     label: 'New Construction',
