@@ -100,9 +100,10 @@ class ArticleController {
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
             console.log('articlearticle', article);
 
-
-            if (!article)
-                return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
+            if (article == null || !article) {
+                console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            }
             return article;
         } catch (error) {
             utils.consolelog('error', error, true);
