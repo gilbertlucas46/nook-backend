@@ -222,6 +222,9 @@ class LoanApplicationE extends BaseEntity {
         const { contactInfo } = data.contactInfo;
         const { employmentInfo } = data;
 
+        console.log('ewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
+
+
         creditCard.status = Constant.CREDIT_CARD_STATUS[creditCard.status].label;
 
         // gender = gender.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();  //Constant.GENDER.FEMALE[gender].label;
@@ -245,8 +248,8 @@ class LoanApplicationE extends BaseEntity {
 
 
         if (data.employmentInfo.coBorrowerInfo.employmentRank) {
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>22222222222222');
-            data.employmentInfo.employmentRank = Constant.EMPLOYMENT_RANK[data.employmentInfo.employmentRank].label;
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>22222222222222', data.employmentInfo.coBorrowerInfo.employmentRank);
+            data.employmentInfo.employmentRank = Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;
         }
 
         if (data.employmentInfo.coBorrowerInfo.employmentType) {
