@@ -63,6 +63,22 @@ export let DATABASE = {
 			label: 'Nook Declined',
 			value: 'NOOK_DECLINED',
 		},
+		WAITING_ON_BORROWER: {
+			label: 'Waiting on Borrower',
+			value: 'WAITING_ON_BORROWER',
+		},
+		APPLICATION_WITHDRAWN: {
+			label: 'Application Withdrawn',
+			value: 'APPLICATION_WITHDRAWN',
+		},
+		PENDING_APPRAISAL: {
+			label: 'Pending Appraisal',
+			value: 'PENDING_APPRAISAL',
+		},
+		CREDIT_ASSESSMENT: {
+			label: 'Credit Assessment',
+			value: 'CREDIT_ASSESSMENT',
+		},
 	},
 	EMPLOYMENT: {
 		TENURE: {

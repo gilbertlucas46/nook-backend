@@ -445,6 +445,14 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
+
+
+
 					]).required(),
 					// type: Joi.string().valid('admin', 'user')
 				},
@@ -774,8 +782,9 @@ export let adminProfileRoute: ServerRoute[] = [
 							LoanConstant.LOAN_TYPES.CONSTRUCTION.value,
 							LoanConstant.LOAN_TYPES.LOAN_TAKE_OUT.value,
 							LoanConstant.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
-							LoanConstant.LOAN_TYPES.REFINANCING.value,
+							LoanConstant.LOAN_TYPES.REFINANCING_LOAN.value,
 							LoanConstant.LOAN_TYPES.RENOVATION.value,
+							LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
 						]),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
