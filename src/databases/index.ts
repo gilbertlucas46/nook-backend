@@ -16,6 +16,7 @@ export class Database {
 			case 'development':
 			case 'testing':
 			case 'staging':
+			case 'beta':
 			case 'production':
 			case 'default': {
 				connect(dbUrl, {

@@ -11,6 +11,7 @@
     "test": "NODE_ENV=testing ts-node -r tsconfig-paths/register app.ts --fast --transpile-only",
     "stag": "NODE_ENV=staging ts-node -r tsconfig-paths/register app.ts --fast --transpile-only",
     "local": "NODE_ENV=default ts-node-dev -r tsconfig-paths/register app.ts",
+    "beta": "NODE_ENV=beta ts-node -r tsconfig-paths/register app.ts --fast --transpile-only",
     "lint": "tslint -p tsconfig.json"
   },
   "dependencies": {
