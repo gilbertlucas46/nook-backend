@@ -11,10 +11,10 @@ export const LOAN_TYPES = {
         label: 'Renovation',
         value: 'RENOVATION',
     },
-    REFINANCING: {
-        label: 'Refinancing',
-        value: 'REFINANCING',
-    },
+    // REFINANCING: {
+    //     label: 'Refinancing',
+    //     value: 'REFINANCING',
+    // },
     LOAN_TAKE_OUT: {
         label: 'Loan Take-out',
         value: 'LOAN_TAKE_OUT',
@@ -22,6 +22,10 @@ export const LOAN_TYPES = {
     NEW_CONSTRUCTION: {
         label: 'New Construction',
         value: 'NEW_CONSTRUCTION',
+    },
+    REFINANCING_LOAN: {
+        label: 'Refinancing Loan',
+        value: 'REFINANCING_LOAN',
     },
 };
 export const CREDIT_CARD_STATUS = {
