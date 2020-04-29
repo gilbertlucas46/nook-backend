@@ -363,14 +363,10 @@ class PreLoanEntities extends BaseEntity {
                 };
             }
             if (propertyValue) {
-                matchObject['propertyValue'] = {
-                    propertyValue,
-                };
+                matchObject['property.value'] = propertyValue;
             }
             if (propertyType) {
-                matchObject['propertyType'] = {
-                    propertyType,
-                };
+                matchObject['property.type'] = propertyType;
             }
 
             // const query = {
