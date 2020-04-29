@@ -124,7 +124,7 @@ const loanApplicationHistory = new Schema({
                 CONSTANT.LOAN_TYPES.CONSTRUCTION.value,
                 CONSTANT.LOAN_TYPES.LOAN_TAKE_OUT.value,
                 CONSTANT.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
-                CONSTANT.LOAN_TYPES.REFINANCING.value,
+                CONSTANT.LOAN_TYPES.REFINANCING_LOAN.value,
                 CONSTANT.LOAN_TYPES.RENOVATION.value,
             ],
         },
