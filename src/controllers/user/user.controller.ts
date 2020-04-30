@@ -103,7 +103,7 @@ export class UserController {
 				else {
 					console.log('333333333333333333333333333333333333333333');
 					const accessToken = await ENTITY.UserE.createToken(payload, userData);
-					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'User');
+					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'Tenant');
 					const formatedData = utils.formatUserData(userData);
 					return { formatedData, accessToken };
 				}
@@ -383,16 +383,31 @@ export class UserController {
 				};
 				const formatedData = await ENTITY.UserE.createOneEntity(userData);
 
-				// SessionE.createSession({}, doc, accessToken, 'user');
 
+				// const doc = await this.DAOManager.findAndUpdate(this.modelName, {
+				// 	_id: new Types.ObjectId(id),
+				// }, data, { new: true });
+				console.log('docdocdocdocdocdocdocdocdocdocdocdocdocdoc', formatedData);
+				const salesforceData = flattenObject(formatedData.toObject ? formatedData.toObject() : formatedData);
+				console.log('salesforceDatasalesforceData', salesforceData);
+				const request = {
+					method: 'post',
+					body: JSON.stringify(salesforceData),
+				};
+
+				// SessionE.createSession({}, doc, accessToken, 'user');
 				// const formatedData = utils.formatUserData(doc);
+
 				// 	receiverEmail: payload.email,
 				// 	subject: 'nook welcomes you',
 				// 	userName: payload.userName,
 				// };
-				const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
-				ENTITY.SessionE.createSession({}, formatedData, accessToken, 'User');
+				await fetch(config.get('zapier_personUrl'), request);
+				await fetch(config.get('zapier_accountUrl'), request);
 
+
+				const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
+				ENTITY.SessionE.createSession({}, formatedData, accessToken, 'Tenant');
 				// mail.welcomeMail(sendObj);
 				return { formatedData, accessToken };
 				// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);

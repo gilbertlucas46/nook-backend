@@ -39,7 +39,7 @@ const userSchema = new Schema({
 	backGroundImageUrl: { type: String },
 	// isEmailVerified: { type: Boolean },
 	// isPhoneVerified: { type: Boolean },
-	type: { type: String, default: 'User' },
+	type: { type: String, default: 'Tenant' },
 	status: {
 		type: String, enum: [
 			CONSTANT.DATABASE.STATUS.USER.ACTIVE,
