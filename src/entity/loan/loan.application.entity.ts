@@ -258,7 +258,7 @@ class LoanApplicationE extends BaseEntity {
 
             if (data.employmentInfo.coBorrowerInfo.employmentType) {
                 console.log('1>>>>>>>>>>>>>>>>');
-                data.employmentInfo.coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[data.employmentInfo.type].label;
+                data.employmentInfo.coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[data.employmentInfo.coBorrowerInfo.type].label;
             }
 
             if (data.employmentInfo.rank) {
