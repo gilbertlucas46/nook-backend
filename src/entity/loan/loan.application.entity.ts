@@ -24,10 +24,12 @@ class LoanApplicationE extends BaseEntity {
             // if (config.get['environment'] === 'production') {
             //     console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
 
-            this.sendApplication(data);
+            await this.sendApplication(data);
             // }
             return data;
         } catch (error) {
+            console.log('saveLoanApplicationsaveLoanApplicationsaveLoanApplication', error);
+
             utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
@@ -216,111 +218,121 @@ class LoanApplicationE extends BaseEntity {
      * @param data Application Data
      */
     async sendApplication(data) {
-        // console.log('inside Loan');
-        const { creditCard, nationality, gender, coBorrowerInfo } = data.personalInfo;
-        const { loanDetails } = data.loanDetails;
-        const { contactInfo } = data.contactInfo;
-        const { employmentInfo } = data;
+        try {
 
-        console.log('ewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
+            // console.log('inside Loan');
+            const { creditCard, nationality, gender, coBorrowerInfo } = data.personalInfo;
+            const { loanDetails } = data.loanDetails;
+            const { contactInfo } = data.contactInfo;
+            const { employmentInfo } = data;
 
-
-        creditCard.status = Constant.CREDIT_CARD_STATUS[creditCard.status].label;
-
-        // gender = gender.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();  //Constant.GENDER.FEMALE[gender].label;
-        // nationality = nationality.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();
-
-        // Constant.GENDER.FEMALE[gender].label;
-
-        if (data.personalInfo.gender) {
-            data.personalInfo.gender = data.personalInfo.gender.charAt(0).toUpperCase() + data.personalInfo.gender.substr(1).toLowerCase();
-        }
-        if (data.personalInfo.nationality) {
-            data.personalInfo.nationality = data.personalInfo.nationality.charAt(0).toUpperCase() + data.personalInfo.nationality.substr(1).toLowerCase();
-        }
-        if (data.contactInfo.currentAddress.homeOwnership) {
-            data.contactInfo.currentAddress.homeOwnership = data.contactInfo.currentAddress.homeOwnership.charAt(0).toUpperCase() + data.contactInfo.currentAddress.homeOwnership.substr(1).toLowerCase();
-        }
-        if (data.personalInfo.civilStatus) {
-            data.personalInfo.civilStatus = data.personalInfo.civilStatus.charAt(0).toUpperCase() + data.personalInfo.civilStatus.substr(1).toLowerCase();
-        }
+            console.log('ewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
 
 
+            creditCard.status = Constant.CREDIT_CARD_STATUS[creditCard.status].label;
 
-        if (data.employmentInfo.coBorrowerInfo.employmentRank) {
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>22222222222222', data.employmentInfo.coBorrowerInfo.employmentRank);
-            data.employmentInfo.employmentRank = Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;
-        }
+            // gender = gender.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();  //Constant.GENDER.FEMALE[gender].label;
+            // nationality = nationality.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();
 
-        if (data.employmentInfo.coBorrowerInfo.employmentType) {
-            console.log('1>>>>>>>>>>>>>>>>');
-            data.employmentInfo.coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[data.employmentInfo.type].label;
-        }
+            // Constant.GENDER.FEMALE[gender].label;
 
-        if (data.employmentInfo.rank) {
-            data.employmentInfo.rank = Constant.EMPLOYMENT_RANK[data.employmentInfo.rank].label;
-        }
-
-        if (data.employmentInfo.type) {
-            data.employmentInfo.type = Constant.EMPLOYMENT_TYPE[data.employmentInfo.type].label;
-
-        }
-
-
-        if (data.employmentInfo.coBorrowerInfo.companyIndustry) {
-            console.log('33333333333333333333333333333333333333333333');
-            data.employmentInfo.coBorrowerInfo.companyIndustry = Constant.INDUSTRIES[data.employmentInfo.coBorrowerInfo.companyIndustry].label;
-        }
-
-        if (data.propertyInfo.type) {
-            data.propertyInfo.type = Constant.LOAN_PROPERTY_TYPES[data.propertyInfo.type].label;
-            console.log('>44444444444444444444444444444444444444444');
-        }
-        // if (data.propertyInfo.status) {
-        //     data.propertyInfo.status = Constant.LOAN_PROPERTY_STATUS[data.propertyInfo.status].label;
-        //     console.log('55555555555555555555555555555555555555555555555555555555555555');
-
-        // }
-
-        if (data.employmentInfo.companyIndustry) {
-            data.employmentInfo.companyIndustry = Constant.INDUSTRIES[data.employmentInfo.companyIndustry].label;
-            console.log('5555555555555555555666666666666666666666666666666666666666666666666666666666666');
-
-        }
-        // coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[coBorrowerInfo.employmentType].label;
-
-        // if (data.propertyInfo.type) {
-        //     console.log('>>>>>>>>>>>>>>>>>>>LLLLLLLLLLLLLLL777777777777777777777');
-        //     data.propertyInfo.type = Constant.LOAN_PROPERTY_TYPES[data.propertyInfo.type].label;
-        //     console.log('>>>>>>>>>>>>>>>>>>>LLLLLLLLLLLLLLL777777777777777777777>>>>>>>>>>>>');
-
-        // }
-        if (data.propertyInfo.status) {
-            console.log('>>>>>>>>>>*888888888888888888888888888888888888888888888888888888888888888');
-            data.propertyInfo.status = Constant.LOAN_PROPERTY_STATUS[data.propertyInfo.status].label;
-            console.log('>>>>>>>>>>*888888888888888888888888888888888888888888888888888888888888888>>>>>>>');
-        }
-
-        if (data.loanDetails.loanType) {
-            console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999');
-            data.loanDetails.loanType = Constant.LOAN_TYPES[data.loanDetails.loanType].label;
-            console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999>>>>>>>>>>>>>>>');
-        }
-
-        console.log('loanDetailsloanDetails>>>>>>>>>>', data);
+            if (data.personalInfo.gender) {
+                data.personalInfo.gender = data.personalInfo.gender.charAt(0).toUpperCase() + data.personalInfo.gender.substr(1).toLowerCase();
+            }
+            if (data.personalInfo.nationality) {
+                data.personalInfo.nationality = data.personalInfo.nationality.charAt(0).toUpperCase() + data.personalInfo.nationality.substr(1).toLowerCase();
+            }
+            if (data.contactInfo.currentAddress.homeOwnership) {
+                data.contactInfo.currentAddress.homeOwnership = data.contactInfo.currentAddress.homeOwnership.charAt(0).toUpperCase() + data.contactInfo.currentAddress.homeOwnership.substr(1).toLowerCase();
+            }
+            if (data.personalInfo.civilStatus) {
+                data.personalInfo.civilStatus = data.personalInfo.civilStatus.charAt(0).toUpperCase() + data.personalInfo.civilStatus.substr(1).toLowerCase();
+            }
 
 
-        if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
-            const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
-            console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
-            if (config.get['environment'] === 'production') {
+
+            if (data.employmentInfo.coBorrowerInfo.employmentRank) {
+                console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>22222222222222', data.employmentInfo.coBorrowerInfo.employmentRank);
+                data.employmentInfo.employmentRank = Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;
+            }
+
+            if (data.employmentInfo.coBorrowerInfo.employmentType) {
+                console.log('1>>>>>>>>>>>>>>>>');
+                data.employmentInfo.coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[data.employmentInfo.type].label;
+            }
+
+            if (data.employmentInfo.rank) {
+                data.employmentInfo.rank = Constant.EMPLOYMENT_RANK[data.employmentInfo.rank].label;
+            }
+
+            if (data.employmentInfo.type) {
+                data.employmentInfo.type = Constant.EMPLOYMENT_TYPE[data.employmentInfo.type].label;
+
+            }
+
+
+            if (data.employmentInfo.coBorrowerInfo.companyIndustry) {
+                console.log('33333333333333333333333333333333333333333333');
+                data.employmentInfo.coBorrowerInfo.companyIndustry = Constant.INDUSTRIES[data.employmentInfo.coBorrowerInfo.companyIndustry].label;
+            }
+
+            if (data.propertyInfo.type) {
+                data.propertyInfo.type = Constant.LOAN_PROPERTY_TYPES[data.propertyInfo.type].label;
+                console.log('>44444444444444444444444444444444444444444');
+            }
+            // if (data.propertyInfo.status) {
+            //     data.propertyInfo.status = Constant.LOAN_PROPERTY_STATUS[data.propertyInfo.status].label;
+            //     console.log('55555555555555555555555555555555555555555555555555555555555555');
+
+            // }
+
+            if (data.employmentInfo.companyIndustry) {
+                data.employmentInfo.companyIndustry = Constant.INDUSTRIES[data.employmentInfo.companyIndustry].label;
+                console.log('5555555555555555555666666666666666666666666666666666666666666666666666666666666');
+
+            }
+            // coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[coBorrowerInfo.employmentType].label;
+
+            // if (data.propertyInfo.type) {
+            //     console.log('>>>>>>>>>>>>>>>>>>>LLLLLLLLLLLLLLL777777777777777777777');
+            //     data.propertyInfo.type = Constant.LOAN_PROPERTY_TYPES[data.propertyInfo.type].label;
+            //     console.log('>>>>>>>>>>>>>>>>>>>LLLLLLLLLLLLLLL777777777777777777777>>>>>>>>>>>>');
+
+            // }
+            if (data.propertyInfo.status) {
+                console.log('>>>>>>>>>>*888888888888888888888888888888888888888888888888888888888888888');
+                data.propertyInfo.status = Constant.LOAN_PROPERTY_STATUS[data.propertyInfo.status].label;
+                console.log('>>>>>>>>>>*888888888888888888888888888888888888888888888888888888888888888>>>>>>>');
+            }
+
+            if (data.loanDetails.loanType) {
+                console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999');
+                data.loanDetails.loanType = Constant.LOAN_TYPES[data.loanDetails.loanType].label;
+                console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999>>>>>>>>>>>>>>>');
+            }
+
+            console.log('loanDetailsloanDetails>>>>>>>>>>', data);
+
+
+            if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
+                const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
+                console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'));
+                console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
 
                 await fetch(config.get('zapier_loanUrl'), {
                     method: 'post',
                     body: JSON.stringify(salesforceData),
                 });
+
                 console.log(config.get('zapier_loanUrl'), salesforceData);
+
             }
+        } catch (error) {
+            console.log('eorrrrrrrrrrrrrrrrrrrrrrrrr', error);
+            return Promise.reject(error);
+            // return (UniversalFunctions.sendError(error));
+            // console.log('errorerrorerrorerrorerror', error);
+            // return Promise.reject(error);
         }
     }
 }
