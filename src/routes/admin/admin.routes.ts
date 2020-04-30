@@ -36,7 +36,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					email: Joi.string().email().lowercase().trim().required(),
-					password: Joi.string().min(6).max(16).trim().required(),
+					password: Joi.string().min(6).max(20).trim().required(),
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
