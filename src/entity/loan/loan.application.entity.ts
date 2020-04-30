@@ -253,12 +253,14 @@ class LoanApplicationE extends BaseEntity {
 
             if (data.employmentInfo.coBorrowerInfo.employmentRank) {
                 console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>22222222222222', data.employmentInfo.coBorrowerInfo.employmentRank);
-                data.employmentInfo.employmentRank = Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;
+                console.log(' Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;', Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label);
+
+                data.employmentInfo.coBorrowerInfo.employmentRank = Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;
             }
 
             if (data.employmentInfo.coBorrowerInfo.employmentType) {
                 console.log('1>>>>>>>>>>>>>>>>');
-                data.employmentInfo.coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[data.employmentInfo.coBorrowerInfo.type].label;
+                data.employmentInfo.coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[data.employmentInfo.coBorrowerInfo.employmentType].label;
             }
 
             if (data.employmentInfo.rank) {
