@@ -32,6 +32,7 @@ const options = {
 	console: {
 		level: 'debug',
 		handleExceptions: true,
+
 		format: format.combine(
 			format.colorize(),
 			format.simple()),

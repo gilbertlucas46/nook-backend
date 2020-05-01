@@ -7,6 +7,7 @@ import * as config from 'config';
 import fetch from 'node-fetch';
 import { flattenObject } from '@src/utils';
 import { label } from 'joi';
+import * as UniversalFunctions from '@src/utils';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {

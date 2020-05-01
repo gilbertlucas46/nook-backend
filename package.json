@@ -2,7 +2,7 @@
   "name": "nook",
   "version": "v1.0.0",
   "description": "Nook-APP",
-  "main": "index.js",
+"main": "index.js",
   "author": "shubham Maheshwari",
   "license": "ISC",
   "scripts": {
