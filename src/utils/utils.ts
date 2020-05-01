@@ -15,29 +15,36 @@ export let sendError = (data: any) => {
 		data.hasOwnProperty('statusCode') &&
 		(data.hasOwnProperty('message') || data.hasOwnProperty('customMessage'))
 	) {
+		console.log('dataaaaaaaaaaaaa', data);
 		let errorToSend: Boom;
 		const error = new Error(data.message);
 		errorToSend = Boom.boomify(error, { statusCode: data.statusCode });
 		(errorToSend.output.payload as any).responseType = data.type;
+		logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`);
 		return errorToSend;
 	} else {
+		console.log('dataaaaaaaaaaaaaaaaaaaaaaaa1322222222222222222', data);
+
 		let errorToSend = '';
 		if (typeof data === 'object') {
-			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
-			logger.log('DB_ERROR', `message - ${data.message}, time-${new Date().toISOString()}`);
+			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>22222233333333LLLLLLLLLLLL', data);
+
+			// logger.log('DB_ERROR', `message - ${data.message}, time-${new Date().toISOString()}`);
 			if (data.name === 'MongoError') {
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + CONSTANT.STATUS_MSG.ERROR.ENQUIRY_ALREADY_SENT;
 				//logger for mongoerror (error in query)
 				logger.log('DB_ERROR', `message - ${data.message}, time-${new Date().toISOString()}`);
 			} else if (data.name === 'ApplicationError') {
+				console.log('ApplicationErrorApplicationError', data);
 				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`);
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.APP_ERROR.message + ' : ';
 			} else if (data.name === 'ValidationError') {
+				console.log('ValidationErrorValidationError', data);
 				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`);
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.VALIDATION_ERROR.message + data.message;
 			} else if (data.name === 'CastError') {
 				// logger for cast error (id not valid)
-				console.log('?????????????????????????????????????????????????????????????????????????????????');
+				console.log('CastErrorCastErrorCastErrorCastError', data)
 				logger.log('info', `message - ${data.message}, time-${new Date().toISOString()}`)
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + CONSTANT.STATUS_MSG.ERROR.E400.INVALID_ID.message + data.value;
 			}
@@ -46,11 +53,19 @@ export let sendError = (data: any) => {
 
 				errorToSend += CONSTANT.STATUS_MSG.ERROR.E400.DB_ERROR.message + data.message + data.message;
 			}
+			else {
+				console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+				logger.log('info', `message - ${data}, time-${new Date().toISOString()}`);
+
+			}
 			// else if (data.hasOwnProperty('TokenExpiredError')) {
 			// 	console.log('22222222222222222222222233333333333333333>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+			console.log('else consolelelleleleeeeeeeeeeee');
 
 			// }
 		} else {
+			console.log(444444444444444444444444444444444444444444444444444);
+
 			logger.log('info', `message - ${data}, time-${new Date().toISOString()}`);
 			errorToSend = data;
 		}
@@ -64,6 +79,7 @@ export let sendError = (data: any) => {
 			customErrorMessage = customErrorMessage && customErrorMessage.replace(']', '');
 			logger.log('DB_ERROR', `message - ${data.message}, time-${new Date().toISOString()}`);
 		}
+		console.log('customErrorMessagecustomErrorMessagecustomErrorMessage', customErrorMessage);
 		throw Boom.badRequest(customErrorMessage);
 	}
 };
