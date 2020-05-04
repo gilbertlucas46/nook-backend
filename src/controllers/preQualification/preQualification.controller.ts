@@ -14,10 +14,7 @@ class PreqQualificationController extends BaseEntity {
 
     async addPreQualifiedBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
         try {
-
-            // const savePrQualification = await ENTITY.PreQualificationBankE.createMulti(dataToSave);
             const data = await ENTITY.PreQualificationBankE.addBanks(payload, userData);
-            // console.log('savePrQualificationsavePrQualificationsavePrQualification', savePrQualification);
             return {};
         } catch (error) {
             return Promise.reject(error);
@@ -56,7 +53,6 @@ class PreqQualificationController extends BaseEntity {
                 userId: userData._id,
             };
             const data = await PreQualificationBankE.getOneEntity(criteria, {});
-            console.log('datadatadatadatadatadatadatadatadata', data);
             return data;
         } catch (error) {
             return Promise.reject(error);
