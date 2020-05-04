@@ -266,5 +266,13 @@ class LoanControllers extends BaseEntity {
         }
     }
 
+
+    async adminAddPrequalification(payload) {
+        try {
+            return await ENTITY.LoanEntity.preloan(payload, {})
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 export const LoanController = new LoanControllers();
