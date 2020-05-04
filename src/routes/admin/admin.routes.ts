@@ -1,4 +1,4 @@
-import { ServerRoute } from 'hapi'; Constant
+import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
