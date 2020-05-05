@@ -5,6 +5,8 @@ import { NATIONALITY } from '@src/constants';
 import { Types } from 'mongoose';
 import * as utils from '@src/utils';
 import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
+import fetch from 'node-fetch';
+import * as config from 'config';
 
 class PreLoanEntities extends BaseEntity {
     constructor() {
@@ -299,6 +301,17 @@ class PreLoanEntities extends BaseEntity {
 
                 const a = this.DAOManager.insert(this.modelName, dataToSave);
                 console.log('daaaaaaaaaaaaaaaaaaaa', a);
+
+                const salesforceDate = utils.flattenObject(a);
+                console.log('salesforceDatra>>>>>>>>>>>>>>>>', salesforceDate);
+
+                fetch(config.get('zapier'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceDate),
+                })
+                    .then(res => res.json())
+                    .then(json => console.log(json));
+
             }
             return data;
         } catch (error) {
