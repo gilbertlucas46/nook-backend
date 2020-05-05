@@ -315,6 +315,11 @@ export class UserController {
 				};
 				const formatedData = await ENTITY.UserE.createOneEntity(userData);
 
+
+				// const doc = await this.DAOManager.findAndUpdate(this.modelName, {
+				// 	_id: new Types.ObjectId(id),
+				// }, data, { new: true });
+				console.log('docdocdocdocdocdocdocdocdocdocdocdocdocdoc', formatedData);
 				const salesforceData = flattenObject(formatedData.toObject ? formatedData.toObject() : formatedData);
 				console.log('salesforceDatasalesforceData', salesforceData);
 				const request = {
