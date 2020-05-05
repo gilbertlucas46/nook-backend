@@ -299,7 +299,7 @@ class PreLoanEntities extends BaseEntity {
                     updatedAt: new Date().getTime(),
                 };
 
-                const a = this.DAOManager.insert(this.modelName, dataToSave);
+                const a = await this.DAOManager.insert(this.modelName, dataToSave);
                 console.log('daaaaaaaaaaaaaaaaaaaa', a);
 
                 const salesforceDate = utils.flattenObject(a);
