@@ -304,13 +304,13 @@ class PreLoanEntities extends BaseEntity {
 
                 const salesforceDate = utils.flattenObject(a);
                 console.log('salesforceDatra>>>>>>>>>>>>>>>>', salesforceDate);
-                if (config.get['environment'] === 'production') {
-                    fetch(config.get('zapier_prequalificationUrl'), {
-                        method: 'post',
-                        body: JSON.stringify(salesforceDate),
-                    })
 
-                }
+                fetch(config.get('zapier_prequalificationUrl'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceDate),
+                })
+
+
 
             }
             return data;
