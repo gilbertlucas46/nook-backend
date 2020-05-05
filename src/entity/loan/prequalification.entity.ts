@@ -3,7 +3,7 @@ import { LoanRequest } from './../../interfaces/loan.interface';
 import * as Constant from '@src/constants';
 import { NATIONALITY } from '@src/constants';
 import { Types } from 'mongoose';
-import * as utils from '@src/utils';
+import { flattenObject } from '@src/utils';
 import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
 import fetch from 'node-fetch';
 import * as config from 'config';
@@ -299,16 +299,22 @@ class PreLoanEntities extends BaseEntity {
                     updatedAt: new Date().getTime(),
                 };
 
-                const a = await this.DAOManager.insert(this.modelName, dataToSave);
-                console.log('daaaaaaaaaaaaaaaaaaaa', a);
+                const data1 = await this.DAOManager.insert(this.modelName, dataToSave);
+                console.log('daaaaaaaaaaaaaaaaaaaa', data1);
 
-                const salesforceDate = utils.flattenObject(a);
-                console.log('salesforceDatra>>>>>>>>>>>>>>>>', salesforceDate);
+                // const salesforceDate = utils.flattenObject(a);
+                // console.log('salesforceDatra>>>>>>>>>>>>>>>>', salesforceDate);
+
+
+                const salesforceData: { [key: string]: string | number } = flattenObject(data1.toObject ? data1.toObject() : data1);
+                console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
+                console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
+
 
                 fetch(config.get('zapier_prequalificationUrl'), {
                     method: 'post',
-                    body: JSON.stringify(salesforceDate),
-                })
+                    body: JSON.stringify(salesforceData),
+                });
 
 
 
@@ -323,7 +329,6 @@ class PreLoanEntities extends BaseEntity {
             const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { sort: { _id: - 1 }, limit: 1 });
             return data[0];
         } catch (error) {
-            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -462,7 +467,6 @@ class PreLoanEntities extends BaseEntity {
             console.log('datadatadatadatadatadatadata', data);
             return data;
         } catch (error) {
-            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
