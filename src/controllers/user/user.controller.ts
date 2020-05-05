@@ -9,7 +9,6 @@ import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { flattenObject } from '@src/utils';
 import fetch from 'node-fetch';
-import { Types } from 'mongoose';
 const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 
 export class UserController {
@@ -32,28 +31,7 @@ export class UserController {
 				if (UserCheck && UserCheck._id) {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
 				} else {
-					// const makePassword = await utils.encryptWordpressHashNode(payload.password);
-					// const userData = {
-					// 	userName: payload.userName.trim().toLowerCase(),
-					// 	email: payload.email.trim().toLowerCase(),
-					// 	password: makePassword,
-					// 	isEmailVerified: true,
-					// 	isProfileComplete: false,
-					// 	type: payload.type,
-					// };
-					// const User: UserRequest.Register = await ENTITY.UserE.createOneEntity(userData);
-
-					// const userResponse = UniversalFunctions.formatUserData(User);
-					// const mail = new MailManager();
-					// const sendObj = {
-					// 	receiverEmail: payload.email,
-					// 	subject: 'nook welcomes you',
-					// 	userName: payload.userName,
-					// };
-					// const token = ENTITY.UserE.createRegisterToken(User._id);
-					// mail.welcomeMail(sendObj);
 					return;
-					// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 				}
 			}
 		} catch (error) {
@@ -91,31 +69,13 @@ export class UserController {
 				if (!(await utils.decryptWordpressHashNode(payload.password, userData.password))) {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
 				}
-				// if (!userData.isProfileComplete) {
-				// 	console.log('22222222222222222222222222222222222');
-				// 	// const accessToken = await ENTITY.UserE.createToken(payload, userData);
-				// 	const formatedData = utils.formatUserData(userData);
-				// 	const incompleteToken = ENTITY.UserE.createRegisterToken(userData._id);
-				// 	await ENTITY.SessionE.createSession(payload, userData, incompleteToken, 'user');
-				// 	// mail.welcomeMail(sendObj);
-				// 	return { formatedData, incompleteToken };
-				// }
 				else {
 					console.log('333333333333333333333333333333333333333333');
 					const accessToken = await ENTITY.UserE.createToken(payload, userData);
-					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'User');
+					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'Tenant');
 					const formatedData = utils.formatUserData(userData);
 					return { formatedData, accessToken };
 				}
-				// }
-				//  else {
-				// 	console.log(444444444444444444444444444444444444);
-
-				// 	const accessToken = await ENTITY.UserE.createToken(payload, userData);
-				// 	await ENTITY.SessionE.createSession(payload, userData, accessToken, 'user');
-				// 	const formatedData = utils.formatUserData(userData);
-				// 	return { formatedData, accessToken };
-				// }
 			} else {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_LOGIN);
 			}
@@ -169,34 +129,6 @@ export class UserController {
 			return Promise.reject(error);
 		}
 	}
-	/**
-	 * @function getProfile
-	 * @description function to get user profile
-	 * @payload  UserData
-	 * return object
-	 */
-	// async getProfile(payload: UserRequest.UserData) {
-	// 	try {
-	// 		if (
-	// 			payload.type === Constant.DATABASE.USER_TYPE.AGENT.TYPE ||
-	// 			payload.type === Constant.DATABASE.USER_TYPE.OWNER.TYPE
-	// 		) {
-	// 			const step1 = await ENTITY.SubscriptionE.getAllHomepageSubscritions({ userId: payload._id });
-	// 			if (step1.length) {
-	// 				payload.isHomePageFeatured = true;
-	// 				payload.subscriptionexpirarionTime = step1[0].endDate;
-	// 			} else {
-	// 				payload.isHomePageFeatured = false;
-	// 			}
-	// 		} else {
-	// 			payload.isHomePageFeatured = false;
-	// 		}
-	// 		return payload;
-	// 	} catch (error) {
-	// 		utils.consolelog('error', error, true);
-	// 		return Promise.reject(error);
-	// 	}
-	// }
 	/**
 	 * @function forgetPassword
 	 * @description function to send the email on the registered emailId
@@ -383,16 +315,26 @@ export class UserController {
 				};
 				const formatedData = await ENTITY.UserE.createOneEntity(userData);
 
-				// SessionE.createSession({}, doc, accessToken, 'user');
+				const salesforceData = flattenObject(formatedData.toObject ? formatedData.toObject() : formatedData);
+				console.log('salesforceDatasalesforceData', salesforceData);
+				const request = {
+					method: 'post',
+					body: JSON.stringify(salesforceData),
+				};
 
+				// SessionE.createSession({}, doc, accessToken, 'user');
 				// const formatedData = utils.formatUserData(doc);
+
 				// 	receiverEmail: payload.email,
 				// 	subject: 'nook welcomes you',
 				// 	userName: payload.userName,
 				// };
-				const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
-				ENTITY.SessionE.createSession({}, formatedData, accessToken, 'User');
+				await fetch(config.get('zapier_personUrl'), request);
+				await fetch(config.get('zapier_accountUrl'), request);
 
+
+				const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
+				ENTITY.SessionE.createSession({}, formatedData, accessToken, 'Tenant');
 				// mail.welcomeMail(sendObj);
 				return { formatedData, accessToken };
 				// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
