@@ -49,6 +49,8 @@ export let preloanRoute: ServerRoute[] = [
               LOAN_PROPERTY_STATUS.PRE_SELLING.value,
               LOAN_PROPERTY_STATUS.READY_FOR_OCCUPANCY.value,
               LOAN_PROPERTY_STATUS.RESELLING.value,
+              LOAN_PROPERTY_STATUS.RENOVATION.value,
+              LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
             ]).required(),
             developer: Joi.string(),
           }),
