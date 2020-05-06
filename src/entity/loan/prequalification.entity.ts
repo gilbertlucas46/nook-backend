@@ -16,7 +16,6 @@ class PreLoanEntities extends BaseEntity {
     async addBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
         try {
             console.log('payload>>>>>>>>>>>>>>>', payload);
-
             let totalMonthlyIncome = payload.work.income;
             let preLoanMonthlyAmount = 0;
             if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome; // If married need to add spouse income also to calculate debtToIncomeRatio
@@ -304,7 +303,11 @@ class PreLoanEntities extends BaseEntity {
 
                 // const salesforceDate = utils.flattenObject(a);
                 // console.log('salesforceDatra>>>>>>>>>>>>>>>>', salesforceDate);
-
+                data1.employmentInfo = {};
+                data1.employmentInfo = data1.work;
+                data1.employmentInfo.grossMonthlyIncome = data1.work.income;
+                console.log('data11111111111111111111111111111', data1);
+                delete data1['work'];
 
                 const salesforceData: { [key: string]: string | number } = flattenObject(data1.toObject ? data1.toObject() : data1);
                 console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));

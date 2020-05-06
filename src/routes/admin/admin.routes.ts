@@ -790,7 +790,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							LoanConstant.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
 							LoanConstant.LOAN_TYPES.REFINANCING_LOAN.value,
 							LoanConstant.LOAN_TYPES.RENOVATION.value,
-							LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
+							// LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
 						]),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
