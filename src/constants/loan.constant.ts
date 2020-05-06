@@ -107,10 +107,10 @@ export const LOAN_PROPERTY_STATUS = {
         label: 'Renovation',
         value: 'RENOVATION',
     },
-    // NEW_CONSTRUCTION: {
-    //     label: 'New Construction',
-    //     value: 'NEW_CONSTRUCTION',
-    // }
+    NEW_CONSTRUCTION: {
+        label: 'New Construction',
+        value: 'NEW_CONSTRUCTION',
+    }
 };
 
 export const EMPLOYMENT_TYPE = {

@@ -21,7 +21,7 @@ export class ArticleClass extends BaseEntity {
             let sortingType = {};
 
             sortingType = {
-                createdAt: sortType,
+                updatedAt: sortType,
                 isFeatured: sortType,
             };
 
