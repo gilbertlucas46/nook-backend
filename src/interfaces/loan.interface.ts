@@ -53,6 +53,7 @@ export namespace LoanRequest {
 
     export interface AdminAddPreLoan {
         bankId?: string;
+        preQualificationId?: string;
         property: {
             value: number;
             type: string;
