@@ -18,7 +18,7 @@ export namespace PreQualificationRequest {
             status: string;
             developer?: string;
         };
-        work: {
+        employmentInfo: {
             type: string;
             rank: string;
             tenure: string;

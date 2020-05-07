@@ -67,7 +67,8 @@ export function checkPermission(adminData, modelName) {
 
         if (!checkReponse || checkReponse === undefined) {
             return Promise.reject(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-        }
+        } else
+            return;
     } catch (error) {
         console.log('checkPermissoincheckPermissoincheckPermissoin', error);
         return UniversalFunctions.sendError(error);

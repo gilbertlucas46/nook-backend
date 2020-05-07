@@ -12,6 +12,14 @@ class PreqQualificationController extends BaseEntity {
      * return
      */
 
+    /**
+     * @description A function to handle admin login requests
+     * @param {App.Request} req App request object
+     * @param {App.Response} res App response object
+     * @param {NextFunction} res A callback function to call next handler
+     */
+
+
     async addPreQualifiedBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
         try {
             const data = await ENTITY.PreQualificationBankE.addBanks(payload, userData);
@@ -24,7 +32,7 @@ class PreqQualificationController extends BaseEntity {
 
 
     /**
-     *
+     *  @description admin get prequalification List
      */
     async preQualificationList(payload, adminData) {
         try {

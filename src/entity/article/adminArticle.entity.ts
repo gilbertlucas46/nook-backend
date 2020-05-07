@@ -8,22 +8,19 @@ export class CategoryClass extends BaseEntity {
     constructor() {
         super('ArticleCategories');
     }
-
+    /**
+     * @description making unique name and removing special charcter from the title 
+     * @param payload title 
+     */
     async addArticleName(payload: ArticleRequest.AddCategoriesName) {
         try {
-            // const { name } = payload;
             const checkContainQmark = payload.title.includes('?');
             console.log('3333333333333333333333333333333');
-            // console.log('nmae22222222222', name2);
             payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
             console.log('payload.titlepayload.titlepayload.title', payload.title);
 
-            // if (checkContainQmark) {
-            //     payload.title = payload.title.concat(' ?');
-            // }
             const criteria = {
                 name: payload.name,
-                // name: payload.name,
             };
             const checkName = await this.DAOManager.findOne(this.modelName, criteria, {});
             console.log('checkNamecheckNamecheckName', checkName);

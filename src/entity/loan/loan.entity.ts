@@ -247,7 +247,7 @@ class LoanEntities extends BaseEntity {
      * @param adminDate
      */
 
-    async adminAddpreloan(payload: LoanRequest.AdminAddPreLoan, userData) {
+    async adminAddpreloanbanks(payload: LoanRequest.AdminAddPreLoan, userData) {
         console.log('payload>>>>>>>>>>>>>>>', payload);
         let totalMonthlyIncome = payload.employmentInfo.income;
         let preLoanMonthlyAmount = 0;
