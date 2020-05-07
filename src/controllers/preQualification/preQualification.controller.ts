@@ -13,9 +13,7 @@ class PreqQualificationController extends BaseEntity {
      */
 
     /**
-     * @description A function to handle admin login requests
-     * @param {App.Request} req App request object
-     * @param {App.Response} res App response object
+     * @description A function to add the user prequalification list
      * @param {NextFunction} res A callback function to call next handler
      */
 

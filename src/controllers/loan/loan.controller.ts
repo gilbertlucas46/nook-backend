@@ -269,7 +269,7 @@ class LoanControllers extends BaseEntity {
 
     async adminAddPrequalification(payload, adminData) {
         try {
-            return await ENTITY.LoanEntity.adminAddpreloanbanks(payload, adminData);
+            return await ENTITY.PreQualificationBankE.addBanks(payload, adminData);
         } catch (error) {
             return Promise.reject(error);
         }
