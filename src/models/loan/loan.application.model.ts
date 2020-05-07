@@ -153,7 +153,7 @@ const schema = new Schema({
                 CONSTANT.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
                 CONSTANT.LOAN_TYPES.REFINANCING_LOAN.value,
                 CONSTANT.LOAN_TYPES.RENOVATION.value,
-                CONSTANT.LOAN_TYPES.NEW_CONSTRUCTION.value,
+                // CONSTANT.LOAN_TYPES.NEW_CONSTRUCTION.value,
             ],
         },
         loanPercent: { type: Number },

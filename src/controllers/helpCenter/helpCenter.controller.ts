@@ -2,8 +2,6 @@ import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
 import * as utils from '@src/utils';
-import { describe } from 'joi';
-import { pipeline } from 'stream';
 import { Types } from 'mongoose';
 
 export class HelpCenter {
@@ -200,20 +198,6 @@ export class HelpCenter {
             pipeline = [
                 {
                     $facet: {
-                        // PROPERTIES: [
-                        //     {
-                        //         $match: {
-
-                        //             categoryType: 'PROPERTIES',
-                        //             $or: [
-                        //                 query,
-                        //             ],
-                        //         },
-                        //     },
-                        //     { $project: { _id: 1, title: 1, categoryId: 1 } },
-                        //     { $sort: sortingType },
-                        // ],
-
                         ACCOUNT: [{
                             $match: {
                                 categoryType: 'ACCOUNT',
@@ -225,17 +209,6 @@ export class HelpCenter {
                         { $project: { _id: 1, title: 1, categoryId: 1 } },
                         { $sort: sortingType },
                         ],
-                        // BILLING: [{
-                        //     $match: {
-                        //         categoryType: 'BILLING',
-                        //         $or: [
-                        //             query,
-                        //         ],
-                        //     },
-                        // },
-                        // { $project: { _id: 1, title: 1, categoryId: 1 } },
-                        // { $sort: sortingType },
-                        // ],
                         HOME_LOANS: [{
                             $match: {
                                 categoryType: 'HOME_LOANS',

@@ -70,11 +70,11 @@ class AdminStaffE extends BaseEntity {
                 { email: new RegExp('.*' + searchTerm + '.*', 'i') },
                 { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
                 // ],
-            ]
+            ];
         } else {
             searchCondition = {
 
-            }
+            };
         }
 
         if (fromDate || toDate) {
@@ -114,19 +114,6 @@ class AdminStaffE extends BaseEntity {
     }
 
     sendInvitationMail(payload: any, genCredentials: string) {
-        // const html = 
-        // `<html><head><title> Nook Admin | Staff Credentials</title></head>
-        //                 <body>
-        //                 Dear User,
-        //                 <br>
-        //                 You are registered as a Nook Staff member. Use your email address and password: '${genCredentials}' to login.Cheers!
-        //                 <p>Login with your email and password sent above.</p>
-        //                 <br>
-        //                 <p>regards</p>
-        //                 <br>
-        //                 <Nook Team>
-        //                 </body>
-        //                 </html>`;
 
         const sendObj = {
             receiverEmail: payload,

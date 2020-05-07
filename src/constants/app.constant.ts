@@ -197,53 +197,6 @@ export let DATABASE = {
 		},
 	},
 
-	// PROPERTY_ACTIONS: {
-	// 	DRAFT: {
-	// 		NUMBER: 1,
-	// 		TYPE: 'DRAFT',
-	// 		DISPLAY_NAME: 'Draft',
-	// 	},
-	// 	POSTED: {
-	// 		NUMBER: 2,
-	// 		TYPE: 'POSTED',
-	// 		DISPLAY_NAME: 'Posted',
-	// 	},
-	// 	APPROVED: {
-	// 		NUMBER: 3,
-	// 		TYPE: 'APPROVED',
-	// 		DISPLAY_NAME: 'Approved',
-	// 	},
-	// 	REJECTED: {
-	// 		NUMBER: 4,
-	// 		TYPE: 'REJECTED',
-	// 		DISPLAY_NAME: 'Rejected',
-	// 	},
-	// 	BLOCKED: {
-	// 		NUMBER: 5,
-	// 		TYPE: 'BLOCKED',
-	// 		DISPLAY_NAME: 'Blocked',
-	// 	},
-	// 	SOLD_RENTED: {
-	// 		NUMBER: 6,
-	// 		TYPE: 'SOLD/RENTED',
-	// 		DISPLAY_NAME: 'Sold/Rented',
-	// 	},
-	// 	EXPIRED: {
-	// 		NUMBER: 7,
-	// 		TYPE: 'EXPIRED',
-	// 		DISPLAY_NAME: 'Expired',
-	// 	},
-	// 	PENDING: {
-	// 		NUMBER: 2,
-	// 		TYPE: 'PENDING',
-	// 		DISPLAY_NAME: 'Pending',
-	// 	},
-	// 	ISFEATURED: {
-	// 		NUMBER: 8,
-	// 		TYPE: 'ISFEATURED',
-	// 		DISPLAY_NAME: 'IsFEATURED',
-	// 	},
-	// },
 
 	PERMISSION: {
 		TYPE: {
@@ -253,28 +206,11 @@ export let DATABASE = {
 			STAFF: 'staffs',
 			ARTICLE: 'articles',
 			LOAN: 'loans',
-			// PROPERTIES: 'properties',
 			Article_Category: 'article-categories',
-			// Subscriptions: 'subscriptions',
 			loanReferrals: 'loan-referrals',
 			PRE_QUALIFICATION: 'pre-qualifications',
-			// ENQUIRY: 'enquiries',
-
 		},
 	},
-
-	// PROPERTY_LABEL: {
-	// 	NONE: 'None',
-	// 	FORECLOSURE: 'Foreclosure',
-	// 	OFFICE: 'Office',
-	// 	PARKING: 'Parking',
-	// 	PRE_SELLING: 'Pre-Selling',
-	// 	READY_FOR_OCCUPANCY: 'Ready For Occupancy',
-	// 	RENT_TO_OWN: 'Rent To Own',
-	// 	RETAIL: 'Retail',
-	// 	SERVICED_OFFICE: 'Serviced Office',
-	// 	WAREHOUSE: 'Warehouse',
-	// },
 
 	ArticleCategoryStatus: {
 		ACTIVE: 'Active',
@@ -303,21 +239,6 @@ export let DATABASE = {
 			TYPE: 'FAQ',
 			DISPLAY_NAME: 'FAQ',
 		},
-		// HOME_LOANS: {
-		// 	NUMBER: 3,
-		// 	TYPE: 'HOME_LOANS',
-		// 	DISPLAY_NAME: 'Home Loans',
-		// },
-		// PROPERTIES: {
-		// 	NUMBER: 2,
-		// 	TYPE: 'PROPERTIES',
-		// 	DISPLAY_NAME: 'PROPERTIES',
-		// },
-		// BILLING: {
-		// 	NUMBER: 3,
-		// 	TYPE: 'BILLING',
-		// 	DISPLAY_NAME: 'BILLING',
-		// },
 		HOME_LOANS: {
 			NUMBER: 4,
 			TYPE: 'HOME_LOANS',
@@ -326,20 +247,6 @@ export let DATABASE = {
 
 	},
 
-	// SUBSCRIPTION_STATUS: {
-	// 	ACTIVE: 'active',
-	// 	CANCEL: 'cancel',
-	// 	EXPIRE: 'expire',
-	// 	PENDING: 'pending',
-	// },
-	// PROPERTY_TYPE: {
-	// 	'NONE': 'None',
-	// 	'APPARTMENT/CONDO': 'Apartment/Condo',
-	// 	'COMMERCIAL': 'Commercial',
-	// 	'HOUSE_LOT': 'House & Lot',
-	// 	'LAND': 'Land',
-	// 	'ROOM': 'Room',
-	// },
 
 	PRICE_LABEL: {
 		DAILY: 'daily',
@@ -360,22 +267,6 @@ export let DATABASE = {
 		SENT: 'sent',
 		RECEIVED: 'received',
 	},
-
-	// ENQUIRY_TYPE: {
-	// 	PROPERTY: 'property',
-	// 	CONTACT: 'contact',
-	// },
-
-	// ENQUIRY_STATUS: {
-	// 	PENDING: 'PENDING',
-	// 	RESOLVED: 'RESOLVED',
-	// },
-
-	// DEVICE_TYPES: {
-	// 	IOS: 'IOS',
-	// 	ANDROID: 'ANDROID',
-	// 	WEB: 'WEB',
-	// },
 
 	GENDER: {
 		MALE: 'MALE',
@@ -456,19 +347,6 @@ export let DATABASE = {
 		FORGOT: 'FORGOT',
 	},
 
-	// FEATURED_TYPE: {
-	// 	FREE: 'FREE',
-	// 	PROFILE: 'PROFILE',
-	// 	PROPERTY: 'PROPERTY',
-	// 	HOMEPAGE: 'HOMEPAGE',
-	// 	HOMEPAGE_PROFILE: 'HOMEPAGE_PROFILE',
-	// 	HOMEPAGE_PROPERTY: 'HOMEPAGE_PROPERTY',
-	// },
-
-	// BILLING_TYPE: {
-	// 	MONTHLY: 'MONTHLY',
-	// 	YEARLY: 'YEARLY',
-	// },
 	BILLING_TYPE: {
 		MONTHLY: 'month',
 		YEARLY: 'year',
@@ -643,21 +521,12 @@ export let STATUS_MSG = {
 				type: 'INVALID_ID',
 				message: 'Invalid Id Provided ',
 			},
-			// INVALID_PROPERTY_STATUS: {
-			// 	statusCode: 400,
-			// 	type: 'INVALID_PROPERTY_STATUS',
-			// 	message: 'Invalid Property Status ',
-			// },
 			INVALID__STATUS: {
 				statusCode: 400,
 				type: 'INVALID__STATUS',
 				message: 'Invalid Status ',
 			},
-			// PROPERTY_SOLD: {
-			// 	statusCode: 400,
-			// 	type: 'PROPERTY_SOLD',
-			// 	message: 'OOPs Property Sold ',
-			// },
+
 			APP_ERROR: {
 				statusCode: 400,
 				type: 'APP_ERROR',
@@ -952,18 +821,6 @@ export let STATUS_MSG = {
 			message: 'Reset otp sent to registered phone number.',
 		},
 	},
-	// S304: {
-	// 	GROUP_ALLREADY_EXISTS: {
-	// 		statusCode: 304,
-	// 		type: 'GROUP_ALLREADY_EXISTS',
-	// 		message: 'Similar unused group exists.',
-	// 	},
-	// 	REQUEST_EXISTS: {
-	// 		statusCode: 304,
-	// 		message: 'Friend request already Exists',
-	// 		type: 'REQUEST_EXISTS',
-	// 	},
-	// },
 };
 
 export let SERVER = {

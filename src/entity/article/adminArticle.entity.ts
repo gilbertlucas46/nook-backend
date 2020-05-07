@@ -14,16 +14,6 @@ export class CategoryClass extends BaseEntity {
             // const { name } = payload;
             const checkContainQmark = payload.title.includes('?');
             console.log('3333333333333333333333333333333');
-            let name1;
-            // let name1 = urlSlug(name,
-            //     // {
-            //     '-',
-            //     false,
-            //     // transformer: urlSlug.transformers.uppercase,
-            //     // }
-            // );
-
-            console.log('nameeeeeeeee', name1);
             // console.log('nmae22222222222', name2);
             payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
             console.log('payload.titlepayload.titlepayload.title', payload.title);
@@ -151,11 +141,6 @@ export class CategoryClass extends BaseEntity {
 
                     return data;
                 }
-                //     '-',
-                //     urlSlug.transformers.titlecase) ===payload.)
-                // console.log('dartaaaaaaaaaaa', data);
-                // return data;
-
             } else if (payload.status) {
                 const statusData = await this.DAOManager.findAndUpdate(this.modelName, criteria, { status: payload.status });
                 this.DAOManager.updateMany('Article', articleStatusCriteria, { status: payload.status }, {});

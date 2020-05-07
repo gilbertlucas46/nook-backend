@@ -2,7 +2,6 @@ import * as ENTITY from '../../entity';
 import * as Constant from '@src/constants/app.constant';
 import * as utils from '../../utils/index';
 import * as UniversalFunctions from '@src/utils';
-import * as config from 'config';
 import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { AdminUserEntity } from '@src/entity';
@@ -128,13 +127,6 @@ class AdminUserControllers {
             };
             const dataToSet: any = {};
             const data = await ENTITY.UserE.updateOneEntity(criteria, dataToUpdate);
-            // if (payload.status === Constant.DATABASE.STATUS.USER.ACTIVE) {
-            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.ACTIVE.NUMBER);
-            // } else if (payload.status === Constant.DATABASE.STATUS.USER.BLOCKED || payload.status === Constant.DATABASE.STATUS.USER.DELETE) {
-            //     result = this.getTypeAndDisplayName(Constant.DATABASE.PROPERTY_STATUS, Constant.DATABASE.PROPERTY_STATUS.DECLINED.NUMBER);
-            // } else {
-            //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PROPERTY_STATUS);
-            // }
 
             dataToSet.$set = {
                 isUserBlockedByAdmin: payload.status !== payload.status['ACTIVE'],
