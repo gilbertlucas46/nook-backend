@@ -363,7 +363,10 @@ export class ArticleClass extends BaseEntity {
                 sortType = -1,
                 limit = Constant.SERVER.LIMIT,
             } = payload;
-            const sortingType = { createdAt: sortType };
+            const sortingType = {
+                isFeatured: sortType,
+                createdAt: sortType,
+            };
 
             if (type) {
                 const criteria = {
@@ -380,7 +383,7 @@ export class ArticleClass extends BaseEntity {
                 categoryId: Types.ObjectId(categoryId),
                 status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
             };
-            sortingType['isFeatured'] = sortType;
+            // sortingType['isFeatured'] = sortType;
             if (searchTerm) {
                 $match = {
                     $and: [
