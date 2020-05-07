@@ -2,7 +2,6 @@ import { ArticleRequest } from '@src/interfaces/article.interface';
 import * as Constant from '../../constants';
 import * as ENTITY from '../../entity';
 import * as utils from '@src/utils';
-import { Types } from 'mongoose';
 
 class ArticleController {
     getTypeAndDisplayName(findObj, num: number) {
@@ -30,13 +29,9 @@ class ArticleController {
 
     async createArticle(payload: ArticleRequest.CreateArticle, userData) {
         try {
-            // const result = this.getTypeAndDisplayName(Constant.DATABASE.ARTICLE_TYPE, payload.categoryId);
-            // payload.categoryType = result['TYPE'];
             payload.userId = userData._id;
             payload.userRole = userData.type;
             payload.addedBy = userData.type;
-
-
 
             const removeSpecialCharacter = payload.title.replace(/[^\w\s]/gi, '').trim();
 

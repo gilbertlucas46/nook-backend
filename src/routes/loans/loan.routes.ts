@@ -27,6 +27,7 @@ export let loanRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
+					prequialificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
@@ -169,7 +170,7 @@ export let loanRoute: ServerRoute[] = [
 							LoanConstant.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
 							LoanConstant.LOAN_TYPES.REFINANCING_LOAN.value,
 							LoanConstant.LOAN_TYPES.RENOVATION.value,
-							LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
+							// LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
 
 						]),
 						loanPercent: Joi.number(),
@@ -589,7 +590,7 @@ export let loanRoute: ServerRoute[] = [
 							LoanConstant.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
 							LoanConstant.LOAN_TYPES.REFINANCING_LOAN.value,
 							LoanConstant.LOAN_TYPES.RENOVATION.value,
-							LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
+							// LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
 						]),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),

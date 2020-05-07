@@ -3,8 +3,10 @@ import { LoanRequest } from './../../interfaces/loan.interface';
 import * as Constant from '@src/constants';
 import { NATIONALITY } from '@src/constants';
 import { Types } from 'mongoose';
-import * as utils from '@src/utils';
+import { flattenObject } from '@src/utils';
 import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
+import fetch from 'node-fetch';
+import * as config from 'config';
 
 class PreLoanEntities extends BaseEntity {
     constructor() {
@@ -14,7 +16,6 @@ class PreLoanEntities extends BaseEntity {
     async addBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
         try {
             console.log('payload>>>>>>>>>>>>>>>', payload);
-
             let totalMonthlyIncome = payload.work.income;
             let preLoanMonthlyAmount = 0;
             if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome; // If married need to add spouse income also to calculate debtToIncomeRatio
@@ -297,8 +298,27 @@ class PreLoanEntities extends BaseEntity {
                     updatedAt: new Date().getTime(),
                 };
 
-                const a = this.DAOManager.insert(this.modelName, dataToSave);
-                console.log('daaaaaaaaaaaaaaaaaaaa', a);
+                let data1 = await this.DAOManager.insert(this.modelName, dataToSave);
+                console.log('data1.work: ', data1.work);
+
+                data1 = data1.toObject();
+                data1['employmentInfo'] = data1.work;
+                // data1.employmentInfo.grossMonthlyIncome = data1.work.income;
+                delete data1['work'];
+                console.log('data2:', data1);
+
+                const salesforceData: { [key: string]: string | number } = flattenObject(data1.toObject ? data1.toObject() : data1);
+                console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
+                console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
+
+
+                fetch(config.get('zapier_prequalificationUrl'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceData),
+                });
+
+
+
             }
             return data;
         } catch (error) {
@@ -310,7 +330,6 @@ class PreLoanEntities extends BaseEntity {
             const data = await this.DAOManager.findAll(this.modelName, criteria, {}, { sort: { _id: - 1 }, limit: 1 });
             return data[0];
         } catch (error) {
-            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }
@@ -449,7 +468,6 @@ class PreLoanEntities extends BaseEntity {
             console.log('datadatadatadatadatadatadata', data);
             return data;
         } catch (error) {
-            utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
     }

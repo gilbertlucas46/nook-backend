@@ -4,7 +4,6 @@ export { AdminService } from './admin/admin.controller';
 export { AdminStaffController } from './admin/admin.staff.controller';
 export { ArticleService } from './article/article.controller';
 export { CityService } from './city/city.controller';
-// export { AgentService } from './agent/agent.controller';
 export { LoanController } from './loan/loan.controller';
 export { AdminUserController } from './admin/admin.user.controller';
 export { CategoryService } from './article/articleCategories.controller';

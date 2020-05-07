@@ -19,10 +19,10 @@ export const LOAN_TYPES = {
         label: 'Loan Take-out',
         value: 'LOAN_TAKE_OUT',
     },
-    NEW_CONSTRUCTION: {
-        label: 'New Construction',
-        value: 'NEW_CONSTRUCTION',
-    },
+    // NEW_CONSTRUCTION: {
+    //     label: 'New Construction',
+    //     value: 'NEW_CONSTRUCTION',
+    // },
     REFINANCING_LOAN: {
         label: 'Refinancing Loan',
         value: 'REFINANCING_LOAN',
@@ -107,10 +107,10 @@ export const LOAN_PROPERTY_STATUS = {
         label: 'Renovation',
         value: 'RENOVATION',
     },
-    // NEW_CONSTRUCTION: {
-    //     label: 'New Construction',
-    //     value: 'NEW_CONSTRUCTION',
-    // }
+    NEW_CONSTRUCTION: {
+        label: 'New Construction',
+        value: 'NEW_CONSTRUCTION',
+    }
 };
 
 export const EMPLOYMENT_TYPE = {

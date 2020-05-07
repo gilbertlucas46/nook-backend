@@ -790,7 +790,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							LoanConstant.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
 							LoanConstant.LOAN_TYPES.REFINANCING_LOAN.value,
 							LoanConstant.LOAN_TYPES.RENOVATION.value,
-							LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
+							// LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
 						]),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
@@ -1006,7 +1006,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						developer: Joi.string(),
 					}),
 
-					work: Joi.object().keys({
+					employmentInfo: Joi.object().keys({
 						type: Joi.string().valid([
 							LoanConstant.EMPLOYMENT_TYPE.BPO.value,
 							LoanConstant.EMPLOYMENT_TYPE.GOVT.value,
