@@ -81,7 +81,7 @@ export let preQualificationroutes: ServerRoute[] = [
                         developer: Joi.string(),
                     }),
 
-                    work: Joi.object().keys({
+                    employmentInfo: Joi.object().keys({
                         type: Joi.string().valid([
                             EMPLOYMENT_TYPE.BPO.value,
                             EMPLOYMENT_TYPE.GOVT.value,

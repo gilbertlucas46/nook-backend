@@ -238,17 +238,14 @@ export let subAdminRoutes: ServerRoute[] = [
 					limit: Joi.number(),
 					sortBy: Joi.string().allow('updatedAt'),
 					permissionType: Joi.string().valid([
-						// CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
-						// CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTIES,
+						CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
 						CONSTANT.DATABASE.PERMISSION.TYPE.LOAN,
 						CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
 						CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 						CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 						CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
 						CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
-						// CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
 						CONSTANT.DATABASE.PERMISSION.TYPE.Article_Category,
-						// CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
 					]),
 					status: Joi.string().valid([
 						CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
@@ -281,15 +278,7 @@ export let subAdminRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: any = request.params;
-				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
-				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
-				// }
-				// const checkPermission = adminData['permission'].some(data => {
-				// 	return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.STAFF;
-				// });
-				// if (checkPermission === false) {
-				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-				// }
+
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.STAFF);
 
 				const registerResponse = await AdminProfileService.profile(payload);

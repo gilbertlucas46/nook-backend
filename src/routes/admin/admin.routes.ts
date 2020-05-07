@@ -960,8 +960,9 @@ export let adminProfileRoute: ServerRoute[] = [
 	},
 
 	/**
-     * @description admin add prequalification 
-     */
+      * @description admin add prequalification
+      */
+
 	{
 		method: 'POST',
 		path: '/v1/admin/prequalification',
@@ -1004,6 +1005,9 @@ export let adminProfileRoute: ServerRoute[] = [
 							LoanConstant.LOAN_PROPERTY_STATUS.PRE_SELLING.value,
 							LoanConstant.LOAN_PROPERTY_STATUS.READY_FOR_OCCUPANCY.value,
 							LoanConstant.LOAN_PROPERTY_STATUS.RESELLING.value,
+							LoanConstant.LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
+							LoanConstant.LOAN_PROPERTY_STATUS.RENOVATION.value,
+
 						]).required(),
 						developer: Joi.string(),
 					}),

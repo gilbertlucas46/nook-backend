@@ -360,4 +360,3 @@ export const INDUSTRIES = {
         value: 'TRANSPORTATION',
     },
 };
-

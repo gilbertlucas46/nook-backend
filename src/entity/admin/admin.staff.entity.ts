@@ -30,7 +30,10 @@ class AdminStaffE extends BaseEntity {
         };
         return this.getOneEntity(query, {});
     }
-
+    /**
+     * @description admin staf listing
+     * return [{}]
+     */
     async staffListing(payload: any) {
         const { fromDate, toDate, permissionType, searchTerm, status } = payload;
         let { limit, page, sortType } = payload;
