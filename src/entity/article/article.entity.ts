@@ -365,7 +365,7 @@ export class ArticleClass extends BaseEntity {
             } = payload;
             const sortingType = {
                 isFeatured: sortType,
-                updatedAt: sortType,
+                createdAt: sortType,
             };
 
             if (type) {
