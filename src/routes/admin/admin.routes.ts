@@ -959,8 +959,9 @@ export let adminProfileRoute: ServerRoute[] = [
 		},
 	},
 
-
-
+	/**
+     * @description admin add prequalification 
+     */
 	{
 		method: 'POST',
 		path: '/v1/admin/prequalification',
@@ -971,7 +972,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				if (request.query.bankId) payload.bankId = request.query.bankId as string;
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION);
 
-				const data = await LoanController.adminAddPrequalification(payload);
+				const data = await LoanController.adminAddPrequalification(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				utils.consolelog('Error', error, true);
@@ -987,6 +988,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 				},
 				payload: {
+					preQualificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					property: Joi.object().keys({
 						value: Joi.number().min(50000),
 						type: Joi.string().valid([
