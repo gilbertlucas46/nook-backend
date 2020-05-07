@@ -300,13 +300,13 @@ class PreLoanEntities extends BaseEntity {
                 };
 
                 let data1 = await this.DAOManager.insert(this.modelName, dataToSave);
-                console.log('data1.work: ', data1.work);
+                // console.log('data1.work: ', data1.work);
 
-                data1 = data1.toObject();
-                data1['employmentInfo'] = data1.work;
+                // data1 = data1.toObject();
+                // data1['employmentInfo'] = data1.work;
                 // data1.employmentInfo.grossMonthlyIncome = data1.work.income;
-                delete data1['work'];
-                console.log('data2:', data1);
+                // delete data1['work'];
+                // console.log('data2:', data1);
 
                 const salesforceData: { [key: string]: string | number } = flattenObject(data1.toObject ? data1.toObject() : data1);
                 console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));

@@ -960,8 +960,8 @@ export let adminProfileRoute: ServerRoute[] = [
 	},
 
 	/**
-      * @description admin add prequalification
-      */
+     * @ description admin add prequalification
+     */
 
 	{
 		method: 'POST',
