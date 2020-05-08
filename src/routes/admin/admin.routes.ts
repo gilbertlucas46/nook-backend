@@ -959,139 +959,322 @@ export let adminProfileRoute: ServerRoute[] = [
 		},
 	},
 
-	/**
-     * @ description admin add prequalification
-     */
 
 	{
 		method: 'POST',
-		path: '/v1/admin/prequalification',
-		handler: async (request, h) => {
+		path: '/v1/admin/loan/application',
+		handler: async (request, h: Hapi.ResponseToolkit) => {
 			try {
-				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.payload;
-				if (request.query.bankId) payload.bankId = request.query.bankId as string;
-				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION);
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const payload: LoanRequest.AddLoan = request.payload as any;
+				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
 
-				const data = await LoanController.adminAddPrequalification(payload, adminData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+				const data = await LoanController.addLoanApplication(payload, userData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
-				utils.consolelog('Error', error, true);
+				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
 		options: {
-			description: 'Admin preQualification by Id',
-			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			description: 'add Loan Requirements',
+			tags: ['api', 'anonymous', 'loan', 'Add'],
 			auth: 'AdminAuth',
 			validate: {
-				query: {
-					bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-				},
 				payload: {
-					preQualificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					property: Joi.object().keys({
-						value: Joi.number().min(50000),
-						type: Joi.string().valid([
-							LoanConstant.LOAN_PROPERTY_TYPES.APARTMENT.value,
-							LoanConstant.LOAN_PROPERTY_TYPES.CONDOMINIUM.value,
-							LoanConstant.LOAN_PROPERTY_TYPES.HOUSE_LOT.value,
-							LoanConstant.LOAN_PROPERTY_TYPES.TOWNHOUSE.value,
-							LoanConstant.LOAN_PROPERTY_TYPES.VACANT_LOT.value,
-						]).required(),
-						status: Joi.string().valid([
-							LoanConstant.LOAN_PROPERTY_STATUS.FORECLOSED.value,
-							LoanConstant.LOAN_PROPERTY_STATUS.REFINANCING.value,
-							LoanConstant.LOAN_PROPERTY_STATUS.PRE_SELLING.value,
-							LoanConstant.LOAN_PROPERTY_STATUS.READY_FOR_OCCUPANCY.value,
-							LoanConstant.LOAN_PROPERTY_STATUS.RESELLING.value,
-							LoanConstant.LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
-							LoanConstant.LOAN_PROPERTY_STATUS.RENOVATION.value,
-
-						]).required(),
-						developer: Joi.string(),
-					}),
-
-					employmentInfo: Joi.object().keys({
-						type: Joi.string().valid([
-							LoanConstant.EMPLOYMENT_TYPE.BPO.value,
-							LoanConstant.EMPLOYMENT_TYPE.GOVT.value,
-							LoanConstant.EMPLOYMENT_TYPE.OFW.value,
-							LoanConstant.EMPLOYMENT_TYPE.PRIVATE.value,
-							LoanConstant.EMPLOYMENT_TYPE.PROFESSIONAL.value,
-							LoanConstant.EMPLOYMENT_TYPE.SELF.value,
-						]).required(),
-
-						rank: Joi.string().valid([
-							LoanConstant.EMPLOYMENT_RANK.ASSISSTANT_VICE_PRESIDENT.value,
-							LoanConstant.EMPLOYMENT_RANK.ASSISTANT_MANAGER.value,
-							LoanConstant.EMPLOYMENT_RANK.CHAIRMAN.value,
-							LoanConstant.EMPLOYMENT_RANK.CHIEF_EXECUTIVE_OFFICER.value,
-							LoanConstant.EMPLOYMENT_RANK.CLERK.value,
-							LoanConstant.EMPLOYMENT_RANK.DIRECTOR.value,
-							LoanConstant.EMPLOYMENT_RANK.EXECUTIVE_VICE_PRESIDENT.value,
-							LoanConstant.EMPLOYMENT_RANK.FIRST_VICE_PRESIDENT.value,
-							LoanConstant.EMPLOYMENT_RANK.GENERAL_EMPLOYEE.value,
-							LoanConstant.EMPLOYMENT_RANK.MANAGER.value,
-							LoanConstant.EMPLOYMENT_RANK.NON_PROFESIONNAL.value,
-							LoanConstant.EMPLOYMENT_RANK.OWNER.value,
-							LoanConstant.EMPLOYMENT_RANK.PRESIDENT.value,
-							LoanConstant.EMPLOYMENT_RANK.PROFESSIONAL.value,
-							LoanConstant.EMPLOYMENT_RANK.RANK_FILE.value,
-							LoanConstant.EMPLOYMENT_RANK.SENIOR_ASSISTANT_MANAGER.value,
-							LoanConstant.EMPLOYMENT_RANK.SENIOR_ASSISTANT_VICE_PRESIDENT.value,
-							LoanConstant.EMPLOYMENT_RANK.SENIOR_MANAGER.value,
-							LoanConstant.EMPLOYMENT_RANK.SENIOR_VICE_PRESIDENT.value,
-							LoanConstant.EMPLOYMENT_RANK.SUPERVISOR.value,
-							LoanConstant.EMPLOYMENT_RANK.VICE_PRESIDENT.value,
-						]).required(),
-
-						tenure: Joi.string().valid(Object.keys(LoanConstant.EMPLOYMENT_TENURE)),
-						income: Joi.number().min(25000),
-					}),
-
-					other: Joi.object().keys({
-						age: Joi.number().min(21).max(65),
-						dob: Joi.number(),
-						nationality: Joi.string().valid([
-							LoanConstant.NATIONALITY.FILIPINO.value,
-							LoanConstant.NATIONALITY.FOREIGNER.value,
-						]),
+					personalInfo: Joi.object().keys({
+						firstName: Joi.string().min(1).max(32).required(),
+						lastName: Joi.string().min(1).max(32),
+						middleName: Joi.string().max(32).allow(''),
+						monthlyIncome: Joi.number(),
+						otherIncome: Joi.number(),
+						motherMaidenName: Joi.string(),
+						birthDate: Joi.number(),
+						nationality: Joi.string(),
 						localVisa: Joi.boolean(),
-						creditCard: Joi.object().keys({
-							status: Joi.string().valid([
-								LoanConstant.CREDIT_CARD_STATUS.YES.value,
-								LoanConstant.CREDIT_CARD_STATUS.NO.value,
-								LoanConstant.CREDIT_CARD_STATUS.NOT_NOW.value,
-							]),
+						creditCard: Joi.object({
+							status: Joi.string(),
 							limit: Joi.number(),
 							cancelled: Joi.boolean(),
 						}),
-						prevLoans: Joi.object().keys({
+						prevLoans: Joi.object({
 							status: Joi.boolean(),
 							monthlyTotal: Joi.number(),
 							remainingTotal: Joi.number(),
 						}),
-						otherIncome: Joi.object().keys({
-							status: Joi.boolean(),
+						gender: Joi.string().valid([
+							LoanConstant.GENDER.MALE.value,
+							LoanConstant.GENDER.FEMALE.value,
+							LoanConstant.GENDER.OTHER.value,
+							//   DATABASE.GENDER.FEMALE,
+							// Constant.DATABASE.GENDER.FEMALE,
+							// Constant.DATABASE.GENDER.OTHER,
+						]),
+						educationBackground: Joi.string().valid([
+							Constant.DATABASE.EDUCATION_BACKGROUND.POST_GRAD,
+							Constant.DATABASE.EDUCATION_BACKGROUND.UNDER_GRAD,
+							Constant.DATABASE.EDUCATION_BACKGROUND.COLLEGE,
+							Constant.DATABASE.EDUCATION_BACKGROUND.VOCATIONAL,
+						]),
+						civilStatus: Joi.string().valid([
+							Constant.DATABASE.CIVIL_STATUS.SINGLE,
+							Constant.DATABASE.CIVIL_STATUS.WIDOW,
+							Constant.DATABASE.CIVIL_STATUS.SEPERATED,
+							Constant.DATABASE.CIVIL_STATUS.MARRIED,
+						]),
+						spouseInfo: {
+							firstName: Joi.string().max(32),
+							lastName: Joi.string().max(32),
+							middleName: Joi.string().max(32),
+							birthDate: Joi.number(),
 							monthlyIncome: Joi.number(),
-						}),
-						married: {
-							status: Joi.boolean(),
-							spouseMonthlyIncome: Joi.number(),
+							isCoborrower: Joi.boolean(),
+							motherMaidenName: Joi.string(),
+							age: Joi.number(),
+							birthPlace: Joi.string(),
 						},
-						coBorrower: {
-							status: Joi.boolean(),
-							coBorrowerMonthlyIncome: Joi.number(),
+						coBorrowerInfo: {
+							firstName: Joi.string().max(32),
+							lastName: Joi.string().max(32),
+							middleName: Joi.string().max(32),
+							birthDate: Joi.number(),
+							monthlyIncome: Joi.number(),
+							isCoborrower: Joi.boolean(),
+							relationship: Joi.string().valid([
+								Constant.DATABASE.RELATIONSHIP.BROTHER,
+								Constant.DATABASE.RELATIONSHIP.FATHER,
+								Constant.DATABASE.RELATIONSHIP.MOTHER,
+								Constant.DATABASE.RELATIONSHIP.SISTER,
+								Constant.DATABASE.RELATIONSHIP.SPOUSE,
+								Constant.DATABASE.RELATIONSHIP.SON,
+								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							]),
+							age: Joi.number(),
+							birthPlace: Joi.string(),
+							motherMaidenName: Joi.string(),
 						},
 					}),
 
-					loan: Joi.object().keys({
+					propertyInfo: {
+						value: Joi.number(),
 						type: Joi.string(),
-						term: Joi.number().default(0),
-						percent: Joi.number(),
-						amount: Joi.number(),
-						fixingPeriod: Joi.number(),
+						status: Joi.string(),
+						developer: Joi.string(),
+					},
+
+					applicationStatus: Joi.string().valid([
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value),
+					bankInfo: Joi.object().keys({
+						iconUrl: Joi.string(),
+						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+						bankName: Joi.string().min(5).max(50),
+						abbrevation: Joi.string().max(10),
+					}),
+
+					contactInfo: Joi.object().keys({
+						phoneNumber: Joi.string(),
+						email: Joi.string().email(),
+						mobileNumber: Joi.string().min(7).max(15),
+						currentAddress: Joi.object().keys({
+							address: Joi.string().max(300),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]),
+						}),
+						// mailingAddress: {
+						// 	permanentAddress: Joi.boolean(),
+						// 	presentAddress: Joi.boolean(),
+						// },
+						// // { type: Boolean, enum: ['Permanent Address', 'Present Address'] },
+						// address: {
+						// 	permanentAddress: {
+						// 		address: Joi.string(),
+						// 		homeOwnership: Joi.string().valid([
+						// 			Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+						// 			Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+						// 			Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+						// 			Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+						// 			Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+						// 		]),
+						// 		lengthOfStay: Joi.number(),
+						// 	},
+						// 	presentAddress: {
+						// 		address: Joi.string(),
+						// 		lengthOfStay: Joi.number(),
+						// 	},
+						// },
+					}),
+
+					loanDetails: Joi.object().keys({
+						maxLoanTerm: Joi.number(),
+						fixedPeriod: Joi.number(),
+						loanTerm: Joi.number(),
+						rate: Joi.number().max(100),
+						monthlyRepayment: Joi.number(),
+						hasCoBorrower: Joi.boolean(),
+						loanType: Joi.string().valid([
+							LoanConstant.LOAN_TYPES.CONSTRUCTION.value,
+							LoanConstant.LOAN_TYPES.LOAN_TAKE_OUT.value,
+							LoanConstant.LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
+							LoanConstant.LOAN_TYPES.REFINANCING_LOAN.value,
+							LoanConstant.LOAN_TYPES.RENOVATION.value,
+							// LoanConstant.LOAN_TYPES.NEW_CONSTRUCTION.value,
+
+						]),
+						loanPercent: Joi.number(),
+						loanAmount: Joi.number(),
+					}),
+
+					employmentInfo: Joi.object().keys({
+						type: Joi.string(),
+						rank: Joi.string(),
+						tenure: Joi.string(),
+						tin: Joi.string(),
+						companyName: Joi.string().min(1).max(300),
+						sss: Joi.string(),
+						officePhone: Joi.string(),
+						officeEmail: Joi.string(),
+						officeAddress: Joi.string().max(300),
+						companyIndustry: Joi.string().valid([
+							LoanConstant.INDUSTRIES.AGRI_FOREST_FISH.value,
+							LoanConstant.INDUSTRIES.ADVERTISING.value,
+							LoanConstant.INDUSTRIES.BUSINESS_INFORMATION.value,
+							LoanConstant.INDUSTRIES.CONST_UTIL_CONTRACT.value,
+							LoanConstant.INDUSTRIES.EDUCATION.value,
+							LoanConstant.INDUSTRIES.ENTERTAINMENT_FASHION.value,
+							LoanConstant.INDUSTRIES.FINANCE_INSURANCE.value,
+							LoanConstant.INDUSTRIES.FOOD_HOSPITALITY.value,
+							LoanConstant.INDUSTRIES.GAMING.value,
+							LoanConstant.INDUSTRIES.HEALTH_SERVICES.value,
+							LoanConstant.INDUSTRIES.INFORMATION_TECHNOLOGY.value,
+							LoanConstant.INDUSTRIES.MANUFACTURING.value,
+							LoanConstant.INDUSTRIES.MOTOR_VEHICLE.value,
+							LoanConstant.INDUSTRIES.MUSIC_MEDIA.value,
+							LoanConstant.INDUSTRIES.NATURAL_RES_ENV.value,
+							LoanConstant.INDUSTRIES.OTHER.value,
+							LoanConstant.INDUSTRIES.PERSONAL_SERVICES.value,
+							LoanConstant.INDUSTRIES.REAL_ESTATE_HOUSING.value,
+							LoanConstant.INDUSTRIES.RETAIL.value,
+							LoanConstant.INDUSTRIES.SAFETY_SECURITY_LEGAL.value,
+							LoanConstant.INDUSTRIES.TRANSPORTATION.value,
+						]),
+						coBorrowerInfo: {
+							employmentType: Joi.string().valid([
+								LoanConstant.EMPLOYMENT_TYPE.BPO.value,
+								LoanConstant.EMPLOYMENT_TYPE.GOVT.value,
+								LoanConstant.EMPLOYMENT_TYPE.OFW.value,
+								LoanConstant.EMPLOYMENT_TYPE.PRIVATE.value,
+								LoanConstant.EMPLOYMENT_TYPE.PROFESSIONAL.value,
+								LoanConstant.EMPLOYMENT_TYPE.SELF.value,
+							]),
+							tin: Joi.string(),
+							companyName: Joi.string(),
+							sss: Joi.string(),
+							employmentRank: Joi.string().valid([
+								LoanConstant.EMPLOYMENT_RANK.ASSISSTANT_VICE_PRESIDENT.value,
+								LoanConstant.EMPLOYMENT_RANK.ASSISTANT_MANAGER.value,
+								LoanConstant.EMPLOYMENT_RANK.CHAIRMAN.value,
+								LoanConstant.EMPLOYMENT_RANK.CHIEF_EXECUTIVE_OFFICER.value,
+								LoanConstant.EMPLOYMENT_RANK.CLERK.value,
+								LoanConstant.EMPLOYMENT_RANK.DIRECTOR.value,
+								LoanConstant.EMPLOYMENT_RANK.EXECUTIVE_VICE_PRESIDENT.value,
+								LoanConstant.EMPLOYMENT_RANK.FIRST_VICE_PRESIDENT.value,
+								LoanConstant.EMPLOYMENT_RANK.GENERAL_EMPLOYEE.value,
+								LoanConstant.EMPLOYMENT_RANK.MANAGER.value,
+								LoanConstant.EMPLOYMENT_RANK.NON_PROFESIONNAL.value,
+								LoanConstant.EMPLOYMENT_RANK.OWNER.value,
+								LoanConstant.EMPLOYMENT_RANK.PRESIDENT.value,
+								LoanConstant.EMPLOYMENT_RANK.PROFESSIONAL.value,
+								LoanConstant.EMPLOYMENT_RANK.RANK_FILE.value,
+								LoanConstant.EMPLOYMENT_RANK.SENIOR_ASSISTANT_MANAGER.value,
+								LoanConstant.EMPLOYMENT_RANK.SENIOR_ASSISTANT_VICE_PRESIDENT.value,
+								LoanConstant.EMPLOYMENT_RANK.SENIOR_MANAGER.value,
+								LoanConstant.EMPLOYMENT_RANK.SENIOR_VICE_PRESIDENT.value,
+								LoanConstant.EMPLOYMENT_RANK.SUPERVISOR.value,
+								LoanConstant.EMPLOYMENT_RANK.VICE_PRESIDENT.value,
+							]),
+							employmentTenure: Joi.string().valid(Object.keys(LoanConstant.EMPLOYMENT_TENURE)),
+							companyIndustry: Joi.string().valid([
+								LoanConstant.INDUSTRIES.AGRI_FOREST_FISH.value,
+								LoanConstant.INDUSTRIES.ADVERTISING.value,
+								LoanConstant.INDUSTRIES.BUSINESS_INFORMATION.value,
+								LoanConstant.INDUSTRIES.CONST_UTIL_CONTRACT.value,
+								LoanConstant.INDUSTRIES.EDUCATION.value,
+								LoanConstant.INDUSTRIES.ENTERTAINMENT_FASHION.value,
+								LoanConstant.INDUSTRIES.FINANCE_INSURANCE.value,
+								LoanConstant.INDUSTRIES.FOOD_HOSPITALITY.value,
+								LoanConstant.INDUSTRIES.GAMING.value,
+								LoanConstant.INDUSTRIES.HEALTH_SERVICES.value,
+								LoanConstant.INDUSTRIES.INFORMATION_TECHNOLOGY.value,
+								LoanConstant.INDUSTRIES.MANUFACTURING.value,
+								LoanConstant.INDUSTRIES.MOTOR_VEHICLE.value,
+								LoanConstant.INDUSTRIES.MUSIC_MEDIA.value,
+								LoanConstant.INDUSTRIES.NATURAL_RES_ENV.value,
+								LoanConstant.INDUSTRIES.OTHER.value,
+								LoanConstant.INDUSTRIES.PERSONAL_SERVICES.value,
+								LoanConstant.INDUSTRIES.REAL_ESTATE_HOUSING.value,
+								LoanConstant.INDUSTRIES.RETAIL.value,
+								LoanConstant.INDUSTRIES.SAFETY_SECURITY_LEGAL.value,
+								LoanConstant.INDUSTRIES.TRANSPORTATION.value,
+							]),
+							officePhone: Joi.number(),
+							officeEmail: Joi.string().email(),
+							officeAddress: Joi.string().max(300),
+						},
+					}),
+					dependentsInfo: Joi.array().items({
+						name: Joi.string(),
+						age: Joi.number(),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+						]),
+					}),
+
+					tradeReferences: Joi.array().items({
+						companyName: Joi.string(),
+						type: Joi.string().valid([
+							LoanConstant.TRADE_REFERENCE.CUSTOMER,
+							LoanConstant.TRADE_REFERENCE.SUPPLIER,
+						]),
+						contactPerson: Joi.string(),
+						contactNumber: Joi.string(),
+						position: Joi.string(),
+					}),
+
+					propertyDocuments: Joi.object().keys({
+						borrowerValidDocIds: Joi.array().items(Joi.string()),
+						coBorrowerValidId: Joi.array().items(Joi.string()),
+						latestITR: Joi.string().uri(),
+						employmentCert: Joi.string().uri(),
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.number(),
+							collateralDocStatus: Joi.boolean(),
+							collateralDocList: Joi.array().items({
+								docType: Joi.string().valid([
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+								]),
+								docUrl: Joi.string(),
+							}),
+						}),
+						nookAgent: Joi.string(),
 					}),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -1103,5 +1286,5 @@ export let adminProfileRoute: ServerRoute[] = [
 				},
 			},
 		},
-	},
+	}
 ];
