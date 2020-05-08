@@ -218,19 +218,20 @@ class LoanApplicationE extends BaseEntity {
      * @description A Function to map and send application data to sales-force
      * @param data Application Data
      */
-    async sendApplication(data) {
+    async sendApplication(data: any) {
         try {
+            console.log('dataAAAAAAAAAAAAAAA>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 
             // console.log('inside Loan');
-            const { creditCard, nationality, gender, coBorrowerInfo } = data.personalInfo;
-            const { loanDetails } = data.loanDetails;
-            const { contactInfo } = data.contactInfo;
-            const { employmentInfo } = data;
+            // const { creditCard, nationality, gender, coBorrowerInfo } = data.personalInfo;
+            // const { loanDetails } = data.loanDetails;
+            // const { contactInfo } = data.contactInfo;
+            // const { employmentInfo } = data;
 
             console.log('ewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
 
 
-            creditCard.status = Constant.CREDIT_CARD_STATUS[creditCard.status].label;
+            data.personalInfo.creditCard.status = Constant.CREDIT_CARD_STATUS[data.personalInfo.creditCard.status].label;
 
             // gender = gender.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();  //Constant.GENDER.FEMALE[gender].label;
             // nationality = nationality.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();
@@ -247,6 +248,7 @@ class LoanApplicationE extends BaseEntity {
                 data.contactInfo.currentAddress.homeOwnership = data.contactInfo.currentAddress.homeOwnership.charAt(0).toUpperCase() + data.contactInfo.currentAddress.homeOwnership.substr(1).toLowerCase();
             }
             if (data.personalInfo.civilStatus) {
+                console.log('civilStatuscivilStatuscivilStatuscivilStatuscivilStatus');
                 data.personalInfo.civilStatus = data.personalInfo.civilStatus.charAt(0).toUpperCase() + data.personalInfo.civilStatus.substr(1).toLowerCase();
             }
 
@@ -316,7 +318,6 @@ class LoanApplicationE extends BaseEntity {
 
             console.log('loanDetailsloanDetails>>>>>>>>>>', data);
 
-
             if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
                 const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
                 console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'));
@@ -340,3 +341,22 @@ class LoanApplicationE extends BaseEntity {
     }
 }
 export const LoanApplicationEntity = new LoanApplicationE();
+
+
+// /var/www / html / nook - app / nook - web /.pm2 / logs / nook - error.log last 15 lines:
+// WARNING: See https://github.com/lorenwest/node-config/wiki/Strict-Mode
+// (node: 6260) DeprecationWarning: collection.count is deprecated, and will be removed in a future version.Use collection.countDocuments or collection.estimatedDocumentCount instead
+//     (node: 6260) UnhandledPromiseRejectionWarning: TypeError: Cannot read property 'employmentRank' of undefined
+// at LoanApplicationE.<anonymous>(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 254: 52)
+// at Generator.next(<anonymous>)
+// at /var/www/html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 7: 71
+// at new Promise(<anonymous>)
+// at __awaiter(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 3: 12)
+// at LoanApplicationE.sendApplication(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 238: 16)
+// at LoanApplicationE.<anonymous>(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 47: 18)
+// at Generator.next(<anonymous>)
+// at fulfilled(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 4: 58)
+// at process._tickCallback(internal / process / next_tick.js: 68: 7)
+//     (node: 6260) UnhandledPromiseRejectionWarning: Unhandled promise rejection.This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
+//         (node: 6260)[DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated.In the future, promise rejections that are not handled will terminate the Node.js process with a non - zero exit code.
+

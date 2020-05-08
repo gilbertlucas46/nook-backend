@@ -116,12 +116,18 @@ export namespace LoanRequest {
         lastName?: string;
         middleName: string;
         gender: string;
+        nationality: string;
         educationBackground: string;
         civilStatus: string;
         birthDate: number;
         motherMaidenName?: string;
         monthlyIncome: number;
         otherIncome: number;
+        creditCard?: {
+            status: string,
+            limit: number,
+            cancelled: boolean,
+        },
         spouseInfo?: {
             firstName?: string,
             lastName?: string,
@@ -175,6 +181,8 @@ export namespace LoanRequest {
         officeEmail: string;
         officeAddress: string;
         companyIndustry: string;
+        rank: string;
+        type: string;
         coBorrowerInfo?: {
             employmentType: string;
             tin: string;

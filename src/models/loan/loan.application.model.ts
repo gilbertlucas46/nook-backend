@@ -166,7 +166,6 @@ const schema = new Schema({
         status: { type: String, enum: Object.keys(CONSTANT.LOAN_PROPERTY_STATUS) },
         developer: { type: String },
     },
-
     employmentInfo: {
         type: { type: Schema.Types.String },
         tenure: Schema.Types.String,

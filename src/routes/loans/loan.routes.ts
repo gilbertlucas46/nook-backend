@@ -14,6 +14,8 @@ export let loanRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
+				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
+
 				const data = await LoanController.addLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
