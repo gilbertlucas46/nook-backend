@@ -16,3 +16,4 @@ export { WebhookE } from './webhook/webhook.entity';
 export { AdminUserEntity } from './admin/admin.user.entity';
 export { ArticleCategoryE } from './article/adminArticle.entity';
 export { PreQualificationBankE } from './loan/prequalification.entity';
+export { LoanErrorE } from './loan/checkLoanError.entity';
