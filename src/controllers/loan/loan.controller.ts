@@ -80,7 +80,12 @@ class LoanControllers extends BaseEntity {
                 adminName: userData.firstName + '' + userData.lastName,
             };
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
-
+            const dataToSave = {
+                userId: userData._id,
+                data: payload,
+                referenceId: payload['referenceId'],
+            };
+            const saveAllData = await ENTITY.LoanErrorE.createOneEntity(dataToSave);
             return data['referenceId'];
 
         } catch (error) {

@@ -182,7 +182,7 @@ const schema = new Schema({
         grossMonthlyIncome: { type: String },
         provinceState: { type: String },
         country: { type: String },
-
+        isSentToSalesforce: { type: Boolean, default: false },
         coBorrowerInfo: {
             employmentType: { type: Schema.Types.String, enum: Object.keys(CONSTANT.EMPLOYMENT_TYPE) },
             tin: { type: Schema.Types.String, trim: true },

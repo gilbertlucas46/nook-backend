@@ -15,3 +15,4 @@ export { Webhook } from './webhook/webhook.model';
 export { ArticleCategories } from './article/article.category.model';
 export { PreQualification } from './loan/preQualification.model';
 export { LoanApplicationHistory } from './loan/loan.application.History.model';
+export { LoanErrorCheck } from './loan/loan.error.model';
