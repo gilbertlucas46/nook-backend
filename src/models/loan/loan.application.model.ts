@@ -167,9 +167,9 @@ const schema = new Schema({
         developer: { type: String },
     },
     employmentInfo: {
-        type: { type: Schema.Types.String },
-        tenure: Schema.Types.String,
-        rank: Schema.Types.String,
+        type: { type: Schema.Types.String, enum: Object.keys(CONSTANT.EMPLOYMENT_TYPE) },
+        tenure: { type: Schema.Types.String, enum: Object.keys(EMPLOYMENT_TENURE) },
+        rank: { type: Schema.Types.String, enum: Object.keys(CONSTANT.EMPLOYMENT_RANK) },
         companyIndustry: { type: Schema.Types.String, enum: Object.keys(CONSTANT.INDUSTRIES) },
         tin: { type: Schema.Types.String, trim: true },
         companyName: { type: Schema.Types.String, trime: true },

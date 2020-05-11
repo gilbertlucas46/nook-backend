@@ -79,6 +79,7 @@ class LoanControllers extends BaseEntity {
                 adminId: userData._id,
                 adminName: userData.firstName + '' + userData.lastName,
             };
+
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
             const dataToSave = {
                 userId: userData._id,
