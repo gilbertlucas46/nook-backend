@@ -13,7 +13,7 @@ class LoanEntities extends BaseEntity {
 
     async preloan(payload: LoanRequest.PreLoan, userData) {
         try {
-            let totalMonthlyIncome = payload.work.income;
+            let totalMonthlyIncome = payload.employmentInfo.income;
             let preLoanMonthlyAmount = 0;
             if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome; // If married need to add spouse income also to calculate debtToIncomeRatio
             if (payload.other.coBorrower.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.coBorrower.coBorrowerMonthlyIncome; // If coborrower need to add coborrower income
@@ -115,9 +115,9 @@ class LoanEntities extends BaseEntity {
                         'userloan.loanForEmploymentType': {
                             $elemMatch: {
                                 $and: [
-                                    { employmentType: payload.work.type },
-                                    { employmentRank: payload.work.rank },
-                                    { minEmploymentTenure: { $lte: Constant.EMPLOYMENT_TENURE[`${payload.work.tenure}`].value.min } },
+                                    { employmentType: payload.employmentInfo.type },
+                                    { employmentRank: payload.employmentInfo.rank },
+                                    { minEmploymentTenure: { $lte: Constant.EMPLOYMENT_TENURE[`${payload.employmentInfo.tenure}`].value.min } },
                                 ],
                             },
                         },
