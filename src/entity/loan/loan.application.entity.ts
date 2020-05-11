@@ -285,11 +285,6 @@ class LoanApplicationE extends BaseEntity {
                 data.propertyInfo.type = Constant.LOAN_PROPERTY_TYPES[data.propertyInfo.type].label;
                 console.log('>44444444444444444444444444444444444444444');
             }
-            // if (data.propertyInfo.status) {
-            //     data.propertyInfo.status = Constant.LOAN_PROPERTY_STATUS[data.propertyInfo.status].label;
-            //     console.log('55555555555555555555555555555555555555555555555555555555555555');
-
-            // }
 
             if (data.employmentInfo.companyIndustry) {
                 data.employmentInfo.companyIndustry = Constant.INDUSTRIES[data.employmentInfo.companyIndustry].label;
@@ -317,36 +312,23 @@ class LoanApplicationE extends BaseEntity {
             }
 
             console.log('loanDetailsloanDetails>>>>>>>>>>', data);
-
             if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
+
+
                 const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
-                console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'));
+                console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
                 console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
+                if (config.get('environment') === 'production') {
+                    console.log('333333333333333333333333333333333333344444444444kkkkkkkkk');
 
-                await fetch(config.get('zapier_loanUrl'), {
-                    method: 'post',
-                    body: JSON.stringify(salesforceData),
-                }).
-                    then(data1 => {
-                        // console.log('data1111111111111111', data1);
-
-                        // const a = data1.json();
-                        // console.log('');
-                        if (data1) {
-                            const updatesalesForceKey = {
-                                _id: data._id,
-                            };
-                            const KeyToUpdate = {
-                                isSentToSalesforce: true,
-                            };
-                            this.DAOManager.findAndUpdate(this.modelName, updatesalesForceKey, KeyToUpdate);
-                        }
-
-                    })
-
-                console.log(config.get('zapier_loanUrl'), salesforceData);
-
+                    await fetch(config.get('zapier_loanUrl'), {
+                        method: 'post',
+                        body: JSON.stringify(salesforceData),
+                    });
+                }
             }
+            return;
+
         } catch (error) {
             console.log('eorrrrrrrrrrrrrrrrrrrrrrrrr', error);
             return Promise.reject(error);
@@ -375,4 +357,3 @@ export const LoanApplicationEntity = new LoanApplicationE();
 // at process._tickCallback(internal / process / next_tick.js: 68: 7)
 //     (node: 6260) UnhandledPromiseRejectionWarning: Unhandled promise rejection.This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
 //         (node: 6260)[DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated.In the future, promise rejections that are not handled will terminate the Node.js process with a non - zero exit code.
-
