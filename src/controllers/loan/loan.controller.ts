@@ -48,7 +48,6 @@ class LoanControllers extends BaseEntity {
                     $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
                 },
             });
-            console.log('criteria1criteria1criteria1', criteria1);
 
             const referenceNumber = await ENTITY.LoanApplicationEntity.getReferenceId(criteria1);
             if (!referenceNumber) {
@@ -80,7 +79,6 @@ class LoanControllers extends BaseEntity {
                 adminId: userData._id,
                 adminName: userData.firstName + '' + userData.lastName,
             };
-
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
             const dataToSave = {
                 userId: userData._id,
