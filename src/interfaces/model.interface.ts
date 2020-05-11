@@ -21,5 +21,6 @@ export type ModelNames = 'User' |
     'ArticleCategories' |
     // 'Card' |
     'PreQualification' |
-    'LoanApplicationHistory'
+    'LoanApplicationHistory' |
+    'LoanErrorCheck'
     ;
