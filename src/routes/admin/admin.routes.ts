@@ -966,11 +966,11 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/loan/application',
 		handler: async (request, h: Hapi.ResponseToolkit) => {
 			try {
-				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
 				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
 
-				const data = await LoanController.addLoanApplication(payload, userData);
+				const data = await LoanController.addLoanApplication(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
