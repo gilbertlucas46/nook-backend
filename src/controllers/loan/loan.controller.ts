@@ -254,6 +254,7 @@ class LoanControllers extends BaseEntity {
             };
 
             const oldData = await ENTITY.LoanApplicationEntity.updateOneEntity(query, payload, false);
+            console.log('oldDataoldDataoldDataoldDataoldData', oldData);
 
             payload['changesMadeBy'] = {
                 adminId: adminData['_id'],
@@ -262,7 +263,7 @@ class LoanControllers extends BaseEntity {
 
             const createHistory = await this.DAOManager.insert('LoanApplicationHistory', payload);
             if (oldData) {
-                return {};
+                return oldData['refrenceId'];
             }
             return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             // return data;
