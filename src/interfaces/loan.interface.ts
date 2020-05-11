@@ -8,7 +8,7 @@ export namespace LoanRequest {
             status: string;
             developer?: string;
         };
-        work: {
+        employmentInfo: {
             type: string;
             rank: string;
             tenure: string;
