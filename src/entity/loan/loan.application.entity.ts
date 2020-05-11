@@ -256,7 +256,7 @@ class LoanApplicationE extends BaseEntity {
 
             if (data.employmentInfo.coBorrowerInfo.employmentRank) {
                 console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>22222222222222', data.employmentInfo.coBorrowerInfo.employmentRank);
-                console.log(' Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;', Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label);
+                // console.log(' Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;', Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label);
 
                 data.employmentInfo.coBorrowerInfo.employmentRank = Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;
             }
@@ -326,7 +326,23 @@ class LoanApplicationE extends BaseEntity {
                 await fetch(config.get('zapier_loanUrl'), {
                     method: 'post',
                     body: JSON.stringify(salesforceData),
-                });
+                }).
+                    then(data1 => {
+                        // console.log('data1111111111111111', data1);
+
+                        // const a = data1.json();
+                        // console.log('');
+                        if (data1) {
+                            const updatesalesForceKey = {
+                                _id: data._id,
+                            };
+                            const KeyToUpdate = {
+                                isSentToSalesforce: true,
+                            };
+                            this.DAOManager.findAndUpdate(this.modelName, updatesalesForceKey, KeyToUpdate);
+                        }
+
+                    })
 
                 console.log(config.get('zapier_loanUrl'), salesforceData);
 
