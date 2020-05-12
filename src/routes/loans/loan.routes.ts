@@ -29,7 +29,7 @@ export let loanRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					ipAddress: Joi.string().required(),
+					ipAddress: Joi.string(),
 					prequialificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
