@@ -21,7 +21,7 @@ class PreqQualificationController extends BaseEntity {
     async addPreQualifiedBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
         try {
             const data = await ENTITY.PreQualificationBankE.addBanks(payload, userData);
-            return {};
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }
