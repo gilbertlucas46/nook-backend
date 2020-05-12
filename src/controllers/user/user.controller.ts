@@ -303,12 +303,13 @@ export class UserController {
 			} else {
 				const makePassword = await utils.encryptWordpressHashNode(payload.password);
 				const userData = {
-					userName: payload.userName.trim().toLowerCase(),
-					email: payload.email.trim().toLowerCase(),
+					userName: payload.userName,
+					email: payload.email,
 					password: makePassword,
 					firstName: payload.firstName,
 					lastName: payload.lastName,
 					phoneNumber: payload.phoneNumber,
+					ipAddress: payload.ipAddress,
 					// isEmailVerified: true,
 					// isProfileComplete: true,
 					// type: payload.type,
