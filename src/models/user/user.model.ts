@@ -49,6 +49,7 @@ const userSchema = new Schema({
 		default: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
 		index: true,
 	},
+	ipAddress: { type: String },
 	createdAt: { type: Number, required: true, index: true },
 	updatedAt: { type: Number, required: true, index: true },
 	// type: {
