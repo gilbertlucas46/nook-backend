@@ -31,7 +31,8 @@ class LoanEntities extends BaseEntity {
 
             // age filters
             if (payload.other.age) ageAtlastLoanPayment = payload.other.age + payload.loan.term;
-            if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+            // if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+            if (ageAtlastLoanPayment >= 70) return []; // Max age is 65 till the final loan payment.
 
             const queryPipeline = [];
             if (payload.other.creditCard.cancelled) {
@@ -151,6 +152,13 @@ class LoanEntities extends BaseEntity {
                     },
                 },
                 {
+                    $addFields: {
+                        totalLoanMonthlyAdd: {
+                            $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount],
+                        },
+                    },
+                },
+                {
                     $project: {
                         abbrevation: 1,
                         totalPrice: 1,
@@ -168,7 +176,12 @@ class LoanEntities extends BaseEntity {
                         processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
                         loanDuration: 1,
-                        totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+                        // totalLoanMonthly: {
+                        //     $round: [ }, 2],
+                        // },     // { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+                        totalLoanMonthly: { $round: ['$totalLoanMonthlyAdd', 2] },
+                        totalLoanMonthly11: { $trunc: ['$totalLoanMonthlyAdd', 2] },
+                        // totalLoanMonthly1: {$round:[$add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount],2 ] },
                         monthlyPayment: { $divide: ['$numerator', '$denominator'] },
                         totalLoanPayment: 1,
                         bankId: '$_id',

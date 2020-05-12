@@ -99,6 +99,7 @@ export namespace UserRequest {
 		firstName: string;
 		lastName: string;
 		phoneNumber: string;
+		ipAddress: string;
 
 	}
 }
