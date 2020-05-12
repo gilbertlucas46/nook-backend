@@ -175,12 +175,13 @@ class LoanEntities extends BaseEntity {
                         bannerUrl: 1,
                         processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
-                        // },     // { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
-                        // totalLoanMonthly: { $round: ['$totalLoanMonthlyAdd', 2] },
-                        totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
-                        monthlyPayment: {
-                            $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
-                        },
+                        totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+                        monthlyPayment: { $divide: ['$numerator', '$denominator'] },
+
+                        // totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
+                        // monthlyPayment: {
+                        //     $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
+                        // },
                         totalLoanPayment: 1,
                         bankId: '$_id',
                         _id: 0,
@@ -202,9 +203,14 @@ class LoanEntities extends BaseEntity {
                 },
                 {
                     $addFields: {
-                        debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
+                        debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
                     },
                 },
+                // {
+                //     $addFields: {
+                //         debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
+                //     },
+                // },
                 {
                     $unwind: {
                         path: '$propertySpecification',
