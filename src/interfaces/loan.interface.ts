@@ -218,6 +218,7 @@ export namespace LoanRequest {
         nookAgent: string;
     }
     export interface AddLoan {
+        ipAddress: string;
         loanId?: string;
         saveAsDraft?: boolean;
         personalInfo?: PersonalInfo;

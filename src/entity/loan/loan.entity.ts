@@ -31,7 +31,8 @@ class LoanEntities extends BaseEntity {
 
             // age filters
             if (payload.other.age) ageAtlastLoanPayment = payload.other.age + payload.loan.term;
-            if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+            // if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+            if (ageAtlastLoanPayment >= 70) return []; // Max age is 65 till the final loan payment.
 
             const queryPipeline = [];
             if (payload.other.creditCard.cancelled) {
@@ -150,6 +151,13 @@ class LoanEntities extends BaseEntity {
                         numerator: { $multiply: ['$numerator1', '$interestRateMonthly', payload.loan.amount] },
                     },
                 },
+                // {
+                //     $addFields: {
+                //         totalLoanMonthlyAdd: {
+                //             $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount],
+                //         },
+                //     },
+                // },
                 {
                     $project: {
                         abbrevation: 1,
@@ -167,9 +175,12 @@ class LoanEntities extends BaseEntity {
                         bannerUrl: 1,
                         processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
-                        loanDuration: 1,
-                        totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
-                        monthlyPayment: { $divide: ['$numerator', '$denominator'] },
+                        // },     // { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+                        // totalLoanMonthly: { $round: ['$totalLoanMonthlyAdd', 2] },
+                        totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
+                        monthlyPayment: {
+                            $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
+                        },
                         totalLoanPayment: 1,
                         bankId: '$_id',
                         _id: 0,
@@ -191,7 +202,7 @@ class LoanEntities extends BaseEntity {
                 },
                 {
                     $addFields: {
-                        debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
+                        debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
                     },
                 },
                 {
