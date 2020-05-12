@@ -7,6 +7,7 @@ import { join } from 'path';
 const prequalification = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     email: { type: String, required: true },
+    grossIncome: { type: Number }, // 98765433
     property: {
         value: { type: Number },
         type: {
