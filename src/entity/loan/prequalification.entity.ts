@@ -244,6 +244,9 @@ class PreLoanEntities extends BaseEntity {
             if (data.length > 0) {
                 // const getPreQualficationId =await
                 payload['grossIncome'] = totalMonthlyIncome;
+                payload['totalLoanMonthly'] = data[0]['totalLoanMonthly'];
+                payload['monthlyPayment'] = data[0]['monthlyPayment'];
+
                 if (payload.preQualificationId) {
                     const criteria = {
                         _id: payload.preQualificationId,

@@ -158,7 +158,8 @@ const prequalification = new Schema({
             coBorrowerMonthlyIncome: { type: Number },
         },
     },
-
+    totalLoanMonthly: { type: Number }, // 437200.5250656446
+    monthlyPayment: { type: Number }, // 437200.5250656446
 
     loan: {
         type: { type: String },
