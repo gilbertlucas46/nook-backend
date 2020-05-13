@@ -255,7 +255,7 @@ class PreLoanEntities extends BaseEntity {
                 if (payload.preQualificationId) {
                     const criteria = {
                         _id: payload.preQualificationId,
-                        userId: userData._id,
+                        // userId: userData._id,
                     };
                     const dataToUpate = {
                         ...payload,

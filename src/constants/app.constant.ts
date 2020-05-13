@@ -244,6 +244,11 @@ export let DATABASE = {
 			TYPE: 'HOME_LOANS',
 			DISPLAY_NAME: 'Home Loans',
 		},
+		STAFF_FAQ: {
+			NUMBER: 4,
+			TYPE: 'STAFF_FAQ',
+			DISPLAY_NAME: 'Staff Faq',
+		},
 
 	},
 
