@@ -260,12 +260,12 @@ class PreLoanEntities extends BaseEntity {
                     const dataToUpate = {
                         ...payload,
                         prequalifiedBanks: data,
-                        createdAt: new Date().getTime(),
-                        updatedAt: new Date().getTime(),
+                        // createdAt: new Date().getTime(),
+                        // updatedAt: new Date().getTime(),
                     };
 
                     const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate);
-                    return updatedData;
+                    return updatedData ? updatedData : null;
                 }
 
                 payload['userId'] = userData._id;
