@@ -238,14 +238,14 @@ export let DATABASE = {
 			TYPE: 'ACCOUNT',
 			DISPLAY_NAME: 'ACCOUNT',
 		},
-		USER_FAQ: {
-			NUMBER: 2,
-			TYPE: 'USER_FAQ',
-			DISPLAY_NAME: 'FAQ',
-		},
+		// USER_FAQ: {
+		// 	NUMBER: 2,
+		// 	TYPE: 'USER_FAQ',
+		// 	DISPLAY_NAME: 'FAQ',
+		// },
 		FAQ: {
 			NUMBER: 2,
-			TYPE: 'USER_FAQ',
+			TYPE: 'FAQ',
 			DISPLAY_NAME: 'FAQ',
 		},
 		HOME_LOANS: {
