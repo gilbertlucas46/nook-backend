@@ -467,6 +467,7 @@ export let loanRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
+					ipAddress: Joi.string(),
 					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					// saveAsDraft: Joi.boolean().required(),
 					applicationStatus: Joi.string().valid([
@@ -798,6 +799,44 @@ export let loanRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'user', 'shuffle', 'banks'],
 			auth: 'DoubleAuth',
 			validate: {
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+
+	},
+	/**
+	 * @desciption create pdf of the home loan application
+	 */
+	{
+		method: 'GET',
+		path: '/v1/user/loan-pdf/{loanId}',
+		handler: async (request, h: ResponseToolkit) => {
+			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const payload = request.params as any;
+				console.log('payloadpayloadpayloadpayloadpayload', payload);
+
+				const data = await LoanController.downloadPdf(payload, userData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'update loan by id',
+			tags: ['api', 'anonymous', 'user', 'user', 'Article'],
+			auth: 'UserAuth',
+			validate: {
+				params: {
+					loanId: Joi.string(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {

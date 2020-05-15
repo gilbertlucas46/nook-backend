@@ -65,6 +65,30 @@ export function checkPermission(adminData, modelName) {
             });
         }
 
+        if (modelName === Constant.DATABASE.PERMISSION.TYPE.HELPCENTER_BANK) {
+            checkReponse = adminData['permission'].some(data => {
+                if (data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELPCENTER_BANK) {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.STAFF;
+                }
+            });
+        }
+
+        if (modelName === Constant.DATABASE.PERMISSION.TYPE.HELPCENTER_STAFF) {
+            checkReponse = adminData['permission'].some(data => {
+                if (data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELPCENTER_STAFF) {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELPCENTER_STAFF;
+                }
+            });
+        }
+
+        if (modelName === Constant.DATABASE.PERMISSION.TYPE.HELPCENTER_USER) {
+            checkReponse = adminData['permission'].some(data => {
+                if (data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELPCENTER_USER) {
+                    return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELPCENTER_USER;
+                }
+            });
+        }
+
         if (!checkReponse || checkReponse === undefined) {
             return Promise.reject(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
         } else
