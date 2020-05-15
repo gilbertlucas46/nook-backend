@@ -168,6 +168,7 @@ const schema = new Schema({
         status: { type: String, enum: Object.keys(CONSTANT.LOAN_PROPERTY_STATUS) },
         developer: { type: String },
     },
+    isSentToSalesforce: { type: Boolean, default: false },
     employmentInfo: {
         type: { type: Schema.Types.String, enum: Object.keys(CONSTANT.EMPLOYMENT_TYPE) },
         tenure: { type: Schema.Types.String, enum: Object.keys(EMPLOYMENT_TENURE) },
@@ -183,7 +184,6 @@ const schema = new Schema({
         grossMonthlyIncome: { type: String },
         provinceState: { type: String },
         country: { type: String },
-        isSentToSalesforce: { type: Boolean, default: false },
         coBorrowerInfo: {
             employmentType: { type: Schema.Types.String, enum: Object.keys(CONSTANT.EMPLOYMENT_TYPE) },
             tin: { type: Schema.Types.String, trim: true },

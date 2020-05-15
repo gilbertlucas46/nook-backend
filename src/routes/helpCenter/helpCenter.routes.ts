@@ -24,8 +24,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 // if (checkPermission === false) {
                 //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
                 // }
-                const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
-
+                const permission = await UniversalFunctions.checkPermission(adminData, payload.type);
 
                 const data = await HelpCenterService.createHelpCenter(payload, adminData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
@@ -48,7 +47,16 @@ export let helpCenterRoute: ServerRoute[] = [
                         // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
+
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
+                    ]),
+                    type: Joi.string().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -254,7 +262,7 @@ export let helpCenterRoute: ServerRoute[] = [
                 const payload = request.params;
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
 
-                const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+                // const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
 
                 const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
                 const responseData = UniversalFunction.formatUserData(data);
@@ -276,6 +284,10 @@ export let helpCenterRoute: ServerRoute[] = [
                         Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
+
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,

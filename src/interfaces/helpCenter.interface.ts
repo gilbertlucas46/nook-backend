@@ -6,6 +6,7 @@ export namespace helpCenterRequest {
         videoUrl: string;
         categoryId: number;
         categoryType: string;
+        type: string;
     }
 
     export interface GetHelpCenter {

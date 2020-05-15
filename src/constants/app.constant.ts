@@ -209,6 +209,10 @@ export let DATABASE = {
 			Article_Category: 'article-categories',
 			loanReferrals: 'loan-referrals',
 			PRE_QUALIFICATION: 'pre-qualifications',
+			HELPCENTER_STAFF: 'help-center-staff',
+			HELPCENTER_USER: 'help-center-user',
+			HELPCENTER_BANK: 'help-center-bank',
+
 		},
 	},
 
@@ -234,9 +238,14 @@ export let DATABASE = {
 			TYPE: 'ACCOUNT',
 			DISPLAY_NAME: 'ACCOUNT',
 		},
+		USER_FAQ: {
+			NUMBER: 2,
+			TYPE: 'USER_FAQ',
+			DISPLAY_NAME: 'FAQ',
+		},
 		FAQ: {
 			NUMBER: 2,
-			TYPE: 'FAQ',
+			TYPE: 'USER_FAQ',
 			DISPLAY_NAME: 'FAQ',
 		},
 		HOME_LOANS: {
@@ -249,7 +258,11 @@ export let DATABASE = {
 			TYPE: 'STAFF_FAQ',
 			DISPLAY_NAME: 'Staff Faq',
 		},
-
+		BANK_FAQ: {
+			NUMBER: 5,
+			TYPE: 'BANK_FAQ',
+			DISPLAY_NAME: 'Bank Faq',
+		},
 	},
 
 

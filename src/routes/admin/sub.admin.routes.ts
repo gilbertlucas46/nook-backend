@@ -11,7 +11,7 @@ const objectSchema = Joi.object({
 		CONSTANT.DATABASE.PERMISSION.TYPE.DASHBOARD,
 		// CONSTANT.DATABASE.PERMISSION.TYPE.PROPERTIES,
 		CONSTANT.DATABASE.PERMISSION.TYPE.LOAN,
-		CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
+		// CONSTANT.DATABASE.PERMISSION.TYPE.HELP_CENTER,
 		CONSTANT.DATABASE.PERMISSION.TYPE.ARTICLE,
 		CONSTANT.DATABASE.PERMISSION.TYPE.USERS,
 		CONSTANT.DATABASE.PERMISSION.TYPE.STAFF,
@@ -20,6 +20,10 @@ const objectSchema = Joi.object({
 		// CONSTANT.DATABASE.PERMISSION.TYPE.Subscriptions,
 		CONSTANT.DATABASE.PERMISSION.TYPE.loanReferrals,
 		CONSTANT.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION,
+
+		CONSTANT.DATABASE.PERMISSION.TYPE.HELPCENTER_BANK,
+		CONSTANT.DATABASE.PERMISSION.TYPE.HELPCENTER_STAFF,
+		CONSTANT.DATABASE.PERMISSION.TYPE.HELPCENTER_USER,
 		// CONSTANT.DATABASE.PERMISSION.TYPE.ENQUIRY,
 	]).required(),
 	accessLevel: Joi.number().valid([CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE]).default(2),
@@ -55,7 +59,7 @@ export let subAdminRoutes: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
-					email: Joi.string().email().required(),
+					email: Joi.string().email().required().lowercase(),
 					firstName: Joi.string().min(1).max(32).required(),
 					lastName: Joi.string().min(1).max(32).required(),
 					phoneNumber: Joi.string().min(7).max(15),

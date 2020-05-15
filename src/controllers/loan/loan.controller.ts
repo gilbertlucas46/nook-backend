@@ -7,7 +7,8 @@ import { LoanRequest } from '@src/interfaces/loan.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Constant from '../../constants/app.constant';
 import * as utils from 'src/utils';
-import { PreQualificationBankE } from '@src/entity/loan/prequalification.entity'
+import { PreQualificationBankE } from '@src/entity/loan/prequalification.entity';
+import { MailManager } from '../../lib/mail.manager';
 
 class LoanControllers extends BaseEntity {
 
@@ -276,6 +277,25 @@ class LoanControllers extends BaseEntity {
     async adminAddPrequalification(payload, adminData) {
         try {
             return await ENTITY.PreQualificationBankE.addBanks(payload, adminData);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+
+    async downloadPdf(payload, userData) {
+        try {
+            const criteria = {
+                _id: payload.loanId,
+            };
+            const getLoanData = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
+            // console.log('getLoanData>>>>>>>>>>>>>>', getLoanData);
+            // return getLoanData;
+
+
+            const mail = new MailManager();
+            mail.generateLoanApplicationform(getLoanData);
+
         } catch (error) {
             return Promise.reject(error);
         }
