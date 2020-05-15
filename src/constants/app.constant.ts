@@ -254,12 +254,12 @@ export let DATABASE = {
 			DISPLAY_NAME: 'Home Loans',
 		},
 		STAFF_FAQ: {
-			NUMBER: 4,
+			NUMBER: 5,
 			TYPE: 'STAFF_FAQ',
 			DISPLAY_NAME: 'Staff Faq',
 		},
 		BANK_FAQ: {
-			NUMBER: 5,
+			NUMBER: 6,
 			TYPE: 'BANK_FAQ',
 			DISPLAY_NAME: 'Bank Faq',
 		},
