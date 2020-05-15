@@ -57,6 +57,8 @@ const helpCenterSchema = new Schema({
             // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
             Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
             Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
+            Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
+            Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
         ],
     },
     categoryType: {
@@ -67,6 +69,10 @@ const helpCenterSchema = new Schema({
             Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.TYPE,
             // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.TYPE,
             Constant.DATABASE.HELP_CENTER_TYPE.FAQ.TYPE,
+
+            Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
 
         ],
         index: true,
