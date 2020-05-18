@@ -287,8 +287,8 @@ export let helpCenterRoute: ServerRoute[] = [
                         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
                         Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
 
-                        // Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
                     ]),
                 },
