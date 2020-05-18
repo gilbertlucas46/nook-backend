@@ -95,7 +95,7 @@ export let helpCenterRoute: ServerRoute[] = [
 
     {
         method: 'GET',
-        path: '/v1/admin/help-center/{id}/{type}',
+        path: '/v1/admin/help-center/{id}',
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
