@@ -258,7 +258,7 @@ export let helpCenterRoute: ServerRoute[] = [
     },
     {
         method: 'GET',
-        path: '/v1/admin/help-center-group/{id}',
+        path: '/v1/admin/help-center-group/{id}/{type}',
         handler: async (request) => {
             try {
                 const payload = request.params;
@@ -291,6 +291,11 @@ export let helpCenterRoute: ServerRoute[] = [
                         // Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
                     ]),
+                    type: Joi.string().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
+                    ])
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
