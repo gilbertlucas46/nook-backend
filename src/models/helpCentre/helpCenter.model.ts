@@ -70,8 +70,8 @@ const helpCenterSchema = new Schema({
             // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.TYPE,
             Constant.DATABASE.HELP_CENTER_TYPE.FAQ.TYPE,
 
-            // Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
-            // Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
             // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
 
         ],
