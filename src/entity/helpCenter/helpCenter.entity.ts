@@ -33,7 +33,7 @@ export class HelpCenterEntity extends BaseEntity {
 
     async getHelpCenterByCategory(payload) {
         try {
-            const { searchTerm, id } = payload;
+            const { searchTerm, id, type } = payload;
             let query;
             if (searchTerm) {
                 query = {
@@ -56,6 +56,7 @@ export class HelpCenterEntity extends BaseEntity {
                 {
                     $match: {
                         categoryId: id,
+                        categoryType: type,
                         $or: [
                             query,
                         ],
