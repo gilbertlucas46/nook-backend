@@ -601,7 +601,7 @@ class PreLoanEntities extends BaseEntity {
             if (!data) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.DEFAULT);
             }
-            return data;
+            return data[0] ? data[0] : {}
 
         } catch (error) {
             return Promise.reject(error);
