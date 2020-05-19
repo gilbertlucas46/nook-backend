@@ -451,10 +451,11 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/user/loan/application',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
 				console.log('payloadpayloadpayloadpayloadpayload', payload);
 
-				const data = await LoanController.updateLoanApplication(payload);
+				const data = await LoanController.updateLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
