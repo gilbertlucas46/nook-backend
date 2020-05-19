@@ -232,17 +232,12 @@ export let DATABASE = {
 		// BLOCKED: 'Blocked',
 	},
 
-	HELP_CENTER_TYPE: {
+	HELP_CENTER_CATEGORY: {
 		ACCOUNT: {
 			NUMBER: 1,
 			TYPE: 'ACCOUNT',
 			DISPLAY_NAME: 'ACCOUNT',
 		},
-		// USER_FAQ: {
-		// 	NUMBER: 2,
-		// 	TYPE: 'USER_FAQ',
-		// 	DISPLAY_NAME: 'FAQ',
-		// },
 		FAQ: {
 			NUMBER: 2,
 			TYPE: 'FAQ',
@@ -253,18 +248,28 @@ export let DATABASE = {
 			TYPE: 'HOME_LOANS',
 			DISPLAY_NAME: 'Home Loans',
 		},
-		STAFF_FAQ: {
-			NUMBER: 5,
-			TYPE: 'STAFF_FAQ',
-			DISPLAY_NAME: 'Staff Faq',
-		},
-		BANK_FAQ: {
-			NUMBER: 6,
-			TYPE: 'BANK_FAQ',
-			DISPLAY_NAME: 'Bank Faq',
-		},
 	},
 
+	HELP_CENTER_TYPE: {
+		// STAFF_FAQ: {
+		// 	NUMBER: 1,
+		// 	TYPE: 'STAFF_FAQ',
+		// 	DISPLAY_NAME: 'Staff Faq',
+		// },
+		// BANK_FAQ: {
+		// 	NUMBER: 2,
+		// 	TYPE: 'BANK_FAQ',
+		// 	DISPLAY_NAME: 'Bank Faq',
+		// },
+		// USER_FAQ: {
+		// 	NUMBER: 3,
+		// 	TYPE: 'USER_FAQ',
+		// 	DISPLAY_NAME: 'FAQ',
+		// },
+		STAFF_FAQ: 'STAFF_FAQ',
+		BANK_FAQ: 'BANK_FAQ',
+		USER_FAQ: 'USER_FAQ',
+	},
 
 	PRICE_LABEL: {
 		DAILY: 'daily',
