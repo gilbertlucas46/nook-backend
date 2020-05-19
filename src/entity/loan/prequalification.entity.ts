@@ -570,7 +570,7 @@ class PreLoanEntities extends BaseEntity {
             const aggregate = [
                 {
                     $match: {
-                        _id: payload.id,
+                        _id: Types.ObjectId(payload.id),
                     },
                 }, {
                     $lookup: {
