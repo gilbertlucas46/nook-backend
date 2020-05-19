@@ -253,7 +253,7 @@ export class HelpCenter {
             let seacrhObject = {};
 
             query['categoryId'] = categoryId;
-            query['types'] = payload.type;
+            query['type'] = payload.type;
 
             if (id) {
                 query['_id'] = {
