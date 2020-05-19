@@ -41,11 +41,12 @@ class LoanApplicationE extends BaseEntity {
      */
     async updateLoanApplication(payload) {
         try {
+
             const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
             // send data to sales-force
             // if (config.get['environment'] === 'production') {
             //     console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
-            this.sendApplication(data);
+            await this.sendApplication(data);
             // }
             return data;
         } catch (error) {
@@ -230,7 +231,6 @@ class LoanApplicationE extends BaseEntity {
 
             console.log('ewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
 
-
             data.personalInfo.creditCard.status = Constant.CREDIT_CARD_STATUS[data.personalInfo.creditCard.status].label;
 
             // gender = gender.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();  //Constant.GENDER.FEMALE[gender].label;
@@ -251,17 +251,21 @@ class LoanApplicationE extends BaseEntity {
                 console.log('civilStatuscivilStatuscivilStatuscivilStatuscivilStatus');
                 data.personalInfo.civilStatus = data.personalInfo.civilStatus.charAt(0).toUpperCase() + data.personalInfo.civilStatus.substr(1).toLowerCase();
             }
+            // console.log("data['employmentInfo']", data['employmentInfo']['coBorrowerInfo']);
 
 
 
-            if (data.employmentInfo.coBorrowerInfo.employmentRank) {
+            // if (data['employmentInfo']['coBorrowerInfo']['employmentRank']) {
+            if (data && data['employmentInfo'] && data['employmentInfo']['coBorrowerInfo'] && data['employmentInfo']['coBorrowerInfo']['employmentRank']) {
+
                 console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>22222222222222', data.employmentInfo.coBorrowerInfo.employmentRank);
                 // console.log(' Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;', Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label);
 
                 data.employmentInfo.coBorrowerInfo.employmentRank = Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;
             }
 
-            if (data.employmentInfo.coBorrowerInfo.employmentType) {
+            // if (data.employmentInfo.coBorrowerInfo.employmentType) {
+            if (data && data['employmentInfo'] && data['employmentInfo']['coBorrowerInfo'] && data['employmentInfo']['coBorrowerInfo']['employmentType']) {
                 console.log('1>>>>>>>>>>>>>>>>');
                 data.employmentInfo.coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[data.employmentInfo.coBorrowerInfo.employmentType].label;
             }
@@ -276,7 +280,8 @@ class LoanApplicationE extends BaseEntity {
             }
 
 
-            if (data.employmentInfo.coBorrowerInfo.companyIndustry) {
+            // if (data.employmentInfo.coBorrowerInfo.companyIndustry) {
+            if (data && data['employmentInfo'] && data['employmentInfo']['coBorrowerInfo'] && data['employmentInfo']['coBorrowerInfo']['companyIndustry']) {
                 console.log('33333333333333333333333333333333333333333333');
                 data.employmentInfo.coBorrowerInfo.companyIndustry = Constant.INDUSTRIES[data.employmentInfo.coBorrowerInfo.companyIndustry].label;
             }
