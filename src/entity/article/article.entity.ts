@@ -353,6 +353,68 @@ export class ArticleClass extends BaseEntity {
         }
     }
 
+    // async getUserArticle(payload) {
+    //     try {
+    //         const {
+    //             type,
+    //             searchTerm,
+    //             categoryId,
+    //             page = 1,
+    //             sortType = -1,
+    //             limit = Constant.SERVER.LIMIT,
+    //         } = payload;
+    //         const sortingType = {
+    //             isFeatured: sortType,
+    //             createdAt: sortType,
+    //         };
+
+    //         if (type) {
+    //             const criteria = {
+    //                 categoryId: Types.ObjectId(Constant.SERVER.SELLING_ARTICLE_ID),
+    //                 status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+    //             };
+    //             return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
+    //         }
+    //         const paginateOptions = { page, limit, skip: null };
+    //         if (page > 1) {
+    //             paginateOptions.skip = (limit * (page - 1)) + 1;
+    //         }
+    //         let $match: object = {
+    //             categoryId: Types.ObjectId(categoryId),
+    //             status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
+    //         };
+    //         // sortingType['isFeatured'] = sortType;
+    //         if (searchTerm) {
+    //             $match = {
+    //                 $and: [
+    //                     $match,
+    //                     {
+    //                         $or: [
+    //                             { title: { $regex: searchTerm, $options: 'i' } },
+    //                             { description: { $regex: searchTerm, $options: 'i' } },
+    //                         ],
+    //                     },
+    //                 ],
+    //             };
+    //         }
+
+    //         const matchPipeline = [
+    //             { $match },
+    //             { $sort: sortingType },
+    //         ];
+    //         const [metaData, data] = await Promise.all([
+    //             page === 1 ? this.DAOManager.findOne('ArticleCategories', { _id: new Types.ObjectId(categoryId) }, {}) : null,
+    //             this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName),
+    //         ]);
+    //         return {
+    //             ...data,
+    //             metaData,
+    //         };
+
+    //     } catch (error) {
+    //         return Promise.reject(error);
+    //     }
+    // }
     async getUserArticle(payload) {
         try {
             const {
@@ -364,8 +426,9 @@ export class ArticleClass extends BaseEntity {
                 limit = Constant.SERVER.LIMIT,
             } = payload;
             const sortingType = {
-                isFeatured: sortType,
-                createdAt: sortType,
+                // isFeatured: sortType,
+                // createdAt: sortType,
+                _id: -1,
             };
 
             if (type) {
@@ -375,7 +438,8 @@ export class ArticleClass extends BaseEntity {
                 };
                 return await this.DAOManager.findAll(this.modelName, criteria, {}, { limit: 3, skip: 0, sort: sortingType });
             }
-            const paginateOptions = { page, limit, skip: null };
+
+            const paginateOptions = { page, limit, skip: 0 };
             if (page > 1) {
                 paginateOptions.skip = (limit * (page - 1)) + 1;
             }
@@ -384,6 +448,7 @@ export class ArticleClass extends BaseEntity {
                 status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
             };
             // sortingType['isFeatured'] = sortType;
+
             if (searchTerm) {
                 $match = {
                     $and: [
@@ -397,17 +462,106 @@ export class ArticleClass extends BaseEntity {
                     ],
                 };
             }
+            console.log('limitlimitlimitlimit', limit, 'LLLLLLLLLLLLL', page);
+
+            console.log('$match$match$match$match$match', $match);
+
+            const data1 = [
+                {
+                    $project: {
+                        count: 1,
+                        total: 1,
+                        results: {
+                            $reduce: {
+                                input: '$list',
+                                initialValue: {
+                                    FEATURED: [],
+                                    LATEST: [],
+                                },
+                                in: {
+                                    $cond: {
+                                        if: {
+                                            $and: [
+                                                {
+                                                    $ne: [{ $size: '$$value.FEATURED' }, 1],
+                                                },
+                                                {
+                                                    $eq: ['$$this.isFeatured', true],
+                                                },
+                                            ],
+                                        },
+                                        then: {
+                                            $mergeObjects: ['$$value', { FEATURED: ['$$this'] }],
+                                        },
+                                        else: {
+                                            $cond: {
+                                                if: {
+                                                    $ne: [{ $size: '$$value.LATEST' }, 6],
+                                                },
+                                                then: {
+                                                    $mergeObjects: ['$$value', { LATEST: { $concatArrays: ['$$value.LATEST', ['$$this']] } }],
+                                                },
+                                                else: {
+                                                    $mergeObjects: ['$$value', { LIST: { $concatArrays: ['$$value.LIST', ['$$this']] } }],
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    $project: {
+                        // metadata: 1,
+                        _id: 1,
+                        LATEST: '$results.LATEST',
+                        FEATURED: '$results.FEATURED',
+                        // LIST: '$results.LIST',
+                        // count: 1,
+                        total: 1,
+                    },
+                },
+            ];
 
             const matchPipeline = [
                 { $match },
-                { $sort: sortingType },
+                {
+                    $group: {
+                        _id: null,
+                        list: {
+                            $push: '$$ROOT',
+                        },
+                        total: { $sum: 1 }
+                    },
+                },
+                { $skip: paginateOptions.skip },
+                { $limit: paginateOptions.limit },
+                ...data1,
+
             ];
+            // const pipeline = [
+            //     {
+            //         $lookup: {
+            //             from: 'articlecategories',
+            //             localField: 'categoryId',
+            //             foreignField: '_id',
+            //             as: 'metadata',
+            //         }
+            //     }
+            // ]
+            console.log('matchPipelinematchPipelinematchPipeline', matchPipeline);
+
             const [metaData, data] = await Promise.all([
                 page === 1 ? this.DAOManager.findOne('ArticleCategories', { _id: new Types.ObjectId(categoryId) }, {}) : null,
-                this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName),
+                // this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName),
+                this.DAOManager.aggregateData(this.modelName, matchPipeline)
+                // this.DAOManager.paginate
             ]);
             return {
-                ...data,
+                // data,
+                data,
                 metaData,
             };
 
@@ -415,6 +569,7 @@ export class ArticleClass extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
 
 
     async getAdminArticle(payload: ArticleRequest.GetArticleById) {

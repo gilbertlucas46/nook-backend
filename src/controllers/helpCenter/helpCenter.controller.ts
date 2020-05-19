@@ -25,7 +25,7 @@ export class HelpCenter {
         try {
             let result: any;
             if (payload.categoryId) {
-                result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
+                result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_CATEGORY, payload.categoryId);
             }
             payload['userId'] = adminData._id;
             payload['categoryType'] = result.TYPE;
