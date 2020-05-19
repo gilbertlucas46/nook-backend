@@ -78,7 +78,7 @@ class LoanControllers extends BaseEntity {
                 userType: userData.type,
                 status: payload.applicationStatus,
                 adminId: userData._id,
-                adminName: userData.firstName + '' + userData.lastName,
+                adminName: userData.firstName + ' ' + userData.lastName,
             };
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
             const dataToSave = {
@@ -101,8 +101,26 @@ class LoanControllers extends BaseEntity {
      * return {data}
      */
 
-    async updateLoanApplication(payload: LoanRequest.AddLoan) {
+    async updateLoanApplication(payload: LoanRequest.AddLoan, userData) {
         try {
+            const dataToUpdate: any = {};
+            // dataToUpdate.$set = { applicationStatus: payload.status };
+            dataToUpdate.$push = {
+                applicationStage: {
+                    userType: userData.type,
+                    status: payload.applicationStatus,
+                    adminId: userData._id,
+                    adminName: userData ? userData.firstName + ' ' + userData.lastName : userData.userName,
+                    approvedAt: new Date().getTime(),
+                },
+            };
+
+            // payload['applicationStage'] = {
+            //     userType: userData.type,
+            //     status: payload.applicationStatus,
+            //     adminId: userData._id,
+            //     adminName: userData.firstName + '' + userData.lastName,
+            // };
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return data['referenceId'];
         } catch (error) {
@@ -193,7 +211,7 @@ class LoanControllers extends BaseEntity {
                     userType: adminData.type,
                     status: payload.status,
                     adminId: adminData._id,
-                    adminName: adminData ? adminData.name : '',
+                    adminName: adminData ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
                     approvedAt: new Date().getTime(),
                 },
             };
