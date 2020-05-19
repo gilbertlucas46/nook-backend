@@ -200,6 +200,7 @@ export class HelpCenter {
                     $facet: {
                         ACCOUNT: [{
                             $match: {
+                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
                                 categoryType: 'ACCOUNT',
                                 $or: [
                                     query,
@@ -211,6 +212,7 @@ export class HelpCenter {
                         ],
                         HOME_LOANS: [{
                             $match: {
+                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
                                 categoryType: 'HOME_LOANS',
                                 $or: [
                                     query,
@@ -223,6 +225,7 @@ export class HelpCenter {
 
                         FAQ: [{
                             $match: {
+                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
                                 categoryType: 'FAQ',
                                 $or: [
                                     query,
