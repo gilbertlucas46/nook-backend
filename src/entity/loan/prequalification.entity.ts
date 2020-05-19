@@ -442,21 +442,96 @@ class PreLoanEntities extends BaseEntity {
                     },
                 },
                 {
+                    $lookup: {
+                        from: 'admins',
+                        let: {
+                            aid: '$userId'
+                        },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: [
+                                            '$_id',
+                                            '$$aid',
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        as: 'adminData',
+                    }
+                },
+                {
+                    $unwind: {
+                        path: '$adminData',
+                        preserveNullAndEmptyArrays: true,
+                    }
+                },
+                {
                     $project: {
                         _id: 1,
                         createdAt: 1,
                         updatedAt: 1,
-                        // prequalifiedBanks: 0,
                         propertyValue: '$property.value',
                         propertyType: '$property.type',
                         referenceId: 1,
-                        firstName: '$userData.firstName',
-                        lastName: '$userData.lastName',
-                        middleName: '$userData.middleName',
-                        userName: '$userData.userName',
-                        No_Of_Banks: { $size: '$prequalifiedBanks' },
-                    },
+                        firstName: {
+                            $cond: {
+                                if: '$userData.firstName',
+                                then: '$userData.firstName',
+                                else: '$adminData.firstName'
+                            }
+                        },
+                        lastName: {
+                            $cond: {
+                                if: '$userData.lastName',
+                                then: '$userData.lastName',
+                                else: '$adminData.lastName',
+                            }
+                        },
+                        middleName: {
+                            $cond: {
+                                if: '$userData.firstName',
+                                then: '$userData.middleName',
+                                else: ''
+                            }
+                        },
+                        userName: {
+                            $cond: {
+                                if: '$userData.userName',
+                                then: '$userData.userName',
+                                else: '',
+                            }
+                        },
+                        email: {
+                            $cond: {
+                                if: '$userData.email',
+                                then: '$userData.email',
+                                else: '$adminData.email',
+                            }
+                        },
+                        No_Of_Banks: {
+                            $size: '$prequalifiedBanks'
+                        }
+                    }
                 }
+                // {
+                //     $project: {
+                //         _id: 1,
+                //         createdAt: 1,
+                //         updatedAt: 1,
+                //         // prequalifiedBanks: 0,
+                //         propertyValue: '$property.value',
+                //         propertyType: '$property.type',
+                //         referenceId: 1,
+                //         firstName: '$userData.firstName',
+                //         lastName: '$userData.lastName',
+                //         middleName: '$userData.middleName',
+                //         userName: '$userData.userName',
+                //         No_Of_Banks: { $size: '$prequalifiedBanks' },
+                //     },
+                // }
 
                 // {
                 //     $project: {
