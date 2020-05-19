@@ -56,7 +56,7 @@ export class HelpCenterEntity extends BaseEntity {
                 {
                     $match: {
                         categoryId: id,
-                        categoryType: type,
+                        type,
                         $or: [
                             query,
                         ],
