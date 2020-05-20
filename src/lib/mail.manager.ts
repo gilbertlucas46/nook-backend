@@ -197,7 +197,7 @@ export class MailManager {
 			console.log('paramssssssssssss', params);
 			console.log('paramssssssssssss', params.personalInfo);
 
-			const checkObjectBlank = Object.keys(params['personalInfo']['coBorrowerInfo']).length === 0 ? false : true;
+			// const checkObjectBlank = Object.keys(params['personalInfo']['coBorrowerInfo']).length === 0 ? false : true;
 
 
 
@@ -225,7 +225,7 @@ export class MailManager {
 					homeOwnership: params.contactInfo['currentAddress']['homeOwnership'],
 
 					// CO-BORROWER’S INFORMATION
-					isCoborrower: checkObjectBlank, //+ ' ' + params['personalInfo']['coBorrowerInfo']['middleName']
+					// isCoborrower: checkObjectBlank, //+ ' ' + params['personalInfo']['coBorrowerInfo']['middleName']
 					coBorrowerFullName: params['personalInfo']['coBorrowerInfo']['firstName'] + ' ' + params['personalInfo']['coBorrowerInfo']['lastName'],
 					relationship: params['personalInfo']['coBorrowerInfo']['relationship'],
 					monthlyIncome: params['personalInfo']['coBorrowerInfo']['monthlyIncome'],
