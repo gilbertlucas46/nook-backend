@@ -815,10 +815,10 @@ export let loanRoute: ServerRoute[] = [
 	 */
 	{
 		method: 'GET',
-		path: '/v1/user/loan-pdf/{loanId}',
+		path: '/v1/admin/loan-pdf/{loanId}',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
-				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = request.params as any;
 				console.log('payloadpayloadpayloadpayloadpayload', payload);
 
@@ -832,7 +832,7 @@ export let loanRoute: ServerRoute[] = [
 		options: {
 			description: 'update loan by id',
 			tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-			auth: 'UserAuth',
+			auth: 'AdminAuth',
 			validate: {
 				params: {
 					loanId: Joi.string(),
