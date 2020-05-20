@@ -317,21 +317,21 @@ class LoanApplicationE extends BaseEntity {
             }
 
             console.log('loanDetailsloanDetails>>>>>>>>>>', data);
-            if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value) {
+            // if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value ) {
 
 
-                const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
-                console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
-                console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
-                if (config.get('environment') === 'production') {
-                    console.log('333333333333333333333333333333333333344444444444kkkkkkkkk');
+            const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
+            console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
+            console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
+            if (config.get('environment') === 'production') {
+                console.log('333333333333333333333333333333333333344444444444kkkkkkkkk');
 
-                    await fetch(config.get('zapier_loanUrl'), {
-                        method: 'post',
-                        body: JSON.stringify(salesforceData),
-                    });
-                }
+                await fetch(config.get('zapier_loanUrl'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceData),
+                });
             }
+            // }
             return;
 
         } catch (error) {
