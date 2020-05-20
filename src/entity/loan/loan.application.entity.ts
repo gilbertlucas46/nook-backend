@@ -323,14 +323,14 @@ class LoanApplicationE extends BaseEntity {
             const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
             console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
             console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
-            if (config.get('environment') === 'production') {
-                console.log('333333333333333333333333333333333333344444444444kkkkkkkkk');
+            // if (config.get('environment') === 'production') {
+            console.log('333333333333333333333333333333333333344444444444kkkkkkkkk');
 
-                await fetch(config.get('zapier_loanUrl'), {
-                    method: 'post',
-                    body: JSON.stringify(salesforceData),
-                });
-            }
+            await fetch(config.get('zapier_loanUrl'), {
+                method: 'post',
+                body: JSON.stringify(salesforceData),
+            });
+            // }
             // }
             return;
 
