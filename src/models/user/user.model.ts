@@ -28,7 +28,7 @@ const userSchema = new Schema({
 	userName: { type: String, index: true, unique: true },
 	email: { type: String, trim: true, index: true, unique: true },
 	password: { type: String, trim: true },
-	firstName: { type: String },
+	firstName: { type: String, index: true },
 	middleName: { type: String },
 	lastName: { type: String },
 	phoneNumber: { type: String },

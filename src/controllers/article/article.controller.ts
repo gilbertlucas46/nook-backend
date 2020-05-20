@@ -42,7 +42,6 @@ class ArticleController {
                 name: payload.name,
             };
             const checkArticleName = await ENTITY.ArticleE.getOneEntity(checkAlreadyAddedCriteria, {});
-            console.log('checkArticleNamecheckArticleNamecheckArticleName', checkArticleName);
 
             if (!checkArticleName) {
                 const dataToSave = {

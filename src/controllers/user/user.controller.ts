@@ -61,7 +61,6 @@ export class UserController extends BaseEntity {
 
 			if (userData && userData._id) {
 				// if (userData.isEmailVerified) {
-				console.log('111111111111111111111111111111');
 				if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
 				}
@@ -72,7 +71,6 @@ export class UserController extends BaseEntity {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
 				}
 				else {
-					console.log('333333333333333333333333333333333333333333');
 					const accessToken = await ENTITY.UserE.createToken(payload, userData);
 					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'Tenant');
 					const formatedData = utils.formatUserData(userData);
@@ -290,7 +288,6 @@ export class UserController extends BaseEntity {
 		// 	...payload,
 		// 	isProfileComplete: true,
 		// });
-		console.log('payloadpayloadpayloadpayload', payload);
 
 		const checkMail = { email: payload.email };
 		const checkUserName = { userName: payload.userName };
@@ -358,7 +355,6 @@ export class UserController extends BaseEntity {
 					{ firstName: { $regex: searchTerm, $options: 'i' } },
 				],
 			};
-			console.log('this.modelNamethis.modelName', this.modelName);
 
 			const usersList = await this.DAOManager.getData('User', seacrhObject, {}, { limit: 10 })
 			console.log('usersListusersListusersList', usersList);

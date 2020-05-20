@@ -157,6 +157,11 @@ const prequalification = new Schema({
             status: { type: Boolean },
             coBorrowerMonthlyIncome: { type: Number },
         },
+        firstName: { type: String },
+        lastNAme: { type: String },
+        midddleName: { type: String },
+        userName: { type: String },
+        email: { type: String },
     },
     totalLoanMonthly: { type: Number }, // 437200.5250656446
     monthlyPayment: { type: Number }, // 437200.5250656446
