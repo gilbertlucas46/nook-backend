@@ -9,9 +9,11 @@ import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { flattenObject } from '@src/utils';
 import fetch from 'node-fetch';
+import { ETIME } from 'constants';
+import { BaseEntity } from '@src/entity/base/base.entity';
 const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 
-export class UserController {
+export class UserController extends BaseEntity {
 	/**
 	 * @function register
 	 * @description function to register agent/owner/tenant
@@ -340,6 +342,30 @@ export class UserController {
 				return { formatedData, accessToken };
 				// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 			}
+		}
+	}
+
+
+	async seacrhUserByAdmin(payload) {
+		try {
+			const { searchTerm } = payload;
+
+			const seacrhObject = {
+				// $and:{status:}
+				$or: [
+					{ userName: { $regex: searchTerm, $options: 'i' } },
+					{ email: { $regex: searchTerm, $options: 'i' } },
+					{ firstName: { $regex: searchTerm, $options: 'i' } },
+				],
+			};
+			console.log('this.modelNamethis.modelName', this.modelName);
+
+			const usersList = await this.DAOManager.getData('User', seacrhObject, {}, { limit: 10 })
+			console.log('usersListusersListusersList', usersList);
+
+			return usersList;
+		} catch (error) {
+			return Promise.reject(error);
 		}
 	}
 }

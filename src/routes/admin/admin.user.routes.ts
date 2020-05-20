@@ -2,7 +2,7 @@ import { ServerRoute } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
-import { AdminUserController } from '../../controllers';
+import { AdminUserController, UserService } from '../../controllers';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 
 export let adminUserRoutes: ServerRoute[] = [
@@ -221,6 +221,39 @@ export let adminUserRoutes: ServerRoute[] = [
 				'hapi-swagger': {
 					responseMessages: Constant.swaggerDefaultResponseMessages,
 				},
+			},
+		},
+	},
+
+	/**
+	 * @description admin add the coborrower info
+	 */
+	{
+		method: 'GET',
+		path: '/v1/admin/search-user',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = request.query as any;
+
+				const data = await UserService.seacrhUserByAdmin(payload);
+				return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Admin user search ',
+			tags: ['api', 'anonymous', 'user', 'bank', 'add', 'prequalification'],
+			auth: 'AdminAuth',
+			validate: {
+				query: {
+					// preQualificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					searchTerm: Joi.string().trim().required(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
 			},
 		},
 	},
