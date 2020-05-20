@@ -356,8 +356,8 @@ export class AdminClass extends BaseEntity {
 				loanGraph1,
 				preQualificationGraph1,
 				totalLoanApplication,
-				// userGraph,
-				userGraphData,
+				userGraph: userGraphData,
+				// userGraphData,
 
 			};
 

@@ -303,7 +303,7 @@ class LoanControllers extends BaseEntity {
     async downloadPdf(payload, userData) {
         try {
             const criteria = {
-                _id: payload.loanId,
+                referenceId: payload.loanId,
             };
             const getLoanData = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
             // console.log('getLoanData>>>>>>>>>>>>>>', getLoanData);
@@ -314,7 +314,6 @@ class LoanControllers extends BaseEntity {
             const data = await mail.generateLoanApplicationform(getLoanData);
             console.log('datadatadatadatadatadatadata', data);
             console.log("loanId: getLoanData['refrenceId'],", getLoanData['referenceId']);
-
 
             return {
                 data,
