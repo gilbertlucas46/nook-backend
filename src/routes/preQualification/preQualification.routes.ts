@@ -495,7 +495,7 @@ export let preQualificationroutes: ServerRoute[] = [
                         },
                         firstName: Joi.string().required(),
                         lastName: Joi.string().required(),
-                        middleName: Joi.string(),
+                        middleName: Joi.string().allow(''),
                         userName: Joi.string().lowercase().required(),
                         email: Joi.string().email().required(),
                     }),
