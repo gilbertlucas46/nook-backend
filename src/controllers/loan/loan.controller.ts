@@ -311,7 +311,15 @@ class LoanControllers extends BaseEntity {
 
 
             const mail = new MailManager();
-            mail.generateLoanApplicationform(getLoanData);
+            const data = await mail.generateLoanApplicationform(getLoanData);
+            console.log('datadatadatadatadatadatadata', data);
+            console.log("loanId: getLoanData['refrenceId'],", getLoanData['referenceId']);
+
+
+            return {
+                data,
+                loanId: getLoanData['referenceId'],
+            };
 
         } catch (error) {
             return Promise.reject(error);

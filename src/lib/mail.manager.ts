@@ -194,47 +194,51 @@ export class MailManager {
 
 	async generateLoanApplicationform(params) {
 		try {
-			console.log('paramssssssssssss', params.dependentsinfo);
+			console.log('paramssssssssssss', params);
+			console.log('paramssssssssssss', params.personalInfo);
+
 			const checkObjectBlank = Object.keys(params['personalInfo']['coBorrowerInfo']).length === 0 ? false : true;
+
+
 
 			const htmlContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'loan-form.html'))
 				.compileFile({
 					applicationId: params['referenceId'],
 					nookLogoUrl: config['host'] + '/images/nooklogo.png',
-					fullName: params['personalInfo']['firstName'] + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' + params['personalInfo']['lastName'],
+					fullName: params['personalInfo']['firstName'] + ' ' + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' + '' + params['personalInfo']['lastName'],
 					civilStatus: params['personalInfo']['civilStatus'],
 					sex: params['personalInfo']['gender'],
 					citizenship: params['personalInfo']['nationality'],
-					birthDate: new Date(params['personalInfo']['birthDate']),
+					birthDate: new Date(params['personalInfo']['birthDate']).toLocaleDateString(),
 
 					phoneNo: params.contactInfo['phoneNumber'],
 					mobileNo: params.contactInfo['mobileNumber'],
 					email: params.contactInfo['email'],
 
-					spouseFullName: params['personalInfo']['spouseInfo']['firstName'] + params['personalInfo']['spouseInfo']['middleName'] ? params['personalInfo']['spouseInfo']['middleName'] : '' + params['personalInfo']['spouseInfo']['lastName'],
+					spouseFullName: params['personalInfo']['spouseInfo']['firstName'] ? params['personalInfo']['spouseInfo']['firstName'] + ' ' + params['personalInfo']['spouseInfo']['lastName'] : 'N/A',
 					motherMaidenName: params['personalInfo']['motherMaidenName'],
 					educationBackground: params['personalInfo']['educationBackground'],
-					spouseBirthDate: new Date(params['personalInfo']['spouseInfo']['birthDate']),
+					spouseBirthDate: params['personalInfo']['spouseInfo']['birthDate'] ? new Date(params['personalInfo']['spouseInfo']['birthDate']).toLocaleDateString() : 'N/A',
 					currentAddress: params.contactInfo['currentAddress']['address'],
 					// permannet address
 
 					homeOwnership: params.contactInfo['currentAddress']['homeOwnership'],
 
 					// CO-BORROWER’S INFORMATION
-					isCoborrower: checkObjectBlank,
-					coBorrowerFullName: params['personalInfo']['coBorrowerInfo']['firstName'] + '' + params['personalInfo']['coBorrowerInfo']['middleName'] ? params['personalInfo']['coBorrowerInfo']['middleName'] : '' + params['personalInfo']['coBorrowerInfo']['lastName'],
+					isCoborrower: checkObjectBlank, //+ ' ' + params['personalInfo']['coBorrowerInfo']['middleName']
+					coBorrowerFullName: params['personalInfo']['coBorrowerInfo']['firstName'] + ' ' + params['personalInfo']['coBorrowerInfo']['lastName'],
 					relationship: params['personalInfo']['coBorrowerInfo']['relationship'],
 					monthlyIncome: params['personalInfo']['coBorrowerInfo']['monthlyIncome'],
-					coBorrowerTIN: params['personalInfo']['coBorrowerInfo']['tin'] ? params['personalInfo']['coBorrowerInfo']['tin'] : 'N/A',
-					coBorrowerSSS: params['personalInfo']['coBorrowerInfo']['sss'] ? params['personalInfo']['coBorrowerInfo']['sss'] : 'N/A',
-					coBorrowerEmploymentType: params['personalInfo']['coBorrowerInfo']['employmentType'] ? params['personalInfo']['coBorrowerInfo']['employmentType'] : 'N/A',
-					coBorrowerEmploymentRank: params['personalInfo']['coBorrowerInfo']['employmentRank'] ? params['personalInfo']['coBorrowerInfo']['employmentRank'] : 'N/A',
-					coBorrowerEmploymentTenure: params['personalInfo']['coBorrowerInfo']['employmentTenure'] ? params['personalInfo']['coBorrowerInfo']['employmentTenure'] : 'N/A',
-					coBorrowerCompanyName: params['personalInfo']['coBorrowerInfo']['companyName'] ? params['personalInfo']['coBorrowerInfo']['companyName'] : 'N/A',
-					coBorrowerCompanyIndustry: params['personalInfo']['coBorrowerInfo']['companyIndustry'] ? params['personalInfo']['coBorrowerInfo']['companyIndustry'] : 'N/A',
-					coBorrowerOfficePhone: params['personalInfo']['coBorrowerInfo']['officePhone'] ? params['personalInfo']['coBorrowerInfo']['officePhone'] : 'N/A',
-					coBorrowerOfficeEmail: params['personalInfo']['coBorrowerInfo']['officeEmail'] ? params['personalInfo']['coBorrowerInfo']['officeEmail'] : 'N/A',
-					coBorrowerOfficeAddress: params['personalInfo']['coBorrowerInfo']['officeAddress'] ? params['personalInfo']['coBorrowerInfo']['officeAddress'] : 'N/A',
+					coBorrowerTIN: params['employmentInfo']['coBorrowerInfo']['tin'] ? params['employmentInfo']['coBorrowerInfo']['tin'] : 'N/A',
+					coBorrowerSSS: params['employmentInfo']['coBorrowerInfo']['sss'] ? params['employmentInfo']['coBorrowerInfo']['sss'] : 'N/A',
+					coBorrowerEmploymentType: params['employmentInfo']['coBorrowerInfo']['employmentType'] ? params['employmentInfo']['coBorrowerInfo']['employmentType'] : 'N/A',
+					coBorrowerEmploymentRank: params['employmentInfo']['coBorrowerInfo']['employmentRank'] ? params['employmentInfo']['coBorrowerInfo']['employmentRank'] : 'N/A',
+					coBorrowerEmploymentTenure: params['employmentInfo']['coBorrowerInfo']['employmentTenure'] ? params['employmentInfo']['coBorrowerInfo']['employmentTenure'] : 'N/A',
+					coBorrowerCompanyName: params['employmentInfo']['coBorrowerInfo']['companyName'] ? params['employmentInfo']['coBorrowerInfo']['companyName'] : 'N/A',
+					coBorrowerCompanyIndustry: params['employmentInfo']['coBorrowerInfo']['companyIndustry'] ? params['employmentInfo']['coBorrowerInfo']['companyIndustry'] : 'N/A',
+					coBorrowerOfficePhone: params['employmentInfo']['coBorrowerInfo']['officePhone'] ? params['employmentInfo']['coBorrowerInfo']['officePhone'] : 'N/A',
+					coBorrowerOfficeEmail: params['employmentInfo']['coBorrowerInfo']['officeEmail'] ? params['employmentInfo']['coBorrowerInfo']['officeEmail'] : 'N/A',
+					coBorrowerOfficeAddress: params['employmentInfo']['coBorrowerInfo']['officeAddress'] ? params['employmentInfo']['coBorrowerInfo']['officeAddress'] : 'N/A',
 
 
 					// loan information
@@ -253,7 +257,7 @@ export class MailManager {
 					// COLLATERAL INFORMATION
 					propertyValue: params['propertyInfo']['value'],
 					propertyType: params['propertyInfo']['type'],
-					proeprtyStatus: params['propertyInfo']['status'],
+					propertyStatus: params['propertyInfo']['status'],
 					propertyDeveloper: params['propertyInfo']['developer'] ? params['propertyInfo']['developer'] : 'N/A',
 					propertyAddress: params['propertyDocuments']['purchasePropertyInfo']['address'],
 					collateralDocStatus: params['propertyDocuments']['purchasePropertyInfo']['collateralDocStatus'],
@@ -266,7 +270,7 @@ export class MailManager {
 					employmentType: params['employmentInfo']['type'],
 					employmentRank: params['employmentInfo']['rank'],
 					employmentTenure: params['employmentInfo']['tenure'],
-					// grossMonthlyIncome:params['']
+					// grossMonthlyIncome:params['']   // to be done
 					tin: params['employmentInfo']['tin'],
 					sss: params['employmentInfo']['sss'],
 					companyName: params['employmentInfo']['companyName'],
@@ -311,10 +315,10 @@ export class MailManager {
 			console.log('htmlContenthtmlContenthtmlContent', typeof htmlContent);
 
 			const htmlData = new PdfGenerator();
-			const a = await htmlData.test(htmlContent, params['referenceId']);
-			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', a);
+			// const a = await htmlData.test(htmlContent, params['referenceId']);
+			// console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', a);
 
-			return;
+			return htmlContent;
 			// await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Password reset request', content: mailContent });
 
 		} catch (error) {
