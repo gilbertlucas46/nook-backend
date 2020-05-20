@@ -644,6 +644,8 @@ export let adminProfileRoute: ServerRoute[] = [
 				console.log('permissio>:::::::::::::::::::::::::::', permission);
 
 				const data = await LoanController.adminUpdateLoanApplication(payload, adminData);
+				console.log('datadatadatadatadata', data);
+
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
