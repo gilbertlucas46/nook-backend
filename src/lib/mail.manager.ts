@@ -226,7 +226,7 @@ export class MailManager {
 
 					// CO-BORROWER’S INFORMATION
 					// isCoborrower: checkObjectBlank, //+ ' ' + params['personalInfo']['coBorrowerInfo']['middleName']
-					coBorrowerFullName: params['personalInfo']['coBorrowerInfo']['firstName'] + ' ' + params['personalInfo']['coBorrowerInfo']['lastName'],
+					// coBorrowerFullName: params['personalInfo']['coBorrowerInfo']['firstName'] + ' ' + params['personalInfo']['coBorrowerInfo']['lastName'],
 					relationship: params['personalInfo']['coBorrowerInfo']['relationship'],
 					monthlyIncome: params['personalInfo']['coBorrowerInfo']['monthlyIncome'],
 					coBorrowerTIN: params['employmentInfo']['coBorrowerInfo']['tin'] ? params['employmentInfo']['coBorrowerInfo']['tin'] : 'N/A',
