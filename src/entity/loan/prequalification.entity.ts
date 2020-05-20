@@ -415,7 +415,26 @@ class PreLoanEntities extends BaseEntity {
                 },
                 {
                     $match: searchObject,
-                }];
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                        // prequalifiedBanks: 0,
+                        propertyValue: '$property.value',
+                        propertyType: '$property.type',
+                        referenceId: 1,
+                        firstName: '$other.firstName',
+                        lastName: '$other.lastName',
+                        middleName: '$other.middleName',
+                        userName: '$other.userName',
+                        email: '$other.email',
+                        No_Of_Banks: { $size: '$prequalifiedBanks' },
+                    },
+                }
+
+            ];
             // { $sort: sortingType },
             const pipeline = [
                 {
@@ -552,7 +571,7 @@ class PreLoanEntities extends BaseEntity {
             //     },
             // ];
             // const data = this.DAOManager.paginatePipeline(this.modelName, query);
-            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
             // const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline, paginateOptions.limit, paginateOptions.skip);
             console.log('datadatadatadatadatadatadata', data);
             return data;

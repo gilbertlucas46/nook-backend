@@ -215,7 +215,6 @@ class LoanControllers extends BaseEntity {
                     approvedAt: new Date().getTime(),
                 },
             };
-            console.log('dataToUpdatedataToUpdatedataToUpdate', dataToUpdate);
 
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
