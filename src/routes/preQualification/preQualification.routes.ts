@@ -494,7 +494,7 @@ export let preQualificationroutes: ServerRoute[] = [
                             coBorrowerMonthlyIncome: Joi.number(),
                         },
                         firstName: Joi.string().required(),
-                        lastNAme: Joi.string().required(),
+                        lastName: Joi.string().required(),
                         midddleName: Joi.string(),
                         userName: Joi.string().required(),
                         email: Joi.string().required(),
