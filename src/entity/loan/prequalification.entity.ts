@@ -172,12 +172,12 @@ class PreLoanEntities extends BaseEntity {
                         processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
                         loanDuration: 1,
-                        // totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
-                        // monthlyPayment: { $divide: ['$numerator', '$denominator'] },
-                        totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
-                        monthlyPayment: {
-                            $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
-                        },
+                        totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+                        monthlyPayment: { $divide: ['$numerator', '$denominator'] },
+                        // totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
+                        // monthlyPayment: {
+                        //     $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
+                        // },
                         totalLoanPayment: 1,
                         bankId: '$_id',
                         _id: 0,
@@ -197,16 +197,16 @@ class PreLoanEntities extends BaseEntity {
                         // },
                     },
                 },
-                // {
-                //     $addFields: {
-                //         debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
-                //     },
-                // },
                 {
                     $addFields: {
-                        debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
+                        debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
                     },
                 },
+                // {
+                //     $addFields: {
+                //         debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
+                //     },
+                // },
                 {
                     $unwind: {
                         path: '$propertySpecification',
@@ -591,29 +591,30 @@ class PreLoanEntities extends BaseEntity {
                     $match: {
                         _id: Types.ObjectId(payload.id),
                     },
-                }, {
-                    $lookup: {
-                        from: 'users',
-                        let: { uid: '$userId' },
-                        pipeline: [{
-                            $match: {
-                                $expr: {
-                                    $eq: [
-                                        '$_id', '$$uid',
-                                    ],
-                                },
-                            },
-                        },
-                        ],
-                        as: 'userdata',
-                    },
                 },
-                {
-                    $unwind: {
-                        path: '$userdata',
-                        preserveNullAndEmptyArrays: true,
-                    },
-                },
+                // {
+                //     $lookup: {
+                //         from: 'users',
+                //         let: { uid: '$userId' },
+                //         pipeline: [{
+                //             $match: {
+                //                 $expr: {
+                //                     $eq: [
+                //                         '$_id', '$$uid',
+                //                     ],
+                //                 },
+                //             },
+                //         },
+                //         ],
+                //         as: 'userdata',
+                //     },
+                // },
+                // {
+                //     $unwind: {
+                //         path: '$userdata',
+                //         preserveNullAndEmptyArrays: true,
+                //     },
+                // },
             ];
             const data = await this.DAOManager.aggregateData(this.modelName, aggregate);
             console.log('dataaaaa', data);
