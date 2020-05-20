@@ -341,10 +341,10 @@ export class AdminClass extends BaseEntity {
 				preQualificationGraph1[data['_id']['month_joined']] = data.number;
 
 			});
-			userGraphData.map(data => {
-				console.log('data>>>>>>>>>3333', data);
-				userGraph[data['_id']['month_joined']] = data.userCount;
-			});
+			// userGraphData.map(data => {
+			// 	console.log('data>>>>>>>>>3333', data);
+			// 	userGraph[data['_id']['month_joined']] = data.userCount;
+			// });
 
 			return {
 				userCount: userCount[0],
@@ -356,7 +356,8 @@ export class AdminClass extends BaseEntity {
 				loanGraph1,
 				preQualificationGraph1,
 				totalLoanApplication,
-				userGraph,
+				// userGraph,
+				userGraphData,
 
 			};
 
