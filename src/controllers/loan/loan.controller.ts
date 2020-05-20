@@ -281,7 +281,7 @@ class LoanControllers extends BaseEntity {
 
             const createHistory = await this.DAOManager.insert('LoanApplicationHistory', payload);
             if (oldData) {
-                return oldData['refrenceId'];
+                return oldData['referenceId'];
             }
             return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             // return data;
