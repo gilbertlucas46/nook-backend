@@ -416,23 +416,23 @@ class PreLoanEntities extends BaseEntity {
                 {
                     $match: searchObject,
                 },
-                {
-                    $project: {
-                        _id: 1,
-                        createdAt: 1,
-                        updatedAt: 1,
-                        // prequalifiedBanks: 0,
-                        propertyValue: '$property.value',
-                        propertyType: '$property.type',
-                        referenceId: 1,
-                        firstName: '$other.firstName',
-                        lastName: '$other.lastName',
-                        middleName: '$other.middleName',
-                        userName: '$other.userName',
-                        email: '$other.email',
-                        No_Of_Banks: { $size: '$prequalifiedBanks' },
-                    },
-                }
+                // {
+                //     $project: {
+                //         _id: 1,
+                //         createdAt: 1,
+                //         updatedAt: 1,
+                //         // prequalifiedBanks: 0,
+                //         propertyValue: '$property.value',
+                //         propertyType: '$property.type',
+                //         referenceId: 1,
+                //         firstName: '$other.firstName',
+                //         lastName: '$other.lastName',
+                //         middleName: '$other.middleName',
+                //         userName: '$other.userName',
+                //         email: '$other.email',
+                //         No_Of_Banks: { $size: '$prequalifiedBanks' },
+                //     },
+                // }
 
             ];
             // { $sort: sortingType },
@@ -459,33 +459,33 @@ class PreLoanEntities extends BaseEntity {
                         preserveNullAndEmptyArrays: true,
                     },
                 },
-                {
-                    $lookup: {
-                        from: 'admins',
-                        let: {
-                            aid: '$userId',
-                        },
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $eq: [
-                                            '$_id',
-                                            '$$aid',
-                                        ],
-                                    },
-                                },
-                            },
-                        ],
-                        as: 'adminData',
-                    },
-                },
-                {
-                    $unwind: {
-                        path: '$adminData',
-                        preserveNullAndEmptyArrays: true,
-                    },
-                },
+                // {
+                //     $lookup: {
+                //         from: 'admins',
+                //         let: {
+                //             aid: '$userId',
+                //         },
+                //         pipeline: [
+                //             {
+                //                 $match: {
+                //                     $expr: {
+                //                         $eq: [
+                //                             '$_id',
+                //                             '$$aid',
+                //                         ],
+                //                     },
+                //                 },
+                //             },
+                //         ],
+                //         as: 'adminData',
+                //     },
+                // },
+                // {
+                //     $unwind: {
+                //         path: '$adminData',
+                //         preserveNullAndEmptyArrays: true,
+                //     },
+                // },
                 {
                     $project: {
                         _id: 1,
@@ -498,35 +498,35 @@ class PreLoanEntities extends BaseEntity {
                             $cond: {
                                 if: '$userData.firstName',
                                 then: '$userData.firstName',
-                                else: '$adminData.firstName',
+                                else: '$other.firstName',
                             },
                         },
                         lastName: {
                             $cond: {
                                 if: '$userData.lastName',
                                 then: '$userData.lastName',
-                                else: '$adminData.lastName',
+                                else: '$other.lastName',
                             },
                         },
                         middleName: {
                             $cond: {
                                 if: '$userData.firstName',
                                 then: '$userData.middleName',
-                                else: '',
+                                else: '$other.middleName',
                             },
                         },
                         userName: {
                             $cond: {
                                 if: '$userData.userName',
                                 then: '$userData.userName',
-                                else: '',
+                                else: '$other.userName',
                             },
                         },
                         email: {
                             $cond: {
                                 if: '$userData.email',
                                 then: '$userData.email',
-                                else: '$adminData.email',
+                                else: '$other.email',
                             },
                         },
                         No_Of_Banks: {
@@ -571,7 +571,7 @@ class PreLoanEntities extends BaseEntity {
             //     },
             // ];
             // const data = this.DAOManager.paginatePipeline(this.modelName, query);
-            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
             // const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline, paginateOptions.limit, paginateOptions.skip);
             console.log('datadatadatadatadatadatadata', data);
             return data;
