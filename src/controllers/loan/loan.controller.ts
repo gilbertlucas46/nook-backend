@@ -308,7 +308,9 @@ class LoanControllers extends BaseEntity {
             const getLoanData = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
             // console.log('getLoanData>>>>>>>>>>>>>>', getLoanData);
             // return getLoanData;
-
+            if (!getLoanData) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID)
+            }
 
             const mail = new MailManager();
             const data = await mail.generateLoanApplicationform(getLoanData);

@@ -835,7 +835,7 @@ export let loanRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				params: {
-					loanId: Joi.string(), // referenceId
+					loanId: Joi.string().trim(), // referenceId
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
