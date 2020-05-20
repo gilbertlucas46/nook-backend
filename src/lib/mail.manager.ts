@@ -205,20 +205,20 @@ export class MailManager {
 				.compileFile({
 					applicationId: params['referenceId'],
 					nookLogoUrl: config['host'] + '/images/nooklogo.png',
-					fullName: params['personalInfo']['firstName'] + ' ' + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' + '' + params['personalInfo']['lastName'],
+					fullName: params['personalInfo']['firstName'] + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' + '' + params['personalInfo']['lastName'],
 					civilStatus: params['personalInfo']['civilStatus'],
 					sex: params['personalInfo']['gender'],
 					citizenship: params['personalInfo']['nationality'],
-					birthDate: new Date(params['personalInfo']['birthDate']).toLocaleDateString(),
+					birthDate: params['personalInfo']['birthDate'] ? new Date(params['personalInfo']['birthDate']).toLocaleDateString() : 'N/A',
 
 					phoneNo: params.contactInfo['phoneNumber'],
 					mobileNo: params.contactInfo['mobileNumber'],
 					email: params.contactInfo['email'],
 
-					spouseFullName: params['personalInfo']['spouseInfo']['firstName'] ? params['personalInfo']['spouseInfo']['firstName'] + ' ' + params['personalInfo']['spouseInfo']['lastName'] : 'N/A',
+					// spouseFullName: params['personalInfo']['spouseInfo']['firstName'] ? params['personalInfo']['spouseInfo']['firstName'] + ' ' + params['personalInfo']['spouseInfo']['lastName'] : 'N/A',
 					motherMaidenName: params['personalInfo']['motherMaidenName'],
 					educationBackground: params['personalInfo']['educationBackground'],
-					spouseBirthDate: params['personalInfo']['spouseInfo']['birthDate'] ? new Date(params['personalInfo']['spouseInfo']['birthDate']).toLocaleDateString() : 'N/A',
+					// spouseBirthDate: params['personalInfo']['spouseInfo']['birthDate'] ? new Date(params['personalInfo']['spouseInfo']['birthDate']).toLocaleDateString() : 'N/A',
 					currentAddress: params.contactInfo['currentAddress']['address'],
 					// permannet address
 
