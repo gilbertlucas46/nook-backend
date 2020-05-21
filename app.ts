@@ -115,7 +115,7 @@ const init = async () => {
 				options: {
 					handler: {
 						directory: {
-							path: process.cwd() + '/src/views/loan'.toString(),
+							path: process.cwd() + '/src/views/loan/'.toString(),
 							listing: false,
 						}
 					},
