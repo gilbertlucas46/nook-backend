@@ -218,6 +218,7 @@ export namespace LoanRequest {
         nookAgent: string;
     }
     export interface AddLoan {
+        userId: string; // in case of admin assign loan-application
         ipAddress: string;
         loanId?: string;
         saveAsDraft?: boolean;

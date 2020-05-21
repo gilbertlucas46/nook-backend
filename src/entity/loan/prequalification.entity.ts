@@ -271,7 +271,7 @@ class PreLoanEntities extends BaseEntity {
                     return updatedData ? updatedData : {};
                 }
 
-                payload['userId'] = userData._id;
+                payload['userId'] = payload.userId ? payload.userId : userData._id;
                 const criteria1 = ({
                     createdAt: {
                         $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
