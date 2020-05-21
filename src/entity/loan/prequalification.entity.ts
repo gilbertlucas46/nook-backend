@@ -592,29 +592,29 @@ class PreLoanEntities extends BaseEntity {
                         _id: Types.ObjectId(payload.id),
                     },
                 },
-                // {
-                //     $lookup: {
-                //         from: 'users',
-                //         let: { uid: '$userId' },
-                //         pipeline: [{
-                //             $match: {
-                //                 $expr: {
-                //                     $eq: [
-                //                         '$_id', '$$uid',
-                //                     ],
-                //                 },
-                //             },
-                //         },
-                //         ],
-                //         as: 'userdata',
-                //     },
-                // },
-                // {
-                //     $unwind: {
-                //         path: '$userdata',
-                //         preserveNullAndEmptyArrays: true,
-                //     },
-                // },
+                {
+                    $lookup: {
+                        from: 'users',
+                        let: { uid: '$userId' },
+                        pipeline: [{
+                            $match: {
+                                $expr: {
+                                    $eq: [
+                                        '$_id', '$$uid',
+                                    ],
+                                },
+                            },
+                        },
+                        ],
+                        as: 'userdata',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$userdata',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
             ];
             const data = await this.DAOManager.aggregateData(this.modelName, aggregate);
             console.log('dataaaaa', data);
