@@ -508,7 +508,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				params: {
-					loanId: Joi.string(),
+					loanId: Joi.string().required().regex(/^[0-9a-fA-F]{24}$/),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
