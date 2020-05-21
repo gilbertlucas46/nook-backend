@@ -43,7 +43,7 @@ class LoanControllers extends BaseEntity {
             const criteria = {
                 saveAsDraft: { $ne: true },
             };
-            payload['userId'] = userData._id;
+            payload['userId'] = payload.userId ? payload.userId : userData._id;
             const criteria1 = ({
                 createdAt: {
                     $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
@@ -82,7 +82,7 @@ class LoanControllers extends BaseEntity {
             };
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
             const dataToSave = {
-                userId: userData._id,
+                userId: payload.userId ? payload.userId : userData._id,
                 data: payload,
                 referenceId: payload['referenceId'],
             };
@@ -314,6 +314,7 @@ class LoanControllers extends BaseEntity {
 
             const mail = new MailManager();
             const data = await mail.generateLoanApplicationform(getLoanData);
+
             console.log('datadatadatadatadatadatadata', data);
             console.log("loanId: getLoanData['refrenceId'],", getLoanData['referenceId']);
 
