@@ -6,140 +6,140 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home Loan Application Form</title>
     <style>
-        .home-loan-form-template {
+        body {
             font-family: Verdana, sans-serif;
             margin: 0px;
             background: #fbfafa !important;
             margin: auto;
         }
 
-        .home-loan-form-template * {
+        * {
             -webkit-print-color-adjust: exact !important;
             color-adjust: exact !important;
         }
 
         @media print {
-            .home-loan-form-template .page-break-before {
+            .page-break-before {
                 page-break-before: always;
             }
         }
 
         @media print {
-            .home-loan-form-template .page-break-after {
+            .page-break-after {
                 page-break-after: always;
             }
         }
 
-        .home-loan-form-template .text-bold {
+        .text-bold {
             font-weight: bold;
         }
 
-        .home-loan-form-template .text-capitalize {
+        .text-capitalize {
             text-transform: capitalize;
         }
 
-        .home-loan-form-template .text-uppercase {
+        .text-uppercase {
             text-transform: uppercase;
         }
 
-        .home-loan-form-template .text-right {
+        .text-right {
             text-align: right;
         }
 
-        .home-loan-form-template .text-center {
+        .text-center {
             text-align: center;
         }
 
-        .home-loan-form-template table {
+        table {
             border-spacing: 0px;
             width: 100%;
         }
 
-        .home-loan-form-template .w-33 {
+        .w-33 {
             width: calc(100%/3);
         }
 
-        .home-loan-form-template .w-50 {
+        .w-50 {
             width: 50%;
         }
 
-        .home-loan-form-template .w-66 {
+        .w-66 {
             width: calc(100% - (100%/3));
         }
 
-        .home-loan-form-template .w-100 {
+        .w-100 {
             width: 100%;
         }
 
-        .home-loan-form-template p {
+        p {
             font-size: 13px;
             color: #231f20 !important;
             margin-bottom: 5px;
             margin-top: 0px;
         }
 
-        .home-loan-form-template td {
+        td {
             font-size: 14px;
             padding: 10px;
             vertical-align: top;
         }
 
-        .home-loan-form-template th {
+        th {
             font-size: 14px;
             padding: 5px 10px;
             text-align: left;
         }
 
-        .home-loan-form-template table.mb-20 {
+        table.mb-20 {
             margin-bottom: 20px;
         }
 
-        .home-loan-form-template tr.br-bottom td {
+        tr.br-bottom td {
             border-bottom: 1px solid #cccccc;
         }
 
-        .home-loan-form-template .main-heading {
+        .main-heading {
             font-size: 15px;
             margin: 0;
         }
 
-        .home-loan-form-template .header {
+        .header {
             padding: 15px 20px;
             height: 80px;
         }
 
-        .home-loan-form-template .header tbody tr td {
+        .header tbody tr td {
             padding: 5px;
             vertical-align: middle;
         }
 
-        .home-loan-form-template .header tbody tr td h2 {
+        .header tbody tr td h2 {
             margin: 0px;
             color: rgba(0, 0, 0, 0.5);
         }
 
-        .home-loan-form-template .header tbody tr td p {
+        .header tbody tr td p {
             line-height: 24px;
         }
 
-        .home-loan-form-template .header tbody tr td img {
+        .header tbody tr td img {
             width: 80px;
             height: auto;
         }
 
-        .home-loan-form-template .text-header {
+        .text-header {
             background-color: #196192;
             padding: 0px 20px;
         }
 
-        .home-loan-form-template .text-header p {
+        .text-header p {
             color: white !important;
             margin: 0px;
             font-size: 14px;
             line-height: 27px;
         }
 
-        .home-loan-form-template .table-content {
+        .table-content {
             padding: 0px 20px;
         }
 
@@ -148,15 +148,15 @@
 </head>
 
 
-<body class="home-loan-form-template">
+<body>
 
-    <table class="table header">
+    <table class="table header" style="border-spacing: 0; width: 100%;">
         <tbody>
             <tr>
-                <td class="w-50">
-                    <h2 class="main-heading">Home Loan Application Form v1 </h2>
+                <td class="w-50" style="width: 50%;">
+                    <h2 class="main-heading" style="font-size: 15px; margin: 0px;">Home Loan Application Form v1 </h2>
                 </td>
-                <td class="w-50 text-right">
+                <td class="w-50 text-right" style="width: 50%; text-align: right;">
                     <img src="{{nookLogoUrl}}" alt="Nook">
                 </td>
             </tr>
@@ -167,13 +167,13 @@
         <tbody>
             <tr>
                 <td class="w-100 text-center">
-                    <h2 class="main-heading" style="margin: 10px 0px;">Application ID: {{applicationId}}</h2>
+                    <h2 class="main-heading" style="margin: 10px 0px;">APPLICATION-ID: {{applicationId}}</h2>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <table class="table text-header">
+    <table class="table text-header" style="background-color: #196192 !important;">
         <tbody>
             <tr>
                 <th class="w-100">
@@ -369,19 +369,6 @@
         </tbody>
     </table>
 
-    <table class="table header page-break-before">
-        <tbody>
-            <tr>
-                <td class="w-50">
-                    <h2 class="main-heading">Home Loan Application Form v1 </h2>
-                </td>
-                <td class="w-50 text-right">
-                    <img src="{{nookLogoUrl}}" alt="Nook">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
     <table class="table text-header">
         <tbody>
             <tr>
@@ -562,19 +549,6 @@
                 <td class="w-33">
                     <p class="text-bold text-capitalize">Office Email</p>
                     <span>{{officeEmail}}</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <table class="table header page-break-before">
-        <tbody>
-            <tr>
-                <td class="w-50">
-                    <h2 class="main-heading">Home Loan Application Form v1 </h2>
-                </td>
-                <td class="w-50 text-right">
-                    <img src="{{nookLogoUrl}}" alt="Nook">
                 </td>
             </tr>
         </tbody>
