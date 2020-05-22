@@ -399,7 +399,7 @@ export let preQualificationroutes: ServerRoute[] = [
             validate: {
                 payload: {
                     preQualificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-                    userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                    userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
                     property: Joi.object().keys({
                         value: Joi.number().min(50000),
                         type: Joi.string().valid([
