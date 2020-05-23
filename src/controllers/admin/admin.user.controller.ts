@@ -52,7 +52,6 @@ class AdminUserControllers {
                 }
             }
         } catch (error) {
-            console.log('errorerrorerrorerror', error);
             return Promise.reject(error);
         }
     }

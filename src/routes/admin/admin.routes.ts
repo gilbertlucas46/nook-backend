@@ -508,7 +508,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				params: {
-					loanId: Joi.string(),
+					loanId: Joi.string().required().regex(/^[0-9a-fA-F]{24}$/),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -644,6 +644,8 @@ export let adminProfileRoute: ServerRoute[] = [
 				console.log('permissio>:::::::::::::::::::::::::::', permission);
 
 				const data = await LoanController.adminUpdateLoanApplication(payload, adminData);
+				console.log('datadatadatadatadata', data);
+
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
@@ -983,6 +985,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
+					userId: Joi.string(),  // in case of admin only
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),

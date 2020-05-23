@@ -7,6 +7,7 @@ import * as Joi from 'joi';
 import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
 // import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS } from '../../constants';
 import { LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, EMPLOYMENT_TYPE, EMPLOYMENT_RANK, CREDIT_CARD_STATUS, EMPLOYMENT_TENURE, NATIONALITY } from '@src/constants';
+import { UserService } from '@src/controllers';
 
 const objectSchema = Joi.object({
     // accessLevel: Joi.number().valid([CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE]).default(2),
@@ -372,11 +373,8 @@ export let preQualificationroutes: ServerRoute[] = [
         },
     },
 
-
-
-
     /**
-     *
+     * @description admin add prequalification
      */
 
     {
@@ -401,6 +399,7 @@ export let preQualificationroutes: ServerRoute[] = [
             validate: {
                 payload: {
                     preQualificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+                    userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
                     property: Joi.object().keys({
                         value: Joi.number().min(50000),
                         type: Joi.string().valid([
@@ -495,6 +494,11 @@ export let preQualificationroutes: ServerRoute[] = [
                             status: Joi.boolean(),
                             coBorrowerMonthlyIncome: Joi.number(),
                         },
+                        firstName: Joi.string().required(),
+                        lastName: Joi.string().required(),
+                        middleName: Joi.string().allow(''),
+                        userName: Joi.string().lowercase().required(),
+                        email: Joi.string().email().required(),
                     }),
 
                     loan: Joi.object().keys({
@@ -504,6 +508,7 @@ export let preQualificationroutes: ServerRoute[] = [
                         amount: Joi.number(),
                         fixingPeriod: Joi.number(),
                     }),
+                    // userId: Joi.string(), // in case of co-borrower
 
                     // prequalifiedBanks: Joi.array().items(objectSchema),
                 },

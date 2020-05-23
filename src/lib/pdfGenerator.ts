@@ -36,8 +36,8 @@ export class PdfGenerator {
 
     async test(htmlFile, fileName) {
         // console.log('htmlFilehtmlFilehtmlFilehtmlFilehtmlFile', htmlFile);
-        console.log('LLLLLLLLLLLLLLLLLLLLL', htmlFile, 'KKKKKKKKKKK', typeof htmlFile);
-        console.log('fileNamefileNamefileNamefileName', fileName);
+        // console.log('LLLLLLLLLLLLLLLLLLLLL', htmlFile, 'KKKKKKKKKKK', typeof htmlFile);
+        // console.log('fileNamefileNamefileNamefileName', fileName);
 
         const buf = await Buffer.from(htmlFile).toString();
         // const aa =
@@ -62,7 +62,7 @@ export class PdfGenerator {
         // const options = { format: 'Letter' };
 
 
-        const a = pdf.create(htmlFile, { format: 'Letter' }).toFile('./' + fileName + '.pdf', function (err, res) {
+        const a = pdf.create(htmlFile, { format: 'Letter' }).toFile(SERVER.TEMPLATE_PATH + '/loan/' + fileName + '.pdf', function (err, res) {
             if (err) return console.log(err);
             console.log('res', res); // { filename: '/app/businesscard.pdf' }
         });

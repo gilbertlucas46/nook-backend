@@ -11,6 +11,7 @@ export namespace helpCenterRequest {
 
     export interface GetHelpCenter {
         id: number;
+        type: string,
     }
     export interface DeleteHelpCenter {
         id: string;

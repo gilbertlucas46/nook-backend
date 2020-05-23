@@ -6,6 +6,9 @@ import * as UniversalFunctions from '../../utils';
 import * as Constant from '../../constants';
 import * as Joi from 'joi';
 export let helpCenterRoute: ServerRoute[] = [
+    /**
+     * @description admin add helpcenter
+     */
     {
         method: 'POST',
         path: '/v1/admin/help-center',
@@ -43,30 +46,26 @@ export let helpCenterRoute: ServerRoute[] = [
                     videoUrl: Joi.string().trim().allow(''),
                     description: Joi.string().trim(),
                     categoryId: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
-
-
-                        // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
                     ]),
-                    // type: Joi.string().valid([
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
-                    //     Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
-                    // ]),
+                    type: Joi.string().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+                    ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
         },
     },
-
+    /**
+     * @desciption user get helpcenter by _id
+     */
     {
         method: 'GET',
         path: '/v1/user/help-center/{id}',
@@ -92,7 +91,9 @@ export let helpCenterRoute: ServerRoute[] = [
             },
         },
     },
-
+    /**
+     * @description admin get helpcenter by _id
+     */
     {
         method: 'GET',
         path: '/v1/admin/help-center/{id}',
@@ -125,13 +126,16 @@ export let helpCenterRoute: ServerRoute[] = [
             validate: {
                 params: {
                     id: Joi.string(),
+                    type: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
             },
         },
     },
-
+    /**
+     * @description admin delete helpcenter permanently 
+     */
     {
         method: 'DELETE',
         path: '/v1/admin/help-center/{id}',
@@ -170,7 +174,9 @@ export let helpCenterRoute: ServerRoute[] = [
             },
         },
     },
-
+    /**
+     * @description admin update helpcenter
+     */
     {
         method: 'PATCH',
         path: '/v1/admin/help-center/{id}',
@@ -201,7 +207,7 @@ export let helpCenterRoute: ServerRoute[] = [
             }
         },
         options: {
-            description: 'delete the help ceneter by id ',
+            description: 'admin update the help ceneter by id ',
             tags: ['api', 'anonymous', 'user', 'delete helpcenter'],
             auth: 'AdminAuth',
             validate: {
@@ -213,14 +219,18 @@ export let helpCenterRoute: ServerRoute[] = [
                     videoUrl: Joi.string().trim().allow('').optional(),
                     description: Joi.string(),
                     categoryId: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
-
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
                     ]),
+                    type: Joi.string().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+
+                    ])
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -256,13 +266,19 @@ export let helpCenterRoute: ServerRoute[] = [
             },
         },
     },
+    /**
+     * @description admin get helpcenter by group
+     */
     {
         method: 'GET',
-        path: '/v1/admin/help-center-group/{id}',
+        path: '/v1/admin/help-center-group/{id}/{type}',
         handler: async (request) => {
             try {
-                const payload = request.params;
+                const payload = {
+                    ...request.params,
+                }
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
+                console.log('payloadpayloadpayload', payload);
 
                 // const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
 
@@ -281,16 +297,21 @@ export let helpCenterRoute: ServerRoute[] = [
             validate: {
                 params: {
                     id: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
 
                         // Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
-                    ]),
+                    ]).default(Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER),
+                    type: Joi.string().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+                    ]).default(Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ)
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -318,11 +339,11 @@ export let helpCenterRoute: ServerRoute[] = [
             validate: {
                 params: {
                     id: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
 
                     ]),
                 },
@@ -391,11 +412,11 @@ export let helpCenterRoute: ServerRoute[] = [
                 query: {
                     // helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     categoryId: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
                     ]),
                     searchTerm: Joi.string(),
                 },
@@ -426,12 +447,15 @@ export let helpCenterRoute: ServerRoute[] = [
                 query: {
                     // helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                     categoryId: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.ACCOUNT.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.HOME_LOANS.NUMBER,
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
                         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_TYPE.FAQ.NUMBER,
-                    ]).required(),
+                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
+                    ]),
+                    type: Joi.string().valid([
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+                    ]).default(Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ),
                     searchTerm: Joi.string(),
                     id: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
                 },
