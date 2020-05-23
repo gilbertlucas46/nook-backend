@@ -184,10 +184,53 @@ class LoanControllers extends BaseEntity {
 
     async loanById(payload: LoanRequest.LoanById, userData) {
         try {
-            const criteria = { _id: payload.loanId };
-            const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
+            const criteria = { _id: Types.ObjectId(payload.loanId) };
+
+            const aggregate = [{
+                $match: criteria,
+            }, {
+                $project: {
+                    applicationStage: 0,
+                }
+            }, {
+                $lookup: {
+                    from: 'admins',
+                    let: { aid: '$assignedTo' },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ['$_id', '$$aid'],
+                                },
+                            },
+                        },
+                        {
+                            $project: {
+                                email: 1,
+                                firstName: 1,
+                                lastName: 1,
+                                status: 1,
+                            }
+                        }
+                    ],
+                    as: 'adminData',
+                },
+            },
+            {
+                $unwind: {
+                    path: '$adminData',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            ];
+            console.log('aggregateaggregateaggregate', aggregate);
+
+            const data = await ENTITY.LoanApplicationEntity.aggregate(aggregate);
+            console.log('datadatadata', data);
+
+            // const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
             if (!data) return Promise.reject(Contsant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
-            else return data;
+            else return data[0] ? data[0] : {};
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
