@@ -9,9 +9,11 @@ import { MailManager } from '@src/lib/mail.manager';
 import { UserRequest } from '@src/interfaces/user.interface';
 import { flattenObject } from '@src/utils';
 import fetch from 'node-fetch';
+import { ETIME } from 'constants';
+import { BaseEntity } from '@src/entity/base/base.entity';
 const pswdCert: string = config.get('jwtSecret.app.forgotToken');
 
-export class UserController {
+export class UserController extends BaseEntity {
 	/**
 	 * @function register
 	 * @description function to register agent/owner/tenant
@@ -59,7 +61,6 @@ export class UserController {
 
 			if (userData && userData._id) {
 				// if (userData.isEmailVerified) {
-				console.log('111111111111111111111111111111');
 				if (userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED);
 				}
@@ -70,7 +71,6 @@ export class UserController {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
 				}
 				else {
-					console.log('333333333333333333333333333333333333333333');
 					const accessToken = await ENTITY.UserE.createToken(payload, userData);
 					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'Tenant');
 					const formatedData = utils.formatUserData(userData);
@@ -288,7 +288,6 @@ export class UserController {
 		// 	...payload,
 		// 	isProfileComplete: true,
 		// });
-		console.log('payloadpayloadpayloadpayload', payload);
 
 		const checkMail = { email: payload.email };
 		const checkUserName = { userName: payload.userName };
@@ -340,6 +339,29 @@ export class UserController {
 				return { formatedData, accessToken };
 				// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 			}
+		}
+	}
+
+
+	async seacrhUserByAdmin(payload) {
+		try {
+			const { searchTerm } = payload;
+
+			const seacrhObject = {
+				// $and:{status:}
+				$or: [
+					{ userName: { $regex: searchTerm, $options: 'i' } },
+					{ email: { $regex: searchTerm, $options: 'i' } },
+					{ firstName: { $regex: searchTerm, $options: 'i' } },
+				],
+			};
+
+			const usersList = await this.DAOManager.getData('User', seacrhObject, {}, { limit: 10 })
+			console.log('usersListusersListusersList', usersList);
+
+			return usersList;
+		} catch (error) {
+			return Promise.reject(error);
 		}
 	}
 }

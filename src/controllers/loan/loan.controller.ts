@@ -43,7 +43,7 @@ class LoanControllers extends BaseEntity {
             const criteria = {
                 saveAsDraft: { $ne: true },
             };
-            payload['userId'] = userData._id;
+            payload['userId'] = payload.userId ? payload.userId : userData._id;
             const criteria1 = ({
                 createdAt: {
                     $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
@@ -78,11 +78,11 @@ class LoanControllers extends BaseEntity {
                 userType: userData.type,
                 status: payload.applicationStatus,
                 adminId: userData._id,
-                adminName: userData.firstName + '' + userData.lastName,
+                adminName: userData.firstName + ' ' + userData.lastName,
             };
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
             const dataToSave = {
-                userId: userData._id,
+                userId: payload.userId ? payload.userId : userData._id,
                 data: payload,
                 referenceId: payload['referenceId'],
             };
@@ -101,8 +101,26 @@ class LoanControllers extends BaseEntity {
      * return {data}
      */
 
-    async updateLoanApplication(payload: LoanRequest.AddLoan) {
+    async updateLoanApplication(payload: LoanRequest.AddLoan, userData) {
         try {
+            const dataToUpdate: any = {};
+            // dataToUpdate.$set = { applicationStatus: payload.status };
+            dataToUpdate.$push = {
+                applicationStage: {
+                    userType: userData.type,
+                    status: payload.applicationStatus,
+                    adminId: userData._id,
+                    adminName: userData ? userData.firstName + ' ' + userData.lastName : userData.userName,
+                    approvedAt: new Date().getTime(),
+                },
+            };
+
+            // payload['applicationStage'] = {
+            //     userType: userData.type,
+            //     status: payload.applicationStatus,
+            //     adminId: userData._id,
+            //     adminName: userData.firstName + '' + userData.lastName,
+            // };
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
             return data['referenceId'];
         } catch (error) {
@@ -193,11 +211,10 @@ class LoanControllers extends BaseEntity {
                     userType: adminData.type,
                     status: payload.status,
                     adminId: adminData._id,
-                    adminName: adminData ? adminData.name : '',
+                    adminName: adminData ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
                     approvedAt: new Date().getTime(),
                 },
             };
-            console.log('dataToUpdatedataToUpdatedataToUpdate', dataToUpdate);
 
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
@@ -264,7 +281,7 @@ class LoanControllers extends BaseEntity {
 
             const createHistory = await this.DAOManager.insert('LoanApplicationHistory', payload);
             if (oldData) {
-                return oldData['refrenceId'];
+                return oldData['referenceId'];
             }
             return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             // return data;
@@ -286,15 +303,25 @@ class LoanControllers extends BaseEntity {
     async downloadPdf(payload, userData) {
         try {
             const criteria = {
-                _id: payload.loanId,
+                referenceId: payload.loanId,
             };
             const getLoanData = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
             // console.log('getLoanData>>>>>>>>>>>>>>', getLoanData);
             // return getLoanData;
-
+            if (!getLoanData) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID)
+            }
 
             const mail = new MailManager();
-            mail.generateLoanApplicationform(getLoanData);
+            const data = await mail.generateLoanApplicationform(getLoanData);
+
+            console.log('datadatadatadatadatadatadata', data);
+            console.log("loanId: getLoanData['refrenceId'],", getLoanData['referenceId']);
+
+            return {
+                data,
+                loanId: getLoanData['referenceId'],
+            };
 
         } catch (error) {
             return Promise.reject(error);

@@ -7,6 +7,7 @@ import { flattenObject } from '@src/utils';
 import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
 import fetch from 'node-fetch';
 import * as config from 'config';
+import { ObjectId } from 'bson';
 
 class PreLoanEntities extends BaseEntity {
     constructor() {
@@ -270,7 +271,7 @@ class PreLoanEntities extends BaseEntity {
                     return updatedData ? updatedData : {};
                 }
 
-                payload['userId'] = userData._id;
+                payload['userId'] = payload.userId ? payload.userId : userData._id;
                 const criteria1 = ({
                     createdAt: {
                         $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
@@ -313,7 +314,7 @@ class PreLoanEntities extends BaseEntity {
                     updatedAt: new Date().getTime(),
                 };
 
-                let data1 = await this.DAOManager.insert(this.modelName, dataToSave);
+                const data1 = await this.DAOManager.insert(this.modelName, dataToSave);
                 // console.log('data1.work: ', data1.work);
 
                 // data1 = data1.toObject();
@@ -326,12 +327,10 @@ class PreLoanEntities extends BaseEntity {
                 console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
                 console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
 
-
                 fetch(config.get('zapier_prequalificationUrl'), {
                     method: 'post',
                     body: JSON.stringify(salesforceData),
                 });
-
 
                 return data1['_id'];
             }
@@ -416,7 +415,26 @@ class PreLoanEntities extends BaseEntity {
                 },
                 {
                     $match: searchObject,
-                }];
+                },
+                // {
+                //     $project: {
+                //         _id: 1,
+                //         createdAt: 1,
+                //         updatedAt: 1,
+                //         // prequalifiedBanks: 0,
+                //         propertyValue: '$property.value',
+                //         propertyType: '$property.type',
+                //         referenceId: 1,
+                //         firstName: '$other.firstName',
+                //         lastName: '$other.lastName',
+                //         middleName: '$other.middleName',
+                //         userName: '$other.userName',
+                //         email: '$other.email',
+                //         No_Of_Banks: { $size: '$prequalifiedBanks' },
+                //     },
+                // }
+
+            ];
             // { $sort: sortingType },
             const pipeline = [
                 {
@@ -441,22 +459,97 @@ class PreLoanEntities extends BaseEntity {
                         preserveNullAndEmptyArrays: true,
                     },
                 },
+                // {
+                //     $lookup: {
+                //         from: 'admins',
+                //         let: {
+                //             aid: '$userId',
+                //         },
+                //         pipeline: [
+                //             {
+                //                 $match: {
+                //                     $expr: {
+                //                         $eq: [
+                //                             '$_id',
+                //                             '$$aid',
+                //                         ],
+                //                     },
+                //                 },
+                //             },
+                //         ],
+                //         as: 'adminData',
+                //     },
+                // },
+                // {
+                //     $unwind: {
+                //         path: '$adminData',
+                //         preserveNullAndEmptyArrays: true,
+                //     },
+                // },
                 {
                     $project: {
                         _id: 1,
                         createdAt: 1,
                         updatedAt: 1,
-                        // prequalifiedBanks: 0,
                         propertyValue: '$property.value',
                         propertyType: '$property.type',
                         referenceId: 1,
-                        firstName: '$userData.firstName',
-                        lastName: '$userData.lastName',
-                        middleName: '$userData.middleName',
-                        userName: '$userData.userName',
-                        No_Of_Banks: { $size: '$prequalifiedBanks' },
+                        firstName: {
+                            $cond: {
+                                if: '$userData.firstName',
+                                then: '$userData.firstName',
+                                else: '$other.firstName',
+                            },
+                        },
+                        lastName: {
+                            $cond: {
+                                if: '$userData.lastName',
+                                then: '$userData.lastName',
+                                else: '$other.lastName',
+                            },
+                        },
+                        middleName: {
+                            $cond: {
+                                if: '$userData.firstName',
+                                then: '$userData.middleName',
+                                else: '$other.middleName',
+                            },
+                        },
+                        userName: {
+                            $cond: {
+                                if: '$userData.userName',
+                                then: '$userData.userName',
+                                else: '$other.userName',
+                            },
+                        },
+                        email: {
+                            $cond: {
+                                if: '$userData.email',
+                                then: '$userData.email',
+                                else: '$other.email',
+                            },
+                        },
+                        No_Of_Banks: {
+                            $size: '$prequalifiedBanks',
+                        },
                     },
-                }
+                },
+                // {
+                //     $project: {
+                //         _id: 1,
+                //         createdAt: 1,
+                //         updatedAt: 1,
+                //         // prequalifiedBanks: 0,
+                //         propertyValue: '$property.value',
+                //         propertyType: '$property.type',
+                //         referenceId: 1,
+                //         firstName: '$userData.firstName',
+                //         lastName: '$userData.lastName',
+                //         middleName: '$userData.middleName',
+                //         userName: '$userData.userName',
+                //         No_Of_Banks: { $size: '$prequalifiedBanks' },
+                //     },
+                // }
 
                 // {
                 //     $project: {
@@ -487,18 +580,48 @@ class PreLoanEntities extends BaseEntity {
         }
     }
 
-
     async preLoanDetail(payload) {
         try {
             const query = {
                 _id: payload.id,
             };
-            const data = await this.DAOManager.findOne(this.modelName, query, {});
+            // const data = await this.DAOManager.findOne(this.modelName, query, {});
+            const aggregate = [
+                {
+                    $match: {
+                        _id: Types.ObjectId(payload.id),
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'users',
+                        let: { uid: '$userId' },
+                        pipeline: [{
+                            $match: {
+                                $expr: {
+                                    $eq: [
+                                        '$_id', '$$uid',
+                                    ],
+                                },
+                            },
+                        },
+                        ],
+                        as: 'userdata',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$userdata',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+            ];
+            const data = await this.DAOManager.aggregateData(this.modelName, aggregate);
             console.log('dataaaaa', data);
             if (!data) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.DEFAULT);
             }
-            return data;
+            return data[0] ? data[0] : {}
 
         } catch (error) {
             return Promise.reject(error);
@@ -517,7 +640,7 @@ class PreLoanEntities extends BaseEntity {
             const paginateOptions = {
                 page: page || 1,
                 limit: limit || Constant.SERVER.LIMIT,
-            }
+            };
 
             const matchCondition: any = {};
             if (fromDate && toDate) { matchCondition['createdAt'] = { $gte: fromDate, $lte: toDate }; }

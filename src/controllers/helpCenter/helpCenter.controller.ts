@@ -25,7 +25,7 @@ export class HelpCenter {
         try {
             let result: any;
             if (payload.categoryId) {
-                result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
+                result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_CATEGORY, payload.categoryId);
             }
             payload['userId'] = adminData._id;
             payload['categoryType'] = result.TYPE;
@@ -200,6 +200,7 @@ export class HelpCenter {
                     $facet: {
                         ACCOUNT: [{
                             $match: {
+                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
                                 categoryType: 'ACCOUNT',
                                 $or: [
                                     query,
@@ -211,6 +212,7 @@ export class HelpCenter {
                         ],
                         HOME_LOANS: [{
                             $match: {
+                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
                                 categoryType: 'HOME_LOANS',
                                 $or: [
                                     query,
@@ -223,6 +225,7 @@ export class HelpCenter {
 
                         FAQ: [{
                             $match: {
+                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
                                 categoryType: 'FAQ',
                                 $or: [
                                     query,
@@ -250,6 +253,7 @@ export class HelpCenter {
             let seacrhObject = {};
 
             query['categoryId'] = categoryId;
+            query['type'] = payload.type;
 
             if (id) {
                 query['_id'] = {

@@ -451,10 +451,11 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/user/loan/application',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
 				console.log('payloadpayloadpayloadpayloadpayload', payload);
 
-				const data = await LoanController.updateLoanApplication(payload);
+				const data = await LoanController.updateLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
@@ -814,10 +815,10 @@ export let loanRoute: ServerRoute[] = [
 	 */
 	{
 		method: 'GET',
-		path: '/v1/user/loan-pdf/{loanId}',
+		path: '/v1/admin/loan-pdf/{loanId}',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
-				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = request.params as any;
 				console.log('payloadpayloadpayloadpayloadpayload', payload);
 
@@ -831,10 +832,10 @@ export let loanRoute: ServerRoute[] = [
 		options: {
 			description: 'update loan by id',
 			tags: ['api', 'anonymous', 'user', 'user', 'Article'],
-			auth: 'UserAuth',
+			auth: 'AdminAuth',
 			validate: {
 				params: {
-					loanId: Joi.string(),
+					loanId: Joi.string().trim(), // referenceId
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

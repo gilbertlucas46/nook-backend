@@ -339,12 +339,20 @@ export class AdminClass extends BaseEntity {
 			preQualificationGraph.map(data => {
 				console.log('data>>>>>>>>>222', data);
 				preQualificationGraph1[data['_id']['month_joined']] = data.number;
-
 			});
 			userGraphData.map(data => {
 				console.log('data>>>>>>>>>3333', data);
 				userGraph[data['_id']['month_joined']] = data.userCount;
 			});
+			function clean(obj) {
+				for (const propName in userGraph) {
+					if (userGraph[propName] === null || userGraph[propName] === undefined || userGraph[propName] === 0) {
+						delete userGraph[propName];
+					}
+				}
+			}
+
+			clean(userGraph);
 
 			return {
 				userCount: userCount[0],
@@ -357,6 +365,7 @@ export class AdminClass extends BaseEntity {
 				preQualificationGraph1,
 				totalLoanApplication,
 				userGraph,
+				// userGraphData,
 
 			};
 
