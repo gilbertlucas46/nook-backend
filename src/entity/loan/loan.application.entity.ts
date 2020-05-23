@@ -233,6 +233,14 @@ class LoanApplicationE extends BaseEntity {
                                 }
                             },
                         },
+                        {
+                            $project: {
+                                email: 1,
+                                firstName: 1,
+                                lastName: 1,
+                                status: 1,
+                            },
+                        }
                     ],
                     as: 'adminData',
                 },
