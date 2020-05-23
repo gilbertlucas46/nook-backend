@@ -308,7 +308,7 @@ class PreLoanEntities extends BaseEntity {
                 const dataToSave = {
                     ...payload,
                     email: userData.email,
-                    userId: userData._id,
+                    userId: payload.userId ? payload.userId : userData._id,
                     prequalifiedBanks: data,
                     createdAt: new Date().getTime(),
                     updatedAt: new Date().getTime(),
