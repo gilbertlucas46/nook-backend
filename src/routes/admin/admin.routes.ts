@@ -412,17 +412,22 @@ export let adminProfileRoute: ServerRoute[] = [
 	 */
 	{
 		method: 'PATCH',
-		path: '/v1/admin/loan/{loanId}/{status}',
+		path: '/v1/admin/loan',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: AdminRequest.IUpdateLoanRequest = request.params as any;
+				// {
+				// 	// ...request.query as any,
+				// 	...request.params,
+				// }
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await AdminStaffEntity.checkPermission(payload.permission);
 				// }
+				console.log('payloadpayload', payload);
 
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
-				console.log('permissio>:::::::::::::::::::::::::::', permission);
+				// console.log('permissio>:::::::::::::::::::::::::::', permission);
 
 
 
@@ -438,8 +443,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
 			auth: 'AdminAuth',
 			validate: {
-				params: {
-					loanId: Joi.string(),
+				query: {
+					loanId: Joi.string().required(),
 					status: Joi.string().valid([
 						// Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING,
 						// Constant.DATABASE.LOAN_APPLICATION_STATUS.REJECTED,
@@ -456,12 +461,16 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
+						'',
+					]),
+					staffId: Joi.string(),
 
-
-
-					]).required(),
-					// type: Joi.string().valid('admin', 'user')
 				},
+				// query: {
+				// 	staffId: Joi.string(),
+				// 	// type: Joi.string().valid('admin', 'user')
+				// },
+
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},

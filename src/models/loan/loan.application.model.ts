@@ -251,7 +251,6 @@ const schema = new Schema({
         },
         nookAgent: { type: Schema.Types.String, trim: true },
     },
-
     applicationStage: [{
         userType: { type: String },
         status: { type: String },
@@ -263,6 +262,7 @@ const schema = new Schema({
         adminId: { type: Schema.Types.ObjectId },
         adminName: { type: String },
     },  // admin ,user, staff
+    assignedTo: { type: Schema.Types.ObjectId, ref: 'Admin', index: true, required: true },
     referenceId: { type: String, index: true, unique: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },
