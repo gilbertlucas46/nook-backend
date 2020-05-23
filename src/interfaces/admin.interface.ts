@@ -88,6 +88,7 @@ export namespace AdminRequest {
 	export interface IUpdateLoanRequest {
 		loanId: string;
 		status: string;
+		staffId: string;
 	}
 
 	export interface Permisssion {

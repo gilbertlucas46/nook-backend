@@ -205,7 +205,12 @@ class LoanControllers extends BaseEntity {
         try {
             const criteria = { _id: payload.loanId };
             const dataToUpdate: any = {};
-            dataToUpdate.$set = { applicationStatus: payload.status };
+            if (payload.status) {
+                dataToUpdate.$set = { applicationStatus: payload.status };
+            }
+            if (payload.staffId) {
+                dataToUpdate.$set = { assignedTo: payload.staffId };
+            }
             dataToUpdate.$push = {
                 applicationStage: {
                     userType: adminData.type,
