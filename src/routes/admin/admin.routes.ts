@@ -416,7 +416,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: AdminRequest.IUpdateLoanRequest = request.params as any;
+				const payload: AdminRequest.IUpdateLoanRequest = request.query as any;
 				// {
 				// 	// ...request.query as any,
 				// 	...request.params,
