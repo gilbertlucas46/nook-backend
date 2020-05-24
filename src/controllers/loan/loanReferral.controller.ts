@@ -21,6 +21,12 @@ class Referal extends BaseEntity {
             request.post({
                 url: config.get('zapier_referralUrl'),
                 formData: {
+                    sendBy: userData.email,
+                    senderFirstName: userData.firstName,
+                    senderLastName: userData.lastName,
+                    senderMiddleName: userData.middleName,
+                    senderUserName: userData.userName,
+                    senderPhoneNumber: userData.phoneNumber,
                     email: data.email,
                     notes: data.notes,
                     lastName: data.lastName,
