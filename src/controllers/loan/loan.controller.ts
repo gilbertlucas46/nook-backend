@@ -213,12 +213,12 @@ class LoanControllers extends BaseEntity {
                             }
                         }
                     ],
-                    as: 'adminData',
+                    as: 'assignedAdmin',
                 },
             },
             {
                 $unwind: {
-                    path: '$adminData',
+                    path: '$assignedAdmin',
                     preserveNullAndEmptyArrays: true,
                 },
             },
