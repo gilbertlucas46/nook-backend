@@ -215,7 +215,12 @@ class LoanApplicationE extends BaseEntity {
             const matchPipeline = [
                 // {
                 matchObject,
-                { $sort: sortingType }
+                { $sort: sortingType },
+                {
+                    $project: {
+                        applicationStage: 0,
+                    },
+                },
                 // },
             ];
             // console.log('matchPipelinematchPipelinematchPipeline', matchPipeline);
@@ -242,23 +247,14 @@ class LoanApplicationE extends BaseEntity {
                             },
                         }
                     ],
-                    as: 'adminData',
+                    as: 'assignedAdmin',
                 },
             }, {
                 $unwind: {
-                    path: '$adminData',
+                    path: '$assignedAdmin',
                     preserveNullAndEmptyArrays: true,
                 },
             },
-                // {
-                //     $project: {
-                //         adminEmail: '$adminData.email',
-                //         adminFirstName: '$adminData.firstName',
-                //         adminLastName: '$adminData.lastName',
-                //         status: '$adminData.status',
-
-                //     }
-                // }
             ]
             // } else {
             //     queryPipeline;
