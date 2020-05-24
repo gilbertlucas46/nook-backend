@@ -162,7 +162,7 @@ class LoanApplicationE extends BaseEntity {
                 matchObject.$match['applicationStatus'] = status;
             }
             if (staffId) {
-                matchObject.$match['assignedTo'] = staffId;
+                matchObject.$match['assignedTo'] =Types.ObjectId(staffId);
             }
             // else {
             //     matchObject['applicationStatus'] =
