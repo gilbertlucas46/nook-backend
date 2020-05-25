@@ -11,36 +11,32 @@
             color-adjust: exact !important;
         }
 
-        @media print {
-            .page-break-before {
-                page-break-before: always;
-            }
-        }
 
-        @media print {
-            .page-break-after {
-                page-break-after: always;
-            }
-        }
 
         p {
-            font-size: 8pt;
+            font-size: 7.5pt;
             color: #231f20;
             margin-bottom: 5px;
             margin-top: 0px;
         }
 
         td {
-            font-size: 8pt;
+            font-size: 7.5pt;
             padding: 6px 10px;
             vertical-align: top;
             word-break: break-word !important;
         }
 
         th {
-            font-size: 9pt;
+            font-size: 7pt;
             padding: 12px 10px;
             text-align: left;
+        }
+
+        @media print {
+            .page-break {
+                page-break-before: always !important;
+            }
         }
     </style>
 </head>
@@ -190,9 +186,13 @@
                     <p style="font-weight: bold; text-transform: capitalize;">TIN</p>
                     <span>{{coBorrowerTIN}}</span>
                 </td>
-                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
+                <td style="border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">SSS No.</p>
                     <span>{{coBorrowerSSS}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Employment Tenure</p>
+                    <span style="text-transform: uppercase;">{{coBorrowerEmploymentTenure}}</span>
                 </td>
             </tr>
             <tr>
@@ -200,13 +200,9 @@
                     <p style="font-weight: bold; text-transform: capitalize;">Employment Type</p>
                     <span style="text-transform: uppercase;">{{coBorrowerEmploymentType}}</span>
                 </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Employment Rank</p>
                     <span style="text-transform: uppercase;">{{coBorrowerEmploymentRank}}</span>
-                </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">Employment Tenure</p>
-                    <span style="text-transform: uppercase;">{{coBorrowerEmploymentTenure}}</span>
                 </td>
             </tr>
             <tr>
@@ -235,12 +231,18 @@
                     <span>{{coBorrowerOfficeEmail}}</span>
                 </td>
             </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <table style="width: 100%; border-collapse: collapse; border-spacing: 0;">
+        <tbody>
 
             <tr>
                 <td colspan="3" style="padding: 35px 0 0 !important;">
                     <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
-                    background-color:#196192 !important; padding:7px 10px !important;">LOAN
-                        INFORMATION</p>
+                    background-color:#196192 !important; padding:7px 10px !important;">LOAN INFORMATION</p>
                 </td>
             </tr>
 
@@ -409,7 +411,13 @@
                     <span>{{officeEmail}}</span>
                 </td>
             </tr>
+        </tbody>
+    </table>
 
+    <div class="page-break"></div>
+
+    <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+        <tbody>
             <tr>
                 <td colspan="3" style="padding: 35px 0 0 !important;">
                     <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
@@ -458,46 +466,46 @@
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
 
-                    <p style="font-weight: bold; text-transform: capitalize;">Dependent Name 1</p>
-                    <span>{{name}}</span>
+                    <p style="font-weight: bold; text-transform: capitalize;">Dependent Name</p>
+                    <span>{{name1}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Age</p>
-                    <span>{{age}}</span>
+                    <span>{{age1}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
-                    <span style="text-transform: capitalize;">{{relationship}}</span>
+                    <span style="text-transform: capitalize;">{{relationship1}}</span>
                 </td>
             </tr>
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
 
                     <p style="font-weight: bold; text-transform: capitalize;">Dependent Name 2</p>
-                    <span>{{name}}</span>
+                    <span>{{name2}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Age</p>
-                    <span>{{age}}</span>
+                    <span>{{age2}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
-                    <span style="text-transform: capitalize;">{{relationship}}</span>
+                    <span style="text-transform: capitalize;">{{relationship2}}</span>
                 </td>
             </tr>
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
 
                     <p style="font-weight: bold; text-transform: capitalize;">Dependent Name 3</p>
-                    <span>{{name}}</span>
+                    <span>{{name3}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Age</p>
-                    <span>{{age}}</span>
+                    <span>{{age3}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
-                    <span style="text-transform: capitalize;">{{relationship}}</span>
+                    <span style="text-transform: capitalize;">{{relationship3}}</span>
                 </td>
             </tr>
             <tr>
@@ -550,5 +558,3 @@
     </table>
 
 </body>
-
-</html>
