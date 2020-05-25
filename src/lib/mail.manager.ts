@@ -357,7 +357,7 @@ export class MailManager {
 					helpCenter: config.get('homePage') + '/help-center',
 				});
 			// console.log('htmlContenthtmlContenthtmlContent', htmlContent);
-			console.log('htmlContenthtmlContenthtmlContent', htmlContent typeof htmlContent);
+			console.log('htmlContenthtmlContenthtmlContent', htmlContent, typeof htmlContent);
 
 			// const htmlData = new PdfGenerator();
 			const a = await pdfClass.test(htmlContent, params['referenceId']);
