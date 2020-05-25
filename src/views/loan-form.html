@@ -6,13 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home Loan Application Form</title>
     <style>
-        body {
-            font-family: Verdana, sans-serif;
-            margin: 0px;
-            background: #fbfafa !important;
-            margin: auto;
-        }
-
         * {
             -webkit-print-color-adjust: exact !important;
             color-adjust: exact !important;
@@ -31,74 +24,63 @@
         }
 
         p {
-            font-size: 13px;
+            font-size: 8pt;
             color: #231f20;
             margin-bottom: 5px;
             margin-top: 0px;
         }
 
         td {
-            font-size: 14px;
-            padding: 10px;
+            font-size: 8pt;
+            padding: 6px 10px;
             vertical-align: top;
+            word-break: break-word !important;
         }
 
         th {
-            font-size: 14px;
-            padding: 5px 10px;
+            font-size: 9pt;
+            padding: 12px 10px;
             text-align: left;
         }
     </style>
 </head>
 
 
-<body>
+<body
+    style="padding:0 30px !important; margin: 20px 0 0; font-family: Verdana, sans-serif !important;  background: #fbfafa !important;">
 
-    <table style="border-spacing: 0; width: 100%; padding: 15px 20px;">
+    <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
         <tbody>
             <tr>
-                <td style="width:50%;">
-                    <h2 style="font-size: 15px; margin: 0px;">Home Loan Application Form v1 </h2>
+                <td style="width: 50%; vertical-align: middle;">
+                    <h1 style="font-size: 8pt; margin: 0px; color: #adadad;">Home Loan Application Form v1 </h1>
                 </td>
-                <td style="width: 50%; text-align: right;">
-                    <img src="{{nookLogoUrl}}" alt="Nook" style="width: 80px; height: auto;">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <table style="width:100%; border-collapse: collapse;">
-        <tbody>
-            <tr>
-                <td style="text-align: center;">
-                    <h2 style="margin: 10px 0px;">APPLICATION ID: {{applicationId}}</h2>
+                <td style="width: 50%; text-align: right; vertical-align: middle; padding-right: 40px !important;">
+                    <img src="nook-logo.png" alt="Nook" style="width: 65px; height: auto;">
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <table
-        style="background-color: #196192 !important; padding: 5px 20px; width: 100%; height: 40px; border-collapse: collapse;">
+    <h2 style="margin: 10px 0px 20px; font-size: 9.5pt; text-align: center;">Application ID: {{applicationId}}</h2>
+
+    <table style="width: 100%; border-collapse: collapse; border-spacing: 0;">
         <tbody>
             <tr>
-                <th style="width:100%;">
-                    <p style="font-weight: bold; color: white; font-size: 14px; margin-bottom: 0;">BORROWER’S
+                <td colspan="3" style="padding: 0 !important;">
+                    <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
+                        background-color:#196192 !important; padding: 7px 10px !important;">
+                        BORROWER’S
                         INFORMATION</p>
-                </th>
+                </td>
             </tr>
-        </tbody>
-    </table>
-
-    <table style="width:100%; padding: 0px 20px; border-collapse: collapse;">
-        <tbody>
 
             <tr>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Full Name</p>
                     <span>{{fullName}}</span>
                 </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;"></td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Civil Status</p>
                     <span>{{civilStatus}}</span>
                 </td>
@@ -133,13 +115,9 @@
                     <span>{{email}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="padding: 0px 20px; border-collapse: collapse; width: 100%;">
-        <tbody>
             <tr>
-                <td style="width: calc(100% - (100%/3)); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Spouse Full Name</p>
                     <span>{{spouseFullName}}</span>
                 </td>
@@ -150,7 +128,7 @@
             </tr>
 
             <tr>
-                <td style="width: calc(100% - (100%/3)); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Mother’s Maiden Name</p>
                     <span>{{motherMaidenName}}</span>
                 </td>
@@ -159,73 +137,60 @@
                     <span>{{educationBackground}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="padding: 0px 20px; width: 100%; border-collapse: collapse;">
-        <tbody>
             <tr>
-                <td style="width:100%; border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="3">
                     <p style="font-weight: bold; text-transform: capitalize;">Present Address</p>
                     <span>{{currentAddress}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="padding: 0px 20px; margin-bottom: 20px; width: 100%; border-collapse: collapse;">
-        <tbody>
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Home Ownership</p>
                     <span>{{homeOwnership}}</span>
                 </td>
-                <td style="width: calc(100% - (100%/3)); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Home Address</p>
                     <span>{{currentAddress}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table
-        style="background-color: #196192 !important; padding: 5px 20px; width: 100%; border-collapse: collapse; height: 40px;">
-        <tbody>
+
             <tr>
-                <th style="width:100%;">
-                    <p style="font-weight: bold; color: white; font-size: 14px; margin-bottom: 0;">CO-BORROWER’S
+                <td colspan="3" style="padding: 35px 0 0 !important;">
+                    <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
+                    background-color:#196192 !important; padding:7px 10px !important;">CO-BORROWER’S
                         INFORMATION</p>
-                </th>
+                </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="padding: 0px 20px; border-collapse: collapse; width: 100%;">
-        <tbody>
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Co-Borrower?</p>
                     <span>{{isCoborrower}}</span>
                 </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Fullname</p>
                     <span>{{coBorrowerFullName}}</span>
-                </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
-                    <span>{{relationship}}</span>
                 </td>
             </tr>
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
+                    <span>{{relationship}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Gross Monthly Income (Php)</p>
                     <span>{{monthlyIncome}}</span>
                 </td>
+            </tr>
+            <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">TIN</p>
                     <span>{{coBorrowerTIN}}</span>
                 </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">SSS No.</p>
                     <span>{{coBorrowerSSS}}</span>
                 </td>
@@ -258,13 +223,9 @@
                     <span>{{coBorrowerOfficePhone}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="padding: 0px 20px; margin-bottom: 20px; width: 100%; border-collapse: collapse;">
-        <tbody>
             <tr>
-                <td style="width: calc(100% - (100%/3)); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Office Address</p>
                     <span>{{coBorrowerOfficeAddress}}</span>
                 </td>
@@ -274,22 +235,15 @@
                     <span>{{coBorrowerOfficeEmail}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table
-        style="background-color: #196192 !important; padding: 5px 20px; width: 100%; border-collapse: collapse; height: 40px;">
-        <tbody>
             <tr>
-                <th style="width:100%;">
-                    <p style="font-weight: bold; color: white; font-size: 14px; margin-bottom: 0;">LOAN INFORMATION</p>
-                </th>
+                <td colspan="3" style="padding: 35px 0 0 !important;">
+                    <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
+                    background-color:#196192 !important; padding:7px 10px !important;">LOAN
+                        INFORMATION</p>
+                </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="padding: 0px 20px; margin-bottom: 20px; border-collapse: collapse; width: 100%;">
-        <tbody>
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Bank</p>
@@ -332,105 +286,99 @@
                     <span>21,109.42 to done</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table
-        style="background-color: #196192 !important; padding: 5px 20px; width: 100%; border-collapse: collapse; height: 40px;">
-        <tbody>
             <tr>
-                <th style="width:100%;">
-                    <p style="font-weight: bold; color: white; font-size: 14px; margin-bottom: 0;">COLLATERAL
+                <td colspan="3" style="padding: 35px 0 0 !important;">
+                    <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
+                    background-color:#196192 !important; padding:7px 10px !important;">COLLATERAL
                         INFORMATION</p>
-                </th>
+                </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="padding: 0 20px; margin-bottom: 20px; border-collapse: collapse; width: 100%;">
-        <tbody>
             <tr>
-                <td style="width:50%; border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Property Value</p>
                     <span>{{propertyValue}}</span>
                 </td>
-                <td style="width:50%; border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Property Type</p>
                     <span>{{propertyType}}</span>
                 </td>
+
             </tr>
+
             <tr>
-                <td style="width:50%; border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Property Status</p>
                     <span style="text-transform: uppercase;">{{propertyStatus}}</span>
                 </td>
-                <td style="width:50%; border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Property Developer</p>
                     <span>{{propertyDeveloper}}</span>
                 </td>
             </tr>
+
             <tr>
-                <td style="width:50%; border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">Property Address</p>
-                    <span>{{propertyAddress}}</span>
-                </td>
-                <td style="width:50%; border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc;" colspan="3">
                     <p style="font-weight: bold; text-transform: capitalize;">Are you ready to upload your collateral?
                     </p>
                     <span>{{collateralDocStatus}}</span>
                 </td>
             </tr>
+
             <tr>
-                <td style="width:50%; border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc;" colspan="3">
+                    <p style="font-weight: bold; text-transform: capitalize;">Property Address</p>
+                    <span>{{propertyAddress}}</span>
+                </td>
+
+            </tr>
+            <tr>
+                <td style=" border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Contact Person</p>
                     <span>{{contactPerson}}</span>
                 </td>
-                <td style="width:50%; border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Contact Number</p>
                     <span>{{contactNumber}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table
-        style="background-color: #196192 !important; padding: 5px 20px; width: 100%; border-collapse: collapse; height: 40px;">
-        <tbody>
             <tr>
-                <th style="width:100%;">
-                    <p style="font-weight: bold; color: white; font-size: 14px; margin-bottom: 0;">EMPLOYMENT
+                <td colspan="3" style="padding: 35px 0 0 !important;">
+                    <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
+                    background-color:#196192 !important; padding:7px 10px !important;">EMPLOYMENT
                         INFORMATION</p>
-                </th>
+                </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="border-collapse: collapse; padding: 0 20px; width: 100%;">
-        <tbody>
             <tr>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Employment Type</p>
                     <span style="text-transform: uppercase;">{{employmentType}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Gross Monthly Income</p>
+                    <span>40,000.00</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Employment Rank</p>
                     <span style="text-transform: uppercase;">{{employmentRank}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">{{employmentTenure}}</p>
-                    <span>3_100</span>
+                    <p style="font-weight: bold; text-transform: capitalize;">Employment Tenure</p>
+                    <span>{{employmentTenure}}</span>
                 </td>
             </tr>
             <tr>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">Gross Monthly Income</p>
-                    <span>40,000.00</span>
-                </td>
+
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">TIN</p>
                     <span>{{tin}}</span>
                 </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">SSS No.</p>
                     <span>{{sss}}</span>
                 </td>
@@ -449,13 +397,9 @@
                     <span>{{officePhone}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="border-collapse: collapse; width:100%; padding: 0 20px; margin-bottom: 20px;">
-        <tbody>
             <tr>
-                <td style="width: calc(100% - (100%/3)); border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Office Address</p>
                     <span>{{officeAddress}}</span>
                 </td>
@@ -465,23 +409,15 @@
                     <span>{{officeEmail}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table
-        style="background-color: #196192 !important; padding: 5px 20px; width: 100%; border-collapse: collapse; height: 40px;">
-        <tbody>
             <tr>
-                <th style="width:100%;">
-                    <p style="font-weight: bold; color: white; font-size: 14px; margin-bottom: 0;">LOANS AND CREDIT
+                <td colspan="3" style="padding: 35px 0 0 !important;">
+                    <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
+                    background-color:#196192 !important; padding:7px 10px !important;">LOANS AND CREDIT
                         INFORMATION</p>
-                </th>
+                </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="padding: 0 20px; width: 100%; margin-bottom: 20px; border-collapse: collapse;">
-        <tbody>
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Do you have other loans?</p>
@@ -510,24 +446,15 @@
                     <span>20,000.00</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table
-        style="background-color: #196192 !important; padding: 5px 20px; width: 100%; border-collapse: collapse; height: 40px;">
-        <tbody>
             <tr>
-                <th style="width:100%;">
-                    <p style="font-weight: bold; color: white; font-size: 14px; margin-bottom: 0;">DEPENDENTS AND
+                <td colspan="3" style="padding: 35px 0 0 !important;">
+                    <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
+                    background-color:#196192 !important; padding:7px 10px !important;">DEPENDENTS AND
                         REFERENCES</p>
-                </th>
+                </td>
             </tr>
-        </tbody>
-    </table>
 
-    <table style="padding: 0 20px; width: 100%; border-collapse: collapse;">
-        {{#each dependentsinfo}}
-        <tbody>
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
 
@@ -543,8 +470,83 @@
                     <span style="text-transform: capitalize;">{{relationship}}</span>
                 </td>
             </tr>
+            <tr>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+
+                    <p style="font-weight: bold; text-transform: capitalize;">Dependent Name 2</p>
+                    <span>{{name}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Age</p>
+                    <span>{{age}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
+                    <span style="text-transform: capitalize;">{{relationship}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+
+                    <p style="font-weight: bold; text-transform: capitalize;">Dependent Name 3</p>
+                    <span>{{name}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Age</p>
+                    <span>{{age}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
+                    <span style="text-transform: capitalize;">{{relationship}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+
+                    <p style="font-weight: bold; text-transform: capitalize;">Personal Reference Name 1</p>
+                    <span>{{name}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Contact No.</p>
+                    <span>{{age}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
+                    <span style="text-transform: capitalize;">{{relationship}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+
+                    <p style="font-weight: bold; text-transform: capitalize;">Personal Reference Name 2</p>
+                    <span>{{name}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Contact No.</p>
+                    <span>{{age}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
+                    <span style="text-transform: capitalize;">{{relationship}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+
+                    <p style="font-weight: bold; text-transform: capitalize;">Personal Reference Name 3</p>
+                    <span>{{name}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Contact No.</p>
+                    <span>{{age}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Relationship to Borrower</p>
+                    <span style="text-transform: capitalize;">{{relationship}}</span>
+                </td>
+            </tr>
+
         </tbody>
-        {{/each}}
     </table>
 
 </body>

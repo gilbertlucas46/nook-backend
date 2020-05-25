@@ -262,7 +262,7 @@ const schema = new Schema({
         adminId: { type: Schema.Types.ObjectId },
         adminName: { type: String },
     },  // admin ,user, staff
-    assignedTo: { type: Schema.Types.ObjectId, ref: 'Admin', index: true, required: true },
+    assignedTo: { type: Schema.Types.ObjectId, ref: 'Admin', index: true },
     referenceId: { type: String, index: true, unique: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },

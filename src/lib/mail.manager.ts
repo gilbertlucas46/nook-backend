@@ -224,12 +224,15 @@ export class MailManager {
 			console.log('gggggggggg', params.employmentInfo['coBorrowerInfo']);
 
 			console.log('LLLLLLLLLLLLLLLLLLl', (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A');
+			console.log('params.dependentsinfo', params.dependentsInfo);
+
+			console.log("params.dependentpendentsinfo[0].name :", (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].name : 'N/A');
 
 			const htmlContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'loan-form.html'))
 				.compileFile({
 					applicationId: params['referenceId'],
 					nookLogoUrl: config['host'] + '/images/nooklogo.png',
-					fullName: params['personalInfo']['firstName'] + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' + '' + params['personalInfo']['lastName'],
+					fullName: params['personalInfo']['firstName'] + ' ' + params['personalInfo']['lastName'],  // + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' 
 					civilStatus: params['personalInfo']['civilStatus'],
 					sex: params['personalInfo']['gender'],
 					citizenship: params['personalInfo']['nationality'],
@@ -323,7 +326,20 @@ export class MailManager {
 					// Credit Card Issuing Bank?
 
 					//  DEPENDENTS AND REFERENCES
-					dependentsinfo: params.dependentsinfo,
+
+					name1: (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].name : 'N/A',
+					age1: (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].age : 'N/A',
+					relationship1: (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].relationship : 'N/A',
+
+
+					name2: (params.dependentsInfo && params.dependentsInfo[1]) ? params.dependentsInfo[1].name : 'N/A',
+					age2: (params.dependentsInfo && params.dependentsInfo[1]) ? params.dependentsInfo[1].age : 'N/A',
+					relationship2: (params.dependentsInfo && params.dependentsInfo[1]) ? params.dependentsInfo[1].relationship : 'N/A',
+
+
+					name3: (params.dependentsInfo && params.dependentsInfo[2]) ? params.dependentsInfo[2].name : 'N/A',
+					age3: (params.dependentsInfo && params.dependentsInfo[2]) ? params.dependentsInfo[2].age : 'N/A',
+					relationship3: (params.dependentsInfo && params.dependentsInfo[2]) ? params.dependentsInfo[2].relationship : 'N/A',
 
 
 					// url: params.url,
@@ -342,8 +358,8 @@ export class MailManager {
 			const htmlData = new PdfGenerator();
 			const a = await htmlData.test(htmlContent, params['referenceId']);
 			// console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', a);
-
-			return htmlContent;
+			return a;
+			// return htmlContent;
 			// await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Password reset request', content: mailContent });
 
 		} catch (error) {
