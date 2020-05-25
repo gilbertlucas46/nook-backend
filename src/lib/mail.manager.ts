@@ -202,7 +202,10 @@ export class MailManager {
 
 			let { coBorrowerInfo, spouseInfo } = params['personalInfo'];
 			console.log('spouseInfospouseInfo', spouseInfo);
-
+			let middleName;
+			if (params['personalInfo'] && params['personalInfo']['middleName']) {
+				middleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : ''
+			}
 
 
 			let checkObjectBlank;
@@ -235,7 +238,7 @@ export class MailManager {
 				.compileFile({
 					applicationId: params['referenceId'],
 					nookLogoUrl: config['host'] + '/images/nooklogo.png',
-					fullName: params['personalInfo']['firstName'] + (params['personalInfo'] && params['personalInfo']['middleName']) ? params['personalInfo']['middleName'] : '' + ' ' + params['personalInfo']['lastName'],  // + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' 
+					fullName: params['personalInfo']['firstName'] + middleName + ' ' + params['personalInfo']['lastName'],  // + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' 
 					civilStatus: params['personalInfo']['civilStatus'],
 					sex: params['personalInfo']['gender'],
 					citizenship: params['personalInfo']['nationality'],
