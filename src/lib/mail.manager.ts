@@ -5,6 +5,9 @@ import * as utils from '../utils';
 import Mail = require('nodemailer/lib/mailer');
 import { TemplateUtil } from '@src/utils/template.util';
 import { PdfGenerator } from './pdfGenerator';
+
+const pdfClass = new PdfGenerator()
+
 const transporter = nodemailer.createTransport({
 
 	host: config.get('smtp.mailHost'),
@@ -355,9 +358,9 @@ export class MailManager {
 			// console.log('htmlContenthtmlContenthtmlContent', htmlContent);
 			console.log('htmlContenthtmlContenthtmlContent', typeof htmlContent);
 
-			const htmlData = new PdfGenerator();
-			const a = await htmlData.test(htmlContent, params['referenceId']);
-			// console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', a);
+			// const htmlData = new PdfGenerator();
+			const a = await pdfClass.test(htmlContent, params['referenceId']);
+			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', a);
 			return a;
 			// return htmlContent;
 			// await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Password reset request', content: mailContent });

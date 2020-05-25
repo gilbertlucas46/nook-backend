@@ -1,9 +1,9 @@
 import * as fs from 'fs';
-import * as pdf from 'html-pdf';
 import { SERVER } from '../constants';
 // const html = fs.readFileSync('./', 'utf8');
 import * as config from 'config';
 import { S3 } from 'aws-sdk/clients/all';
+import * as pdf from 'html-pdf';
 
 export class PdfGenerator {
 
@@ -18,19 +18,27 @@ export class PdfGenerator {
 
     async test(htmlFile, fileName) {
         try {
-
-            // const buf = await Buffer.from(htmlFile).toString();
+            console.log('11111111111111111111111111111111111111');
+            const buf = await Buffer.from(htmlFile).toString();
             // const html = fs.readFileSync(SERVER.TEMPLATE_PATH + 'testHtmlFile.html', 'utf8');
 
-            const data: any = await pdf.create(htmlFile, { format: 'A4' }).toFile(SERVER.TEMPLATE_PATH + '/loan/' + fileName + '.pdf') // , async function (err, data) {
-            console.log('dataaaaaaaaaaa', data);
+            // return pdfToFile();
 
-            // setTimeout(async function () {
-            const aa = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + 'loan/' + fileName + '.pdf', fileName);
-            console.log('aaaaaaaaaaaaaaaaaaaaaaaa', aa);
-            return aa;
-            // }, 200);
+            return new Promise((resolve, reject) => {
+                pdf.create(buf, { format: 'A4' }).toFile(SERVER.TEMPLATE_PATH + '/loan/' + fileName + '.pdf', async (err, data) => {
+                    if (err) {
+                        console.log('dataaaaaaaaaaa', err);
+                        reject(err);
+                    } else {
+                        console.log('datadatadatadatadatadatadatadata', data);
+                        const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + '/loan/' + fileName + '.pdf', fileName);
+                        console.log('aaaaaaaaaaaaaaaaaaaaaaaa', nameUrl);
+                        resolve(nameUrl);
+                        console.log('212777777777777777');
 
+                    }
+                });
+            });
         } catch (error) {
             console.log('errorerrorerrorerrorerrorerror', error);
             return Promise.reject(error);
