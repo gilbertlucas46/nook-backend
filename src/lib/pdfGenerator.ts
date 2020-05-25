@@ -25,9 +25,12 @@ export class PdfGenerator {
             const data: any = await pdf.create(htmlFile, { format: 'A4' }).toFile(SERVER.TEMPLATE_PATH + '/loan/' + fileName + '.pdf') // , async function (err, data) {
             console.log('dataaaaaaaaaaa', data);
 
+            // setTimeout(async function () {
             const aa = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + 'loan/' + fileName + '.pdf', fileName);
             console.log('aaaaaaaaaaaaaaaaaaaaaaaa', aa);
             return aa;
+            // }, 200);
+
         } catch (error) {
             console.log('errorerrorerrorerrorerrorerror', error);
             return Promise.reject(error);
