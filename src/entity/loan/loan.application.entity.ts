@@ -135,15 +135,20 @@ class LoanApplicationE extends BaseEntity {
     async getAdminLoanList(payload: LoanRequest.IGetAdminLoanList, userData) {
         try {
             let { page, limit, sortType } = payload;
-            const { fromDate, toDate, status, sortBy, amountFrom, amountTo, searchTerm } = payload;
+            const { fromDate, toDate, status, sortBy, amountFrom, amountTo, searchTerm, staffId } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
             sortType = !sortType ? -1 : sortType;
             let sortingType = {};
             const promiseArray = [];
-            const matchObject: any = {};
-
+            let queryPipeline = [];
+            // const matchObject: any = {};
+            const matchObject: any = { $match: {} };
+            const paginateOptions = {
+                limit: limit || 10,
+                page: page || 1,
+            };
             // if (userData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE || userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE) {
             // matchObject['saveAsDraft'] = false;
             // }
@@ -154,7 +159,10 @@ class LoanApplicationE extends BaseEntity {
                 };
             }
             if (status) {
-                matchObject['applicationStatus'] = status;
+                matchObject.$match['applicationStatus'] = status;
+            }
+            if (staffId) {
+                matchObject.$match['assignedTo'] =Types.ObjectId(staffId);
             }
             // else {
             //     matchObject['applicationStatus'] =
@@ -162,22 +170,22 @@ class LoanApplicationE extends BaseEntity {
             // }
 
             if (amountFrom && amountTo) {
-                matchObject['loanDetails.loanAmount'] = {
+                matchObject.$match['loanDetails.loanAmount'] = {
                     $gt: amountFrom,
                     $lt: amountTo,
                 };
             } else if (amountFrom && !amountTo) {
-                matchObject['loanDetails.loanAmount'] = {
+                matchObject.$match['loanDetails.loanAmount'] = {
                     $gt: amountFrom,
                 };
             } else if (amountTo && !amountFrom) {
-                matchObject['loanDetails.loanAmount'] = {
+                matchObject.$match['loanDetails.loanAmount'] = {
                     $lt: amountTo,
                 };
             }
 
             if (searchTerm) {
-                matchObject['$or'] = [
+                matchObject.$match['$or'] = [
                     { 'personalInfo.firstName': { $regex: searchTerm, $options: 'i' } },
                     { 'personalInfo.middleName': { $regex: searchTerm, $options: 'i' } },
                     { 'contactInfo.phoneNumber': { $regex: searchTerm, $options: 'i' } },
@@ -187,29 +195,84 @@ class LoanApplicationE extends BaseEntity {
             }
 
             if (fromDate && toDate) {
-                matchObject['createdAt'] = {
+                matchObject.$match['createdAt'] = {
                     $gte: fromDate,
                     $lte: toDate,
                 };
             }
             else if (toDate) {
-                matchObject['createdAt'] = {
+                matchObject.$match['createdAt'] = {
                     $lte: toDate,
                 };
             } else if (fromDate) {
-                matchObject['createdAt'] = {
+                matchObject.$match['createdAt'] = {
                     $gte: fromDate,
                     $lte: new Date().getTime(),
                 };
             }
+            console.log('matchObjectmatchObjectmatchObject', matchObject);
 
-            promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit, sort: sortingType }));
-            promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
-            const [data, total] = await Promise.all(promiseArray);
-            return {
-                data,
-                total,
-            };
+            const matchPipeline = [
+                // {
+                matchObject,
+                { $sort: sortingType },
+                {
+                    $project: {
+                        applicationStage: 0,
+                    },
+                },
+                // },
+            ];
+            // console.log('matchPipelinematchPipelinematchPipeline', matchPipeline);
+
+            // if (payload.staffId) {
+            queryPipeline = [{
+                $lookup: {
+                    from: 'admins',
+                    let: { aid: '$assignedTo' },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ['$_id', '$$aid'],
+                                }
+                            },
+                        },
+                        {
+                            $project: {
+                                email: 1,
+                                firstName: 1,
+                                lastName: 1,
+                                status: 1,
+                            },
+                        }
+                    ],
+                    as: 'assignedAdmin',
+                },
+            }, {
+                $unwind: {
+                    path: '$assignedAdmin',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            ]
+            // } else {
+            //     queryPipeline;
+            // }
+            // console.log('matchPipelinematchPipelinematchPipeline', matchPipeline);
+
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, queryPipeline).aggregate(this.modelName);
+            console.log('datadatadatadatadata', data);
+
+            // promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit, sort: sortingType }));
+            // promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
+            // const [data, total] = await Promise.all(promiseArray);
+            // return {
+            //     data,
+            //     total,
+            // };
+            return data;
+
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -323,14 +386,14 @@ class LoanApplicationE extends BaseEntity {
             const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
             console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
             console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
-            // if (config.get('environment') === 'production') {
-            console.log('333333333333333333333333333333333333344444444444kkkkkkkkk');
+            if (config.get('environment') === 'production') {
+                console.log('333333333333333333333333333333333333344444444444kkkkkkkkk');
 
-            await fetch(config.get('zapier_loanUrl'), {
-                method: 'post',
-                body: JSON.stringify(salesforceData),
-            });
-            // }
+                await fetch(config.get('zapier_loanUrl'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceData),
+                });
+            }
             // }
             return;
 

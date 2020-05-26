@@ -43,7 +43,7 @@ class LoanControllers extends BaseEntity {
             const criteria = {
                 saveAsDraft: { $ne: true },
             };
-            payload['userId'] = userData._id;
+            payload['userId'] = payload.userId ? payload.userId : userData._id;
             const criteria1 = ({
                 createdAt: {
                     $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
@@ -82,7 +82,7 @@ class LoanControllers extends BaseEntity {
             };
             const data = await ENTITY.LoanApplicationEntity.saveLoanApplication(payload);
             const dataToSave = {
-                userId: userData._id,
+                userId: payload.userId ? payload.userId : userData._id,
                 data: payload,
                 referenceId: payload['referenceId'],
             };
@@ -184,10 +184,53 @@ class LoanControllers extends BaseEntity {
 
     async loanById(payload: LoanRequest.LoanById, userData) {
         try {
-            const criteria = { _id: payload.loanId };
-            const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
+            const criteria = { _id: Types.ObjectId(payload.loanId) };
+
+            const aggregate = [{
+                $match: criteria,
+            }, {
+                $project: {
+                    applicationStage: 0,
+                }
+            }, {
+                $lookup: {
+                    from: 'admins',
+                    let: { aid: '$assignedTo' },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ['$_id', '$$aid'],
+                                },
+                            },
+                        },
+                        {
+                            $project: {
+                                email: 1,
+                                firstName: 1,
+                                lastName: 1,
+                                status: 1,
+                            }
+                        }
+                    ],
+                    as: 'assignedAdmin',
+                },
+            },
+            {
+                $unwind: {
+                    path: '$assignedAdmin',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            ];
+            console.log('aggregateaggregateaggregate', aggregate);
+
+            const data = await ENTITY.LoanApplicationEntity.aggregate(aggregate);
+            console.log('datadatadata', data);
+
+            // const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
             if (!data) return Promise.reject(Contsant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
-            else return data;
+            else return data[0] ? data[0] : {};
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -205,7 +248,12 @@ class LoanControllers extends BaseEntity {
         try {
             const criteria = { _id: payload.loanId };
             const dataToUpdate: any = {};
-            dataToUpdate.$set = { applicationStatus: payload.status };
+            if (payload.status) {
+                dataToUpdate.$set = { applicationStatus: payload.status };
+            }
+            if (payload.staffId) {
+                dataToUpdate.$set = { assignedTo: payload.staffId };
+            }
             dataToUpdate.$push = {
                 applicationStage: {
                     userType: adminData.type,
@@ -309,11 +357,12 @@ class LoanControllers extends BaseEntity {
             // console.log('getLoanData>>>>>>>>>>>>>>', getLoanData);
             // return getLoanData;
             if (!getLoanData) {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID)
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             }
 
             const mail = new MailManager();
             const data = await mail.generateLoanApplicationform(getLoanData);
+
             console.log('datadatadatadatadatadatadata', data);
             console.log("loanId: getLoanData['refrenceId'],", getLoanData['referenceId']);
 

@@ -197,11 +197,11 @@ class PreLoanEntities extends BaseEntity {
                         // },
                     },
                 },
-                {
-                    $addFields: {
-                        debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
-                    },
-                },
+                // {
+                //     $addFields: {
+                //         debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
+                //     },
+                // },
                 {
                     $addFields: {
                         debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
@@ -271,7 +271,7 @@ class PreLoanEntities extends BaseEntity {
                     return updatedData ? updatedData : {};
                 }
 
-                payload['userId'] = userData._id;
+                payload['userId'] = payload.userId ? payload.userId : userData._id;
                 const criteria1 = ({
                     createdAt: {
                         $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
@@ -308,7 +308,7 @@ class PreLoanEntities extends BaseEntity {
                 const dataToSave = {
                     ...payload,
                     email: userData.email,
-                    userId: userData._id,
+                    userId: payload.userId ? payload.userId : userData._id,
                     prequalifiedBanks: data,
                     createdAt: new Date().getTime(),
                     updatedAt: new Date().getTime(),

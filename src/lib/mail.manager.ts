@@ -5,6 +5,9 @@ import * as utils from '../utils';
 import Mail = require('nodemailer/lib/mailer');
 import { TemplateUtil } from '@src/utils/template.util';
 import { PdfGenerator } from './pdfGenerator';
+
+const pdfClass = new PdfGenerator()
+
 const transporter = nodemailer.createTransport({
 
 	host: config.get('smtp.mailHost'),
@@ -199,7 +202,10 @@ export class MailManager {
 
 			let { coBorrowerInfo, spouseInfo } = params['personalInfo'];
 			console.log('spouseInfospouseInfo', spouseInfo);
-
+			let middleName;
+			if (params['personalInfo'] && params['personalInfo']['middleName']) {
+				middleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : ''
+			}
 
 
 			let checkObjectBlank;
@@ -224,12 +230,15 @@ export class MailManager {
 			console.log('gggggggggg', params.employmentInfo['coBorrowerInfo']);
 
 			console.log('LLLLLLLLLLLLLLLLLLl', (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A');
+			console.log('params.dependentsinfo', params.dependentsInfo);
+
+			console.log("params.dependentpendentsinfo[0].name :", (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].name : 'N/A');
 
 			const htmlContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'loan-form.html'))
 				.compileFile({
 					applicationId: params['referenceId'],
 					nookLogoUrl: config['host'] + '/images/nooklogo.png',
-					fullName: params['personalInfo']['firstName'] + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' + '' + params['personalInfo']['lastName'],
+					fullName: params['personalInfo']['firstName'] + middleName + ' ' + params['personalInfo']['lastName'],  // + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' 
 					civilStatus: params['personalInfo']['civilStatus'],
 					sex: params['personalInfo']['gender'],
 					citizenship: params['personalInfo']['nationality'],
@@ -243,7 +252,7 @@ export class MailManager {
 					motherMaidenName: params['personalInfo']['motherMaidenName'],
 					educationBackground: params['personalInfo']['educationBackground'],
 					spouseBirthDate: (spouseInfo && spouseInfo['birthDate']) ? new Date(spouseInfo['birthDate']).toLocaleDateString() : 'N/A',
-					currentAddress: params.contactInfo['currentAddress']['address'],
+					currentAddress: params.contactInfo && params.contactInfo['currentAddress'] && params.contactInfo['currentAddress']['address'] ? params.contactInfo['currentAddress']['address'] : 'N/A',
 					// permannet address
 
 					homeOwnership: params.contactInfo['currentAddress']['homeOwnership'],
@@ -255,10 +264,10 @@ export class MailManager {
 					// relationship: coBorrowerInfo ? coBorrowerInfo['relationship'] : 'N/A',
 					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? coBorrowerInfo['monthlyIncome'] : 'N/A',
 					coBorrowerTIN: (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A',
-					coBorrowerSSS: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && coBorrowerInfo['sss']) ? params.employmentInfo.coBorrowerInfo['sss'] : 'N/A',
+					coBorrowerSSS: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['sss']) ? params.employmentInfo.coBorrowerInfo['sss'] : 'N/A',
 					coBorrowerEmploymentType: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentType']) ? params.employmentInfo.coBorrowerInfo['employmentType'] : 'N/A',
 					coBorrowerEmploymentRank: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentRank']) ? params.employmentInfo.coBorrowerInfo['employmentRank'] : 'N/A',
-					coBorrowerEmploymentTenure: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentTenure']) ? params.employmentInfo.coBorrowerInfo['employmentTenure'] : 'N/A',
+					coBorrowerEmploymentTenure: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentTenure']) ? params.employmentInfo.coBorrowerInfo['employmentTenure'] + ' ' + 'year' : 'N/A',
 					coBorrowerCompanyName: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['companyName']) ? params.employmentInfo.coBorrowerInfo['companyName'] : 'N/A',
 					coBorrowerCompanyIndustry: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['companyIndustry']) ? params.employmentInfo.coBorrowerInfo['companyIndustry'] : 'N/A',
 					coBorrowerOfficePhone: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['officePhone']) ? params.employmentInfo.coBorrowerInfo['officePhone'] : 'N/A',
@@ -268,19 +277,19 @@ export class MailManager {
 
 					// loan information
 					bankName: params['bankInfo']['bankName'],
-					loanTerm: params['loanDetails']['loanTerm'],
-					fixedPeriod: params['loanDetails']['fixedPeriod'],
+					loanTerm: params['loanDetails']['loanTerm'] + ' ' + 'year',
+					fixedPeriod: params['loanDetails']['fixedPeriod'] + ' ' + 'year',
 					loanPercent: params['loanDetails']['loanPercent'],
 					loanAmount: params['loanDetails']['loanAmount'],
-					interestRate: params['loanDetails']['rate:'],
+					interestRate: params['loanDetails']['rate'],
 					loanType: params['loanDetails']['loanType'],
 					// Loan Total PaymentA (Php): params['loanDetails']['loanAmount'],
-					monthlyRepayment: 'N/A',
+					monthlyRepayment: params['loanDetails']['monthlyRepayment'],
 					loanTotalPayment: 'N/A',
 
 
 					// COLLATERAL INFORMATION
-					propertyValue: params['propertyInfo']['value'],
+					propertyValue: params['propertyInfo']['value'] + 'php',
 					propertyType: params['propertyInfo']['type'],
 					propertyStatus: params['propertyInfo']['status'],
 					propertyDeveloper: params['propertyInfo']['developer'] ? params['propertyInfo']['developer'] : 'N/A',
@@ -306,24 +315,38 @@ export class MailManager {
 
 
 					// LOANS AND CREDIT CARDS
-					otherLoan: '',
-					totalMonthlyPayments: '',
-					//  Total Remaining Balance (Php)
+					otherLoan: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['status']) ? params['personalInfo']['prevLoans']['status'] : 'N/A',
+					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? params['personalInfo']['prevLoans']['monthlyTotal'] : 'N/A',
+					totalRemainingBalance: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['remainingTotal']) ? params['personalInfo']['prevLoans']['remainingTotal'] : 'N/A',
 					//
 					// Credit Card Limit (Php)
 
 
-					creditCard: '', // Credit Card Issuing Bank? 					,
+					creditCardStatus: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['status']) === 'YES' ? 'Yes ,active credit card' : 'No', // Credit Card Issuing Bank? 					,
+					creditCardCancelled: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['cancelled']) ? params['personalInfo']['creditCard']['cancelled'] : 'N/A',
 					// Total Monthly Payments (Php)
 
 					// Total Remaining Balance (Php)
 
-					// Credit Card Limit (Php)
+					creditCardLimit: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['limit']) ? params['personalInfo']['creditCard']['limit'] : 'N/A',
 
-					// Credit Card Issuing Bank?
+					creaditCardIssuingBank: 'N/A',
 
 					//  DEPENDENTS AND REFERENCES
-					dependentsinfo: params.dependentsinfo,
+
+					name1: (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].name : 'N/A',
+					age1: (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].age : 'N/A',
+					relationship1: (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].relationship : 'N/A',
+
+
+					name2: (params.dependentsInfo && params.dependentsInfo[1]) ? params.dependentsInfo[1].name : 'N/A',
+					age2: (params.dependentsInfo && params.dependentsInfo[1]) ? params.dependentsInfo[1].age : 'N/A',
+					relationship2: (params.dependentsInfo && params.dependentsInfo[1]) ? params.dependentsInfo[1].relationship : 'N/A',
+
+
+					name3: (params.dependentsInfo && params.dependentsInfo[2]) ? params.dependentsInfo[2].name : 'N/A',
+					age3: (params.dependentsInfo && params.dependentsInfo[2]) ? params.dependentsInfo[2].age : 'N/A',
+					relationship3: (params.dependentsInfo && params.dependentsInfo[2]) ? params.dependentsInfo[2].relationship : 'N/A',
 
 
 					// url: params.url,
@@ -337,13 +360,13 @@ export class MailManager {
 					helpCenter: config.get('homePage') + '/help-center',
 				});
 			// console.log('htmlContenthtmlContenthtmlContent', htmlContent);
-			console.log('htmlContenthtmlContenthtmlContent', typeof htmlContent);
+			console.log('htmlContenthtmlContenthtmlContent', htmlContent, typeof htmlContent);
 
-			const htmlData = new PdfGenerator();
-			const a = await htmlData.test(htmlContent, params['referenceId']);
-			// console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', a);
-
-			return htmlContent;
+			// const htmlData = new PdfGenerator();
+			const a = await pdfClass.test(htmlContent, params['referenceId']);
+			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', a);
+			return a;
+			// return htmlContent;
 			// await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Password reset request', content: mailContent });
 
 		} catch (error) {
