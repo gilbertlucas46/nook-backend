@@ -123,8 +123,8 @@ const prequalification = new Schema({
                 type: String, enum: [
                     NATIONALITY.FILIPINO.value,
                     NATIONALITY.FOREIGNER.value,
-                ]
-            }
+                ],
+            },
         },
 
         localVisa: { type: Boolean },
