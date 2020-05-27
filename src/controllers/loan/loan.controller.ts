@@ -191,7 +191,7 @@ class LoanControllers extends BaseEntity {
             }, {
                 $project: {
                     applicationStage: 0,
-                }
+                },
             }, {
                 $lookup: {
                     from: 'admins',
@@ -210,8 +210,8 @@ class LoanControllers extends BaseEntity {
                                 firstName: 1,
                                 lastName: 1,
                                 status: 1,
-                            }
-                        }
+                            },
+                        },
                     ],
                     as: 'assignedAdmin',
                 },
@@ -338,7 +338,6 @@ class LoanControllers extends BaseEntity {
         }
     }
 
-
     async adminAddPrequalification(payload, adminData) {
         try {
             return await ENTITY.PreQualificationBankE.addBanks(payload, adminData);
@@ -346,7 +345,6 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
-
 
     async downloadPdf(payload, userData) {
         try {
@@ -380,124 +378,222 @@ class LoanControllers extends BaseEntity {
         try {
             const criteria = {
                 _id: payload.bankId,
+            };
+            const promise = [];
+
+            let aggregateLegal;
+            if (payload.employmentType) {
+                console.log(1111111111111111111111111111111111111111);
+
+                aggregateLegal = [{
+                    $match: {
+                        _id: Types.ObjectId(payload.bankId),
+                    },
+                },
+                {
+                    $project: {
+                        propertySpecification: 0,
+                        interestRateDetails: 0,
+                        loanForForeigner: 0,
+                        loanForForeignerMarriedLocal: 0,
+                        loanForNonCreditCardHolder: 0,
+                        loanForCreditCardHolder: 0,
+                        loanForNotNowCreditCardHolder: 0,
+                        loanAlreadyExistDiffBank: 0,
+                        loanAlreadyExistSameBank: 0,
+                        missedLoanPaymentAllowance: 0,
+                        abbrevation: 0,
+                        bankName: 0,
+                        headquarterLocation: 0,
+                        loanForCancelledCreditCard: 0,
+                        bankFeePercent: 0,
+                        bankFeeAmount: 0,
+                        loanApplicationFeePercent: 0,
+                        loanApplicationFeeAmount: 0,
+                        loanMinAmount: 0,
+                        loanMaxAmount: 0,
+                        minLoanDuration: 0,
+                        maxLoanDuration: 0,
+                        minAgeRequiredForLoan: 0,
+                        minMonthlyIncomeRequired: 0,
+                        logoUrl: 0,
+                        iconUrl: 0,
+                        bannerUrl: 0,
+                        createdAt: 0,
+                        updatedAt: 0,
+                        incomeDocument: 0,
+                        collateralDocument: 0,
+                        __v: 0,
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$legalDocument',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $match: {
+                        //              "legalDocument.coborrower" : false,
+                        'legalDocument.allowedFor': payload.employmentType,
+
+                    },
+                },
+                ];
             }
-            const aggregateLegal = [{
-                $match: {
-                    _id: Types.ObjectId(payload.bankId),
-                },
-            },
-            {
-                $project: {
-                    propertySpecification: 0,
-                    interestRateDetails: 0,
-                    loanForForeigner: 0,
-                    loanForForeignerMarriedLocal: 0,
-                    loanForNonCreditCardHolder: 0,
-                    loanForCreditCardHolder: 0,
-                    loanForNotNowCreditCardHolder: 0,
-                    loanAlreadyExistDiffBank: 0,
-                    loanAlreadyExistSameBank: 0,
-                    missedLoanPaymentAllowance: 0,
-                    abbrevation: 0,
-                    bankName: 0,
-                    headquarterLocation: 0,
-                    loanForCancelledCreditCard: 0,
-                    bankFeePercent: 0,
-                    bankFeeAmount: 0,
-                    loanApplicationFeePercent: 0,
-                    loanApplicationFeeAmount: 0,
-                    loanMinAmount: 0,
-                    loanMaxAmount: 0,
-                    minLoanDuration: 0,
-                    maxLoanDuration: 0,
-                    minAgeRequiredForLoan: 0,
-                    minMonthlyIncomeRequired: 0,
-                    logoUrl: 0,
-                    iconUrl: 0,
-                    bannerUrl: 0,
-                    createdAt: 0,
-                    updatedAt: 0,
-                    incomeDocument: 0,
-                }
-            },
-            {
-                $unwind: {
-                    path: '$legalDocument',
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-                $match: {
-                    //              "legalDocument.coborrower" : false,
-                    'legalDocument.allowedFor': payload.employmentType,
+            let aggregateIncome;
+            if (payload.employmentType) {
+                console.log(22222222222222222222222222222222222222);
 
+                aggregateIncome = [{
+                    $match: {
+                        _id: Types.ObjectId(payload.bankId),
+                    },
                 },
-            },
-            ];
+                {
+                    $project: {
+                        propertySpecification: 0,
+                        interestRateDetails: 0,
+                        loanForForeigner: 0,
+                        loanForForeignerMarriedLocal: 0,
+                        loanForNonCreditCardHolder: 0,
+                        loanForCreditCardHolder: 0,
+                        loanForNotNowCreditCardHolder: 0,
+                        loanAlreadyExistDiffBank: 0,
+                        loanAlreadyExistSameBank: 0,
+                        missedLoanPaymentAllowance: 0,
+                        abbrevation: 0,
+                        bankName: 0,
+                        headquarterLocation: 0,
+                        loanForCancelledCreditCard: 0,
+                        bankFeePercent: 0,
+                        bankFeeAmount: 0,
+                        loanApplicationFeePercent: 0,
+                        loanApplicationFeeAmount: 0,
+                        loanMinAmount: 0,
+                        loanMaxAmount: 0,
+                        minLoanDuration: 0,
+                        maxLoanDuration: 0,
+                        minAgeRequiredForLoan: 0,
+                        minMonthlyIncomeRequired: 0,
+                        logoUrl: 0,
+                        iconUrl: 0,
+                        bannerUrl: 0,
+                        createdAt: 0,
+                        updatedAt: 0,
+                        legalDocument: 0,
+                        collateralDocument: 0,
+                        __v: 0,
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$incomeDocument',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $match: {
+                        // "legalDocument.coborrower" : false,
+                        'incomeDocument.allowedFor': payload.employmentType,
 
+                    },
+                },
+                ];
+                // promise.push(ENTITY.BankE.aggregate(aggregateIncome));
+            }
+            let aggregateColleteralDocument;
+            if (payload.propertyStatus) {
+                console.log('33333333333333333333333333333333333333');
 
-            const aggregateIncome = [{
-                $match: {
-                    _id: Types.ObjectId(payload.bankId),
+                aggregateColleteralDocument = [{
+                    $match: {
+                        _id: Types.ObjectId(payload.bankId),
+                    },
                 },
-            },
-            {
-                $project: {
-                    propertySpecification: 0,
-                    interestRateDetails: 0,
-                    loanForForeigner: 0,
-                    loanForForeignerMarriedLocal: 0,
-                    loanForNonCreditCardHolder: 0,
-                    loanForCreditCardHolder: 0,
-                    loanForNotNowCreditCardHolder: 0,
-                    loanAlreadyExistDiffBank: 0,
-                    loanAlreadyExistSameBank: 0,
-                    missedLoanPaymentAllowance: 0,
-                    abbrevation: 0,
-                    bankName: 0,
-                    headquarterLocation: 0,
-                    loanForCancelledCreditCard: 0,
-                    bankFeePercent: 0,
-                    bankFeeAmount: 0,
-                    loanApplicationFeePercent: 0,
-                    loanApplicationFeeAmount: 0,
-                    loanMinAmount: 0,
-                    loanMaxAmount: 0,
-                    minLoanDuration: 0,
-                    maxLoanDuration: 0,
-                    minAgeRequiredForLoan: 0,
-                    minMonthlyIncomeRequired: 0,
-                    logoUrl: 0,
-                    iconUrl: 0,
-                    bannerUrl: 0,
-                    createdAt: 0,
-                    updatedAt: 0,
-                    legalDocument: 0,
-                },
-            },
-            {
-                $unwind: {
-                    path: '$incomeDocument',
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-                $match: {
-                    //              "legalDocument.coborrower" : false,
-                    'incomeDocument.allowedFor': payload.employmentType,
+                {
+                    $project: {
+                        propertySpecification: 0,
+                        interestRateDetails: 0,
+                        loanForForeigner: 0,
+                        loanForForeignerMarriedLocal: 0,
+                        loanForNonCreditCardHolder: 0,
+                        loanForCreditCardHolder: 0,
+                        loanForNotNowCreditCardHolder: 0,
+                        loanAlreadyExistDiffBank: 0,
+                        loanAlreadyExistSameBank: 0,
+                        missedLoanPaymentAllowance: 0,
+                        abbrevation: 0,
+                        bankName: 0,
+                        headquarterLocation: 0,
+                        loanForCancelledCreditCard: 0,
+                        bankFeePercent: 0,
+                        bankFeeAmount: 0,
+                        loanApplicationFeePercent: 0,
+                        loanApplicationFeeAmount: 0,
+                        loanMinAmount: 0,
+                        loanMaxAmount: 0,
+                        minLoanDuration: 0,
+                        maxLoanDuration: 0,
+                        minAgeRequiredForLoan: 0,
+                        minMonthlyIncomeRequired: 0,
+                        logoUrl: 0,
+                        iconUrl: 0,
+                        bannerUrl: 0,
+                        createdAt: 0,
+                        updatedAt: 0,
+                        legalDocument: 0,
+                        incomeDocument: 0,
+                        __v: 0,
 
+                    },
                 },
-            },
-            ];
+                {
+                    $unwind: {
+                        path: '$collateralDocument',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $match: {
+                        //              "legalDocument.coborrower" : false,
+                        'collateralDocument.allowedFor': payload.propertyStatus,
+
+                    },
+                },
+
+                ];
+                // promise.push(ENTITY.BankE.aggregate(aggregateColleteralDocument));
+
+            }
+
 
             // const data = await ENTITY.BankE.aggregate(aggregateIncome);
-            const promise = [];
-            promise.push(ENTITY.BankE.aggregate(aggregateLegal));
-            promise.push(ENTITY.BankE.aggregate(aggregateIncome));
-            const [legalDoc, incomeDoc] = await Promise.all(promise);
+
+            if (payload.employmentType) {
+                promise.push(ENTITY.BankE.aggregate(aggregateLegal))
+            } else {
+                promise.push([])
+            }
+
+            if (payload.employmentType) {
+                promise.push(ENTITY.BankE.aggregate(aggregateIncome))
+            } else {
+                promise.push([]);
+            }
+            // promise.push(ENTITY.BankE.aggregate(aggregateIncome));
+            if (payload.propertyStatus) {
+                promise.push(ENTITY.BankE.aggregate(aggregateColleteralDocument))
+            } else {
+                promise.push([]);
+            }
+            // promise.push(ENTITY.BankE.aggregate(aggregateColleteralDocument));
+
+            const [legalDoc, incomeDoc, colleteralDoc] = await Promise.all(promise);
             return {
-                legalDoc,
-                incomeDoc,
+                legalDoc: legalDoc ? legalDoc : [],
+                incomeDoc: incomeDoc ? incomeDoc : [],
+                colleteralDoc: colleteralDoc ? colleteralDoc : [],
             };
             // console.log('datadata', data);
             // return data;
