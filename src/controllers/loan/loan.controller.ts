@@ -364,13 +364,143 @@ class LoanControllers extends BaseEntity {
             const data = await mail.generateLoanApplicationform(getLoanData);
 
             console.log('datadatadatadatadatadatadata', data);
-            console.log("loanId: getLoanData['refrenceId'],", getLoanData['referenceId']);
+            console.log('loanId: getLoanData[\'refrenceId\'],', getLoanData['referenceId']);
 
             return {
                 data,
                 loanId: getLoanData['referenceId'],
             };
 
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getDocuments(payload) {
+        try {
+            const criteria = {
+                _id: payload.bankId,
+            }
+            const aggregateLegal = [{
+                $match: {
+                    _id: Types.ObjectId(payload.bankId),
+                },
+            },
+            {
+                $project: {
+                    propertySpecification: 0,
+                    interestRateDetails: 0,
+                    loanForForeigner: 0,
+                    loanForForeignerMarriedLocal: 0,
+                    loanForNonCreditCardHolder: 0,
+                    loanForCreditCardHolder: 0,
+                    loanForNotNowCreditCardHolder: 0,
+                    loanAlreadyExistDiffBank: 0,
+                    loanAlreadyExistSameBank: 0,
+                    missedLoanPaymentAllowance: 0,
+                    abbrevation: 0,
+                    bankName: 0,
+                    headquarterLocation: 0,
+                    loanForCancelledCreditCard: 0,
+                    bankFeePercent: 0,
+                    bankFeeAmount: 0,
+                    loanApplicationFeePercent: 0,
+                    loanApplicationFeeAmount: 0,
+                    loanMinAmount: 0,
+                    loanMaxAmount: 0,
+                    minLoanDuration: 0,
+                    maxLoanDuration: 0,
+                    minAgeRequiredForLoan: 0,
+                    minMonthlyIncomeRequired: 0,
+                    logoUrl: 0,
+                    iconUrl: 0,
+                    bannerUrl: 0,
+                    createdAt: 0,
+                    updatedAt: 0,
+                    incomeDocument: 0,
+                }
+            },
+            {
+                $unwind: {
+                    path: '$legalDocument',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $match: {
+                    //              "legalDocument.coborrower" : false,
+                    'legalDocument.allowedFor': payload.employmentType,
+
+                },
+            },
+            ];
+
+
+            const aggregateIncome = [{
+                $match: {
+                    _id: Types.ObjectId(payload.bankId),
+                },
+            },
+            {
+                $project: {
+                    propertySpecification: 0,
+                    interestRateDetails: 0,
+                    loanForForeigner: 0,
+                    loanForForeignerMarriedLocal: 0,
+                    loanForNonCreditCardHolder: 0,
+                    loanForCreditCardHolder: 0,
+                    loanForNotNowCreditCardHolder: 0,
+                    loanAlreadyExistDiffBank: 0,
+                    loanAlreadyExistSameBank: 0,
+                    missedLoanPaymentAllowance: 0,
+                    abbrevation: 0,
+                    bankName: 0,
+                    headquarterLocation: 0,
+                    loanForCancelledCreditCard: 0,
+                    bankFeePercent: 0,
+                    bankFeeAmount: 0,
+                    loanApplicationFeePercent: 0,
+                    loanApplicationFeeAmount: 0,
+                    loanMinAmount: 0,
+                    loanMaxAmount: 0,
+                    minLoanDuration: 0,
+                    maxLoanDuration: 0,
+                    minAgeRequiredForLoan: 0,
+                    minMonthlyIncomeRequired: 0,
+                    logoUrl: 0,
+                    iconUrl: 0,
+                    bannerUrl: 0,
+                    createdAt: 0,
+                    updatedAt: 0,
+                    legalDocument: 0,
+                },
+            },
+            {
+                $unwind: {
+                    path: '$incomeDocument',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $match: {
+                    //              "legalDocument.coborrower" : false,
+                    'incomeDocument.allowedFor': payload.employmentType,
+
+                },
+            },
+            ];
+
+            // const data = await ENTITY.BankE.aggregate(aggregateIncome);
+            const promise = [];
+            promise.push(ENTITY.BankE.aggregate(aggregateLegal));
+            promise.push(ENTITY.BankE.aggregate(aggregateIncome));
+            const [legalDoc, incomeDoc] = await Promise.all(promise);
+            return {
+                legalDoc,
+                incomeDoc,
+            };
+            // console.log('datadata', data);
+            // return data;
         } catch (error) {
             return Promise.reject(error);
         }
