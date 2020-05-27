@@ -117,7 +117,7 @@ const schema = new Schema({
             },
             permanentResidenceSince: { type: Number },
         },
-        permanentAddressAddress: {
+        permanentAddress: {
             address: { type: String, required: true },
             homeOwnership: {
                 type: String, enum: [

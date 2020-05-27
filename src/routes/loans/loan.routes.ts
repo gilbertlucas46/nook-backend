@@ -151,7 +151,7 @@ export let loanRoute: ServerRoute[] = [
 							]).required(),
 							permanentResidenceSince: Joi.number().required(),
 						}),
-						permanentAddressAddress: Joi.object().keys({
+						permanentAddress: Joi.object().keys({
 							address: Joi.string().max(300).required(),
 							homeOwnership: Joi.string().valid([
 								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
@@ -654,7 +654,7 @@ export let loanRoute: ServerRoute[] = [
 							]).required(),
 							permanentResidenceSince: Joi.number().required(),
 						}),
-						permanentAddressAddress: Joi.object().keys({
+						permanentAddress: Joi.object().keys({
 							address: Joi.string().max(300).required(),
 							homeOwnership: Joi.string().valid([
 								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
