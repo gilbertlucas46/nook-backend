@@ -104,7 +104,7 @@ const schema = new Schema({
         email: { type: Schema.Types.String, trim: true },
         mobileNumber: { type: Schema.Types.String, trim: true },
         currentAddress: {
-            address: { type: Schema.Types.String, reuiqred: true },
+            address: { type: Schema.Types.String },
             homeOwnership: {
                 type: Schema.Types.String, enum: [
                     CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
@@ -127,12 +127,11 @@ const schema = new Schema({
                     CONSTANT.DATABASE.HOME_OWNERSHIP.RENTED,
                     CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
                 ],
-                required: true,
             },
             permanentResidenceSince: { type: Number },
         },
         previousAddress: {
-            address: { type: String, required: true },
+            address: { type: String },
             homeOwnership: {
                 type: String, enum: [
                     CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
@@ -141,7 +140,6 @@ const schema = new Schema({
                     CONSTANT.DATABASE.HOME_OWNERSHIP.RENTED,
                     CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
                 ],
-                required: true,
             },
             permanentResidenceSince: { type: Number },
         },
