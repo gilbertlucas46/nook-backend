@@ -501,6 +501,7 @@ export let preQualificationroutes: ServerRoute[] = [
                         middleName: Joi.string().allow(''),
                         userName: Joi.string().lowercase().required(),
                         email: Joi.string().email().required(),
+                        mobileNumber: Joi.string().trim(),
                     }),
 
                     loan: Joi.object().keys({
