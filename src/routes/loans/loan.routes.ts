@@ -52,6 +52,7 @@ export let loanRoute: ServerRoute[] = [
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
 						birthDate: Joi.number(),
+						placeOfBirth: Joi.string(),
 						nationality: Joi.string(),
 						localVisa: Joi.boolean(),
 						creditCard: Joi.object({
@@ -529,6 +530,7 @@ export let loanRoute: ServerRoute[] = [
 						monthlyIncome: Joi.number(),
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
+						placeOfBirth: Joi.string(),
 						birthDate: Joi.number(),
 						nationality: Joi.string(),
 						localVisa: Joi.boolean(),
@@ -653,30 +655,29 @@ export let loanRoute: ServerRoute[] = [
 							]).required(),
 							permanentResidenceSince: Joi.number().required(),
 						}),
+						permanentAddressAddress: Joi.object().keys({
+							address: Joi.string().max(300).required(),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]).required(),
+							permanentResidenceSince: Joi.number().required(),
+						}),
+						previousAddress: Joi.object().keys({
+							address: Joi.string().max(300).required().trim(),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]).required(),
+							permanentResidenceSince: Joi.number().required(),
+						}),
 					}),
-					permanentAddressAddress: Joi.object().keys({
-						address: Joi.string().max(300).required(),
-						homeOwnership: Joi.string().valid([
-							Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
-							Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
-							Constant.DATABASE.HOME_OWNERSHIP.OWNED,
-							Constant.DATABASE.HOME_OWNERSHIP.RENTED,
-							Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
-						]).required(),
-						permanentResidenceSince: Joi.number().required(),
-					}),
-					previousAddress: Joi.object().keys({
-						address: Joi.string().max(300).required().trim(),
-						homeOwnership: Joi.string().valid([
-							Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
-							Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
-							Constant.DATABASE.HOME_OWNERSHIP.OWNED,
-							Constant.DATABASE.HOME_OWNERSHIP.RENTED,
-							Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
-						]).required(),
-						permanentResidenceSince: Joi.number().required(),
-					}),
-
 					loanDetails: Joi.object().keys({
 						maxLoanTerm: Joi.number(),
 						fixedPeriod: Joi.number(),

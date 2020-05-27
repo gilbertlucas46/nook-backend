@@ -54,6 +54,7 @@ const schema = new Schema({
                 CONSTANT.DATABASE.CIVIL_STATUS.MARRIED,
             ],
         },
+        placeOfBirth: { type: String },
         birthDate: { type: Schema.Types.Number },
         monthlyIncome: { type: Schema.Types.Number, default: 0 },
         otherIncome: { type: Schema.Types.Number, default: 0 },
