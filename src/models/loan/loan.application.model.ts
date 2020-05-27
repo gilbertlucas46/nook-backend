@@ -254,72 +254,72 @@ const schema = new Schema({
         position: { type: String },
     }],
 
-    // propertyDocuments: {
-    //     borrowerValidDocIds: [Schema.Types.String],
-    //     coBorrowerValidId: [Schema.Types.String],
-    //     latestITR: { type: Schema.Types.String },
-    //     employmentCert: { type: Schema.Types.String },
-    //     purchasePropertyInfo: {
-    //         address: { type: Schema.Types.String, index: true },
-    //         contactPerson: { type: Schema.Types.String, trim: true },
-    //         contactNumber: { type: Schema.Types.String, trim: true },
-    //         collateralDocStatus: { type: Schema.Types.Boolean },
-    //         collateralDocList: [{
-    //             docType: {
-    //                 type: Schema.Types.String, enum: [
-    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
-    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
-    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
-    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
-    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
-    //                 ],
-    //             },
-    //             docUrl: {
-    //                 type: Schema.Types.String,
-    //                 trim: true,
-    //             },
-    //         }],
-    //     },
-    //     nookAgent: { type: Schema.Types.String, trim: true },
-    // },
-    document: {
-        legalDocument: [{
-            status: {
-                type: String, enum: [
-                    CONSTANT.DocumentStatus.ACTIVE,
-                    CONSTANT.DocumentStatus.Pending,
-                    CONSTANT.DocumentStatus.Rejected,
-                ]
-            },
-            documentRequired: { type: String },
-            desciption: { type: String },
-            url: { type: String },
-        }],
-        incomeDocument: [{
-            status: {
-                type: String, enum: [
-                    CONSTANT.DocumentStatus.ACTIVE,
-                    CONSTANT.DocumentStatus.Pending,
-                    CONSTANT.DocumentStatus.Rejected,
-                ]
-            },
-            documentRequired: { type: String },
-            desciption: { type: String },
-            url: { type: String },
-        }],
-        colleteralDoc: [{
-            status: {
-                type: String, enum: [
-                    CONSTANT.DocumentStatus.ACTIVE,
-                    CONSTANT.DocumentStatus.Pending,
-                    CONSTANT.DocumentStatus.Rejected,
-                ],
-            },
-            documentRequired: { type: String },
-            desciption: { type: String },
-            url: { type: String },
-        }],
+    propertyDocuments: {
+        borrowerValidDocIds: [Schema.Types.String],
+        coBorrowerValidId: [Schema.Types.String],
+        latestITR: { type: Schema.Types.String },
+        employmentCert: { type: Schema.Types.String },
+        purchasePropertyInfo: {
+            address: { type: Schema.Types.String, index: true },
+            contactPerson: { type: Schema.Types.String, trim: true },
+            contactNumber: { type: Schema.Types.String, trim: true },
+            collateralDocStatus: { type: Schema.Types.Boolean },
+            collateralDocList: [{
+                docType: {
+                    type: Schema.Types.String, enum: [
+                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+                    ],
+                },
+                docUrl: {
+                    type: Schema.Types.String,
+                    trim: true,
+                },
+            }],
+        },
+        nookAgent: { type: Schema.Types.String, trim: true },
     },
+    // document: {
+    //     legalDocument: [{
+    //         status: {
+    //             type: String, enum: [
+    //                 CONSTANT.DocumentStatus.ACTIVE,
+    //                 CONSTANT.DocumentStatus.Pending,
+    //                 CONSTANT.DocumentStatus.Rejected,
+    //             ]
+    //         },
+    //         documentRequired: { type: String },
+    //         desciption: { type: String },
+    //         url: { type: String },
+    //     }],
+    //     incomeDocument: [{
+    //         status: {
+    //             type: String, enum: [
+    //                 CONSTANT.DocumentStatus.ACTIVE,
+    //                 CONSTANT.DocumentStatus.Pending,
+    //                 CONSTANT.DocumentStatus.Rejected,
+    //             ]
+    //         },
+    //         documentRequired: { type: String },
+    //         desciption: { type: String },
+    //         url: { type: String },
+    //     }],
+    //     colleteralDoc: [{
+    //         status: {
+    //             type: String, enum: [
+    //                 CONSTANT.DocumentStatus.ACTIVE,
+    //                 CONSTANT.DocumentStatus.Pending,
+    //                 CONSTANT.DocumentStatus.Rejected,
+    //             ],
+    //         },
+    //         documentRequired: { type: String },
+    //         desciption: { type: String },
+    //         url: { type: String },
+    //     }],
+    // },
     applicationStage: [{
         userType: { type: String },
         status: { type: String },
