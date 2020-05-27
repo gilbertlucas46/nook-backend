@@ -115,7 +115,7 @@ class AdminUserControllers {
         }
     }
 
-    async updateUser(payload) {
+    async updateUserStatus(payload) {
         try {
             const criteria = {
                 _id: payload.userId,
@@ -138,6 +138,11 @@ class AdminUserControllers {
         }
     }
 
+    /**
+     * 
+     * @param payload userData
+     * @param userId
+     */
     async adminGetUser(payload) {
         try {
             const criteria = {
@@ -166,9 +171,44 @@ class AdminUserControllers {
             }
             return data;
         } catch (error) {
-            return Promise.reject(error)
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description  admin update the user
+     * @param payload userId and userData
+     */
+    async updateUser(payload: AdminRequest.IUpdateUser) {
+        try {
+            const criteria = {
+                _id: payload.userId,
+            };
+            const getUserData = await ENTITY.UserE.getOneEntity(criteria, {});
+            const checkEmailCriteria = {
+                email: payload.email,
+            };
+            const checkUserName = { userName: payload.userName };
+            console.log('ge{tUserData', getUserData);
+            if (getUserData && getUserData.email !== payload.email) {
+                const checkByEmail = await ENTITY.UserE.getOneEntity(checkEmailCriteria, ['_id', 'email']);
+                if (checkByEmail && checkByEmail._id) {
+                    return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
+                }
+            }
+            if (getUserData && getUserData.userName !== payload.userName) {
+                const checkByUserName = await ENTITY.UserE.getOneEntity(checkUserName, ['_id', 'userName']);
+                if (checkByUserName && checkByUserName._id) {
+                    return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
+                }
+            }
+            const updatedUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
+            const userResponse = UniversalFunctions.formatUserData(updatedUser);
+            return userResponse;
+        }
+        catch (error) {
+            console.log('errorerrorerrorerror', error);
+            return Promise.reject(error);
         }
     }
 }
-
 export let AdminUserController = new AdminUserControllers();

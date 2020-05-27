@@ -130,11 +130,66 @@ export let adminUserRoutes: ServerRoute[] = [
 
 	{
 		method: 'Patch',
-		path: '/v1/admin/users/{userId}',
+		path: '/v1/admin/users/{userId}/status',
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = {
+					...request.params,
+					...request.payload as any,
+				};
+				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await ENTITY.AdminStaffEntity.checkPermission(payload.permission);
+				// }
+				// const checkPermission = adminData['permission'].some(data => {
+				// 	return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.USERS;
+				// });
+				// if (checkPermission === false) {
+				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+				// }
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.USERS);
+
+
+				const registerResponse = await AdminUserController.updateUserStatus(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Get Admin Profile',
+			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					userId: Joi.string(),
+				},
+				payload: {
+					status: Joi.string().valid([
+						Constant.DATABASE.STATUS.USER.ACTIVE,
+						Constant.DATABASE.STATUS.USER.BLOCKED,
+						Constant.DATABASE.STATUS.USER.DELETE,
+					]),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
+	{
+		method: 'Patch',
+		path: '/v1/admin/users/{userId}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload: AdminRequest.IUpdateUser = {
 					...request.params,
 					...request.payload as any,
 				};
@@ -158,19 +213,26 @@ export let adminUserRoutes: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Get Admin Profile',
-			tags: ['api', 'anonymous', 'admin', 'Detail'],
+			description: 'update user Profile by admin',
+			tags: ['api', 'anonymous', 'admin', 'user', 'update'],
 			auth: 'AdminAuth',
 			validate: {
 				params: {
-					userId: Joi.string(),
+					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				payload: {
-					status: Joi.string().valid([
-						Constant.DATABASE.STATUS.USER.ACTIVE,
-						Constant.DATABASE.STATUS.USER.BLOCKED,
-						Constant.DATABASE.STATUS.USER.DELETE,
-					]),
+					userName: Joi.string().lowercase().required(),
+					email: Joi.string().email().lowercase().required(),
+					firstName: Joi.string(),
+					middleName: Joi.string(),
+					lastName: Joi.string(),
+					phoneNumber: Joi.string(),
+					language: Joi.string(),
+					aboutMe: Joi.string(),
+					profilePicUrl: Joi.string().uri(),
+					backGroundImageUrl: Joi.string().uri(),
+					// isEmailVerified: { type: Boolean },
+					// isPhoneVerified: { type: Boolean },
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
