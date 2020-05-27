@@ -103,7 +103,7 @@ const schema = new Schema({
         email: { type: Schema.Types.String, trim: true },
         mobileNumber: { type: Schema.Types.String, trim: true },
         currentAddress: {
-            address: { type: Schema.Types.String },
+            address: { type: Schema.Types.String, reuiqred: true },
             homeOwnership: {
                 type: Schema.Types.String, enum: [
                     CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
@@ -112,7 +112,37 @@ const schema = new Schema({
                     CONSTANT.DATABASE.HOME_OWNERSHIP.RENTED,
                     CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
                 ],
+                required: true,
             },
+            permanentResidenceSince: { type: Number },
+        },
+        permanentAddressAddress: {
+            address: { type: String, required: true },
+            homeOwnership: {
+                type: String, enum: [
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.OWNED,
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.RENTED,
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
+                ],
+                required: true,
+            },
+            permanentResidenceSince: { type: Number },
+        },
+        previousAddress: {
+            address: { type: String, required: true },
+            homeOwnership: {
+                type: String, enum: [
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.OWNED,
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.RENTED,
+                    CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
+                ],
+                required: true,
+            },
+            permanentResidenceSince: { type: Number },
         },
         // mailingAddress: {
         //     permanentAddress: { type: Boolean },

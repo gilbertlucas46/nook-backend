@@ -127,39 +127,61 @@ export let loanRoute: ServerRoute[] = [
 						email: Joi.string().email(),
 						mobileNumber: Joi.string().min(7).max(15),
 						currentAddress: Joi.object().keys({
-							address: Joi.string().max(300),
+							address: Joi.string().max(300).required().trim(),
 							homeOwnership: Joi.string().valid([
 								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
 								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
 								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
 								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
 								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
-							]),
+							]).required(),
+							permanentResidenceSince: Joi.number().required(),
 						}),
-						// mailingAddress: {
-						// 	permanentAddress: Joi.boolean(),
-						// 	presentAddress: Joi.boolean(),
-						// },
-						// // { type: Boolean, enum: ['Permanent Address', 'Present Address'] },
-						// address: {
-						// 	permanentAddress: {
-						// 		address: Joi.string(),
-						// 		homeOwnership: Joi.string().valid([
-						// 			Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
-						// 			Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
-						// 			Constant.DATABASE.HOME_OWNERSHIP.OWNED,
-						// 			Constant.DATABASE.HOME_OWNERSHIP.RENTED,
-						// 			Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
-						// 		]),
-						// 		lengthOfStay: Joi.number(),
-						// 	},
-						// 	presentAddress: {
-						// 		address: Joi.string(),
-						// 		lengthOfStay: Joi.number(),
-						// 	},
-						// },
+						permanentAddressAddress: Joi.object().keys({
+							address: Joi.string().max(300).required(),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]).required(),
+							permanentResidenceSince: Joi.number().required(),
+						}),
+						previousAddress: Joi.object().keys({
+							address: Joi.string().max(300).required().trim(),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]).required(),
+							permanentResidenceSince: Joi.number().required(),
+							// mailingAddress: {
+							// 	permanentAddress: Joi.boolean(),
+							// 	presentAddress: Joi.boolean(),
+							// },
+							// // { type: Boolean, enum: ['Permanent Address', 'Present Address'] },
+							// address: {
+							// 	permanentAddress: {
+							// 		address: Joi.string(),
+							// 		homeOwnership: Joi.string().valid([
+							// 			Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+							// 			Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+							// 			Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+							// 			Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+							// 			Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							// 		]),
+							// 		lengthOfStay: Joi.number(),
+							// 	},
+							// 	presentAddress: {
+							// 		address: Joi.string(),
+							// 		lengthOfStay: Joi.number(),
+							// 	},
+							// },
+						}),
 					}),
-
 					loanDetails: Joi.object().keys({
 						maxLoanTerm: Joi.number(),
 						fixedPeriod: Joi.number(),
@@ -608,8 +630,31 @@ export let loanRoute: ServerRoute[] = [
 								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
 								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
 								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
-							]),
+							]).required(),
+							permanentResidenceSince: Joi.number().required(),
 						}),
+					}),
+					permanentAddressAddress: Joi.object().keys({
+						address: Joi.string().max(300).required(),
+						homeOwnership: Joi.string().valid([
+							Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+							Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+							Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+							Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+							Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+						]).required(),
+						permanentResidenceSince: Joi.number().required(),
+					}),
+					previousAddress: Joi.object().keys({
+						address: Joi.string().max(300).required().trim(),
+						homeOwnership: Joi.string().valid([
+							Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+							Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+							Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+							Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+							Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+						]).required(),
+						permanentResidenceSince: Joi.number().required(),
 					}),
 
 					loanDetails: Joi.object().keys({
@@ -838,6 +883,143 @@ export let loanRoute: ServerRoute[] = [
 					loanId: Joi.string().trim(), // referenceId
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
+	/**
+	 * @description user upload document
+	 */
+	{
+		method: 'GET',
+		path: '/v1/user/loan/document/{bankId}',
+		handler: async (request, h: ResponseToolkit) => {
+			try {
+				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload: LoanRequest.AddLoan = {
+					...request.params as any,
+					...request.query as any,
+				};
+				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
+
+				const data = await LoanController.getDocuments(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'add Loan Requirements',
+			tags: ['api', 'anonymous', 'loan', 'Add'],
+			// auth: 'UserAuth',
+			validate: {
+				params: {
+					bankId: Joi.string(),
+				},
+				query: {
+					// personalInfo: Joi.object().keys({
+					civilStatus: Joi.string().valid([
+						Constant.DATABASE.CIVIL_STATUS.SINGLE,
+						Constant.DATABASE.CIVIL_STATUS.WIDOW,
+						Constant.DATABASE.CIVIL_STATUS.SEPERATED,
+						Constant.DATABASE.CIVIL_STATUS.MARRIED,
+					]),
+					spouseInfo: {
+						firstName: Joi.string().max(32),
+						lastName: Joi.string().max(32),
+						middleName: Joi.string().max(32),
+						birthDate: Joi.number(),
+						monthlyIncome: Joi.number(),
+						isCoborrower: Joi.boolean(),
+						motherMaidenName: Joi.string(),
+						age: Joi.number(),
+						birthPlace: Joi.string(),
+					},
+					coBorrowerInfo: {
+						firstName: Joi.string().max(32),
+						lastName: Joi.string().max(32),
+						middleName: Joi.string().max(32),
+						birthDate: Joi.number(),
+						monthlyIncome: Joi.number(),
+						isCoborrower: Joi.boolean(),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+						]),
+					},
+					employmentType: Joi.string().valid([
+						EMPLOYMENT_TYPE.BPO.value,
+						EMPLOYMENT_TYPE.GOVT.value,
+						EMPLOYMENT_TYPE.OFW.value,
+						EMPLOYMENT_TYPE.PRIVATE.value,
+						EMPLOYMENT_TYPE.PROFESSIONAL.value,
+						EMPLOYMENT_TYPE.SELF.value,
+					]),
+
+					// }),
+					// bankInfo: Joi.object().keys({
+					// iconUrl: Joi.string(),
+					// bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					// bankName: Joi.string().min(5).max(50),
+					// abbrevation: Joi.string().max(10),
+					// }),
+
+					// employmentInfo: Joi.object().keys({
+					// 	type: Joi.string().valid([
+					// 		EMPLOYMENT_TYPE.BPO.value,
+					// 		EMPLOYMENT_TYPE.GOVT.value,
+					// 		EMPLOYMENT_TYPE.OFW.value,
+					// 		EMPLOYMENT_TYPE.PRIVATE.value,
+					// 		EMPLOYMENT_TYPE.PROFESSIONAL.value,
+					// 		EMPLOYMENT_TYPE.SELF.value,
+					// 	]),
+					// 	coBorrowerInfo: {
+					// 		employmentType: Joi.string().valid([
+					// 			EMPLOYMENT_TYPE.BPO.value,
+					// 			EMPLOYMENT_TYPE.GOVT.value,
+					// 			EMPLOYMENT_TYPE.OFW.value,
+					// 			EMPLOYMENT_TYPE.PRIVATE.value,
+					// 			EMPLOYMENT_TYPE.PROFESSIONAL.value,
+					// 			EMPLOYMENT_TYPE.SELF.value,
+					// 		]),
+					// 	},
+					// }),
+
+					// propertyDocuments: Joi.object().keys({
+					// 	borrowerValidDocIds: Joi.array().items(Joi.string()),
+					// 	coBorrowerValidId: Joi.array().items(Joi.string()),
+					// 	latestITR: Joi.string().uri(),
+					// 	employmentCert: Joi.string().uri(),
+					// 	purchasePropertyInfo: Joi.object().keys({
+					// 		address: Joi.string().max(300),
+					// 		contactPerson: Joi.string(),
+					// 		contactNumber: Joi.number(),
+					// 		collateralDocStatus: Joi.boolean(),
+					// 		collateralDocList: Joi.array().items({
+					// 			docType: Joi.string().valid([
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+					// 			]),
+					// 			docUrl: Joi.string(),
+					// 		}),
+					// 	}),
+				},
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {

@@ -51,6 +51,7 @@ export namespace PreQualificationRequest {
                 status: boolean;
                 coBorrowerMonthlyIncome?: number;
             },
+            mobileNumber: string;
         };
         loan: {
             type: string;
