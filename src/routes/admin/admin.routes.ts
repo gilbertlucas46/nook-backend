@@ -767,7 +767,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							]),
 							permanentResidenceSince: Joi.number(),
 						}),
-						permanentAddressAddress: Joi.object().keys({
+						permanentAddress: Joi.object().keys({
 							address: Joi.string().max(300),
 							homeOwnership: Joi.string().valid([
 								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
@@ -1127,7 +1127,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							]).required(),
 							permanentResidenceSince: Joi.number(),
 						}),
-						permanentAddressAddress: Joi.object().keys({
+						permanentAddress: Joi.object().keys({
 							address: Joi.string().max(300),
 							homeOwnership: Joi.string().valid([
 								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
