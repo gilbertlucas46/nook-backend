@@ -393,9 +393,9 @@ export let loanRoute: ServerRoute[] = [
 					// }),
 
 					documents: {
-						legalDocument: Joi.array().items(objectSchema).min(1).unique(),
-						incomeDocument: Joi.array().items(objectSchema).min(1).unique(),
-						colleteralDoc: Joi.array().items(objectSchema).min(1).unique(),
+						legalDocument: Joi.array().items(objectSchema).min(1),
+						incomeDocument: Joi.array().items(objectSchema).min(1),
+						colleteralDoc: Joi.array().items(objectSchema).min(1),
 					},
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
