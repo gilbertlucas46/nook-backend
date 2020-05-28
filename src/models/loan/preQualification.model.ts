@@ -162,6 +162,7 @@ const prequalification = new Schema({
         midddleName: { type: String },
         userName: { type: String },
         email: { type: String },
+        mobileNumber: { type: Schema.Types.String, trim: true },
     },
     totalLoanMonthly: { type: Number }, // 437200.5250656446
     monthlyPayment: { type: Number }, // 437200.5250656446

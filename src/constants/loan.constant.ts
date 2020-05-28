@@ -360,3 +360,8 @@ export const INDUSTRIES = {
         value: 'TRANSPORTATION',
     },
 };
+export const DocumentStatus = {
+    ACTIVE: 'Active',
+    Pending: 'Pending',
+    Rejected: 'Rejected',
+};

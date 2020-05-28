@@ -680,6 +680,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
 						birthDate: Joi.number(),
+						placeOfBirth: Joi.string(),
 						nationality: Joi.string(),
 						localVisa: Joi.boolean(),
 						creditCard: Joi.object({
@@ -764,6 +765,29 @@ export let adminProfileRoute: ServerRoute[] = [
 								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
 								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
 							]),
+							permanentResidenceSince: Joi.number(),
+						}),
+						permanentAddress: Joi.object().keys({
+							address: Joi.string().max(300),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]),
+							permanentResidenceSince: Joi.number(),
+						}),
+						previousAddress: Joi.object().keys({
+							address: Joi.string().max(300).trim(),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]),
+							permanentResidenceSince: Joi.number(),
 						}),
 						// mailingAddress: {
 						// 	permanentAddress: Joi.boolean(),
@@ -1004,6 +1028,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
 						birthDate: Joi.number(),
+						placeOfBirth: Joi.string(),
 						nationality: Joi.string(),
 						localVisa: Joi.boolean(),
 						creditCard: Joi.object({
@@ -1099,7 +1124,30 @@ export let adminProfileRoute: ServerRoute[] = [
 								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
 								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
 								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]).required(),
+							permanentResidenceSince: Joi.number(),
+						}),
+						permanentAddress: Joi.object().keys({
+							address: Joi.string().max(300),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
 							]),
+							permanentResidenceSince: Joi.number(),
+						}),
+						previousAddress: Joi.object().keys({
+							address: Joi.string().max(300).trim(),
+							homeOwnership: Joi.string().valid([
+								Constant.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
+								Constant.DATABASE.HOME_OWNERSHIP.MORTGAGED,
+								Constant.DATABASE.HOME_OWNERSHIP.OWNED,
+								Constant.DATABASE.HOME_OWNERSHIP.RENTED,
+								Constant.DATABASE.HOME_OWNERSHIP.USED_FREE,
+							]),
+							permanentResidenceSince: Joi.number(),
 						}),
 						// mailingAddress: {
 						// 	permanentAddress: Joi.boolean(),

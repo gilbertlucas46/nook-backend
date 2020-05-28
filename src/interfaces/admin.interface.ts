@@ -152,5 +152,22 @@ export namespace AdminRequest {
 		userId?: string;
 		isByAdmin?: boolean;
 	}
+	export interface IUpdateUser {
+		userId: string;
+		email: string;
+		userName: string;
+		firstName: string;
+		middleName: string;
+		lastName: string;
+		phoneNumber: string;
+		type?: string;
+		language?: string;
+		// title?: string;
+		// license?: string;
+		companyName?: string;
+		address?: string;
+		aboutMe?: string;
+	}
+
 
 }
