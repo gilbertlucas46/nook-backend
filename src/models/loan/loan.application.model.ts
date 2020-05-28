@@ -290,8 +290,9 @@ const schema = new Schema({
                 ]
             },
             documentRequired: { type: String },
-            desciption: { type: String },
+            description: { type: String },
             url: { type: String },
+            createdAt: { type: Number },
         }],
         incomeDocument: [{
             status: {
@@ -302,7 +303,7 @@ const schema = new Schema({
                 ]
             },
             documentRequired: { type: String },
-            desciption: { type: String },
+            description: { type: String },
             url: { type: String },
         }],
         colleteralDoc: [{
@@ -314,7 +315,7 @@ const schema = new Schema({
                 ],
             },
             documentRequired: { type: String },
-            desciption: { type: String },
+            description: { type: String },
             url: { type: String },
         }],
     },
