@@ -393,9 +393,9 @@ export let loanRoute: ServerRoute[] = [
 					// }),
 
 					documents: {
-						legalDocument: Joi.array().items(objectSchema).min(1),
-						incomeDocument: Joi.array().items(objectSchema).min(1),
-						colleteralDoc: Joi.array().items(objectSchema).min(1),
+						legalDocument: Joi.array().items(objectSchema),
+						incomeDocument: Joi.array().items(objectSchema),
+						colleteralDoc: Joi.array().items(objectSchema),
 					},
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -835,9 +835,9 @@ export let loanRoute: ServerRoute[] = [
 					// 	nookAgent: Joi.string(),
 					// }),
 					documents: {
-						legalDocument: Joi.array().items(objectSchema).min(1),
-						incomeDocument: Joi.array().items(objectSchema).min(1),
-						colleteralDoc: Joi.array().items(objectSchema).min(1),
+						legalDocument: Joi.array().items(objectSchema),
+						incomeDocument: Joi.array().items(objectSchema),
+						colleteralDoc: Joi.array().items(objectSchema),
 					},
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
