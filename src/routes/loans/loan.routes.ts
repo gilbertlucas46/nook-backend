@@ -16,7 +16,7 @@ const objectSchema = Joi.object({
 		LoanConstant.DocumentStatus.Pending,
 	]),
 	documentRequired: Joi.string(),
-	desciption: Joi.string(),
+	description: Joi.string(),
 	url: Joi.string(),
 });
 export let loanRoute: ServerRoute[] = [
