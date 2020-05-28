@@ -17,3 +17,4 @@ export { AdminUserEntity } from './admin/admin.user.entity';
 export { ArticleCategoryE } from './article/adminArticle.entity';
 export { PreQualificationBankE } from './loan/prequalification.entity';
 export { LoanErrorE } from './loan/checkLoanError.entity';
+export { BankE } from './banks/banks.entity';
