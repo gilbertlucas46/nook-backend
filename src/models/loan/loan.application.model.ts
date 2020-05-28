@@ -280,7 +280,7 @@ const schema = new Schema({
     //     },
     //     nookAgent: { type: Schema.Types.String, trim: true },
     // },
-    document: {
+    documents: {
         legalDocument: [{
             status: {
                 type: String, enum: [
@@ -294,6 +294,7 @@ const schema = new Schema({
             url: { type: String },
             createdAt: { type: Number },
         }],
+
         incomeDocument: [{
             status: {
                 type: String, enum: [
