@@ -9,7 +9,8 @@ import * as Constant from '../../constants/app.constant';
 import * as utils from 'src/utils';
 import { PreQualificationBankE } from '@src/entity/loan/prequalification.entity';
 import { MailManager } from '../../lib/mail.manager';
-
+import fetch from 'node-fetch';
+import * as config from 'config';
 class LoanControllers extends BaseEntity {
 
     /**
@@ -261,12 +262,32 @@ class LoanControllers extends BaseEntity {
                     adminId: adminData._id,
                     adminName: adminData ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
                     approvedAt: new Date().getTime(),
+                    assignedTo: payload.staffId ? payload.staffId : '',
                 },
             };
 
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
-            else return data;
+            else {
+                if (payload.staffId) {
+                    const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
+                    console.log('getStaffName>>>>>>>>>>>>', getStaffData);
+                    const salesforceData = {
+                        _id: payload.loanId,
+                        staffAssignedEmail: getStaffData.email,
+                        staffAssignedfirstName: getStaffData.firstName,
+                        staffAssignedlastName: getStaffData.lastName,
+                    };
+                    if (config.get('environment') === 'production') {
+                        await fetch(config.get('zapier_loanUrl'), {
+                            method: 'post',
+                            body: JSON.stringify(salesforceData),
+                        });
+                    }
+                    return data;
+                }
+                return data;
+            }
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
