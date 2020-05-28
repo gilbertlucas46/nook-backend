@@ -368,35 +368,35 @@ export let loanRoute: ServerRoute[] = [
 						position: Joi.string(),
 					}),
 
-					propertyDocuments: Joi.object().keys({
-						borrowerValidDocIds: Joi.array().items(Joi.string()),
-						coBorrowerValidId: Joi.array().items(Joi.string()),
-						latestITR: Joi.string().uri(),
-						employmentCert: Joi.string().uri(),
-						purchasePropertyInfo: Joi.object().keys({
-							address: Joi.string().max(300),
-							contactPerson: Joi.string(),
-							contactNumber: Joi.number(),
-							collateralDocStatus: Joi.boolean(),
-							collateralDocList: Joi.array().items({
-								docType: Joi.string().valid([
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
-								]),
-								docUrl: Joi.string(),
-							}),
-						}),
-						nookAgent: Joi.string(),
-					}),
+					// propertyDocuments: Joi.object().keys({
+					// 	borrowerValidDocIds: Joi.array().items(Joi.string()),
+					// 	coBorrowerValidId: Joi.array().items(Joi.string()),
+					// 	latestITR: Joi.string().uri(),
+					// 	employmentCert: Joi.string().uri(),
+					// 	purchasePropertyInfo: Joi.object().keys({
+					// 		address: Joi.string().max(300),
+					// 		contactPerson: Joi.string(),
+					// 		contactNumber: Joi.number(),
+					// 		collateralDocStatus: Joi.boolean(),
+					// 		collateralDocList: Joi.array().items({
+					// 			docType: Joi.string().valid([
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+					// 			]),
+					// 			docUrl: Joi.string(),
+					// 		}),
+					// 	}),
+					// 	nookAgent: Joi.string(),
+					// }),
 
-					// documents: {
-					// 	legalDocument: Joi.array().items(objectSchema).min(1).unique(),
-					// 	incomeDocument: Joi.array().items(objectSchema).min(1).unique(),
-					// 	colleteralDoc: Joi.array().items(objectSchema).min(1).unique(),
-					// },
+					documents: {
+						legalDocument: Joi.array().items(objectSchema).min(1).unique(),
+						incomeDocument: Joi.array().items(objectSchema).min(1).unique(),
+						colleteralDoc: Joi.array().items(objectSchema).min(1).unique(),
+					},
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
