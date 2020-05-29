@@ -121,6 +121,18 @@ const init = async () => {
 					},
 				},
 			},
+			{
+				method: 'GET',
+				path: '/src/views/images/'.toString() + `{path*}`, // ' /views/uploads/image/{path*}',
+				options: {
+					handler: {
+						directory: {
+							path: process.cwd() + '/src/views/images/'.toString(),
+							listing: false,
+						},
+					},
+				},
+			},
 			// {
 			// 	method: 'GET',
 			// 	path: config.get('basepath.url.csv').toString() + `{path*}`,
