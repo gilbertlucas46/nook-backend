@@ -650,7 +650,7 @@ class LoanControllers extends BaseEntity {
             }
 
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
-            return data['documents'];
+            return data
         } catch (error) {
             return Promise.reject(error);
         }
