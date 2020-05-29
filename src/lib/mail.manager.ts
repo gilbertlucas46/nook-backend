@@ -243,7 +243,7 @@ export class MailManager {
 			const htmlContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'loan-form.html'))
 				.compileFile({
 					applicationId: params['referenceId'],
-					nookLogoUrl: config['host'] + '/images/nooklogo.png',
+					nookLogoUrl: config['host'] + 'src/views/images/nooklogo.png',
 					fullName: params['personalInfo']['firstName'] + middleName + ' ' + params['personalInfo']['lastName'],  // + params['personalInfo']['middleName'] ? params['personalInfo']['middleName'] : '' 
 					civilStatus: params['personalInfo']['civilStatus'],
 					sex: params['personalInfo']['gender'],
