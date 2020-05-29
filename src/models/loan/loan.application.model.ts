@@ -329,7 +329,7 @@ const schema = new Schema({
         status: { type: String },
         adminId: { type: Schema.Types.ObjectId, ref: 'admin' },
         adminName: { type: String },
-        assignedTo: { type: Schema.Types.ObjectId },
+        assignedTo: { type: String },
         approvedAt: { type: Number, default: new Date().getTime() },
     }],
     changesMadeBy: {
