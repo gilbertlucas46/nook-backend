@@ -162,7 +162,7 @@ class LoanApplicationE extends BaseEntity {
                 matchObject.$match['applicationStatus'] = status;
             }
             if (staffId) {
-                matchObject.$match['assignedTo'] =Types.ObjectId(staffId);
+                matchObject.$match['assignedTo'] = Types.ObjectId(staffId);
             }
             // else {
             //     matchObject['applicationStatus'] =
@@ -373,7 +373,7 @@ class LoanApplicationE extends BaseEntity {
                 console.log('>>>>>>>>>>*888888888888888888888888888888888888888888888888888888888888888>>>>>>>');
             }
 
-            if (data.loanDetails.loanType) {
+            if (data && data.loanDetails && data.loanDetails.loanType) {
                 console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999');
                 data.loanDetails.loanType = Constant.LOAN_TYPES[data.loanDetails.loanType].label;
                 console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999>>>>>>>>>>>>>>>');
@@ -407,21 +407,3 @@ class LoanApplicationE extends BaseEntity {
     }
 }
 export const LoanApplicationEntity = new LoanApplicationE();
-
-
-// /var/www / html / nook - app / nook - web /.pm2 / logs / nook - error.log last 15 lines:
-// WARNING: See https://github.com/lorenwest/node-config/wiki/Strict-Mode
-// (node: 6260) DeprecationWarning: collection.count is deprecated, and will be removed in a future version.Use collection.countDocuments or collection.estimatedDocumentCount instead
-//     (node: 6260) UnhandledPromiseRejectionWarning: TypeError: Cannot read property 'employmentRank' of undefined
-// at LoanApplicationE.<anonymous>(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 254: 52)
-// at Generator.next(<anonymous>)
-// at /var/www/html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 7: 71
-// at new Promise(<anonymous>)
-// at __awaiter(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 3: 12)
-// at LoanApplicationE.sendApplication(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 238: 16)
-// at LoanApplicationE.<anonymous>(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 47: 18)
-// at Generator.next(<anonymous>)
-// at fulfilled(/var/www / html / nook - app / nook - web / backend / backend / src / entity / loan / loan.application.entity.ts: 4: 58)
-// at process._tickCallback(internal / process / next_tick.js: 68: 7)
-//     (node: 6260) UnhandledPromiseRejectionWarning: Unhandled promise rejection.This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
-//         (node: 6260)[DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated.In the future, promise rejections that are not handled will terminate the Node.js process with a non - zero exit code.
