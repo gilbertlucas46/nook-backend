@@ -42,8 +42,7 @@
 </head>
 
 
-<body
-    style="padding:0 30px !important; margin: 20px 0 0; font-family: Verdana, sans-serif !important;  background: #fbfafa !important;">
+<body style="padding:0 30px !important; margin: 20px 0 0; font-family: Verdana, sans-serif !important;">
 
     <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
         <tbody>
@@ -72,13 +71,17 @@
             </tr>
 
             <tr>
-                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="1">
                     <p style="font-weight: bold; text-transform: capitalize;">Full Name</p>
                     <span>{{fullName}}</span>
                 </td>
                 <td style="border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Civil Status</p>
                     <span>{{civilStatus}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold;">Birth Date</p>
+                    <span>{{birthDate}}</span>
                 </td>
             </tr>
 
@@ -92,8 +95,8 @@
                     <span style="text-transform: uppercase;">{{citizenship}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">Birth Date</p>
-                    <span>{{birthDate}}</span>
+                    <p style="font-weight: bold; text-transform: capitalize;">Place of Birth</p>
+                    <span style="text-transform: uppercase;">Filipino</span>
                 </td>
             </tr>
 
@@ -144,15 +147,56 @@
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Home Ownership</p>
-                    <span>{{homeOwnership}}</span>
+                    <span>{{homeOwnership1}}</span>
                 </td>
                 <td style="border-bottom: 1px solid #cccccc;" colspan="2">
-                    <p style="font-weight: bold; text-transform: capitalize;">Home Address</p>
-                    <span>{{currentAddress}}</span>
+                    <p style="font-weight: bold; text-transform: capitalize;">Residence Since (No. of Years)</p>
+                    <span>{{permanentResidenceSince1}}</span>
                 </td>
             </tr>
 
+            <tr>
+                <td style="border-bottom: 1px solid #cccccc;" colspan="3">
+                    <p style="font-weight: bold; text-transform: capitalize;">Permanent Address</p>
+                    <span>{{permanentAddress}}</span>
+                </td>
+            </tr>
 
+            <tr>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Home Ownership</p>
+                    <span>{{homeOwnership2}}</span>
+                </td>
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
+                    <p style="font-weight: bold; text-transform: capitalize;">Residence Since (No. of Years)</p>
+                    <span>{{permanentResidenceSince2}}</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border-bottom: 1px solid #cccccc;" colspan="3">
+                    <p style="font-weight: bold; text-transform: capitalize;">Previous Address</p>
+                    <span>{{previousAddress}}</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Home Ownership</p>
+                    <span>{{homeOwnership3}}</span>
+                </td>
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
+                    <p style="font-weight: bold; text-transform: capitalize;">Residence Since (No. of Years)</p>
+                    <span>{{permanentResidenceSince3}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <table style="width: 100%; border-collapse: collapse; border-spacing: 0;">
+        <tbody>
             <tr>
                 <td colspan="3" style="padding: 35px 0 0 !important;">
                     <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
@@ -186,13 +230,9 @@
                     <p style="font-weight: bold; text-transform: capitalize;">TIN</p>
                     <span>{{coBorrowerTIN}}</span>
                 </td>
-                <td style="border-bottom: 1px solid #cccccc;">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">SSS No.</p>
                     <span>{{coBorrowerSSS}}</span>
-                </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">Employment Tenure</p>
-                    <span style="text-transform: uppercase;">{{coBorrowerEmploymentTenure}}</span>
                 </td>
             </tr>
             <tr>
@@ -210,35 +250,28 @@
                     <p style="font-weight: bold; text-transform: capitalize;">Company Name</p>
                     <span>{{coBorrowerCompanyName}}</span>
                 </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Company Industry</p>
                     <span style="text-transform: uppercase;">{{coBorrowerCompanyIndustry}}</span>
-                </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">Office Phone</p>
-                    <span>{{coBorrowerOfficePhone}}</span>
                 </td>
             </tr>
 
             <tr>
-                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="3">
                     <p style="font-weight: bold; text-transform: capitalize;">Office Address</p>
                     <span>{{coBorrowerOfficeAddress}}</span>
                 </td>
-
+            </tr>
+            <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Office Phone</p>
+                    <span>{{coBorrowerOfficePhone}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Office Email</p>
                     <span>{{coBorrowerOfficeEmail}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
-
-    <div class="page-break"></div>
-
-    <table style="width: 100%; border-collapse: collapse; border-spacing: 0;">
-        <tbody>
-
             <tr>
                 <td colspan="3" style="padding: 35px 0 0 !important;">
                     <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
@@ -275,22 +308,22 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Loan Type</p>
                     <span>{{loanType}}</span>
-                </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">Loan Total Payment (Php)</p>
-                    <span>3,400,000.00</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Monthly Repayments (Php)</p>
                     <span>21,109.42 to done</span>
                 </td>
             </tr>
+        </tbody>
+    </table>
 
+    <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+        <tbody>
             <tr>
-                <td colspan="3" style="padding: 35px 0 0 !important;">
+                <td colspan="2" style="padding: 35px 0 0 !important;">
                     <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
                     background-color:#196192 !important; padding:7px 10px !important;">COLLATERAL
                         INFORMATION</p>
@@ -298,11 +331,11 @@
             </tr>
 
             <tr>
-                <td style=" border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc; width: 50%;">
                     <p style="font-weight: bold; text-transform: capitalize;">Property Value</p>
                     <span>{{propertyValue}}</span>
                 </td>
-                <td style=" border-bottom: 1px solid #cccccc;" colspan="2">
+                <td style=" border-bottom: 1px solid #cccccc; width: 50%;">
                     <p style="font-weight: bold; text-transform: capitalize;">Property Type</p>
                     <span>{{propertyType}}</span>
                 </td>
@@ -310,41 +343,44 @@
             </tr>
 
             <tr>
-                <td style=" border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc; width: 50%;">
                     <p style="font-weight: bold; text-transform: capitalize;">Property Status</p>
                     <span style="text-transform: uppercase;">{{propertyStatus}}</span>
                 </td>
-                <td style=" border-bottom: 1px solid #cccccc;" colspan="2">
+                <td style=" border-bottom: 1px solid #cccccc; width: 50%;">
                     <p style="font-weight: bold; text-transform: capitalize;">Property Developer</p>
                     <span>{{propertyDeveloper}}</span>
                 </td>
             </tr>
 
             <tr>
-                <td style=" border-bottom: 1px solid #cccccc;" colspan="3">
+                <td style=" border-bottom: 1px solid #cccccc; width: 50%;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Property Address</p>
+                    <span>{{propertyAddress}}</span>
+                </td>
+                <td style=" border-bottom: 1px solid #cccccc; width: 50%;">
                     <p style="font-weight: bold; text-transform: capitalize;">Are you ready to upload your collateral?
                     </p>
                     <span>{{collateralDocStatus}}</span>
                 </td>
             </tr>
-
             <tr>
-                <td style=" border-bottom: 1px solid #cccccc;" colspan="3">
-                    <p style="font-weight: bold; text-transform: capitalize;">Property Address</p>
-                    <span>{{propertyAddress}}</span>
-                </td>
-
-            </tr>
-            <tr>
-                <td style=" border-bottom: 1px solid #cccccc;">
+                <td style=" border-bottom: 1px solid #cccccc; width: 50%;">
                     <p style="font-weight: bold; text-transform: capitalize;">Contact Person</p>
                     <span>{{contactPerson}}</span>
                 </td>
-                <td style=" border-bottom: 1px solid #cccccc;" colspan="2">
+                <td style=" border-bottom: 1px solid #cccccc; width: 50%;">
                     <p style="font-weight: bold; text-transform: capitalize;">Contact Number</p>
                     <span>{{contactNumber}}</span>
                 </td>
             </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <table style="width: 100%; border-collapse: collapse; border-spacing: 0;">
+        <tbody>
 
             <tr>
                 <td colspan="3" style="padding: 35px 0 0 !important;">
@@ -390,34 +426,31 @@
                     <p style="font-weight: bold; text-transform: capitalize;">Company Name</p>
                     <span>{{companyName}}</span>
                 </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Company Industry</p>
                     <span style="text-transform: uppercase;">{{companyIndustry}}</span>
                 </td>
-                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
-                    <p style="font-weight: bold; text-transform: capitalize;">Office Phone/Fax</p>
-                    <span>{{officePhone}}</span>
-                </td>
+
             </tr>
 
             <tr>
-                <td style="border-bottom: 1px solid #cccccc;" colspan="2">
+                <td style="border-bottom: 1px solid #cccccc;" colspan="3">
                     <p style="font-weight: bold; text-transform: capitalize;">Office Address</p>
                     <span>{{officeAddress}}</span>
                 </td>
 
+
+            </tr>
+            <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
+                    <p style="font-weight: bold; text-transform: capitalize;">Office Phone/Fax</p>
+                    <span>{{officePhone}}</span>
+                </td>
+                <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;" colspan="2">
                     <p style="font-weight: bold; text-transform: capitalize;">Office Email</p>
                     <span>{{officeEmail}}</span>
                 </td>
             </tr>
-        </tbody>
-    </table>
-
-    <div class="page-break"></div>
-
-    <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
-        <tbody>
             <tr>
                 <td colspan="3" style="padding: 35px 0 0 !important;">
                     <p style="font-weight: bold; color: white; font-size: 8.5pt; margin-bottom: 0; 
@@ -429,31 +462,37 @@
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Do you have other loans?</p>
-                    <span>{{otherLoan}}</span>
+                    <span>False</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Total Monthly Payments (Php)</p>
-                    <span>{{totalMonthlyPayments}}</span>
+                    <span>N/A</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Total Remaining Balance (Php)</p>
-                    <span>{{totalRemainingBalance}}</span>
+                    <span>N/A</span>
                 </td>
             </tr>
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Do you own a credit card?</p>
-                    <span>{{creditCardStatus}}</span>
+                    <span>Yes, active credit card</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Credit Card issuing bank?</p>
-                    <span>{{creaditCardIssuingBank}}</span>
+                    <span>N/A</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
                     <p style="font-weight: bold; text-transform: capitalize;">Credit Card Limit (Php)</p>
-                    <span>{{creditCardLimit}}</span>
+                    <span>20,000.00</span>
                 </td>
             </tr>
+        </tbody>
+    </table>
+
+    <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+        <tbody>
+
 
             <tr>
                 <td colspan="3" style="padding: 35px 0 0 !important;">
@@ -466,7 +505,7 @@
             <tr>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
 
-                    <p style="font-weight: bold; text-transform: capitalize;">Dependent Name</p>
+                    <p style="font-weight: bold; text-transform: capitalize;">Dependent Name 1</p>
                     <span>{{name1}}</span>
                 </td>
                 <td style="width: calc(100%/3); border-bottom: 1px solid #cccccc;">
@@ -558,3 +597,5 @@
     </table>
 
 </body>
+
+</html>
