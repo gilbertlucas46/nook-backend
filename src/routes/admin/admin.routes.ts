@@ -12,6 +12,19 @@ import { LoanRequest } from '@src/interfaces/loan.interface';
 import * as LoanConstant from '../../constants/loan.constant';
 
 
+const objectSchema = Joi.object({
+	// moduleName: Joi.string().min(1).valid([
+	// 	status
+	// 	// Constant.DATABASE.PERMISSION.TYPE.ENQUIRY,
+	// ]).required(),
+	status: Joi.string().valid([
+		LoanConstant.DocumentStatus.Pending,
+	]),
+	documentRequired: Joi.string(),
+	description: Joi.string(),
+	url: Joi.string(),
+});
+
 export let adminProfileRoute: ServerRoute[] = [
 	/**
 	 * @description:Login via mail
@@ -1316,29 +1329,34 @@ export let adminProfileRoute: ServerRoute[] = [
 						position: Joi.string(),
 					}),
 
-					propertyDocuments: Joi.object().keys({
-						borrowerValidDocIds: Joi.array().items(Joi.string()),
-						coBorrowerValidId: Joi.array().items(Joi.string()),
-						latestITR: Joi.string().uri(),
-						employmentCert: Joi.string().uri(),
-						purchasePropertyInfo: Joi.object().keys({
-							address: Joi.string().max(300),
-							contactPerson: Joi.string(),
-							contactNumber: Joi.number(),
-							collateralDocStatus: Joi.boolean(),
-							collateralDocList: Joi.array().items({
-								docType: Joi.string().valid([
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
-									Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
-								]),
-								docUrl: Joi.string(),
-							}),
-						}),
-						nookAgent: Joi.string(),
-					}),
+					// propertyDocuments: Joi.object().keys({
+					// 	borrowerValidDocIds: Joi.array().items(Joi.string()),
+					// 	coBorrowerValidId: Joi.array().items(Joi.string()),
+					// 	latestITR: Joi.string().uri(),
+					// 	employmentCert: Joi.string().uri(),
+					// 	purchasePropertyInfo: Joi.object().keys({
+					// 		address: Joi.string().max(300),
+					// 		contactPerson: Joi.string(),
+					// 		contactNumber: Joi.number(),
+					// 		collateralDocStatus: Joi.boolean(),
+					// 		collateralDocList: Joi.array().items({
+					// 			docType: Joi.string().valid([
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+					// 			]),
+					// 			docUrl: Joi.string(),
+					// 		}),
+					// 	}),
+					// 	nookAgent: Joi.string(),
+					// }),
+					documents: {
+						legalDocument: Joi.array().items(objectSchema),
+						incomeDocument: Joi.array().items(objectSchema),
+						colleteralDoc: Joi.array().items(objectSchema),
+					},
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
