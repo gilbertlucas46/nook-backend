@@ -993,7 +993,6 @@ export let loanRoute: ServerRoute[] = [
 						EMPLOYMENT_TYPE.SELF.value,
 					]),
 					propertyStatus: Joi.string().valid([
-						LOAN_PROPERTY_STATUS.FORECLOSED.value,
 						LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
 						LOAN_PROPERTY_STATUS.PRE_SELLING.value,
 						LOAN_PROPERTY_STATUS.READY_FOR_OCCUPANCY.value,
@@ -1185,4 +1184,58 @@ export let loanRoute: ServerRoute[] = [
 			},
 		},
 	},
+	/**
+	 * @description user update profile
+	 */
+	{
+		method: 'PATCH',
+		path: '/v1/user/loan/document/{loanId}',
+		handler: async (request, h: ResponseToolkit) => {
+			try {
+				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = {
+					...request.params as any,
+					...request.payload as any,
+				};
+
+				const data = await LoanController.updateDocument(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'add Loan Requirements',
+			tags: ['api', 'anonymous', 'loan', 'Add'],
+			auth: 'UserAuth',
+			validate: {
+				params: {
+					loanId: Joi.string(),
+				},
+				payload: {
+					documentType: Joi.string().valid([
+						LoanConstant.documentType.COLLETERAL,
+						LoanConstant.documentType.INCOME,
+						LoanConstant.documentType.LEGAL,
+					]),
+					// documentId: Joi.string(),
+					// url: Joi.string(),
+					documentId: Joi.string(),
+					status: 'Pending',
+					url: Joi.string(),
+					// createdAt: new Date().getTime(),
+					// updatedAt: { type: Number },
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
 ];
