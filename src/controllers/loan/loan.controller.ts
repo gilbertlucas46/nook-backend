@@ -624,10 +624,25 @@ class LoanControllers extends BaseEntity {
 
     async adminUpdateDocumentStatus(payload) {
         try {
-            const criteria = {
-                '_id': payload.loanId,
-                'documents.legalDocument._id': payload.documentId,
-            };
+            let criteria;
+            if (payload.documentType === 'Legal') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.legalDocument._id': payload.documentId,
+                };
+            }
+            else if (payload.documentType === 'Income') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.incomeDocument._id': payload.documentId,
+                };
+            }
+            else if (payload.documentType === 'Colleteral') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.colleteralDoc._id': payload.documentId,
+                };
+            }
 
             let dataToUpdate;
             if (payload.documentType === 'Legal') {
@@ -645,12 +660,12 @@ class LoanControllers extends BaseEntity {
             else if (payload.documentType === 'Colleteral') {
                 dataToUpdate = {
                     'documents.colleteralDoc.$.status': payload.status,
-                    'documents.colleteralDoc.$.updatedAt': new Date().getTime()
+                    'documents.colleteralDoc.$.updatedAt': new Date().getTime(),
                 };
             }
 
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
-            return data
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }
