@@ -588,23 +588,22 @@ class LoanControllers extends BaseEntity {
 
             }
 
-
             // const data = await ENTITY.BankE.aggregate(aggregateIncome);
 
             if (payload.employmentType) {
-                promise.push(ENTITY.BankE.aggregate(aggregateLegal))
+                promise.push(ENTITY.BankE.aggregate(aggregateLegal));
             } else {
-                promise.push([])
+                promise.push([]);
             }
 
             if (payload.employmentType) {
-                promise.push(ENTITY.BankE.aggregate(aggregateIncome))
+                promise.push(ENTITY.BankE.aggregate(aggregateIncome));
             } else {
                 promise.push([]);
             }
             // promise.push(ENTITY.BankE.aggregate(aggregateIncome));
             if (payload.propertyStatus) {
-                promise.push(ENTITY.BankE.aggregate(aggregateColleteralDocument))
+                promise.push(ENTITY.BankE.aggregate(aggregateColleteralDocument));
             } else {
                 promise.push([]);
             }
@@ -618,6 +617,24 @@ class LoanControllers extends BaseEntity {
             };
             // console.log('datadata', data);
             // return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async adminUpdateDocumentStatus(payload) {
+        try {
+            const criteria = {
+                '_id': payload.loanId,
+                'documents.legalDocument._id': payload.documentId,
+            };
+
+            const dataToUpdate = {
+                'documents.legalDocument.$.status': payload.status,
+            };
+
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
+            return data['documents'];
         } catch (error) {
             return Promise.reject(error);
         }

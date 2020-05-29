@@ -365,3 +365,9 @@ export const DocumentStatus = {
     Pending: 'Pending',
     Rejected: 'Rejected',
 };
+
+export const documentType = {
+    LEGAL: 'Legal',
+    INCOME: 'Income',
+    COLLETERAL: 'Colleteral',
+};
