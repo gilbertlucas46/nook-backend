@@ -629,9 +629,22 @@ class LoanControllers extends BaseEntity {
                 'documents.legalDocument._id': payload.documentId,
             };
 
-            const dataToUpdate = {
-                'documents.legalDocument.$.status': payload.status,
-            };
+            let dataToUpdate;
+            if (payload.documentType === 'Legal') {
+                dataToUpdate = {
+                    'documents.legalDocument.$.status': payload.status,
+                };
+            }
+            else if (payload.documentType === 'Income') {
+                dataToUpdate = {
+                    'documents.incomeDocument.$.status': payload.status,
+                };
+            }
+            else if (payload.documentType === 'Colleteral') {
+                dataToUpdate = {
+                    'documents.colleteralDoc.$.status': payload.status,
+                };
+            }
 
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
             return data['documents'];
