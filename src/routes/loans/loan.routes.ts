@@ -1063,4 +1063,126 @@ export let loanRoute: ServerRoute[] = [
 			},
 		},
 	},
+
+
+	{
+		method: 'GET',
+		path: '/v1/admin/loan/document/{bankId}',
+		handler: async (request, h: ResponseToolkit) => {
+			try {
+				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload: LoanRequest.AddLoan = {
+					...request.params as any,
+					...request.query as any,
+				};
+				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
+
+				const data = await LoanController.getDocuments(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'add Loan Requirements',
+			tags: ['api', 'anonymous', 'loan', 'Add'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					bankId: Joi.string(),
+				},
+				query: {
+					// personalInfo: Joi.object().keys({
+					civilStatus: Joi.string().valid([
+						Constant.DATABASE.CIVIL_STATUS.SINGLE,
+						Constant.DATABASE.CIVIL_STATUS.WIDOW,
+						Constant.DATABASE.CIVIL_STATUS.SEPERATED,
+						Constant.DATABASE.CIVIL_STATUS.MARRIED,
+					]),
+					spouseInfo: {
+						firstName: Joi.string().max(32),
+						lastName: Joi.string().max(32),
+						middleName: Joi.string().max(32),
+						birthDate: Joi.number(),
+						monthlyIncome: Joi.number(),
+						isCoborrower: Joi.boolean(),
+						motherMaidenName: Joi.string(),
+						age: Joi.number(),
+						birthPlace: Joi.string(),
+					},
+					coBorrowerInfo: {
+						firstName: Joi.string().max(32),
+						lastName: Joi.string().max(32),
+						middleName: Joi.string().max(32),
+						birthDate: Joi.number(),
+						monthlyIncome: Joi.number(),
+						isCoborrower: Joi.boolean(),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+						]),
+					},
+					employmentType: Joi.string().valid([
+						EMPLOYMENT_TYPE.BPO.value,
+						EMPLOYMENT_TYPE.GOVT.value,
+						EMPLOYMENT_TYPE.OFW.value,
+						EMPLOYMENT_TYPE.PRIVATE.value,
+						EMPLOYMENT_TYPE.PROFESSIONAL.value,
+						EMPLOYMENT_TYPE.SELF.value,
+					]),
+					propertyStatus: Joi.string().valid([
+						LOAN_PROPERTY_STATUS.FORECLOSED.value,
+						LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
+						LOAN_PROPERTY_STATUS.PRE_SELLING.value,
+						LOAN_PROPERTY_STATUS.READY_FOR_OCCUPANCY.value,
+						LOAN_PROPERTY_STATUS.REFINANCING.value,
+						LOAN_PROPERTY_STATUS.RENOVATION.value,
+						LOAN_PROPERTY_STATUS.RESELLING.value,
+					]),
+
+					// }),
+					// bankInfo: Joi.object().keys({
+					// iconUrl: Joi.string(),
+					// bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					// bankName: Joi.string().min(5).max(50),
+					// abbrevation: Joi.string().max(10),
+					// }),
+
+					// employmentInfo: Joi.object().keys({
+					// 	type: Joi.string().valid([
+					// 		EMPLOYMENT_TYPE.BPO.value,
+					// 		EMPLOYMENT_TYPE.GOVT.value,
+					// 		EMPLOYMENT_TYPE.OFW.value,
+					// 		EMPLOYMENT_TYPE.PRIVATE.value,
+					// 		EMPLOYMENT_TYPE.PROFESSIONAL.value,
+					// 		EMPLOYMENT_TYPE.SELF.value,
+					// 	]),
+					// 	coBorrowerInfo: {
+					// 		employmentType: Joi.string().valid([
+					// 			EMPLOYMENT_TYPE.BPO.value,
+					// 			EMPLOYMENT_TYPE.GOVT.value,
+					// 			EMPLOYMENT_TYPE.OFW.value,
+					// 			EMPLOYMENT_TYPE.PRIVATE.value,
+					// 			EMPLOYMENT_TYPE.PROFESSIONAL.value,
+					// 			EMPLOYMENT_TYPE.SELF.value,
+					// 		]),
+					// 	},
+					// }),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
 ];
