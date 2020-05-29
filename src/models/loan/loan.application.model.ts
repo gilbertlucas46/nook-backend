@@ -292,9 +292,9 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number },
+            createdAt: { type: Number, default: new Date().getTime() },
+            updatedAt: { type: Number },
         }],
-
         incomeDocument: [{
             status: {
                 type: String, enum: [
@@ -306,6 +306,8 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
+            createdAt: { type: Number, default: new Date().getTime() },
+            updatedAt: { type: Number },
         }],
         colleteralDoc: [{
             status: {
@@ -318,6 +320,8 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
+            createdAt: { type: Number, default: new Date().getTime() },
+            updatedAt: { type: Number },
         }],
     },
     applicationStage: [{

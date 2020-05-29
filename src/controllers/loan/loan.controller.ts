@@ -633,16 +633,19 @@ class LoanControllers extends BaseEntity {
             if (payload.documentType === 'Legal') {
                 dataToUpdate = {
                     'documents.legalDocument.$.status': payload.status,
+                    'documents.legalDocument.$.updatedAt': new Date().getTime(),
                 };
             }
             else if (payload.documentType === 'Income') {
                 dataToUpdate = {
                     'documents.incomeDocument.$.status': payload.status,
+                    'documents.incomeDocument.$.updatedAt': new Date().getTime(),
                 };
             }
             else if (payload.documentType === 'Colleteral') {
                 dataToUpdate = {
                     'documents.colleteralDoc.$.status': payload.status,
+                    'documents.colleteralDoc.$.updatedAt': new Date().getTime()
                 };
             }
 
