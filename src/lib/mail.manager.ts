@@ -344,7 +344,7 @@ export class MailManager {
 					// Credit Card Limit (Php)
 
 
-					creditCardStatus: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['status']) === 'YES' ? 'Yes ,active credit card' : 'No', // Credit Card Issuing Bank? 					,
+					creditCardStatus: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['status'] === 'YES') ? 'Yes ,active credit card' : 'No', // Credit Card Issuing Bank? 					,
 					creditCardCancelled: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['cancelled']) ? params['personalInfo']['creditCard']['cancelled'] : 'N/A',
 					// Total Monthly Payments (Php)
 
