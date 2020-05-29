@@ -207,11 +207,16 @@ export class MailManager {
 			if (params['personalInfo'] && params['personalInfo']['middleName']) {
 				middleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : ''
 			}
+			let spouseMiddleName;
+			if (params['personalInfo'] && params['personalInfo']['middleName']) {
+				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : ''
+			}
+
 
 
 			let checkObjectBlank;
 			if (coBorrowerInfo) {
-				checkObjectBlank = (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo.firstName) ? true : false
+				checkObjectBlank = (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo.employmentRank) ? true : false
 				console.log('checkObjectBlankcheckObjectBlankcheckObjectBlank', checkObjectBlank);
 			} else {
 				coBorrowerInfo = {};
@@ -249,7 +254,7 @@ export class MailManager {
 					mobileNo: params.contactInfo['mobileNumber'],
 					email: params.contactInfo['email'],
 
-					spouseFullName: (spouseInfo && spouseInfo['firstName']) ? spouseInfo['firstName'] + ' ' + spouseInfo['lastName'] : 'N/A',
+					spouseFullName: (spouseInfo && spouseInfo['firstName']) ? spouseInfo['firstName'] + spouseMiddleName + ' ' + spouseInfo['lastName'] : 'N/A',
 					motherMaidenName: params['personalInfo']['motherMaidenName'],
 					educationBackground: params['personalInfo']['educationBackground'],
 					spouseBirthDate: (spouseInfo && spouseInfo['birthDate']) ? new Date(spouseInfo['birthDate']).toLocaleDateString() : 'N/A',
@@ -277,7 +282,7 @@ export class MailManager {
 
 					// CO-BORROWER’S INFORMATION
 					isCoborrower: checkObjectBlank, // + ' ' + params['personalInfo']['coBorrowerInfo']['middleName']
-					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + ' ' + coBorrowerInfo['lastName'] : 'N/A',
+					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + ' ' + coBorrowerInfo['lastName'] || '' + ' ' + coBorrowerInfo['lastName'] : 'N/A',
 					relationship: (coBorrowerInfo && coBorrowerInfo['relationship']) ? coBorrowerInfo['relationship'] : 'N/A',
 					// relationship: coBorrowerInfo ? coBorrowerInfo['relationship'] : 'N/A',
 					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? coBorrowerInfo['monthlyIncome'] : 'N/A',
@@ -301,7 +306,7 @@ export class MailManager {
 					interestRate: params['loanDetails']['rate'],
 					loanType: params['loanDetails']['loanType'],
 					// Loan Total PaymentA (Php): params['loanDetails']['loanAmount'],
-					monthlyRepayment: params['loanDetails']['monthlyRepayment'],
+					monthlyRepayment: (params['loanDetails']['monthlyRepayment']).toFixed(2),
 					loanTotalPayment: 'N/A',
 
 
@@ -323,7 +328,7 @@ export class MailManager {
 					employmentTenure: params['employmentInfo']['tenure'],
 					// grossMonthlyIncome:params['']   // to be done
 					tin: params['employmentInfo'] ? params['employmentInfo']['tin'] : 'N/A',
-					sss: params['employmentInfo'] ? params['employmentInfo']['tin'] : ['sss'],
+					sss: params['employmentInfo'] ? params['employmentInfo']['sss'] : 'N/A',
 					companyName: params['employmentInfo']['companyName'],
 					companyIndustry: params['employmentInfo']['companyIndustry'],
 					officePhone: params['employmentInfo']['officePhone'],
