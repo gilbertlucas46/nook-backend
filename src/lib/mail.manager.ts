@@ -310,11 +310,11 @@ export class MailManager {
 					propertyType: params['propertyInfo']['type'],
 					propertyStatus: params['propertyInfo']['status'],
 					propertyDeveloper: params['propertyInfo']['developer'] ? params['propertyInfo']['developer'] : 'N/A',
-					propertyAddress: params['propertyDocuments']['purchasePropertyInfo']['address'],
-					collateralDocStatus: params['propertyDocuments']['purchasePropertyInfo']['collateralDocStatus'],
+					// propertyAddress: params['propertyDocuments']['purchasePropertyInfo']['address'],
+					// collateralDocStatus: params['propertyDocuments']['purchasePropertyInfo']['collateralDocStatus'],
 
-					contactPerson: params['propertyDocuments']['purchasePropertyInfo']['contactPerson'],
-					contactNumber: params['propertyDocuments']['purchasePropertyInfo']['contactNumber'],
+					// contactPerson: params['propertyDocuments']['purchasePropertyInfo']['contactPerson'],
+					// contactNumber: params['propertyDocuments']['purchasePropertyInfo']['contactNumber'],
 
 
 					// employmentInfo
