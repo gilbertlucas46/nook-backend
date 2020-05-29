@@ -1355,15 +1355,17 @@ export let adminProfileRoute: ServerRoute[] = [
 	 */
 	{
 		method: 'PATCH',
-		path: '/v1/admin/loan/{loanId}/document/{status}',
+		path: '/v1/admin/document/{loanId}',
 		handler: async (request, h) => {
 			try {
-				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				// const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				// const payload = request.payload as AdminRequest.IAddUser;
-				const payload = {
+				const payload: any = {
 					...request.params,
 					...request.payload as any,
 				};
+
+
 				console.log('payloadpayload', payload);
 
 				// const checkPermission = adminData['permission'].some(data => {
@@ -1372,7 +1374,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				// if (checkPermission === false) {
 				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
 				// }
-				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
+				// const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
 
 				const registerResponse = await LoanController.adminUpdateDocumentStatus(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, {}));
@@ -1382,12 +1384,12 @@ export let adminProfileRoute: ServerRoute[] = [
 			}
 		},
 		options: {
-			description: 'Create user',
+			description: 'admin update adocument',
 			tags: ['api', 'anonymous', 'Admin', 'document', 'status'],
-			auth: 'AdminAuth',
+			// auth: 'AdminAuth',
 			validate: {
 				params: {
-					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					loanId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				payload: {
 					documentType: Joi.string().valid([
@@ -1395,14 +1397,14 @@ export let adminProfileRoute: ServerRoute[] = [
 						LoanConstant.documentType.INCOME,
 						LoanConstant.documentType.LEGAL,
 					]),
-					documentId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					documentId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
 					status: Joi.string().valid([
 						LoanConstant.DocumentStatus.ACTIVE,
 						LoanConstant.DocumentStatus.Pending,
 						LoanConstant.DocumentStatus.Rejected,
-					])
+					]),
 				},
-				headers: UniversalFunctions.authorizationHeaderObj,
+				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
