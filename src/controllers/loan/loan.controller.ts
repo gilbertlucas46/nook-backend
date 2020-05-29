@@ -677,5 +677,45 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+    async updateDocument(payload) {
+        try {
+            console.log('payload>>>>>>>>>>>', payload);
+
+            let criteria;
+            if (payload.documentType === 'Legal') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.legalDocument._id': payload.documentId,
+                };
+            }
+            else if (payload.documentType === 'Income') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.incomeDocument._id': payload.documentId,
+                };
+            }
+            else if (payload.documentType === 'Colleteral') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.colleteralDoc._id': payload.documentId,
+                };
+            }
+
+            const dataToUpdate = {
+                status: 'Pending',
+                url: payload.url,
+                createdAt: new Date().getTime(),
+                updatedAt: { type: Number },
+            };
+            console.log('criteriacriteriacriteria', criteria);
+
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, { 'documents.legalDocument.$.url': payload.url });
+            // { $set: { "grades.$.std" : 6 } }
+            return data;
+
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 export const LoanController = new LoanControllers();
