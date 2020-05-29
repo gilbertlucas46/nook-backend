@@ -197,10 +197,11 @@ export class MailManager {
 
 	async generateLoanApplicationform(params) {
 		try {
-			console.log('paramssssssssssss', params);
-			console.log('paramssssssssssss', params.personalInfo.spouseInfo);
 
 			let { coBorrowerInfo, spouseInfo } = params['personalInfo'];
+			// let { currentAddress, permanentAddress, previousAddress } = params['contactInfo'];
+			// console.log('11111111111111111111', (contactInfo && contactInfo['currentAddress'] && contactInfo['currentAddress']['address']) ? contactInfo['currentAddress']['address'] : 'N/A');
+
 			console.log('spouseInfospouseInfo', spouseInfo);
 			let middleName;
 			if (params['personalInfo'] && params['personalInfo']['middleName']) {
@@ -252,10 +253,27 @@ export class MailManager {
 					motherMaidenName: params['personalInfo']['motherMaidenName'],
 					educationBackground: params['personalInfo']['educationBackground'],
 					spouseBirthDate: (spouseInfo && spouseInfo['birthDate']) ? new Date(spouseInfo['birthDate']).toLocaleDateString() : 'N/A',
-					currentAddress: params.contactInfo && params.contactInfo['currentAddress'] && params.contactInfo['currentAddress']['address'] ? params.contactInfo['currentAddress']['address'] : 'N/A',
+					currentAddress: (params.contactInfo && params.contactInfo['currentAddress'] && params.contactInfo['currentAddress']['address']) ? params.contactInfo['currentAddress']['address'] : 'N/A',
 					// permannet address
 
-					homeOwnership: params.contactInfo['currentAddress']['homeOwnership'],
+					homeOwnership1: (params.contactInfo && params.contactInfo['currentAddress'] && params.contactInfo && params.contactInfo['currentAddress']['homeOwnership']) ? params.contactInfo['currentAddress']['homeOwnership'] : 'N/A',
+					permanentResidenceSince1: (params.contactInfo && params.contactInfo['currentAddress'] && params.contactInfo['currentAddress']['permanentResidenceSince']) ? params.contactInfo['currentAddress']['permanentResidenceSince'] : 'N/A',
+
+
+					permanentAddress: (params.contactInfo && params.contactInfo['permanentAddress'] && params.contactInfo['permanentAddress']['address']) ? params.contactInfo['permanentAddress']['address'] : 'N/A',
+
+					homeOwnership2: (params.contactInfo && params.contactInfo['permanentAddress'] && params.contactInfo && params.contactInfo['permanentAddress']['homeOwnership']) ? params.contactInfo['permanentAddress']['homeOwnership'] : 'N/A',
+
+					permanentResidenceSince2: (params.contactInfo && params.contactInfo['permanentAddress'] && params.contactInfo['permanentAddress']['permanentResidenceSince']) ? params.contactInfo['permanentAddress']['permanentResidenceSince'] : 'N/A',
+
+
+					previousAddress: (params.contactInfo && params.contactInfo['previousAddress'] && params.contactInfo['previousAddress']['address']) ? params.contactInfo['previousAddress']['address'] : 'N/A',
+
+					homeOwnership3: (params.contactInfo && params.contactInfo['previousAddress'] && params.contactInfo && params.contactInfo['previousAddress']['homeOwnership']) ? params.contactInfo['previousAddress']['homeOwnership'] : 'N/A',
+
+					permanentResidenceSince3: (params.contactInfo && params.contactInfo['previousAddress'] && params.contactInfo['previousAddress']['permanentResidenceSince']) ? params.contactInfo['previousAddress']['permanentResidenceSince'] : 'N/A',
+
+
 
 					// CO-BORROWER’S INFORMATION
 					isCoborrower: checkObjectBlank, // + ' ' + params['personalInfo']['coBorrowerInfo']['middleName']
@@ -273,7 +291,6 @@ export class MailManager {
 					coBorrowerOfficePhone: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['officePhone']) ? params.employmentInfo.coBorrowerInfo['officePhone'] : 'N/A',
 					coBorrowerOfficeEmail: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['officeEmail']) ? params.employmentInfo.coBorrowerInfo['officeEmail'] : 'N/A',
 					coBorrowerOfficeAddress: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['officeAddress']) ? params.employmentInfo.coBorrowerInfo['officeAddress'] : 'N/A',
-
 
 					// loan information
 					bankName: params['bankInfo']['bankName'],
@@ -348,16 +365,6 @@ export class MailManager {
 					age3: (params.dependentsInfo && params.dependentsInfo[2]) ? params.dependentsInfo[2].age : 'N/A',
 					relationship3: (params.dependentsInfo && params.dependentsInfo[2]) ? params.dependentsInfo[2].relationship : 'N/A',
 
-
-					// url: params.url,
-					// year: new Date().getFullYear(),
-					// projectName: 'Nook',
-					// subject: params.subject,
-					// GSG_ADDRESS: EMAIL_TEMPLATE.GSG_ADDRESS,
-					// email: params.receiverEmail,
-					// userName: params.firstName ? params.firstName : params.userName,
-					// firstName: params.firstName,
-					helpCenter: config.get('homePage') + '/help-center',
 				});
 			// console.log('htmlContenthtmlContenthtmlContent', htmlContent);
 			console.log('htmlContenthtmlContenthtmlContent', htmlContent, typeof htmlContent);
