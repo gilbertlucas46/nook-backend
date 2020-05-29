@@ -397,6 +397,13 @@ class LoanControllers extends BaseEntity {
 
     async getDocuments(payload) {
         try {
+            if (payload.employmentType === 'GOVT' || payload.employmentType === 'BPO') {
+                payload['employmentType'] = 'PRIVATE';
+            }
+            if (payload.propertyStatus === 'FORECLOSED' || payload.propertyStatus === 'BPO') {
+                payload['propertyStatus'] = 'NEW_CONSTRUCTION';
+            }
+
             const criteria = {
                 _id: payload.bankId,
             };
