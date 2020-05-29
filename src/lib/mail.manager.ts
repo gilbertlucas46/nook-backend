@@ -252,7 +252,10 @@ export class MailManager {
 
 					phoneNo: params.contactInfo['phoneNumber'],
 					mobileNo: params.contactInfo['mobileNumber'],
+
 					email: params.contactInfo['email'],
+					birthPlace: (params['personalInfo'] && params['personalInfo']['placeOfBirth']) ? params['personalInfo']['placeOfBirth'] : 'N/A',
+
 
 					spouseFullName: (spouseInfo && spouseInfo['firstName']) ? spouseInfo['firstName'] + spouseMiddleName + ' ' + spouseInfo['lastName'] : 'N/A',
 					motherMaidenName: params['personalInfo']['motherMaidenName'],
