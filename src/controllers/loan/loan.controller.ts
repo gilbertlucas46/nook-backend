@@ -260,9 +260,9 @@ class LoanControllers extends BaseEntity {
                     userType: adminData.type,
                     status: payload.status,
                     adminId: adminData._id,
-                    adminName: adminData ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
+                    adminName: (adminData && adminData.firstName) ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
                     approvedAt: new Date().getTime(),
-                    assignedTo: payload.staffId ? payload.staffId : '',
+                    assignedTo: (payload && payload.staffId) ? payload.staffId : '',
                 },
             };
 
