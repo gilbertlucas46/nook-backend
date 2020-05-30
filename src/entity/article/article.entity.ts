@@ -133,6 +133,7 @@ export class ArticleClass extends BaseEntity {
                             },
                             {
                                 $project: {
+                                    title: 1,
                                     name: 1,
                                     articles: {
                                         $slice: ['$articles', 3],
