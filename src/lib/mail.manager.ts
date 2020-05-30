@@ -223,6 +223,7 @@ export class MailManager {
 			}
 			console.log("coBorrowerInfo['firstName']", coBorrowerInfo['firstName']);
 
+
 			// if (!spouseInfo) {
 			// 	spouseInfo = null
 			// }
@@ -242,6 +243,13 @@ export class MailManager {
 
 			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', new Date(params['personalInfo']['birthDate']).toLocaleDateString());
 
+			function GetFormattedDate(date) {
+				const todayTime = new Date(date);
+				const month = (todayTime.getMonth() + 1);
+				const day = (todayTime.getDate());
+				const year = (todayTime.getFullYear());
+				return day + '/' + month + '/' + year;
+			}
 
 			const htmlContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'loan-form.html'))
 				.compileFile({
@@ -251,7 +259,7 @@ export class MailManager {
 					civilStatus: params['personalInfo']['civilStatus'],
 					sex: params['personalInfo']['gender'],
 					citizenship: params['personalInfo']['nationality'],
-					birthDate: params['personalInfo']['birthDate'] ? new Date(params['personalInfo']['birthDate']).toLocaleDateString() : 'N/A',
+					birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
 
 					phoneNo: params.contactInfo['phoneNumber'],
 					mobileNo: params.contactInfo['mobileNumber'],
@@ -263,7 +271,7 @@ export class MailManager {
 					spouseFullName: (spouseInfo && spouseInfo['firstName']) ? spouseInfo['firstName'] + spouseMiddleName + ' ' + spouseInfo['lastName'] : 'N/A',
 					motherMaidenName: params['personalInfo']['motherMaidenName'],
 					educationBackground: params['personalInfo']['educationBackground'],
-					spouseBirthDate: (spouseInfo && spouseInfo['birthDate']) ? new Date(spouseInfo['birthDate']).toLocaleDateString() : 'N/A',
+					spouseBirthDate: (spouseInfo && spouseInfo['birthDate']) ? GetFormattedDate(spouseInfo['birthDate']) : 'N/A',
 					currentAddress: (params.contactInfo && params.contactInfo['currentAddress'] && params.contactInfo['currentAddress']['address']) ? params.contactInfo['currentAddress']['address'] : 'N/A',
 					// permannet address
 
