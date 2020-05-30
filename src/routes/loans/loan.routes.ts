@@ -12,12 +12,21 @@ const objectSchema = Joi.object({
 	// 	status
 	// 	// Constant.DATABASE.PERMISSION.TYPE.ENQUIRY,
 	// ]).required(),
+	// status: Joi.string().when('url', {
+	// 	is: Joi.exist().valid(Joi.string().uri()),
+	// 	then: Joi.string().valid([
+	// 		LoanConstant.DocumentStatus.APPROVED,
+	// 	]),
+	// 	// else: Joi.string()
+	// }),
 	status: Joi.string().valid([
-		LoanConstant.DocumentStatus.Pending,
+		LoanConstant.DocumentStatus.APPROVED,
+		LoanConstant.DocumentStatus.PENDING,
+		LoanConstant.DocumentStatus.REJECTED,
 	]),
+	url: Joi.string(),
 	documentRequired: Joi.string(),
 	description: Joi.string(),
-	url: Joi.string(),
 });
 export let loanRoute: ServerRoute[] = [
 	{
@@ -393,9 +402,30 @@ export let loanRoute: ServerRoute[] = [
 					// }),
 
 					documents: {
-						legalDocument: Joi.array().items(objectSchema),
-						incomeDocument: Joi.array().items(objectSchema),
-						colleteralDoc: Joi.array().items(objectSchema),
+						legalDocument: Joi.array().items({
+							status: Joi.string().valid([
+								LoanConstant.DocumentStatus.PENDING,
+							]),
+							url: Joi.string().uri().allow(''),
+							documentRequired: Joi.string(),
+							description: Joi.string(),
+						}),
+						incomeDocument: Joi.array().items({
+							status: Joi.string().valid([
+								LoanConstant.DocumentStatus.PENDING,
+							]),
+							url: Joi.string().uri().allow(''),
+							documentRequired: Joi.string(),
+							description: Joi.string(),
+						}),
+						colleteralDoc: Joi.array().items({
+							status: Joi.string().valid([
+								LoanConstant.DocumentStatus.PENDING,
+							]),
+							url: Joi.string().uri().allow(''),
+							documentRequired: Joi.string(),
+							description: Joi.string(),
+						}),
 					},
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -811,6 +841,19 @@ export let loanRoute: ServerRoute[] = [
 						]),
 					}),
 
+					tradeReferences: Joi.array().items({
+						companyName: Joi.string(),
+						type: Joi.string().valid([
+							TRADE_REFERENCE.CUSTOMER,
+							TRADE_REFERENCE.SUPPLIER,
+						]),
+						contactPerson: Joi.string(),
+						contactNumber: Joi.string(),
+						position: Joi.string(),
+					}),
+
+
+
 					// propertyDocuments: Joi.object().keys({
 					// 	borrowerValidDocIds: Joi.array().items(Joi.string()),
 					// 	coBorrowerValidId: Joi.array().items(Joi.string()),
@@ -1221,8 +1264,9 @@ export let loanRoute: ServerRoute[] = [
 					]),
 					// documentId: Joi.string(),
 					// url: Joi.string(),
+					documentRequired: Joi.string(),
+					description: Joi.string(),
 					documentId: Joi.string(),
-					status: 'Pending',
 					url: Joi.string(),
 					// createdAt: new Date().getTime(),
 					// updatedAt: { type: Number },
