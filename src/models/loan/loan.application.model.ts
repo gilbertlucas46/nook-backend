@@ -283,10 +283,10 @@ const schema = new Schema({
         legalDocument: [{
             status: {
                 type: String, enum: [
-                    CONSTANT.DocumentStatus.ACTIVE,
-                    CONSTANT.DocumentStatus.Pending,
-                    CONSTANT.DocumentStatus.Rejected,
-                ]
+                    CONSTANT.DocumentStatus.APPROVED,
+                    CONSTANT.DocumentStatus.PENDING,
+                    CONSTANT.DocumentStatus.REJECTED,
+                ], default: CONSTANT.DocumentStatus.PENDING,
             },
             documentRequired: { type: String },
             description: { type: String },
@@ -297,10 +297,10 @@ const schema = new Schema({
         incomeDocument: [{
             status: {
                 type: String, enum: [
-                    CONSTANT.DocumentStatus.ACTIVE,
-                    CONSTANT.DocumentStatus.Pending,
-                    CONSTANT.DocumentStatus.Rejected,
-                ]
+                    CONSTANT.DocumentStatus.APPROVED,
+                    CONSTANT.DocumentStatus.REJECTED,
+                    CONSTANT.DocumentStatus.PENDING,
+                ], default: CONSTANT.DocumentStatus.PENDING,
             },
             documentRequired: { type: String },
             description: { type: String },
@@ -311,10 +311,10 @@ const schema = new Schema({
         colleteralDoc: [{
             status: {
                 type: String, enum: [
-                    CONSTANT.DocumentStatus.ACTIVE,
-                    CONSTANT.DocumentStatus.Pending,
-                    CONSTANT.DocumentStatus.Rejected,
-                ],
+                    CONSTANT.DocumentStatus.APPROVED,
+                    CONSTANT.DocumentStatus.PENDING,
+                    CONSTANT.DocumentStatus.REJECTED,
+                ], default: CONSTANT.DocumentStatus.PENDING,
             },
             documentRequired: { type: String },
             description: { type: String },

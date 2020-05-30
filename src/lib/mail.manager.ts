@@ -240,6 +240,9 @@ export class MailManager {
 
 			console.log("params.dependentpendentsinfo[0].name :", (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].name : 'N/A');
 
+			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', new Date(params['personalInfo']['birthDate']).toLocaleDateString());
+
+
 			const htmlContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'loan-form.html'))
 				.compileFile({
 					applicationId: params['referenceId'],
@@ -285,7 +288,7 @@ export class MailManager {
 
 					// CO-BORROWER’S INFORMATION
 					isCoborrower: checkObjectBlank, // + ' ' + params['personalInfo']['coBorrowerInfo']['middleName']
-					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + ' ' + coBorrowerInfo['lastName'] || '' + ' ' + coBorrowerInfo['lastName'] : 'N/A',
+					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + ' ' + coBorrowerInfo['middleName'] || '' + ' ' + coBorrowerInfo['lastName'] : 'N/A',
 					relationship: (coBorrowerInfo && coBorrowerInfo['relationship']) ? coBorrowerInfo['relationship'] : 'N/A',
 					// relationship: coBorrowerInfo ? coBorrowerInfo['relationship'] : 'N/A',
 					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? coBorrowerInfo['monthlyIncome'] : 'N/A',
