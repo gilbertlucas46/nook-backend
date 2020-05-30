@@ -1042,6 +1042,7 @@ export let loanRoute: ServerRoute[] = [
 						LOAN_PROPERTY_STATUS.REFINANCING.value,
 						LOAN_PROPERTY_STATUS.RENOVATION.value,
 						LOAN_PROPERTY_STATUS.RESELLING.value,
+						LOAN_PROPERTY_STATUS.FORECLOSED.value,
 					]),
 
 					// }),
