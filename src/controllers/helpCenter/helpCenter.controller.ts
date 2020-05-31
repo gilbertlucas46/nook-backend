@@ -89,10 +89,13 @@ export class HelpCenter {
             if (payload.categoryId) {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
             }
+            console.log('result>>>>>>>>>>>>>.', result);
+
+
             dataToSet.$set = {
                 ...payload,
                 // categoryId: payload.categoryId,
-                categoryType: result.TYPE,
+                categoryType: payload.type,
                 // videoUrl: payload.videoUrl,
                 userId: adminData._id,
                 firstName: adminData.firstName,
