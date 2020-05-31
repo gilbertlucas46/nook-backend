@@ -327,6 +327,7 @@ const schema = new Schema({
         userType: { type: String },
         status: { type: String },
         adminId: { type: Schema.Types.ObjectId, ref: 'admin' },
+        assignedTo: { type: String },
         adminName: { type: String },
         assignedTo: { type: String },
         approvedAt: { type: Number, default: new Date().getTime() },

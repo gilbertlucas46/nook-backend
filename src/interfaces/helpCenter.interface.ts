@@ -28,5 +28,6 @@ export namespace helpCenterRequest {
         videoUrl?: string;
         description?: string;
         categoryId?: number;
+        type: string;
     }
 }
