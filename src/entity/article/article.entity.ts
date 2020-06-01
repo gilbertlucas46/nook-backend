@@ -430,7 +430,7 @@ export class ArticleClass extends BaseEntity {
             const sortingType = {
                 // isFeatured: sortType,
                 // createdAt: sortType,
-                _id: -1,
+                createdAt: -1,
             };
 
             if (type) {
@@ -562,6 +562,7 @@ export class ArticleClass extends BaseEntity {
 
             const matchPipeline = [
                 { $match },
+                { $sort: sortingType },
                 {
                     $project: {
                         articleAction: 0,
