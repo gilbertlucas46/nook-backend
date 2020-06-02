@@ -1,7 +1,7 @@
 
 import { Schema, Document, model, Types } from 'mongoose';
 import * as CONSTANT from './../../constants';
-import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE, LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, NATIONALITY, CREDIT_CARD_STATUS, PARTNER_FIRM } from './../../constants';
+import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE, LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, NATIONALITY, CREDIT_CARD_STATUS } from './../../constants';
 import { join } from 'path';
 
 const prequalification = new Schema({
