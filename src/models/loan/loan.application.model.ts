@@ -113,9 +113,7 @@ const schema = new Schema({
                     CONSTANT.DATABASE.HOME_OWNERSHIP.RENTED,
                     CONSTANT.DATABASE.HOME_OWNERSHIP.USED_FREE,
                 ],
-                required: true,
             },
-            permanentResidenceSince: { type: Number },
         },
         permanentAddress: {
             address: { type: String, required: true },
