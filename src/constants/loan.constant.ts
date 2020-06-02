@@ -371,3 +371,7 @@ export const documentType = {
     INCOME: 'Income',
     COLLETERAL: 'Colleteral',
 };
+// export const PARTNER_FIRM = {
+//     MONEYMAX: 'MoneyMax',
+//     CAROUSELL: 'Carousell',
+// }

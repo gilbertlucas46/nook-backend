@@ -132,19 +132,7 @@ const init = async () => {
 						},
 					},
 				},
-			},
-			// {
-			// 	method: 'GET',
-			// 	path: config.get('basepath.url.csv').toString() + `{path*}`,
-			// 	options: {
-			// 		handler: {
-			// 			directory: {
-			// 				path: process.cwd() + config.get('basepath.url.csv').toString(),
-			// 				listing: false,
-			// 			}
-			// 		}
-			// 	}
-			// }
+			}
 		)
 		server.route(Routes);
 

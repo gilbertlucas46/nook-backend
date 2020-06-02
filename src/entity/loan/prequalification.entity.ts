@@ -314,6 +314,12 @@ class PreLoanEntities extends BaseEntity {
                     updatedAt: new Date().getTime(),
                 };
 
+                if (payload.partnerId && payload.partnerName) {
+                    const criteria = {
+                        shortId: payload.partnerId,
+                    }
+                    const updateData = this.DAOManager.findAndUpdate('Partner', criteria, { $inc: { counter: 1 } });
+                }
                 const data1 = await this.DAOManager.insert(this.modelName, dataToSave);
                 // console.log('data1.work: ', data1.work);
 
