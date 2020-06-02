@@ -12,6 +12,8 @@ export namespace PreQualificationRequest {
     export interface IPreLoanAdd {
         preQualificationId?: string;
         userId?: string;  // for admin add and assisgn
+        partnerName?: string;
+        partnerId?: string;
         bankId?: string;
         property: {
             value: number;

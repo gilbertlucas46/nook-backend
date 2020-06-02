@@ -220,6 +220,11 @@ export let DATABASE = {
 		ACTIVE: 'Active',
 		BLOCK: 'Block',
 	},
+	PartnerStatus: {
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
+		DELTE: 'Delete',
+	},
 	PREQUALIFICATION_STATUS: {
 		PENDING: 'Pending',
 		ACTIVE: 'Active',

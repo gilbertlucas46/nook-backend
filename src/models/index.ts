@@ -16,3 +16,5 @@ export { ArticleCategories } from './article/article.category.model';
 export { PreQualification } from './loan/preQualification.model';
 export { LoanApplicationHistory } from './loan/loan.application.History.model';
 export { LoanErrorCheck } from './loan/loan.error.model';
+// export { PartnerPreQualification } from './loan/partner.preQualification.model';
+export { Partner } from './partner/partner.model';

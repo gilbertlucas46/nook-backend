@@ -20,7 +20,7 @@ import { searchRoutes } from './search.routes';
 import { adminUserRoutes } from './admin/admin.user.routes';
 // import { adminProperty } from './admin/admin.property.routes';
 import { preQualificationroutes } from './preQualification/preQualification.routes';
-
+import { partnerRoutes } from './partner/partner.routes';
 
 // const arr = [];
 export let Routes: ServerRoute[] = [
@@ -43,6 +43,7 @@ export let Routes: ServerRoute[] = [
 	// ...subscriptionRoute,
 	...adminUserRoutes,
 	...preQualificationroutes,
+	...partnerRoutes,
 	// ...adminProperty,
 	// {
 	// 	method: ['*'],

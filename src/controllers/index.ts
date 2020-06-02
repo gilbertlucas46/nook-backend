@@ -7,3 +7,4 @@ export { CityService } from './city/city.controller';
 export { LoanController } from './loan/loan.controller';
 export { AdminUserController } from './admin/admin.user.controller';
 export { CategoryService } from './article/articleCategories.controller';
+export { PartnerService } from './partner/partner.controller';

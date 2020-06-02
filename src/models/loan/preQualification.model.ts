@@ -1,13 +1,15 @@
 
 import { Schema, Document, model, Types } from 'mongoose';
 import * as CONSTANT from './../../constants';
-import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE, LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, NATIONALITY, CREDIT_CARD_STATUS } from './../../constants';
+import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE, LOAN_PROPERTY_TYPES, LOAN_PROPERTY_STATUS, NATIONALITY, CREDIT_CARD_STATUS, PARTNER_FIRM } from './../../constants';
 import { join } from 'path';
 
 const prequalification = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     email: { type: String, required: true },
     grossIncome: { type: Number }, // 98765433
+    partnerName: { type: String },
+    partnerId: { type: String },  // for now short id in future can be _id partner Id
     property: {
         value: { type: Number },
         type: {
