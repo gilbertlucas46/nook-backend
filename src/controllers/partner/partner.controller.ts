@@ -74,6 +74,31 @@ export class Partner {
         }
     }
 
+    async updatePartnerStatus(payload: PartnerAdminRequest.UpdateStatus) {
+        try {
+
+            const criteria = {
+                shortId: payload.partnerSid,
+            };
+            const dataToUpdate = {
+                status: payload.status,
+            };
+            const data = await ENTITY.PartnerE.updateOneEntity(criteria, dataToUpdate)
+            return;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async getPartners() {
+        try {
+            const data = await ENTITY.PartnerE.getMultiple({}, {});
+            console.log('data', data);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 
 }
 

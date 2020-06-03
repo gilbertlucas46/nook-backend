@@ -6,5 +6,9 @@ export namespace PartnerAdminRequest {
         displayName?: string;
 
     }
+    export interface UpdateStatus {
+        partnerSid: string;
+        status: string;
+    }
 
 }

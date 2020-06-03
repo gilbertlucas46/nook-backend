@@ -212,7 +212,7 @@ export let DATABASE = {
 			HELPCENTER_STAFF: 'help-center-staff',
 			HELPCENTER_USER: 'help-center-user',
 			HELPCENTER_BANK: 'help-center-bank',
-
+			REFERRAL_PARTNER: 'refferal-partner',
 		},
 	},
 
@@ -223,7 +223,7 @@ export let DATABASE = {
 	PartnerStatus: {
 		ACTIVE: 'Active',
 		BLOCK: 'Block',
-		DELTE: 'Delete',
+		DELETE: 'Delete',
 	},
 	PREQUALIFICATION_STATUS: {
 		PENDING: 'Pending',
@@ -256,25 +256,32 @@ export let DATABASE = {
 	},
 
 	HELP_CENTER_TYPE: {
-		// STAFF_FAQ: {
-		// 	NUMBER: 1,
-		// 	TYPE: 'STAFF_FAQ',
-		// 	DISPLAY_NAME: 'Staff Faq',
-		// },
-		// BANK_FAQ: {
-		// 	NUMBER: 2,
-		// 	TYPE: 'BANK_FAQ',
-		// 	DISPLAY_NAME: 'Bank Faq',
-		// },
-		// USER_FAQ: {
-		// 	NUMBER: 3,
-		// 	TYPE: 'USER_FAQ',
-		// 	DISPLAY_NAME: 'FAQ',
-		// },
-		STAFF_FAQ: 'STAFF_FAQ',
-		BANK_FAQ: 'BANK_FAQ',
-		USER_FAQ: 'USER_FAQ',
+		STAFF_FAQ: {
+			NUMBER: 1,
+			TYPE: 'STAFF_FAQ',
+			DISPLAY_NAME: 'Staff Faq',
+		},
+		BANK_FAQ: {
+			NUMBER: 2,
+			TYPE: 'BANK_FAQ',
+			DISPLAY_NAME: 'Bank Faq',
+		},
+		USER_FAQ: {
+			NUMBER: 3,
+			TYPE: 'USER_FAQ',
+			DISPLAY_NAME: 'FAQ',
+		},
+		// STAFF_FAQ: 'STAFF_FAQ',
+		// BANK_FAQ: 'BANK_FAQ',
+		// USER_FAQ: 'USER_FAQ',
 	},
+
+	HELP_CENTER_STATUS: {
+		ACTIVE: 'Active',
+		BLOCKED: 'Blocked',
+		DELETED: 'Deleted',
+	},
+
 
 	PRICE_LABEL: {
 		DAILY: 'daily',
