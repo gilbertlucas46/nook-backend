@@ -105,7 +105,8 @@ export let partnerRoutes: ServerRoute[] = [
                 console.log('datadata>>>>>>>>>>>>>>>', data);
                 if (data) {
                     console.log('>>>>>>>>>>>>>>>>>>>>', 'localhost:4200' + '?pre-qualification=' + data['shortId']);
-                    return h.redirect('localhost:4200' + '?pre-qualification=' + data['shortId']);
+                    // return 'localhost:4200' + '?pre-qualification=' + data['shortId'];
+                    return h.redirect(config.get('homePage')); //  + '?pre-qualification=' + data['shortId']);
                 } else {
                     return h.redirect(config.get('homePage'));
                 }
