@@ -103,16 +103,12 @@ export let partnerRoutes: ServerRoute[] = [
 
                 const data = await PartnerService.redirect(payload);
                 console.log('datadata>>>>>>>>>>>>>>>', data);
-
                 if (data) {
-                    console.log('>>>>>>>>>>>>>>>>>>>>', config.get('homePage') + '/pre-qualification/' + data['shortId']);
-
-                    return h.redirect(config.get('homePage') + '/pre-qualification/' + data['shortId']);
-                    // nookdevangweb.appskeeper.com / pre - qualification / process / property - information
+                    console.log('>>>>>>>>>>>>>>>>>>>>', config.get('homePage') + '?pre-qualification=' + data['shortId']);
+                    return h.redirect(config.get('homePage') + '?pre-qualification=' + data['shortId']);
                 } else {
                     return h.redirect(config.get('homePage'));
                 }
-                // return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
             } catch (error) {
                 console.log('errorerrorerror', error);
                 return h.redirect(config.get('homePage'));
