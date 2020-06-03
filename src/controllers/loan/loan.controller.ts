@@ -268,26 +268,39 @@ class LoanControllers extends BaseEntity {
 
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
-            else {
-                if (payload.staffId) {
-                    const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
-                    console.log('getStaffName>>>>>>>>>>>>', getStaffData);
-                    const salesforceData = {
-                        _id: payload.loanId,
-                        staffAssignedEmail: getStaffData.email,
-                        staffAssignedfirstName: getStaffData.firstName,
-                        staffAssignedlastName: getStaffData.lastName,
-                    };
-                    if (config.get('environment') === 'production') {
-                        await fetch(config.get('zapier_loanUrl'), {
-                            method: 'post',
-                            body: JSON.stringify(salesforceData),
-                        });
-                    }
-                    return data;
-                }
-                return data;
+            // else {
+            let salesforceData;
+            if (payload.staffId) {
+                const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
+                console.log('getStaffName>>>>>>>>>>>>', getStaffData);
+                salesforceData = {
+                    _id: payload.loanId,
+                    staffAssignedEmail: getStaffData.email,
+                    staffAssignedfirstName: getStaffData.firstName,
+                    staffAssignedlastName: getStaffData.lastName,
+                };
+                // if (config.get('environment') === 'production') {
+                //     await fetch(config.get('zapier_loanUrl'), {
+                //         method: 'post',
+                //         body: JSON.stringify(salesforceData),
+                //     });
+                // }
+                // return data;
             }
+            if (payload.status) {
+                salesforceData = {
+                    _id: payload.loanId,
+                    applicationStatus: payload.status,
+                };
+            }
+            if (config.get('environment') === 'production') {
+                await fetch(config.get('zapier_loanUrl'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceData),
+                });
+            }
+            return data;
+
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

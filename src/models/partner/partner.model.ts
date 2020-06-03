@@ -14,7 +14,7 @@ const PartnerSchema = new Schema({
         type: String, enum: [
             CONSTANT.DATABASE.PartnerStatus.ACTIVE,
             CONSTANT.DATABASE.PartnerStatus.BLOCK,
-            CONSTANT.DATABASE.PartnerStatus.DELTE,
+            CONSTANT.DATABASE.PartnerStatus.DELETE,
         ],
     },
     counter: { type: Number, default: 0 },
