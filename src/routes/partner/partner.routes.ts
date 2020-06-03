@@ -105,7 +105,9 @@ export let partnerRoutes: ServerRoute[] = [
                 console.log('datadata>>>>>>>>>>>>>>>', data);
 
                 if (data) {
-                    return h.redirect(config.get('homePage') + '/pre-qualification' + data['shortId']);
+                    console.log('>>>>>>>>>>>>>>>>>>>>', config.get('homePage') + '/pre-qualification/' + data['shortId']);
+
+                    return h.redirect(config.get('homePage') + '/pre-qualification/' + data['shortId']);
                     // nookdevangweb.appskeeper.com / pre - qualification / process / property - information
                 } else {
                     return h.redirect(config.get('homePage'));
