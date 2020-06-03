@@ -104,8 +104,8 @@ export let partnerRoutes: ServerRoute[] = [
                 const data = await PartnerService.redirect(payload);
                 console.log('datadata>>>>>>>>>>>>>>>', data);
                 if (data) {
-                    console.log('>>>>>>>>>>>>>>>>>>>>', config.get('homePage') + '?pre-qualification=' + data['shortId']);
-                    return h.redirect(config.get('homePage') + '?pre-qualification=' + data['shortId']);
+                    console.log('>>>>>>>>>>>>>>>>>>>>', 'localhost:4200' + '?pre-qualification=' + data['shortId']);
+                    return h.redirect('localhost:4200' + '?pre-qualification=' + data['shortId']);
                 } else {
                     return h.redirect(config.get('homePage'));
                 }
