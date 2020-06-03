@@ -44,7 +44,7 @@ export class Partner {
             const criteria = {
                 shortId: payload.partnerSid,
                 status: Constant.DATABASE.PartnerStatus.ACTIVE,
-            }
+            };
             const data = await ENTITY.PartnerE.getOneEntity(criteria, {});
             if (!data) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
@@ -54,6 +54,26 @@ export class Partner {
             return Promise.reject(error);
         }
     }
+
+    async  redirect(payload) {
+        try {
+            const criteria = {
+                shortId: payload.partnerSid,
+                status: Constant.DATABASE.PartnerStatus.ACTIVE,
+            };
+            const data = await ENTITY.PartnerE.getOneEntity(criteria, {});
+            // if (!data) {
+            //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            // }
+
+            console.log('datadatadatadatadatadata', data);
+            // return data['shortId'];
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 
 }
 
