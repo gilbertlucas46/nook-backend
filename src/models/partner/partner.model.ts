@@ -15,7 +15,7 @@ const PartnerSchema = new Schema({
             CONSTANT.DATABASE.PartnerStatus.ACTIVE,
             CONSTANT.DATABASE.PartnerStatus.BLOCK,
             CONSTANT.DATABASE.PartnerStatus.DELETE,
-        ],
+        ], default: CONSTANT.DATABASE.PartnerStatus.ACTIVE,
     },
     counter: { type: Number, default: 0 },
     createdAt: { type: Number },
