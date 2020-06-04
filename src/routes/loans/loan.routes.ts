@@ -53,6 +53,8 @@ export let loanRoute: ServerRoute[] = [
 				payload: {
 					ipAddress: Joi.string(),
 					prequialificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+					partnerName: Joi.string(),
+					partnerId: Joi.string(),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),

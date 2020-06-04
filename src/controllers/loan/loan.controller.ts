@@ -275,9 +275,9 @@ class LoanControllers extends BaseEntity {
                 console.log('getStaffName>>>>>>>>>>>>', getStaffData);
                 salesforceData = {
                     _id: payload.loanId,
-                    staffAssignedEmail: getStaffData.email,
-                    staffAssignedfirstName: getStaffData.firstName,
-                    staffAssignedlastName: getStaffData.lastName,
+                    staffAssignedEmail: getStaffData && getStaffData.email || '',
+                    staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
+                    staffAssignedlastName: getStaffData && getStaffData.lastName || '',
                 };
                 // if (config.get('environment') === 'production') {
                 //     await fetch(config.get('zapier_loanUrl'), {
@@ -293,6 +293,8 @@ class LoanControllers extends BaseEntity {
                     applicationStatus: payload.status,
                 };
             }
+            console.log('salesforceDatasalesforceData', salesforceData);
+
             if (config.get('environment') === 'production') {
                 await fetch(config.get('zapier_loanUrl'), {
                     method: 'post',
