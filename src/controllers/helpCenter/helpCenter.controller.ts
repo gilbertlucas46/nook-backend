@@ -24,6 +24,8 @@ export class HelpCenter {
     async createHelpCenter(payload: helpCenterRequest.CreateHelpCenter, adminData) {
         try {
             let result: any;
+            payload['userId'] = adminData._id;
+
             // if (payload.categoryId) {
             //     result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_CATEGORY, payload.categoryId);
             // }
