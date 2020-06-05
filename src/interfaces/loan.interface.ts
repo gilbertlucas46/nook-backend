@@ -288,6 +288,7 @@ export namespace LoanRequest {
         fromDate?: number;
         toDate?: number;
         status?: string;
+        partnerId?: string;
     }
 
     export interface IGetAdminLoanList {
