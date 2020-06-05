@@ -106,9 +106,9 @@ export let partnerRoutes: ServerRoute[] = [
                 if (data) {
                     // console.log('>>>>>>>>>>>>>>>>>>>>', 'localhost:4200' + '?pre-qualification=' + data['shortId']);
                     // return 'localhost:4200' + '?pre-qualification=' + data['shortId'];
-                    console.log('>>>>>>', config.get('homePage') + '/pre-qualification/' + data['shortId']);
+                    console.log('>>>>>>', config.get('homePage') + '/pre-qualification/process/property-information/' + data['shortId']);
 
-                    return h.redirect(config.get('homePage') + '/pre-qualification/' + data['shortId']);
+                    return h.redirect(config.get('homePage') + '/pre-qualification/process/property-information/' + data['shortId']);
                 } else {
                     return h.redirect(config.get('homePage'));
                 }
@@ -192,7 +192,7 @@ export let partnerRoutes: ServerRoute[] = [
             }
         },
         options: {
-            description: 'admin create partner application',
+            description: 'admin get partners',
             tags: ['api', 'anonymous', 'user', 'admin', 'staff', 'Article'],
             auth: 'AdminAuth',
             validate: {

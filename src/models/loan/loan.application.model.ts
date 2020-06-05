@@ -4,6 +4,8 @@ import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../con
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
+    partnerName: { type: String },
+    partnerId: { type: String },
     // saveAsDraft: { type: Schema.Types.Boolean, default: false },
     ipAddress: { type: String },
     applicationStatus: {
