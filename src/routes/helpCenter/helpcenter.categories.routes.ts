@@ -45,7 +45,7 @@ export let helpCenterCategoryRoutes: ServerRoute[] = [
                     type: Joi.string().valid(
                         Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
                         Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
-                    ),
+                    ).required(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -155,56 +155,59 @@ export let helpCenterCategoryRoutes: ServerRoute[] = [
         },
     },
 
-    // {
-    //     method: 'GET',
-    //     path: '/v1/admin/help-category',
-    //     handler: async (request, h) => {
-    //         try {
-    //             const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-    //             // const payload: helpCenterRequest.IhelpCenterCategoryUpdate = {
-    //             //     ...request.params as any,
-    //             //     ...request.payload as any,
-    //             // };
-    //             // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
-    //             //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
-    //             // }
+    {
+        method: 'GET',
+        path: '/v1/admin/help-category',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                // const payload: helpCenterRequest.IhelpCenterCategoryUpdate = {
+                //     ...request.params as any,
+                //     ...request.payload as any,
+                // };
+                const payload = request.query;
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+                // }
 
-    //             // const checkPermission = adminData['permission'].some(data => {
-    //             //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
-    //             // });
+                // const checkPermission = adminData['permission'].some(data => {
+                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
+                // });
 
-    //             // if (checkPermission === false) {
-    //             //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
-    //             // }
-    //             // const permission = await UniversalFunctions.checkPermission(adminData, payload.type);
+                // if (checkPermission === false) {
+                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                // }
+                // const permission = await UniversalFunctions.checkPermission(adminData, payload.type);
 
-    //             const data = await HelpCenterCategoryService.adminGetCategory();
-    //             return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
-    //         } catch (error) {
-    //             UniversalFunctions.consolelog(error, 'error', true);
-    //             return (UniversalFunction.sendError(error));
-    //         }
-    //     },
-    //     options: {
-    //         description: 'admin get helpcenter category by group',
-    //         tags: ['api', 'anonymous', 'admin', 'helpcentercategory', 'get'],
-    //         auth: 'AdminAuth',
-    //         validate: {
-    //             // params: {
-    //             //     categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-    //             // },
-    //             query: {
-    //                 // status: Joi.string().valid(
-    //                 //     Constant.DATABASE.HELP_CENTER_STATUS.ACTIVE,
-    //                 //     Constant.DATABASE.HELP_CENTER_STATUS.DELETED,
-    //                 //     Constant.DATABASE.HELP_CENTER_STATUS.BLOCKED,
-    //                 // ),
-    //             },
-    //             headers: UniversalFunctions.authorizationHeaderObj,
-    //             failAction: UniversalFunctions.failActionFunction,
-    //         },
-    //     },
-    // },
+                const data = await HelpCenterCategoryService.adminGetCategory(payload);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'admin get helpcenter category by group',
+            tags: ['api', 'anonymous', 'admin', 'helpcentercategory', 'get'],
+            auth: 'AdminAuth',
+            validate: {
+                // params: {
+                //     categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                // },
+                query: {
+                    type: Joi.string().valid(
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE ,
+                        // Constant.DATABASE.HELP_CENTER_STATUS.ACTIVE,
+                        // Constant.DATABASE.HELP_CENTER_STATUS.DELETED,
+                        // Constant.DATABASE.HELP_CENTER_STATUS.BLOCKED,
+                    ),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
 
 
 
