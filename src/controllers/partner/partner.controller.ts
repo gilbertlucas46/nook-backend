@@ -92,7 +92,14 @@ export class Partner {
 
     async getPartners() {
         try {
-            const data = await ENTITY.PartnerE.getMultiple({}, {});
+            const criteria = {
+                $or: [{
+                    status: Constant.DATABASE.PartnerStatus.ACTIVE,
+                }, {
+                    status: Constant.DATABASE.PartnerStatus.BLOCK,
+                }],
+            };
+            const data = await ENTITY.PartnerE.getMultiple(criteria, {});
             console.log('data', data);
             return data;
         } catch (error) {
