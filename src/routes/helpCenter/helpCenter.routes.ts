@@ -45,7 +45,7 @@ export let helpCenterRoute: ServerRoute[] = [
                     title: Joi.string().trim(),
                     videoUrl: Joi.string().trim().allow(''),
                     description: Joi.string().trim(),
-                    categoryId: Joi.string(), // can be _id and can be or name as unique
+                    categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(), // can be _id and can be or name as unique
                     //  Joi.number().valid([
                     //     Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
                     //     // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
@@ -54,9 +54,9 @@ export let helpCenterRoute: ServerRoute[] = [
                     //     Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
                     // ]),
                     type: Joi.string().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
-                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
-                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
