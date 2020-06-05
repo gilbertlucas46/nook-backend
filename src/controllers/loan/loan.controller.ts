@@ -269,33 +269,25 @@ class LoanControllers extends BaseEntity {
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             // else {
-            let salesforceData;
-            if (payload.staffId) {
-                const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
-                console.log('getStaffName>>>>>>>>>>>>', getStaffData);
-                salesforceData = {
-                    _id: payload.loanId,
-                    staffAssignedEmail: getStaffData && getStaffData.email || '',
-                    staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
-                    staffAssignedlastName: getStaffData && getStaffData.lastName || '',
-                };
-                // if (config.get('environment') === 'production') {
-                //     await fetch(config.get('zapier_loanUrl'), {
-                //         method: 'post',
-                //         body: JSON.stringify(salesforceData),
-                //     });
-                // }
-                // return data;
-            }
-            if (payload.status) {
-                salesforceData = {
-                    _id: payload.loanId,
-                    applicationStatus: payload.status,
-                };
-            }
-            console.log('salesforceDatasalesforceData', salesforceData);
-
             if (config.get('environment') === 'production') {
+                let salesforceData;
+                if (payload.staffId) {
+                    const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
+                    console.log('getStaffName>>>>>>>>>>>>', getStaffData);
+                    salesforceData = {
+                        _id: payload.loanId,
+                        staffAssignedEmail: getStaffData && getStaffData.email || '',
+                        staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
+                        staffAssignedlastName: getStaffData && getStaffData.lastName || '',
+                    };
+                }
+                if (payload.status) {
+                    salesforceData = {
+                        _id: payload.loanId,
+                        applicationStatus: payload.status,
+                    };
+                }
+                console.log('salesforceDatasalesforceData', salesforceData);
                 await fetch(config.get('zapier_loanUrl'), {
                     method: 'post',
                     body: JSON.stringify(salesforceData),

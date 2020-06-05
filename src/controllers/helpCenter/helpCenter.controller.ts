@@ -24,12 +24,12 @@ export class HelpCenter {
     async createHelpCenter(payload: helpCenterRequest.CreateHelpCenter, adminData) {
         try {
             let result: any;
-            if (payload.categoryId) {
-                result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_CATEGORY, payload.categoryId);
-            }
-            payload['userId'] = adminData._id;
-            payload['categoryType'] = result.TYPE;
-            payload['userRole'] = adminData.type;
+            // if (payload.categoryId) {
+            //     result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_CATEGORY, payload.categoryId);
+            // }
+            // payload['userId'] = adminData._id;
+            // payload['categoryType'] = result.TYPE;
+            // payload['userRole'] = adminData.type;
             return await ENTITY.HelpCenterE.createOneEntity(payload);
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -90,7 +90,6 @@ export class HelpCenter {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
             }
             console.log('result>>>>>>>>>>>>>.', result);
-
 
             dataToSet.$set = {
                 ...payload,

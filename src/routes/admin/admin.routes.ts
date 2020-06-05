@@ -445,8 +445,6 @@ export let adminProfileRoute: ServerRoute[] = [
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
 				// console.log('permissio>:::::::::::::::::::::::::::', permission);
 
-
-
 				const registerResponse = await LoanController.adminUpdateLoanStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
