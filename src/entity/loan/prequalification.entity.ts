@@ -318,7 +318,7 @@ class PreLoanEntities extends BaseEntity {
                     const criteria = {
                         shortId: payload.partnerId,
                     }
-                    const updateData = this.DAOManager.findAndUpdate('Partner', criteria, { $inc: { counter: 1 } });
+                    this.DAOManager.findAndUpdate('Partner', criteria, { $inc: { totalPrequalification: 1 } });
                 }
                 const data1 = await this.DAOManager.insert(this.modelName, dataToSave);
                 // console.log('data1.work: ', data1.work);
@@ -356,7 +356,7 @@ class PreLoanEntities extends BaseEntity {
 
     async preloanList(payload, adminData) {
         try {
-            const { fromDate, toDate, status, propertyValue, propertyType, page, limit, searchTerm } = payload;
+            const { fromDate, toDate, status, propertyValue, propertyType, page, limit, searchTerm, partnerId } = payload;
             // const paginateOptions = {
             //     page: page || 1,
             //     limit: limit || Constant.SERVER.LIMIT,
@@ -407,7 +407,9 @@ class PreLoanEntities extends BaseEntity {
             if (propertyType) {
                 matchObject['property.type'] = propertyType;
             }
-
+            if (partnerId) {
+                matchObject['partnerId'] = partnerId;
+            }
             // const query = {
             //     userId: Types.ObjectId(userId),
             // };
