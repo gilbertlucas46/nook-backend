@@ -471,6 +471,7 @@ export let loanRoute: ServerRoute[] = [
 					fromDate: Joi.number(),
 					toDate: Joi.number(),
 					status: Joi.string(),
+					partnerId: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

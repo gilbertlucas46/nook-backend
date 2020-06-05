@@ -19,7 +19,12 @@ class LoanApplicationE extends BaseEntity {
      */
     async saveLoanApplication(payload) {
         try {
-
+            if (payload.partnerId && payload.partnerName) {
+                const criteria = {
+                    shortId: payload.partnerId,
+                };
+                this.DAOManager.findAndUpdate('Partner', criteria, { $inc: { totalLoanApplication: 1 } });
+            }
             const data = await this.createOneEntity(payload);
             // send data to sales-force
             // if (config.get['environment'] === 'production') {
@@ -67,7 +72,7 @@ class LoanApplicationE extends BaseEntity {
 
     async getUserLoanList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
-            let { page, limit, sortType, sortBy } = payload;
+            let { page, limit, sortType, sortBy, partnerId } = payload;
             const { fromDate, toDate, status } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
@@ -118,7 +123,9 @@ class LoanApplicationE extends BaseEntity {
                     $lte: new Date().getTime(),
                 };
             }
-
+            if (partnerId) {
+                matchObject['partnerId'] = partnerId;
+            }
             promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit, sort: sortingType }));
             promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
             const [data, total] = await Promise.all(promiseArray);

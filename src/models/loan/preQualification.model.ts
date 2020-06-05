@@ -9,7 +9,7 @@ const prequalification = new Schema({
     email: { type: String, required: true },
     grossIncome: { type: Number }, // 98765433
     partnerName: { type: String },
-    partnerId: { type: String },  // for now short id in future can be _id partner Id
+    partnerId: { type: String, index: true },  // for now short id in future can be _id partner Id
     property: {
         value: { type: Number },
         type: {

@@ -586,6 +586,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					propertyValue: Joi.number(),
 					propertyType: Joi.string(),
 					searchTerm: Joi.string(),
+					partnerId: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
