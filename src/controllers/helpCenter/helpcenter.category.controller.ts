@@ -31,6 +31,7 @@ export class HelpCenterCategory {
             // payload['categoryType'] = result.TYPE;
             // payload['userRole'] = adminData.type;
             const criteria = {
+                type: payload.type,
                 name: payload.name,
             };
             const checkAlreadyExist = await ENTITY.HelpCenterCatgoryE.getOneEntity(criteria, {});
@@ -132,37 +133,43 @@ export class HelpCenterCategory {
      * @description admin get the helpcneter by category
      */
 
-    async adminGetCategory() {
+    async adminGetCategory(payload) {
         try {
             const pipeline = [
                 // {
                 //     status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
                 // },
-                {
-                    $facet: {
-                        BANK_CATEGORY1: [{
-                            $match: {
-                                category: 'STAFF_FAQ',
-                            },
-                        },
-                            //                         { $project: { _id: 1, title: 1, categoryId: 1 } },
-                            //                             // { $sort: sortingType },
-                        ],
-                        STAFF_CATEGORY: [{
-                            $match: {
-                                category: 'BANK_FAQ',
-                            }
-                        }]
-                    },
+                // {
+                //     $facet: {
+                //         BANK_CATEGORY1: [{
+                //             $match: {
+                //                 category: 'STAFF_FAQ',
+                //             },
+                //         },
+                //             //                         { $project: { _id: 1, title: 1, categoryId: 1 } },
+                //             //                             // { $sort: sortingType },
+                //         ],
+                //         STAFF_CATEGORY: [{
+                //             $match: {
+                //                 category: 'BANK_FAQ',
+                //             }
+                //         }]
+                //     },
 
-                },
+                // },
+                // {
+                //     $project:
+                //     {
+                //         BANK_CATEGORY: '$BANK_CATEGORY1.name',
+                //         STAFF_CATEGORY: '$STAFF_CATEGORY.name',
+                //     },
+                // },
                 {
-                    $project:
-                    {
-                        BANK_CATEGORY: '$BANK_CATEGORY1.name',
-                        STAFF_CATEGORY: '$STAFF_CATEGORY.name',
-                    },
-                },
+                    $match: {
+                        category: payload.type,
+                        status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
+                    }
+                }
             ];
             const data = await ENTITY.HelpCenterCatgoryE.aggregate(pipeline);
             console.log('datadatadatadatadata', data);
