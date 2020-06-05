@@ -88,6 +88,10 @@ export class AdminClass extends BaseEntity {
 					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION,
 					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
 				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.REFERRAL_PARTNER,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
 			],
 		};
 

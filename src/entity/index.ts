@@ -20,3 +20,4 @@ export { LoanErrorE } from './loan/checkLoanError.entity';
 export { BankE } from './banks/banks.entity';
 // export { PartnerE } from './preQualification/partner.preQualification.entity';
 export { PartnerE } from './partner/partner.entity';
+export { HelpCenterCatgoryE } from './helpCenter/helpcenter.category.entity';
