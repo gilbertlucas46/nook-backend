@@ -499,6 +499,8 @@ class PreLoanEntities extends BaseEntity {
                         _id: 1,
                         createdAt: 1,
                         updatedAt: 1,
+                        partnerId: 1,
+                        partnerName: 1,
                         propertyValue: '$property.value',
                         propertyType: '$property.type',
                         referenceId: 1,
