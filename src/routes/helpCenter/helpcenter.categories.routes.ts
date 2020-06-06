@@ -45,6 +45,7 @@ export let helpCenterCategoryRoutes: ServerRoute[] = [
                     type: Joi.string().valid(
                         Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
                         Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
+                        // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE ,
                     ).required(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -187,21 +188,29 @@ export let helpCenterCategoryRoutes: ServerRoute[] = [
             }
         },
         options: {
-            description: 'admin get helpcenter category by group',
-            tags: ['api', 'anonymous', 'admin', 'helpcentercategory', 'get'],
+            description: 'admin get helpcenter catgetegory by type  and detail by id',
+            tags: ['api', 'anonymous', 'admin', 'helpcenter category', 'type', 'get'],
             auth: 'AdminAuth',
             validate: {
                 // params: {
                 //     categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                 // },
                 query: {
-                    type: Joi.string().valid(
+                    type: Joi.string().valid([
                         Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
-                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE ,
-                        // Constant.DATABASE.HELP_CENTER_STATUS.ACTIVE,
-                        // Constant.DATABASE.HELP_CENTER_STATUS.DELETED,
-                        // Constant.DATABASE.HELP_CENTER_STATUS.BLOCKED,
-                    ),
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
+                    ]).required(),
+                    // categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+                    limit: Joi.number(),
+                    page: Joi.number(),
+                    // type: Joi.string().valid(
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE ,
+                    //     // Constant.DATABASE.HELP_CENTER_STATUS.ACTIVE,
+                    //     // Constant.DATABASE.HELP_CENTER_STATUS.DELETED,
+                    //     // Constant.DATABASE.HELP_CENTER_STATUS.BLOCKED,
+                    // ),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -210,5 +219,48 @@ export let helpCenterCategoryRoutes: ServerRoute[] = [
     },
 
 
+    {
+        method: 'GET',
+        path: '/v1/admin/help-category/{categoryId}',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                // const payload: helpCenterRequest.IhelpCenterCategoryUpdate = {
+                //     ...request.params as any,
+                //     ...request.payload as any,
+                // };
+                const payload = request.params;
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+                // }
 
+                // const checkPermission = adminData['permission'].some(data => {
+                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
+                // });
+
+                // if (checkPermission === false) {
+                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                // }
+                // const permission = await UniversalFunctions.checkPermission(adminData, payload.type);
+
+                const data = await HelpCenterCategoryService.adminCategoryDetail(payload);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'admin get helpcanter category details by id',
+            tags: ['api', 'anonymous', 'admin', 'helpcenter category', 'detail', 'get'],
+            auth: 'AdminAuth',
+            validate: {
+                params: {
+                    categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
 ];

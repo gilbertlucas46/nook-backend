@@ -2,7 +2,7 @@ import * as ENTITY from '@src/entity';
 import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 import * as Constant from '../../constants';
 import * as utils from '@src/utils';
-import { isDate } from 'util';
+import { Types } from 'mongoose';
 
 export class HelpCenterCategory {
 
@@ -135,42 +135,24 @@ export class HelpCenterCategory {
 
     async adminGetCategory(payload) {
         try {
-            const pipeline = [
-                // {
-                //     status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
-                // },
-                // {
-                //     $facet: {
-                //         BANK_CATEGORY1: [{
-                //             $match: {
-                //                 category: 'STAFF_FAQ',
-                //             },
-                //         },
-                //             //                         { $project: { _id: 1, title: 1, categoryId: 1 } },
-                //             //                             // { $sort: sortingType },
-                //         ],
-                //         STAFF_CATEGORY: [{
-                //             $match: {
-                //                 category: 'BANK_FAQ',
-                //             }
-                //         }]
-                //     },
 
-                // },
-                // {
-                //     $project:
-                //     {
-                //         BANK_CATEGORY: '$BANK_CATEGORY1.name',
-                //         STAFF_CATEGORY: '$STAFF_CATEGORY.name',
-                //     },
-                // },
-                {
+            const { type } = payload;
+            const pipeline = [];
+            if (type) {
+                pipeline.push({
                     $match: {
                         category: payload.type,
                         status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
-                    }
-                }
-            ];
+                    },
+                });
+            }
+            // if (categoryId) {
+            //     pipeline.push({
+            //         $match: {
+            //             _id: new Types.ObjectId(categoryId),
+            //         },
+            //     });
+            // }
             const data = await ENTITY.HelpCenterCatgoryE.aggregate(pipeline);
             console.log('datadatadatadatadata', data);
             return data;
@@ -178,6 +160,47 @@ export class HelpCenterCategory {
             return Promise.reject(error);
         }
     }
+
+    async adminCategoryDetail(payload) {
+        try {
+            const criteria = {
+                _id: payload.categoryId,
+            };
+            return await ENTITY.HelpCenterCatgoryE.getOneEntity(criteria, {});
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
+
+
+// {
+//     status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
+// },
+// {
+//     $facet: {
+//         BANK_CATEGORY1: [{
+//             $match: {
+//                 category: 'STAFF_FAQ',
+//             },
+//         },
+//             //                         { $project: { _id: 1, title: 1, categoryId: 1 } },
+//             //                             // { $sort: sortingType },
+//         ],
+//         STAFF_CATEGORY: [{
+//             $match: {
+//                 category: 'BANK_FAQ',
+//             }
+//         }]
+//     },
+
+// },
+// {
+//     $project:
+//     {
+//         BANK_CATEGORY: '$BANK_CATEGORY1.name',
+//         STAFF_CATEGORY: '$STAFF_CATEGORY.name',
+//     },
+// },
 
 export let HelpCenterCategoryService = new HelpCenterCategory();
