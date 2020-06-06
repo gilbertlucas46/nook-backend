@@ -300,6 +300,72 @@ export class HelpCenter {
             return Promise.reject(error);
         }
     }
+
+
+
+    async getHelpcenter(payload) {
+        try {
+            const data = await ENTITY.HelpCenterE.adminGetHelpCenter(payload);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //  async getHelpcenter(payload) {
+    // try {
+    //         const aggregate = [
+    //             {
+    //                 $match: {
+    //                     _id: payload.categoryId,
+    //                 },
+    //             },
+    //             {
+    //                 $lookup: {
+    //                     from: 'helpcenters',
+    //                     // let: { hc_Id: '$$ROOT._id' },
+    //                     as: 'helpcenterData',
+    //                     pipeline: [
+    //                         {
+    //                             $match: {
+    //                                 categoryId: Types.ObjectId(payload.categoryId),
+    //                             },
+    //                         },
+    //                         {
+    //                             $project: {
+    //                                 title: 1,
+    //                                 createdAt: 1,
+    //                                 categoryType: 1,
+    //                             },
+    //                         },
+    //                     ],
+    //                 },
+    //             }];
+
+    //     } catch (error) {
+    //         return Promise.reject(error);
+    //     }
+    // }
+
+
+
 }
 
 export let HelpCenterService = new HelpCenter();
