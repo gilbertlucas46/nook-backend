@@ -8,7 +8,7 @@ const prequalification = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     email: { type: String, required: true },
     grossIncome: { type: Number }, // 98765433
-    partnerName: { type: String },
+    partnerName: { type: String, index: true },
     partnerId: { type: String, index: true },  // for now short id in future can be _id partner Id
     property: {
         value: { type: Number },

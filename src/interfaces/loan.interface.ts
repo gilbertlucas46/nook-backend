@@ -303,6 +303,7 @@ export namespace LoanRequest {
         amountTo?: number;
         searchTerm?: string;
         staffId?: string;
+        partnerName?: string
     }
 
     export interface IAdminPrequalificationList {

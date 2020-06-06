@@ -535,9 +535,6 @@ export let helpCenterRoute: ServerRoute[] = [
             tags: ['api', 'anonymous', 'user', 'delete helpcenter'],
             auth: 'AdminAuth',
             validate: {
-                // params: {
-
-                // },
                 query: {
                     categoryId: Joi.string().required(),
                     page: Joi.number(),

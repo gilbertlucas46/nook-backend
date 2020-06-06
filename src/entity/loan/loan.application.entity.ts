@@ -142,7 +142,7 @@ class LoanApplicationE extends BaseEntity {
     async getAdminLoanList(payload: LoanRequest.IGetAdminLoanList, userData) {
         try {
             let { page, limit, sortType } = payload;
-            const { fromDate, toDate, status, sortBy, amountFrom, amountTo, searchTerm, staffId } = payload;
+            const { fromDate, toDate, status, sortBy, amountFrom, amountTo, searchTerm, staffId, partnerName } = payload;
             if (!limit) { limit = Constant.SERVER.LIMIT; }
             if (!page) { page = 1; }
             const skip = (limit * (page - 1));
@@ -216,6 +216,11 @@ class LoanApplicationE extends BaseEntity {
                     $gte: fromDate,
                     $lte: new Date().getTime(),
                 };
+            }
+
+            if (partnerName) {
+                matchObject.$match['partnerName'] = partnerName;
+
             }
             console.log('matchObjectmatchObjectmatchObject', matchObject);
 
