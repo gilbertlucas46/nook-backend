@@ -82,7 +82,7 @@ export class HelpCenterEntity extends BaseEntity {
 
             const paginateOptions = {
                 page: page || 1,
-                limit: limit || 1,
+                limit: limit || 10,
             }
             const matchPipeline = [
                 {
