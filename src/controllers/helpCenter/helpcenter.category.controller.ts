@@ -31,7 +31,7 @@ export class HelpCenterCategory {
             // payload['categoryType'] = result.TYPE;
             // payload['userRole'] = adminData.type;
             const criteria = {
-                type: payload.type,
+                category: payload.type,
                 name: payload.name,
             };
             const checkAlreadyExist = await ENTITY.HelpCenterCatgoryE.getOneEntity(criteria, {});
@@ -43,7 +43,7 @@ export class HelpCenterCategory {
                 userRole: adminData.type,
                 adminId: adminData._id,
             };
-
+            payload['category'] = payload.type;
             payload['userType'] = adminData.type;
             const data = await ENTITY.HelpCenterCatgoryE.createOneEntity(payload);
             return data;
