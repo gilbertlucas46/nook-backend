@@ -216,6 +216,7 @@ export let helpCenterRoute: ServerRoute[] = [
                     id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                 },
                 payload: {
+                    categoryId: Joi.string(),
                     title: Joi.string(),
                     videoUrl: Joi.string().trim().allow('').optional(),
                     description: Joi.string(),
@@ -230,8 +231,7 @@ export let helpCenterRoute: ServerRoute[] = [
                         Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
                         Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
                         Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
-
-                    ])
+                    ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
