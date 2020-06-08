@@ -31,8 +31,9 @@ export let partnerRoutes: ServerRoute[] = [
             validate: {
                 payload: {
                     logoUrl: Joi.string().uri().required(),
+                    webUrl: Joi.string().required(),
                     name: Joi.string().required(),
-                    displayName: Joi.string(),
+                    displayName: Joi.string().optional(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -212,6 +213,44 @@ export let partnerRoutes: ServerRoute[] = [
         },
     },
 
+    {
+        method: 'PATCH',
+        path: '/v1/admin/partner/{partnerSid}',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload = request.payload as PartnerAdminRequest.UpdatePartner;
 
+                const data = await PartnerService.updatePartner(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'admin update partner application',
+            tags: ['api', 'anonymous', 'user', 'admin', 'partner'],
+            auth: 'AdminAuth',
+            validate: {
+                params: {
+                    partnerSid: Joi.string()
+                },
+                payload: {
+                    logoUrl: Joi.string().uri().required(),
+                    webUrl: Joi.string().required(),
+                    name: Joi.string().required(),
+                    displayName: Joi.string().optional(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
 
 ];

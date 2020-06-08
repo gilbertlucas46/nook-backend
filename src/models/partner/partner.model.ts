@@ -5,11 +5,12 @@ import * as shortid from 'shortid';
 // shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
 
 const PartnerSchema = new Schema({
-    logoUrl: { type: String },
+    logoUrl: { type: String, required: true },
+    webUrl: { type: String, required: true },
     addedBy: { type: Schema.Types.ObjectId, ref: 'Admin', index: true, required: true },
     shortId: { type: String, default: shortid.generate, unique: true },
     name: { type: String, unique: true },
-    displayName: { type: String, unique: true },
+    displayName: { type: String },
     status: {
         type: String, enum: [
             CONSTANT.DATABASE.PartnerStatus.ACTIVE,
