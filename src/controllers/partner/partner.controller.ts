@@ -107,6 +107,21 @@ export class Partner {
         }
     }
 
+    async updatePartner(payload: PartnerAdminRequest.UpdatePartner) {
+        try {
+            const criteria = {
+                shortId: payload.partnerSid,
+            };
+            const data = await ENTITY.PartnerE.updateOneEntity(criteria, payload);
+            if (!data) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            }
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 }
 
 export let PartnerService = new Partner();
