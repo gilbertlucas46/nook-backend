@@ -1039,6 +1039,7 @@ export let adminProfileRoute: ServerRoute[] = [
 			auth: 'AdminAuth',
 			validate: {
 				payload: {
+					assignedTo: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
 					userId: Joi.string(),  // in case of admin only
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
