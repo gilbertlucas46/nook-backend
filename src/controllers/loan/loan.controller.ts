@@ -449,13 +449,17 @@ class LoanControllers extends BaseEntity {
                     // },
                 ];
             }
-            if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED) {
+            if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED && payload.coBorrowerInfo) {
                 console.log('1111111111111111111111111LLLLLLLLLLL');
                 const pushedItem = {
                     $match: {
                         $or: [{
                             'legalDocument.isSpouse': true,
-                        }, {
+                        },
+                        {
+                            'legalDocument.coborrower': true,
+                        },
+                        {
                             'legalDocument.isSpouse': { $exists: false },
                         }],
                     },
@@ -463,7 +467,7 @@ class LoanControllers extends BaseEntity {
                 aggregateLegal.splice(5, 5, pushedItem);
             }
 
-            if (payload.coBorrowerInfo) {
+            else if (payload.coBorrowerInfo) {
                 console.log('222222222KKKKKKKKKKKKKK');
                 const pushedItem = {
                     $match: {
@@ -480,11 +484,11 @@ class LoanControllers extends BaseEntity {
                 aggregateLegal.push(pushedItem);
             }
 
-            if (payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
+            else if (payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
                 console.log('33333333333333hhhhhhhKKKKKKKKKKKKKK');
                 const pushedItem = {
                     $match: {
-                        $or: [
+                        $and: [
                             {
                                 'legalDocument.coborrower': { $exists: false },
                             },
@@ -496,6 +500,23 @@ class LoanControllers extends BaseEntity {
                 };
                 aggregateLegal.push(pushedItem);
             }
+            else if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
+                console.log('4444444444444444444444444ttttttttTTTTTTTTTTTTTTTTTTTTTT');
+                const pushedItem = {
+                    $match: {
+                        $or: [
+                            {
+                                'legalDocument.coborrower': { $exists: false },
+                            },
+                            {
+                                'legalDocument.isSpouse': { $exists: true },
+                            },
+                        ],
+                    },
+                };
+                aggregateLegal.push(pushedItem);
+            }
+
 
             console.log('aggregateLegal>>>>>>>>>>>>>>>222222222.', aggregateLegal);
 
