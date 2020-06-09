@@ -444,9 +444,9 @@ class LoanControllers extends BaseEntity {
                             'legalDocument.allowedFor': payload.employmentType,
                         },
                     },
-                    {
-                        $replaceRoot: { newRoot: '$legalDocument' },
-                    },
+                    // {
+                    //     $replaceRoot: { newRoot: '$legalDocument' },
+                    // },
                 ];
             }
             if (payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED) {
@@ -454,9 +454,9 @@ class LoanControllers extends BaseEntity {
                 const pushedItem = {
                     $match: {
                         $or: [{
-                            isSpouse: true,
+                            'legalDocument.isSpouse': true,
                         }, {
-                            isSpouse: { $exists: false },
+                            'legalDocument.isSpouse': { $exists: false },
                         }],
                     },
                 };
@@ -468,10 +468,10 @@ class LoanControllers extends BaseEntity {
                     $match: {
                         $or: [
                             {
-                                coborrower: { $exists: true },
+                                'legalDocument.coborrower': { $exists: true },
                             },
                             {
-                                isSpouse: { $exists: false },
+                                'legalDocument.isSpouse': { $exists: false },
                             },
                         ],
                     },
