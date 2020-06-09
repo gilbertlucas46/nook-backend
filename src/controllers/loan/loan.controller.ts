@@ -449,7 +449,7 @@ class LoanControllers extends BaseEntity {
                     // },
                 ];
             }
-            if (payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED) {
+            if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED) {
                 console.log('1111111111111111111111111LLLLLLLLLLL');
                 const pushedItem = {
                     $match: {
@@ -462,6 +462,7 @@ class LoanControllers extends BaseEntity {
                 };
                 aggregateLegal.splice(5, 5, pushedItem);
             }
+
             if (payload.coBorrowerInfo) {
                 console.log('222222222KKKKKKKKKKKKKK');
                 const pushedItem = {
@@ -478,6 +479,24 @@ class LoanControllers extends BaseEntity {
                 };
                 aggregateLegal.push(pushedItem);
             }
+
+            if (payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
+                console.log('33333333333333hhhhhhhKKKKKKKKKKKKKK');
+                const pushedItem = {
+                    $match: {
+                        $or: [
+                            {
+                                'legalDocument.coborrower': { $exists: false },
+                            },
+                            {
+                                'legalDocument.isSpouse': { $exists: false },
+                            },
+                        ],
+                    },
+                };
+                aggregateLegal.push(pushedItem);
+            }
+
             console.log('aggregateLegal>>>>>>>>>>>>>>>222222222.', aggregateLegal);
 
             let aggregateIncome;
