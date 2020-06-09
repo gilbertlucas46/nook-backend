@@ -407,6 +407,8 @@ class LoanControllers extends BaseEntity {
             if (payload.employmentType === 'GOVT' || payload.employmentType === 'BPO') {
                 payload['employmentType'] = 'PRIVATE';
             }
+            // LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
+
             if (payload.propertyStatus === 'FORECLOSED' || payload.propertyStatus === 'BPO') {
                 payload['propertyStatus'] = 'NEW_CONSTRUCTION';
             }
@@ -420,66 +422,67 @@ class LoanControllers extends BaseEntity {
             if (payload.employmentType) {
                 console.log(1111111111111111111111111111111111111111);
 
-                aggregateLegal = [{
-                    $match: {
-                        _id: Types.ObjectId(payload.bankId),
+                aggregateLegal = [
+                    {
+                        $match: {
+                            _id: Types.ObjectId(payload.bankId),
+                        },
                     },
-                },
-                {
-                    $project: {
-                        propertySpecification: 0,
-                        interestRateDetails: 0,
-                        loanForForeigner: 0,
-                        loanForForeignerMarriedLocal: 0,
-                        loanForNonCreditCardHolder: 0,
-                        loanForCreditCardHolder: 0,
-                        loanForNotNowCreditCardHolder: 0,
-                        loanAlreadyExistDiffBank: 0,
-                        loanAlreadyExistSameBank: 0,
-                        missedLoanPaymentAllowance: 0,
-                        abbrevation: 0,
-                        bankName: 0,
-                        headquarterLocation: 0,
-                        loanForCancelledCreditCard: 0,
-                        bankFeePercent: 0,
-                        bankFeeAmount: 0,
-                        loanApplicationFeePercent: 0,
-                        loanApplicationFeeAmount: 0,
-                        loanMinAmount: 0,
-                        loanMaxAmount: 0,
-                        minLoanDuration: 0,
-                        maxLoanDuration: 0,
-                        minAgeRequiredForLoan: 0,
-                        minMonthlyIncomeRequired: 0,
-                        logoUrl: 0,
-                        iconUrl: 0,
-                        bannerUrl: 0,
-                        createdAt: 0,
-                        updatedAt: 0,
-                        incomeDocument: 0,
-                        collateralDocument: 0,
-                        __v: 0,
+                    {
+                        $project: {
+                            legalDocument: 1,
+                        },
                     },
-                },
-                {
-                    $unwind: {
-                        path: '$legalDocument',
-                        preserveNullAndEmptyArrays: true,
+                    {
+                        $unwind: {
+                            path: '$legalDocument',
+                            preserveNullAndEmptyArrays: true,
+                        },
                     },
-                },
-                {
-                    $match: {
-                        //              "legalDocument.coborrower" : false,
-                        'legalDocument.allowedFor': payload.employmentType,
-
+                    {
+                        $match: {
+                            'legalDocument.allowedFor': payload.employmentType,
+                        },
                     },
-                },
+                    {
+                        $replaceRoot: { newRoot: '$legalDocument' },
+                    },
                 ];
             }
+            if (payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED) {
+                console.log('1111111111111111111111111LLLLLLLLLLL');
+                const pushedItem = {
+                    $match: {
+                        $or: [{
+                            isSpouse: true,
+                        }, {
+                            isSpouse: { $exists: false },
+                        }],
+                    },
+                };
+                aggregateLegal.splice(5, 5, pushedItem);
+            }
+            if (payload.coBorrowerInfo) {
+                console.log('222222222KKKKKKKKKKKKKK');
+                const pushedItem = {
+                    $match: {
+                        $or: [
+                            {
+                                coborrower: { $exists: true },
+                            },
+                            {
+                                isSpouse: { $exists: false },
+                            },
+                        ],
+                    },
+                };
+                aggregateLegal.push(pushedItem);
+            }
+            console.log('aggregateLegal>>>>>>>>>>>>>>>222222222.', aggregateLegal);
+
             let aggregateIncome;
             if (payload.employmentType) {
                 console.log(22222222222222222222222222222222222222);
-
                 aggregateIncome = [{
                     $match: {
                         _id: Types.ObjectId(payload.bankId),
@@ -487,38 +490,7 @@ class LoanControllers extends BaseEntity {
                 },
                 {
                     $project: {
-                        propertySpecification: 0,
-                        interestRateDetails: 0,
-                        loanForForeigner: 0,
-                        loanForForeignerMarriedLocal: 0,
-                        loanForNonCreditCardHolder: 0,
-                        loanForCreditCardHolder: 0,
-                        loanForNotNowCreditCardHolder: 0,
-                        loanAlreadyExistDiffBank: 0,
-                        loanAlreadyExistSameBank: 0,
-                        missedLoanPaymentAllowance: 0,
-                        abbrevation: 0,
-                        bankName: 0,
-                        headquarterLocation: 0,
-                        loanForCancelledCreditCard: 0,
-                        bankFeePercent: 0,
-                        bankFeeAmount: 0,
-                        loanApplicationFeePercent: 0,
-                        loanApplicationFeeAmount: 0,
-                        loanMinAmount: 0,
-                        loanMaxAmount: 0,
-                        minLoanDuration: 0,
-                        maxLoanDuration: 0,
-                        minAgeRequiredForLoan: 0,
-                        minMonthlyIncomeRequired: 0,
-                        logoUrl: 0,
-                        iconUrl: 0,
-                        bannerUrl: 0,
-                        createdAt: 0,
-                        updatedAt: 0,
-                        legalDocument: 0,
-                        collateralDocument: 0,
-                        __v: 0,
+                        incomeDocument: 1
                     },
                 },
                 {
@@ -548,39 +520,7 @@ class LoanControllers extends BaseEntity {
                 },
                 {
                     $project: {
-                        propertySpecification: 0,
-                        interestRateDetails: 0,
-                        loanForForeigner: 0,
-                        loanForForeignerMarriedLocal: 0,
-                        loanForNonCreditCardHolder: 0,
-                        loanForCreditCardHolder: 0,
-                        loanForNotNowCreditCardHolder: 0,
-                        loanAlreadyExistDiffBank: 0,
-                        loanAlreadyExistSameBank: 0,
-                        missedLoanPaymentAllowance: 0,
-                        abbrevation: 0,
-                        bankName: 0,
-                        headquarterLocation: 0,
-                        loanForCancelledCreditCard: 0,
-                        bankFeePercent: 0,
-                        bankFeeAmount: 0,
-                        loanApplicationFeePercent: 0,
-                        loanApplicationFeeAmount: 0,
-                        loanMinAmount: 0,
-                        loanMaxAmount: 0,
-                        minLoanDuration: 0,
-                        maxLoanDuration: 0,
-                        minAgeRequiredForLoan: 0,
-                        minMonthlyIncomeRequired: 0,
-                        logoUrl: 0,
-                        iconUrl: 0,
-                        bannerUrl: 0,
-                        createdAt: 0,
-                        updatedAt: 0,
-                        legalDocument: 0,
-                        incomeDocument: 0,
-                        __v: 0,
-
+                        collateralDocument: 1,
                     },
                 },
                 {
