@@ -113,6 +113,8 @@ export class Partner {
                 shortId: payload.partnerSid,
             };
             const data = await ENTITY.PartnerE.updateOneEntity(criteria, payload);
+            console.log('datadatadatadata', data);
+
             if (!data) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             }
