@@ -4,6 +4,8 @@ import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../con
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
+    partnerName: { type: String, index: true },
+    partnerId: { type: String, index: true },
     // saveAsDraft: { type: Schema.Types.Boolean, default: false },
     ipAddress: { type: String },
     applicationStatus: {
@@ -116,7 +118,7 @@ const schema = new Schema({
             },
         },
         permanentAddress: {
-            address: { type: String, required: true },
+            address: { type: String },
             homeOwnership: {
                 type: String, enum: [
                     CONSTANT.DATABASE.HOME_OWNERSHIP.LIVING_WITH_RELATIVE,
@@ -250,76 +252,83 @@ const schema = new Schema({
         position: { type: String },
     }],
 
-    propertyDocuments: {
-        borrowerValidDocIds: [Schema.Types.String],
-        coBorrowerValidId: [Schema.Types.String],
-        latestITR: { type: Schema.Types.String },
-        employmentCert: { type: Schema.Types.String },
-        purchasePropertyInfo: {
-            address: { type: Schema.Types.String, index: true },
-            contactPerson: { type: Schema.Types.String, trim: true },
-            contactNumber: { type: Schema.Types.String, trim: true },
-            collateralDocStatus: { type: Schema.Types.Boolean },
-            collateralDocList: [{
-                docType: {
-                    type: Schema.Types.String, enum: [
-                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
-                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
-                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
-                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
-                        CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
-                    ],
-                },
-                docUrl: {
-                    type: Schema.Types.String,
-                    trim: true,
-                },
-            }],
-        },
-        nookAgent: { type: Schema.Types.String, trim: true },
-    },
-    // document: {
-    //     legalDocument: [{
-    //         status: {
-    //             type: String, enum: [
-    //                 CONSTANT.DocumentStatus.ACTIVE,
-    //                 CONSTANT.DocumentStatus.Pending,
-    //                 CONSTANT.DocumentStatus.Rejected,
-    //             ]
-    //         },
-    //         documentRequired: { type: String },
-    //         desciption: { type: String },
-    //         url: { type: String },
-    //     }],
-    //     incomeDocument: [{
-    //         status: {
-    //             type: String, enum: [
-    //                 CONSTANT.DocumentStatus.ACTIVE,
-    //                 CONSTANT.DocumentStatus.Pending,
-    //                 CONSTANT.DocumentStatus.Rejected,
-    //             ]
-    //         },
-    //         documentRequired: { type: String },
-    //         desciption: { type: String },
-    //         url: { type: String },
-    //     }],
-    //     colleteralDoc: [{
-    //         status: {
-    //             type: String, enum: [
-    //                 CONSTANT.DocumentStatus.ACTIVE,
-    //                 CONSTANT.DocumentStatus.Pending,
-    //                 CONSTANT.DocumentStatus.Rejected,
-    //             ],
-    //         },
-    //         documentRequired: { type: String },
-    //         desciption: { type: String },
-    //         url: { type: String },
-    //     }],
+    // propertyDocuments: {
+    //     borrowerValidDocIds: [Schema.Types.String],
+    //     coBorrowerValidId: [Schema.Types.String],
+    //     latestITR: { type: Schema.Types.String },
+    //     employmentCert: { type: Schema.Types.String },
+    //     purchasePropertyInfo: {
+    //         address: { type: Schema.Types.String, index: true },
+    //         contactPerson: { type: Schema.Types.String, trim: true },
+    //         contactNumber: { type: Schema.Types.String, trim: true },
+    //         collateralDocStatus: { type: Schema.Types.Boolean },
+    //         collateralDocList: [{
+    //             docType: {
+    //                 type: Schema.Types.String, enum: [
+    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+    //                     CONSTANT.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+    //                 ],
+    //             },
+    //             docUrl: {
+    //                 type: Schema.Types.String,
+    //                 trim: true,
+    //             },
+    //         }],
+    //     },
+    //     nookAgent: { type: Schema.Types.String, trim: true },
     // },
+    documents: {
+        legalDocument: [{
+            status: {
+                type: String, enum: [
+                    CONSTANT.DocumentStatus.APPROVED,
+                    CONSTANT.DocumentStatus.PENDING,
+                    CONSTANT.DocumentStatus.REJECTED,
+                ], default: CONSTANT.DocumentStatus.PENDING,
+            },
+            documentRequired: { type: String },
+            description: { type: String },
+            url: { type: String },
+            createdAt: { type: Number, default: new Date().getTime() },
+            updatedAt: { type: Number },
+        }],
+        incomeDocument: [{
+            status: {
+                type: String, enum: [
+                    CONSTANT.DocumentStatus.APPROVED,
+                    CONSTANT.DocumentStatus.REJECTED,
+                    CONSTANT.DocumentStatus.PENDING,
+                ], default: CONSTANT.DocumentStatus.PENDING,
+            },
+            documentRequired: { type: String },
+            description: { type: String },
+            url: { type: String },
+            createdAt: { type: Number, default: new Date().getTime() },
+            updatedAt: { type: Number },
+        }],
+        colleteralDoc: [{
+            status: {
+                type: String, enum: [
+                    CONSTANT.DocumentStatus.APPROVED,
+                    CONSTANT.DocumentStatus.PENDING,
+                    CONSTANT.DocumentStatus.REJECTED,
+                ], default: CONSTANT.DocumentStatus.PENDING,
+            },
+            documentRequired: { type: String },
+            description: { type: String },
+            url: { type: String },
+            createdAt: { type: Number, default: new Date().getTime() },
+            updatedAt: { type: Number },
+        }],
+    },
     applicationStage: [{
         userType: { type: String },
         status: { type: String },
         adminId: { type: Schema.Types.ObjectId, ref: 'admin' },
+        assignedTo: { type: String },
         adminName: { type: String },
         approvedAt: { type: Number, default: new Date().getTime() },
     }],

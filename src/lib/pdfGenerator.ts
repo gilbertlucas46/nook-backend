@@ -20,9 +20,6 @@ export class PdfGenerator {
         try {
             console.log('11111111111111111111111111111111111111');
             const buf = await Buffer.from(htmlFile).toString();
-            // const html = fs.readFileSync(SERVER.TEMPLATE_PATH + 'testHtmlFile.html', 'utf8');
-
-            // return pdfToFile();
 
             return new Promise((resolve, reject) => {
                 pdf.create(buf, { format: 'A4' }).toFile(SERVER.TEMPLATE_PATH + '/loan/' + fileName + '.pdf', async (err, data) => {
@@ -30,11 +27,8 @@ export class PdfGenerator {
                         console.log('dataaaaaaaaaaa', err);
                         reject(err);
                     } else {
-                        console.log('datadatadatadatadatadatadatadata', data);
                         const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + '/loan/' + fileName + '.pdf', fileName);
-                        console.log('aaaaaaaaaaaaaaaaaaaaaaaa', nameUrl);
                         resolve(nameUrl);
-                        console.log('212777777777777777');
 
                     }
                 });
@@ -59,16 +53,12 @@ export class PdfGenerator {
                     console.log('fileDatafileDatafileData', fileData);
 
                     resolve(await this.uploadS3(fileData, fileName));
-                    // if (upload) {
-                    //     // resolve(`${config.s3.basePath}version-point-receipts/` + file.fileName);
-                    //     resolve;
-                    // }
                 });
             } catch (error) {
                 console.log('Error inside uploadFileToS3', error);
                 reject(error);
             }
-        })
+        });
     }
 
     uploadS3 = async (fileData, fileName?) => {
@@ -81,12 +71,9 @@ export class PdfGenerator {
             ACL: 'public-read',
             ContentDisposition: 'inline',
         };
-        console.log('paramsparamsparams', params);
 
         const uploadManager = this.server.upload(params);
         const resp = await uploadManager.promise();
-        console.log('resprespresp', resp);
-
         return resp.Location;
     }
 }

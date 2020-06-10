@@ -95,7 +95,6 @@ class ArticleController {
             console.log('articlearticle', article);
 
             if (article == null || !article) {
-                console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             }
             return article;

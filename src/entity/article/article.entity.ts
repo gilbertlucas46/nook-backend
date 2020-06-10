@@ -118,6 +118,7 @@ export class ArticleClass extends BaseEntity {
                             },
                             {
                                 $project: {
+                                    title: 1,
                                     name: 1,
                                     articles: {
                                         $filter: {
@@ -132,6 +133,7 @@ export class ArticleClass extends BaseEntity {
                             },
                             {
                                 $project: {
+                                    title: 1,
                                     name: 1,
                                     articles: {
                                         $slice: ['$articles', 3],
@@ -428,7 +430,7 @@ export class ArticleClass extends BaseEntity {
             const sortingType = {
                 // isFeatured: sortType,
                 // createdAt: sortType,
-                _id: -1,
+                createdAt: -1,
             };
 
             if (type) {
@@ -466,81 +468,66 @@ export class ArticleClass extends BaseEntity {
 
             console.log('$match$match$match$match$match', $match);
 
-            const data1 = [
-                {
-                    $project: {
-                        count: 1,
-                        total: 1,
-                        results: {
-                            $reduce: {
-                                input: '$list',
-                                initialValue: {
-                                    FEATURED: [],
-                                    LATEST: [],
-                                },
-                                in: {
-                                    $cond: {
-                                        if: {
-                                            $and: [
-                                                {
-                                                    $ne: [{ $size: '$$value.FEATURED' }, 1],
-                                                },
-                                                {
-                                                    $eq: ['$$this.isFeatured', true],
-                                                },
-                                            ],
-                                        },
-                                        then: {
-                                            $mergeObjects: ['$$value', { FEATURED: ['$$this'] }],
-                                        },
-                                        else: {
-                                            $cond: {
-                                                if: {
-                                                    $ne: [{ $size: '$$value.LATEST' }, 6],
-                                                },
-                                                then: {
-                                                    $mergeObjects: ['$$value', { LATEST: { $concatArrays: ['$$value.LATEST', ['$$this']] } }],
-                                                },
-                                                else: {
-                                                    $mergeObjects: ['$$value', { LIST: { $concatArrays: ['$$value.LIST', ['$$this']] } }],
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                {
-                    $project: {
-                        // metadata: 1,
-                        _id: 1,
-                        LATEST: '$results.LATEST',
-                        FEATURED: '$results.FEATURED',
-                        // LIST: '$results.LIST',
-                        // count: 1,
-                        total: 1,
-                    },
-                },
-            ];
+            // const data1 = [
+            //     {
+            //         $project: {
+            //             count: 1,
+            //             total: 1,
+            //             results: {
+            //                 $reduce: {
+            //                     input: '$list',
+            //                     initialValue: {
+            //                         FEATURED: [],
+            //                         LATEST: [],
+            //                     },
+            //                     in: {
+            //                         $cond: {
+            //                             if: {
+            //                                 $and: [
+            //                                     {
+            //                                         $ne: [{ $size: '$$value.FEATURED' }, 1],
+            //                                     },
+            //                                     {
+            //                                         $eq: ['$$this.isFeatured', true],
+            //                                     },
+            //                                 ],
+            //                             },
+            //                             then: {
+            //                                 $mergeObjects: ['$$value', { FEATURED: ['$$this'] }],
+            //                             },
+            //                             else: {
+            //                                 $cond: {
+            //                                     if: {
+            //                                         $ne: [{ $size: '$$value.LATEST' }, 6],
+            //                                     },
+            //                                     then: {
+            //                                         $mergeObjects: ['$$value', { LATEST: { $concatArrays: ['$$value.LATEST', ['$$this']] } }],
+            //                                     },
+            //                                     else: {
+            //                                         $mergeObjects: ['$$value', { LIST: { $concatArrays: ['$$value.LIST', ['$$this']] } }],
+            //                                     },
+            //                                 },
+            //                             },
+            //                         },
+            //                     },
+            //                 },
+            //             },
+            //         },
+            //     },
+            //     {
+            //         $project: {
+            //             // metadata: 1,
+            //             _id: 1,
+            //             LATEST: '$results.LATEST',
+            //             FEATURED: '$results.FEATURED',
+            //             // LIST: '$results.LIST',
+            //             // count: 1,
+            //             total: 1,
+            //         },
+            //     },
+            // ];
 
-            const matchPipeline = [
-                { $match },
-                {
-                    $group: {
-                        _id: null,
-                        list: {
-                            $push: '$$ROOT',
-                        },
-                        total: { $sum: 1 }
-                    },
-                },
-                { $skip: paginateOptions.skip },
-                { $limit: paginateOptions.limit },
-                ...data1,
 
-            ];
             // const pipeline = [
             //     {
             //         $lookup: {
@@ -551,17 +538,95 @@ export class ArticleClass extends BaseEntity {
             //         }
             //     }
             // ]
-            console.log('matchPipelinematchPipelinematchPipeline', matchPipeline);
+            // console.log('matchPipelinematchPipelinematchPipeline', matchPipeline);
+            let criteria: any = {}
+            criteria = {
+                isFeatured: true,
+                categoryId,
+                status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
 
-            const [metaData, data] = await Promise.all([
-                page === 1 ? this.DAOManager.findOne('ArticleCategories', { _id: new Types.ObjectId(categoryId) }, {}) : null,
-                // this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName),
-                this.DAOManager.aggregateData(this.modelName, matchPipeline)
-                // this.DAOManager.paginate
-            ]);
+            }
+            if (searchTerm) {
+                criteria['$or'] = [
+                    { title: { $regex: searchTerm, $options: 'i' } },
+                    { description: { $regex: searchTerm, $options: 'i' } },
+
+                ];
+            }
+
+
+            const FEATURED = await this.DAOManager.findOne(this.modelName, criteria, { articleAction: 0 }, { sort: { _id: -1 } });
+            // const FEATURED = await this.DAOManager.findOne(this.modelName, { isFeatured: true, $match }, { articleAction: 0 }, { sort: { _id: -1 } });
+
+            console.log('FEATUREDFEATURED', FEATURED);
+
+            const matchPipeline = [
+                { $match },
+                { $sort: sortingType },
+                {
+                    $project: {
+                        articleAction: 0,
+                    },
+                },
+            ];
+
+            if (FEATURED) {
+                console.log('matchPipelinematchPipelinematchPipeline1111111111111111111111');
+
+                const pushedItem = {
+                    $match:
+                    {
+                        _id: {
+                            $ne: FEATURED._id,
+                        },
+                    },
+                };
+                matchPipeline.splice(0, 0, pushedItem);
+            }
+
+            // if (!FEATURED && FEATURED != null) {
+            //     matchPipeline.splice(1, 0, pushedItem);
+            // }
+
+            // const pipeline = [
+            //     {
+            //         $lookup: {
+            //             from: 'articlecategories',
+            //             let: { cid: '$categoryId' },
+            //             pipeline: [
+            //                 {
+            //                     $match: {
+            //                         $expr: {
+            //                             $eq: ['$_id', '$$cid'],
+            //                         },
+            //                     },
+            //                 },
+            //             ],
+            //             as: 'categoryData',
+            //         },
+            //     },
+
+            // ];
+            // const LATEST = await this.DAOManager.findAll(this.modelName, { $ne: { _id: FEATURED._id } }, { articleAction: 0 }, { limit: 6, skip: paginateOptions.skip, sort: sortingType });
+
+            const LATEST = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+
+            // const [metaData] = await Promise.all([
+            const metaData = await this.DAOManager.findOne('ArticleCategories', { _id: new Types.ObjectId(categoryId) }, {});
+            // this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName),
+            // this.DAOManager.findOne(this.modelName, { isFeatured: true }, { $sort: { _id: -1 } }),
+
+            // this.DAOManager.findAll(this.modelName, { $ne: { _id: FEATURED._id } }, { articleAction: 0 }, { limit: 6, skip: paginateOptions.skip, sort: sortingType }),
+            // this.DAOManager.aggregateData(this.modelName, matchPipeline),
+            // this.DAOManager.count(this.modelName, $match),
+            // this.DAOManager.paginate
+            // ]);
+            // data[0]['total'] = total;
+            // const addTotal = data[0] 
             return {
-                // data,
-                data,
+                FEATURED: FEATURED ? [FEATURED] : [],
+                LATEST: LATEST ? LATEST : [],
+                // data: { ...LATEST, ...FEATURED },
                 metaData,
             };
 
@@ -569,8 +634,6 @@ export class ArticleClass extends BaseEntity {
             return Promise.reject(error);
         }
     }
-
-
 
     async getAdminArticle(payload: ArticleRequest.GetArticleById) {
         try {

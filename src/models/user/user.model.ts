@@ -37,8 +37,6 @@ const userSchema = new Schema({
 	aboutMe: { type: String },
 	profilePicUrl: { type: String },
 	backGroundImageUrl: { type: String },
-	// isEmailVerified: { type: Boolean },
-	// isPhoneVerified: { type: Boolean },
 	type: { type: String, default: 'Tenant' },
 	status: {
 		type: String, enum: [
@@ -52,18 +50,6 @@ const userSchema = new Schema({
 	ipAddress: { type: String },
 	createdAt: { type: Number, required: true, index: true },
 	updatedAt: { type: Number, required: true, index: true },
-	// type: {
-	// 	type: String,
-	// 	enum: [
-	// 		// CONSTANT.DATABASE.USER_TYPE.AGENT.TYPE,
-	// 		// CONSTANT.DATABASE.USER_TYPE.OWNER.TYPE,
-	// 		CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
-	// 		// CONSTANT.DATABASE.USER_TYPE.GUEST.TYPE,
-	// 	],
-	// 	default: CONSTANT.DATABASE.USER_TYPE.TENANT.TYPE,
-	// 	index: true,
-	// },
-	// isProfileComplete: { type: Boolean, default: false },
 	passwordResetToken: { type: String },
 	passwordResetTokenExpirationTime: { type: Date },
 

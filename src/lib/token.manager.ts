@@ -26,7 +26,6 @@ export let setToken = async (tokenData: any) => {
 
 export let verifyToken = async (token, tokenType, request?: any) => {
 	try {
-		console.log(111111111111111111111111111111111111111111111111111111);
 		let result;
 		try {
 			result = Jwt.verify(token, cert, { algorithms: ['HS256'] });

@@ -28,5 +28,19 @@ export namespace helpCenterRequest {
         videoUrl?: string;
         description?: string;
         categoryId?: number;
+        type: string;
     }
+
+    export interface IhelpcenterCategoryAdd {
+        name: string;
+        category: string;
+        //  title:string ;
+    }
+    export interface IhelpCenterCategoryUpdate {
+        categoryId: string;
+        name: string;
+        status: string;
+        //  title:string ;
+    }
+
 }

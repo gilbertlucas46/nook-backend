@@ -212,13 +212,18 @@ export let DATABASE = {
 			HELPCENTER_STAFF: 'help-center-staff',
 			HELPCENTER_USER: 'help-center-user',
 			HELPCENTER_BANK: 'help-center-bank',
-
+			REFERRAL_PARTNER: 'refferal-partner',
 		},
 	},
 
 	ArticleCategoryStatus: {
 		ACTIVE: 'Active',
 		BLOCK: 'Block',
+	},
+	PartnerStatus: {
+		ACTIVE: 'Active',
+		BLOCK: 'Block',
+		DELETE: 'Delete',
 	},
 	PREQUALIFICATION_STATUS: {
 		PENDING: 'Pending',
@@ -251,25 +256,37 @@ export let DATABASE = {
 	},
 
 	HELP_CENTER_TYPE: {
-		// STAFF_FAQ: {
-		// 	NUMBER: 1,
-		// 	TYPE: 'STAFF_FAQ',
-		// 	DISPLAY_NAME: 'Staff Faq',
-		// },
-		// BANK_FAQ: {
-		// 	NUMBER: 2,
-		// 	TYPE: 'BANK_FAQ',
-		// 	DISPLAY_NAME: 'Bank Faq',
-		// },
-		// USER_FAQ: {
-		// 	NUMBER: 3,
-		// 	TYPE: 'USER_FAQ',
-		// 	DISPLAY_NAME: 'FAQ',
-		// },
-		STAFF_FAQ: 'STAFF_FAQ',
-		BANK_FAQ: 'BANK_FAQ',
-		USER_FAQ: 'USER_FAQ',
+		STAFF_FAQ: {
+			NUMBER: 1,
+			TYPE: 'STAFF_FAQ',
+			DISPLAY_NAME: 'Staff Faq',
+		},
+		BANK_FAQ: {
+			NUMBER: 2,
+			TYPE: 'BANK_FAQ',
+			DISPLAY_NAME: 'Bank Faq',
+		},
+		USER_FAQ: {
+			NUMBER: 3,
+			TYPE: 'USER_FAQ',
+			DISPLAY_NAME: 'FAQ',
+		},
+		// STAFF_FAQ: 'STAFF_FAQ',
+		// BANK_FAQ: 'BANK_FAQ',
+		// USER_FAQ: 'USER_FAQ',
 	},
+
+	HELP_CENTER_STATUS: {
+		ACTIVE: 'Active',
+		BLOCKED: 'Blocked',
+		DELETED: 'Deleted',
+	},
+	HELP_CENTER_CATEGORY_STATUS: {
+		ACTIVE: 'Active',
+		BLOCKED: 'Blocked',
+		DELETED: 'Deleted',
+	},
+
 
 	PRICE_LABEL: {
 		DAILY: 'daily',
@@ -316,29 +333,6 @@ export let DATABASE = {
 		},
 	},
 
-	// AGENT_SPECIALIZING: {
-	// 	LICENSED_BROKER: {
-	// 		NUMBER: 1,
-	// 		TYPE: 'LICENSED BROKER',
-	// 		DISPLAY_NAME: 'Licensed Broker',
-	// 	},
-	// 	PROPERTY_CONSULTANT: {
-	// 		NUMBER: 2,
-	// 		TYPE: 'PROPERTY_CONSULTANT',
-	// 		DISPLAY_NAME: 'Property_Consultant',
-	// 	},
-	// 	REAL_ESTATE_BROKER: {
-	// 		NUMBER: 3,
-	// 		TYPE: 'REAL_ESTATE_BROKER',
-	// 		DISPLAY_NAME: 'Real Estate Broker',
-	// 	},
-	// 	SALES_MANAGER: {
-	// 		NUMBER: 4,
-	// 		TYPE: 'SALES_MANAGER',
-	// 		DISPLAY_NAME: 'Sales Manager',
-	// 	},
-	// },
-
 	ACTION: {
 		DEEPLINK: {
 			APP: 'APP',
@@ -374,43 +368,6 @@ export let DATABASE = {
 		MONTHLY: 'month',
 		YEARLY: 'year',
 	},
-	// SCREEN_TYPE: {
-	// 	HOMEPAGE: 'HOMEPAGE',
-	// 	HOMEPAGE_PROFILE: 'HOMEPAGE_PROFILE',
-	// 	HOMEPAGE_PROPERTY: 'HOMEPAGE_PROPERTY',
-	// 	SEARCH: 'SEARCH',
-	// },
-	// type = YEARLY, MONTHLY
-	// SUBSCRIPTION_TYPE: (type) => [{
-	// 	type: 'FREE',
-	// 	featuredType: 'FREE',
-	// 	amount: 0,
-	// 	description: 'Unlimited Properties, Unlimited Enquiries, Broker/Agent Profile Page',
-	// 	details: 'Finally a property portal that is completely free to use for all brokers, agents and property owners. List an unlimited number of properties; receive an unlimited number of property enquiries from potential tenants and buyers; and have your own profile page to promote yourself in order to find new clients who want you to sell or lease their property. There is no trial period needed, Nook is free forever. Just create an account and start posting your property listings for free.',
-	// }, {
-	// 	type: 'FEATURED PROPERTY',
-	// 	featuredType: 'PROPERTY',
-	// 	amount: type === 'MONTHLY' ? 890 : 990,
-	// 	description: 'Featured Property Upgrade - Search Results',
-	// 	details: 'Have a property for sale or lease that you want to feature more prominently? Want more people to view your property and send more enquiries? Want to sell or lease faster? Then upgrade your property to a Featured Property for a small fee to have it appear at the top of search results for your chosen location.',
-	// }, {
-	// 	type: 'FEATURED PROFILE',
-	// 	featuredType: 'PROFILE',
-	// 	amount: type === 'MONTHLY' ? 890 : 990,
-	// 	description: 'Featured Profile Upgrade - Search Results',
-	// 	details: 'Would you like more clients to be giving you more properties to sell or lease out? Want an easier way for these new clients to find you? Simply upgrade your broker/agent profile page for a small fee to a Featured Profile and have it appear at the top of search results for your chosen location. Have the clients come to you.',
-	// }, {
-	// 	type: 'HOMEPAGE FEATURE',
-	// 	featuredType: 'HOMEPAGE',
-	// 	amount: type === 'MONTHLY' ? 890 : 1799,
-	// 	description: 'Featured Property or Profile - Homepage Features Featured Profile Upgrade',
-	// 	details: 'Would you like the maximum level of exposure for your property or your broker/agent profile page? Would you like a high number of people enquiring so you sell/lease faster and find new clients easier? Upgrade your property or broker/agent profile to a Homepage Feature for a small fee and get the most amount of website traffic now.',
-	// }],
-	// TRANSACTION_STATUS: {
-	// 	SUCCEEDED: 'succeeded',
-	// 	PENDING: 'pending',
-	// 	FAILED: 'failed',
-	// },
 };
 
 export const EMAIL_TEMPLATE = {
@@ -509,11 +466,6 @@ export let STATUS_MSG = {
 				type: 'INVALID_LOGIN',
 				message: 'Entered username/email is not registered with us!',
 			},
-			// PROPERTY_NOT_REGISTERED: {
-			// 	statusCode: 400,
-			// 	type: 'PROPERTY_NOT_REGISTERED',
-			// 	message: 'PROPERTY does not exist.',
-			// },
 			USER_NOT_REGISTERED: {
 				statusCode: 400,
 				type: 'USER_NOT_REGISTERED',
@@ -524,16 +476,6 @@ export let STATUS_MSG = {
 				type: 'USER_ALREADY_EXIST',
 				message: 'User already exist, please login.',
 			},
-			// INVALID_OTP: {
-			// 	statusCode: 400,
-			// 	type: 'INVALID_OTP',
-			// 	message: 'Invalid OTP',
-			// },
-			// APP_VERSION_ERROR: {
-			// 	statusCode: 400,
-			// 	type: 'APP_VERSION_ERROR',
-			// 	message: 'One of the latest version or updated version value must be present',
-			// },
 			VALIDATION_ERROR: {
 				statusCode: 400,
 				type: 'VALIDATION_ERROR',
@@ -797,21 +739,6 @@ export let STATUS_MSG = {
 				type: 'CREATED',
 				message: 'Successfully send your referral to nook ',
 			},
-			// PROPERTY_ADDED: {
-			// 	statusCode: 201,
-			// 	type: 'PROPERTY_ADDED',
-			// 	message: 'Property Added Successfully',
-			// },
-			// ENQUIRY_SUBMITTED: {
-			// 	statusCode: 201,
-			// 	type: 'ENQUIRY_SUBMITTED',
-			// 	message: 'Enquiry Submitted',
-			// },
-			// PROPERTY_SAVE_AS_DRAFT: {
-			// 	statusCode: 201,
-			// 	type: 'PROPERTY_SAVE_AS_DRAFT',
-			// 	message: 'Property Added as Draft',
-			// },
 			ARTICLE_CREATED: {
 				statusCode: 201,
 				type: 'CREATED',

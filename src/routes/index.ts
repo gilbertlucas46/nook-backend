@@ -20,7 +20,8 @@ import { searchRoutes } from './search.routes';
 import { adminUserRoutes } from './admin/admin.user.routes';
 // import { adminProperty } from './admin/admin.property.routes';
 import { preQualificationroutes } from './preQualification/preQualification.routes';
-
+import { partnerRoutes } from './partner/partner.routes';
+import { helpCenterCategoryRoutes } from './helpCenter/helpcenter.categories.routes';
 
 // const arr = [];
 export let Routes: ServerRoute[] = [
@@ -43,6 +44,9 @@ export let Routes: ServerRoute[] = [
 	// ...subscriptionRoute,
 	...adminUserRoutes,
 	...preQualificationroutes,
+	...partnerRoutes,
+	...helpCenterCategoryRoutes,
+
 	// ...adminProperty,
 	// {
 	// 	method: ['*'],
@@ -59,7 +63,7 @@ export let Routes: ServerRoute[] = [
 	// 		} else {
 	// 			return Promise.reject(' this resource isn’t available.');
 	// 		}
-	// 		// if (accept && accept.match(arr[0])) {
+	// 		// if (accept && accept.match(arr[0])) {\
 	// 		// 	return Promise.reject(' this resource isn’t available.');
 	// 		// }
 	// 		return;

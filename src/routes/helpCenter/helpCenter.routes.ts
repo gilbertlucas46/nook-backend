@@ -37,25 +37,26 @@ export let helpCenterRoute: ServerRoute[] = [
             }
         },
         options: {
-            description: 'update account type ',
-            tags: ['api', 'anonymous', 'user', 'updateAccount'],
+            description: 'admin create helpceter',
+            tags: ['api', 'anonymous', 'user', 'admin helpcener'],
             auth: 'AdminAuth',
             validate: {
                 payload: {
                     title: Joi.string().trim(),
                     videoUrl: Joi.string().trim().allow(''),
                     description: Joi.string().trim(),
-                    categoryId: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
-                    ]),
+                    categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(), // can be _id and can be or name as unique
+                    //  Joi.number().valid([
+                    //     Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
+                    //     // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
+                    //     // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
+                    // ]),
                     type: Joi.string().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
-                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
-                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
                     ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
@@ -215,22 +216,22 @@ export let helpCenterRoute: ServerRoute[] = [
                     id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
                 },
                 payload: {
+                    categoryId: Joi.string(),
                     title: Joi.string(),
                     videoUrl: Joi.string().trim().allow('').optional(),
                     description: Joi.string(),
-                    categoryId: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                    ]),
+                    // categoryId: Joi.number().valid([
+                    //     Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
+                    //     // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
+                    //     // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                    // ]),
                     type: Joi.string().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
-                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
-                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
-
-                    ])
+                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
+                    ]),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
@@ -269,55 +270,55 @@ export let helpCenterRoute: ServerRoute[] = [
     /**
      * @description admin get helpcenter by group
      */
-    {
-        method: 'GET',
-        path: '/v1/admin/help-center-group/{id}/{type}',
-        handler: async (request) => {
-            try {
-                const payload = {
-                    ...request.params,
-                }
-                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
-                console.log('payloadpayloadpayload', payload);
+    // {
+    //     method: 'GET',
+    //     path: '/v1/admin/help-center-group/{id}/{type}',
+    //     handler: async (request) => {
+    //         try {
+    //             const payload = {
+    //                 ...request.params,
+    //             }
+    //             const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
+    //             console.log('payloadpayloadpayload', payload);
 
-                // const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+    //             // const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
 
-                const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
-                const responseData = UniversalFunction.formatUserData(data);
-                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
-            } catch (error) {
-                UniversalFunctions.consolelog('error', error, true);
-                return (UniversalFunction.sendError(error));
-            }
-        },
-        options: {
-            description: 'Get help topics by id ',
-            tags: ['api', 'anonymous', 'user', 'delete helpcenter'],
-            auth: 'AdminAuth',
-            validate: {
-                params: {
-                    id: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
+    //             const data = await HelpCenterService.getHelpCenterByCategoryId(payload);
+    //             const responseData = UniversalFunction.formatUserData(data);
+    //             return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
+    //         } catch (error) {
+    //             UniversalFunctions.consolelog('error', error, true);
+    //             return (UniversalFunction.sendError(error));
+    //         }
+    //     },
+    //     options: {
+    //         description: 'Get help topics by id ',
+    //         tags: ['api', 'anonymous', 'user', 'delete helpcenter'],
+    //         auth: 'AdminAuth',
+    //         validate: {
+    //             params: {
+    //                 id: Joi.number().valid([
+    //                     Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
+    //                     // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+    //                     Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
+    //                     // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+    //                     Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
 
-                        // Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
-                    ]).default(Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER),
-                    type: Joi.string().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
-                        Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
-                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
-                    ]).default(Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ)
-                },
-                headers: UniversalFunctions.authorizationHeaderObj,
-                failAction: UniversalFunctions.failActionFunction,
-            },
-        },
-    },
+    //                     // Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
+    //                     // Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
+    //                     // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
+    //                 ]).default(Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER),
+    //                 type: Joi.string().valid([
+    //                     Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
+    //                     Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
+    //                     Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+    //                 ]).default(Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ)
+    //             },
+    //             headers: UniversalFunctions.authorizationHeaderObj,
+    //             failAction: UniversalFunctions.failActionFunction,
+    //         },
+    //     },
+    // },
     {
         method: 'GET',
         path: '/v1/user/help-center-group/{id}',
@@ -458,6 +459,91 @@ export let helpCenterRoute: ServerRoute[] = [
                     ]).default(Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ),
                     searchTerm: Joi.string(),
                     id: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+
+    // {
+    //     method: 'GET',
+    //     path: '/v1/admin/helpcenter',
+    //     handler: async (request, h) => {
+    //         try {
+    //             const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
+    //             const payload = request.query as any;
+    //             const data = await HelpCenterService.getRelatedArticles(payload, adminData);
+    //             return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
+    //         } catch (error) {
+    //             UniversalFunctions.consolelog(error, 'error', true);
+    //             return (UniversalFunction.sendError(error));
+    //         }
+    //     },
+    //     options: {
+    //         description: 'get article User',
+    //         tags: ['api', 'anonymous', 'user', 'helpcenter-article-helpful'],
+    //         auth: 'AdminAuth',
+    //         validate: {
+    //             query: {
+    //                 categoryId: Joi.string(),
+    //                 // helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+    //                 // categoryId: Joi.number().valid([
+    //                 //     Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
+    //                 //     // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+    //                 //     Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
+    //                 //     // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+    //                 //     Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
+    //                 // ]),
+    //                 // type: Joi.string().valid([
+    //                 //     Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+    //                 // ]).default(Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ),
+    //                 // searchTerm: Joi.string(),
+    //                 // id: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+    //             },
+    //             headers: UniversalFunctions.authorizationHeaderObj,
+    //             failAction: UniversalFunctions.failActionFunction,
+    //         },
+    //     },
+    // },
+
+    {
+        method: 'GET',
+        path: '/v1/admin/help-center',
+        handler: async (request) => {
+            try {
+                const payload = request.query;
+                // {
+                //     ...request.params,
+                //     ...request.query,
+                // }
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
+                console.log('payloadpayloadpayload', payload);
+
+                // const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+
+                const data = await HelpCenterService.getHelpcenter(payload);
+                const responseData = UniversalFunction.formatUserData(data);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, responseData);
+            } catch (error) {
+                UniversalFunctions.consolelog('error', error, true);
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'Get help topics by id ',
+            tags: ['api', 'anonymous', 'user', 'delete helpcenter'],
+            auth: 'AdminAuth',
+            validate: {
+                query: {
+                    categoryId: Joi.string().required(),
+                    page: Joi.number(),
+                    limit: Joi.number(),
+                    // type: Joi.string().valid([
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
+                    //     Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+                    // ]).default(Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

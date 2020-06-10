@@ -22,5 +22,7 @@ export type ModelNames = 'User' |
     // 'Card' |
     'PreQualification' |
     'LoanApplicationHistory' |
-    'LoanErrorCheck'
+    'LoanErrorCheck' |
+    // 'PartnerPreQualification'
+    'Partner'
     ;

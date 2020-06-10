@@ -172,12 +172,12 @@ class PreLoanEntities extends BaseEntity {
                         processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
                         loanDuration: 1,
-                        // totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
-                        // monthlyPayment: { $divide: ['$numerator', '$denominator'] },
-                        totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
-                        monthlyPayment: {
-                            $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
-                        },
+                        totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+                        monthlyPayment: { $divide: ['$numerator', '$denominator'] },
+                        // totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
+                        // monthlyPayment: {
+                        //     $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
+                        // },
                         totalLoanPayment: 1,
                         bankId: '$_id',
                         _id: 0,
@@ -197,16 +197,16 @@ class PreLoanEntities extends BaseEntity {
                         // },
                     },
                 },
-                // {
-                //     $addFields: {
-                //         debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
-                //     },
-                // },
                 {
                     $addFields: {
-                        debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
+                        debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
                     },
                 },
+                // {
+                //     $addFields: {
+                //         debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
+                //     },
+                // },
                 {
                     $unwind: {
                         path: '$propertySpecification',
@@ -314,6 +314,12 @@ class PreLoanEntities extends BaseEntity {
                     updatedAt: new Date().getTime(),
                 };
 
+                if (payload.partnerId && payload.partnerName) {
+                    const criteria = {
+                        shortId: payload.partnerId,
+                    }
+                    this.DAOManager.findAndUpdate('Partner', criteria, { $inc: { totalPrequalification: 1 } });
+                }
                 const data1 = await this.DAOManager.insert(this.modelName, dataToSave);
                 // console.log('data1.work: ', data1.work);
 
@@ -348,9 +354,9 @@ class PreLoanEntities extends BaseEntity {
         }
     }
 
-    async preloanList(payload, adminData) {
+    async preloanList(payload: PreQualificationRequest.IAdminPrequalificationList, adminData) {
         try {
-            const { fromDate, toDate, status, propertyValue, propertyType, page, limit, searchTerm } = payload;
+            const { fromDate, toDate, propertyValue, propertyType, page, limit, searchTerm, partnerName } = payload;
             // const paginateOptions = {
             //     page: page || 1,
             //     limit: limit || Constant.SERVER.LIMIT,
@@ -401,7 +407,9 @@ class PreLoanEntities extends BaseEntity {
             if (propertyType) {
                 matchObject['property.type'] = propertyType;
             }
-
+            if (partnerName) {
+                matchObject['partnerName'] = partnerName;
+            }
             // const query = {
             //     userId: Types.ObjectId(userId),
             // };
@@ -416,24 +424,6 @@ class PreLoanEntities extends BaseEntity {
                 {
                     $match: searchObject,
                 },
-                // {
-                //     $project: {
-                //         _id: 1,
-                //         createdAt: 1,
-                //         updatedAt: 1,
-                //         // prequalifiedBanks: 0,
-                //         propertyValue: '$property.value',
-                //         propertyType: '$property.type',
-                //         referenceId: 1,
-                //         firstName: '$other.firstName',
-                //         lastName: '$other.lastName',
-                //         middleName: '$other.middleName',
-                //         userName: '$other.userName',
-                //         email: '$other.email',
-                //         No_Of_Banks: { $size: '$prequalifiedBanks' },
-                //     },
-                // }
-
             ];
             // { $sort: sortingType },
             const pipeline = [
@@ -459,38 +449,13 @@ class PreLoanEntities extends BaseEntity {
                         preserveNullAndEmptyArrays: true,
                     },
                 },
-                // {
-                //     $lookup: {
-                //         from: 'admins',
-                //         let: {
-                //             aid: '$userId',
-                //         },
-                //         pipeline: [
-                //             {
-                //                 $match: {
-                //                     $expr: {
-                //                         $eq: [
-                //                             '$_id',
-                //                             '$$aid',
-                //                         ],
-                //                     },
-                //                 },
-                //             },
-                //         ],
-                //         as: 'adminData',
-                //     },
-                // },
-                // {
-                //     $unwind: {
-                //         path: '$adminData',
-                //         preserveNullAndEmptyArrays: true,
-                //     },
-                // },
                 {
                     $project: {
                         _id: 1,
                         createdAt: 1,
                         updatedAt: 1,
+                        partnerId: 1,
+                        partnerName: 1,
                         propertyValue: '$property.value',
                         propertyType: '$property.type',
                         referenceId: 1,
@@ -534,42 +499,8 @@ class PreLoanEntities extends BaseEntity {
                         },
                     },
                 },
-                // {
-                //     $project: {
-                //         _id: 1,
-                //         createdAt: 1,
-                //         updatedAt: 1,
-                //         // prequalifiedBanks: 0,
-                //         propertyValue: '$property.value',
-                //         propertyType: '$property.type',
-                //         referenceId: 1,
-                //         firstName: '$userData.firstName',
-                //         lastName: '$userData.lastName',
-                //         middleName: '$userData.middleName',
-                //         userName: '$userData.userName',
-                //         No_Of_Banks: { $size: '$prequalifiedBanks' },
-                //     },
-                // }
-
-                // {
-                //     $project: {
-                //         _id: 1,
-                //         createdAt: 1,
-                //         updatedAt: 1,
-                //         // prequalifiedBanks: 0,
-                //         propertyValue: '$property.type',
-                //         propertyType: '$property.value',
-                //         referenceId: 1,
-                //         No_Of_Banks: { $size: '$prequalifiedBanks' },
-                //     },
-                // },
             ];
-            // const pipeline = [
-            //     {
-            //         $lookup: 'users',
-            //         from: '',
-            //     },
-            // ];
+
             // const data = this.DAOManager.paginatePipeline(this.modelName, query);
             const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
             // const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline, paginateOptions.limit, paginateOptions.skip);
@@ -580,7 +511,7 @@ class PreLoanEntities extends BaseEntity {
         }
     }
 
-    async preLoanDetail(payload) {
+    async preLoanDetail(payload: PreQualificationRequest.IprequalificationDetail) {
         try {
             const query = {
                 _id: payload.id,
@@ -617,11 +548,10 @@ class PreLoanEntities extends BaseEntity {
                 },
             ];
             const data = await this.DAOManager.aggregateData(this.modelName, aggregate);
-            console.log('dataaaaa', data);
             if (!data) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.DEFAULT);
             }
-            return data[0] ? data[0] : {}
+            return data[0] ? data[0] : {};
 
         } catch (error) {
             return Promise.reject(error);
@@ -670,9 +600,6 @@ class PreLoanEntities extends BaseEntity {
                         No_Of_Banks: { $size: '$prequalifiedBanks' },
                     },
                 },
-
-                // { $sort: sortingType },
-
             ];
             const pipeline = [
                 {

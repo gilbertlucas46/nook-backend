@@ -6,7 +6,6 @@ const cert: any = config.get('jwtSecret.admin.accessToken');
 import * as utils from '@src/utils';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as CONSTANT from '../../constants';
-import { promises } from 'fs';
 const pswdCert: string = config.get('jwtSecret.admin.forgotToken');
 
 /**
@@ -87,6 +86,10 @@ export class AdminClass extends BaseEntity {
 				},
 				{
 					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION,
+					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
+				},
+				{
+					moduleName: CONSTANT.DATABASE.PERMISSION.TYPE.REFERRAL_PARTNER,
 					accessLevel: CONSTANT.PRIVILEGE.SUB_ADMIN_PRIVILEGE[2],
 				},
 			],
