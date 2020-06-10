@@ -122,6 +122,23 @@ export class Partner {
         }
     }
 
+    async  adminGetPartnerInfo(payload) {
+        try {
+            const criteria = {
+                shortId: payload.partnerSid,
+                // status: Constant.DATABASE.PartnerStatus.ACTIVE,
+            };
+            const data = await ENTITY.PartnerE.getOneEntity(criteria, {});
+            if (!data) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
+            }
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+
 }
 
 export let PartnerService = new Partner();
