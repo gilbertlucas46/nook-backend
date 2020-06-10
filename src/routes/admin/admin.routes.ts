@@ -21,7 +21,7 @@ const objectSchema = Joi.object({
 	]),
 	documentRequired: Joi.string(),
 	description: Joi.string(),
-	url: Joi.string(),
+	url: Joi.string().allow(''),
 });
 
 export let adminProfileRoute: ServerRoute[] = [
@@ -747,7 +747,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						value: Joi.number(),
 						type: Joi.string(),
 						status: Joi.string(),
-						developer: Joi.string(),
+						developer: Joi.string().allow(''),
 					},
 					bankInfo: Joi.object().keys({
 						iconUrl: Joi.string(),
@@ -1106,7 +1106,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						value: Joi.number(),
 						type: Joi.string(),
 						status: Joi.string(),
-						developer: Joi.string(),
+						developer: Joi.string().allow(''),
 					},
 
 					applicationStatus: Joi.string().valid([
@@ -1114,7 +1114,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
 					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value),
 					bankInfo: Joi.object().keys({
-						iconUrl: Joi.string(),
+						iconUrl: Joi.string().allow(''),
 						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 						bankName: Joi.string().min(5).max(50),
 						abbrevation: Joi.string().max(10),

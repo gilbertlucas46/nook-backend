@@ -412,13 +412,18 @@ export let helpCenterRoute: ServerRoute[] = [
             validate: {
                 query: {
                     // helpCenterId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-                    categoryId: Joi.number().valid([
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
-                        // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-                        Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
+                    categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).valid([
+                        '5ee103fc8f2f61a8ca114795',
+                        '5ee103fc8f2f61a8ca114796',
+                        '5ee103fc8f2f61a8ca114797',
                     ]),
+                    // Joi.number().valid([
+                    //     Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
+                    //     // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
+                    //     // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+                    //     Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
+                    // ]),
                     searchTerm: Joi.string(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
