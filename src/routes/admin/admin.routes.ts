@@ -10,13 +10,10 @@ import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Hapi from 'hapi';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import * as LoanConstant from '../../constants/loan.constant';
+import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
 
 
 const objectSchema = Joi.object({
-	// moduleName: Joi.string().min(1).valid([
-	// 	status
-	// 	// Constant.DATABASE.PERMISSION.TYPE.ENQUIRY,
-	// ]).required(),
 	status: Joi.string().valid([
 		LoanConstant.DocumentStatus.PENDING,
 		LoanConstant.DocumentStatus.APPROVED,
@@ -370,7 +367,6 @@ export let adminProfileRoute: ServerRoute[] = [
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
 				console.log('permissio>:::::::::::::::::::::::::::', permission);
 
-
 				const registerResponse = await LoanController.adminLoansList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
@@ -441,10 +437,8 @@ export let adminProfileRoute: ServerRoute[] = [
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await AdminStaffEntity.checkPermission(payload.permission);
 				// }
-				console.log('payloadpayload', payload);
 
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
-				// console.log('permissio>:::::::::::::::::::::::::::', permission);
 
 				const registerResponse = await LoanController.adminUpdateLoanStatus(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -479,13 +473,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						'',
 					]),
 					staffId: Joi.string(),
-
 				},
-				// query: {
-				// 	staffId: Joi.string(),
-				// 	// type: Joi.string().valid('admin', 'user')
-				// },
-
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
@@ -554,7 +542,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.query;
+				const payload: PreQualificationRequest.IAdminPrequalificationList = request.query as any;
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await ENTITY.AdminStaffEntity.checkPermission(adminData.permission);
 				// }
@@ -609,7 +597,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: any = request.params;
+				const payload: PreQualificationRequest.IprequalificationDetail = request.params as any;
 				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
 				// 	await ENTITY.AdminStaffEntity.checkPermission(adminData.permission);
 				// }
@@ -1024,7 +1012,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
-				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
 
 				const data = await LoanController.addLoanApplication(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
@@ -1384,15 +1371,12 @@ export let adminProfileRoute: ServerRoute[] = [
 		path: '/v1/admin/document/{loanId}',
 		handler: async (request, h) => {
 			try {
-				// const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				// const payload = request.payload as AdminRequest.IAddUser;
 				const payload: any = {
 					...request.params,
 					...request.payload as any,
 				};
-
-
-				console.log('payloadpayload', payload);
 
 				// const checkPermission = adminData['permission'].some(data => {
 				// 	return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.USERS;
@@ -1412,7 +1396,7 @@ export let adminProfileRoute: ServerRoute[] = [
 		options: {
 			description: 'admin update adocument',
 			tags: ['api', 'anonymous', 'Admin', 'document', 'status'],
-			// auth: 'AdminAuth',
+			auth: 'AdminAuth',
 			validate: {
 				params: {
 					loanId: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/).required(),
@@ -1430,7 +1414,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						LoanConstant.DocumentStatus.REJECTED,
 					]),
 				},
-				// headers: UniversalFunctions.authorizationHeaderObj,
+				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
 			plugins: {
@@ -1441,6 +1425,3 @@ export let adminProfileRoute: ServerRoute[] = [
 		},
 	},
 ];
-
-
-

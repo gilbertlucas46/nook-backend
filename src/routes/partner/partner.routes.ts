@@ -234,7 +234,7 @@ export let partnerRoutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 params: {
-                    partnerSid: Joi.string()
+                    partnerSid: Joi.string(),
                 },
                 payload: {
                     logoUrl: Joi.string().uri().required(),

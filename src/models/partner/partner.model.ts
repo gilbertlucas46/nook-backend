@@ -22,13 +22,6 @@ const PartnerSchema = new Schema({
     totalLoanApplication: { type: Number, default: 0 },
     createdAt: { type: Number },
     updatedAt: { type: Number },
-    //     referenceId: { type: String },
-    // });
-    // schema.pre('save', function (this: any, next: () => void) {
-    //     if (!this.referenceId) {
-    //         this.referenceId = `USR${++global.counters.LoanApplication}`;
-    //     }
-    //     next();
 });
 
 export const Partner = model('partner', PartnerSchema);

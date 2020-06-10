@@ -197,11 +197,7 @@ export class MailManager {
 
 	async generateLoanApplicationform(params) {
 		try {
-
 			let { coBorrowerInfo, spouseInfo } = params['personalInfo'];
-			// let { currentAddress, permanentAddress, previousAddress } = params['contactInfo'];
-			// console.log('11111111111111111111', (contactInfo && contactInfo['currentAddress'] && contactInfo['currentAddress']['address']) ? contactInfo['currentAddress']['address'] : 'N/A');
-
 			console.log('spouseInfospouseInfo', spouseInfo);
 			let middleName;
 			if (params['personalInfo'] && params['personalInfo']['middleName']) {
@@ -212,8 +208,6 @@ export class MailManager {
 				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : ''
 			}
 
-
-
 			let checkObjectBlank;
 			if (coBorrowerInfo) {
 				checkObjectBlank = (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo.employmentRank) ? true : false
@@ -221,27 +215,6 @@ export class MailManager {
 			} else {
 				coBorrowerInfo = {};
 			}
-			console.log("coBorrowerInfo['firstName']", coBorrowerInfo['firstName']);
-
-
-			// if (!spouseInfo) {
-			// 	spouseInfo = null
-			// }
-
-			// let { coBorrowerFullName, relationship }
-
-			console.log(':::::::::<>>>>>>>>>>>>>>>>>', (spouseInfo && spouseInfo['firstName']) ? spouseInfo['firstName'] + ' ' + spouseInfo['lastName'] : 'N/A');
-			// console.log("spouseInfo ? new Date(spouseInfo['birthDate']).toLocaleDateString() : 'N/A", spouseInfo ? new Date(spouseInfo['birthDate']).toLocaleDateString() : 'N/A');
-			// console.log("paraersonalInfo'][lastName", params['personalInfo']['firstName'] + '' + params['personalInfo']['middleName'] ? + params['personalInfo']['middleName'] + ' ' + params['personalInfo']['lastName']);
-			console.log('coBorrowerInfocoBorrowerInfo', coBorrowerInfo);
-			console.log('gggggggggg', params.employmentInfo['coBorrowerInfo']);
-
-			console.log('LLLLLLLLLLLLLLLLLLl', (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A');
-			console.log('params.dependentsinfo', params.dependentsInfo);
-
-			console.log("params.dependentpendentsinfo[0].name :", (params.dependentsInfo && params.dependentsInfo[0]) ? params.dependentsInfo[0].name : 'N/A');
-
-			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', new Date(params['personalInfo']['birthDate']).toLocaleDateString());
 
 			function GetFormattedDate(date) {
 				const todayTime = new Date(date);
@@ -278,7 +251,6 @@ export class MailManager {
 					homeOwnership1: (params.contactInfo && params.contactInfo['currentAddress'] && params.contactInfo && params.contactInfo['currentAddress']['homeOwnership']) ? params.contactInfo['currentAddress']['homeOwnership'] : 'N/A',
 					permanentResidenceSince1: (params.contactInfo && params.contactInfo['currentAddress'] && params.contactInfo['currentAddress']['permanentResidenceSince']) ? params.contactInfo['currentAddress']['permanentResidenceSince'] : 'N/A',
 
-
 					permanentAddress: (params.contactInfo && params.contactInfo['permanentAddress'] && params.contactInfo['permanentAddress']['address']) ? params.contactInfo['permanentAddress']['address'] : 'N/A',
 
 					homeOwnership2: (params.contactInfo && params.contactInfo['permanentAddress'] && params.contactInfo && params.contactInfo['permanentAddress']['homeOwnership']) ? params.contactInfo['permanentAddress']['homeOwnership'] : 'N/A',
@@ -291,7 +263,6 @@ export class MailManager {
 					homeOwnership3: (params.contactInfo && params.contactInfo['previousAddress'] && params.contactInfo && params.contactInfo['previousAddress']['homeOwnership']) ? params.contactInfo['previousAddress']['homeOwnership'] : 'N/A',
 
 					permanentResidenceSince3: (params.contactInfo && params.contactInfo['previousAddress'] && params.contactInfo['previousAddress']['permanentResidenceSince']) ? params.contactInfo['previousAddress']['permanentResidenceSince'] : 'N/A',
-
 
 
 					// CO-BORROWER’S INFORMATION
@@ -385,16 +356,9 @@ export class MailManager {
 					relationship3: (params.dependentsInfo && params.dependentsInfo[2]) ? params.dependentsInfo[2].relationship : 'N/A',
 
 				});
-			// console.log('htmlContenthtmlContenthtmlContent', htmlContent);
-			console.log('htmlContenthtmlContenthtmlContent', htmlContent, typeof htmlContent);
 
-			// const htmlData = new PdfGenerator();
 			const a = await pdfClass.test(htmlContent, params['referenceId']);
-			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', a);
 			return a;
-			// return htmlContent;
-			// await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Password reset request', content: mailContent });
-
 		} catch (error) {
 			console.log('errorrrrrrrrr', error);
 
