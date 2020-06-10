@@ -4,6 +4,7 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
 import { LoanRequest } from '@src/interfaces/loan.interface';
+import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Constant from '../../constants/app.constant';
 import * as utils from 'src/utils';
@@ -319,9 +320,9 @@ class LoanControllers extends BaseEntity {
     }
 
     /**
-     *
+     * @description admin prequalificatio  list
      */
-    async preQualificationList(payload, adminData) {
+    async preQualificationList(payload: PreQualificationRequest.IAdminPrequalificationList, adminData) {
         try {
             const data = await PreQualificationBankE.preloanList(payload, adminData);
             return data;
@@ -330,7 +331,7 @@ class LoanControllers extends BaseEntity {
         }
     }
 
-    async preQualificationDetail(payload) {
+    async preQualificationDetail(payload: PreQualificationRequest.IprequalificationDetail) {
         try {
             const data = await PreQualificationBankE.preLoanDetail(payload);
             return data;
@@ -388,9 +389,6 @@ class LoanControllers extends BaseEntity {
 
             const mail = new MailManager();
             const data = await mail.generateLoanApplicationform(getLoanData);
-
-            console.log('datadatadatadatadatadatadata', data);
-            console.log('loanId: getLoanData[\'refrenceId\'],', getLoanData['referenceId']);
 
             return {
                 data,

@@ -65,7 +65,7 @@ const helpCenterCategorySchema = new Schema({
                 Constant.DATABASE.USER_TYPE.STAFF.TYPE,
             ],
         },
-        adminId: { type: Schema.Types.ObjectId, }
+        adminId: { type: Schema.Types.ObjectId },
     }],
 
     createdAt: { type: Number, required: true, default: new Date().getTime() },

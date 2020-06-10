@@ -23,19 +23,11 @@ export class HelpCenterCategory {
      */
     async adminCreateCategory(payload, adminData) {
         try {
-            // let result: any;
-            // if (payload.categoryId) {
-            //     result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_CATEGORY, payload.categoryId);
-            // }
-            // payload['userId'] = adminData._id;
-            // payload['categoryType'] = result.TYPE;
-            // payload['userRole'] = adminData.type;
             const criteria = {
                 category: payload.type,
                 name: payload.name,
             };
             const checkAlreadyExist = await ENTITY.HelpCenterCatgoryE.getOneEntity(criteria, {});
-            console.log('checkAlreadyExistcheckAlreadyExistcheckAlreadyExist', checkAlreadyExist);
             if (checkAlreadyExist) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
             }
@@ -59,20 +51,12 @@ export class HelpCenterCategory {
      */
     async adminUpdateCategory(payload: helpCenterRequest.IhelpCenterCategoryUpdate, adminData) {
         try {
-            // let result: any;
-            // if (payload.categoryId) {
-            //     result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_CATEGORY, payload.categoryId);
-            // }
-            // payload['userId'] = adminData._id;
-            // payload['categoryType'] = result.TYPE;
-            // payload['userRole'] = adminData.type;
             const criteria = {
                 name: payload.name,
                 // _id: { $ne: payload.categoryId },
             };
 
             const checkAlreadyExist = await ENTITY.HelpCenterCatgoryE.getOneEntity(criteria, {});
-            console.log('checkAlreadyExistcheckAlreadyExistcheckAlreadyExist', checkAlreadyExist);
             if (checkAlreadyExist) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
             }
@@ -100,13 +84,6 @@ export class HelpCenterCategory {
 
     async adminUpdateCatgoryStatus(payload: helpCenterRequest.IhelpCenterCategoryUpdate, adminData) {
         try {
-            // let result: any;
-            // if (payload.categoryId) {
-            //     result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_CATEGORY, payload.categoryId);
-            // }
-            // payload['userId'] = adminData._id;
-            // payload['categoryType'] = result.TYPE;
-            // payload['userRole'] = adminData.type;
             const criteria = {
                 _id: payload.categoryId,
             };

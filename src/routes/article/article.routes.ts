@@ -476,16 +476,6 @@ export let articleRoutes: ServerRoute[] = [
                     sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
                     sortBy: Joi.string(),
                     articleId: Joi.string(),
-                    // categoryId: Joi.number().valid([
-                    //     Constant.DATABASE.ARTICLE_TYPE.AGENTS.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.BUYING.NUMBER,
-                    //     // Constant.DATABASE.ARTICLE_TYPE.FEATURED_ARTICLE.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.HOME_LOANS.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.RENTING.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.SELLING.NUMBER,
-                    //     Constant.DATABASE.ARTICLE_TYPE.NEWS.NUMBER,
-                    //     // Constant.DATABASE.ARTICLE_TYPE.DOMESTIC_NEWS.NUMBER,
-                    // ]),
                     status: Joi.string().valid([
                         Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
                         Constant.DATABASE.ARTICLE_STATUS.BLOCK,
@@ -516,7 +506,6 @@ export let articleRoutes: ServerRoute[] = [
                 // const userData = request.auth && request.auth.credentials && request.auth.credentials.userData;
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload: ArticleRequest.GetArticleById = request.params as any;
-                // console.log('adminData', adminData);
 
                 // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
                 //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.ARTICLE);

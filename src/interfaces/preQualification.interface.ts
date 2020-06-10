@@ -64,4 +64,19 @@ export namespace PreQualificationRequest {
         };
     }
 
+    export interface IAdminPrequalificationList {
+        page: number;
+        limit: number;
+        fromDate: number;
+        toDate: number;
+        sortType: number;
+        propertyValue: number;
+        propertyType: string;
+        searchTerm: string;
+        partnerName: string;
+    }
+
+    export interface IprequalificationDetail {
+        id: string;
+    }
 }
