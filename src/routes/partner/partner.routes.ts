@@ -219,7 +219,11 @@ export let partnerRoutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-                const payload = request.payload as PartnerAdminRequest.UpdatePartner;
+                const payload: PartnerAdminRequest.UpdatePartner = {
+                    ...request.params as any,
+                    ...request.payload as any,
+                };
+                console.log('payloadpayloadpayload', payload);
 
                 const data = await PartnerService.updatePartner(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
