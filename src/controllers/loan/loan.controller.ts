@@ -465,7 +465,7 @@ class LoanControllers extends BaseEntity {
                 aggregateLegal.splice(5, 5, pushedItem);
             }
 
-            else if (payload.coBorrowerInfo) {
+            else if (payload.coBorrowerInfo && payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED) {
                 console.log('222222222KKKKKKKKKKKKKK');
                 const pushedItem = {
                     $match: {
