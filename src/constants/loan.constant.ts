@@ -54,8 +54,8 @@ export const GENDER = {
     OTHER: {
         label: 'Other',
         value: 'OTHER',
-    }
-}
+    },
+};
 
 export const LOAN_TERMS: number[] = [1, 2, 3, 4, 5, 10, 15, 20, 25, 30];
 
@@ -110,7 +110,7 @@ export const LOAN_PROPERTY_STATUS = {
     NEW_CONSTRUCTION: {
         label: 'New Construction',
         value: 'NEW_CONSTRUCTION',
-    }
+    },
 };
 
 export const EMPLOYMENT_TYPE = {
@@ -361,7 +361,13 @@ export const INDUSTRIES = {
     },
 };
 export const DocumentStatus = {
-    ACTIVE: 'Active',
-    Pending: 'Pending',
-    Rejected: 'Rejected',
+    APPROVED: 'Approved',
+    REJECTED: 'Rejected',
+    PENDING: 'Pending',
+};
+
+export const documentType = {
+    LEGAL: 'Legal',
+    INCOME: 'Income',
+    COLLETERAL: 'Colleteral',
 };

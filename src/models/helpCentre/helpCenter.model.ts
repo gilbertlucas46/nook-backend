@@ -48,19 +48,19 @@ const helpCenterSchema = new Schema({
         ],
     },
     description: { type: String },
-    categoryId: {
-        type: Number,
-        enum: [
-            Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
-            // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
-            Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
-            // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
-            Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
-            // Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
-            // Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
-            // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
-        ],
-    },
+    // categoryId: {
+    //     type: Number,
+    //     enum: [
+    //         Constant.DATABASE.HELP_CENTER_CATEGORY.ACCOUNT.NUMBER,
+    //         // Constant.DATABASE.HELP_CENTER_TYPE.BILLING.NUMBER,
+    //         Constant.DATABASE.HELP_CENTER_CATEGORY.HOME_LOANS.NUMBER,
+    //         // Constant.DATABASE.HELP_CENTER_TYPE.PROPERTIES.NUMBER,
+    //         Constant.DATABASE.HELP_CENTER_CATEGORY.FAQ.NUMBER,
+    //         // Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.NUMBER,
+    //         // Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.NUMBER,
+    //         // Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.NUMBER,
+    //     ],
+    // },
     categoryType: {
         type: String,
         enum: [
@@ -79,9 +79,9 @@ const helpCenterSchema = new Schema({
     type: {
         type: String,
         enum: [
-            Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
-            Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
-            Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
+            Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ.TYPE,
+            Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ.TYPE,
         ],
     },
     actions: [{
@@ -91,6 +91,7 @@ const helpCenterSchema = new Schema({
         firstName: { type: String },
         actionTime: { type: Number },
     }],
+    categoryId: { type: Schema.Types.ObjectId },
     createdAt: { type: Number, required: true, index: true },
     updatedAt: { type: Number, required: true, index: true },
 }, {

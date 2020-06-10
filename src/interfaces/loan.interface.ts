@@ -218,6 +218,7 @@ export namespace LoanRequest {
         nookAgent: string;
     }
     export interface AddLoan {
+        assignedTo?: string;
         userId: string; // in case of admin assign loan-application
         ipAddress: string;
         loanId?: string;
@@ -288,6 +289,7 @@ export namespace LoanRequest {
         fromDate?: number;
         toDate?: number;
         status?: string;
+        partnerId?: string;
     }
 
     export interface IGetAdminLoanList {
@@ -302,6 +304,7 @@ export namespace LoanRequest {
         amountTo?: number;
         searchTerm?: string;
         staffId?: string;
+        partnerName?: string;
     }
 
     export interface IAdminPrequalificationList {

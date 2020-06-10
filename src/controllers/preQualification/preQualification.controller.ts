@@ -31,6 +31,7 @@ class PreqQualificationController extends BaseEntity {
 
     /**
      *  @description admin get prequalification List
+     *  funcction to be removeds after check
      */
     async preQualificationList(payload, adminData) {
         try {

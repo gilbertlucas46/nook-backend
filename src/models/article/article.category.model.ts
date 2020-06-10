@@ -6,6 +6,7 @@ export interface ICategory extends Document {
     status: string;
     createdAt: number;
     updatedAt: number;
+    title: string;
 }
 const categories = new Schema({
     name: { type: String, unique: true, reuqired: true },

@@ -1,6 +1,6 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as utils from '@src/utils';
-
+import { Types } from 'mongoose';
 export class HelpCenterEntity extends BaseEntity {
     constructor() {
         super('HelpCentre');
@@ -72,6 +72,31 @@ export class HelpCenterEntity extends BaseEntity {
             return await this.DAOManager.aggregateData(this.modelName, pipeline, {});
         } catch (error) {
             utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+
+    async adminGetHelpCenter(payload) {
+        try {
+            const { categoryId, page, limit } = payload;
+
+            const paginateOptions = {
+                page: page || 1,
+                limit: limit || 10,
+            }
+            const matchPipeline = [
+                {
+                    $match: {
+                        categoryId: Types.ObjectId(categoryId),
+                    },
+                },
+            ];
+
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+            console.log('dataaaaa', data);
+            return data;
+
+        } catch (error) {
             return Promise.reject(error);
         }
     }

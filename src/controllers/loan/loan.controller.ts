@@ -4,12 +4,14 @@ import { BaseEntity } from '@src/entity/base/base.entity';
 import { LoanEntity } from '@src/entity/loan/loan.entity';
 import * as Contsant from '@src/constants/app.constant';
 import { LoanRequest } from '@src/interfaces/loan.interface';
+import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import * as Constant from '../../constants/app.constant';
 import * as utils from 'src/utils';
 import { PreQualificationBankE } from '@src/entity/loan/prequalification.entity';
 import { MailManager } from '../../lib/mail.manager';
-
+import fetch from 'node-fetch';
+import * as config from 'config';
 class LoanControllers extends BaseEntity {
 
     /**
@@ -259,14 +261,41 @@ class LoanControllers extends BaseEntity {
                     userType: adminData.type,
                     status: payload.status,
                     adminId: adminData._id,
-                    adminName: adminData ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
+                    adminName: (adminData && adminData.firstName) ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
                     approvedAt: new Date().getTime(),
+                    assignedTo: (payload && payload.staffId) ? payload.staffId : '',
                 },
             };
 
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
-            else return data;
+            // else {
+            if (config.get('environment') === 'production') {
+                let salesforceData;
+                if (payload.staffId) {
+                    const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
+                    console.log('getStaffName>>>>>>>>>>>>', getStaffData);
+                    salesforceData = {
+                        _id: payload.loanId,
+                        staffAssignedEmail: getStaffData && getStaffData.email || '',
+                        staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
+                        staffAssignedlastName: getStaffData && getStaffData.lastName || '',
+                    };
+                }
+                if (payload.status) {
+                    salesforceData = {
+                        _id: payload.loanId,
+                        applicationStatus: payload.status,
+                    };
+                }
+                console.log('salesforceDatasalesforceData', salesforceData);
+                await fetch(config.get('zapier_loanUrl'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceData),
+                });
+            }
+            return data;
+
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -291,9 +320,9 @@ class LoanControllers extends BaseEntity {
     }
 
     /**
-     *
+     * @description admin prequalificatio  list
      */
-    async preQualificationList(payload, adminData) {
+    async preQualificationList(payload: PreQualificationRequest.IAdminPrequalificationList, adminData) {
         try {
             const data = await PreQualificationBankE.preloanList(payload, adminData);
             return data;
@@ -302,7 +331,7 @@ class LoanControllers extends BaseEntity {
         }
     }
 
-    async preQualificationDetail(payload) {
+    async preQualificationDetail(payload: PreQualificationRequest.IprequalificationDetail) {
         try {
             const data = await PreQualificationBankE.preLoanDetail(payload);
             return data;
@@ -361,9 +390,6 @@ class LoanControllers extends BaseEntity {
             const mail = new MailManager();
             const data = await mail.generateLoanApplicationform(getLoanData);
 
-            console.log('datadatadatadatadatadatadata', data);
-            console.log('loanId: getLoanData[\'refrenceId\'],', getLoanData['referenceId']);
-
             return {
                 data,
                 loanId: getLoanData['referenceId'],
@@ -376,6 +402,15 @@ class LoanControllers extends BaseEntity {
 
     async getDocuments(payload) {
         try {
+            if (payload.employmentType === 'GOVT' || payload.employmentType === 'BPO') {
+                payload['employmentType'] = 'PRIVATE';
+            }
+            // LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
+
+            if (payload.propertyStatus === 'FORECLOSED' || payload.propertyStatus === 'BPO') {
+                payload['propertyStatus'] = 'NEW_CONSTRUCTION';
+            }
+
             const criteria = {
                 _id: payload.bankId,
             };
@@ -385,66 +420,107 @@ class LoanControllers extends BaseEntity {
             if (payload.employmentType) {
                 console.log(1111111111111111111111111111111111111111);
 
-                aggregateLegal = [{
-                    $match: {
-                        _id: Types.ObjectId(payload.bankId),
+                aggregateLegal = [
+                    {
+                        $match: {
+                            _id: Types.ObjectId(payload.bankId),
+                        },
                     },
-                },
-                {
-                    $project: {
-                        propertySpecification: 0,
-                        interestRateDetails: 0,
-                        loanForForeigner: 0,
-                        loanForForeignerMarriedLocal: 0,
-                        loanForNonCreditCardHolder: 0,
-                        loanForCreditCardHolder: 0,
-                        loanForNotNowCreditCardHolder: 0,
-                        loanAlreadyExistDiffBank: 0,
-                        loanAlreadyExistSameBank: 0,
-                        missedLoanPaymentAllowance: 0,
-                        abbrevation: 0,
-                        bankName: 0,
-                        headquarterLocation: 0,
-                        loanForCancelledCreditCard: 0,
-                        bankFeePercent: 0,
-                        bankFeeAmount: 0,
-                        loanApplicationFeePercent: 0,
-                        loanApplicationFeeAmount: 0,
-                        loanMinAmount: 0,
-                        loanMaxAmount: 0,
-                        minLoanDuration: 0,
-                        maxLoanDuration: 0,
-                        minAgeRequiredForLoan: 0,
-                        minMonthlyIncomeRequired: 0,
-                        logoUrl: 0,
-                        iconUrl: 0,
-                        bannerUrl: 0,
-                        createdAt: 0,
-                        updatedAt: 0,
-                        incomeDocument: 0,
-                        collateralDocument: 0,
-                        __v: 0,
+                    {
+                        $project: {
+                            legalDocument: 1,
+                        },
                     },
-                },
-                {
-                    $unwind: {
-                        path: '$legalDocument',
-                        preserveNullAndEmptyArrays: true,
+                    {
+                        $unwind: {
+                            path: '$legalDocument',
+                            preserveNullAndEmptyArrays: true,
+                        },
                     },
-                },
-                {
-                    $match: {
-                        //              "legalDocument.coborrower" : false,
-                        'legalDocument.allowedFor': payload.employmentType,
-
+                    {
+                        $match: {
+                            'legalDocument.allowedFor': payload.employmentType,
+                        },
                     },
-                },
+                    // {
+                    //     $replaceRoot: { newRoot: '$legalDocument' },
+                    // },
                 ];
             }
+            if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED && payload.coBorrowerInfo) {
+                console.log('1111111111111111111111111LLLLLLLLLLL');
+                const pushedItem = {
+                    $match: {
+                        $or: [{
+                            'legalDocument.isSpouse': true,
+                        },
+                        {
+                            'legalDocument.coborrower': true,
+                        },
+                        {
+                            'legalDocument.isSpouse': { $exists: false },
+                        }],
+                    },
+                };
+                aggregateLegal.splice(5, 5, pushedItem);
+            }
+
+            else if (payload.coBorrowerInfo) {
+                console.log('222222222KKKKKKKKKKKKKK');
+                const pushedItem = {
+                    $match: {
+                        $or: [
+                            {
+                                'legalDocument.coborrower': { $exists: true },
+                            },
+                            {
+                                'legalDocument.isSpouse': { $exists: false },
+                            },
+                        ],
+                    },
+                };
+                aggregateLegal.push(pushedItem);
+            }
+
+            else if (payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
+                console.log('33333333333333hhhhhhhKKKKKKKKKKKKKK');
+                const pushedItem = {
+                    $match: {
+                        $and: [
+                            {
+                                'legalDocument.coborrower': { $exists: false },
+                            },
+                            {
+                                'legalDocument.isSpouse': { $exists: false },
+                            },
+                        ],
+                    },
+                };
+                aggregateLegal.push(pushedItem);
+            }
+            else if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
+                console.log('4444444444444444444444444ttttttttTTTTTTTTTTTTTTTTTTTTTT');
+                const pushedItem = {
+                    $match: {
+                        $or: [
+                            {
+                                'legalDocument.coborrower': { $exists: false },
+                            },
+                            {
+                                'legalDocument.isSpouse': { $exists: true },
+                            },
+                        ],
+                    },
+                };
+                aggregateLegal.push(pushedItem);
+            }
+
+
+            console.log('aggregateLegal>>>>>>>>>>>>>>>222222222.', aggregateLegal);
+
             let aggregateIncome;
             if (payload.employmentType) {
                 console.log(22222222222222222222222222222222222222);
-
                 aggregateIncome = [{
                     $match: {
                         _id: Types.ObjectId(payload.bankId),
@@ -452,38 +528,7 @@ class LoanControllers extends BaseEntity {
                 },
                 {
                     $project: {
-                        propertySpecification: 0,
-                        interestRateDetails: 0,
-                        loanForForeigner: 0,
-                        loanForForeignerMarriedLocal: 0,
-                        loanForNonCreditCardHolder: 0,
-                        loanForCreditCardHolder: 0,
-                        loanForNotNowCreditCardHolder: 0,
-                        loanAlreadyExistDiffBank: 0,
-                        loanAlreadyExistSameBank: 0,
-                        missedLoanPaymentAllowance: 0,
-                        abbrevation: 0,
-                        bankName: 0,
-                        headquarterLocation: 0,
-                        loanForCancelledCreditCard: 0,
-                        bankFeePercent: 0,
-                        bankFeeAmount: 0,
-                        loanApplicationFeePercent: 0,
-                        loanApplicationFeeAmount: 0,
-                        loanMinAmount: 0,
-                        loanMaxAmount: 0,
-                        minLoanDuration: 0,
-                        maxLoanDuration: 0,
-                        minAgeRequiredForLoan: 0,
-                        minMonthlyIncomeRequired: 0,
-                        logoUrl: 0,
-                        iconUrl: 0,
-                        bannerUrl: 0,
-                        createdAt: 0,
-                        updatedAt: 0,
-                        legalDocument: 0,
-                        collateralDocument: 0,
-                        __v: 0,
+                        incomeDocument: 1
                     },
                 },
                 {
@@ -513,39 +558,7 @@ class LoanControllers extends BaseEntity {
                 },
                 {
                     $project: {
-                        propertySpecification: 0,
-                        interestRateDetails: 0,
-                        loanForForeigner: 0,
-                        loanForForeignerMarriedLocal: 0,
-                        loanForNonCreditCardHolder: 0,
-                        loanForCreditCardHolder: 0,
-                        loanForNotNowCreditCardHolder: 0,
-                        loanAlreadyExistDiffBank: 0,
-                        loanAlreadyExistSameBank: 0,
-                        missedLoanPaymentAllowance: 0,
-                        abbrevation: 0,
-                        bankName: 0,
-                        headquarterLocation: 0,
-                        loanForCancelledCreditCard: 0,
-                        bankFeePercent: 0,
-                        bankFeeAmount: 0,
-                        loanApplicationFeePercent: 0,
-                        loanApplicationFeeAmount: 0,
-                        loanMinAmount: 0,
-                        loanMaxAmount: 0,
-                        minLoanDuration: 0,
-                        maxLoanDuration: 0,
-                        minAgeRequiredForLoan: 0,
-                        minMonthlyIncomeRequired: 0,
-                        logoUrl: 0,
-                        iconUrl: 0,
-                        bannerUrl: 0,
-                        createdAt: 0,
-                        updatedAt: 0,
-                        legalDocument: 0,
-                        incomeDocument: 0,
-                        __v: 0,
-
+                        collateralDocument: 1,
                     },
                 },
                 {
@@ -567,23 +580,22 @@ class LoanControllers extends BaseEntity {
 
             }
 
-
             // const data = await ENTITY.BankE.aggregate(aggregateIncome);
 
             if (payload.employmentType) {
-                promise.push(ENTITY.BankE.aggregate(aggregateLegal))
+                promise.push(ENTITY.BankE.aggregate(aggregateLegal));
             } else {
-                promise.push([])
+                promise.push([]);
             }
 
             if (payload.employmentType) {
-                promise.push(ENTITY.BankE.aggregate(aggregateIncome))
+                promise.push(ENTITY.BankE.aggregate(aggregateIncome));
             } else {
                 promise.push([]);
             }
             // promise.push(ENTITY.BankE.aggregate(aggregateIncome));
             if (payload.propertyStatus) {
-                promise.push(ENTITY.BankE.aggregate(aggregateColleteralDocument))
+                promise.push(ENTITY.BankE.aggregate(aggregateColleteralDocument));
             } else {
                 promise.push([]);
             }
@@ -597,6 +609,95 @@ class LoanControllers extends BaseEntity {
             };
             // console.log('datadata', data);
             // return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async adminUpdateDocumentStatus(payload) {
+        try {
+            let criteria;
+            if (payload.documentType === 'Legal') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.legalDocument._id': payload.documentId,
+                };
+            }
+            else if (payload.documentType === 'Income') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.incomeDocument._id': payload.documentId,
+                };
+            }
+            else if (payload.documentType === 'Colleteral') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.colleteralDoc._id': payload.documentId,
+                };
+            }
+
+            let dataToUpdate;
+            if (payload.documentType === 'Legal') {
+                dataToUpdate = {
+                    'documents.legalDocument.$.status': payload.status,
+                    'documents.legalDocument.$.updatedAt': new Date().getTime(),
+                };
+            }
+            else if (payload.documentType === 'Income') {
+                dataToUpdate = {
+                    'documents.incomeDocument.$.status': payload.status,
+                    'documents.incomeDocument.$.updatedAt': new Date().getTime(),
+                };
+            }
+            else if (payload.documentType === 'Colleteral') {
+                dataToUpdate = {
+                    'documents.colleteralDoc.$.status': payload.status,
+                    'documents.colleteralDoc.$.updatedAt': new Date().getTime(),
+                };
+            }
+
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    async updateDocument(payload) {
+        try {
+            console.log('payload>>>>>>>>>>>', payload);
+
+            let criteria;
+            if (payload.documentType === 'Legal') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.legalDocument._id': payload.documentId,
+                };
+            }
+            else if (payload.documentType === 'Income') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.incomeDocument._id': payload.documentId,
+                };
+            }
+            else if (payload.documentType === 'Colleteral') {
+                criteria = {
+                    '_id': payload.loanId,
+                    'documents.colleteralDoc._id': payload.documentId,
+                };
+            }
+
+            const dataToUpdate = {
+                status: 'Pending',
+                url: payload.url,
+                createdAt: new Date().getTime(),
+                updatedAt: { type: Number },
+            };
+            console.log('criteriacriteriacriteria', criteria);
+
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, { 'documents.legalDocument.$.url': payload.url });
+            // { $set: { "grades.$.std" : 6 } }
+            return data;
+
         } catch (error) {
             return Promise.reject(error);
         }

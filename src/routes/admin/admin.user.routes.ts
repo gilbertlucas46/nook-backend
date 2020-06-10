@@ -135,7 +135,7 @@ export let adminUserRoutes: ServerRoute[] = [
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = {
-					...request.params,
+					...request.params as any,
 					...request.payload as any,
 				};
 				// if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
@@ -223,14 +223,21 @@ export let adminUserRoutes: ServerRoute[] = [
 				payload: {
 					userName: Joi.string().lowercase().required(),
 					email: Joi.string().email().lowercase().required(),
-					firstName: Joi.string(),
-					middleName: Joi.string(),
-					lastName: Joi.string(),
-					phoneNumber: Joi.string(),
-					language: Joi.string(),
-					aboutMe: Joi.string(),
-					profilePicUrl: Joi.string().uri(),
-					backGroundImageUrl: Joi.string().uri(),
+					firstName: Joi.string().trim().min(3).max(30),
+					middleName: Joi.string().trim().allow(''),
+					lastName: Joi.string().trim().min(3).max(30),
+					phoneNumber: Joi.string().trim().min(7).max(15),
+					// type: Joi.string().trim().valid([
+					// 	// Constant.DATABASE.USER_TYPE.AGENT.TYPE,
+					// 	// Constant.DATABASE.USER_TYPE.OWNER.TYPE,
+					// 	Constant.DATABASE.USER_TYPE.TENANT.TYPE,
+					// ]),
+					// fullPhoneNumber: Joi.string().allow('').allow(null),
+					language: Joi.string().allow('').allow(null),
+					// address: Joi.string().allow('').allow(null),
+					aboutMe: Joi.string().allow('').allow(null),
+					profilePicUrl: Joi.string().allow('').allow(null),
+					backGroundImageUrl: Joi.string().allow('').allow(null),
 					// isEmailVerified: { type: Boolean },
 					// isPhoneVerified: { type: Boolean },
 				},
