@@ -204,7 +204,7 @@ export class HelpCenter {
                     $facet: {
                         ACCOUNT: [{
                             $match: {
-                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
                                 // categoryType: 'ACCOUNT'
                                 categoryId: Types.ObjectId('5ee103fc8f2f61a8ca114797'),
                                 $or: [
@@ -217,7 +217,7 @@ export class HelpCenter {
                         ],
                         HOME_LOANS: [{
                             $match: {
-                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
                                 // categoryType: 'HOME_LOANS',
                                 categoryId: Types.ObjectId('5ee103fc8f2f61a8ca114796'),
                                 $or: [
@@ -231,7 +231,7 @@ export class HelpCenter {
 
                         FAQ: [{
                             $match: {
-                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
+                                type: Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
                                 // categoryType: 'FAQ',
                                 categoryId: Types.ObjectId('5ee103fc8f2f61a8ca114795'),
                                 $or: [
