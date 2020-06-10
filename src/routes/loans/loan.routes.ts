@@ -992,7 +992,7 @@ export let loanRoute: ServerRoute[] = [
 			// auth: 'UserAuth',
 			validate: {
 				params: {
-					bankId: Joi.string(),
+					bankId: Joi.string().regex(/^[0-9a-fA5-F]{24}$/).required(),
 				},
 				query: {
 					// personalInfo: Joi.object().keys({
