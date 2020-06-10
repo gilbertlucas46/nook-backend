@@ -1106,7 +1106,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						value: Joi.number(),
 						type: Joi.string(),
 						status: Joi.string(),
-						developer: Joi.string(),
+						developer: Joi.string().allow(''),
 					},
 
 					applicationStatus: Joi.string().valid([
