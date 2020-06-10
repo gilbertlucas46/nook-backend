@@ -267,7 +267,7 @@ class LoanControllers extends BaseEntity {
                 },
             };
 
-            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate);
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true });
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             // else {
             if (config.get('environment') === 'production') {
