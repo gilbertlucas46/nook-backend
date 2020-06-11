@@ -356,7 +356,7 @@ class PreLoanEntities extends BaseEntity {
 
     async preloanList(payload: PreQualificationRequest.IAdminPrequalificationList, adminData) {
         try {
-            const { fromDate, toDate, propertyValue, propertyType, page, limit, searchTerm, partnerName } = payload;
+            const { fromDate, toDate, propertyValue, propertyType, page, limit, searchTerm, partnerId } = payload;
             // const paginateOptions = {
             //     page: page || 1,
             //     limit: limit || Constant.SERVER.LIMIT,
@@ -407,8 +407,8 @@ class PreLoanEntities extends BaseEntity {
             if (propertyType) {
                 matchObject['property.type'] = propertyType;
             }
-            if (partnerName) {
-                matchObject['partnerName'] = partnerName;
+            if (partnerId) {
+                matchObject['partnerId'] = partnerId;
             }
             // const query = {
             //     userId: Types.ObjectId(userId),

@@ -73,7 +73,8 @@ export namespace PreQualificationRequest {
         propertyValue: number;
         propertyType: string;
         searchTerm: string;
-        partnerName: string;
+        // partnerName: string;
+        partnerId?: string;
     }
 
     export interface IprequalificationDetail {
