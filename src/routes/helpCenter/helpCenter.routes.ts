@@ -458,8 +458,8 @@ export let helpCenterRoute: ServerRoute[] = [
                         '5ee103fc8f2f61a8ca114797',
                     ]),
                     type: Joi.string().valid([
-                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ,
-                    ]).default(Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ),
+                        Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE,
+                    ]).default(Constant.DATABASE.HELP_CENTER_TYPE.USER_FAQ.TYPE),
                     searchTerm: Joi.string(),
                     id: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
                 },

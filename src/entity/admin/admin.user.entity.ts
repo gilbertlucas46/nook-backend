@@ -149,7 +149,6 @@ class AdminUserE extends BaseEntity {
             ];
             return await this.DAOManager.paginate(this.modelName, query, limit, page);
         } catch (error) {
-            console.log('errorerrorerrorerror', error);
             return Promise.reject(error);
         }
     }

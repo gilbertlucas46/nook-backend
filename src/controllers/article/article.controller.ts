@@ -92,8 +92,6 @@ class ArticleController {
                 name: payload.articleId,
             };
             const article = await ENTITY.ArticleE.getOneEntity(criteria, {});
-            console.log('articlearticle', article);
-
             if (article == null || !article) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             }
@@ -145,8 +143,6 @@ class ArticleController {
             };
             // const getArticleDataByName = await ENTITY.ArticleE.getOneEntity(checkOldArticleCriteria,{});
             const getOldArticleData = await ENTITY.ArticleE.getOneEntity(oldArticleByName, {});
-            console.log('getOldArticleDatagetOldArticleData', getOldArticleData);
-
             if (!getOldArticleData || getOldArticleData._id !== payload.articleId) {  // .name === payload.name && 
                 const dataToSet: any = {};
                 dataToSet.$set = {
