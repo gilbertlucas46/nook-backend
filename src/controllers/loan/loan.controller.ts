@@ -12,6 +12,7 @@ import { PreQualificationBankE } from '@src/entity/loan/prequalification.entity'
 import { MailManager } from '../../lib/mail.manager';
 import fetch from 'node-fetch';
 import * as config from 'config';
+import { flattenObject } from '@src/utils/flatten.util';
 class LoanControllers extends BaseEntity {
 
     /**
@@ -271,12 +272,18 @@ class LoanControllers extends BaseEntity {
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             // else {
             if (config.get('environment') === 'production') {
-                let salesforceData;
+                let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
+                // const request = {
+                //     method: 'post',
+                //     body: JSON.stringify(salesforceData),
+                // };
+                // let salesforceData;
                 if (payload.staffId) {
                     const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
                     console.log('getStaffName>>>>>>>>>>>>', getStaffData);
                     salesforceData = {
-                        _id: payload.loanId,
+                        ...salesforceData,
+                        // _id: payload.loanId,
                         staffAssignedEmail: getStaffData && getStaffData.email || '',
                         staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
                         staffAssignedlastName: getStaffData && getStaffData.lastName || '',
@@ -284,8 +291,9 @@ class LoanControllers extends BaseEntity {
                 }
                 if (payload.status) {
                     salesforceData = {
-                        _id: payload.loanId,
-                        applicationStatus: payload.status,
+                        ...salesforceData,
+                        // _id: payload.loanId,
+                        // applicationStatus: payload.status,
                     };
                 }
                 console.log('salesforceDatasalesforceData', salesforceData);
