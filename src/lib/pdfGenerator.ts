@@ -34,9 +34,9 @@ export class PdfGenerator {
                     //         '<div>Header</div>',
                     // },
                     // "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                    height: '11.25in',
-                    width: '8.5in',
-                    zoomFactor: '0.654545',
+                    height: '11.7in',
+                    width: '8.3in',
+                    zoomFactor: '1',
                     footer: {
                         height: '2cm',
                         contents: {
