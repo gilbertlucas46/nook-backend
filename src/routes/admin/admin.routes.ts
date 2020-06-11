@@ -408,7 +408,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					// type: Joi.string().valid('admin', 'user')
 					searchTerm: Joi.string(),
 					staffId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					partnerName: Joi.string(),
+					partnerId: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -575,7 +575,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					propertyValue: Joi.number(),
 					propertyType: Joi.string(),
 					searchTerm: Joi.string(),
-					partnerName: Joi.string(),
+					partnerId: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

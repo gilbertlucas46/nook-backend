@@ -36,7 +36,7 @@ export class PdfGenerator {
                     // "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     height: '11.7in',
                     width: '8.3in',
-                    zoomFactor: '0.654545',
+                    zoomFactor: '1',
                     footer: {
                         height: '2cm',
                         contents: {
