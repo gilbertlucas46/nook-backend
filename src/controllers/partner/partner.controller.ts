@@ -24,8 +24,6 @@ export class Partner {
             const checkData = await ENTITY.PartnerE.getOneEntity(criteria, {});
             if (!checkData) {
                 data = await ENTITY.PartnerE.createOneEntity(payload);
-                console.log('datadatadatadatadatadata', data);
-
             } else {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.ALREADY_EXIST);
             }
@@ -65,8 +63,6 @@ export class Partner {
             // if (!data) {
             //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             // }
-
-            console.log('datadatadatadatadatadata', data);
             // return data['shortId'];
             return data;
         } catch (error) {

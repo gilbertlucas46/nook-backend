@@ -31,8 +31,6 @@ class Referal extends BaseEntity {
                 firstName: data.firstName,
                 mobileNo: data.phoneNumber,
             };
-            console.log('salesforceDatasalesforceData', salesforceData);
-
             const request = {
                 method: 'post',
                 body: JSON.stringify(salesforceData),

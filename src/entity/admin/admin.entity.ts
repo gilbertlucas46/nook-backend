@@ -324,7 +324,6 @@ export class AdminClass extends BaseEntity {
 			pipeline.push(this.DAOManager.count('LoanApplication', { createdAt: { $gt: payload.loanGraph } }));
 			pipeline.push(this.DAOManager.aggregateData('User', userGraphQuery));
 			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount, loanGraph, preQualificationGraph, totalLoanApplication, userGraphData] = await Promise.all(pipeline);
-			console.log('loanGraphloanGraphloanGraphloanGraphloanGraph', loanGraph);
 
 			// const loanGraph1 = {};
 			// const preQualificationGraph1 = {};
@@ -335,16 +334,13 @@ export class AdminClass extends BaseEntity {
 
 			// Obj[key]=value
 			loanGraph.map(data => {
-				console.log('data>>>>>>>>>1111', data);
 				loanGraph1[data['_id']['month_joined']] = data.number;
 
 			});
 			preQualificationGraph.map(data => {
-				console.log('data>>>>>>>>>222', data);
 				preQualificationGraph1[data['_id']['month_joined']] = data.number;
 			});
 			userGraphData.map(data => {
-				console.log('data>>>>>>>>>3333', data);
 				userGraph[data['_id']['month_joined']] = data.userCount;
 			});
 			function clean(obj) {

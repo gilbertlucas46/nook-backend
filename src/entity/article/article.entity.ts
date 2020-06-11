@@ -464,9 +464,6 @@ export class ArticleClass extends BaseEntity {
                     ],
                 };
             }
-            console.log('limitlimitlimitlimit', limit, 'LLLLLLLLLLLLL', page);
-
-            console.log('$match$match$match$match$match', $match);
 
             // const data1 = [
             //     {
