@@ -26,7 +26,7 @@ export class PdfGenerator {
             const applicantName: any = datatoAddInPDF.fullName;
             return new Promise((resolve, reject) => {
                 const options = {
-                    // format: 'A4',
+                    // format: 'Letter',        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     // header: {
                     //     height: '3cm',
                     //     contents:
@@ -67,7 +67,6 @@ export class PdfGenerator {
             return Promise.reject(error);
         }
     }
-
 
     uploadFileToS3 = async (file, fileName) => {
         console.log('filefilefile', file);
