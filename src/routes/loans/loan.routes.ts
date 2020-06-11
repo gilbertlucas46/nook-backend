@@ -53,8 +53,8 @@ export let loanRoute: ServerRoute[] = [
 				payload: {
 					ipAddress: Joi.string(),
 					prequialificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-					partnerName: Joi.string(),
-					partnerId: Joi.string(),
+					partnerName: Joi.string().allow('').default(''),
+					partnerId: Joi.string().allow('').default(''),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
 						lastName: Joi.string().min(1).max(32),
@@ -545,6 +545,8 @@ export let loanRoute: ServerRoute[] = [
 				payload: {
 					ipAddress: Joi.string(),
 					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+					partnerName: Joi.string().allow('').default(''),
+					partnerId: Joi.string().allow('').default(''),
 					// saveAsDraft: Joi.boolean().required(),
 					applicationStatus: Joi.string().valid([
 						// Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
