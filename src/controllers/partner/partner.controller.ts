@@ -86,18 +86,9 @@ export class Partner {
         }
     }
 
-    async getPartners() {
+    async getPartners(payload: PartnerAdminRequest.GetPartners) {
         try {
-            const criteria = {
-                $or: [{
-                    status: Constant.DATABASE.PartnerStatus.ACTIVE,
-                }, {
-                    status: Constant.DATABASE.PartnerStatus.BLOCK,
-                }],
-            };
-            const data = await ENTITY.PartnerE.getMultiple(criteria, {});
-            console.log('data', data);
-            return data;
+            return await ENTITY.PartnerE.getPartners(payload);
         } catch (error) {
             return Promise.reject(error);
         }
