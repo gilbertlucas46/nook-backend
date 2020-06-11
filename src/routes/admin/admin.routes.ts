@@ -674,6 +674,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					loanId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				payload: {
+					assignedTo: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
 					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
