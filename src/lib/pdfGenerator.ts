@@ -26,12 +26,16 @@ export class PdfGenerator {
             const applicantName: any = datatoAddInPDF.fullName;
             return new Promise((resolve, reject) => {
                 const options = {
-                    // format: 'Letter',        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+
+                    //        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     // header: {
                     //     height: '3cm',
                     //     contents:
                     //         '<div>Header</div>',
                     // },
+                    // "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+                    height: '11.25in',
+                    width: '8.5in',
                     zoomFactor: '0.654545',
                     footer: {
                         height: '2cm',
@@ -50,6 +54,7 @@ export class PdfGenerator {
                     },
                     // timeout: 120000
                 };
+
 
                 pdf.create(buf, options).toFile(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', async (err, data) => {
                     if (err) {
