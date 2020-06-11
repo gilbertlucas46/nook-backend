@@ -224,8 +224,8 @@ export class MailManager {
 				const month = (todayTime.getMonth() + 1);
 				const day = (todayTime.getDate());
 				const year = (todayTime.getFullYear());
-				console.log("day + ' / ' + month + ' / ' + year", day + '/' + month + '/' + year);
-				return day + '/' + month + '/' + year;
+				console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
+				return day + '-' + month + '-' + year;
 			}
 
 			const htmlContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'loan-form.html'))
