@@ -11,8 +11,6 @@
             color-adjust: exact !important;
         }
 
-
-
         p {
             font-size: 7.5pt;
             color: #231f20;
@@ -39,25 +37,6 @@
             }
         }
 
-        /* Styles go here */
-
-        .page-footer-1,
-        .page-footer-1-space {
-            height: 50px;
-
-        }
-
-        .page-footer-1 {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: black !important;
-        }
-
-        /* @page {
-            margin: 20mm
-        } */
-
         @media print {
             thead {
                 display: table-header-group;
@@ -82,8 +61,7 @@
             <tr>
                 <td style="width: 50%; vertical-align: middle;"></td>
                 <td style="width: 50%; text-align: right; vertical-align: middle; padding-right: 40px !important;">
-                    <img src="./nook-logo.png" alt="Nook" style="width: 65px; height: auto;">
-                    <!-- <img src="{{nookLogoUrl}}" alt="Nook" style="width: 65px; height: auto;"> -->
+                    <img src="{{nookLogoUrl}}" alt="Nook" style="width: 65px; height: auto;">
                 </td>
             </tr>
         </tbody>
@@ -91,17 +69,6 @@
 
     <h2 style="margin: 10px 0px 20px; font-size: 9.5pt; color: #434343;">Housing Loan Application ID: {{applicationId}}
     </h2>
-
-    <div class="page-footer-1">
-        <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;">Ver1.0 05.20/CM</p>
-        <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;">Copyright © Nook.</p>
-    </div>
-    <!-- <div class="page-footer-1">
-        <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Application ID:
-            </b>{!Loan_Application__c.Name}</p>
-        <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Name:</b>
-            {!Loan_Application__c.Fullname_PA__r.Name}</p>
-    </div> -->
 
     <table style="width: 100%; border-collapse: collapse; border-spacing: 0;">
         <tbody>
@@ -235,14 +202,6 @@
                 </td>
             </tr>
         </tbody>
-        <tfoot>
-            <tr>
-                <td>
-                    <!--place holder for the fixed-position footer-->
-                    <div class="page-footer-1-space"></div>
-                </td>
-            </tr>
-        </tfoot>
     </table>
 
     <div class="page-break"></div>

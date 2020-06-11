@@ -16,18 +16,47 @@ export class PdfGenerator {
         });
     }
 
-    async test(htmlFile, fileName) {
+    async test(htmlFile, datatoAddInPDF) {
         try {
+            console.log('htmlFilehtmlFilehtmlFilehtmlFile', datatoAddInPDF);
+
             console.log('11111111111111111111111111111111111111');
             const buf = await Buffer.from(htmlFile).toString();
-
+            const applicationId: any = datatoAddInPDF.applicationId;
+            const applicantName: any = datatoAddInPDF.fullName;
             return new Promise((resolve, reject) => {
-                pdf.create(buf, { format: 'A4' }).toFile(SERVER.TEMPLATE_PATH + '/loan/' + fileName + '.pdf', async (err, data) => {
+                const options = {
+                    // format: 'A4',
+                    // header: {
+                    //     height: '3cm',
+                    //     contents:
+                    //         '<div>Header</div>',
+                    // },
+                    zoomFactor: '0.654545',
+                    footer: {
+                        height: '2cm',
+                        contents: {
+                            // first: '<div class="page-footer"><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p ><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.< /p>< /div>',
+                            first: `<div style="padding: 0 30px!important;">
+                            <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p>
+                              <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.</p>
+                        </div>`,
+                            // 2: 'Second page', // Any page number is working. 1-based index
+                            default: `<div style="padding: 0 30px!important;">
+                                     <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Application ID: </b>${applicationId}'</p>
+                                    <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Name: </b>${applicantName}</p>
+                                    </div>`,
+                        },
+                    },
+                    // timeout: 120000
+                };
+
+                pdf.create(buf, options).toFile(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', async (err, data) => {
                     if (err) {
                         console.log('dataaaaaaaaaaa', err);
                         reject(err);
                     } else {
-                        const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + '/loan/' + fileName + '.pdf', fileName);
+                        const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', datatoAddInPDF['fileName']);
                         resolve(nameUrl);
 
                     }
