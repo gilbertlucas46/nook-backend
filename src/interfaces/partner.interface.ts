@@ -22,4 +22,8 @@ export namespace PartnerAdminRequest {
 
     }
 
+    export interface GetPartners {
+        limit: number;
+        page: number;
+    }
 }

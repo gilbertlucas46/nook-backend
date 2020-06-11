@@ -183,9 +183,9 @@ export let partnerRoutes: ServerRoute[] = [
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-                // const payload = request.payload as PartnerAdminRequest;
+                const payload: PartnerAdminRequest.GetPartners = request.query as any;
 
-                const data = await PartnerService.getPartners();
+                const data = await PartnerService.getPartners(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
             } catch (error) {
                 UniversalFunctions.consolelog('error', error, true);
@@ -198,6 +198,8 @@ export let partnerRoutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 query: {
+                    limit: Joi.number().default(10),
+                    page: Joi.number().default(1),
                     // logoUrl: Joi.string().uri().required(),
                     // name: Joi.string().required(),
                     // displayName: Joi.string(),
