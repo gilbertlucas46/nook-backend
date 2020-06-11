@@ -199,14 +199,17 @@ export class MailManager {
 		try {
 			let { coBorrowerInfo, spouseInfo } = params['personalInfo'];
 			console.log('spouseInfospouseInfo', spouseInfo);
-			let middleName;
+			let middleName = '';
 			if (params['personalInfo'] && params['personalInfo']['middleName']) {
-				middleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : ''
+				middleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : '';
 			}
-			let spouseMiddleName;
+			console.log('middleNamemiddleNamemiddleNamemiddleName', middleName);
+
+			let spouseMiddleName = '';
 			if (params['personalInfo'] && params['personalInfo']['middleName']) {
-				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : ''
+				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : '';
 			}
+			console.log('spouseMiddleNamespouseMiddleNamespouseMiddleName', spouseMiddleName);
 
 			let checkObjectBlank;
 			if (coBorrowerInfo) {
@@ -221,6 +224,7 @@ export class MailManager {
 				const month = (todayTime.getMonth() + 1);
 				const day = (todayTime.getDate());
 				const year = (todayTime.getFullYear());
+				console.log("day + ' / ' + month + ' / ' + year", day + '/' + month + '/' + year);
 				return day + '/' + month + '/' + year;
 			}
 
@@ -270,7 +274,7 @@ export class MailManager {
 					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + ' ' + coBorrowerInfo['middleName'] || '' + ' ' + coBorrowerInfo['lastName'] : 'N/A',
 					relationship: (coBorrowerInfo && coBorrowerInfo['relationship']) ? coBorrowerInfo['relationship'] : 'N/A',
 					// relationship: coBorrowerInfo ? coBorrowerInfo['relationship'] : 'N/A',
-					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? coBorrowerInfo['monthlyIncome'] : 'N/A',
+					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? coBorrowerInfo['monthlyIncome'] + ' php' : 'N/A',
 					coBorrowerTIN: (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A',
 					coBorrowerSSS: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['sss']) ? params.employmentInfo.coBorrowerInfo['sss'] : 'N/A',
 					coBorrowerEmploymentType: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentType']) ? params.employmentInfo.coBorrowerInfo['employmentType'] : 'N/A',
@@ -287,7 +291,7 @@ export class MailManager {
 					loanTerm: params['loanDetails']['loanTerm'] + ' ' + 'year',
 					fixedPeriod: params['loanDetails']['fixedPeriod'] + ' ' + 'year',
 					loanPercent: params['loanDetails']['loanPercent'],
-					loanAmount: params['loanDetails']['loanAmount'],
+					loanAmount: params['loanDetails']['loanAmount'] + ' php',
 					interestRate: params['loanDetails']['rate'],
 					loanType: params['loanDetails']['loanType'],
 					// Loan Total PaymentA (Php): params['loanDetails']['loanAmount'],
@@ -296,7 +300,7 @@ export class MailManager {
 
 
 					// COLLATERAL INFORMATION
-					propertyValue: params['propertyInfo']['value'] + 'php',
+					propertyValue: params['propertyInfo']['value'] + ' php',
 					propertyType: params['propertyInfo']['type'],
 					propertyStatus: params['propertyInfo']['status'],
 					propertyDeveloper: params['propertyInfo']['developer'] ? params['propertyInfo']['developer'] : 'N/A',
@@ -357,7 +361,12 @@ export class MailManager {
 
 				});
 
-			const a = await pdfClass.test(htmlContent, params['referenceId']);
+			const datatoAddInPDF = {
+				applicationId: params['referenceId'],
+				fullName: params['personalInfo']['firstName'] + middleName + ' ' + params['personalInfo']['lastName'],
+				fileName: params['referenceId'],
+			}
+			const a = await pdfClass.test(htmlContent, datatoAddInPDF);
 			return a;
 		} catch (error) {
 			console.log('errorrrrrrrrr', error);
