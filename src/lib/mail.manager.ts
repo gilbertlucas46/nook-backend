@@ -321,7 +321,7 @@ export class MailManager {
 					employmentType: params['employmentInfo']['type'],
 					employmentRank: params['employmentInfo']['rank'],
 					employmentTenure: params['employmentInfo']['tenure'],
-					grossMonthlyIncome: params['employmentInfo']['monthlyIncome'] + ' php',   // to be done
+					grossMonthlyIncome: params['employmentInfo']['grossMonthlyIncome'] + ' php',   // to be done
 					tin: params['employmentInfo'] ? params['employmentInfo']['tin'] : 'N/A',
 					sss: params['employmentInfo'] ? params['employmentInfo']['sss'] : 'N/A',
 					companyName: params['employmentInfo']['companyName'],
