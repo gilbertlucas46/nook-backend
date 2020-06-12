@@ -21,7 +21,7 @@ export class PdfGenerator {
             console.log('htmlFilehtmlFilehtmlFilehtmlFile', datatoAddInPDF);
 
             console.log('11111111111111111111111111111111111111');
-            const buf = await Buffer.from(htmlFile).toString();
+            const buf = Buffer.from(htmlFile).toString();
             const applicationId: any = datatoAddInPDF.applicationId;
             const applicantName: any = datatoAddInPDF.fullName;
             return new Promise((resolve, reject) => {
