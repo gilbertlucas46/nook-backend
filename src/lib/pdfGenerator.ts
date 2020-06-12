@@ -40,16 +40,16 @@ export class PdfGenerator {
                     footer: {
                         height: '1.2cm',
                         contents: {
-                            // first: '<div class="page-footer"><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p ><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.< /p>< /div>',
-                            first: `<div style="padding: 0 30px!important;">
-                            <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p>
-                              <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.</p>
-                        </div>`,
-                            // 2: 'Second page', // Any page number is working. 1-based index
-                            default: `<div style="padding: 0 30px!important;">
-                                     <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Application ID: </b>${applicationId}'</p>
-                                    <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Name: </b>${applicantName}</p>
-                                    </div>`,
+                            //     // first: '<div class="page-footer"><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p ><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.< /p>< /div>',
+                            //     first: `<div style="padding: 0 30px!important;">
+                            //     <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p>
+                            //       <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.</p>
+                            // </div>`,
+                            //     // 2: 'Second page', // Any page number is working. 1-based index
+                            //     default: `<div style="padding: 0 30px!important;">
+                            //              <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Application ID: </b>${applicationId}'</p>
+                            //             <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Name: </b>${applicantName}</p>
+                            //             </div>`,
                         },
                     },
                     // timeout: 120000
