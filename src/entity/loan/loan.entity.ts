@@ -43,6 +43,7 @@ class LoanEntities extends BaseEntity {
                             loanMinAmount: { $lte: payload.property.value },
                             minMonthlyIncomeRequired: { $lte: totalMonthlyIncome },
                             loanForForeignerMarriedLocal: localVisa,
+                            // maxAgeRequiredForLoan: { $lt: 70 },
                             propertySpecification: {
                                 $elemMatch: {
                                     $and: [
@@ -76,6 +77,18 @@ class LoanEntities extends BaseEntity {
                         },
                     },
                 );
+            }
+            console.log('queryPipeline', queryPipeline);
+            console.log('maxAgeRequiredForLoanmaxAgeRequiredForLoan', ageAtlastLoanPayment);
+
+            if (ageAtlastLoanPayment > 65 && ageAtlastLoanPayment < 70) {
+                console.log('maxAgeRequiredForLoanmaxAgeRequiredForLoan', ageAtlastLoanPayment);
+
+                queryPipeline.push({
+                    $match: {
+                        maxAgeRequiredForLoan: { $eq: 70 },
+                    },
+                });
             }
 
             if (payload.bankId) queryPipeline[0].$match._id = Types.ObjectId(payload.bankId);
