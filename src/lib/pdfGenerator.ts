@@ -34,11 +34,11 @@ export class PdfGenerator {
                     //         '<div>Header</div>',
                     // },
                     // "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                    height: '11.7in',
-                    width: '8.3in',
+                    // height: '11.7in',
+                    // width: '8.3in',
                     zoomFactor: '1',
                     footer: {
-                        height: '2cm',
+                        height: '1.2cm',
                         contents: {
                             // first: '<div class="page-footer"><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p ><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.< /p>< /div>',
                             first: `<div style="padding: 0 30px!important;">
