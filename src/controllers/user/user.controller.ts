@@ -309,6 +309,7 @@ export class UserController extends BaseEntity {
 					lastName: payload.lastName,
 					phoneNumber: payload.phoneNumber,
 					ipAddress: payload.ipAddress,
+					countryCode: payload.countryCode,
 					// isEmailVerified: true,
 					// isProfileComplete: true,
 					// type: payload.type,
