@@ -35,17 +35,17 @@ export class PdfGenerator {
                         height: '2cm',
                         contents:
                             `
-                            <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
-                           <tbody>
-                          <tr>
-                           <td style="width: 50%; vertical-align: middle; padding-left: 0px; font-size: 8.5pt;">Page: 2</td>
-                <td style="width: 50%; text-align: right; vertical-align: middle; padding-right: 40px !important;">
-                    <img src="${nookLogoUrl}" alt="Nook" style="width: 65px; height: auto;">
-                </td>
-               </tr>
-              </tbody>
-             </table>
-              `,
+                        <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%; vertical-align: middle; padding-left: 0px; font-size: 8.5pt;"></td>
+                                    <td style="width: 50%; text-align: right; vertical-align: middle; height: 70px; padding-right: 40px !important;">
+                                        <img src="${nookLogoUrl}" alt="Nook" style="width: 65px; height: auto;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        `,
                     },
                     format: 'A4',        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     // height: '11.7in',
@@ -54,15 +54,15 @@ export class PdfGenerator {
                     footer: {
                         height: '1.2cm',
                         contents: {
-                            // first: '<div class="page-footer"><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p ><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.< /p>< /div>',
+                            // first: '<div class="page-footer"><p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p ><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.< /p>< /div>',
                             first: `<div style="padding: 0 30px!important;">
-                                <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p>
-                                  <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.</p>
+                                <p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p>
+                                  <p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"> Copyright © Nook.</p>
                             </div>`,
                             // 2: 'Second page', // Any page number is working. 1-based index
                             default: `<div style="padding: 0 30px!important;">
-                                         <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Application ID: </b>${applicationId}'</p>
-                                        <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Name: </b>${applicantName}</p>
+                                         <p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"><b>Application ID: </b>${applicationId}</p>
+                                        <p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"><b>Name: </b>${applicantName}</p>
                                         </div>`,
                         },
                     },
