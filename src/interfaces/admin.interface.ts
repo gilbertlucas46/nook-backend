@@ -132,6 +132,7 @@ export namespace AdminRequest {
 		phoneNumber: string;
 		type?: string;
 		language?: string;
+		countryCode: string;
 		// title?: string;
 		// license?: string;
 		companyName?: string;

@@ -182,6 +182,7 @@ export let userRoute: ServerRoute[] = [
 					// ]),
 					// fullPhoneNumber: Joi.string().allow('').allow(null),
 					language: Joi.string().allow('').allow(null),
+					countryCode: Joi.string(),
 					// address: Joi.string().allow('').allow(null),
 					aboutMe: Joi.string().allow('').allow(null),
 					profilePicUrl: Joi.string().allow('').allow(null),
@@ -503,6 +504,7 @@ export let userRoute: ServerRoute[] = [
 					lastName: Joi.string().trim().min(3).max(30).required(),
 					phoneNumber: Joi.string().trim().min(7).max(15).required(),
 					ipAddress: Joi.string(),
+					countryCode: Joi.string().default(+63),
 					// type: Joi.string().trim().valid([
 					// 	Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 					// 	Constant.DATABASE.USER_TYPE.OWNER.TYPE,
