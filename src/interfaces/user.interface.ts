@@ -58,6 +58,7 @@ export namespace UserRequest {
 		lastName: string;
 		phoneNumber?: string;
 		type?: string;
+		countryCode?: string;
 		// title?: string;
 		// license?: string;
 		// taxnumber?: string;
@@ -100,7 +101,7 @@ export namespace UserRequest {
 		lastName: string;
 		phoneNumber: string;
 		ipAddress: string;
-		countryCode:string;
+		countryCode: string;
 
 	}
 }
