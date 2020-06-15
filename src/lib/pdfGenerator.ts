@@ -24,19 +24,34 @@ export class PdfGenerator {
             const buf = Buffer.from(htmlFile).toString();
             const applicationId: any = datatoAddInPDF.applicationId;
             const applicantName: any = datatoAddInPDF.fullName;
+            const nooklogoUrl = datatoAddInPDF.nookLogoUrl;
+
             return new Promise((resolve, reject) => {
                 const options = {
 
                     //        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                    // header: {
-                    //     height: '3cm',
-                    //     contents:
-                    //         '<div>Header</div>',
-                    // },
+                    paginationOffset: 1,       // Override the initial pagination number
+                    header: {
+                        height: '45mm',
+                        contents:
+                            `<table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+                      <tbody>
+                       <tr>
+                       <td style="width: 50%; vertical-align: middle; padding-left: 0px; font-size: 8.5pt;">Page:1 </td>
+                       <td style="width: 50%; text-align: right; vertical-align: middle; padding-right: 40px !important;">
+                    <img src=${nooklogoUrl} alt="Nook" style="width: 65px; height: auto;">
+                        </td>
+                     </tr>
+                     </tbody>
+                    </table>
+                      `,
+                    },
+                    // <td style="width: 50%; vertical-align: middle; padding-left: 0px; font-size: 8.5pt;">Page: 2</td>
+
                     // "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     // height: '11.7in',
                     // width: '8.3in',
-                    zoomFactor: '1',
+                    // zoomFactor: '1',
                     footer: {
                         height: '1.2cm',
                         contents: {
