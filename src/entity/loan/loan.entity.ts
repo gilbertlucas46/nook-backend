@@ -43,6 +43,7 @@ class LoanEntities extends BaseEntity {
                             loanMinAmount: { $lte: payload.property.value },
                             minMonthlyIncomeRequired: { $lte: totalMonthlyIncome },
                             loanForForeignerMarriedLocal: localVisa,
+                            // maxAgeRequiredForLoan: { $lt: 70 },
                             propertySpecification: {
                                 $elemMatch: {
                                     $and: [
@@ -76,6 +77,18 @@ class LoanEntities extends BaseEntity {
                         },
                     },
                 );
+            }
+            console.log('queryPipeline', queryPipeline);
+            console.log('maxAgeRequiredForLoanmaxAgeRequiredForLoan', ageAtlastLoanPayment);
+
+            if (ageAtlastLoanPayment > 65 && ageAtlastLoanPayment < 70) {
+                console.log('maxAgeRequiredForLoanmaxAgeRequiredForLoan', ageAtlastLoanPayment);
+
+                queryPipeline.push({
+                    $match: {
+                        maxAgeRequiredForLoan: { $eq: 70 },
+                    },
+                });
             }
 
             if (payload.bankId) queryPipeline[0].$match._id = Types.ObjectId(payload.bankId);
@@ -175,13 +188,13 @@ class LoanEntities extends BaseEntity {
                         bannerUrl: 1,
                         processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
-                        // totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
-                        // monthlyPayment: { $divide: ['$numerator', '$denominator'] },
+                        totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+                        monthlyPayment: { $divide: ['$numerator', '$denominator'] },
 
-                        totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
-                        monthlyPayment: {
-                            $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
-                        },
+                        // totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
+                        // monthlyPayment: {
+                        //     $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
+                        // },
                         totalLoanPayment: 1,
                         bankId: '$_id',
                         _id: 0,
