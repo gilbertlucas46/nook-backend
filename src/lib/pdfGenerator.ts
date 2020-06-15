@@ -25,6 +25,7 @@ export class PdfGenerator {
             const applicationId: any = datatoAddInPDF.applicationId;
             const applicantName: any = datatoAddInPDF.fullName;
             const nookLogoUrl = config['host'] + '/src/views/images/nooklogo.png';
+            console.log('nookLogoUrlnookLogoUrl', nookLogoUrl);
 
             return new Promise((resolve, reject) => {
                 const options = {
