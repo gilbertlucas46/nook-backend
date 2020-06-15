@@ -21,10 +21,14 @@ export class PdfGenerator {
             console.log('htmlFilehtmlFilehtmlFilehtmlFile', datatoAddInPDF);
 
             console.log('11111111111111111111111111111111111111');
-            const buf = await Buffer.from(htmlFile).toString();
+            const buf = Buffer.from(htmlFile).toString();
             const applicationId: any = datatoAddInPDF.applicationId;
             const applicantName: any = datatoAddInPDF.fullName;
+<<<<<<< HEAD
             const nookLogoUrl = config['host'] + '/src/views/images/nooklogo.png';
+=======
+            const nooklogoUrl = datatoAddInPDF.nookLogoUrl;
+>>>>>>> testing
 
             return new Promise((resolve, reject) => {
                 const options = {
@@ -50,7 +54,7 @@ export class PdfGenerator {
                     format: 'A4',        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     // height: '11.7in',
                     // width: '8.3in',
-                    zoomFactor: '1',
+                    // zoomFactor: '1',
                     footer: {
                         height: '1.2cm',
                         contents: {
@@ -74,7 +78,7 @@ export class PdfGenerator {
                         console.log('dataaaaaaaaaaa', err);
                         reject(err);
                     } else {
-                        const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', datatoAddInPDF['fileName']);
+                        const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + 'loan/' + datatoAddInPDF['fileName'] + '.pdf', datatoAddInPDF['fileName']);
                         resolve(nameUrl);
 
                     }

@@ -10,7 +10,7 @@ export interface IUser extends Document {
 	phoneNumber: string;
 	type: string;
 	title?: string;
-
+	countryCode: string;
 	fullPhoneNumber?: string;
 	language?: string;
 	aboutMe?: string;
