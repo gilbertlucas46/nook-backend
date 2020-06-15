@@ -100,6 +100,7 @@ export namespace UserRequest {
 		lastName: string;
 		phoneNumber: string;
 		ipAddress: string;
+		countryCode:string;
 
 	}
 }
