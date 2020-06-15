@@ -504,7 +504,7 @@ export let userRoute: ServerRoute[] = [
 					lastName: Joi.string().trim().min(3).max(30).required(),
 					phoneNumber: Joi.string().trim().min(7).max(15).required(),
 					ipAddress: Joi.string(),
-					countryCode: Joi.string().default(+63),
+					countryCode: Joi.string().default('+63'),
 					// type: Joi.string().trim().valid([
 					// 	Constant.DATABASE.USER_TYPE.AGENT.TYPE,
 					// 	Constant.DATABASE.USER_TYPE.OWNER.TYPE,
