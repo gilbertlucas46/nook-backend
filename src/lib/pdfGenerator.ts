@@ -71,12 +71,12 @@ export class PdfGenerator {
                 };
 
 
-                pdf.create(buf, options).toFile(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', async (err, data) => {
+                pdf.create(buf, options).toFile(SERVER.TEMPLATE_PATH + 'loan/' + datatoAddInPDF['fileName'] + '.pdf', async (err, data) => {
                     if (err) {
                         console.log('dataaaaaaaaaaa', err);
                         reject(err);
                     } else {
-                        const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', datatoAddInPDF['fileName']);
+                        const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + 'loan/' + datatoAddInPDF['fileName'] + '.pdf', datatoAddInPDF['fileName']);
                         resolve(nameUrl);
 
                     }
