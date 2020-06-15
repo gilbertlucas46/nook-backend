@@ -24,16 +24,30 @@ export class PdfGenerator {
             const buf = await Buffer.from(htmlFile).toString();
             const applicationId: any = datatoAddInPDF.applicationId;
             const applicantName: any = datatoAddInPDF.fullName;
+            const nookLogoUrl = config['host'] + '/src/views/images/nooklogo.png';
+
             return new Promise((resolve, reject) => {
                 const options = {
+                    paginationOffset: 1,       // Override the initial pagination number
 
                     //        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                    // header: {
-                    //     height: '3cm',
-                    //     contents:
-                    //         '<div>Header</div>',
-                    // },
-                    // "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+                    header: {
+                        height: '2cm',
+                        contents:
+                            `
+                            <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+                           <tbody>
+                          <tr>
+                           <td style="width: 50%; vertical-align: middle; padding-left: 0px; font-size: 8.5pt;">Page: 2</td>
+                <td style="width: 50%; text-align: right; vertical-align: middle; padding-right: 40px !important;">
+                    <img src="${nookLogoUrl}" alt="Nook" style="width: 65px; height: auto;">
+                </td>
+               </tr>
+              </tbody>
+             </table>
+              `,
+                    },
+                    format: 'A4',        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     // height: '11.7in',
                     // width: '8.3in',
                     zoomFactor: '1',
@@ -54,7 +68,6 @@ export class PdfGenerator {
                     },
                     // timeout: 120000
                 };
-
 
                 pdf.create(buf, options).toFile(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', async (err, data) => {
                     if (err) {
