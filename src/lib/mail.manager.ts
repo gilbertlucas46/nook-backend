@@ -371,6 +371,7 @@ export class MailManager {
 				applicationId: params['referenceId'],
 				fullName: params['personalInfo']['firstName'] + middleName + ' ' + params['personalInfo']['lastName'],
 				fileName: params['referenceId'],
+				nookLogoUrl: config['host'] + '/src/views/images/nooklogo.png',
 			}
 			const a = await pdfClass.test(htmlContent, datatoAddInPDF);
 			return a;
