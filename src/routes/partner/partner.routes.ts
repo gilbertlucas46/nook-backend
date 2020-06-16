@@ -96,7 +96,7 @@ export let partnerRoutes: ServerRoute[] = [
 
     {
         method: 'GET',
-        path: '/v1/nook/partner-redirect/{partnerSid}',
+        path: '/v1/nook/partner-redirect/{partnerSid}/{partnerName?}',
         handler: async (request, h) => {
             try {
                 // const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
@@ -124,6 +124,7 @@ export let partnerRoutes: ServerRoute[] = [
             // auth: 'DoubleAuth',
             validate: {
                 params: {
+                    partnerName: Joi.string().optional(),
                     partnerSid: Joi.string().required(),
                 },
                 // headers: UniversalFunctions.authorizationHeaderObj,
