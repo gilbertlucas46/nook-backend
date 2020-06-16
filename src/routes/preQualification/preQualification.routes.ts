@@ -124,7 +124,7 @@ export let preQualificationroutes: ServerRoute[] = [
 
                     other: Joi.object().keys({
                         dob: Joi.number(),
-                        age: Joi.number().min(21).max(65),
+                        age: Joi.number().min(21).max(70),
                         nationality: Joi.string().valid([
                             NATIONALITY.FILIPINO.value,
                             NATIONALITY.FOREIGNER.value,
@@ -468,7 +468,7 @@ export let preQualificationroutes: ServerRoute[] = [
 
                     other: Joi.object().keys({
                         dob: Joi.number(),
-                        age: Joi.number().min(21).max(65),
+                        age: Joi.number().min(21).max(70),
                         nationality: Joi.string().valid([
                             NATIONALITY.FILIPINO.value,
                             NATIONALITY.FOREIGNER.value,
