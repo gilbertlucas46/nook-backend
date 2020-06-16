@@ -145,6 +145,8 @@ class AdminUserE extends BaseEntity {
                         // userId: '$_id',
                         lastName: 1,
                         status: 1,
+                        partnerName: 1,
+                        partnerId: 1,
                     },
                 },
             ];
