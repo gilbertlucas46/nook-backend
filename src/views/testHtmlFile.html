@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Loan Application Form</title>
+    <style>
+        .home-loan-form-template {
+            font-family: Verdana, sans-serif;
+            margin: 0px;
+            background: #fbfafa !important;
+            margin: auto;
+        }
+
+        .home-loan-form-template * {
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+
+        @media print {
+            .home-loan-form-template .page-break-before {
+                page-break-before: always;
+            }
+        }
+
+        @media print {
+            .home-loan-form-template .page-break-after {
+                page-break-after: always;
+            }
+        }
+
+        .home-loan-form-template .text-bold {
+            font-weight: bold;
+        }
+
+        .home-loan-form-template .text-capitalize {
+            text-transform: capitalize;
+        }
+
+        .home-loan-form-template .text-uppercase {
+            text-transform: uppercase;
+        }
+
+        .home-loan-form-template .text-right {
+            text-align: right;
+        }
+
+        .home-loan-form-template .text-center {
+            text-align: center;
+        }
+
+        .home-loan-form-template table {
+            border-spacing: 0px;
+            width: 100%;
+        }
+
+        .home-loan-form-template .w-33 {
+            width: calc(100%/3);
+        }
+
+        .home-loan-form-template .w-50 {
+            width: 50%;
+        }
+
+        .home-loan-form-template .w-66 {
+            width: calc(100% - (100%/3));
+        }
+
+        .home-loan-form-template .w-100 {
+            width: 100%;
+        }
+
+        .home-loan-form-template p {
+            font-size: 13px;
+            color: #231f20 !important;
+            margin-bottom: 5px;
+            margin-top: 0px;
+        }
+
+        .home-loan-form-template td {
+            font-size: 14px;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        .home-loan-form-template th {
+            font-size: 14px;
+            padding: 5px 10px;
+            text-align: left;
+        }
+
+        .home-loan-form-template table.mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .home-loan-form-template tr.br-bottom td {
+            border-bottom: 1px solid #cccccc;
+        }
+
+        .home-loan-form-template .main-heading {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .home-loan-form-template .header {
+            padding: 15px 20px;
+            height: 80px;
+        }
+
+        .home-loan-form-template .header tbody tr td {
+            padding: 5px;
+            vertical-align: middle;
+        }
+
+        .home-loan-form-template .header tbody tr td h2 {
+            margin: 0px;
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .home-loan-form-template .header tbody tr td p {
+            line-height: 24px;
+        }
+
+        .home-loan-form-template .header tbody tr td img {
+            width: 80px;
+            height: auto;
+        }
+
+        .home-loan-form-template .text-header {
+            background-color: #196192;
+            padding: 0px 20px;
+        }
+
+        .home-loan-form-template .text-header p {
+            color: white !important;
+            margin: 0px;
+            font-size: 14px;
+            line-height: 27px;
+        }
+
+        .home-loan-form-template .table-content {
+            padding: 0px 20px;
+        }
+
+        /*# sourceMappingURL=home-loan-application.css.map */
+    </style>
+</head>
+
+
+<body class="home-loan-form-template">
+
+    <table class="table header">
+        <tbody>
+            <tr>
+                <td class="w-50">
+                    <h2 class="main-heading">Home Loan Application Form v1 </h2>
+                </td>
+                <td class="w-50 text-right">
+                    <img src="{{nookLogoUrl}}" alt="Nook">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td class="w-100 text-center">
+                    <h2 class="main-heading" style="margin: 10px 0px;">Application ID: HLA-200221-0002</h2>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table text-header">
+        <tbody>
+            <tr>
+                <th class="w-100">
+                    <p class="text-bold underline">BORROWER’S INFORMATION</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content">
+        <tbody>
+
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Full Name</p>
+                    <span>{{fullName}}</span>
+                </td>
+                <td class="w-33"></td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Civil Status</p>
+                    <span>{{civilStatus}}</span>
+                </td>
+            </tr>
+
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Sex</p>
+                    <span>{{sex}}</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Citizenship</p>
+                    <span class="text-uppercase">{{citizenship}}</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Birth Date</p>
+                    <span>{{birthDate}}</span>
+                </td>
+            </tr>
+
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Mobile No.</p>
+                    <span>{{mobileNo}}</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Phone No.</p>
+                    <span>{{phoneNo}}</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Email</p>
+                    <span>{{email}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-66">
+                    <p class="text-bold text-capitalize">Spouse Full Name</p>
+                    <span>{{spouseFullName}}</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Spouse Birthday</p>
+                    <span>{{spouseBirthDate}}</span>
+                </td>
+            </tr>
+
+            <tr class="br-bottom">
+                <td class="w-66">
+                    <p class="text-bold text-capitalize">Mother’s Maiden Name</p>
+                    <span>{{motherMaidenName}}</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Educational Background</p>
+                    <span>{{educationBackground}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-100">
+                    <p class="text-bold text-capitalize">Present Address</p>
+                    <span>{{currentAddress}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content mb-20">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Home Ownership</p>
+                    <span>{{homeOwnership}}</span>
+                </td>
+                <td class="w-66">
+                    <p class="text-bold text-capitalize">Home Address</p>
+                    <span>{{currentAddress}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table text-header">
+        <tbody>
+            <tr>
+                <th class="w-100">
+                    <p class="text-bold underline">CO-BORROWER’S INFORMATION</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Co-Borrower?</p>
+                    <span>True</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Fullname</p>
+                    <span>Jannet Punla Amat</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Relationship to Borrower</p>
+                    <span>Sister</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Gross Monthly Income (Php)</p>
+                    <span>10,000.00</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">TIN</p>
+                    <span>000000000</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">SSS No.</p>
+                    <span>0000000000</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Employment Type</p>
+                    <span class="text-uppercase">SELF</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Employment Rank</p>
+                    <span class="text-uppercase">OWNER</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Employment Tenure</p>
+                    <span class="text-uppercase">N/A</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Company Name</p>
+                    <span>JaJarome Store</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Company Industry</p>
+                    <span class="text-uppercase">RETAIL</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Office Phone</p>
+                    <span>9171800054</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content mb-20 ">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-66">
+                    <p class="text-bold text-capitalize">Office Address</p>
+                    <span>San Simon, Pampanga, Philippines</span>
+                </td>
+
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Office Email</p>
+                    <span>abc@abc.com</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table header page-break-before">
+        <tbody>
+            <tr>
+                <td class="w-50">
+                    <h2 class="main-heading">Home Loan Application Form v1 </h2>
+                </td>
+                <td class="w-50 text-right">
+                    <img src="nook-logo.png" alt="Nook">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table text-header">
+        <tbody>
+            <tr>
+                <th class="w-100">
+                    <p class="text-bold underline">LOAN INFORMATION</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content mb-20">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Bank</p>
+                    <span>Security Bank</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Loan Term</p>
+                    <span>25</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Fixing Period</p>
+                    <span>1</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Loanable Percentage (%)</p>
+                    <span>80</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Loan Amount</p>
+                    <span>3,200,000.00</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Interest Rate (%)</p>
+                    <span>6.25</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Loan Type</p>
+                    <span>Purchase of Property</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Loan Total Payment (Php)</p>
+                    <span>3,400,000.00</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Monthly Repayments (Php)</p>
+                    <span>21,109.42</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table text-header">
+        <tbody>
+            <tr>
+                <th class="w-100">
+                    <p class="text-bold underline">COLLATERAL INFORMATION</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content mb-20">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-50">
+                    <p class="text-bold text-capitalize">Property Value</p>
+                    <span>4,000,000.00</span>
+                </td>
+                <td class="w-50">
+                    <p class="text-bold text-capitalize">Property Type</p>
+                    <span>House & Lot</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-50">
+                    <p class="text-bold text-capitalize">Property Status</p>
+                    <span class="text-uppercase">RESELLING</span>
+                </td>
+                <td class="w-50">
+                    <p class="text-bold text-capitalize">Property Developer</p>
+                    <span>N/A</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-50">
+                    <p class="text-bold text-capitalize">Property Address</p>
+                    <span>Ph2 Blk 11 Lot 9 Fiesta Comm Mabalacat</span>
+                </td>
+                <td class="w-50">
+                    <p class="text-bold text-capitalize">Are you ready to upload your collateral?</p>
+                    <span>False</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-50">
+                    <p class="text-bold text-capitalize">Contact Person</p>
+                    <span>Gritchel Lee</span>
+                </td>
+                <td class="w-50">
+                    <p class="text-bold text-capitalize">Contact Number</p>
+                    <span>9165488520</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table text-header">
+        <tbody>
+            <tr>
+                <th class="w-100">
+                    <p class="text-bold underline">EMPLOYMENT INFORMATION</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Employment Type</p>
+                    <span class="text-uppercase">PRIVATE</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Employment Rank</p>
+                    <span class="text-uppercase">GENERAL EMPLOYEE</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Employment Tenure</p>
+                    <span>3_100</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Gross Monthly Income</p>
+                    <span>40,000.00</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">TIN</p>
+                    <span>279308699</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">SSS No.</p>
+                    <span>0000000000</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Company Name</p>
+                    <span>TI (Philippines) Inc.</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Company Industry</p>
+                    <span class="text-uppercase">INFORMATION TECHNOLOGY</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Office Phone/Fax</p>
+                    <span>09177376801</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content mb-20">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-66">
+                    <p class="text-bold text-capitalize">Office Address</p>
+                    <span>Clark Freeport, Pampanga, Philippines</span>
+                </td>
+
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Office Email</p>
+                    <span>abc@abc.com</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table header page-break-before">
+        <tbody>
+            <tr>
+                <td class="w-50">
+                    <h2 class="main-heading">Home Loan Application Form v1 </h2>
+                </td>
+                <td class="w-50 text-right">
+                    <img src="nook-logo.png" alt="Nook">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table text-header">
+        <tbody>
+            <tr>
+                <th class="w-100">
+                    <p class="text-bold underline">LOANS AND CREDIT CARDS</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content mb-20">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Do you have other loans?</p>
+                    <span>False</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Total Monthly Payments (Php)</p>
+                    <span>N/A</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Total Remaining Balance (Php)</p>
+                    <span>N/A</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Do you own a credit card?</p>
+                    <span>Yes, active credit card</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Credit Card issuing bank?</p>
+                    <span>N/A</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Credit Card Limit (Php)</p>
+                    <span>20,000.00</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table text-header">
+        <tbody>
+            <tr>
+                <th class="w-100">
+                    <p class="text-bold underline">DEPENDENTS AND REFERENCES</p>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-content">
+        <tbody>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Dependent Name 1</p>
+                    <span>Name here</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Age</p>
+                    <span>7</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Relationship to Borrower</p>
+                    <span class="text-capitalize">Son</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Dependent Name 2</p>
+                    <span>Name here</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Age</p>
+                    <span>7</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Relationship to Borrower</p>
+                    <span class="text-capitalize">Son</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Dependent Name 3</p>
+                    <span>Name here</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Age</p>
+                    <span>7</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Relationship to Borrower</p>
+                    <span class="text-capitalize">Daughter</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Personal Reference Name 1</p>
+                    <span>Name here</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Contact No.</p>
+                    <span>1231231234</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Relationship to Borrower</p>
+                    <span class="text-capitalize">Relationship here</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Personal Reference Name 2</p>
+                    <span>Name here</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Contact No.</p>
+                    <span>1231231234</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Relationship to Borrower</p>
+                    <span class="text-capitalize">Relationship here</span>
+                </td>
+            </tr>
+            <tr class="br-bottom">
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Personal Reference Name 3</p>
+                    <span>Name here</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Contact No.</p>
+                    <span>1231231234</span>
+                </td>
+                <td class="w-33">
+                    <p class="text-bold text-capitalize">Relationship to Borrower</p>
+                    <span class="text-capitalize">Relationship here</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

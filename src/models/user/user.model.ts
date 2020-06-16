@@ -48,6 +48,8 @@ const userSchema = new Schema({
 		index: true,
 	},
 	countryCode: { type: String },
+	partnerName: { type: String },
+	partnerId: { type: String },
 	ipAddress: { type: String },
 	createdAt: { type: Number, required: true, index: true },
 	updatedAt: { type: Number, required: true, index: true },

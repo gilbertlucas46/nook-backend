@@ -769,6 +769,7 @@ export let loanRoute: ServerRoute[] = [
 						provinceState: Joi.string(),
 						country: Joi.string(),
 						coBorrowerInfo: {
+							
 							employmentType: Joi.string().valid([
 								EMPLOYMENT_TYPE.BPO.value,
 								EMPLOYMENT_TYPE.GOVT.value,

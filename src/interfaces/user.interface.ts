@@ -102,6 +102,8 @@ export namespace UserRequest {
 		phoneNumber: string;
 		ipAddress: string;
 		countryCode: string;
+		partnerName: string;
+		partnerId: string;
 
 	}
 }

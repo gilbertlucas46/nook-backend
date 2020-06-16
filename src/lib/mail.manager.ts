@@ -206,8 +206,8 @@ export class MailManager {
 			console.log('middleNamemiddleNamemiddleNamemiddleName', middleName);
 
 			let spouseMiddleName = '';
-			if (params['personalInfo'] && params['personalInfo']['spouseInfo'] && params['personalInfo']['spouseInfo']['middleName']) {
-				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['spouseInfo']['middleName'] : '';
+			if (params['personalInfo'] && params['personalInfo']['middleName']) {
+				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : '';
 			}
 			let coBorrowerMiddleName = '';
 			console.log('spouseMiddleNamespouseMiddleNamespouseMiddleName', spouseMiddleName);
@@ -280,7 +280,7 @@ export class MailManager {
 					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + coBorrowerMiddleName + ' ' + coBorrowerInfo['lastName'] : 'N/A',
 					relationship: (coBorrowerInfo && coBorrowerInfo['relationship']) ? coBorrowerInfo['relationship'] : 'N/A',
 					// relationship: coBorrowerInfo ? coBorrowerInfo['relationship'] : 'N/A',
-					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? coBorrowerInfo['monthlyIncome'] : 'N/A',
+					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? coBorrowerInfo['monthlyIncome'] + ' php' : 'N/A',
 					coBorrowerTIN: (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A',
 					coBorrowerSSS: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['sss']) ? params.employmentInfo.coBorrowerInfo['sss'] : 'N/A',
 					coBorrowerEmploymentType: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentType']) ? params.employmentInfo.coBorrowerInfo['employmentType'] : 'N/A',
@@ -310,7 +310,13 @@ export class MailManager {
 					propertyType: params['propertyInfo']['type'],
 					propertyStatus: params['propertyInfo']['status'],
 					propertyDeveloper: params['propertyInfo']['developer'] ? params['propertyInfo']['developer'] : 'N/A',
-					// propertyAddress: params['propertyDocuments']['purchasePropertyInfo']['address'],
+					propertyAddress: (params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['address']) ? params['propertyDocuments']['purchasePropertyInfo']['address'] : 'N/A',
+					isColleteralDocumentUploaded: (params && params['documents'] && params['documents']['colleteralDoc'][0]['status']) ? true : false,
+
+					// contactPerson:
+					contactNumber: (params && params['contactInfo'] && params['contactInfo']['mobileNumber']) ? params['contactInfo']['mobileNumber'] : 'N/A',
+
+
 					// collateralDocStatus: params['propertyDocuments']['purchasePropertyInfo']['collateralDocStatus'],
 
 					// contactPerson: params['propertyDocuments']['purchasePropertyInfo']['contactPerson'],
@@ -321,9 +327,7 @@ export class MailManager {
 					employmentType: params['employmentInfo']['type'],
 					employmentRank: params['employmentInfo']['rank'],
 					employmentTenure: params['employmentInfo']['tenure'],
-					grossMonthlyIncome: params['personalInfo']['monthlyIncome'] + ' php',
-
-					// grossMonthlyIncome: params['employmentInfo']['monthlyIncome'] + ' php',   // to be done
+					grossMonthlyIncome: params['personalInfo']['monthlyIncome'] + ' php',   // to be done
 					tin: params['employmentInfo'] ? params['employmentInfo']['tin'] : 'N/A',
 					sss: params['employmentInfo'] ? params['employmentInfo']['sss'] : 'N/A',
 					companyName: params['employmentInfo']['companyName'],
@@ -335,7 +339,7 @@ export class MailManager {
 
 					// LOANS AND CREDIT CARDS
 					otherLoan: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['status']) ? params['personalInfo']['prevLoans']['status'] : 'N/A',
-					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? params['personalInfo']['prevLoans']['monthlyTotal'] : 'N/A',
+					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? params['personalInfo']['prevLoans']['monthlyTotal'] + ' php' : 'N/A',
 					totalRemainingBalance: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['remainingTotal']) ? params['personalInfo']['prevLoans']['remainingTotal'] : 'N/A',
 					//
 					// Credit Card Limit (Php)
