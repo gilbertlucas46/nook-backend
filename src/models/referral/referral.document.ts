@@ -9,6 +9,7 @@ export interface ILoanReferral {
     updatedAt: number;
     userId: Types.ObjectId;
     status: string;
+    countryCode:string;
 }
 
 export interface LoanReferralDocument extends Document, ILoanReferral { }
