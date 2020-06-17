@@ -23,7 +23,8 @@ export class PdfGenerator {
             const buf = Buffer.from(htmlFile).toString();
             const applicationId: any = datatoAddInPDF.applicationId;
             const applicantName: any = datatoAddInPDF.fullName;
-            const nookLogoUrl = config['host'] + '/src/views/images/nooklogo.png';
+            // const nookLogoUrl = config['host'] + '/src/views/images/nooklogo.png';
+            const nookLogoUrl = 'http://nookqa.appskeeper.com' + '/src/views/images/nooklogo.png';
             console.log('nookLogoUrlnookLogoUrl', nookLogoUrl);
 
 
