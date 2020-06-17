@@ -19,7 +19,6 @@ export class PdfGenerator {
     async test(htmlFile, datatoAddInPDF) {
         try {
             console.log('htmlFilehtmlFilehtmlFilehtmlFile', datatoAddInPDF);
-
             console.log('11111111111111111111111111111111111111');
             const buf = Buffer.from(htmlFile).toString();
             const applicationId: any = datatoAddInPDF.applicationId;
@@ -27,9 +26,10 @@ export class PdfGenerator {
             const nookLogoUrl = config['host'] + '/src/views/images/nooklogo.png';
             console.log('nookLogoUrlnookLogoUrl', nookLogoUrl);
 
+
             return new Promise((resolve, reject) => {
                 const options = {
-                    paginationOffset: 1,       // Override the initial pagination number
+                    // paginationOffset: 1,       // Override the initial pagination number
 
                     //        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     header: {
