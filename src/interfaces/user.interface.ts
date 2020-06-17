@@ -39,6 +39,8 @@ export namespace UserRequest {
 	export interface Login1 {
 		email: string;
 		password: string;
+		partnerId?: string;
+		partnerName?: string;
 	}
 	export interface Session {
 		userId?: string;
