@@ -23,9 +23,10 @@ export class PdfGenerator {
             const buf = Buffer.from(htmlFile).toString();
             const applicationId: any = datatoAddInPDF.applicationId;
             const applicantName: any = datatoAddInPDF.fullName;
-            // const nookLogoUrl = config['host'] + '/src/views/images/nooklogo.png';
-            const nookLogoUrl = 'https://nookqa.appskeeper.com' + '/src/views/images/nooklogo.png';
-            console.log('nookLogoUrlnookLogoUrl', nookLogoUrl);
+            const nookLogoUrl = datatoAddInPDF['nookLogoUrl'];
+
+            // const nookLogoUrl = 'https://nookqa.appskeeper.com' + '/src/views/images/nooklogo.png';
+            // console.log('nookLogoUrlnookLogoUrl', nookLogoUrl);
 
 
             return new Promise((resolve, reject) => {
@@ -42,13 +43,14 @@ export class PdfGenerator {
                                 <tr>
                                     <td style="width: 50%; vertical-align: middle; padding-left: 0px; font-size: 8.5pt;"></td>
                                     <td style="width: 50%; text-align: right; vertical-align: middle; height: 70px; padding-right: 40px !important;">
-                                        <img src=${nookLogoUrl} alt="Nook" style="width: 65px; height: auto;">
+                                        <img src=${nookLogoUrl} alt="Nook" style="width: 65px; alt="" height: auto;">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         `,
                     },
+                    "base": "file:///home/www/your-asset-path", // Base path that's used to load files (images, css, js) when they aren't referenced using a host
                     format: 'A4',        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     // height: '11.7in',
                     // width: '8.3in',
@@ -70,6 +72,7 @@ export class PdfGenerator {
                     },
                     // timeout: 120000
                 };
+                var result = "<div id='pageHeader'><img src='" + nookLogoUrl + "' /><div style='text-align: center;'>Author: Marc Bachmann</div></div>";
 
                 pdf.create(buf, options).toFile(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', async (err, data) => {
                     if (err) {
