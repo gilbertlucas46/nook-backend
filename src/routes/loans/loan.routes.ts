@@ -1194,6 +1194,7 @@ export let loanRoute: ServerRoute[] = [
 						LOAN_PROPERTY_STATUS.RENOVATION.value,
 						LOAN_PROPERTY_STATUS.RESELLING.value,
 					]),
+					loanAmount: Joi.number(),
 
 					// }),
 					// bankInfo: Joi.object().keys({
