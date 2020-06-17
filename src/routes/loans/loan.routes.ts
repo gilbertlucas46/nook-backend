@@ -983,7 +983,7 @@ export let loanRoute: ServerRoute[] = [
 				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
 
 				const data = await LoanController.getDocuments(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));
@@ -1250,7 +1250,7 @@ export let loanRoute: ServerRoute[] = [
 				};
 
 				const data = await LoanController.updateDocument(payload);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
 				return (UniversalFunctions.sendError(error));

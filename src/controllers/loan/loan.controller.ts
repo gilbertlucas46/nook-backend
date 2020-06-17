@@ -415,8 +415,8 @@ class LoanControllers extends BaseEntity {
             }
             // LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
 
-            if (payload.propertyStatus === 'FORECLOSED' || payload.propertyStatus === 'BPO') {
-                payload['propertyStatus'] = 'NEW_CONSTRUCTION';
+            if (payload.propertyStatus === 'FORECLOSED') {
+                payload['propertyStatus'] = 'READY_FOR_OCCUPANCY';
             }
 
             const criteria = {
@@ -450,9 +450,6 @@ class LoanControllers extends BaseEntity {
                             'legalDocument.allowedFor': payload.employmentType,
                         },
                     },
-                    // {
-                    //     $replaceRoot: { newRoot: '$legalDocument' },
-                    // },
                 ];
             }
             if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED && payload.coBorrowerInfo) {
