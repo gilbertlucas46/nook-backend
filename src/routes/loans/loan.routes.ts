@@ -769,7 +769,7 @@ export let loanRoute: ServerRoute[] = [
 						provinceState: Joi.string(),
 						country: Joi.string(),
 						coBorrowerInfo: {
-							
+
 							employmentType: Joi.string().valid([
 								EMPLOYMENT_TYPE.BPO.value,
 								EMPLOYMENT_TYPE.GOVT.value,
@@ -976,7 +976,7 @@ export let loanRoute: ServerRoute[] = [
 		handler: async (request, h: ResponseToolkit) => {
 			try {
 				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				const payload: LoanRequest.AddLoan = {
+				const payload = {
 					...request.params as any,
 					...request.query as any,
 				};
@@ -1040,7 +1040,7 @@ export let loanRoute: ServerRoute[] = [
 						EMPLOYMENT_TYPE.PRIVATE.value,
 						EMPLOYMENT_TYPE.PROFESSIONAL.value,
 						EMPLOYMENT_TYPE.SELF.value,
-					]),
+					]).required(),
 					propertyStatus: Joi.string().valid([
 						LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
 						LOAN_PROPERTY_STATUS.PRE_SELLING.value,
@@ -1049,8 +1049,8 @@ export let loanRoute: ServerRoute[] = [
 						LOAN_PROPERTY_STATUS.RENOVATION.value,
 						LOAN_PROPERTY_STATUS.RESELLING.value,
 						LOAN_PROPERTY_STATUS.FORECLOSED.value,
-					]),
-
+					]).required(),
+					loanAmount: Joi.number(),
 					// }),
 					// bankInfo: Joi.object().keys({
 					// iconUrl: Joi.string(),

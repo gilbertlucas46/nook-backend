@@ -7,6 +7,7 @@ export namespace loanReferralRequest {
         phoneNumber: string;
         notes: string;
         status?: string;
+        countryCode: string;
     }
 
     export interface GetReferral {
