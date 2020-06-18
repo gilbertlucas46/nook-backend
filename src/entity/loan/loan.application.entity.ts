@@ -198,6 +198,7 @@ class LoanApplicationE extends BaseEntity {
                     { 'contactInfo.phoneNumber': { $regex: searchTerm, $options: 'i' } },
                     { 'contactInfo.email': { $regex: searchTerm, $options: 'i' } },
                     { 'contactInfo.mobileNumber': { $regex: searchTerm, $options: 'i' } },
+                    { referenceId: { $regex: searchTerm, $options: 'i' } },
                 ];
             }
 
@@ -247,7 +248,7 @@ class LoanApplicationE extends BaseEntity {
                             $match: {
                                 $expr: {
                                     $eq: ['$_id', '$$aid'],
-                                }
+                                },
                             },
                         },
                         {
@@ -257,7 +258,7 @@ class LoanApplicationE extends BaseEntity {
                                 lastName: 1,
                                 status: 1,
                             },
-                        }
+                        },
                     ],
                     as: 'assignedAdmin',
                 },
@@ -267,7 +268,7 @@ class LoanApplicationE extends BaseEntity {
                     preserveNullAndEmptyArrays: true,
                 },
             },
-            ]
+            ];
             // } else {
             //     queryPipeline;
             // }
@@ -328,8 +329,6 @@ class LoanApplicationE extends BaseEntity {
             }
             // console.log("data['employmentInfo']", data['employmentInfo']['coBorrowerInfo']);
 
-
-
             // if (data['employmentInfo']['coBorrowerInfo']['employmentRank']) {
             if (data && data['employmentInfo'] && data['employmentInfo']['coBorrowerInfo'] && data['employmentInfo']['coBorrowerInfo']['employmentRank']) {
 
@@ -353,7 +352,6 @@ class LoanApplicationE extends BaseEntity {
                 data.employmentInfo.type = Constant.EMPLOYMENT_TYPE[data.employmentInfo.type].label;
 
             }
-
 
             // if (data.employmentInfo.coBorrowerInfo.companyIndustry) {
             if (data && data['employmentInfo'] && data['employmentInfo']['coBorrowerInfo'] && data['employmentInfo']['coBorrowerInfo']['companyIndustry']) {
@@ -393,7 +391,6 @@ class LoanApplicationE extends BaseEntity {
 
             console.log('loanDetailsloanDetails>>>>>>>>>>', data);
             // if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value ) {
-
 
             const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
             console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
