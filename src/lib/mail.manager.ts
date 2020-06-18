@@ -206,8 +206,8 @@ export class MailManager {
 			console.log('middleNamemiddleNamemiddleNamemiddleName', middleName);
 
 			let spouseMiddleName = '';
-			if (params['personalInfo'] && params['personalInfo']['middleName']) {
-				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : '';
+			if (params['personalInfo'] && params['personalInfo']['spouseInfo'] && params['personalInfo']['spouseInfo']['middleName']) {
+				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['spouseInfo']) ? ' ' + params['personalInfo']['spouseInfo']['middleName'] : '';
 			}
 			let coBorrowerMiddleName = '';
 			console.log('spouseMiddleNamespouseMiddleNamespouseMiddleName', spouseMiddleName);
