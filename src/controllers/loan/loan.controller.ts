@@ -456,15 +456,19 @@ class LoanControllers extends BaseEntity {
                 console.log('1111111111111111111111111LLLLLLLLLLL');
                 const pushedItem = {
                     $match: {
-                        $or: [{
-                            'legalDocument.isSpouse': true,
+                        $and: [{
+                            $or: [{
+                                'legalDocument.isSpouse': true,
+                            },
+                            {
+                                'legalDocument.coborrower': true,
+                            },
+                            ],
                         },
                         {
-                            'legalDocument.coborrower': true,
+                            'legalDocument.isSpouse': { $ne: true },
                         },
-                        {
-                            'legalDocument.isSpouse': { $exists: false },
-                        }],
+                        ],
                     },
                 };
                 aggregateLegal.splice(5, 5, pushedItem);
@@ -474,13 +478,19 @@ class LoanControllers extends BaseEntity {
                 console.log('222222222KKKKKKKKKKKKKK');
                 const pushedItem = {
                     $match: {
-                        $or: [
-                            {
-                                'legalDocument.coborrower': { $exists: true },
-                            },
-                            {
-                                'legalDocument.isSpouse': { $exists: false },
-                            },
+                        $and: [{
+                            $or: [
+                                {
+                                    'legalDocument.coborrower': { $exists: true },
+                                },
+                                {
+                                    'legalDocument.isSpouse': { $exists: false },
+                                },
+                            ],
+                        },
+                        // {
+                        //     'legalDocument.isSpouse': { $ne: true },
+                        // },
                         ],
                     },
                 };
