@@ -406,7 +406,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					limit: Joi.number(),
 					page: Joi.number().min(1).default(1),
 					// type: Joi.string().valid('admin', 'user')
-					searchTerm: Joi.string(),
+					searchTerm: Joi.string().trim(),
 					staffId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					partnerId: Joi.string(),
 				},
