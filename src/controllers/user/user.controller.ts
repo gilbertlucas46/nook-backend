@@ -78,10 +78,8 @@ export class UserController extends BaseEntity {
 							partnerId: payload.partnerId,
 							partnerName: payload.partnerName,
 						};
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, dataToupdate);
 					}
-					const data = await ENTITY.UserE.updateOneEntity({ _id: userData._id }, dataToupdate);
-					console.log('datadatadata', data);
-
 					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'Tenant');
 					const formatedData = utils.formatUserData(userData);
 					return { formatedData, accessToken };
