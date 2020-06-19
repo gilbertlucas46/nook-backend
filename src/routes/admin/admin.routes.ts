@@ -22,6 +22,7 @@ const objectSchema = Joi.object({
 	documentRequired: Joi.string(),
 	description: Joi.string(),
 	url: Joi.string().allow(''),
+	createdAt: Joi.number(),
 });
 
 export let adminProfileRoute: ServerRoute[] = [
@@ -1006,8 +1007,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-
-
 	{
 		method: 'POST',
 		path: '/v1/admin/loan/application',
