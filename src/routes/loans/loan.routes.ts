@@ -1296,6 +1296,7 @@ export let loanRoute: ServerRoute[] = [
 					description: Joi.string(),
 					documentId: Joi.string(),
 					url: Joi.string(),
+					createdAt: Joi.number(),
 					// createdAt: new Date().getTime(),
 					// updatedAt: { type: Number },
 				},
