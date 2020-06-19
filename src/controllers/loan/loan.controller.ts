@@ -488,9 +488,9 @@ class LoanControllers extends BaseEntity {
                                 },
                             ],
                         },
-                        // {
-                        //     'legalDocument.isSpouse': { $ne: true },
-                        // },
+                            // {
+                            //     'legalDocument.isSpouse': { $ne: true },
+                            // },
                         ],
                     },
                 };
@@ -702,14 +702,20 @@ class LoanControllers extends BaseEntity {
             }
 
             const dataToUpdate = {
+                // documentRequired: Joi.string(),
+                description: payload.description,
                 status: 'Pending',
                 url: payload.url,
-                createdAt: new Date().getTime(),
-                updatedAt: { type: Number },
+                createdAt: payload.createdAt,
             };
             console.log('criteriacriteriacriteria', criteria);
 
-            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, { 'documents.legalDocument.$.url': payload.url });
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, {
+                'documents.legalDocument.$.url': payload.url,
+                'createdAt': payload.createdAt,
+                'status': 'Pending',
+
+            });
             // { $set: { "grades.$.std" : 6 } }
             return data;
 
