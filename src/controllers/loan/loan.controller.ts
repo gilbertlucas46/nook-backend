@@ -486,10 +486,10 @@ class LoanControllers extends BaseEntity {
                                 {
                                     'legalDocument.isSpouse': { $exists: false },
                                 },
-                                {
-                                    'legalDocument.isSingle': { $exists: false },
-                                },
                             ],
+                        },
+                        {
+                            'legalDocument.isSingle': { $exists: false },
                         },
                             // {
                             //     'legalDocument.isSingle': { $exists: true },
@@ -505,21 +505,11 @@ class LoanControllers extends BaseEntity {
                 const pushedItem = {
                     $match: {
                         $and: [{
-                            $or: [
-                                {
-                                    'legalDocument.coborrower': { $exists: false },
-                                },
-                                {
-                                    'legalDocument.isSpouse': { $exists: false },
-                                },
-                                {
-                                    'legalDocument.isSingle': { $exists: false },
-                                },
-                            ]
+                            'legalDocument.coborrower': { $exists: false },
                         },
-                            // {
-                            //     'legalDocument.isSingle': { $exists: false },
-                            // },
+                        {
+                            'legalDocument.isSpouse': { $exists: false },
+                        },
                         ],
                     },
                 };
@@ -532,15 +522,15 @@ class LoanControllers extends BaseEntity {
                         $and: [{
                             $or: [
                                 {
-                                    'legalDocument.coborrower': { $exists: false },
-                                },
-                                {
                                     'legalDocument.isSpouse': { $exists: true },
                                 },
                                 {
                                     'legalDocument.isSingle': { $exists: false },
                                 },
                             ],
+                        },
+                        {
+                            'legalDocument.coborrower': { $exists: false },
                         },
                             // {
                             //     'legalDocument.isSingle': { $exists: true },
