@@ -463,10 +463,10 @@ class LoanControllers extends BaseEntity {
                             {
                                 'legalDocument.coborrower': true,
                             },
+                            {
+                                'legalDocument.isSingle': { $exists: false },
+                            },
                             ],
-                        },
-                        {
-                            'legalDocument.isSpouse': { $ne: true },
                         },
                         ],
                     },
@@ -486,10 +486,13 @@ class LoanControllers extends BaseEntity {
                                 {
                                     'legalDocument.isSpouse': { $exists: false },
                                 },
+                                {
+                                    'legalDocument.isSingle': { $exists: false },
+                                },
                             ],
                         },
                             // {
-                            //     'legalDocument.isSpouse': { $ne: true },
+                            //     'legalDocument.isSingle': { $exists: true },
                             // },
                         ],
                     },
@@ -501,13 +504,22 @@ class LoanControllers extends BaseEntity {
                 console.log('33333333333333hhhhhhhKKKKKKKKKKKKKK');
                 const pushedItem = {
                     $match: {
-                        $and: [
-                            {
-                                'legalDocument.coborrower': { $exists: false },
-                            },
-                            {
-                                'legalDocument.isSpouse': { $exists: false },
-                            },
+                        $and: [{
+                            $or: [
+                                {
+                                    'legalDocument.coborrower': { $exists: false },
+                                },
+                                {
+                                    'legalDocument.isSpouse': { $exists: false },
+                                },
+                                {
+                                    'legalDocument.isSingle': { $exists: false },
+                                },
+                            ]
+                        },
+                            // {
+                            //     'legalDocument.isSingle': { $exists: false },
+                            // },
                         ],
                     },
                 };
@@ -517,14 +529,27 @@ class LoanControllers extends BaseEntity {
                 console.log('4444444444444444444444444ttttttttTTTTTTTTTTTTTTTTTTTTTT');
                 const pushedItem = {
                     $match: {
-                        $or: [
-                            {
-                                'legalDocument.coborrower': { $exists: false },
-                            },
-                            {
-                                'legalDocument.isSpouse': { $exists: true },
-                            },
+                        $and: [{
+                            $or: [
+                                {
+                                    'legalDocument.coborrower': { $exists: false },
+                                },
+                                {
+                                    'legalDocument.isSpouse': { $exists: true },
+                                },
+                                {
+                                    'legalDocument.isSingle': { $exists: false },
+                                },
+                            ],
+                        },
+                            // {
+                            //     'legalDocument.isSingle': { $exists: true },
+                            // },
                         ],
+                        // $or: [
+                        //     { doSomething: { $exists: false } },
+                        //     { doSomething: false }
+                        // ]
                     },
                 };
                 aggregateLegal.push(pushedItem);
