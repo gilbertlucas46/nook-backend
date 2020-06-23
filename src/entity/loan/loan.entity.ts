@@ -188,13 +188,13 @@ class LoanEntities extends BaseEntity {
                         bannerUrl: 1,
                         processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
-                        totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
-                        monthlyPayment: { $divide: ['$numerator', '$denominator'] },
+                        // totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+                        // monthlyPayment: { $divide: ['$numerator', '$denominator'] },
 
-                        // totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
-                        // monthlyPayment: {
-                        //     $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
-                        // },
+                        totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
+                        monthlyPayment: {
+                            $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
+                        },
                         totalLoanPayment: 1,
                         bankId: '$_id',
                         _id: 0,
