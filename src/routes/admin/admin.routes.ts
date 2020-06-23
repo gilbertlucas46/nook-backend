@@ -887,7 +887,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							LoanConstant.INDUSTRIES.SAFETY_SECURITY_LEGAL.value,
 							LoanConstant.INDUSTRIES.TRANSPORTATION.value,
 						]),
-						grossMonthlyIncome: Joi.string().allow('').allow(null),
+						grossMonthlyIncome: Joi.string().allow('').default(''),
 						provinceState: Joi.string(),
 						country: Joi.string(),
 						coBorrowerInfo: {
