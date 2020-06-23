@@ -745,7 +745,20 @@ export let adminProfileRoute: ServerRoute[] = [
 							]),
 						},
 					}),
+					applicationStatus: Joi.string().valid([
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value
 
+					]),
 					propertyInfo: {
 						value: Joi.number(),
 						type: Joi.string(),
