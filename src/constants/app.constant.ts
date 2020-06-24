@@ -782,7 +782,7 @@ export let SERVER = {
 	ADMIN_FORGET_PASSWORD_URL: '/v1/admin/verifyLink/',
 
 	ANDROID_PACKAGE_NAME: 'com.nook.com',
-	APP_URL: config.get('host'),
+	// APP_URL: config.get('host'),
 	LINKS: {
 		TERMS_COND: '',
 		PRIVACY: config.get('host') + '/privacy_policy/',
