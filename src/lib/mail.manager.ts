@@ -280,7 +280,7 @@ export class MailManager {
 					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + coBorrowerMiddleName + ' ' + coBorrowerInfo['lastName'] : 'N/A',
 					relationship: (coBorrowerInfo && coBorrowerInfo['relationship']) ? coBorrowerInfo['relationship'] : 'N/A',
 					// relationship: coBorrowerInfo ? coBorrowerInfo['relationship'] : 'N/A',
-					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? coBorrowerInfo['monthlyIncome'] + ' php' : 'N/A',
+					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? + 'php ' + coBorrowerInfo['monthlyIncome'] : 'N/A',
 					coBorrowerTIN: (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A',
 					coBorrowerSSS: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['sss']) ? params.employmentInfo.coBorrowerInfo['sss'] : 'N/A',
 					coBorrowerEmploymentType: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentType']) ? params.employmentInfo.coBorrowerInfo['employmentType'] : 'N/A',
@@ -297,7 +297,7 @@ export class MailManager {
 					loanTerm: params['loanDetails']['loanTerm'] + ' ' + 'year',
 					fixedPeriod: params['loanDetails']['fixedPeriod'] + ' ' + 'year',
 					loanPercent: params['loanDetails']['loanPercent'],
-					loanAmount: params['loanDetails']['loanAmount'] + ' php',
+					loanAmount: 'php ' + params['loanDetails']['loanAmount'] + ,
 					interestRate: params['loanDetails']['rate'],
 					loanType: params['loanDetails']['loanType'],
 					// Loan Total PaymentA (Php): params['loanDetails']['loanAmount'],
@@ -306,7 +306,7 @@ export class MailManager {
 
 
 					// COLLATERAL INFORMATION
-					propertyValue: params['propertyInfo']['value'] + ' php',
+					propertyValue: 'php ' + params['propertyInfo']['value'],
 					propertyType: params['propertyInfo']['type'],
 					propertyStatus: params['propertyInfo']['status'],
 					propertyDeveloper: params['propertyInfo']['developer'] ? params['propertyInfo']['developer'] : 'N/A',
@@ -327,7 +327,7 @@ export class MailManager {
 					employmentType: params['employmentInfo']['type'],
 					employmentRank: params['employmentInfo']['rank'],
 					employmentTenure: params['employmentInfo']['tenure'],
-					grossMonthlyIncome: params['personalInfo']['monthlyIncome'] + ' php',   // to be done
+					grossMonthlyIncome: 'php ' + params['personalInfo']['monthlyIncome'] + ,   // to be done
 					tin: params['employmentInfo'] ? params['employmentInfo']['tin'] : 'N/A',
 					sss: params['employmentInfo'] ? params['employmentInfo']['sss'] : 'N/A',
 					companyName: params['employmentInfo']['companyName'],
