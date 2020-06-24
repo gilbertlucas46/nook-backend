@@ -14,6 +14,7 @@ import { PreQualificationRequest } from '@src/interfaces/preQualification.interf
 
 
 const objectSchema = Joi.object({
+	_id: Joi.string(),
 	status: Joi.string().valid([
 		LoanConstant.DocumentStatus.PENDING,
 		LoanConstant.DocumentStatus.APPROVED,
@@ -22,7 +23,7 @@ const objectSchema = Joi.object({
 	documentRequired: Joi.string(),
 	description: Joi.string(),
 	url: Joi.string().allow(''),
-	createdAt: Joi.number(),
+	createdAt: Joi.number().allow(null).allow(''),
 });
 
 export let adminProfileRoute: ServerRoute[] = [
@@ -958,6 +959,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						},
 					}),
 					dependentsInfo: Joi.array().items({
+						_id: Joi.string().allow(null).allow(''),
 						name: Joi.string(),
 						age: Joi.number(),
 						relationship: Joi.string().valid([
@@ -971,6 +973,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						]),
 					}),
 					tradeReferences: Joi.array().items({
+						_id: Joi.string().allow(null).allow(''),
 						companyName: Joi.string(),
 						type: Joi.string().valid([
 							LoanConstant.TRADE_REFERENCE.CUSTOMER,
