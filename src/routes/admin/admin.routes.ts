@@ -23,7 +23,7 @@ const objectSchema = Joi.object({
 	documentRequired: Joi.string(),
 	description: Joi.string(),
 	url: Joi.string().allow(''),
-	createdAt: Joi.number().allow(null).allow(''),
+	createdAt: Joi.number().allow(null).default(0),
 });
 
 export let adminProfileRoute: ServerRoute[] = [
