@@ -90,7 +90,15 @@ class LoanControllers extends BaseEntity {
                 referenceId: payload['referenceId'],
             };
             const saveAllData = await ENTITY.LoanErrorE.createOneEntity(dataToSave);
-            return data['referenceId'];
+            if (userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE) {
+                return {
+                    referenceId: data['referenceId'],
+                    applicationStatus: data['applicationStatus'],
+                    _id: data['_id']
+                }
+            }
+            return data['referenceIdu'];
+
 
         } catch (error) {
             utils.consolelog('error', error, true);
