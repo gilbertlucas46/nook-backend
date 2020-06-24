@@ -1007,6 +1007,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					// 	}),
 					// 	nookAgent: Joi.string(),
 					// }),
+					referenceId: { type: String, index: true, unique: true },
 					documents: {
 						legalDocument: Joi.array().items(objectSchema),
 						incomeDocument: Joi.array().items(objectSchema),
