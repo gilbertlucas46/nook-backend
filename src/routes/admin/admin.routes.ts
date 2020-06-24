@@ -677,8 +677,8 @@ export let adminProfileRoute: ServerRoute[] = [
 				},
 				payload: {
 					assignedTo: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
-					partnerName: Joi.string().allow('').default(''),
-					partnerId: Joi.string().allow('').default(''),
+					partnerName: Joi.string().allow(''),
+					partnerId: Joi.string().allow(''),
 					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
@@ -1046,8 +1046,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					assignedTo: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
-					partnerName: Joi.string().allow('').default(''),
-					partnerId: Joi.string().allow('').default(''),
+					partnerName: Joi.string().allow(''),
+					partnerId: Joi.string().allow(''),
 					userId: Joi.string(),  // in case of admin only
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
