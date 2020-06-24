@@ -403,8 +403,8 @@ export let preQualificationroutes: ServerRoute[] = [
             validate: {
                 payload: {
                     preQualificationId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
-                    partnerName: Joi.string().allow('').default(''),
-                    partnerId: Joi.string().allow('').default(''),
+                    partnerName: Joi.string().allow(''),
+                    partnerId: Joi.string().allow(''),
                     userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/), // to add the prequialification for the user by admin
                     property: Joi.object().keys({
                         value: Joi.number().min(50000),
