@@ -53,7 +53,13 @@ export namespace PreQualificationRequest {
                 status: boolean;
                 coBorrowerMonthlyIncome?: number;
             },
+            //admin addprequalofication for user
             mobileNumber: string;
+            firstName?: string;
+            lastName?: string;
+            middleName?: string;
+            userName?: string;
+            email?: string;
         };
         loan: {
             type: string;
