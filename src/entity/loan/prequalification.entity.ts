@@ -307,7 +307,7 @@ class PreLoanEntities extends BaseEntity {
 
                 const dataToSave = {
                     ...payload,
-                    email: userData.email,
+                    email: (payload.other && payload.other.email) ? payload.other.email : userData.email,
                     userId: payload.userId ? payload.userId : userData._id,
                     prequalifiedBanks: data,
                     createdAt: new Date().getTime(),
@@ -328,6 +328,9 @@ class PreLoanEntities extends BaseEntity {
                 // data1.employmentInfo.grossMonthlyIncome = data1.work.income;
                 // delete data1['work'];
                 // console.log('data2:', data1);
+                if (payload.other && payload.other.email) {
+                    delete payload.other['email'];
+                }
 
                 const salesforceData: { [key: string]: string | number } = flattenObject(data1.toObject ? data1.toObject() : data1);
                 console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
