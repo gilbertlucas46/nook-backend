@@ -212,6 +212,7 @@ const schema = new Schema({
         officeAddress: { type: Schema.Types.String, trim: true },
         // Gross Monthly Income (PhP)
         grossMonthlyIncome: { type: String },
+        // grossMonthlyIncome: { type: Number, default: 0 },
         provinceState: { type: String },
         country: { type: String },
         coBorrowerInfo: {
@@ -282,6 +283,11 @@ const schema = new Schema({
     //     nookAgent: { type: Schema.Types.String, trim: true },
     // },
     documents: {
+        purchasePropertyInfo: {
+            address: { type: Schema.Types.String, index: true },
+            contactPerson: { type: Schema.Types.String, trim: true },
+            contactNumber: { type: Schema.Types.String, trim: true },
+        },
         legalDocument: [{
             status: {
                 type: String, enum: [
@@ -293,7 +299,7 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number },
+            createdAt: { type: Number, default: new Date().getTime() },
             updatedAt: { type: Number },
         }],
         incomeDocument: [{
@@ -307,7 +313,7 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number },
+            createdAt: { type: Number, default: new Date().getTime() },
             updatedAt: { type: Number },
         }],
         colleteralDoc: [{
@@ -321,7 +327,7 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number },
+            createdAt: { type: Number, default: new Date().getTime() },
             updatedAt: { type: Number },
         }],
     },

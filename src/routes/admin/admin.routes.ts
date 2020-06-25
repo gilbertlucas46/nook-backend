@@ -1009,6 +1009,11 @@ export let adminProfileRoute: ServerRoute[] = [
 					// }),
 					referenceId: Joi.string(),
 					documents: {
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.string(),
+						}),
 						legalDocument: Joi.array().items(objectSchema),
 						incomeDocument: Joi.array().items(objectSchema),
 						colleteralDoc: Joi.array().items(objectSchema),
@@ -1369,6 +1374,11 @@ export let adminProfileRoute: ServerRoute[] = [
 					// 	nookAgent: Joi.string(),
 					// }),
 					documents: {
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.string(),
+						}),
 						legalDocument: Joi.array().items(objectSchema),
 						incomeDocument: Joi.array().items(objectSchema),
 						colleteralDoc: Joi.array().items(objectSchema),
