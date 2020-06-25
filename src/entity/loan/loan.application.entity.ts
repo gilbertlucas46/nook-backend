@@ -392,8 +392,9 @@ class LoanApplicationE extends BaseEntity {
                 console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999>>>>>>>>>>>>>>>');
             }
             if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
-                data['personalInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['birthDate']);
-                console.log('LLLLLLLLLLLLLLLLLLL', data['personalInfo']['birthDate']);
+                const date = await GetFormattedDate(data['personalInfo']['birthDate']);
+                data['personalInfo']['birthDate'] = date;
+                console.log('LLLLLLLLLLLLLLLLLLL', data['personalInfo']['birthDate'], date);
             }
             // 					birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
             if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
