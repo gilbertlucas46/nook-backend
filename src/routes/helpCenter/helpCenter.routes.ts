@@ -515,7 +515,7 @@ export let helpCenterRoute: ServerRoute[] = [
         path: '/v1/admin/help-center',
         handler: async (request) => {
             try {
-                const payload = request.query;
+                const payload: helpCenterRequest.AdminGetHelpCnter = request.query as any;
                 // {
                 //     ...request.params,
                 //     ...request.query,
@@ -542,6 +542,8 @@ export let helpCenterRoute: ServerRoute[] = [
                     categoryId: Joi.string().required(),
                     page: Joi.number(),
                     limit: Joi.number(),
+                    searchTerm: Joi.string().trim(),
+                    sortType: Joi.number().valid(Constant.ENUM.SORT_TYPE),
                     // type: Joi.string().valid([
                     //     Constant.DATABASE.HELP_CENTER_TYPE.STAFF_FAQ,
                     //     Constant.DATABASE.HELP_CENTER_TYPE.BANK_FAQ,
