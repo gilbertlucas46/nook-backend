@@ -331,6 +331,20 @@ class PreLoanEntities extends BaseEntity {
                 if (payload.other && payload.other.email) {
                     delete payload.other['email'];
                 }
+                function GetFormattedDate(date) {
+                    const todayTime = new Date(date);
+                    const month = (todayTime.getMonth() + 1);
+                    const day = (todayTime.getDate());
+                    const year = (todayTime.getFullYear());
+                    console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
+                    return day + '-' + month + '-' + year;
+                }
+
+                // for salesfoce 
+                if (payload.other && payload.other.dob) {
+                    payload.other.dob = GetFormattedDate(payload.other['dob'])
+                }
+
 
                 const salesforceData: { [key: string]: string | number } = flattenObject(data1.toObject ? data1.toObject() : data1);
                 console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));

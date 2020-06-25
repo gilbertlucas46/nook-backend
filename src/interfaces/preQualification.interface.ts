@@ -28,6 +28,7 @@ export namespace PreQualificationRequest {
             income: number;
         };
         other: {
+            dob: number | string;
             age: number;
             nationality: string;
             localVisa: boolean,
