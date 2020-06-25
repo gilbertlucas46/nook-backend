@@ -242,6 +242,7 @@ export class MailManager {
 			}
 			console.log('contactPersoncontactPersoncontactPerson', contactNumber);
 
+			console.log('>>>>>', (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? + 'php ' + coBorrowerInfo['monthlyIncome'] : 'N/A');
 
 			function GetFormattedDate(date) {
 				const todayTime = new Date(date);
@@ -357,7 +358,7 @@ export class MailManager {
 
 					// LOANS AND CREDIT CARDS
 					otherLoan: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['status']) ? params['personalInfo']['prevLoans']['status'] : 'N/A',
-					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? params['personalInfo']['prevLoans']['monthlyTotal'] + ' php' : 'N/A',
+					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? + 'php ' + params['personalInfo']['prevLoans']['monthlyTotal'] : 'N/A',
 					totalRemainingBalance: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['remainingTotal']) ? params['personalInfo']['prevLoans']['remainingTotal'] : 'N/A',
 					//
 					// Credit Card Limit (Php)
