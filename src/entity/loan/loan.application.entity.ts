@@ -299,7 +299,7 @@ class LoanApplicationE extends BaseEntity {
         try {
             console.log('dataAAAAAAAAAAAAAAA>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 
-            function GetFormattedDate(date) {
+            async function GetFormattedDate(date) {
                 const todayTime = new Date(date);
                 const month = (todayTime.getMonth() + 1);
                 const day = (todayTime.getDate());
@@ -392,15 +392,15 @@ class LoanApplicationE extends BaseEntity {
                 console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999>>>>>>>>>>>>>>>');
             }
             if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
-                console.log('2222222222');
-                data['personalInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['birthDate']);
+                data['personalInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['birthDate']);
+                console.log('LLLLLLLLLLLLLLLLLLL', data['personalInfo']['birthDate']);
             }
             // 					birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
             if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
-                data['personalInfo']['spouseInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
+                data['personalInfo']['spouseInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
             }
             if (data && data['personalInfo'] && data['personalInfo']['coBorrowerInfo'] && data['personalInfo']['coBorrowerInfo']['birthDate']) {
-                data['personalInfo']['coBorrowerInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
+                data['personalInfo']['coBorrowerInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
             }
 
             // spouseBirthDate: (spouseInfo && spouseInfo['birthDate']) ? GetFormattedDate(spouseInfo['birthDate']) : 'N/A',
