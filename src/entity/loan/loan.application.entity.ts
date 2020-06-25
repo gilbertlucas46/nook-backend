@@ -299,11 +299,14 @@ class LoanApplicationE extends BaseEntity {
         try {
             console.log('dataAAAAAAAAAAAAAAA>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 
-            // console.log('inside Loan');
-            // const { creditCard, nationality, gender, coBorrowerInfo } = data.personalInfo;
-            // const { loanDetails } = data.loanDetails;
-            // const { contactInfo } = data.contactInfo;
-            // const { employmentInfo } = data;
+            function GetFormattedDate(date) {
+                const todayTime = new Date(date);
+                const month = (todayTime.getMonth() + 1);
+                const day = (todayTime.getDate());
+                const year = (todayTime.getFullYear());
+                console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
+                return day + '-' + month + '-' + year;
+            }
 
             console.log('ewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
 
@@ -388,6 +391,15 @@ class LoanApplicationE extends BaseEntity {
                 data.loanDetails.loanType = Constant.LOAN_TYPES[data.loanDetails.loanType].label;
                 console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999>>>>>>>>>>>>>>>');
             }
+            if (data && data['personalInfo']['birthDate']) {
+                data['personalInfo']['birthDate'] == GetFormattedDate(data['personalInfo']['birthDate']);
+            }
+            // 					birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
+            if (data && data.spouseInfo && data.spouseInfo['birthDate']) {
+                data.spouseInfo['birthDate'] = GetFormattedDate(data.spouseInfo['birthDate']);
+            }
+            // spouseBirthDate: (spouseInfo && spouseInfo['birthDate']) ? GetFormattedDate(spouseInfo['birthDate']) : 'N/A',
+
 
             console.log('loanDetailsloanDetails>>>>>>>>>>', data);
             // if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value ) {
