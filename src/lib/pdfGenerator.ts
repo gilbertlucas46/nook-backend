@@ -34,23 +34,23 @@ export class PdfGenerator {
                     // paginationOffset: 1,       // Override the initial pagination number
 
                     //        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                    header: {
-                        height: '2cm',
-                        contents:
-                            `
-                        <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 50%; vertical-align: middle; padding-left: 0px; font-size: 8.5pt;"></td>
-                                    <td style="width: 50%; text-align: right; vertical-align: middle; height: 70px; padding-right: 40px !important;">
-                                        <img src=${nookLogoUrl} alt="Nook" style="width: 65px; alt="" height: auto;">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        `,
-                    },
-                    "base": "file:///home/www/your-asset-path", // Base path that's used to load files (images, css, js) when they aren't referenced using a host
+                    // header: {
+                    //     height: '2cm',
+                    //     contents:
+                    //         `
+                    //     <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+                    //         <tbody>
+                    //             <tr>
+                    //                 <td style="width: 50%; vertical-align: middle; padding-left: 0px; font-size: 8.5pt;"></td>
+                    //                 <td style="width: 50%; text-align: right; vertical-align: middle; height: 70px; padding-right: 40px !important;">
+                    //                     <img src=${nookLogoUrl} alt="Nook" style="width: 65px; alt="" height: auto;">
+                    //                 </td>
+                    //             </tr>
+                    //         </tbody>
+                    //     </table>
+                    //     `,
+                    // },
+                    // "base": "file:///home/www/your-asset-path", // Base path that's used to load files (images, css, js) when they aren't referenced using a host
                     format: 'A4',        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     // height: '11.7in',
                     // width: '8.3in',
