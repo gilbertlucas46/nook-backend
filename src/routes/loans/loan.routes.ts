@@ -26,7 +26,7 @@ const objectSchema = Joi.object({
 	]),
 	url: Joi.string(),
 	documentRequired: Joi.string(),
-	description: Joi.string(),
+	description: Joi.string().allow('').allow(null),
 	createdAt: Joi.number(),
 });
 export let loanRoute: ServerRoute[] = [
@@ -411,7 +411,7 @@ export let loanRoute: ServerRoute[] = [
 							]),
 							url: Joi.string().uri().allow(''),
 							documentRequired: Joi.string(),
-							description: Joi.string(),
+							description: Joi.string().allow('').allow(null),
 							createdAt: Joi.number(),
 						}),
 						incomeDocument: Joi.array().items({
@@ -420,7 +420,7 @@ export let loanRoute: ServerRoute[] = [
 							]),
 							url: Joi.string().uri().allow(''),
 							documentRequired: Joi.string(),
-							description: Joi.string(),
+							description: Joi.string().allow('').allow(null),
 							createdAt: Joi.number(),
 						}),
 						colleteralDoc: Joi.array().items({
@@ -429,7 +429,7 @@ export let loanRoute: ServerRoute[] = [
 							]),
 							url: Joi.string().uri().allow(''),
 							documentRequired: Joi.string(),
-							description: Joi.string(),
+							description: Joi.string().allow('').allow(null),
 							createdAt: Joi.number(),
 						}),
 					},
