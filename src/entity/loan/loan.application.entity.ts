@@ -398,7 +398,7 @@ class LoanApplicationE extends BaseEntity {
             if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
                 data['personalInfo']['spouseInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
             }
-            if (data && data['personalInfo'] && data['personalInfo']['coBorrowerInfo']['birthDate']) {
+            if (data && data['personalInfo'] && data['personalInfo']['coBorrowerInfo']&& data['personalInfo']['coBorrowerInfo']['birthDate']) {
                 data['personalInfo']['coBorrowerInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
             }
 
