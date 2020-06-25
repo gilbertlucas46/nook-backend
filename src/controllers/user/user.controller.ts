@@ -318,6 +318,8 @@ export class UserController extends BaseEntity {
 					phoneNumber: payload.phoneNumber,
 					ipAddress: payload.ipAddress,
 					countryCode: payload.countryCode,
+					partnerId: payload.partnerId,
+					partnerName: payload.partnerName,
 					// isEmailVerified: true,
 					// isProfileComplete: true,
 					// type: payload.type,

@@ -225,6 +225,24 @@ export class MailManager {
 				coBorrowerInfo = {};
 			}
 
+			let contactPerson;
+			if (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['contactPerson'] || params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['contactPerson']) {
+				contactPerson = (params && params['documents'] && params['documents']['purchasePropertyInfo']['contactPerson']) ? params && params['documents'] && params['documents']['purchasePropertyInfo']['contactPerson'] : params['propertyDocuments']['purchasePropertyInfo']['contactPerson']
+			}
+			console.log('contactPersoncontactPersoncontactPerson', contactPerson);
+
+			let contactNumber;
+			if (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['contactNumber'] || params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['contactNumber']) {
+				contactNumber = (params && params['documents'] && params['documents']['purchasePropertyInfo']['contactNumber']) ? params && params['documents'] && params['documents']['purchasePropertyInfo']['contactNumber'] : params['propertyDocuments']['purchasePropertyInfo']['contactNumber']
+			}
+			console.log('contactPersoncontactPersoncontactPerson', contactNumber);
+			let propAddress;
+			if (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['address'] || params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['address']) {
+				propAddress = (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['address']) ? params && params['documents'] && params['documents']['purchasePropertyInfo']['contactNumber'] : params['propertyDocuments']['purchasePropertyInfo']['address']
+			}
+			console.log('contactPersoncontactPersoncontactPerson', contactNumber);
+
+
 			function GetFormattedDate(date) {
 				const todayTime = new Date(date);
 				const month = (todayTime.getMonth() + 1);
@@ -319,9 +337,9 @@ export class MailManager {
 
 					// collateralDocStatus: params['propertyDocuments']['purchasePropertyInfo']['collateralDocStatus'],
 
-					// contactPerson: params['propertyDocuments']['purchasePropertyInfo']['contactPerson'],
-					// contactNumber: params['propertyDocuments']['purchasePropertyInfo']['contactNumber'],
-
+					propcontactPerson: contactPerson ? contactPerson : 'N/A',
+					propcontactNumber: contactNumber ? contactNumber : 'N/A',
+					propAddress: propAddress ? propAddress : 'N/A',
 
 					// employmentInfo
 					employmentType: params['employmentInfo']['type'],
