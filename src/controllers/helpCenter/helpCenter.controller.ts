@@ -309,7 +309,7 @@ export class HelpCenter {
 
 
 
-    async getHelpcenter(payload) {
+    async getHelpcenter(payload: helpCenterRequest.AdminGetHelpCnter) {
         try {
             const data = await ENTITY.HelpCenterE.adminGetHelpCenter(payload);
             return data;
