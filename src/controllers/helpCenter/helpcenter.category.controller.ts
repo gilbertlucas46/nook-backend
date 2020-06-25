@@ -148,8 +148,19 @@ export class HelpCenterCategory {
             return Promise.reject(error);
         }
     }
-}
 
+
+    async adminDeleteCategory(payload) {
+        try {
+            const criteria = {
+                _id: payload.categoryId,
+            }
+            const data = await ENTITY.HelpCenterCatgoryE.removeEntity(criteria)
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+}
 
 // {
 //     status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
