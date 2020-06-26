@@ -298,6 +298,7 @@ class LoanApplicationE extends BaseEntity {
      */
     async sendApplication(data: any) {
         try {
+            data = JSON.parse(JSON.stringify(data))
             console.log('dataAAAAAAAAAAAAAAA>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
 
             async function GetFormattedDate(date) {
@@ -399,12 +400,8 @@ class LoanApplicationE extends BaseEntity {
             //     // console.log('LLLLLLLLLLLLLLLLLLL', data['personalInfo']['birthDate'], date);
             // }
             if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
-                console.log(" await GetFormattedDate(data['personalInfo']['birthDate']): ", await GetFormattedDate(data['personalInfo']['birthDate']))
-                data['personalInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['birthDate']);
-                console.log("data['personalInfo']['birthDate']: ", data['personalInfo']['birthDate'])
-                console.log("data['personalInfo']['birthDate']", typeof data['personalInfo']['birthDate']);
-                const bb = await GetFormattedDate(data['personalInfo']['birthDate'])
-                console.log('bbbbbbbbb', bb, typeof bb);
+                data.personalInfo.birthDate = await GetFormattedDate(data['personalInfo']['birthDate'])
+                console.log('bbbbbbbbb', data['personalInfo']['birthDate']);
             }
 
 
