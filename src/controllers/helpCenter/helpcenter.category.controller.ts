@@ -76,6 +76,7 @@ export class HelpCenterCategory {
             payload['userType'] = adminData.type;
             const updateCriteria = {
                 _id: payload.categoryId,
+                status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE
             }
             const data = await ENTITY.HelpCenterCatgoryE.updateOneEntity(updateCriteria, dataToUpdate);
             return data;
