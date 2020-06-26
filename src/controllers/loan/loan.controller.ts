@@ -263,46 +263,62 @@ class LoanControllers extends BaseEntity {
                 dataToUpdate.$set = { applicationStatus: payload.status };
             }
             if (payload.staffId) {
-                dataToUpdate.$set = { assignedTo: payload.staffId };
-            }
-            dataToUpdate.$push = {
-                applicationStage: {
-                    userType: adminData.type,
-                    status: payload.status,
-                    adminId: adminData._id,
-                    adminName: (adminData && adminData.firstName) ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
-                    approvedAt: new Date().getTime(),
-                    assignedTo: (payload && payload.staffId) ? payload.staffId : '',
-                },
-            };
-
-
-            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true });
-            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
-            // else {
-            if (config.get('environment') === 'production') {
-                let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
-                // const request = {
-                //     method: 'post',
-                //     body: JSON.stringify(salesforceData),
-                // };
-                // let salesforceData;
-
-                if (payload.status) {
-                    salesforceData = {
-                        ...salesforceData,
-                        // _id: payload.loanId,
-                        // applicationStatus: payload.status,
-                    };
+                const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
+                if (payload.staffId) {
+                    dataToUpdate.$set = { assignedTo: payload.staffId };
+                    dataToUpdate.$set = { staffAssignedEmail: getStaffData && getStaffData.email || '', }
+                    dataToUpdate.$set = { staffAssignedEmail: getStaffData && getStaffData.email || '', }
+                    dataToUpdate.$set = { staffAssignedfirstName: getStaffData && getStaffData.firstName || '', }
+                    dataToUpdate.$set = { staffAssignedlastName: getStaffData && getStaffData.lastName || '', }
                 }
-                console.log('salesforceDatasalesforceData', salesforceData);
-                await fetch(config.get('zapier_loanUrl'), {
-                    method: 'post',
-                    body: JSON.stringify(salesforceData),
-                });
-            }
-            return data;
 
+                dataToUpdate.$push = {
+                    applicationStage: {
+                        userType: adminData.type,
+                        status: payload.status,
+                        adminId: adminData._id,
+                        adminName: (adminData && adminData.firstName) ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
+                        approvedAt: new Date().getTime(),
+                        assignedTo: (payload && payload.staffId) ? payload.staffId : '',
+                    },
+                };
+
+                const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true });
+                if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
+                // else {
+                if (config.get('environment') === 'production') {
+                    let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
+                    // const request = {
+                    //     method: 'post',
+                    //     body: JSON.stringify(salesforceData),
+                    // };
+                    // let salesforceData;
+                    if (payload.staffId) {
+                        const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
+                        console.log('getStaffName>>>>>>>>>>>>', getStaffData);
+                        salesforceData = {
+                            ...salesforceData,
+                            // _id: payload.loanId,
+                            // staffAssignedEmail: getStaffData && getStaffData.email || '',
+                            // staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
+                            // staffAssignedlastName: getStaffData && getStaffData.lastName || '',
+                        };
+                    }
+                    if (payload.status) {
+                        salesforceData = {
+                            ...salesforceData,
+                            // _id: payload.loanId,
+                            // applicationStatus: payload.status,
+                        };
+                    }
+                    console.log('salesforceDatasalesforceData', salesforceData);
+                    await fetch(config.get('zapier_loanUrl'), {
+                        method: 'post',
+                        body: JSON.stringify(salesforceData),
+                    });
+                }
+                return data;
+            }
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

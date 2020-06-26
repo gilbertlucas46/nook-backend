@@ -344,6 +344,9 @@ const schema = new Schema({
         adminName: { type: String },
     },  // admin ,user, staff
     assignedTo: { type: Schema.Types.ObjectId, ref: 'Admin', index: true },
+    staffAssignedEmail: { type: String },
+    staffAssignedfirstName: { type: String },
+    staffAssignedlastName: { type: String },
     referenceId: { type: String, index: true, unique: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },
