@@ -8,6 +8,7 @@ import fetch from 'node-fetch';
 import { flattenObject } from '@src/utils';
 import { label } from 'joi';
 import * as UniversalFunctions from '@src/utils';
+import { type } from 'os';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -391,11 +392,22 @@ class LoanApplicationE extends BaseEntity {
                 data.loanDetails.loanType = Constant.LOAN_TYPES[data.loanDetails.loanType].label;
                 console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999>>>>>>>>>>>>>>>');
             }
+            // if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
+            //     const date = await GetFormattedDate(data['personalInfo']['birthDate']);
+            //     console.log('datedatedatedatedate', date, typeof date);
+            //     data['personalInfo']['birthDate'] = date;
+            //     // console.log('LLLLLLLLLLLLLLLLLLL', data['personalInfo']['birthDate'], date);
+            // }
             if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
-                const date = await GetFormattedDate(data['personalInfo']['birthDate']);
-                data.personalInfo.birthDate = date;
-                console.log('LLLLLLLLLLLLLLLLLLL', data['personalInfo']['birthDate'], date);
+                console.log(" await GetFormattedDate(data['personalInfo']['birthDate']): ", await GetFormattedDate(data['personalInfo']['birthDate']))
+                data['personalInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['birthDate']);
+                console.log("data['personalInfo']['birthDate']: ", data['personalInfo']['birthDate'])
+                console.log("data['personalInfo']['birthDate']", typeof data['personalInfo']['birthDate']);
+                const bb = await GetFormattedDate(data['personalInfo']['birthDate'])
+                console.log('bbbbbbbbb', bb, typeof bb);
             }
+
+
             // 					birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
             if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
                 data['personalInfo']['spouseInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);

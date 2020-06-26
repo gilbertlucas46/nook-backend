@@ -265,11 +265,12 @@ class LoanControllers extends BaseEntity {
             if (payload.staffId) {
                 const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
                 if (payload.staffId) {
-                    dataToUpdate.$set = { assignedTo: payload.staffId };
-                    dataToUpdate.$set = { staffAssignedEmail: getStaffData && getStaffData.email || '', }
-                    dataToUpdate.$set = { staffAssignedEmail: getStaffData && getStaffData.email || '', }
-                    dataToUpdate.$set = { staffAssignedfirstName: getStaffData && getStaffData.firstName || '', }
-                    dataToUpdate.$set = { staffAssignedlastName: getStaffData && getStaffData.lastName || '', }
+                    dataToUpdate.$set = {
+                        assignedTo: payload.staffId,
+                        staffAssignedEmail: getStaffData && getStaffData.email || '',
+                        staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
+                        staffAssignedlastName: getStaffData && getStaffData.lastName || '',
+                    };
                 }
 
                 dataToUpdate.$push = {
