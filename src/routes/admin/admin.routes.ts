@@ -20,7 +20,7 @@ const objectSchema = Joi.object({
 		LoanConstant.DocumentStatus.APPROVED,
 		LoanConstant.DocumentStatus.REJECTED,
 	]),
-	documentRequired: Joi.string(),
+	documentRequired: Joi.string().allow('').allow(null),
 	description: Joi.string().allow('').allow(null),
 	url: Joi.string().allow(''),
 	createdAt: Joi.number().allow(null),

@@ -299,7 +299,7 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number, default: new Date().getTime() },
+            createdAt: { type: Number },
             updatedAt: { type: Number },
         }],
         incomeDocument: [{
@@ -313,7 +313,7 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number, default: new Date().getTime() },
+            createdAt: { type: Number },
             updatedAt: { type: Number },
         }],
         colleteralDoc: [{
@@ -327,7 +327,7 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number, default: new Date().getTime() },
+            createdAt: { type: Number },
             updatedAt: { type: Number },
         }],
     },
