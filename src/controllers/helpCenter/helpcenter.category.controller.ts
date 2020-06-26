@@ -126,13 +126,13 @@ export class HelpCenterCategory {
                 pipeline.push({
                     $match: {
                         category: payload.type,
-                        // $or: [{
-                        status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
-                        // },
-                        // {
-                        // status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.BLOCKED
-                        // }
-                        // ]
+                        $or: [{
+                            status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
+                        },
+                        {
+                            status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.BLOCKED
+                        }
+                        ]
                     }
                 })
             }
