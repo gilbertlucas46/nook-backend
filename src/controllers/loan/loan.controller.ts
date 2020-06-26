@@ -276,6 +276,7 @@ class LoanControllers extends BaseEntity {
                 },
             };
 
+
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true });
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             // else {
@@ -286,17 +287,7 @@ class LoanControllers extends BaseEntity {
                 //     body: JSON.stringify(salesforceData),
                 // };
                 // let salesforceData;
-                if (payload.staffId) {
-                    const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
-                    console.log('getStaffName>>>>>>>>>>>>', getStaffData);
-                    salesforceData = {
-                        ...salesforceData,
-                        // _id: payload.loanId,
-                        staffAssignedEmail: getStaffData && getStaffData.email || '',
-                        staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
-                        staffAssignedlastName: getStaffData && getStaffData.lastName || '',
-                    };
-                }
+
                 if (payload.status) {
                     salesforceData = {
                         ...salesforceData,
@@ -427,7 +418,7 @@ class LoanControllers extends BaseEntity {
             }
             // LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
 
-            if (payload.propertyStatus === 'FORECLOSED') {
+            if (payload.propertyStatus === 'FORECLOSED' || payload.propertyStatus === 'RESELLING' || payload.propertyStatus === 'PRE_SELLING') {
                 payload['propertyStatus'] = 'READY_FOR_OCCUPANCY';
             }
 
