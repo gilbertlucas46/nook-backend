@@ -62,15 +62,22 @@ export class HelpCenterCategory {
             }
 
             const dataToUpdate: any = {};
-            dataToUpdate.$push = {
-                applicationStage: {
-                    userRole: adminData.type,
-                    adminId: adminData._id,
-                },
-            };
+            dataToUpdate.$set = {
+                name: payload.name
+            }
+
+            // dataToUpdate.$push = {
+            //     applicationStage: {
+            //         userRole: adminData.type,
+            //         adminId: adminData._id,
+            //     },
+            // };
 
             payload['userType'] = adminData.type;
-            const data = await ENTITY.HelpCenterCatgoryE.createOneEntity(payload);
+            const updateCriteria = {
+                _id: payload.categoryId,
+            }
+            const data = await ENTITY.HelpCenterCatgoryE.updateOneEntity(updateCriteria, dataToUpdate);
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
