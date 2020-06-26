@@ -129,7 +129,7 @@ export let helpCenterCategoryRoutes: ServerRoute[] = [
                 // const permission = await UniversalFunctions.checkPermission(adminData, payload.type);
 
                 const data = await HelpCenterCategoryService.adminUpdateCatgoryStatus(payload, adminData);
-                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
             } catch (error) {
                 UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
