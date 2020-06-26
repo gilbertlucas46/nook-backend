@@ -119,7 +119,7 @@ export namespace LoanRequest {
         nationality: string;
         educationBackground: string;
         civilStatus: string;
-        birthDate: number | string;
+        birthDate: any;
         motherMaidenName?: string;
         monthlyIncome: number;
         otherIncome: number;
@@ -132,7 +132,7 @@ export namespace LoanRequest {
             firstName?: string,
             lastName?: string,
             middleName?: string,
-            birthDate?: number | string,
+            birthDate?: any,
             monthlyIncome?: number,
             isCoborrower?: boolean,
         };
@@ -140,7 +140,7 @@ export namespace LoanRequest {
             firstName?: string
             lastName?: string,
             middleName?: string,
-            birthDate?: string | number,
+            birthDate?: any,
             monthlyIncome?: number,
             isCoborrower?: boolean
             relationship?: string,
