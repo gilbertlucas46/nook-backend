@@ -267,6 +267,15 @@ class PreLoanEntities extends BaseEntity {
 
                     const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate);
                     console.log('updatedDataupdatedDataupdatedData', updatedData, true);
+                    const salesforceData: { [key: string]: string | number } = flattenObject(updatedData.toObject ? updatedData.toObject() : updatedData);
+                    console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
+                    console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
+
+                    fetch(config.get('zapier_prequalificationUrl'), {
+                        method: 'post',
+                        body: JSON.stringify(salesforceData),
+                    });
+
 
                     return updatedData ? updatedData : {};
                 }
