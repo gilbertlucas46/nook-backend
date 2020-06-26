@@ -283,43 +283,43 @@ class LoanControllers extends BaseEntity {
                         assignedTo: (payload && payload.staffId) ? payload.staffId : '',
                     },
                 };
-
-                const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true });
-                if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
-                // else {
-                if (config.get('environment') === 'production') {
-                    let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
-                    // const request = {
-                    //     method: 'post',
-                    //     body: JSON.stringify(salesforceData),
-                    // };
-                    // let salesforceData;
-                    if (payload.staffId) {
-                        const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
-                        console.log('getStaffName>>>>>>>>>>>>', getStaffData);
-                        salesforceData = {
-                            ...salesforceData,
-                            // _id: payload.loanId,
-                            // staffAssignedEmail: getStaffData && getStaffData.email || '',
-                            // staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
-                            // staffAssignedlastName: getStaffData && getStaffData.lastName || '',
-                        };
-                    }
-                    if (payload.status) {
-                        salesforceData = {
-                            ...salesforceData,
-                            // _id: payload.loanId,
-                            // applicationStatus: payload.status,
-                        };
-                    }
-                    console.log('salesforceDatasalesforceData', salesforceData);
-                    await fetch(config.get('zapier_loanUrl'), {
-                        method: 'post',
-                        body: JSON.stringify(salesforceData),
-                    });
-                }
-                return data;
             }
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true });
+            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
+            // else {
+            if (config.get('environment') === 'production') {
+                let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
+                // const request = {
+                //     method: 'post',
+                //     body: JSON.stringify(salesforceData),
+                // };
+                // let salesforceData;
+                if (payload.staffId) {
+                    const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
+                    console.log('getStaffName>>>>>>>>>>>>', getStaffData);
+                    salesforceData = {
+                        ...salesforceData,
+                        // _id: payload.loanId,
+                        // staffAssignedEmail: getStaffData && getStaffData.email || '',
+                        // staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
+                        // staffAssignedlastName: getStaffData && getStaffData.lastName || '',
+                    };
+                }
+                if (payload.status) {
+                    salesforceData = {
+                        ...salesforceData,
+                        // _id: payload.loanId,
+                        // applicationStatus: payload.status,
+                    };
+                }
+                console.log('salesforceDatasalesforceData', salesforceData);
+                await fetch(config.get('zapier_loanUrl'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceData),
+                });
+            }
+            return data;
+
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
