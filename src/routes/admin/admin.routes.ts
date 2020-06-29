@@ -726,6 +726,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
 							birthDate: Joi.number(),
+							motherMaidenName: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 						},
@@ -734,6 +735,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
 							birthDate: Joi.number(),
+							motherMaidenName: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 							relationship: Joi.string().valid([
