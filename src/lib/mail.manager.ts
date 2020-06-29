@@ -357,7 +357,7 @@ export class MailManager {
 
 
 					// LOANS AND CREDIT CARDS
-					otherLoan: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['status']) ? params['personalInfo']['prevLoans']['status'] : 'N/A',
+					otherLoan: (params['personalInfo'] && params['personalInfo']['prevLoans']) ? params['personalInfo']['prevLoans']['status'] : 'N/A',
 					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? + 'php ' + params['personalInfo']['prevLoans']['monthlyTotal'] : 'N/A',
 					totalRemainingBalance: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['remainingTotal']) ? params['personalInfo']['prevLoans']['remainingTotal'] : 'N/A',
 					//
