@@ -13,6 +13,8 @@ import { MailManager } from '../../lib/mail.manager';
 import fetch from 'node-fetch';
 import * as config from 'config';
 import { flattenObject } from '@src/utils/flatten.util';
+import { LoanApplicationEntity } from '@src/entity/loan/loan.application.entity';
+
 class LoanControllers extends BaseEntity {
 
     /**
@@ -234,10 +236,8 @@ class LoanControllers extends BaseEntity {
                 },
             },
             ];
-            console.log('aggregateaggregateaggregate', aggregate);
 
             const data = await ENTITY.LoanApplicationEntity.aggregate(aggregate);
-            console.log('datadatadata', data);
 
             // const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
             if (!data) return Promise.reject(Contsant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
@@ -291,7 +291,6 @@ class LoanControllers extends BaseEntity {
             console.log('salesforceDatasalesforceData', salesforceData);
             if (payload.staffId) {
                 // const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
-                // console.log('getStaffName>>>>>>>>>>>>', getStaffData);
                 salesforceData = {
                     ...salesforceData,
                     // _id: payload.loanId,
@@ -307,10 +306,8 @@ class LoanControllers extends BaseEntity {
                     // applicationStatus: payload.status,
                 };
             }
-            console.log('salesforceDatasalesforceData', salesforceData);
 
             if (config.get('environment') === 'production') {
-                console.log('333333333333333333333333333333333333344444444444kkkkkkkkk');
 
                 await fetch(config.get('zapier_loanUrl'), {
                     method: 'post',
@@ -364,14 +361,12 @@ class LoanControllers extends BaseEntity {
 
     async adminUpdateLoanApplication(payload, adminData) {
         try {
-            console.log('adminDataadminDataadminDataadminData', adminData);
-
             const query = {
                 _id: payload.loanId,
             };
 
-            const oldData = await ENTITY.LoanApplicationEntity.updateOneEntity(query, payload, false);
-            console.log('oldDataoldDataoldDataoldDataoldData', oldData);
+            const oldData = await ENTITY.LoanApplicationEntity.updateOneEntity(query, payload);
+            await LoanApplicationEntity.sendApplication(oldData)
 
             payload['changesMadeBy'] = {
                 adminId: adminData['_id'],
@@ -407,8 +402,6 @@ class LoanControllers extends BaseEntity {
                 referenceId: payload.loanId,
             };
             const getLoanData = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
-            // console.log('getLoanData>>>>>>>>>>>>>>', getLoanData);
-            // return getLoanData;
             if (!getLoanData) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             }
@@ -444,7 +437,6 @@ class LoanControllers extends BaseEntity {
 
             let aggregateLegal;
             if (payload.employmentType) {
-                console.log(1111111111111111111111111111111111111111);
 
                 aggregateLegal = [
                     {
@@ -563,9 +555,6 @@ class LoanControllers extends BaseEntity {
                 aggregateLegal.push(pushedItem);
             }
 
-
-            console.log('aggregateLegal>>>>>>>>>>>>>>>222222222.', aggregateLegal);
-
             let aggregateIncome;
             if (payload.employmentType) {
                 console.log(22222222222222222222222222222222222222);
@@ -655,8 +644,6 @@ class LoanControllers extends BaseEntity {
                 incomeDoc: incomeDoc ? incomeDoc : [],
                 colleteralDoc: colleteralDoc ? colleteralDoc : [],
             };
-            // console.log('datadata', data);
-            // return data;
         } catch (error) {
             return Promise.reject(error);
         }
@@ -712,8 +699,6 @@ class LoanControllers extends BaseEntity {
     }
     async updateDocument(payload) {
         try {
-            console.log('payload>>>>>>>>>>>', payload);
-
             let criteria;
             if (payload.documentType === 'Legal') {
                 criteria = {
@@ -741,7 +726,6 @@ class LoanControllers extends BaseEntity {
                 url: payload.url,
                 createdAt: payload.createdAt,
             };
-            console.log('criteriacriteriacriteria', criteria);
 
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, {
                 'documents.legalDocument.$.url': payload.url,
