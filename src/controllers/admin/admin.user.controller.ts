@@ -188,7 +188,6 @@ class AdminUserControllers {
                 email: payload.email,
             };
             const checkUserName = { userName: payload.userName };
-            console.log('ge{tUserData', getUserData);
             if (getUserData && getUserData.email !== payload.email) {
                 const checkByEmail = await ENTITY.UserE.getOneEntity(checkEmailCriteria, ['_id', 'email']);
                 if (checkByEmail && checkByEmail._id) {
@@ -206,7 +205,6 @@ class AdminUserControllers {
             return userResponse;
         }
         catch (error) {
-            console.log('errorerrorerrorerror', error);
             return Promise.reject(error);
         }
     }

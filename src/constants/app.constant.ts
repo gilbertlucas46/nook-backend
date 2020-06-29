@@ -783,10 +783,10 @@ export let SERVER = {
 
 	ANDROID_PACKAGE_NAME: 'com.nook.com',
 	// APP_URL: config.get('host'),
-	LINKS: {
-		TERMS_COND: '',
-		PRIVACY: config.get('host') + '/privacy_policy/',
-	},
+	// LINKS: {
+	// 	TERMS_COND: '',
+	// 	PRIVACY: config.get('host') + '/privacy_policy/',
+	// },
 	// SHARE_CONTENT: {
 	// 	SHARE_CONTENT_MESSAGE: `Thank you for your interest in downloading Toki! We're constantly working on improving the way you can hangout with your closest friends :)`,
 	// 	SHARE_CONTENT_LINK: config.get('host') + DATABASE.DEEPLINK_REDIRECT_URL.APP + 'http://nook.com' + '/' + DATABASE.ACTION.DEEPLINK.APP + '&ios=' + 'nook://' + DATABASE.ACTION.DEEPLINK.APP,
