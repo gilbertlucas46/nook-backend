@@ -28,6 +28,7 @@ class AdminUserE extends BaseEntity {
                 createdAt: sortType,
             };
             if (searchTerm) {
+                matchObject.$match['status'] = Constant.DATABASE.STATUS.USER.ACTIVE;
                 // for filtration
                 searchCriteria = {
                     $match: {
@@ -101,7 +102,7 @@ class AdminUserE extends BaseEntity {
                         break;
                 }
             }
-            if (!status) {
+            if (!status && !searchTerm) {
                 matchObject.$match = {
                     $or: [{
                         status: Constant.DATABASE.STATUS.USER.ACTIVE,
