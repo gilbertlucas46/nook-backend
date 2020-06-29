@@ -212,7 +212,7 @@ export class MailManager {
 			let coBorrowerMiddleName = '';
 			console.log('spouseMiddleNamespouseMiddleNamespouseMiddleName', spouseMiddleName);
 			if (coBorrowerInfo && coBorrowerInfo['middleName']) {
-				coBorrowerMiddleName = coBorrowerInfo['middleName'];
+				coBorrowerMiddleName = ' ' + coBorrowerInfo['middleName'];
 			}
 			console.log('coBorrowerMiddleNamecoBorrowerMiddleName', coBorrowerMiddleName);
 
@@ -296,10 +296,10 @@ export class MailManager {
 
 					// CO-BORROWER’S INFORMATION
 					isCoborrower: checkObjectBlank, // + ' ' + params['personalInfo']['coBorrowerInfo']['middleName']
-					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + ' ' + coBorrowerMiddleName + ' ' + coBorrowerInfo['lastName'] : 'N/A',
+					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + coBorrowerMiddleName + ' ' + coBorrowerInfo['lastName'] : 'N/A',
 					relationship: (coBorrowerInfo && coBorrowerInfo['relationship']) ? coBorrowerInfo['relationship'] : 'N/A',
 					// relationship: coBorrowerInfo ? coBorrowerInfo['relationship'] : 'N/A',
-					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? + 'php ' + coBorrowerInfo['monthlyIncome'] : 'N/A',
+					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? + coBorrowerInfo['monthlyIncome'] : 'N/A',
 					coBorrowerTIN: (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A',
 					coBorrowerSSS: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['sss']) ? params.employmentInfo.coBorrowerInfo['sss'] : 'N/A',
 					coBorrowerEmploymentType: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentType']) ? params.employmentInfo.coBorrowerInfo['employmentType'] : 'N/A',
