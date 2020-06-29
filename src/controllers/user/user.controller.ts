@@ -357,8 +357,10 @@ export class UserController extends BaseEntity {
 	async seacrhUserByAdmin(payload) {
 		try {
 			const { searchTerm } = payload;
+			let seacrhObject: any = {}
 
-			const seacrhObject = {
+			seacrhObject = {
+				status: Constant.DATABASE.STATUS.USER.ACTIVE,
 				// $and:{status:}
 				$or: [
 					{ userName: { $regex: searchTerm, $options: 'i' } },
