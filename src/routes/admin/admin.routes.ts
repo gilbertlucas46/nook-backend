@@ -990,6 +990,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							contactNumber: Joi.number(),
 							collateralDocStatus: Joi.boolean(),
 							collateralDocList: Joi.array().items({
+								_id: Joi.string(),
 								docType: Joi.string().valid([
 									Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
 									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
