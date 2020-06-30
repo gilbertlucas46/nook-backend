@@ -367,7 +367,6 @@ export let adminProfileRoute: ServerRoute[] = [
 				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
 				// }
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
-				console.log('permissio>:::::::::::::::::::::::::::', permission);
 
 				const registerResponse = await LoanController.adminLoansList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -506,8 +505,6 @@ export let adminProfileRoute: ServerRoute[] = [
 				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
 				// }
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
-				console.log('permissio>:::::::::::::::::::::::::::', permission);
-
 
 				const registerResponse = await LoanController.loanById(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -646,7 +643,6 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h: Hapi.ResponseToolkit) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				console.log('adminData><<<<<<<<<<<', adminData);
 
 				// const payload =
 				// const loanId =
@@ -654,12 +650,9 @@ export let adminProfileRoute: ServerRoute[] = [
 					...request.payload as any,
 					...request.params as any,
 				};
-				console.log('payload', payload);
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
-				console.log('permissio>:::::::::::::::::::::::::::', permission);
 
 				const data = await LoanController.adminUpdateLoanApplication(payload, adminData);
-				console.log('datadatadatadatadata', data);
 
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
 			} catch (error) {
@@ -986,29 +979,29 @@ export let adminProfileRoute: ServerRoute[] = [
 						position: Joi.string(),
 					}),
 
-					// propertyDocuments: Joi.object().keys({
-					// 	borrowerValidDocIds: Joi.array().items(Joi.string()),
-					// 	coBorrowerValidId: Joi.array().items(Joi.string()),
-					// 	latestITR: Joi.string().uri(),
-					// 	employmentCert: Joi.string().uri(),
-					// 	purchasePropertyInfo: Joi.object().keys({
-					// 		address: Joi.string().max(300),
-					// 		contactPerson: Joi.string(),
-					// 		contactNumber: Joi.number(),
-					// 		collateralDocStatus: Joi.boolean(),
-					// 		collateralDocList: Joi.array().items({
-					// 			docType: Joi.string().valid([
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
-					// 			]),
-					// 			docUrl: Joi.string(),
-					// 		}),
-					// 	}),
-					// 	nookAgent: Joi.string(),
-					// }),
+					propertyDocuments: Joi.object().keys({
+						borrowerValidDocIds: Joi.array().items(Joi.string()),
+						coBorrowerValidId: Joi.array().items(Joi.string()),
+						latestITR: Joi.string().uri(),
+						employmentCert: Joi.string().uri(),
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.number(),
+							collateralDocStatus: Joi.boolean(),
+							collateralDocList: Joi.array().items({
+								docType: Joi.string().valid([
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+								]),
+								docUrl: Joi.string(),
+							}),
+						}),
+						nookAgent: Joi.string(),
+					}),
 					referenceId: Joi.string(),
 					documents: {
 						purchasePropertyInfo: Joi.object().keys({
@@ -1352,29 +1345,29 @@ export let adminProfileRoute: ServerRoute[] = [
 						position: Joi.string(),
 					}),
 
-					// propertyDocuments: Joi.object().keys({
-					// 	borrowerValidDocIds: Joi.array().items(Joi.string()),
-					// 	coBorrowerValidId: Joi.array().items(Joi.string()),
-					// 	latestITR: Joi.string().uri(),
-					// 	employmentCert: Joi.string().uri(),
-					// 	purchasePropertyInfo: Joi.object().keys({
-					// 		address: Joi.string().max(300),
-					// 		contactPerson: Joi.string(),
-					// 		contactNumber: Joi.number(),
-					// 		collateralDocStatus: Joi.boolean(),
-					// 		collateralDocList: Joi.array().items({
-					// 			docType: Joi.string().valid([
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
-					// 			]),
-					// 			docUrl: Joi.string(),
-					// 		}),
-					// 	}),
-					// 	nookAgent: Joi.string(),
-					// }),
+					propertyDocuments: Joi.object().keys({
+						borrowerValidDocIds: Joi.array().items(Joi.string()),
+						coBorrowerValidId: Joi.array().items(Joi.string()),
+						latestITR: Joi.string().uri(),
+						employmentCert: Joi.string().uri(),
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.number(),
+							collateralDocStatus: Joi.boolean(),
+							collateralDocList: Joi.array().items({
+								docType: Joi.string().valid([
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+								]),
+								docUrl: Joi.string(),
+							}),
+						}),
+						nookAgent: Joi.string(),
+					}),
 					documents: {
 						purchasePropertyInfo: Joi.object().keys({
 							address: Joi.string().max(300),
