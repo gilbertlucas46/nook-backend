@@ -145,7 +145,6 @@ export class HelpCenterCategory {
             //     });
             // }
             const data = await ENTITY.HelpCenterCatgoryE.aggregate(pipeline);
-            console.log('datadatadatadatadata', data);
             return data;
         } catch (error) {
             return Promise.reject(error);

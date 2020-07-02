@@ -30,7 +30,6 @@ export class PartnerClass extends BaseEntity {
 				},
 			}];
 			const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
-			console.log('dataaaaa', data);
 			return data;
 		} catch (error) {
 			return Promise.reject(error);

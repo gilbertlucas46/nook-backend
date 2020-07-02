@@ -119,7 +119,6 @@ export class HelpCenterEntity extends BaseEntity {
             ];
 
             const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
-            console.log('dataaaaa', data);
             return data;
 
         } catch (error) {

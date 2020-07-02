@@ -26,7 +26,6 @@ export let helpCenterRoute1: ServerRoute[] = [
                 // }
                 // const permission = await UniversalFunctions.checkPermission(adminData, payload.type);
                 // const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELPCENTER_BANK);
-                // console.log('permissionpermissionpermission', permission);
 
                 const data = await HelpCenterService.createHelpCenter(payload, adminData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);

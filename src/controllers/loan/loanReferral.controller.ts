@@ -37,26 +37,6 @@ class Referal extends BaseEntity {
                 body: JSON.stringify(salesforceData),
             };
             await fetch(config.get('zapier_referralUrl'), request);
-
-            // request.post({
-            //     url: config.get('zapier_referralUrl'),
-            //     formData: {
-            //         sendBy: userData.email,
-            //         senderFirstName: userData.firstName,
-            //         senderLastName: userData.lastName,
-            //         senderMiddleName: userData.middleName,
-            //         senderUserName: userData.userName,
-            //         senderPhoneNumber: userData.phoneNumber,
-            //         email: data.email,
-            //         notes: data.notes,
-            //         lastName: data.lastName,
-            //         firstName: data.firstName,
-            //         mobileNo: data.phoneNumber,
-            //     },
-            // }, function optionalCallback(err, httpResponse, body) {
-            //     if (err) { return console.log(err); }
-            //     // console.log('body ----', body);
-            // });
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

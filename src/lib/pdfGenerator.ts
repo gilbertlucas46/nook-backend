@@ -18,43 +18,17 @@ export class PdfGenerator {
 
     async test(htmlFile, datatoAddInPDF) {
         try {
-            console.log('htmlFilehtmlFilehtmlFilehtmlFile', datatoAddInPDF);
-            console.log('11111111111111111111111111111111111111');
             const buf = Buffer.from(htmlFile).toString();
             const applicationId: any = datatoAddInPDF.applicationId;
             const applicantName: any = datatoAddInPDF.fullName;
             const nookLogoUrl = datatoAddInPDF['nookLogoUrl'];
 
             // const nookLogoUrl = 'https://nookqa.appskeeper.com' + '/src/views/images/nooklogo.png';
-            // console.log('nookLogoUrlnookLogoUrl', nookLogoUrl);
-
 
             return new Promise((resolve, reject) => {
                 const options = {
-                    // paginationOffset: 1,       // Override the initial pagination number
-
-                    //        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                    // header: {
-                    //     height: '2cm',
-                    //     contents:
-                    //         `
-                    //     <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
-                    //         <tbody>
-                    //             <tr>
-                    //                 <td style="width: 50%; vertical-align: middle; padding-left: 0px; font-size: 8.5pt;"></td>
-                    //                 <td style="width: 50%; text-align: right; vertical-align: middle; height: 70px; padding-right: 40px !important;">
-                    //                     <img src=${nookLogoUrl} alt="Nook" style="width: 65px; alt="" height: auto;">
-                    //                 </td>
-                    //             </tr>
-                    //         </tbody>
-                    //     </table>
-                    //     `,
-                    // },
                     // "base": "file:///home/www/your-asset-path", // Base path that's used to load files (images, css, js) when they aren't referenced using a host
                     format: 'A4',        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                    // height: '11.7in',
-                    // width: '8.3in',
-                    // zoomFactor: '1',
                     footer: {
                         height: '1.2cm',
                         contents: {
@@ -76,7 +50,6 @@ export class PdfGenerator {
 
                 pdf.create(buf, options).toFile(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', async (err, data) => {
                     if (err) {
-                        console.log('dataaaaaaaaaaa', err);
                         reject(err);
                     } else {
                         const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + 'loan/' + datatoAddInPDF['fileName'] + '.pdf', datatoAddInPDF['fileName']);
@@ -86,13 +59,11 @@ export class PdfGenerator {
                 });
             });
         } catch (error) {
-            console.log('errorerrorerrorerrorerrorerror', error);
             return Promise.reject(error);
         }
     }
 
     uploadFileToS3 = async (file, fileName) => {
-        console.log('filefilefile', file);
 
         return new Promise(async (resolve, reject) => {
             try {
@@ -101,12 +72,10 @@ export class PdfGenerator {
                         console.log('Error in uploadFileToS3', err);
                         reject(err);
                     }
-                    console.log('fileDatafileDatafileData', fileData);
 
                     resolve(await this.uploadS3(fileData, fileName));
                 });
             } catch (error) {
-                console.log('Error inside uploadFileToS3', error);
                 reject(error);
             }
         });

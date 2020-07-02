@@ -99,22 +99,15 @@ export let partnerRoutes: ServerRoute[] = [
         path: '/v1/nook/partner-redirect/{partnerSid}/{partnerName?}',
         handler: async (request, h) => {
             try {
-                // const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
                 const payload = request.params as any;
 
                 const data = await PartnerService.redirect(payload);
-                console.log('datadata>>>>>>>>>>>>>>>', data);
                 if (data) {
-                    // console.log('>>>>>>>>>>>>>>>>>>>>', 'localhost:4200' + '?pre-qualification=' + data['shortId']);
-                    // return 'localhost:4200' + '?pre-qualification=' + data['shortId'];
-                    console.log('>>>>>>', config.get('homePage') + '/pre-qualification/process/property-information/' + data['shortId']);
-
                     return h.redirect(config.get('homePage') + '/pre-qualification/process/property-information/' + data['shortId']);
                 } else {
                     return h.redirect(config.get('homePage'));
                 }
             } catch (error) {
-                console.log('errorerrorerror', error);
                 return h.redirect(config.get('homePage'));
             }
         },
@@ -145,12 +138,10 @@ export let partnerRoutes: ServerRoute[] = [
             try {
                 const adminAuth = request.auth && request.auth.credentials && (request.auth.credentials as any).adminAuth;
                 const payload: PartnerAdminRequest.UpdateStatus = request.params as any;
-                console.log('payloadpayload', payload);
 
                 const data = await PartnerService.updatePartnerStatus(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {}));
             } catch (error) {
-                console.log('errorerrorerror', error);
                 return Promise.reject(error);
             }
         },
@@ -226,7 +217,6 @@ export let partnerRoutes: ServerRoute[] = [
                     ...request.params as any,
                     ...request.payload as any,
                 };
-                console.log('payloadpayloadpayload', payload);
 
                 const data = await PartnerService.updatePartner(payload);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));

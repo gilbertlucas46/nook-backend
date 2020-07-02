@@ -15,7 +15,6 @@ export class CategoryClass extends BaseEntity {
     async addArticleName(payload: ArticleRequest.AddCategoriesName) {
         try {
             const checkContainQmark = payload.title.includes('?');
-            console.log('3333333333333333333333333333333');
             payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
             console.log('payload.titlepayload.titlepayload.title', payload.title);
 
@@ -23,7 +22,6 @@ export class CategoryClass extends BaseEntity {
                 name: payload.name,
             };
             const checkName = await this.DAOManager.findOne(this.modelName, criteria, {});
-            console.log('checkNamecheckNamecheckName', checkName);
 
             if (!checkName) {
                 const dataToSave = {
@@ -122,7 +120,6 @@ export class CategoryClass extends BaseEntity {
                 // }
 
                 const checkAlreadyAdded = await this.DAOManager.findOne(this.modelName, criteria1, {});
-                console.log('checkAlreadyAddedcheckAlreadyAddedcheckAlreadyAdded', checkAlreadyAdded);
 
                 // checkAlreadyAdded.
                 if (checkAlreadyAdded != null && checkAlreadyAdded.name === payload.name) {

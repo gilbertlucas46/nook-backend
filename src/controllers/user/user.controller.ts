@@ -259,7 +259,6 @@ export class UserController extends BaseEntity {
 	async dashboard(userData: UserRequest.UserData) {
 		try {
 			const step2 = await ENTITY.UserE.userDashboad(userData);
-			console.log('step2step2step2step2', step2);
 
 			// // step2.isFeaturedProfile = step1 ? true : false;
 			return step2;
@@ -370,7 +369,6 @@ export class UserController extends BaseEntity {
 			};
 
 			const usersList = await this.DAOManager.getData('User', seacrhObject, {}, { limit: 10 })
-			console.log('usersListusersListusersList', usersList);
 
 			return usersList;
 		} catch (error) {

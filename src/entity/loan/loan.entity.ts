@@ -278,7 +278,6 @@ class LoanEntities extends BaseEntity {
      */
 
     // async adminAddpreloanbanks(payload: LoanRequest.AdminAddPreLoan, userData) {
-    //     console.log('payload>>>>>>>>>>>>>>>', payload);
     //     let totalMonthlyIncome = payload.employmentInfo.income;
     //     let preLoanMonthlyAmount = 0;
     //     if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome; // If married need to add spouse income also to calculate debtToIncomeRatio
@@ -298,7 +297,6 @@ class LoanEntities extends BaseEntity {
     //     // age filters
     //     if (payload.other.age) ageAtlastLoanPayment = payload.other.age + payload.loan.term;
     //     if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
-    //     console.log('totalMonthlyIncometotalMonthlyIncometotalMonthlyIncometotalMonthlyIncome', totalMonthlyIncome);
 
     //     const queryPipeline = [];
     //     if (payload.other.creditCard.cancelled) {
@@ -499,7 +497,6 @@ class LoanEntities extends BaseEntity {
     //     );
 
     //     const data = await this.DAOManager.aggregateData('Bank', queryPipeline);
-    //     console.log('data>>>>>>>>>>>>>>>>>>>>>>>adiminnnnnnnnnnnnnn', data);
 
     //     if (data.length > 0) {
     //         // const getPreQualficationId =await
@@ -528,7 +525,6 @@ class LoanEntities extends BaseEntity {
     //         });
 
     //         const referenceNumber = await this.getReferenceId(criteria1);
-    //         console.log('referenceNumberreferenceNumber', referenceNumber);
 
     //         if (!referenceNumber) {
     //             const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
@@ -553,7 +549,6 @@ class LoanEntities extends BaseEntity {
     //             const formattedTime = referenceNumber['referenceId'].replace(referenceNumber['referenceId'].split('-')[2], num);
     //             payload['referenceId'] = formattedTime;
     //         }
-    //         console.log('1111111111111111111111111111111111111111111', payload);
 
     //         const dataToSave = {
     //             ...payload,
@@ -566,17 +561,13 @@ class LoanEntities extends BaseEntity {
 
     //         let data1 = await this.DAOManager.insert('PreQualification', dataToSave);
 
-    //         // console.log('data1.work: ', data1.work);
 
     //         // data1 = data1.toObject();
     //         // data1['employmentInfo'] = data1.work;
     //         // // data1.employmentInfo.grossMonthlyIncome = data1.work.income;
     //         // delete data1['work'];
-    //         // console.log('data2:', data1);
 
     //         const salesforceData: { [key: string]: string | number } = utils.flattenObject(data1.toObject ? data1.toObject() : data1);
-    //         console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
-    //         console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
 
 
     //         fetch(config.get('zapier_prequalificationUrl'), {
