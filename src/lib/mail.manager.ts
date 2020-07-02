@@ -250,16 +250,16 @@ export class MailManager {
 					loanTerm: params['loanDetails']['loanTerm'] + ' ' + 'year',
 					fixedPeriod: params['loanDetails']['fixedPeriod'] + ' ' + 'year',
 					loanPercent: params['loanDetails']['loanPercent'],
-					loanAmount: 'Php ' + (params['loanDetails']['loanAmount']).toLocaleString,
+					loanAmount: 'Php ' + ((params['loanDetails']['loanAmount']).toFixed(2)).toLocaleString(),
 					interestRate: params['loanDetails']['rate'],
 					loanType: params['loanDetails']['loanType'],
 					// Loan Total PaymentA (Php): params['loanDetails']['loanAmount'],
-					monthlyRepayment: 'Php ' + ((params['loanDetails']['monthlyRepayment']).toFixed(2)).toLocaleString,
+					monthlyRepayment: 'Php ' + ((params['loanDetails']['monthlyRepayment']).toFixed(2)).toLocaleString(),
 					loanTotalPayment: 'N/A',
 
 
 					// COLLATERAL INFORMATION
-					propertyValue: 'Php ' + ((params['propertyInfo']['value']).toFixed(2)).toLocaleString,
+					propertyValue: 'Php ' + ((params['propertyInfo']['value']).toFixed(2)).toLocaleString(),
 					propertyType: params['propertyInfo']['type'],
 					propertyStatus: params['propertyInfo']['status'],
 					propertyDeveloper: params['propertyInfo']['developer'] ? params['propertyInfo']['developer'] : 'N/A',
@@ -280,7 +280,7 @@ export class MailManager {
 					employmentType: params['employmentInfo']['type'],
 					employmentRank: params['employmentInfo']['rank'],
 					employmentTenure: params['employmentInfo']['tenure'],
-					grossMonthlyIncome: 'Php ' + params['personalInfo']['monthlyIncome'].toLocaleString,   // to be done
+					grossMonthlyIncome: 'Php ' + params['personalInfo']['monthlyIncome'].toLocaleString(),   // to be done
 					tin: params['employmentInfo'] ? params['employmentInfo']['tin'] : 'N/A',
 					sss: params['employmentInfo'] ? params['employmentInfo']['sss'] : 'N/A',
 					companyName: params['employmentInfo']['companyName'],
@@ -292,7 +292,7 @@ export class MailManager {
 
 					// LOANS AND CREDIT CARDS
 					otherLoan: (params['personalInfo'] && params['personalInfo']['prevLoans']) ? params['personalInfo']['prevLoans']['status'] : 'N/A',
-					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? + 'Php ' + (params['personalInfo']['prevLoans']['monthlyTotal']).toLocaleString : 'N/A',
+					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? + 'Php ' + (params['personalInfo']['prevLoans']['monthlyTotal']).toLocaleString() : 'N/A',
 					totalRemainingBalance: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['remainingTotal']) ? params['personalInfo']['prevLoans']['remainingTotal'] : 'N/A',
 					//
 					// Credit Card Limit (Php)
