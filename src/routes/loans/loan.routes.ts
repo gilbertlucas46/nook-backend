@@ -37,8 +37,6 @@ export let loanRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
-				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
-
 				const data = await LoanController.addLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
@@ -537,8 +535,6 @@ export let loanRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
-				console.log('payloadpayloadpayloadpayloadpayload', payload);
-
 				const data = await LoanController.updateLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -952,8 +948,6 @@ export let loanRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload = request.params as any;
-				console.log('payloadpayloadpayloadpayloadpayload', payload);
-
 				const data = await LoanController.downloadPdf(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -993,8 +987,6 @@ export let loanRoute: ServerRoute[] = [
 					...request.params as any,
 					...request.query as any,
 				};
-				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
-
 				const data = await LoanController.getDocuments(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -1137,8 +1129,6 @@ export let loanRoute: ServerRoute[] = [
 					...request.params as any,
 					...request.query as any,
 				};
-				console.log('payloadpayloadpayloadpayloadpayloadpayloadpayload', payload);
-
 				const data = await LoanController.getDocuments(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {

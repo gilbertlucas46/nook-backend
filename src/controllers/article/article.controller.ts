@@ -84,7 +84,6 @@ class ArticleController {
     async getArticleById(payload: ArticleRequest.GetArticleById) {
         try {
             // const removeSpecialCharacter = payload.articleId.replace(/[^\w\s]/gi, '');
-            // console.log('removeSpecialCharacterremoveSpecialCharacter', removeSpecialCharacter);
 
             // payload['name'] = removeSpecialCharacter.replace(/\s+/g, '-');
 

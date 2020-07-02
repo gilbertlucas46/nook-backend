@@ -157,7 +157,6 @@ export let userRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: UserRequest.ProfileUpdate = request.payload as any;
-				console.log('payloadpayloadpayload', payload);
 
 				const responseData = await UserService.updateProfile(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
@@ -210,8 +209,6 @@ export let userRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				// const responseData = await UserService.getProfile(userData);
-				console.log('userDatauserData', userData);
-
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, userData));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);

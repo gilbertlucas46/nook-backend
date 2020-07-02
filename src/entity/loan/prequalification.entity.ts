@@ -16,7 +16,6 @@ class PreLoanEntities extends BaseEntity {
 
     async addBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
         try {
-            console.log('payload>>>>>>>>>>>>>>>', payload);
             let totalMonthlyIncome = payload.employmentInfo.income;
             let preLoanMonthlyAmount = 0;
             if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome; // If married need to add spouse income also to calculate debtToIncomeRatio
@@ -245,8 +244,6 @@ class PreLoanEntities extends BaseEntity {
             );
 
             const data = await this.DAOManager.aggregateData('Bank', queryPipeline);
-            console.log('data>>>>>>>>>>>>>>>>>>>>>>>', data);
-
             if (data.length > 0) {
                 // const getPreQualficationId =await
                 payload['grossIncome'] = totalMonthlyIncome;
@@ -266,7 +263,6 @@ class PreLoanEntities extends BaseEntity {
                     };
 
                     const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate);
-                    console.log('updatedDataupdatedDataupdatedData', updatedData, true);
                     const salesforceData: { [key: string]: string | number } = flattenObject(updatedData.toObject ? updatedData.toObject() : updatedData);
                     console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
                     console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
@@ -288,7 +284,6 @@ class PreLoanEntities extends BaseEntity {
                 });
 
                 const referenceNumber = await this.getReferenceId(criteria1);
-                console.log('referenceNumberreferenceNumber', referenceNumber);
 
                 if (!referenceNumber) {
                     const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
@@ -530,7 +525,6 @@ class PreLoanEntities extends BaseEntity {
             // const data = this.DAOManager.paginatePipeline(this.modelName, query);
             const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
             // const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline, paginateOptions.limit, paginateOptions.skip);
-            console.log('datadatadatadatadatadatadata', data);
             return data;
         } catch (error) {
             return Promise.reject(error);

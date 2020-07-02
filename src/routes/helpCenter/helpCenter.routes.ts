@@ -521,7 +521,6 @@ export let helpCenterRoute: ServerRoute[] = [
                 //     ...request.query,
                 // }
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any)['adminData'];
-                console.log('payloadpayloadpayload', payload);
 
                 // const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
 

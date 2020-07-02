@@ -13,10 +13,8 @@ export let preloanRoute: ServerRoute[] = [
     handler: async (request, h: ResponseToolkit) => {
       try {
         const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
-        // const payload = request.payload as AdminRequest.ProfileUpdate;
 
         const payload: LoanRequest.PreLoan = request.payload as LoanRequest.PreLoan;
-        console.log('payloadpayload', payload);
         if (request.query.bankId) payload.bankId = request.query.bankId as string;
         const bankData = await LoanController.checkPreloanApplication(payload, userData);
         return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, bankData));
@@ -160,7 +158,6 @@ export let preloanRoute: ServerRoute[] = [
         // const payload = request.payload as AdminRequest.ProfileUpdate;
 
         const payload: LoanRequest.PreLoan = request.payload as LoanRequest.PreLoan;
-        console.log('payloadpayload', payload);
         if (request.query.bankId) payload.bankId = request.query.bankId as string;
 
         const bankData = await LoanController.checkPreloanApplication(payload, adminData);
