@@ -175,7 +175,7 @@ export class MailManager {
 			}
 			let propAddress;
 			if (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['address'] || params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['address']) {
-				propAddress = (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['address']) ? params && params['documents'] && params['documents']['purchasePropertyInfo']['contactNumber'] : params['propertyDocuments']['purchasePropertyInfo']['address']
+				propAddress = (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['address']) ? params && params['documents'] && params['documents']['purchasePropertyInfo']['address'] : params['propertyDocuments']['purchasePropertyInfo']['address']
 			}
 
 			function GetFormattedDate(date) {
