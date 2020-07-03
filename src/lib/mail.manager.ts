@@ -197,8 +197,8 @@ export class MailManager {
 					citizenship: params['personalInfo']['nationality'],
 					birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
 
-					phoneNo: params.contactInfo['phoneNumber'],
-					mobileNo: params.contactInfo['mobileNumber'],
+					phoneNo: (params && params.contactInfo && params.contactInfo['phoneNumber']) ? params.contactInfo['phoneNumber'] : 'N/A',
+					mobileNo: (params && params.contactInfo && params.contactInfo['mobileNumber']) ? params.contactInfo['mobileNumber'] : 'N/A',
 
 					email: params.contactInfo['email'],
 					birthPlace: (params['personalInfo'] && params['personalInfo']['placeOfBirth']) ? params['personalInfo']['placeOfBirth'] : 'N/A',
@@ -250,21 +250,26 @@ export class MailManager {
 					loanTerm: params['loanDetails']['loanTerm'] + ' ' + 'year',
 					fixedPeriod: params['loanDetails']['fixedPeriod'] + ' ' + 'year',
 					loanPercent: params['loanDetails']['loanPercent'],
-					loanAmount: 'Php ' + ((params['loanDetails']['loanAmount']).toFixed(2)).toLocaleString(),
+					loanAmount: 'Php ' + (params['loanDetails']['loanAmount']).toLocaleString(),
 					interestRate: params['loanDetails']['rate'],
 					loanType: params['loanDetails']['loanType'],
 					// Loan Total PaymentA (Php): params['loanDetails']['loanAmount'],
-					monthlyRepayment: 'Php ' + ((params['loanDetails']['monthlyRepayment']).toFixed(2)).toLocaleString(),
+					monthlyRepayment: 'Php ' + (params['loanDetails']['monthlyRepayment']).toLocaleString(),
 					loanTotalPayment: 'N/A',
 
 
 					// COLLATERAL INFORMATION
-					propertyValue: 'Php ' + ((params['propertyInfo']['value']).toFixed(2)).toLocaleString(),
+					propertyValue: 'Php ' + (params['propertyInfo']['value']).toLocaleString(),
+
 					propertyType: params['propertyInfo']['type'],
+
 					propertyStatus: params['propertyInfo']['status'],
-					propertyDeveloper: params['propertyInfo']['developer'] ? params['propertyInfo']['developer'] : 'N/A',
+
+					propertyDeveloper: (params && params['propertyInfo'] && params['propertyInfo']['developer']) ? params['propertyInfo']['developer'] : 'N/A',
+
 					propertyAddress: (params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['address']) ? params['propertyDocuments']['purchasePropertyInfo']['address'] : 'N/A',
-					isColleteralDocumentUploaded: (params && params['documents'] && params['documents']['colleteralDoc'][0]['status']) ? true : false,
+
+					isColleteralDocumentUploaded: (params && params['documents'] && params['documents']['colleteralDoc'] && params['documents']['colleteralDoc'] && params['documents']['colleteralDoc'][0] && params['documents']['colleteralDoc'][0]['status']) ? true : false,
 
 					// contactPerson:
 					contactNumber: (params && params['contactInfo'] && params['contactInfo']['mobileNumber']) ? params['contactInfo']['mobileNumber'] : 'N/A',
