@@ -250,11 +250,11 @@ export class MailManager {
 					loanTerm: params['loanDetails']['loanTerm'] + ' ' + 'year',
 					fixedPeriod: params['loanDetails']['fixedPeriod'] + ' ' + 'year',
 					loanPercent: params['loanDetails']['loanPercent'],
-					loanAmount: 'Php ' + (params['loanDetails']['loanAmount']).toLocaleString(),
+					loanAmount: 'Php ' + (parseInt(params['loanDetails']['loanAmount'])).toLocaleString(),
 					interestRate: params['loanDetails']['rate'],
 					loanType: params['loanDetails']['loanType'],
 					// Loan Total PaymentA (Php): params['loanDetails']['loanAmount'],
-					monthlyRepayment: 'Php ' + ((params['loanDetails']['monthlyRepayment']).toFixed(0)).toLocaleString(),
+					monthlyRepayment: 'Php ' + (parseInt(params['loanDetails']['monthlyRepayment'])).toLocaleString(),
 					loanTotalPayment: 'N/A',
 
 
@@ -285,7 +285,7 @@ export class MailManager {
 					employmentType: params['employmentInfo']['type'],
 					employmentRank: params['employmentInfo']['rank'],
 					employmentTenure: params['employmentInfo']['tenure'],
-					grossMonthlyIncome: 'Php ' + params['personalInfo']['monthlyIncome'].toLocaleString(),   // to be done
+					grossMonthlyIncome: 'Php ' + (parseInt(params['personalInfo']['monthlyIncome'])).toLocaleString(),   // to be done
 					tin: params['employmentInfo'] ? params['employmentInfo']['tin'] : 'N/A',
 					sss: params['employmentInfo'] ? params['employmentInfo']['sss'] : 'N/A',
 					companyName: params['employmentInfo']['companyName'],
