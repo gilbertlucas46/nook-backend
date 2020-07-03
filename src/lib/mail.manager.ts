@@ -254,7 +254,7 @@ export class MailManager {
 					interestRate: params['loanDetails']['rate'],
 					loanType: params['loanDetails']['loanType'],
 					// Loan Total PaymentA (Php): params['loanDetails']['loanAmount'],
-					monthlyRepayment: 'Php ' + (params['loanDetails']['monthlyRepayment']).toLocaleString(),
+					monthlyRepayment: 'Php ' + ((params['loanDetails']['monthlyRepayment']).toFixed(0)).toLocaleString(),
 					loanTotalPayment: 'N/A',
 
 
