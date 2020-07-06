@@ -297,8 +297,8 @@ export class MailManager {
 
 					// LOANS AND CREDIT CARDS
 					otherLoan: (params['personalInfo'] && params['personalInfo']['prevLoans']) ? params['personalInfo']['prevLoans']['status'] : 'N/A',
-					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? + 'Php ' + (params['personalInfo']['prevLoans']['monthlyTotal']).toLocaleString() : 'N/A',
-					totalRemainingBalance: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['remainingTotal']) ? params['personalInfo']['prevLoans']['remainingTotal'] : 'N/A',
+					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? (parseInt(params['personalInfo']['prevLoans']['monthlyTotal'])).toLocaleString() : 'N/A',
+					totalRemainingBalance: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['remainingTotal']) ? (parseInt(params['personalInfo']['prevLoans']['remainingTotal'])).toLocaleString() : 'N/A',
 					//
 					// Credit Card Limit (Php)
 
@@ -309,7 +309,7 @@ export class MailManager {
 
 					// Total Remaining Balance (Php)
 
-					creditCardLimit: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['limit']) ? params['personalInfo']['creditCard']['limit'] : 'N/A',
+					creditCardLimit: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['limit']) ? (parseInt(params['personalInfo']['creditCard']['limit'])).toLocaleString() : 'N/A',
 
 					creaditCardIssuingBank: 'N/A',
 
