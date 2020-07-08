@@ -284,9 +284,28 @@ class LoanControllers extends BaseEntity {
                     },
                 };
             }
-            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true });
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true, lean: true });
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             // else {
+            // JSON.parse(JSON.stringify(data));
+            async function GetFormattedDate(date) {
+                const todayTime = new Date(date);
+                const month = (todayTime.getMonth() + 1);
+                const day = (todayTime.getDate());
+                const year = (todayTime.getFullYear());
+                console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
+                return day + '-' + month + '-' + year;
+            }
+            if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
+                data.personalInfo.birthDate = await GetFormattedDate(data['personalInfo']['birthDate'])
+            }
+            // 	birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
+            if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
+                data['personalInfo']['spouseInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
+            }
+            if (data && data['personalInfo'] && data['personalInfo']['coBorrowerInfo'] && data['personalInfo']['coBorrowerInfo']['birthDate']) {
+                data['personalInfo']['coBorrowerInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
+            }
             let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
             console.log('salesforceDatasalesforceData', salesforceData);
             if (payload.staffId) {

@@ -365,7 +365,6 @@ class LoanApplicationE extends BaseEntity {
                 data.personalInfo.birthDate = await GetFormattedDate(data['personalInfo']['birthDate'])
             }
 
-
             // 	birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
             if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
                 data['personalInfo']['spouseInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
