@@ -233,7 +233,8 @@ export class MailManager {
 					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + coBorrowerMiddleName + ' ' + coBorrowerInfo['lastName'] : 'N/A',
 					relationship: (coBorrowerInfo && coBorrowerInfo['relationship']) ? coBorrowerInfo['relationship'] : 'N/A',
 					// relationship: coBorrowerInfo ? coBorrowerInfo['relationship'] : 'N/A',
-					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? + coBorrowerInfo['monthlyIncome'] : 'N/A',
+					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? 'Php ' + (parseInt(coBorrowerInfo['monthlyIncome'])).toLocaleString() : 'N/A',
+
 					coBorrowerTIN: (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A',
 					coBorrowerSSS: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['sss']) ? params.employmentInfo.coBorrowerInfo['sss'] : 'N/A',
 					coBorrowerEmploymentType: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentType']) ? params.employmentInfo.coBorrowerInfo['employmentType'] : 'N/A',
