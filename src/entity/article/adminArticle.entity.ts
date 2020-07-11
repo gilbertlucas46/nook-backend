@@ -16,7 +16,6 @@ export class CategoryClass extends BaseEntity {
         try {
             const checkContainQmark = payload.title.includes('?');
             payload.name = payload.title.replace(/\s+/g, '-').replace(/\//g, '_').toLowerCase();
-            console.log('payload.titlepayload.titlepayload.title', payload.title);
 
             const criteria = {
                 name: payload.name,
@@ -131,8 +130,6 @@ export class CategoryClass extends BaseEntity {
                         title: payload.title,
                     };
                     const data = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpdate);
-                    console.log('data>A>>>>>', data);
-
                     return data;
                 }
             } else if (payload.status) {

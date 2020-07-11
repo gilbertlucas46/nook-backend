@@ -482,7 +482,6 @@ class LoanControllers extends BaseEntity {
                 ];
             }
             if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED && payload.coBorrowerInfo) {
-                console.log('1111111111111111111111111LLLLLLLLLLL');
                 const pushedItem = {
                     $match: {
                         $and: [{
@@ -504,7 +503,6 @@ class LoanControllers extends BaseEntity {
             }
 
             else if (payload.coBorrowerInfo && payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED) {
-                console.log('222222222KKKKKKKKKKKKKK');
                 const pushedItem = {
                     $match: {
                         $and: [{
@@ -530,7 +528,6 @@ class LoanControllers extends BaseEntity {
             }
 
             else if (payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
-                console.log('33333333333333hhhhhhhKKKKKKKKKKKKKK');
                 const pushedItem = {
                     $match: {
                         $and: [{
@@ -545,7 +542,6 @@ class LoanControllers extends BaseEntity {
                 aggregateLegal.push(pushedItem);
             }
             else if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
-                console.log('4444444444444444444444444ttttttttTTTTTTTTTTTTTTTTTTTTTT');
                 const pushedItem = {
                     $match: {
                         $and: [{
@@ -576,7 +572,6 @@ class LoanControllers extends BaseEntity {
 
             let aggregateIncome;
             if (payload.employmentType) {
-                console.log(22222222222222222222222222222222222222);
                 aggregateIncome = [{
                     $match: {
                         _id: Types.ObjectId(payload.bankId),
@@ -605,8 +600,6 @@ class LoanControllers extends BaseEntity {
             }
             let aggregateColleteralDocument;
             if (payload.propertyStatus) {
-                console.log('33333333333333333333333333333333333333');
-
                 aggregateColleteralDocument = [{
                     $match: {
                         _id: Types.ObjectId(payload.bankId),

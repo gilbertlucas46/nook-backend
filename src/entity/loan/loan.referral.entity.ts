@@ -150,7 +150,6 @@ class LoanReferral extends BaseEntity {
             ];
 
             const data = await this.DAOManager.paginatePipeline(matchCondition, paginateOptions, pipeline).aggregate(this.modelName);
-            console.log('dataaaaaaaaaaaaaaaa', data);
             return data;
 
             // const [data, total] = await Promise.all(promiseArray);
