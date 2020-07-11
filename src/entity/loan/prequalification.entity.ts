@@ -385,7 +385,6 @@ class PreLoanEntities extends BaseEntity {
             const matchObject: any = {};
             let searchObject: any = {};
             const { sortType } = payload;
-            // console.log('userIduserIduserId', userId);
 
             const paginateOptions = {
                 page: page || 1,

@@ -385,7 +385,6 @@ class LoanApplicationE extends BaseEntity {
             return;
 
         } catch (error) {
-            console.log('eorrrrrrrrrrrrrrrrrrrrrrrrr', error);
             return Promise.reject(error);
         }
     }

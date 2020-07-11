@@ -78,12 +78,8 @@ class LoanEntities extends BaseEntity {
                     },
                 );
             }
-            console.log('queryPipeline', queryPipeline);
-            console.log('maxAgeRequiredForLoanmaxAgeRequiredForLoan', ageAtlastLoanPayment);
 
             if (ageAtlastLoanPayment > 65 && ageAtlastLoanPayment < 70) {
-                console.log('maxAgeRequiredForLoanmaxAgeRequiredForLoan', ageAtlastLoanPayment);
-
                 queryPipeline.push({
                     $match: {
                         maxAgeRequiredForLoan: { $eq: 70 },
@@ -262,8 +258,6 @@ class LoanEntities extends BaseEntity {
             );
 
             const data = await this.DAOManager.aggregateData(this.modelName, queryPipeline);
-            console.log('datadatadatadata', data);
-
             return data;
 
         } catch (error) {
