@@ -34,7 +34,8 @@ class PreLoanEntities extends BaseEntity {
 
             // age filters
             if (payload.other.age) ageAtlastLoanPayment = payload.other.age + payload.loan.term;
-            if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+            // if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+            if (ageAtlastLoanPayment >= 70) return []; // Max age is 65 till the final loan payment.
 
             const queryPipeline = [];
             if (payload.other.creditCard.cancelled) {
@@ -78,6 +79,13 @@ class PreLoanEntities extends BaseEntity {
                         },
                     },
                 );
+            }
+            if (ageAtlastLoanPayment > 65 && ageAtlastLoanPayment < 70) {
+                queryPipeline.push({
+                    $match: {
+                        maxAgeRequiredForLoan: { $eq: 70 },
+                    },
+                });
             }
 
             if (payload.bankId) queryPipeline[0].$match._id = Types.ObjectId(payload.bankId);
