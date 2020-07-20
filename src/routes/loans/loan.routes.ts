@@ -531,6 +531,15 @@ export let loanRoute: ServerRoute[] = [
 					applicationStatus: Joi.string().valid([
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
