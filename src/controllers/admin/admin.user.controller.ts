@@ -6,6 +6,9 @@ import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { AdminUserEntity } from '@src/entity';
 import { MailManager } from '@src/lib';
+import { flattenObject } from '@src/utils/flatten.util';
+import fetch from 'node-fetch';
+import * as config from 'config';
 /**
  * @author Anurag Agarwal
  * @description this controller contains actions for user management in admin/staff
@@ -39,13 +42,31 @@ class AdminUserControllers {
                         ...payload,
                         password: hashPassword,
                     };
-                    const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
+                    const User: any = await ENTITY.UserE.createOneEntity(userData);
                     const userResponse = UniversalFunctions.formatUserData(User);
                     const sendObj = {
                         receiverEmail: payload.email,
                         password: genCredentials,
                         userName: payload.firstName + '' + payload.lastName,
                     };
+
+                    const salesforceData = flattenObject(User.toObject ? User.toObject() : User);
+                    console.log('salesforceDatasalesforceData', salesforceData);
+                    const request = {
+                        method: 'post',
+                        body: JSON.stringify(salesforceData),
+                    };
+
+                    // SessionE.createSession({}, doc, accessToken, 'user');
+                    // const formatedData = utils.formatUserData(doc);
+
+                    // 	receiverEmail: payload.email,
+                    // 	subject: 'nook welcomes you',
+                    // 	userName: payload.userName,
+                    // };
+                    await fetch(config.get('zapier_personUrl'), request);
+                    await fetch(config.get('zapier_accountUrl'), request);
+
                     const mail = new MailManager();
                     await mail.welcomeStaffUSer(sendObj);
                     return userResponse;
