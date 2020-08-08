@@ -253,6 +253,14 @@ class PreLoanEntities extends BaseEntity {
 
             const data = await this.DAOManager.aggregateData('Bank', queryPipeline);
             if (data.length > 0) {
+                function GetFormattedDate(date) {
+                    const todayTime = new Date(date);
+                    const month = (todayTime.getMonth() + 1);
+                    const day = (todayTime.getDate());
+                    const year = (todayTime.getFullYear());
+                    console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
+                    return day + '-' + month + '-' + year;
+                }
                 // const getPreQualficationId =await
                 payload['grossIncome'] = totalMonthlyIncome;
                 payload['totalLoanMonthly'] = data[0]['totalLoanMonthly'];
@@ -271,6 +279,11 @@ class PreLoanEntities extends BaseEntity {
                     };
 
                     const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate);
+
+                    if (updatedData.other && updatedData.other.dob) {
+                        updatedData.other.dob = GetFormattedDate(updatedData.other['dob'])
+                    }
+
                     const salesforceData: { [key: string]: string | number } = flattenObject(updatedData.toObject ? updatedData.toObject() : updatedData);
                     console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
                     console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
@@ -342,14 +355,6 @@ class PreLoanEntities extends BaseEntity {
                 // console.log('data2:', data1);
                 if (payload.other && payload.other.email) {
                     delete payload.other['email'];
-                }
-                function GetFormattedDate(date) {
-                    const todayTime = new Date(date);
-                    const month = (todayTime.getMonth() + 1);
-                    const day = (todayTime.getDate());
-                    const year = (todayTime.getFullYear());
-                    console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
-                    return day + '-' + month + '-' + year;
                 }
 
                 // for salesfoce 
