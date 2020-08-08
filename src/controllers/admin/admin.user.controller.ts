@@ -226,7 +226,8 @@ class AdminUserControllers {
             }
             const updatedUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
             const userResponse = UniversalFunctions.formatUserData(updatedUser);
-            if (config.get['environment'] === 'production') {
+
+            if (config.get('environment') === 'production') {
                 // if (!isProfileCompleted) {
                 // convert document to data
                 const salesforceData = flattenObject(userResponse.toObject ? userResponse.toObject() : userResponse);
