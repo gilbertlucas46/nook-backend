@@ -42,7 +42,8 @@ class AdminUserControllers {
                         ...payload,
                         password: hashPassword,
                     };
-                    const User: any = await ENTITY.UserE.createOneEntity(userData);
+                    const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
+                    delete User['password']
                     const userResponse = await UniversalFunctions.formatUserData(User);
                     console.log('userResponseuserResponse', userResponse);
 
