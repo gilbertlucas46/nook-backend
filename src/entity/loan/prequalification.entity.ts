@@ -278,7 +278,7 @@ class PreLoanEntities extends BaseEntity {
                         // updatedAt: new Date().getTime(),
                     };
 
-                    const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate);
+                    const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate, { new: true });
 
                     if (updatedData.other && updatedData.other.dob) {
                         updatedData.other.dob = GetFormattedDate(updatedData.other['dob'])
