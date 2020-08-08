@@ -50,7 +50,7 @@ class AdminUserControllers {
                         userName: payload.firstName + '' + payload.lastName,
                     };
 
-                    const salesforceData = flattenObject(User.toObject ? User.toObject() : User);
+                    const salesforceData = flattenObject(userResponse.toObject ? userResponse.toObject() : userResponse);
                     console.log('salesforceDatasalesforceData', salesforceData);
                     const request = {
                         method: 'post',
