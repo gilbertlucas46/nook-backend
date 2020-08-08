@@ -43,7 +43,9 @@ class AdminUserControllers {
                         password: hashPassword,
                     };
                     const User: any = await ENTITY.UserE.createOneEntity(userData);
-                    const userResponse = UniversalFunctions.formatUserData(User);
+                    const userResponse = await UniversalFunctions.formatUserData(User);
+                    console.log('userResponseuserResponse', userResponse);
+
                     const sendObj = {
                         receiverEmail: payload.email,
                         password: genCredentials,
