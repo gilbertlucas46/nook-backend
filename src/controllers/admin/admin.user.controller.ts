@@ -43,12 +43,12 @@ class AdminUserControllers {
                         password: hashPassword,
                     };
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
-                    delete User['password']
-                    const userResponse = await UniversalFunctions.formatUserData(User);
-                    console.log('userResponseuserResponse', userResponse);
 
+                    let userResponse = await UniversalFunctions.formatUserData(User);
+                    userResponse = JSON.parse(JSON.stringify(userResponse))
                     userResponse['isNewUser'] = 1;
-
+                    console.log('userResponse', userResponse);
+                    delete userResponse['password']
                     const sendObj = {
                         receiverEmail: payload.email,
                         password: genCredentials,
