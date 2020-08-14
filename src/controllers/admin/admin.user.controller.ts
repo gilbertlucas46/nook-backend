@@ -23,7 +23,7 @@ class AdminUserControllers {
         return result[0];
     }
 
-    async addUser(payload) {
+    async addUser(payload: AdminRequest.IAddUser) {
         try {
             const checkMail = { email: payload.email };
             const checkUserName = { userName: payload.userName };
@@ -46,6 +46,8 @@ class AdminUserControllers {
                     delete User['password']
                     const userResponse = await UniversalFunctions.formatUserData(User);
                     console.log('userResponseuserResponse', userResponse);
+
+                    userResponse['isNewUser'] = 1;
 
                     const sendObj = {
                         receiverEmail: payload.email,
@@ -226,6 +228,8 @@ class AdminUserControllers {
             }
             const updatedUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
             const userResponse = UniversalFunctions.formatUserData(updatedUser);
+
+            userResponse['isNewUser'] = 0;
 
             if (config.get('environment') === 'production') {
                 // if (!isProfileCompleted) {
