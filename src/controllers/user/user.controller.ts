@@ -114,13 +114,13 @@ export class UserController extends BaseEntity {
 			// }
 
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
-
+			updateUser['isNewUser'] = 0;
 			/**
 			 *  push contract to salesforce
 			 */
 			if (config.get('environment') === 'production') {
 				// if (!isProfileCompleted) {
-				// convert document to data
+				// convert document to data	
 				const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
 				const request = {
 					method: 'post',
@@ -324,7 +324,7 @@ export class UserController extends BaseEntity {
 					// type: payload.type,
 				};
 				const formatedData = await ENTITY.UserE.createOneEntity(userData);
-
+				formatedData['isNewUser'] = 1;
 				const salesforceData = flattenObject(formatedData.toObject ? formatedData.toObject() : formatedData);
 				console.log('salesforceDatasalesforceData', salesforceData);
 				const request = {
