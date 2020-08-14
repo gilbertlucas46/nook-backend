@@ -324,7 +324,8 @@ export class UserController extends BaseEntity {
 					// isProfileComplete: true,
 					// type: payload.type,
 				};
-				const formatedData = await ENTITY.UserE.createOneEntity(userData);
+				let formatedData = await ENTITY.UserE.createOneEntity(userData);
+				formatedData = JSON.parse(JSON.stringify(formatedData));
 				formatedData['isNewUser'] = 1;
 				const salesforceData = flattenObject(formatedData.toObject ? formatedData.toObject() : formatedData);
 				console.log('salesforceDatasalesforceData', salesforceData);
