@@ -122,6 +122,7 @@ export class UserController extends BaseEntity {
 				// if (!isProfileCompleted) {
 				// convert document to data	
 				const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
+				console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
 				const request = {
 					method: 'post',
 					body: JSON.stringify(salesforceData),
