@@ -305,6 +305,7 @@ export namespace LoanRequest {
         searchTerm?: string;
         staffId?: string;
         partnerId?: string;
+        // applicationStatus: string;
     }
 
     export interface IAdminPrequalificationList {

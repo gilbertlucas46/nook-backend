@@ -331,6 +331,11 @@ export let DATABASE = {
 			BLOCKED: 'BLOCKED',
 			DELETE: 'DELETE',
 		},
+		LOAN_STATUS: {
+			ACTIVE: 'ACTIVE',
+			// BLOCKED: 'BLOCKED',
+			DELETE: 'DELETE',
+		},
 	},
 
 	ACTION: {

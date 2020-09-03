@@ -752,5 +752,23 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    async adminDeleteLoanApplication(payload) {
+        try {
+            const criteira = {
+                _id: payload.loanId
+            };
+            const dataToUpdate = {
+                status: payload.status
+            }
+            const data = LoanApplicationEntity.updateOneEntity(criteira, dataToUpdate);
+            if (!data) {
+                return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
+            }
+            return Constant.STATUS_MSG.SUCCESS.S200.DELETED;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }
 export const LoanController = new LoanControllers();
