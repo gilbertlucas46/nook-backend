@@ -157,7 +157,7 @@ class LoanApplicationE extends BaseEntity {
             // if (status) {
             //     matchObject['status'] = status;
             // } else {
-            matchObject['status'] = Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE;
+            matchObject.$match['status'] = Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE;
             // }
             if (sortBy) {
                 sortingType = {
