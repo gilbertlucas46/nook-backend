@@ -1490,6 +1490,8 @@ export let adminProfileRoute: ServerRoute[] = [
 				params: {
 					loanId: Joi.string().required(),
 					status: Joi.string().valid([
+						Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
+						Constant.DATABASE.STATUS.LOAN_STATUS.DELETE
 					]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
