@@ -154,7 +154,11 @@ class LoanApplicationE extends BaseEntity {
             // if (userData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE || userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE) {
             // matchObject['saveAsDraft'] = false;
             // }
-
+            // if (status) {
+            //     matchObject['status'] = status;
+            // } else {
+            matchObject['status'] = Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE;
+            // }
             if (sortBy) {
                 sortingType = {
                     [sortBy]: sortType,

@@ -9,6 +9,7 @@ import { MailManager } from '@src/lib';
 import { flattenObject } from '@src/utils/flatten.util';
 import fetch from 'node-fetch';
 import * as config from 'config';
+import { Types } from 'mongoose';
 /**
  * @author Anurag Agarwal
  * @description this controller contains actions for user management in admin/staff
@@ -157,7 +158,13 @@ class AdminUserControllers {
                 isUserBlockedByAdmin: payload.status !== payload.status['ACTIVE'],
                 approvedAt: new Date().getTime(),
             };
+            // const loanUserCriteria = {
+            //     userId: Types.ObjectId(payload.userId),
+            // }
 
+            // // if (payload.status === Constant.DATABASE.STATUS.USER.DELETE || payload.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
+            // const data1 = await ENTITY.LoanApplicationEntity.updateMultiple(loanUserCriteria, dataToUpdate);
+            // // }
             return data;
         } catch (error) {
             return Promise.reject(error);

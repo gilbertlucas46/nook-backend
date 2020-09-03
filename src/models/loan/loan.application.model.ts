@@ -1,11 +1,18 @@
 import { Schema, Document, model, Types } from 'mongoose';
 import * as CONSTANT from './../../constants';
 import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../constants';
+import { config } from 'process';
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     partnerName: { type: String, index: true },
     partnerId: { type: String, index: true },
+    status: {
+        type: String, enum: [
+            CONSTANT.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
+            CONSTANT.DATABASE.STATUS.LOAN_STATUS.DELETE
+        ]
+    },
     // saveAsDraft: { type: Schema.Types.Boolean, default: false },
     ipAddress: { type: String },
     applicationStatus: {
