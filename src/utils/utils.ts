@@ -8,6 +8,7 @@ import { isArray } from 'util';
 import { logger } from '../lib/logger.manager'
 const displayColors = config.get('displayColors');
 import * as hasher from 'wordpress-hash-node';
+import * as request from 'request';
 
 export let sendError = (data: any) => {
 	if (
@@ -206,4 +207,24 @@ export let invoiceNumber = (value) => {
 	return 'INV' + new Date().getFullYear() + ('00000000' + value).slice(-8);
 };
 
+export let errorReporter = async (data) => {
+	try {
+		console.log('config.get,config.get,', config.get('flock'),);
+
+		let postThisData = {
+			url: config.get('flock'),
+			body: JSON.stringify({ flockml: data }),
+			headers: { 'Content-Type': 'application/json' }
+		}
+		request.post(postThisData, (err, response, body) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log(body)
+			}
+		});
+	} catch (error) {
+		console.log('Error inside errorReporter', error);
+	}
+}
 export let incrementNumber = (value) => { return value; };
