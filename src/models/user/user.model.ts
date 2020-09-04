@@ -10,7 +10,7 @@ export interface IUser extends Document {
 	phoneNumber: string;
 	type: string;
 	title?: string;
-
+	countryCode: string;
 	fullPhoneNumber?: string;
 	language?: string;
 	aboutMe?: string;
@@ -47,6 +47,9 @@ const userSchema = new Schema({
 		default: CONSTANT.DATABASE.STATUS.USER.ACTIVE,
 		index: true,
 	},
+	countryCode: { type: String },
+	partnerName: { type: String },
+	partnerId: { type: String },
 	ipAddress: { type: String },
 	createdAt: { type: Number, required: true, index: true },
 	updatedAt: { type: Number, required: true, index: true },

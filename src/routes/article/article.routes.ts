@@ -228,7 +228,6 @@ export let articleRoutes: ServerRoute[] = [
                 // }
 
                 const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.ARTICLE);
-                console.log('permissio>:::::::::::::::::::::::::::', permission);
 
                 const data = await ArticleService.createArticle(payload, adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.ARTICLE_CREATED, data));

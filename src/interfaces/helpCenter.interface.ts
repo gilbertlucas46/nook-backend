@@ -13,6 +13,14 @@ export namespace helpCenterRequest {
         id: number;
         type: string,
     }
+
+    export interface AdminGetHelpCnter {
+        categoryId: string
+        page: number;
+        limit: number;
+        searchTerm: string;
+        sortType: number
+    }
     export interface DeleteHelpCenter {
         id: string;
     }

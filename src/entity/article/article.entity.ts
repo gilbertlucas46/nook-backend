@@ -239,7 +239,6 @@ export class ArticleClass extends BaseEntity {
 
             let { sortType, status } = payload;
             const { articleId, searchTerm, fromDate, toDate, categoryId, page, limit } = payload;
-            console.log('payloadpayloadpayloadpayload', payload.categoryId, categoryId);
 
             let sortingType = {};
             sortType = !sortType ? -1 : sortType;
@@ -284,7 +283,6 @@ export class ArticleClass extends BaseEntity {
                 };
             }
             if (Admindata && categoryId) {
-                console.log('11111111111111111111111111111111');
                 query = {
                     categoryId: Types.ObjectId(categoryId),
                     status: Constant.DATABASE.ARTICLE_STATUS.ACTIVE,
@@ -302,7 +300,6 @@ export class ArticleClass extends BaseEntity {
             if (fromDate && toDate) { query['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             if (fromDate && !toDate) { query['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { query['createdAt'] = { $lte: toDate }; }
-            console.log('queryqueryqueryqueryqueryqueryqueryqueryquery', query);
 
             const matchPipeline = [
                 { $match: query },
@@ -555,7 +552,6 @@ export class ArticleClass extends BaseEntity {
             const FEATURED = await this.DAOManager.findOne(this.modelName, criteria, { articleAction: 0 }, { sort: { _id: -1 } });
             // const FEATURED = await this.DAOManager.findOne(this.modelName, { isFeatured: true, $match }, { articleAction: 0 }, { sort: { _id: -1 } });
 
-            console.log('FEATUREDFEATURED', FEATURED);
 
             const matchPipeline = [
                 { $match },
@@ -568,8 +564,6 @@ export class ArticleClass extends BaseEntity {
             ];
 
             if (FEATURED) {
-                console.log('matchPipelinematchPipelinematchPipeline1111111111111111111111');
-
                 const pushedItem = {
                     $match:
                     {

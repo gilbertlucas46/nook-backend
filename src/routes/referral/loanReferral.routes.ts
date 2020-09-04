@@ -28,9 +28,10 @@ export let loanReferral: any = [
                 payload: {
                     lastName: Joi.string(),
                     firstName: Joi.string(),
-                    email: Joi.string().email(),
-                    phoneNumber: Joi.string(),
+                    email: Joi.string().email().required(),
+                    phoneNumber: Joi.string().required(),
                     notes: Joi.string(),
+                    countryCode: Joi.string().default('+63'),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,

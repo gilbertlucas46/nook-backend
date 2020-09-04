@@ -132,8 +132,10 @@ export namespace AdminRequest {
 		phoneNumber: string;
 		type?: string;
 		language?: string;
+		countryCode: string;
 		// title?: string;
 		// license?: string;
+		isNewUser: boolean;
 		companyName?: string;
 		address?: string;
 		aboutMe?: string;
@@ -162,6 +164,7 @@ export namespace AdminRequest {
 		phoneNumber: string;
 		type?: string;
 		language?: string;
+		isNewUser: boolean;
 		// title?: string;
 		// license?: string;
 		companyName?: string;

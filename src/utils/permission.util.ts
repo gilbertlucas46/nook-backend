@@ -94,7 +94,6 @@ export function checkPermission(adminData, modelName) {
         } else
             return;
     } catch (error) {
-        console.log('checkPermissoincheckPermissoincheckPermissoin', error);
         return UniversalFunctions.sendError(error);
     }
 }

@@ -82,7 +82,7 @@ export let helpCenterCategoryRoutes: ServerRoute[] = [
                 // const permission = await UniversalFunctions.checkPermission(adminData, payload.type);
 
                 const data = await HelpCenterCategoryService.adminUpdateCategory(payload, adminData);
-                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data);
             } catch (error) {
                 UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
@@ -129,7 +129,7 @@ export let helpCenterCategoryRoutes: ServerRoute[] = [
                 // const permission = await UniversalFunctions.checkPermission(adminData, payload.type);
 
                 const data = await HelpCenterCategoryService.adminUpdateCatgoryStatus(payload, adminData);
-                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, {});
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
             } catch (error) {
                 UniversalFunctions.consolelog(error, 'error', true);
                 return (UniversalFunction.sendError(error));
@@ -263,4 +263,48 @@ export let helpCenterCategoryRoutes: ServerRoute[] = [
             },
         },
     },
+
+    {
+        method: 'DELETE',
+        path: '/v1/admin/help-category/{categoryId}',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload = request.params as any;
+                // ...request.payload as any,
+
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                //     await ENTITY.AdminStaffEntity.checkPermission(Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER);
+                // }
+
+                // const checkPermission = adminData['permission'].some(data => {
+                //     return data.moduleName === Constant.DATABASE.PERMISSION.TYPE.HELP_CENTER;
+                // });
+
+                // if (checkPermission === false) {
+                //     return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
+                // }
+                // const permission = await UniversalFunctions.checkPermission(adminData, payload.type);
+
+                const data = await HelpCenterCategoryService.adminDeleteCategory(payload);
+                return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, {});
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunction.sendError(error));
+            }
+        },
+        options: {
+            description: 'admin delelte helpcenter category',
+            tags: ['api', 'anonymous', 'admin', 'helpcentercategory', 'update'],
+            auth: 'AdminAuth',
+            validate: {
+                params: {
+                    categoryId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+
 ];

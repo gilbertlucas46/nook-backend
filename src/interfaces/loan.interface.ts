@@ -119,7 +119,7 @@ export namespace LoanRequest {
         nationality: string;
         educationBackground: string;
         civilStatus: string;
-        birthDate: number;
+        birthDate: any;
         motherMaidenName?: string;
         monthlyIncome: number;
         otherIncome: number;
@@ -132,7 +132,7 @@ export namespace LoanRequest {
             firstName?: string,
             lastName?: string,
             middleName?: string,
-            birthDate?: number,
+            birthDate?: any,
             monthlyIncome?: number,
             isCoborrower?: boolean,
         };
@@ -140,7 +140,7 @@ export namespace LoanRequest {
             firstName?: string
             lastName?: string,
             middleName?: string,
-            birthDate?: string,
+            birthDate?: any,
             monthlyIncome?: number,
             isCoborrower?: boolean
             relationship?: string,
@@ -305,6 +305,7 @@ export namespace LoanRequest {
         searchTerm?: string;
         staffId?: string;
         partnerId?: string;
+        // applicationStatus: string;
     }
 
     export interface IAdminPrequalificationList {

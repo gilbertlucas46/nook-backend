@@ -167,43 +167,6 @@ export let subAdminRoutes: ServerRoute[] = [
 			},
 		},
 	},
-	// {
-	// 	method: 'PATCH',
-	// 	path: '/v1/admin/staff/status/{id}',
-	// 	handler: async (request, h) => {
-	// 		try {
-	// 			const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-	// 			const payload: any = request.params;
-	// 			await AdminStaffController.deleteStaff(payload, adminData);
-	// 			return {};
-	// 		} catch (error) {
-	// 			UniversalFunctions.consolelog('error', error, true);
-	// 			return Promise.reject(error);
-	// 		}
-	// 	},
-	// 	options: {
-	// 		description: 'update status Staff member',
-	// 		tags: ['api', 'anonymous', 'admin', 'update staus admin'],
-	// 		auth: 'AdminAuth',
-	// 			validate: {
-	// 				params: {
-	// 					id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-	// 					status: Joi.string().valid([
-	// 						CONSTANT.DATABASE.STATUS.ADMIN.ACTIVE,
-	// 						CONSTANT.DATABASE.STATUS.ADMIN.BLOCKED,
-	// 						CONSTANT.DATABASE.STATUS.ADMIN.PENDING,
-	// 					]),
-	// 				},
-	// 				headers: UniversalFunctions.authorizationHeaderObj,
-	// 				failAction: UniversalFunctions.failActionFunction,
-	// 			},
-	// 			plugins: {
-	// 				'hapi-swagger': {
-	// 					responseMessages: Constant.swaggerDefaultResponseMessages,
-	// 				},
-	// 			},
-	// 	},
-	// },
 
 	/**
 	 * @description :Admin Staff Listing

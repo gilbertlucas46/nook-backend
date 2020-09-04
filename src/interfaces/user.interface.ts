@@ -39,6 +39,8 @@ export namespace UserRequest {
 	export interface Login1 {
 		email: string;
 		password: string;
+		partnerId?: string;
+		partnerName?: string;
 	}
 	export interface Session {
 		userId?: string;
@@ -58,6 +60,7 @@ export namespace UserRequest {
 		lastName: string;
 		phoneNumber?: string;
 		type?: string;
+		countryCode?: string;
 		// title?: string;
 		// license?: string;
 		// taxnumber?: string;
@@ -100,6 +103,9 @@ export namespace UserRequest {
 		lastName: string;
 		phoneNumber: string;
 		ipAddress: string;
+		countryCode: string;
+		partnerName: string;
+		partnerId: string;
 
 	}
 }

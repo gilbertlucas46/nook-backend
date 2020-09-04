@@ -106,59 +106,6 @@ export class MailManager {
 		}
 	}
 
-	// async contactEmail(params) {
-	// 	try {
-	// 		const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'contact.html'))
-	// 			.compileFile({
-	// 				// faceBookUrl: config['host'] + '/images/facebook.png',
-	// 				// instaUrl: config['host'] + '/images/instagram-2.png',
-	// 				// twitterUrl: config['host'] + '/images/twitter-2.png',
-	// 				name: params.name,
-	// 				address: params.address,
-	// 				description: params.message,
-	// 				phone: params.phone,
-	// 				// Id: params.propertyId, // shortId
-	// 				email: params.email,
-	// 				title: params.title,
-	// 				userName: params.firstName ? params.firstName : params.userName,
-	// 				contactUrl: config.get('homePage') + '/layout/enquiries/received?type=contact',
-	// 			});
-	// 		await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject + params.name, content: mailContent });
-	// 	} catch (error) {
-	// 		return Promise.reject(error);
-	// 	}
-	// }
-
-	// async enquiryEmail(params) {
-	// 	try {
-	// 		console.log('paramsparamsparams', params);
-
-	// 		const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'enquiry.html'))
-	// 			.compileFile({
-	// 				nookLogoUrl: config['host'] + '/images/nooklogo.png',
-	// 				faceBookUrl: config['host'] + '/images/facebook.png',
-	// 				instaUrl: config['host'] + '/images/instagram-2.png',
-	// 				twitterUrl: config['host'] + '/images/twitter-2.png',
-
-	// 				// receieverUserName: params['userName'],
-	// 				receiverName: params['receiverName'] ? params['receiverName'] : params['receieverUserName'], //  params['receiverName'],
-	// 				name: params.name,
-	// 				// address: params.address,
-	// 				description: params.message,
-	// 				phone: params.phone,
-	// 				email: params.email,
-	// 				Id: params.propertyId, // shortId
-	// 				title: params.title,
-	// 				propertyUrl: params.propertyUrl,
-	// 				enquiryUrl: config.get('homePage') + '/layout/enquiries/received',
-	// 			});
-
-	// 		await this.sendMail({ receiverEmail: params.receiverEmail, subject: params.subject + params.name, content: mailContent });
-	// 	} catch (error) {
-	// 		return Promise.reject(error);
-	// 	}
-	// }
-
 	async welcomeStaffUSer(params) {
 		try {
 			// let url;
@@ -167,7 +114,6 @@ export class MailManager {
 			// } else {
 			// url = config.SERVER.USER_RESET_URL + `${params.accessToken}`;
 			// }
-			console.log('receiverEmailreceiverEmailreceiverEmail<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>', params);
 
 			const mailContent = await (new TemplateUtil(SERVER.TEMPLATE_PATH + 'welcome.html'))
 				.compileFile({
@@ -184,12 +130,9 @@ export class MailManager {
 					userName: params.userName,
 					password: params.password || '',
 				});
-			console.log('mailContent>>>>..', mailContent);
 			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Welcome To Nook', content: mailContent });
 
 		} catch (error) {
-			console.log('errorerrorerrorerrorerrorerror', error);
-
 			return {};
 		}
 	}
@@ -198,23 +141,19 @@ export class MailManager {
 	async generateLoanApplicationform(params) {
 		try {
 			let { coBorrowerInfo, spouseInfo } = params['personalInfo'];
-			console.log('spouseInfospouseInfo', spouseInfo);
 			let middleName = '';
 			if (params['personalInfo'] && params['personalInfo']['middleName']) {
 				middleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : '';
 			}
-			console.log('middleNamemiddleNamemiddleNamemiddleName', middleName);
 
 			let spouseMiddleName = '';
-			if (params['personalInfo'] && params['personalInfo']['middleName']) {
-				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['middleName']) ? ' ' + params['personalInfo']['middleName'] : '';
+			if (params['personalInfo'] && params['personalInfo']['spouseInfo'] && params['personalInfo']['spouseInfo']['middleName']) {
+				spouseMiddleName = (params['personalInfo'] && params['personalInfo']['spouseInfo']) ? ' ' + params['personalInfo']['spouseInfo']['middleName'] : '';
 			}
 			let coBorrowerMiddleName = '';
-			console.log('spouseMiddleNamespouseMiddleNamespouseMiddleName', spouseMiddleName);
 			if (coBorrowerInfo && coBorrowerInfo['middleName']) {
-				coBorrowerMiddleName = coBorrowerInfo['middleName'];
+				coBorrowerMiddleName = ' ' + coBorrowerInfo['middleName'];
 			}
-			console.log('coBorrowerMiddleNamecoBorrowerMiddleName', coBorrowerMiddleName);
 
 
 			let checkObjectBlank;
@@ -223,6 +162,20 @@ export class MailManager {
 				console.log('checkObjectBlankcheckObjectBlankcheckObjectBlank', checkObjectBlank);
 			} else {
 				coBorrowerInfo = {};
+			}
+
+			let contactPerson;
+			if (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['contactPerson'] || params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['contactPerson']) {
+				contactPerson = (params && params['documents'] && params['documents']['purchasePropertyInfo']['contactPerson']) ? params && params['documents'] && params['documents']['purchasePropertyInfo']['contactPerson'] : params['propertyDocuments']['purchasePropertyInfo']['contactPerson']
+			}
+
+			let contactNumber;
+			if (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['contactNumber'] || params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['contactNumber']) {
+				contactNumber = (params && params['documents'] && params['documents']['purchasePropertyInfo']['contactNumber']) ? params && params['documents'] && params['documents']['purchasePropertyInfo']['contactNumber'] : params['propertyDocuments']['purchasePropertyInfo']['contactNumber']
+			}
+			let propAddress;
+			if (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['address'] || params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['address']) {
+				propAddress = (params && params['documents'] && params['documents']['purchasePropertyInfo'] && params['documents']['purchasePropertyInfo']['address']) ? params && params['documents'] && params['documents']['purchasePropertyInfo']['address'] : params['propertyDocuments']['purchasePropertyInfo']['address']
 			}
 
 			function GetFormattedDate(date) {
@@ -244,8 +197,8 @@ export class MailManager {
 					citizenship: params['personalInfo']['nationality'],
 					birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
 
-					phoneNo: params.contactInfo['phoneNumber'],
-					mobileNo: params.contactInfo['mobileNumber'],
+					phoneNo: (params && params.contactInfo && params.contactInfo['phoneNumber']) ? params.contactInfo['phoneNumber'] : 'N/A',
+					mobileNo: (params && params.contactInfo && params.contactInfo['mobileNumber']) ? params.contactInfo['mobileNumber'] : 'N/A',
 
 					email: params.contactInfo['email'],
 					birthPlace: (params['personalInfo'] && params['personalInfo']['placeOfBirth']) ? params['personalInfo']['placeOfBirth'] : 'N/A',
@@ -280,7 +233,8 @@ export class MailManager {
 					coBorrowerFullName: (coBorrowerInfo && coBorrowerInfo['firstName']) ? coBorrowerInfo['firstName'] + coBorrowerMiddleName + ' ' + coBorrowerInfo['lastName'] : 'N/A',
 					relationship: (coBorrowerInfo && coBorrowerInfo['relationship']) ? coBorrowerInfo['relationship'] : 'N/A',
 					// relationship: coBorrowerInfo ? coBorrowerInfo['relationship'] : 'N/A',
-					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? coBorrowerInfo['monthlyIncome'] + ' php' : 'N/A',
+					monthlyIncome: (coBorrowerInfo && coBorrowerInfo['monthlyIncome']) ? 'Php ' + (parseInt(coBorrowerInfo['monthlyIncome'])).toLocaleString() : 'N/A',
+
 					coBorrowerTIN: (params.employmentInfo && params.employmentInfo['coBorrowerInfo'] && params.employmentInfo['coBorrowerInfo']['tin']) ? params.employmentInfo.coBorrowerInfo['tin'] : 'N/A',
 					coBorrowerSSS: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['sss']) ? params.employmentInfo.coBorrowerInfo['sss'] : 'N/A',
 					coBorrowerEmploymentType: (params.employmentInfo && params.employmentInfo.coBorrowerInfo && params.employmentInfo.coBorrowerInfo['employmentType']) ? params.employmentInfo.coBorrowerInfo['employmentType'] : 'N/A',
@@ -297,31 +251,42 @@ export class MailManager {
 					loanTerm: params['loanDetails']['loanTerm'] + ' ' + 'year',
 					fixedPeriod: params['loanDetails']['fixedPeriod'] + ' ' + 'year',
 					loanPercent: params['loanDetails']['loanPercent'],
-					loanAmount: params['loanDetails']['loanAmount'] + ' php',
+					loanAmount: 'Php ' + (parseInt(params['loanDetails']['loanAmount'])).toLocaleString(),
 					interestRate: params['loanDetails']['rate'],
 					loanType: params['loanDetails']['loanType'],
 					// Loan Total PaymentA (Php): params['loanDetails']['loanAmount'],
-					monthlyRepayment: (params['loanDetails']['monthlyRepayment']).toFixed(2),
+					monthlyRepayment: 'Php ' + (parseInt(params['loanDetails']['monthlyRepayment'])).toLocaleString(),
 					loanTotalPayment: 'N/A',
 
 
 					// COLLATERAL INFORMATION
-					propertyValue: params['propertyInfo']['value'] + ' php',
+					propertyValue: 'Php ' + (params['propertyInfo']['value']).toLocaleString(),
+
 					propertyType: params['propertyInfo']['type'],
+
 					propertyStatus: params['propertyInfo']['status'],
-					propertyDeveloper: params['propertyInfo']['developer'] ? params['propertyInfo']['developer'] : 'N/A',
-					// propertyAddress: params['propertyDocuments']['purchasePropertyInfo']['address'],
+
+					propertyDeveloper: (params && params['propertyInfo'] && params['propertyInfo']['developer']) ? params['propertyInfo']['developer'] : 'N/A',
+
+					propertyAddress: (params && params['propertyDocuments'] && params['propertyDocuments']['purchasePropertyInfo'] && params['propertyDocuments']['purchasePropertyInfo']['address']) ? params['propertyDocuments']['purchasePropertyInfo']['address'] : 'N/A',
+
+					isColleteralDocumentUploaded: (params && params['documents'] && params['documents']['colleteralDoc'] && params['documents']['colleteralDoc'] && params['documents']['colleteralDoc'][0] && params['documents']['colleteralDoc'][0]['status']) ? true : false,
+
+					// contactPerson:
+					contactNumber: (params && params['contactInfo'] && params['contactInfo']['mobileNumber']) ? params['contactInfo']['mobileNumber'] : 'N/A',
+
+
 					// collateralDocStatus: params['propertyDocuments']['purchasePropertyInfo']['collateralDocStatus'],
 
-					// contactPerson: params['propertyDocuments']['purchasePropertyInfo']['contactPerson'],
-					// contactNumber: params['propertyDocuments']['purchasePropertyInfo']['contactNumber'],
-
+					propcontactPerson: contactPerson ? contactPerson : 'N/A',
+					propcontactNumber: contactNumber ? contactNumber : 'N/A',
+					propAddress: propAddress ? propAddress : 'N/A',
 
 					// employmentInfo
 					employmentType: params['employmentInfo']['type'],
 					employmentRank: params['employmentInfo']['rank'],
 					employmentTenure: params['employmentInfo']['tenure'],
-					grossMonthlyIncome: params['employmentInfo']['monthlyIncome'] + ' php',   // to be done
+					grossMonthlyIncome: 'Php ' + (parseInt(params['personalInfo']['monthlyIncome'])).toLocaleString(),   // to be done
 					tin: params['employmentInfo'] ? params['employmentInfo']['tin'] : 'N/A',
 					sss: params['employmentInfo'] ? params['employmentInfo']['sss'] : 'N/A',
 					companyName: params['employmentInfo']['companyName'],
@@ -332,9 +297,9 @@ export class MailManager {
 
 
 					// LOANS AND CREDIT CARDS
-					otherLoan: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['status']) ? params['personalInfo']['prevLoans']['status'] : 'N/A',
-					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? params['personalInfo']['prevLoans']['monthlyTotal'] + ' php' : 'N/A',
-					totalRemainingBalance: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['remainingTotal']) ? params['personalInfo']['prevLoans']['remainingTotal'] : 'N/A',
+					otherLoan: (params['personalInfo'] && params['personalInfo']['prevLoans']) ? params['personalInfo']['prevLoans']['status'] : 'N/A',
+					totalMonthlyPayments: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['monthlyTotal']) ? 'Php ' + (parseInt(params['personalInfo']['prevLoans']['monthlyTotal'])).toLocaleString() : 'N/A',
+					totalRemainingBalance: (params['personalInfo'] && params['personalInfo']['prevLoans'] && params['personalInfo']['prevLoans']['remainingTotal']) ? 'Php ' + (parseInt(params['personalInfo']['prevLoans']['remainingTotal'])).toLocaleString() : 'N/A',
 					//
 					// Credit Card Limit (Php)
 
@@ -345,7 +310,7 @@ export class MailManager {
 
 					// Total Remaining Balance (Php)
 
-					creditCardLimit: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['limit']) ? params['personalInfo']['creditCard']['limit'] : 'N/A',
+					creditCardLimit: (params['personalInfo'] && params['personalInfo']['creditCard'] && params['personalInfo']['creditCard']['limit']) ? 'Php ' + (parseInt(params['personalInfo']['creditCard']['limit'])).toLocaleString() : 'N/A',
 
 					creaditCardIssuingBank: 'N/A',
 
@@ -371,12 +336,11 @@ export class MailManager {
 				applicationId: params['referenceId'],
 				fullName: params['personalInfo']['firstName'] + middleName + ' ' + params['personalInfo']['lastName'],
 				fileName: params['referenceId'],
+				nookLogoUrl: config['host'] + '/src/views/images/nooklogo.png',
 			}
 			const a = await pdfClass.test(htmlContent, datatoAddInPDF);
 			return a;
 		} catch (error) {
-			console.log('errorrrrrrrrr', error);
-
 			return {};
 		}
 	}

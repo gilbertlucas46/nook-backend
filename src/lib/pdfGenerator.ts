@@ -18,63 +18,52 @@ export class PdfGenerator {
 
     async test(htmlFile, datatoAddInPDF) {
         try {
-            console.log('htmlFilehtmlFilehtmlFilehtmlFile', datatoAddInPDF);
-
-            console.log('11111111111111111111111111111111111111');
             const buf = Buffer.from(htmlFile).toString();
             const applicationId: any = datatoAddInPDF.applicationId;
             const applicantName: any = datatoAddInPDF.fullName;
+            const nookLogoUrl = datatoAddInPDF['nookLogoUrl'];
+
+            // const nookLogoUrl = 'https://nookqa.appskeeper.com' + '/src/views/images/nooklogo.png';
+
             return new Promise((resolve, reject) => {
                 const options = {
-
-                    //        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                    // header: {
-                    //     height: '3cm',
-                    //     contents:
-                    //         '<div>Header</div>',
-                    // },
-                    // "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                    // height: '11.7in',
-                    // width: '8.3in',
-                    zoomFactor: '1',
+                    // "base": "file:///home/www/your-asset-path", // Base path that's used to load files (images, css, js) when they aren't referenced using a host
+                    format: 'A4',        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
                     footer: {
                         height: '1.2cm',
                         contents: {
-                            // first: '<div class="page-footer"><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p ><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.< /p>< /div>',
+                            // first: '<div class="page-footer"><p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p ><p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.< /p>< /div>',
                             first: `<div style="padding: 0 30px!important;">
-                            <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p>
-                              <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"> Copyright © Nook.</p>
-                        </div>`,
+                                <p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"> Ver1.0 05.20/CM</p>
+                                  <p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"> Copyright © Nook.</p>
+                            </div>`,
                             // 2: 'Second page', // Any page number is working. 1-based index
                             default: `<div style="padding: 0 30px!important;">
-                                     <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Application ID: </b>${applicationId}'</p>
-                                    <p style="color: #d3d3d3; font-size: 7pt; font-style: italic;"><b>Name: </b>${applicantName}</p>
-                                    </div>`,
+                                         <p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"><b>Application ID: </b>${applicationId}</p>
+                                        <p style="color: #8e8e8e; font-size: 7pt; font-style: italic;"><b>Name: </b>${applicantName}</p>
+                                        </div>`,
                         },
                     },
                     // timeout: 120000
                 };
-
+                var result = "<div id='pageHeader'><img src='" + nookLogoUrl + "' /><div style='text-align: center;'>Author: Marc Bachmann</div></div>";
 
                 pdf.create(buf, options).toFile(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', async (err, data) => {
                     if (err) {
-                        console.log('dataaaaaaaaaaa', err);
                         reject(err);
                     } else {
-                        const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + '/loan/' + datatoAddInPDF['fileName'] + '.pdf', datatoAddInPDF['fileName']);
+                        const nameUrl = await this.uploadFileToS3(SERVER.TEMPLATE_PATH + 'loan/' + datatoAddInPDF['fileName'] + '.pdf', datatoAddInPDF['fileName']);
                         resolve(nameUrl);
 
                     }
                 });
             });
         } catch (error) {
-            console.log('errorerrorerrorerrorerrorerror', error);
             return Promise.reject(error);
         }
     }
 
     uploadFileToS3 = async (file, fileName) => {
-        console.log('filefilefile', file);
 
         return new Promise(async (resolve, reject) => {
             try {
@@ -83,12 +72,10 @@ export class PdfGenerator {
                         console.log('Error in uploadFileToS3', err);
                         reject(err);
                     }
-                    console.log('fileDatafileDatafileData', fileData);
 
                     resolve(await this.uploadS3(fileData, fileName));
                 });
             } catch (error) {
-                console.log('Error inside uploadFileToS3', error);
                 reject(error);
             }
         });

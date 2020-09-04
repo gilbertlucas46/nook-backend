@@ -37,7 +37,7 @@ export class Partner {
      * @description user get the partner info
      */
 
-    async  getPartnerInfo(payload) {
+    async getPartnerInfo(payload) {
         try {
             const criteria = {
                 shortId: payload.partnerSid,
@@ -53,7 +53,7 @@ export class Partner {
         }
     }
 
-    async  redirect(payload) {
+    async redirect(payload) {
         try {
             const criteria = {
                 shortId: payload.partnerSid,
@@ -100,7 +100,6 @@ export class Partner {
                 shortId: payload.partnerSid,
             };
             const data = await ENTITY.PartnerE.updateOneEntity(criteria, payload);
-            console.log('datadatadatadata', data);
 
             if (!data) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
@@ -111,7 +110,7 @@ export class Partner {
         }
     }
 
-    async  adminGetPartnerInfo(payload) {
+    async adminGetPartnerInfo(payload) {
         try {
             const criteria = {
                 shortId: payload.partnerSid,

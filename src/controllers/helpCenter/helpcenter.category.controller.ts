@@ -62,15 +62,23 @@ export class HelpCenterCategory {
             }
 
             const dataToUpdate: any = {};
-            dataToUpdate.$push = {
-                applicationStage: {
-                    userRole: adminData.type,
-                    adminId: adminData._id,
-                },
-            };
+            dataToUpdate.$set = {
+                name: payload.name
+            }
+
+            // dataToUpdate.$push = {
+            //     applicationStage: {
+            //         userRole: adminData.type,
+            //         adminId: adminData._id,
+            //     },
+            // };
 
             payload['userType'] = adminData.type;
-            const data = await ENTITY.HelpCenterCatgoryE.createOneEntity(payload);
+            const updateCriteria = {
+                _id: payload.categoryId,
+                status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE
+            }
+            const data = await ENTITY.HelpCenterCatgoryE.updateOneEntity(updateCriteria, dataToUpdate);
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -119,9 +127,15 @@ export class HelpCenterCategory {
                 pipeline.push({
                     $match: {
                         category: payload.type,
-                        status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
-                    },
-                });
+                        $or: [{
+                            status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,
+                        },
+                        {
+                            status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.BLOCKED
+                        }
+                        ]
+                    }
+                })
             }
             // if (categoryId) {
             //     pipeline.push({
@@ -131,7 +145,6 @@ export class HelpCenterCategory {
             //     });
             // }
             const data = await ENTITY.HelpCenterCatgoryE.aggregate(pipeline);
-            console.log('datadatadatadatadata', data);
             return data;
         } catch (error) {
             return Promise.reject(error);
@@ -148,8 +161,19 @@ export class HelpCenterCategory {
             return Promise.reject(error);
         }
     }
-}
 
+
+    async adminDeleteCategory(payload) {
+        try {
+            const criteria = {
+                _id: payload.categoryId,
+            }
+            const data = await ENTITY.HelpCenterCatgoryE.removeEntity(criteria)
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+}
 
 // {
 //     status: Constant.DATABASE.HELP_CENTER_CATEGORY_STATUS.ACTIVE,

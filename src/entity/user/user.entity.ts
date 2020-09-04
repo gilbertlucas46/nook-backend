@@ -86,26 +86,19 @@ export class UserClass extends BaseEntity {
 			const doc = await this.DAOManager.findAndUpdate(this.modelName, {
 				_id: new Types.ObjectId(id),
 			}, data, { new: true });
-			console.log('docdocdocdocdocdocdocdocdocdocdocdocdocdoc', doc);
 			const salesforceData = flattenObject(doc.toObject ? doc.toObject() : doc);
-			// console.log(doc, salesforceData);
 			const request = {
 				method: 'post',
 				body: JSON.stringify(salesforceData),
 			};
 			const accessToken = await UserE.createToken({}, doc);
-			console.log('accessTokenaccessTokenaccessToken', accessToken);
 
 			await SessionE.createSession({}, doc, accessToken, 'user');
 
 			const formatedData = utils.formatUserData(doc);
 			// return { accessToken };
-
-			// await fetch(config.get('zapier_personUrl'), request);
-			// await fetch(config.get('zapier_accountUrl'), request);
 			return { formatedData, accessToken };
 		} catch (err) {
-			console.log(err);
 			// @TODO handle error messages for token and update failed
 			return Promise.reject(err);
 		}
@@ -117,7 +110,6 @@ export class UserClass extends BaseEntity {
 	 */
 	async userDashboad(userData: UserRequest.UserData) {
 		try {
-			console.log('userDatauserData', userData);
 
 			const promise = [];
 			if (userData) {
@@ -129,12 +121,10 @@ export class UserClass extends BaseEntity {
 				const totalPreQualificationCount = {
 					userId: userData._id,
 				};
-				console.log('loanAppplicationloanAppplication');
 
 				promise.push(this.DAOManager.count('PreQualification', totalPreQualificationCount));
 				promise.push(this.DAOManager.count('LoanApplication', loanAppplication));
 				const [totalPreQualification, totalApplication] = await Promise.all(promise);
-				console.log('totalPreQualificationtotalPreQualificationtotalPreQualification', totalPreQualification);
 
 				return {
 					totalApplication,
