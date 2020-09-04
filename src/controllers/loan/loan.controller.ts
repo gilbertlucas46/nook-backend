@@ -334,6 +334,7 @@ class LoanControllers extends BaseEntity {
             }
             return data;
         } catch (error) {
+            utils.errorReporter(error);
             utils.consolelog('error', error, true);
             return Promise.reject(error);
         }

@@ -540,6 +540,9 @@ export let loanRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIEVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
+
 					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
