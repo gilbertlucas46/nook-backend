@@ -397,7 +397,8 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
-
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIEVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 					]),
 					amountFrom: Joi.number(),
 					amountTo: Joi.number(),
@@ -476,6 +477,8 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIEVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 						'',
 					]),
 					staffId: Joi.string(),
@@ -759,8 +762,9 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value
-
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIEVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 					]),
 					propertyInfo: {
 						value: Joi.number(),

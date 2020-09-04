@@ -79,6 +79,14 @@ export let DATABASE = {
 			label: 'Credit Assessment',
 			value: 'CREDIT_ASSESSMENT',
 		},
+		ARCHIEVED: {
+			label: 'Archieved',
+			value: 'ARCHIEVED'
+		},
+		LOAN_BOOKED: {
+			label: 'Loan Booked',
+			value: 'LOAN_BOOKED'
+		}
 	},
 	EMPLOYMENT: {
 		TENURE: {
