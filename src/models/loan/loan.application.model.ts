@@ -1,11 +1,19 @@
 import { Schema, Document, model, Types } from 'mongoose';
 import * as CONSTANT from './../../constants';
 import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../constants';
+import { config } from 'process';
 
 const schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
     partnerName: { type: String, index: true },
     partnerId: { type: String, index: true },
+    status: {
+        type: String, enum: [
+            CONSTANT.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
+            CONSTANT.DATABASE.STATUS.LOAN_STATUS.DELETE
+        ],
+        default: CONSTANT.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
+    },
     // saveAsDraft: { type: Schema.Types.Boolean, default: false },
     ipAddress: { type: String },
     applicationStatus: {
@@ -212,6 +220,7 @@ const schema = new Schema({
         officeAddress: { type: Schema.Types.String, trim: true },
         // Gross Monthly Income (PhP)
         grossMonthlyIncome: { type: String },
+        // grossMonthlyIncome: { type: Number, default: 0 },
         provinceState: { type: String },
         country: { type: String },
         coBorrowerInfo: {
@@ -282,6 +291,11 @@ const schema = new Schema({
     //     nookAgent: { type: Schema.Types.String, trim: true },
     // },
     documents: {
+        purchasePropertyInfo: {
+            address: { type: Schema.Types.String, index: true },
+            contactPerson: { type: Schema.Types.String, trim: true },
+            contactNumber: { type: Schema.Types.String, trim: true },
+        },
         legalDocument: [{
             status: {
                 type: String, enum: [
@@ -293,7 +307,7 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number, default: new Date().getTime() },
+            createdAt: { type: Number },
             updatedAt: { type: Number },
         }],
         incomeDocument: [{
@@ -307,7 +321,7 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number, default: new Date().getTime() },
+            createdAt: { type: Number },
             updatedAt: { type: Number },
         }],
         colleteralDoc: [{
@@ -321,7 +335,7 @@ const schema = new Schema({
             documentRequired: { type: String },
             description: { type: String },
             url: { type: String },
-            createdAt: { type: Number, default: new Date().getTime() },
+            createdAt: { type: Number },
             updatedAt: { type: Number },
         }],
     },
@@ -337,7 +351,10 @@ const schema = new Schema({
         adminId: { type: Schema.Types.ObjectId },
         adminName: { type: String },
     },  // admin ,user, staff
-    assignedTo: { type: Schema.Types.ObjectId, ref: 'Admin', index: true },
+    assignedTo: { type: Schema.Types.ObjectId, ref: 'Admin', index: true, default: '5f0565b9f4e03c5110e47fa4' },
+    staffAssignedEmail: { type: String, default: 'loans.queue@nook.com.ph' },
+    staffAssignedfirstName: { type: String, default: 'Loans' },
+    staffAssignedlastName: { type: String, default: 'Queue' },
     referenceId: { type: String, index: true, unique: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },

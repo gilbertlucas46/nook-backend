@@ -1,6 +1,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as utils from '@src/utils';
 import { Types } from 'mongoose';
+import { helpCenterRequest } from '@src/interfaces/helpCenter.interface';
 export class HelpCenterEntity extends BaseEntity {
     constructor() {
         super('HelpCentre');
@@ -76,13 +77,34 @@ export class HelpCenterEntity extends BaseEntity {
         }
     }
 
-    async adminGetHelpCenter(payload) {
+    async adminGetHelpCenter(payload: helpCenterRequest.AdminGetHelpCnter) {
         try {
-            const { categoryId, page, limit } = payload;
-
+            const { categoryId, page, limit, searchTerm } = payload;
+            let { sortType } = payload;
             const paginateOptions = {
                 page: page || 1,
                 limit: limit || 10,
+            }
+            let sortingType = {};
+            sortType = !sortType ? -1 : sortType;
+            let searchCriteria = {};
+            sortingType = {
+                createdAt: sortType,
+            };
+            if (searchTerm) {
+                // for filtration
+                searchCriteria = {
+                    $match: {
+                        $or: [
+                            { title: new RegExp('.*' + searchTerm + '.*', 'i') },
+                        ],
+                    },
+                };
+            } else {
+                searchCriteria = {
+                    $match: {
+                    },
+                };
             }
             const matchPipeline = [
                 {
@@ -90,10 +112,13 @@ export class HelpCenterEntity extends BaseEntity {
                         categoryId: Types.ObjectId(categoryId),
                     },
                 },
+                searchCriteria,
+                {
+                    $sort: sortingType,
+                },
             ];
 
             const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
-            console.log('dataaaaa', data);
             return data;
 
         } catch (error) {

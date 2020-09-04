@@ -13,6 +13,8 @@ import { MailManager } from '../../lib/mail.manager';
 import fetch from 'node-fetch';
 import * as config from 'config';
 import { flattenObject } from '@src/utils/flatten.util';
+import { LoanApplicationEntity } from '@src/entity/loan/loan.application.entity';
+
 class LoanControllers extends BaseEntity {
 
     /**
@@ -90,7 +92,15 @@ class LoanControllers extends BaseEntity {
                 referenceId: payload['referenceId'],
             };
             const saveAllData = await ENTITY.LoanErrorE.createOneEntity(dataToSave);
+            if (userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE || userData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                return {
+                    referenceId: data['referenceId'],
+                    applicationStatus: data['applicationStatus'],
+                    _id: data['_id']
+                }
+            }
             return data['referenceId'];
+
 
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -226,10 +236,8 @@ class LoanControllers extends BaseEntity {
                 },
             },
             ];
-            console.log('aggregateaggregateaggregate', aggregate);
 
             const data = await ENTITY.LoanApplicationEntity.aggregate(aggregate);
-            console.log('datadatadata', data);
 
             // const data = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
             if (!data) return Promise.reject(Contsant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
@@ -255,55 +263,77 @@ class LoanControllers extends BaseEntity {
                 dataToUpdate.$set = { applicationStatus: payload.status };
             }
             if (payload.staffId) {
-                dataToUpdate.$set = { assignedTo: payload.staffId };
-            }
-            dataToUpdate.$push = {
-                applicationStage: {
-                    userType: adminData.type,
-                    status: payload.status,
-                    adminId: adminData._id,
-                    adminName: (adminData && adminData.firstName) ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
-                    approvedAt: new Date().getTime(),
-                    assignedTo: (payload && payload.staffId) ? payload.staffId : '',
-                },
-            };
-
-            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true });
-            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
-            // else {
-            if (config.get('environment') === 'production') {
-                let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
-                // const request = {
-                //     method: 'post',
-                //     body: JSON.stringify(salesforceData),
-                // };
-                // let salesforceData;
+                const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
                 if (payload.staffId) {
-                    const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
-                    console.log('getStaffName>>>>>>>>>>>>', getStaffData);
-                    salesforceData = {
-                        ...salesforceData,
-                        // _id: payload.loanId,
+                    dataToUpdate.$set = {
+                        assignedTo: payload.staffId,
                         staffAssignedEmail: getStaffData && getStaffData.email || '',
                         staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
                         staffAssignedlastName: getStaffData && getStaffData.lastName || '',
                     };
                 }
-                if (payload.status) {
-                    salesforceData = {
-                        ...salesforceData,
-                        // _id: payload.loanId,
-                        // applicationStatus: payload.status,
-                    };
-                }
-                console.log('salesforceDatasalesforceData', salesforceData);
+
+                dataToUpdate.$push = {
+                    applicationStage: {
+                        userType: adminData.type,
+                        status: payload.status,
+                        adminId: adminData._id,
+                        adminName: (adminData && adminData.firstName) ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
+                        approvedAt: new Date().getTime(),
+                        assignedTo: (payload && payload.staffId) ? payload.staffId : '',
+                    },
+                };
+            }
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true, lean: true });
+            if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
+            // else {
+            // JSON.parse(JSON.stringify(data));
+            async function GetFormattedDate(date) {
+                const todayTime = new Date(date);
+                const month = (todayTime.getMonth() + 1);
+                const day = (todayTime.getDate());
+                const year = (todayTime.getFullYear());
+                console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
+                return day + '-' + month + '-' + year;
+            }
+            if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
+                data.personalInfo.birthDate = await GetFormattedDate(data['personalInfo']['birthDate'])
+            }
+            // 	birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
+            if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
+                data['personalInfo']['spouseInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
+            }
+            if (data && data['personalInfo'] && data['personalInfo']['coBorrowerInfo'] && data['personalInfo']['coBorrowerInfo']['birthDate']) {
+                data['personalInfo']['coBorrowerInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
+            }
+            let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
+            console.log('salesforceDatasalesforceData', salesforceData);
+            if (payload.staffId) {
+                // const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
+                salesforceData = {
+                    ...salesforceData,
+                    // _id: payload.loanId,
+                    // staffAssignedEmail: getStaffData && getStaffData.email || '',
+                    // staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
+                    // staffAssignedlastName: getStaffData && getStaffData.lastName || '',
+                };
+            }
+            if (payload.status) {
+                salesforceData = {
+                    ...salesforceData,
+                    // _id: payload.loanId,
+                    // applicationStatus: payload.status,
+                };
+            }
+
+            if (config.get('environment') === 'production') {
+
                 await fetch(config.get('zapier_loanUrl'), {
                     method: 'post',
                     body: JSON.stringify(salesforceData),
                 });
             }
             return data;
-
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -350,14 +380,12 @@ class LoanControllers extends BaseEntity {
 
     async adminUpdateLoanApplication(payload, adminData) {
         try {
-            console.log('adminDataadminDataadminDataadminData', adminData);
-
             const query = {
                 _id: payload.loanId,
             };
 
-            const oldData = await ENTITY.LoanApplicationEntity.updateOneEntity(query, payload, false);
-            console.log('oldDataoldDataoldDataoldDataoldData', oldData);
+            const oldData = await ENTITY.LoanApplicationEntity.updateOneEntity(query, payload);
+            await LoanApplicationEntity.sendApplication(oldData)
 
             payload['changesMadeBy'] = {
                 adminId: adminData['_id'],
@@ -366,7 +394,11 @@ class LoanControllers extends BaseEntity {
 
             const createHistory = await this.DAOManager.insert('LoanApplicationHistory', payload);
             if (oldData) {
-                return oldData['referenceId'];
+                return {
+                    referenceId: oldData['referenceId'],
+                    applicationStatus: oldData['applicationStatus'],
+                    _id: oldData['_id']
+                }
             }
             return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             // return data;
@@ -389,8 +421,6 @@ class LoanControllers extends BaseEntity {
                 referenceId: payload.loanId,
             };
             const getLoanData = await ENTITY.LoanApplicationEntity.getOneEntity(criteria, {});
-            // console.log('getLoanData>>>>>>>>>>>>>>', getLoanData);
-            // return getLoanData;
             if (!getLoanData) {
                 return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_ID);
             }
@@ -415,8 +445,8 @@ class LoanControllers extends BaseEntity {
             }
             // LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
 
-            if (payload.propertyStatus === 'FORECLOSED' || payload.propertyStatus === 'BPO') {
-                payload['propertyStatus'] = 'NEW_CONSTRUCTION';
+            if (payload.propertyStatus === 'FORECLOSED' || payload.propertyStatus === 'RESELLING' || payload.propertyStatus === 'PRE_SELLING') {
+                payload['propertyStatus'] = 'READY_FOR_OCCUPANCY';
             }
 
             const criteria = {
@@ -426,7 +456,6 @@ class LoanControllers extends BaseEntity {
 
             let aggregateLegal;
             if (payload.employmentType) {
-                console.log(1111111111111111111111111111111111111111);
 
                 aggregateLegal = [
                     {
@@ -450,40 +479,48 @@ class LoanControllers extends BaseEntity {
                             'legalDocument.allowedFor': payload.employmentType,
                         },
                     },
-                    // {
-                    //     $replaceRoot: { newRoot: '$legalDocument' },
-                    // },
                 ];
             }
             if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED && payload.coBorrowerInfo) {
-                console.log('1111111111111111111111111LLLLLLLLLLL');
                 const pushedItem = {
                     $match: {
-                        $or: [{
-                            'legalDocument.isSpouse': true,
+                        $and: [{
+                            $or: [{
+                                'legalDocument.isSpouse': true,
+                            },
+                            {
+                                'legalDocument.coborrower': true,
+                            },
+                            {
+                                'legalDocument.isSingle': { $exists: false },
+                            },
+                            ],
                         },
-                        {
-                            'legalDocument.coborrower': true,
-                        },
-                        {
-                            'legalDocument.isSpouse': { $exists: false },
-                        }],
+                        ],
                     },
                 };
                 aggregateLegal.splice(5, 5, pushedItem);
             }
 
             else if (payload.coBorrowerInfo && payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED) {
-                console.log('222222222KKKKKKKKKKKKKK');
                 const pushedItem = {
                     $match: {
-                        $or: [
-                            {
-                                'legalDocument.coborrower': { $exists: true },
-                            },
-                            {
-                                'legalDocument.isSpouse': { $exists: false },
-                            },
+                        $and: [{
+                            $or: [
+                                {
+                                    'legalDocument.coborrower': { $exists: true },
+                                },
+                                {
+                                    'legalDocument.isSpouse': { $exists: false },
+                                },
+                            ],
+                        },
+                        {
+                            'legalDocument.isSingle': { $exists: false },
+                        },
+                            // {
+                            //     'legalDocument.isSingle': { $exists: true },
+                            // },
                         ],
                     },
                 };
@@ -491,44 +528,50 @@ class LoanControllers extends BaseEntity {
             }
 
             else if (payload.civilStatus !== Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
-                console.log('33333333333333hhhhhhhKKKKKKKKKKKKKK');
                 const pushedItem = {
                     $match: {
-                        $and: [
-                            {
-                                'legalDocument.coborrower': { $exists: false },
-                            },
-                            {
-                                'legalDocument.isSpouse': { $exists: false },
-                            },
+                        $and: [{
+                            'legalDocument.coborrower': { $exists: false },
+                        },
+                        {
+                            'legalDocument.isSpouse': { $exists: false },
+                        },
                         ],
                     },
                 };
                 aggregateLegal.push(pushedItem);
             }
             else if (payload.civilStatus === Constant.DATABASE.CIVIL_STATUS.MARRIED && !payload.coBorrowerInfo) {
-                console.log('4444444444444444444444444ttttttttTTTTTTTTTTTTTTTTTTTTTT');
                 const pushedItem = {
                     $match: {
-                        $or: [
-                            {
-                                'legalDocument.coborrower': { $exists: false },
-                            },
-                            {
-                                'legalDocument.isSpouse': { $exists: true },
-                            },
+                        $and: [{
+                            $or: [
+                                {
+                                    'legalDocument.isSpouse': { $exists: true },
+                                },
+                                {
+                                    'legalDocument.isSingle': { $exists: false },
+                                },
+                            ],
+                        },
+                        {
+                            'legalDocument.coborrower': { $exists: false },
+                        },
+                            // {
+                            //     'legalDocument.isSingle': { $exists: true },
+                            // },
                         ],
+                        // $or: [
+                        //     { doSomething: { $exists: false } },
+                        //     { doSomething: false }
+                        // ]
                     },
                 };
                 aggregateLegal.push(pushedItem);
             }
 
-
-            console.log('aggregateLegal>>>>>>>>>>>>>>>222222222.', aggregateLegal);
-
             let aggregateIncome;
             if (payload.employmentType) {
-                console.log(22222222222222222222222222222222222222);
                 aggregateIncome = [{
                     $match: {
                         _id: Types.ObjectId(payload.bankId),
@@ -557,8 +600,6 @@ class LoanControllers extends BaseEntity {
             }
             let aggregateColleteralDocument;
             if (payload.propertyStatus) {
-                console.log('33333333333333333333333333333333333333');
-
                 aggregateColleteralDocument = [{
                     $match: {
                         _id: Types.ObjectId(payload.bankId),
@@ -615,8 +656,6 @@ class LoanControllers extends BaseEntity {
                 incomeDoc: incomeDoc ? incomeDoc : [],
                 colleteralDoc: colleteralDoc ? colleteralDoc : [],
             };
-            // console.log('datadata', data);
-            // return data;
         } catch (error) {
             return Promise.reject(error);
         }
@@ -672,8 +711,6 @@ class LoanControllers extends BaseEntity {
     }
     async updateDocument(payload) {
         try {
-            console.log('payload>>>>>>>>>>>', payload);
-
             let criteria;
             if (payload.documentType === 'Legal') {
                 criteria = {
@@ -695,17 +732,40 @@ class LoanControllers extends BaseEntity {
             }
 
             const dataToUpdate = {
+                // documentRequired: Joi.string(),
+                description: payload.description,
                 status: 'Pending',
                 url: payload.url,
-                createdAt: new Date().getTime(),
-                updatedAt: { type: Number },
+                createdAt: payload.createdAt,
             };
-            console.log('criteriacriteriacriteria', criteria);
 
-            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, { 'documents.legalDocument.$.url': payload.url });
+            const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, {
+                'documents.legalDocument.$.url': payload.url,
+                'createdAt': payload.createdAt,
+                'status': 'Pending',
+
+            });
             // { $set: { "grades.$.std" : 6 } }
             return data;
 
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async adminDeleteLoanApplication(payload) {
+        try {
+            const criteira = {
+                _id: payload.loanId
+            };
+            const dataToUpdate = {
+                status: payload.status
+            }
+            const data = LoanApplicationEntity.updateOneEntity(criteira, dataToUpdate);
+            if (!data) {
+                return Constant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
+            }
+            return Constant.STATUS_MSG.SUCCESS.S200.DELETED;
         } catch (error) {
             return Promise.reject(error);
         }

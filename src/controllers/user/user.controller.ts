@@ -72,6 +72,14 @@ export class UserController extends BaseEntity {
 				}
 				else {
 					const accessToken = await ENTITY.UserE.createToken(payload, userData);
+					let dataToupdate;
+					if (payload.partnerId && payload.partnerName && !userData.hasOwnProperty('partnerId')) {
+						dataToupdate = {
+							partnerId: payload.partnerId,
+							partnerName: payload.partnerName,
+						};
+						ENTITY.UserE.updateOneEntity({ _id: userData._id }, dataToupdate);
+					}
 					await ENTITY.SessionE.createSession(payload, userData, accessToken, 'Tenant');
 					const formatedData = utils.formatUserData(userData);
 					return { formatedData, accessToken };
@@ -106,14 +114,15 @@ export class UserController extends BaseEntity {
 			// }
 
 			const updateUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
-
+			updateUser['isNewUser'] = 0;
 			/**
 			 *  push contract to salesforce
 			 */
-			if (config.get['environment'] === 'production') {
+			if (config.get('environment') === 'production') {
 				// if (!isProfileCompleted) {
-				// convert document to data
+				// convert document to data	
 				const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
+				console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
 				const request = {
 					method: 'post',
 					body: JSON.stringify(salesforceData),
@@ -251,7 +260,6 @@ export class UserController extends BaseEntity {
 	async dashboard(userData: UserRequest.UserData) {
 		try {
 			const step2 = await ENTITY.UserE.userDashboad(userData);
-			console.log('step2step2step2step2', step2);
 
 			// // step2.isFeaturedProfile = step1 ? true : false;
 			return step2;
@@ -309,12 +317,16 @@ export class UserController extends BaseEntity {
 					lastName: payload.lastName,
 					phoneNumber: payload.phoneNumber,
 					ipAddress: payload.ipAddress,
+					countryCode: payload.countryCode,
+					partnerId: payload.partnerId,
+					partnerName: payload.partnerName,
 					// isEmailVerified: true,
 					// isProfileComplete: true,
 					// type: payload.type,
 				};
-				const formatedData = await ENTITY.UserE.createOneEntity(userData);
-
+				let formatedData = await ENTITY.UserE.createOneEntity(userData);
+				formatedData = JSON.parse(JSON.stringify(formatedData));
+				formatedData['isNewUser'] = 1;
 				const salesforceData = flattenObject(formatedData.toObject ? formatedData.toObject() : formatedData);
 				console.log('salesforceDatasalesforceData', salesforceData);
 				const request = {
@@ -346,8 +358,10 @@ export class UserController extends BaseEntity {
 	async seacrhUserByAdmin(payload) {
 		try {
 			const { searchTerm } = payload;
+			let seacrhObject: any = {}
 
-			const seacrhObject = {
+			seacrhObject = {
+				status: Constant.DATABASE.STATUS.USER.ACTIVE,
 				// $and:{status:}
 				$or: [
 					{ userName: { $regex: searchTerm, $options: 'i' } },
@@ -357,7 +371,6 @@ export class UserController extends BaseEntity {
 			};
 
 			const usersList = await this.DAOManager.getData('User', seacrhObject, {}, { limit: 10 })
-			console.log('usersListusersListusersList', usersList);
 
 			return usersList;
 		} catch (error) {

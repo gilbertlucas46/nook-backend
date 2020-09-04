@@ -14,14 +14,16 @@ import { PreQualificationRequest } from '@src/interfaces/preQualification.interf
 
 
 const objectSchema = Joi.object({
+	_id: Joi.string(),
 	status: Joi.string().valid([
 		LoanConstant.DocumentStatus.PENDING,
 		LoanConstant.DocumentStatus.APPROVED,
 		LoanConstant.DocumentStatus.REJECTED,
 	]),
-	documentRequired: Joi.string(),
-	description: Joi.string(),
+	documentRequired: Joi.string().allow('').allow(null),
+	description: Joi.string().allow('').allow(null),
 	url: Joi.string().allow(''),
+	createdAt: Joi.number().allow(null),
 });
 
 export let adminProfileRoute: ServerRoute[] = [
@@ -365,7 +367,6 @@ export let adminProfileRoute: ServerRoute[] = [
 				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
 				// }
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
-				console.log('permissio>:::::::::::::::::::::::::::', permission);
 
 				const registerResponse = await LoanController.adminLoansList(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -406,9 +407,13 @@ export let adminProfileRoute: ServerRoute[] = [
 					limit: Joi.number(),
 					page: Joi.number().min(1).default(1),
 					// type: Joi.string().valid('admin', 'user')
-					searchTerm: Joi.string(),
+					searchTerm: Joi.string().trim(),
 					staffId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 					partnerId: Joi.string(),
+					// status: Joi.string().allow([
+					// 	Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
+					// 	Constant.DATABASE.STATUS.LOAN_STATUS.DELETE,
+					// ]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -504,8 +509,6 @@ export let adminProfileRoute: ServerRoute[] = [
 				// 	return UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.UNAUTHORIZED);
 				// }
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
-				console.log('permissio>:::::::::::::::::::::::::::', permission);
-
 
 				const registerResponse = await LoanController.loanById(payload, adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
@@ -644,7 +647,6 @@ export let adminProfileRoute: ServerRoute[] = [
 		handler: async (request, h: Hapi.ResponseToolkit) => {
 			try {
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-				console.log('adminData><<<<<<<<<<<', adminData);
 
 				// const payload =
 				// const loanId =
@@ -652,12 +654,9 @@ export let adminProfileRoute: ServerRoute[] = [
 					...request.payload as any,
 					...request.params as any,
 				};
-				console.log('payload', payload);
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
-				console.log('permissio>:::::::::::::::::::::::::::', permission);
 
 				const data = await LoanController.adminUpdateLoanApplication(payload, adminData);
-				console.log('datadatadatadatadata', data);
 
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
 			} catch (error) {
@@ -675,8 +674,8 @@ export let adminProfileRoute: ServerRoute[] = [
 				},
 				payload: {
 					assignedTo: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
-					partnerName: Joi.string().allow('').default(''),
-					partnerId: Joi.string().allow('').default(''),
+					partnerName: Joi.string().allow(''),
+					partnerId: Joi.string().allow(''),
 					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
@@ -724,6 +723,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
 							birthDate: Joi.number(),
+							motherMaidenName: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 						},
@@ -732,6 +732,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
 							birthDate: Joi.number(),
+							motherMaidenName: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 							relationship: Joi.string().valid([
@@ -886,7 +887,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							LoanConstant.INDUSTRIES.SAFETY_SECURITY_LEGAL.value,
 							LoanConstant.INDUSTRIES.TRANSPORTATION.value,
 						]),
-						grossMonthlyIncome: Joi.string(),
+						grossMonthlyIncome: Joi.string().allow(''),
 						provinceState: Joi.string(),
 						country: Joi.string(),
 						coBorrowerInfo: {
@@ -951,12 +952,13 @@ export let adminProfileRoute: ServerRoute[] = [
 							officePhone: Joi.number(),
 							officeEmail: Joi.string().email(),
 							officeAddress: Joi.string().max(300),
-							grossMonthlyIncome: Joi.string(),
+							grossMonthlyIncome: Joi.number(),
 							provinceState: Joi.string(),
 							country: Joi.string(),
 						},
 					}),
 					dependentsInfo: Joi.array().items({
+						_id: Joi.string().allow(null).allow(''),
 						name: Joi.string(),
 						age: Joi.number(),
 						relationship: Joi.string().valid([
@@ -970,6 +972,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						]),
 					}),
 					tradeReferences: Joi.array().items({
+						_id: Joi.string().allow(null).allow(''),
 						companyName: Joi.string(),
 						type: Joi.string().valid([
 							LoanConstant.TRADE_REFERENCE.CUSTOMER,
@@ -980,30 +983,37 @@ export let adminProfileRoute: ServerRoute[] = [
 						position: Joi.string(),
 					}),
 
-					// propertyDocuments: Joi.object().keys({
-					// 	borrowerValidDocIds: Joi.array().items(Joi.string()),
-					// 	coBorrowerValidId: Joi.array().items(Joi.string()),
-					// 	latestITR: Joi.string().uri(),
-					// 	employmentCert: Joi.string().uri(),
-					// 	purchasePropertyInfo: Joi.object().keys({
-					// 		address: Joi.string().max(300),
-					// 		contactPerson: Joi.string(),
-					// 		contactNumber: Joi.number(),
-					// 		collateralDocStatus: Joi.boolean(),
-					// 		collateralDocList: Joi.array().items({
-					// 			docType: Joi.string().valid([
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
-					// 			]),
-					// 			docUrl: Joi.string(),
-					// 		}),
-					// 	}),
-					// 	nookAgent: Joi.string(),
-					// }),
+					propertyDocuments: Joi.object().keys({
+						borrowerValidDocIds: Joi.array().items(Joi.string()),
+						coBorrowerValidId: Joi.array().items(Joi.string()),
+						latestITR: Joi.string().uri(),
+						employmentCert: Joi.string().uri(),
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.number(),
+							collateralDocStatus: Joi.boolean(),
+							collateralDocList: Joi.array().items({
+								_id: Joi.string(),
+								docType: Joi.string().valid([
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+								]),
+								docUrl: Joi.string(),
+							}),
+						}),
+						nookAgent: Joi.string(),
+					}),
+					referenceId: Joi.string(),
 					documents: {
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.string(),
+						}),
 						legalDocument: Joi.array().items(objectSchema),
 						incomeDocument: Joi.array().items(objectSchema),
 						colleteralDoc: Joi.array().items(objectSchema),
@@ -1019,8 +1029,6 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
-
-
 	{
 		method: 'POST',
 		path: '/v1/admin/loan/application',
@@ -1043,8 +1051,8 @@ export let adminProfileRoute: ServerRoute[] = [
 			validate: {
 				payload: {
 					assignedTo: Joi.string().trim().regex(/^[0-9a-fA-F]{24}$/),
-					partnerName: Joi.string().allow('').default(''),
-					partnerId: Joi.string().allow('').default(''),
+					partnerName: Joi.string().allow(''),
+					partnerId: Joi.string().allow(''),
 					userId: Joi.string(),  // in case of admin only
 					personalInfo: Joi.object().keys({
 						firstName: Joi.string().min(1).max(32).required(),
@@ -1342,30 +1350,35 @@ export let adminProfileRoute: ServerRoute[] = [
 						position: Joi.string(),
 					}),
 
-					// propertyDocuments: Joi.object().keys({
-					// 	borrowerValidDocIds: Joi.array().items(Joi.string()),
-					// 	coBorrowerValidId: Joi.array().items(Joi.string()),
-					// 	latestITR: Joi.string().uri(),
-					// 	employmentCert: Joi.string().uri(),
-					// 	purchasePropertyInfo: Joi.object().keys({
-					// 		address: Joi.string().max(300),
-					// 		contactPerson: Joi.string(),
-					// 		contactNumber: Joi.number(),
-					// 		collateralDocStatus: Joi.boolean(),
-					// 		collateralDocList: Joi.array().items({
-					// 			docType: Joi.string().valid([
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
-					// 				Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
-					// 			]),
-					// 			docUrl: Joi.string(),
-					// 		}),
-					// 	}),
-					// 	nookAgent: Joi.string(),
-					// }),
+					propertyDocuments: Joi.object().keys({
+						borrowerValidDocIds: Joi.array().items(Joi.string()),
+						coBorrowerValidId: Joi.array().items(Joi.string()),
+						latestITR: Joi.string().uri(),
+						employmentCert: Joi.string().uri(),
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.number(),
+							collateralDocStatus: Joi.boolean(),
+							collateralDocList: Joi.array().items({
+								docType: Joi.string().valid([
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.RESERVE_AGREEMENT,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_1,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.TAX_DECLARATION_2,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.BILL_MATERIAL,
+									Constant.DATABASE.COLLATERAL.DOC.TYPE.FLOOR_PLAN,
+								]),
+								docUrl: Joi.string(),
+							}),
+						}),
+						nookAgent: Joi.string(),
+					}),
 					documents: {
+						purchasePropertyInfo: Joi.object().keys({
+							address: Joi.string().max(300),
+							contactPerson: Joi.string(),
+							contactNumber: Joi.string(),
+						}),
 						legalDocument: Joi.array().items(objectSchema),
 						incomeDocument: Joi.array().items(objectSchema),
 						colleteralDoc: Joi.array().items(objectSchema),
@@ -1430,6 +1443,55 @@ export let adminProfileRoute: ServerRoute[] = [
 						LoanConstant.DocumentStatus.APPROVED,
 						LoanConstant.DocumentStatus.PENDING,
 						LoanConstant.DocumentStatus.REJECTED,
+					]),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+
+	/**
+	 * @description admin mark their loan applicaiton to delete
+	 */
+	{
+		method: 'DELETE',
+		path: '/v1/admin/loan/{loanId}/status/{status}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = request.params as any;
+				// {
+				// 	// ...request.query as any,
+				// 	...request.params,
+				// }
+				// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+				// 	await AdminStaffEntity.checkPermission(payload.permission);
+				// }
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
+
+				const registerResponse = await LoanController.adminDeleteLoanApplication(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+			} catch (error) {
+				utils.consolelog('Error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'Admin update loan status',
+			tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					loanId: Joi.string().required(),
+					status: Joi.string().valid([
+						Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
+						Constant.DATABASE.STATUS.LOAN_STATUS.DELETE
 					]),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,

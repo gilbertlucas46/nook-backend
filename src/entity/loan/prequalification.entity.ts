@@ -16,7 +16,6 @@ class PreLoanEntities extends BaseEntity {
 
     async addBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
         try {
-            console.log('payload>>>>>>>>>>>>>>>', payload);
             let totalMonthlyIncome = payload.employmentInfo.income;
             let preLoanMonthlyAmount = 0;
             if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome; // If married need to add spouse income also to calculate debtToIncomeRatio
@@ -35,7 +34,8 @@ class PreLoanEntities extends BaseEntity {
 
             // age filters
             if (payload.other.age) ageAtlastLoanPayment = payload.other.age + payload.loan.term;
-            if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+            // if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+            if (ageAtlastLoanPayment >= 70) return []; // Max age is 65 till the final loan payment.
 
             const queryPipeline = [];
             if (payload.other.creditCard.cancelled) {
@@ -79,6 +79,13 @@ class PreLoanEntities extends BaseEntity {
                         },
                     },
                 );
+            }
+            if (ageAtlastLoanPayment > 65 && ageAtlastLoanPayment < 70) {
+                queryPipeline.push({
+                    $match: {
+                        maxAgeRequiredForLoan: { $eq: 70 },
+                    },
+                });
             }
 
             if (payload.bankId) queryPipeline[0].$match._id = Types.ObjectId(payload.bankId);
@@ -172,12 +179,12 @@ class PreLoanEntities extends BaseEntity {
                         processingTime: 'As fast as 5 working days upon submission of complete documents',
                         interestRate: 1,
                         loanDuration: 1,
-                        totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
-                        monthlyPayment: { $divide: ['$numerator', '$denominator'] },
-                        // totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
-                        // monthlyPayment: {
-                        //     $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
-                        // },
+                        // totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+                        // monthlyPayment: { $divide: ['$numerator', '$denominator'] },
+                        totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
+                        monthlyPayment: {
+                            $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
+                        },
                         totalLoanPayment: 1,
                         bankId: '$_id',
                         _id: 0,
@@ -245,9 +252,15 @@ class PreLoanEntities extends BaseEntity {
             );
 
             const data = await this.DAOManager.aggregateData('Bank', queryPipeline);
-            console.log('data>>>>>>>>>>>>>>>>>>>>>>>', data);
-
             if (data.length > 0) {
+                function GetFormattedDate(date) {
+                    const todayTime = new Date(date);
+                    const month = (todayTime.getMonth() + 1);
+                    const day = (todayTime.getDate());
+                    const year = (todayTime.getFullYear());
+                    console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
+                    return day + '-' + month + '-' + year;
+                }
                 // const getPreQualficationId =await
                 payload['grossIncome'] = totalMonthlyIncome;
                 payload['totalLoanMonthly'] = data[0]['totalLoanMonthly'];
@@ -265,8 +278,21 @@ class PreLoanEntities extends BaseEntity {
                         // updatedAt: new Date().getTime(),
                     };
 
-                    const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate);
-                    console.log('updatedDataupdatedDataupdatedData', updatedData, true);
+                    const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate, { new: true });
+
+                    if (updatedData.other && updatedData.other.dob) {
+                        updatedData.other.dob = GetFormattedDate(updatedData.other['dob'])
+                    }
+
+                    const salesforceData: { [key: string]: string | number } = flattenObject(updatedData.toObject ? updatedData.toObject() : updatedData);
+                    console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
+                    console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
+
+                    fetch(config.get('zapier_prequalificationUrl'), {
+                        method: 'post',
+                        body: JSON.stringify(salesforceData),
+                    });
+
 
                     return updatedData ? updatedData : {};
                 }
@@ -279,7 +305,6 @@ class PreLoanEntities extends BaseEntity {
                 });
 
                 const referenceNumber = await this.getReferenceId(criteria1);
-                console.log('referenceNumberreferenceNumber', referenceNumber);
 
                 if (!referenceNumber) {
                     const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
@@ -307,7 +332,7 @@ class PreLoanEntities extends BaseEntity {
 
                 const dataToSave = {
                     ...payload,
-                    email: userData.email,
+                    email: (payload.other && payload.other.email) ? payload.other.email : userData.email,
                     userId: payload.userId ? payload.userId : userData._id,
                     prequalifiedBanks: data,
                     createdAt: new Date().getTime(),
@@ -328,6 +353,15 @@ class PreLoanEntities extends BaseEntity {
                 // data1.employmentInfo.grossMonthlyIncome = data1.work.income;
                 // delete data1['work'];
                 // console.log('data2:', data1);
+                if (payload.other && payload.other.email) {
+                    delete payload.other['email'];
+                }
+
+                // for salesfoce 
+                if (payload.other && payload.other.dob) {
+                    payload.other.dob = GetFormattedDate(payload.other['dob'])
+                }
+
 
                 const salesforceData: { [key: string]: string | number } = flattenObject(data1.toObject ? data1.toObject() : data1);
                 console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
@@ -364,7 +398,6 @@ class PreLoanEntities extends BaseEntity {
             const matchObject: any = {};
             let searchObject: any = {};
             const { sortType } = payload;
-            // console.log('userIduserIduserId', userId);
 
             const paginateOptions = {
                 page: page || 1,
@@ -504,7 +537,6 @@ class PreLoanEntities extends BaseEntity {
             // const data = this.DAOManager.paginatePipeline(this.modelName, query);
             const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, pipeline).aggregate(this.modelName);
             // const data = await this.DAOManager.aggregateData(this.modelName, matchPipeline, paginateOptions.limit, paginateOptions.skip);
-            console.log('datadatadatadatadatadatadata', data);
             return data;
         } catch (error) {
             return Promise.reject(error);

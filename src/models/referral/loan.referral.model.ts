@@ -6,10 +6,11 @@ import * as Constant from '../../constants';
 export const referralSchema = new Schema({
     firstName: { type: Schema.Types.String },
     lastName: { type: Schema.Types.String },
-    email: { type: Schema.Types.String },
+    email: { type: Schema.Types.String, required: true },
     phoneNumber: { type: Schema.Types.String },
     notes: { type: Schema.Types.String },
     userId: { type: Schema.Types.ObjectId },
+    countryCode: { type: String },
     status: {
         type: String,
         enum: [

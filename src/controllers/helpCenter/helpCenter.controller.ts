@@ -91,7 +91,6 @@ export class HelpCenter {
             if (payload.categoryId) {
                 result = this.getTypeAndDisplayName(Constant.DATABASE.HELP_CENTER_TYPE, payload.categoryId);
             }
-            console.log('result>>>>>>>>>>>>>.', result);
 
             dataToSet.$set = {
                 ...payload,
@@ -309,7 +308,7 @@ export class HelpCenter {
 
 
 
-    async getHelpcenter(payload) {
+    async getHelpcenter(payload: helpCenterRequest.AdminGetHelpCnter) {
         try {
             const data = await ENTITY.HelpCenterE.adminGetHelpCenter(payload);
             return data;

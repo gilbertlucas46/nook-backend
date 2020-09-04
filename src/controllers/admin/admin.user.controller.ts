@@ -6,6 +6,10 @@ import { generateRandomString } from '../../utils/index';
 import { AdminRequest } from '@src/interfaces/admin.interface';
 import { AdminUserEntity } from '@src/entity';
 import { MailManager } from '@src/lib';
+import { flattenObject } from '@src/utils/flatten.util';
+import fetch from 'node-fetch';
+import * as config from 'config';
+import { Types } from 'mongoose';
 /**
  * @author Anurag Agarwal
  * @description this controller contains actions for user management in admin/staff
@@ -20,7 +24,7 @@ class AdminUserControllers {
         return result[0];
     }
 
-    async addUser(payload) {
+    async addUser(payload: AdminRequest.IAddUser) {
         try {
             const checkMail = { email: payload.email };
             const checkUserName = { userName: payload.userName };
@@ -40,12 +44,35 @@ class AdminUserControllers {
                         password: hashPassword,
                     };
                     const User: AdminRequest.IcreateUser = await ENTITY.UserE.createOneEntity(userData);
-                    const userResponse = UniversalFunctions.formatUserData(User);
+
+                    let userResponse = await UniversalFunctions.formatUserData(User);
+                    userResponse = JSON.parse(JSON.stringify(userResponse))
+                    userResponse['isNewUser'] = 1;
+                    console.log('userResponse', userResponse);
+                    delete userResponse['password']
                     const sendObj = {
                         receiverEmail: payload.email,
                         password: genCredentials,
                         userName: payload.firstName + '' + payload.lastName,
                     };
+
+                    const salesforceData = flattenObject(userResponse.toObject ? userResponse.toObject() : userResponse);
+                    console.log('salesforceDatasalesforceData', salesforceData);
+                    const request = {
+                        method: 'post',
+                        body: JSON.stringify(salesforceData),
+                    };
+
+                    // SessionE.createSession({}, doc, accessToken, 'user');
+                    // const formatedData = utils.formatUserData(doc);
+
+                    // 	receiverEmail: payload.email,
+                    // 	subject: 'nook welcomes you',
+                    // 	userName: payload.userName,
+                    // };
+                    await fetch(config.get('zapier_personUrl'), request);
+                    await fetch(config.get('zapier_accountUrl'), request);
+
                     const mail = new MailManager();
                     await mail.welcomeStaffUSer(sendObj);
                     return userResponse;
@@ -131,7 +158,13 @@ class AdminUserControllers {
                 isUserBlockedByAdmin: payload.status !== payload.status['ACTIVE'],
                 approvedAt: new Date().getTime(),
             };
+            // const loanUserCriteria = {
+            //     userId: Types.ObjectId(payload.userId),
+            // }
 
+            // // if (payload.status === Constant.DATABASE.STATUS.USER.DELETE || payload.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
+            // const data1 = await ENTITY.LoanApplicationEntity.updateMultiple(loanUserCriteria, dataToUpdate);
+            // // }
             return data;
         } catch (error) {
             return Promise.reject(error);
@@ -188,7 +221,6 @@ class AdminUserControllers {
                 email: payload.email,
             };
             const checkUserName = { userName: payload.userName };
-            console.log('ge{tUserData', getUserData);
             if (getUserData && getUserData.email !== payload.email) {
                 const checkByEmail = await ENTITY.UserE.getOneEntity(checkEmailCriteria, ['_id', 'email']);
                 if (checkByEmail && checkByEmail._id) {
@@ -203,10 +235,26 @@ class AdminUserControllers {
             }
             const updatedUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
             const userResponse = UniversalFunctions.formatUserData(updatedUser);
+
+            userResponse['isNewUser'] = 0;
+
+            if (config.get('environment') === 'production') {
+                // if (!isProfileCompleted) {
+                // convert document to data
+                const salesforceData = flattenObject(userResponse.toObject ? userResponse.toObject() : userResponse);
+                console.log('salesforceDatasalesforceData', salesforceData);
+                const request = {
+                    method: 'post',
+                    body: JSON.stringify(salesforceData),
+                };
+                await fetch(config.get('zapier_personUrl'), request);
+                await fetch(config.get('zapier_accountUrl'), request);
+            }
+
+
             return userResponse;
         }
         catch (error) {
-            console.log('errorerrorerrorerror', error);
             return Promise.reject(error);
         }
     }

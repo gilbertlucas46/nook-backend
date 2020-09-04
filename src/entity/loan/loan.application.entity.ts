@@ -8,6 +8,7 @@ import fetch from 'node-fetch';
 import { flattenObject } from '@src/utils';
 import { label } from 'joi';
 import * as UniversalFunctions from '@src/utils';
+import { type } from 'os';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -27,15 +28,11 @@ class LoanApplicationE extends BaseEntity {
             }
             const data = await this.createOneEntity(payload);
             // send data to sales-force
-            // if (config.get['environment'] === 'production') {
-            //     console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
 
             await this.sendApplication(data);
-            // }
+
             return data;
         } catch (error) {
-            console.log('saveLoanApplicationsaveLoanApplicationsaveLoanApplication', error);
-
             utils.consolelog('error', error, true);
             return Promise.reject(error);
         }
@@ -49,10 +46,8 @@ class LoanApplicationE extends BaseEntity {
 
             const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
             // send data to sales-force
-            // if (config.get['environment'] === 'production') {
-            //     console.log('productionproductionproduction>>>>>>>>>>>>>>>>.');
             await this.sendApplication(data);
-            // }
+
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -90,22 +85,22 @@ class LoanApplicationE extends BaseEntity {
             sortingType = {
                 createdAt: sortType,
             };
-
+            matchObject['status'] = Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE;
             if (status) {
                 matchObject['applicationStatus'] = status;
             }
 
-            else {
-                matchObject['$or'] = [
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value },
-                    { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value },
-                ];
-            }
+            // else {
+            //     matchObject['$or'] = [
+            //         { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value },
+            //         { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value },
+            //         { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value },
+            //         { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value },
+            //         { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value },
+            //         { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value },
+            //         { applicationStatus: Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value },
+            //     ];
+            // }
 
             if (fromDate && toDate) {
                 matchObject['createdAt'] = {
@@ -159,7 +154,11 @@ class LoanApplicationE extends BaseEntity {
             // if (userData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE || userData.type === Constant.DATABASE.USER_TYPE.ADMIN.TYPE) {
             // matchObject['saveAsDraft'] = false;
             // }
-
+            // if (status) {
+            //     matchObject['status'] = status;
+            // } else {
+            matchObject.$match['status'] = Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE;
+            // }
             if (sortBy) {
                 sortingType = {
                     [sortBy]: sortType,
@@ -198,6 +197,7 @@ class LoanApplicationE extends BaseEntity {
                     { 'contactInfo.phoneNumber': { $regex: searchTerm, $options: 'i' } },
                     { 'contactInfo.email': { $regex: searchTerm, $options: 'i' } },
                     { 'contactInfo.mobileNumber': { $regex: searchTerm, $options: 'i' } },
+                    { referenceId: { $regex: searchTerm, $options: 'i' } },
                 ];
             }
 
@@ -222,8 +222,6 @@ class LoanApplicationE extends BaseEntity {
                 matchObject.$match['partnerId'] = partnerId;
 
             }
-            console.log('matchObjectmatchObjectmatchObject', matchObject);
-
             const matchPipeline = [
                 // {
                 matchObject,
@@ -235,7 +233,6 @@ class LoanApplicationE extends BaseEntity {
                 },
                 // },
             ];
-            // console.log('matchPipelinematchPipelinematchPipeline', matchPipeline);
 
             // if (payload.staffId) {
             queryPipeline = [{
@@ -247,7 +244,7 @@ class LoanApplicationE extends BaseEntity {
                             $match: {
                                 $expr: {
                                     $eq: ['$_id', '$$aid'],
-                                }
+                                },
                             },
                         },
                         {
@@ -257,7 +254,7 @@ class LoanApplicationE extends BaseEntity {
                                 lastName: 1,
                                 status: 1,
                             },
-                        }
+                        },
                     ],
                     as: 'assignedAdmin',
                 },
@@ -267,14 +264,13 @@ class LoanApplicationE extends BaseEntity {
                     preserveNullAndEmptyArrays: true,
                 },
             },
-            ]
+            ];
             // } else {
             //     queryPipeline;
             // }
             // console.log('matchPipelinematchPipelinematchPipeline', matchPipeline);
 
             const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, queryPipeline).aggregate(this.modelName);
-            console.log('datadatadatadatadata', data);
 
             // promiseArray.push(this.DAOManager.findAll(this.modelName, matchObject, {}, { skip, limit, sort: sortingType }));
             // promiseArray.push(this.DAOManager.count(this.modelName, matchObject));
@@ -296,15 +292,16 @@ class LoanApplicationE extends BaseEntity {
      */
     async sendApplication(data: any) {
         try {
-            console.log('dataAAAAAAAAAAAAAAA>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
+            data = JSON.parse(JSON.stringify(data));
+            async function GetFormattedDate(date) {
+                const todayTime = new Date(date);
+                const month = (todayTime.getMonth() + 1);
+                const day = (todayTime.getDate());
+                const year = (todayTime.getFullYear());
+                console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
+                return day + '-' + month + '-' + year;
+            }
 
-            // console.log('inside Loan');
-            // const { creditCard, nationality, gender, coBorrowerInfo } = data.personalInfo;
-            // const { loanDetails } = data.loanDetails;
-            // const { contactInfo } = data.contactInfo;
-            // const { employmentInfo } = data;
-
-            console.log('ewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
 
             data.personalInfo.creditCard.status = Constant.CREDIT_CARD_STATUS[data.personalInfo.creditCard.status].label;
 
@@ -323,25 +320,17 @@ class LoanApplicationE extends BaseEntity {
                 data.contactInfo.currentAddress.homeOwnership = data.contactInfo.currentAddress.homeOwnership.charAt(0).toUpperCase() + data.contactInfo.currentAddress.homeOwnership.substr(1).toLowerCase();
             }
             if (data.personalInfo.civilStatus) {
-                console.log('civilStatuscivilStatuscivilStatuscivilStatuscivilStatus');
                 data.personalInfo.civilStatus = data.personalInfo.civilStatus.charAt(0).toUpperCase() + data.personalInfo.civilStatus.substr(1).toLowerCase();
             }
-            // console.log("data['employmentInfo']", data['employmentInfo']['coBorrowerInfo']);
-
-
 
             // if (data['employmentInfo']['coBorrowerInfo']['employmentRank']) {
             if (data && data['employmentInfo'] && data['employmentInfo']['coBorrowerInfo'] && data['employmentInfo']['coBorrowerInfo']['employmentRank']) {
-
-                console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>22222222222222', data.employmentInfo.coBorrowerInfo.employmentRank);
-                // console.log(' Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;', Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label);
 
                 data.employmentInfo.coBorrowerInfo.employmentRank = Constant.EMPLOYMENT_RANK[data.employmentInfo.coBorrowerInfo.employmentRank].label;
             }
 
             // if (data.employmentInfo.coBorrowerInfo.employmentType) {
             if (data && data['employmentInfo'] && data['employmentInfo']['coBorrowerInfo'] && data['employmentInfo']['coBorrowerInfo']['employmentType']) {
-                console.log('1>>>>>>>>>>>>>>>>');
                 data.employmentInfo.coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[data.employmentInfo.coBorrowerInfo.employmentType].label;
             }
 
@@ -354,67 +343,53 @@ class LoanApplicationE extends BaseEntity {
 
             }
 
-
             // if (data.employmentInfo.coBorrowerInfo.companyIndustry) {
             if (data && data['employmentInfo'] && data['employmentInfo']['coBorrowerInfo'] && data['employmentInfo']['coBorrowerInfo']['companyIndustry']) {
-                console.log('33333333333333333333333333333333333333333333');
                 data.employmentInfo.coBorrowerInfo.companyIndustry = Constant.INDUSTRIES[data.employmentInfo.coBorrowerInfo.companyIndustry].label;
             }
 
             if (data.propertyInfo.type) {
                 data.propertyInfo.type = Constant.LOAN_PROPERTY_TYPES[data.propertyInfo.type].label;
-                console.log('>44444444444444444444444444444444444444444');
             }
 
             if (data.employmentInfo.companyIndustry) {
                 data.employmentInfo.companyIndustry = Constant.INDUSTRIES[data.employmentInfo.companyIndustry].label;
-                console.log('5555555555555555555666666666666666666666666666666666666666666666666666666666666');
 
             }
-            // coBorrowerInfo.employmentType = Constant.EMPLOYMENT_TYPE[coBorrowerInfo.employmentType].label;
 
-            // if (data.propertyInfo.type) {
-            //     console.log('>>>>>>>>>>>>>>>>>>>LLLLLLLLLLLLLLL777777777777777777777');
-            //     data.propertyInfo.type = Constant.LOAN_PROPERTY_TYPES[data.propertyInfo.type].label;
-            //     console.log('>>>>>>>>>>>>>>>>>>>LLLLLLLLLLLLLLL777777777777777777777>>>>>>>>>>>>');
-
-            // }
             if (data.propertyInfo.status) {
-                console.log('>>>>>>>>>>*888888888888888888888888888888888888888888888888888888888888888');
                 data.propertyInfo.status = Constant.LOAN_PROPERTY_STATUS[data.propertyInfo.status].label;
-                console.log('>>>>>>>>>>*888888888888888888888888888888888888888888888888888888888888888>>>>>>>');
             }
 
             if (data && data.loanDetails && data.loanDetails.loanType) {
-                console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999');
                 data.loanDetails.loanType = Constant.LOAN_TYPES[data.loanDetails.loanType].label;
-                console.log('>>>>>>>>>>*9999999999999999999999999999999999999999999999>>>>>>>>>>>>>>>');
             }
 
-            console.log('loanDetailsloanDetails>>>>>>>>>>', data);
-            // if (data.applicationStatus === Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value ) {
+            if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
+                data.personalInfo.birthDate = await GetFormattedDate(data['personalInfo']['birthDate'])
+            }
 
+            // 	birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
+            if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
+                data['personalInfo']['spouseInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
+            }
+            if (data && data['personalInfo'] && data['personalInfo']['coBorrowerInfo'] && data['personalInfo']['coBorrowerInfo']['birthDate']) {
+                data['personalInfo']['coBorrowerInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
+            }
 
             const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
             console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
             console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
             if (config.get('environment') === 'production') {
-                console.log('333333333333333333333333333333333333344444444444kkkkkkkkk');
-
                 await fetch(config.get('zapier_loanUrl'), {
                     method: 'post',
                     body: JSON.stringify(salesforceData),
                 });
             }
-            // }
             return;
 
         } catch (error) {
-            console.log('eorrrrrrrrrrrrrrrrrrrrrrrrr', error);
             return Promise.reject(error);
-            // return (UniversalFunctions.sendError(error));
-            // console.log('errorerrorerrorerrorerror', error);
-            // return Promise.reject(error);
         }
     }
 }
