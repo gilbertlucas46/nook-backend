@@ -29,11 +29,12 @@ class LoanApplicationE extends BaseEntity {
             const data = await this.createOneEntity(payload);
             // send data to sales-force
 
-            await this.sendApplication(data);
+            const salesforce = await this.sendApplication(data);
 
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
+            utils.errorReporter(error)
             return Promise.reject(error);
         }
     }
@@ -302,8 +303,9 @@ class LoanApplicationE extends BaseEntity {
                 return day + '-' + month + '-' + year;
             }
 
-
-            data.personalInfo.creditCard.status = Constant.CREDIT_CARD_STATUS[data.personalInfo.creditCard.status].label;
+            if (data.personalInfo && data.personalInfo.creditCard && data.personalInfo.creditCard.status) {
+                data.personalInfo.creditCard.status = Constant.CREDIT_CARD_STATUS[data.personalInfo.creditCard.status].label;
+            }
 
             // gender = gender.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();  //Constant.GENDER.FEMALE[gender].label;
             // nationality = nationality.charAt(0).toUpperCase() + gender.substr(1).toLowerCase();
@@ -389,6 +391,7 @@ class LoanApplicationE extends BaseEntity {
             return;
 
         } catch (error) {
+            utils.errorReporter(error);
             return Promise.reject(error);
         }
     }

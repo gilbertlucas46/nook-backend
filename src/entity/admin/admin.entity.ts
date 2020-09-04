@@ -142,7 +142,6 @@ export class AdminClass extends BaseEntity {
 
 	async adminDashboard(payload, adminData) {
 		try {
-
 			const totalArticles = {
 				status: {
 					$eq: CONSTANT.DATABASE.ARTICLE_STATUS.ACTIVE,
@@ -213,70 +212,77 @@ export class AdminClass extends BaseEntity {
 				createdAt: { $gt: payload.preQualificationGraph },
 			};
 
-			const LoanList = [{
-				$facet: {
-					// TOTAL_LOAN_APPLICATION: [{
-					// 	$group: { _id: null, myCount: { $sum: 1 } },
-					// },
-					// {
-					// 	$project: { _id: 0 },
-					// },
-
-					// ],
-					NEW: [{
-						$match: {
-							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
-						},
-					}],
-					REFERRED_TO_BANK: [{
-						$match: {
-							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
-						},
-					}],
-					BANK_APPROVED: [{
-						$match: {
-							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
-						},
-					}],
-					BANK_DECLINED: [{
-						$match: {
-							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
-						},
-					}],
-					NOOK_DECLINED: [{
-						$match: {
-							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
-
-						},
-					}],
-					NOOK_REVIEW: [{
-						$match: {
-							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
-
-						},
-					}],
-					DRAFT: [{
-						$match: {
-							applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
-						},
-					}],
+			const LoanList = [
+				{
+					$match: {
+						status: CONSTANT.DATABASE.STATUS.LOAN_STATUS.ACTIVE
+					},
 				},
-			},
-			{
-				$project: {
-					NEW: { $size: '$NEW' },
-					REFERRED_TO_BANK: { $size: '$REFERRED_TO_BANK' },
-					BANK_APPROVED: { $size: '$BANK_APPROVED' },
-					BANK_DECLINED: { $size: '$BANK_DECLINED' },
-					NOOK_DECLINED: { $size: '$NOOK_DECLINED' },
-					NOOK_REVIEW: { $size: '$NOOK_REVIEW' },
-					DRAFT: { $size: '$DRAFT' },
+				{
+					$facet: {
+						// TOTAL_LOAN_APPLICATION: [{
+						// 	$group: { _id: null, myCount: { $sum: 1 } },
+						// },
+						// {
+						// 	$project: { _id: 0 },
+						// },
+
+						// ],
+						NEW: [{
+							$match: {
+								applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+							},
+						}],
+						REFERRED_TO_BANK: [{
+							$match: {
+								applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+							},
+						}],
+						BANK_APPROVED: [{
+							$match: {
+								applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
+							},
+						}],
+						BANK_DECLINED: [{
+							$match: {
+								applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
+							},
+						}],
+						NOOK_DECLINED: [{
+							$match: {
+								applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+
+							},
+						}],
+						NOOK_REVIEW: [{
+							$match: {
+								applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+
+							},
+						}],
+						DRAFT: [{
+							$match: {
+								applicationStatus: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
+							},
+						}],
+					},
 				},
-			}];
+				{
+					$project: {
+						NEW: { $size: '$NEW' },
+						REFERRED_TO_BANK: { $size: '$REFERRED_TO_BANK' },
+						BANK_APPROVED: { $size: '$BANK_APPROVED' },
+						BANK_DECLINED: { $size: '$BANK_DECLINED' },
+						NOOK_DECLINED: { $size: '$NOOK_DECLINED' },
+						NOOK_REVIEW: { $size: '$NOOK_REVIEW' },
+						DRAFT: { $size: '$DRAFT' },
+					},
+				}];
 
 			const graphLoanApplication = [
 				{
 					$match: {
+						status: CONSTANT.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
 						createdAt: { $gt: payload.loanGraph },
 					},
 				},
@@ -321,7 +327,7 @@ export class AdminClass extends BaseEntity {
 
 			pipeline.push(this.DAOManager.aggregateData('LoanApplication', graphLoanApplication));
 			pipeline.push(this.DAOManager.aggregateData('PreQualification', graphPreQualification));
-			pipeline.push(this.DAOManager.count('LoanApplication', { createdAt: { $gt: payload.loanGraph } }));
+			pipeline.push(this.DAOManager.count('LoanApplication', { status: CONSTANT.DATABASE.STATUS.LOAN_STATUS.ACTIVE, createdAt: { $gt: payload.loanGraph } }));
 			pipeline.push(this.DAOManager.aggregateData('User', userGraphQuery));
 			const [userCount, loanCount, staffcount, articleCount, referralCount, preQualificationCount, loanGraph, preQualificationGraph, totalLoanApplication, userGraphData] = await Promise.all(pipeline);
 
