@@ -165,6 +165,7 @@ export let preloanRoute: ServerRoute[] = [
         return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, bankData));
       } catch (error) {
         UniversalFunctions.consolelog(error, 'error', true);
+        UniversalFunctions.errorReporter(error);
         return (UniversalFunctions.sendError(error));
       }
     },

@@ -14,7 +14,6 @@ import fetch from 'node-fetch';
 import * as config from 'config';
 import { flattenObject } from '@src/utils/flatten.util';
 import { LoanApplicationEntity } from '@src/entity/loan/loan.application.entity';
-
 class LoanControllers extends BaseEntity {
 
     /**
@@ -51,10 +50,10 @@ class LoanControllers extends BaseEntity {
             payload['userId'] = payload.userId ? payload.userId : userData._id;
             const criteria1 = ({
                 createdAt: {
-                    $gte: new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
+                    $gte: new Date().setHours(0, 0, 0, 0) // new Date(new Date(new Date().setHours(0)).setMinutes(0)).setMilliseconds(0),
                 },
             });
-
+            //new Date().setHours(0, 0, 0, 0)  
             const referenceNumber = await ENTITY.LoanApplicationEntity.getReferenceId(criteria1);
             if (!referenceNumber) {
                 const year = new Date(new Date().getTime()).getFullYear().toString().substr(-2);
@@ -403,6 +402,7 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(Constant.STATUS_MSG.SUCCESS.S204.NO_CONTENT_AVAILABLE);
             // return data;
         } catch (error) {
+            utils.errorReporter(error);
             return Promise.reject(error);
         }
     }

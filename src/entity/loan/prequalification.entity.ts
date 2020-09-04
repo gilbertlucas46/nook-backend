@@ -8,6 +8,7 @@ import { PreQualificationRequest } from '@src/interfaces/preQualification.interf
 import fetch from 'node-fetch';
 import * as config from 'config';
 import { ObjectId } from 'bson';
+import * as utils from '@src/utils';
 
 class PreLoanEntities extends BaseEntity {
     constructor() {
@@ -376,6 +377,7 @@ class PreLoanEntities extends BaseEntity {
             }
             return data;
         } catch (error) {
+            utils.errorReporter(error);
             return Promise.reject(error);
         }
     }
