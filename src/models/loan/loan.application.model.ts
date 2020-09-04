@@ -11,7 +11,8 @@ const schema = new Schema({
         type: String, enum: [
             CONSTANT.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
             CONSTANT.DATABASE.STATUS.LOAN_STATUS.DELETE
-        ]
+        ],
+        default: CONSTANT.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
     },
     // saveAsDraft: { type: Schema.Types.Boolean, default: false },
     ipAddress: { type: String },

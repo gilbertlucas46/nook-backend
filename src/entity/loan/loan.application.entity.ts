@@ -85,7 +85,7 @@ class LoanApplicationE extends BaseEntity {
             sortingType = {
                 createdAt: sortType,
             };
-
+            matchObject['status'] = Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE;
             if (status) {
                 matchObject['applicationStatus'] = status;
             }
