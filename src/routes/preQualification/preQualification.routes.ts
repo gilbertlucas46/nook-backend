@@ -50,6 +50,7 @@ export let preQualificationroutes: ServerRoute[] = [
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PREQUALIFICATION_SAVED, {});
             } catch (error) {
                 UniversalFunctions.consolelog(error, 'error', true);
+                UniversalFunctions.errorReporter(error);
                 return (UniversalFunction.sendError(error));
             }
         },
@@ -254,6 +255,7 @@ export let preQualificationroutes: ServerRoute[] = [
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PREQUALIFICATION_SAVED, {});
             } catch (error) {
                 UniversalFunctions.consolelog(error, 'error', true);
+                UniversalFunctions.errorReporter(error);
                 return (UniversalFunction.sendError(error));
             }
         },

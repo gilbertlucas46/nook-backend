@@ -449,6 +449,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
 				utils.consolelog('Error', error, true);
+				UniversalFunctions.errorReporter(error);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -661,6 +662,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
+				UniversalFunctions.errorReporter(error);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -1041,6 +1043,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, data));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
+				utils.errorReporter(error);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
@@ -1478,6 +1481,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const registerResponse = await LoanController.adminDeleteLoanApplication(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
+				utils.errorReporter(error);
 				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
 			}

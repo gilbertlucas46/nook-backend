@@ -922,6 +922,7 @@ export let loanRoute: ServerRoute[] = [
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
 				UniversalFunctions.consolelog('error', error, true);
+				UniversalFunctions.errorReporter(error);
 				return (UniversalFunctions.sendError(error));
 			}
 		},
