@@ -236,9 +236,11 @@ class AdminUserControllers {
                 }
             }
             const updatedUser = await ENTITY.UserE.updateOneEntity(criteria, payload, { lean: true, new: true });
-            if (updatedUser.email !== payload.email) {
-                const updateLoan = ENTITY.LoanApplicationEntity.updateMultiple(criteria, { email: payload.email })
-                const preqQualification = ENTITY.PreQualificationBankE.updateMultiple(criteria, { email: payload.email });
+
+            if (updatedUser.email !== getUserData.email) {
+                console.log(':::::::::::::');
+                const loan = await ENTITY.LoanApplicationEntity.updateMultiple({ userId: payload.userId }, { 'contactInfo.email': payload.email })
+                const preqQualification = await ENTITY.PreQualificationBankE.updateMultiple({ userId: payload.userId }, { email: payload.email });
             }
 
             const userResponse = UniversalFunctions.formatUserData(updatedUser);
