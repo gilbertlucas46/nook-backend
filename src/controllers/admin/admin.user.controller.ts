@@ -10,6 +10,8 @@ import { flattenObject } from '@src/utils/flatten.util';
 import fetch from 'node-fetch';
 import * as config from 'config';
 import { Types } from 'mongoose';
+import { LoanApplication } from '@src/models';
+import { util } from 'config';
 /**
  * @author Anurag Agarwal
  * @description this controller contains actions for user management in admin/staff
@@ -233,7 +235,12 @@ class AdminUserControllers {
                     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
                 }
             }
-            const updatedUser = await ENTITY.UserE.updateOneEntity(criteria, payload);
+            const updatedUser = await ENTITY.UserE.updateOneEntity(criteria, payload, { lean: true, new: true });
+            if (updatedUser.email !== payload.email) {
+                const updateLoan = ENTITY.LoanApplicationEntity.updateMultiple(criteria, { email: payload.email })
+                const preqQualification = ENTITY.PreQualificationBankE.updateMultiple(criteria, { email: payload.email });
+            }
+
             const userResponse = UniversalFunctions.formatUserData(updatedUser);
 
             userResponse['isNewUser'] = 0;
@@ -255,6 +262,7 @@ class AdminUserControllers {
             return userResponse;
         }
         catch (error) {
+            utils.errorReporter(error);
             return Promise.reject(error);
         }
     }

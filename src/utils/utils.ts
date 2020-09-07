@@ -212,7 +212,7 @@ export let errorReporter = async (data) => {
 		console.log('config.get,config.get,', config.get('flock'),);
 
 		let postThisData = {
-			url: config.get('flock'),
+			url: "https://api.flock.com/hooks/sendMessage/68a7b63d-4b1e-4a02-b4c9-0f6a91aa6a27", // config.get('flock'),
 			body: JSON.stringify({ flockml: data }),
 			headers: { 'Content-Type': 'application/json' }
 		}
