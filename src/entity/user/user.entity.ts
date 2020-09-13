@@ -116,6 +116,7 @@ export class UserClass extends BaseEntity {
 				const loanAppplication = {
 					userId: userData._id,
 					applicationStatus: { $ne: 'DRAFT' },
+					status: Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
 					// { createdAt: { $gt: new Date().getTime() - (30 * 24 * 60 * 60 * 1000) } },
 				};
 				const totalPreQualificationCount = {
