@@ -28,6 +28,16 @@ class PreqQualificationController extends BaseEntity {
     }
 
 
+    async adminAddPreQualifiedBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
+        try {
+            const data = await ENTITY.PreQualificationBankE.adminAddBanks(payload, userData);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+
 
     /**
      *  @description admin get prequalification List
