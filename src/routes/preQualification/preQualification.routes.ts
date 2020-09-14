@@ -391,7 +391,7 @@ export let preQualificationroutes: ServerRoute[] = [
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
                 const payload: PreQualificationRequest.IPreLoanAdd = request.payload as any;
 
-                const data = await PreQualificationService.addPreQualifiedBanks(payload, adminData);
+                const data = await PreQualificationService.adminAddPreQualifiedBanks(payload, adminData);
                 return UniversalFunction.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.PREQUALIFICATION_SAVED, data);
             } catch (error) {
                 UniversalFunctions.consolelog(error, 'error', true);
