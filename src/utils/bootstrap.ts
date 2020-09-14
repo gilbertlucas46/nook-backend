@@ -8,6 +8,12 @@ export class Bootstrap {
 		await this.dataBaseService.connectDatabase();
 		await this.initRegions();
 		AdminE.adminAccountCreator();
+		const serverTime = new Date();
+		console.log('serverTimeserverTimeserverTime', serverTime);
+		const getTime = new Date().getTime();
+		console.log('TimeStampTimeStampTimeStampTimeStamp', getTime);
+
+
 		// await this.initCounters();
 		// await this.subscriptionPlan();
 		// await this.bootstrapCounters();
