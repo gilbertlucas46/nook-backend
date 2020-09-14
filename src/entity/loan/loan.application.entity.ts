@@ -318,7 +318,7 @@ class LoanApplicationE extends BaseEntity {
             if (data.personalInfo.nationality) {
                 data.personalInfo.nationality = data.personalInfo.nationality.charAt(0).toUpperCase() + data.personalInfo.nationality.substr(1).toLowerCase();
             }
-            if (data.contactInfo.currentAddress.homeOwnership) {
+            if (data.contactInfo && data.contactInfo.currentAddress && data.contactInfo.currentAddress.homeOwnership) {
                 data.contactInfo.currentAddress.homeOwnership = data.contactInfo.currentAddress.homeOwnership.charAt(0).toUpperCase() + data.contactInfo.currentAddress.homeOwnership.substr(1).toLowerCase();
             }
             if (data.personalInfo.civilStatus) {
