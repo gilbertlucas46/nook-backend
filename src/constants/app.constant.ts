@@ -234,9 +234,10 @@ export let DATABASE = {
 		DELETE: 'Delete',
 	},
 	PREQUALIFICATION_STATUS: {
-		PENDING: 'Pending',
+		// PENDING: 'Pending',
 		ACTIVE: 'Active',
-		BLOCK: 'Block',
+		// BLOCK: 'Block',
+		DELETE: 'Delete'
 	},
 	ARTICLE_STATUS: {
 		PENDING: 'Pending',

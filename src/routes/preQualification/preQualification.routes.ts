@@ -529,8 +529,8 @@ export let preQualificationroutes: ServerRoute[] = [
 
 
     {
-        method: 'PATCH',
-        path: '/v1/admin/prequalification/{loanId}/status/{status}',
+        method: 'DELETE',
+        path: '/v1/admin/prequalification/{Id}',
         handler: async (request, h) => {
             try {
                 const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
@@ -558,11 +558,7 @@ export let preQualificationroutes: ServerRoute[] = [
             auth: 'AdminAuth',
             validate: {
                 params: {
-                    loanId: Joi.string().required(),
-                    status: Joi.string().valid([
-                        // Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
-                        Constant.DATABASE.STATUS.LOAN_STATUS.DELETE
-                    ]),
+                    Id: Joi.string().required(),
                 },
                 headers: UniversalFunctions.authorizationHeaderObj,
                 failAction: UniversalFunctions.failActionFunction,
