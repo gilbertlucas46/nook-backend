@@ -526,4 +526,52 @@ export let preQualificationroutes: ServerRoute[] = [
             },
         },
     },
+
+
+    {
+        method: 'PATCH',
+        path: '/v1/admin/prequalification/{loanId}/status/{status}',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+                const payload = request.params as any;
+                // {
+                // 	// ...request.query as any,
+                // 	...request.params,
+                // }
+                // if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                // 	await AdminStaffEntity.checkPermission(payload.permission);
+                // }
+                const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
+
+                const registerResponse = await PreQualificationService.adminDeletePrequalification(payload);
+                return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+            } catch (error) {
+                UniversalFunction.errorReporter(error);
+                UniversalFunction.consolelog('Error', error, true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'Admin update prequlification status',
+            tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
+            auth: 'AdminAuth',
+            validate: {
+                params: {
+                    loanId: Joi.string().required(),
+                    status: Joi.string().valid([
+                        // Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE,
+                        Constant.DATABASE.STATUS.LOAN_STATUS.DELETE
+                    ]),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responseMessages: Constant.swaggerDefaultResponseMessages,
+                },
+            },
+        },
+    },
 ];

@@ -420,6 +420,11 @@ class PreLoanEntities extends BaseEntity {
 
                 };
             }
+
+            matchObject['status'] = Constant.DATABASE.PREQUALIFICATION_STATUS.ACTIVE;
+
+            // matchObject['status'] = Constant.DATABASE.PREQUALIFICATION_STATUS.ACTIVE
+
             if (fromDate && toDate) {
                 matchObject['createdAt'] = {
                     $gte: fromDate,
@@ -606,12 +611,16 @@ class PreLoanEntities extends BaseEntity {
                 limit: limit || Constant.SERVER.LIMIT,
             };
 
+
             const matchCondition: any = {};
+
+            matchCondition['userId'] = Types.ObjectId(userData._id);
+            matchCondition['status'] = Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE;
+
             if (fromDate && toDate) { matchCondition['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             if (fromDate && !toDate) { matchCondition['createdAt'] = { $gte: fromDate }; }
             if (!fromDate && toDate) { matchCondition['createdAt'] = { $lte: toDate }; }
 
-            matchCondition['userId'] = Types.ObjectId(userData._id);
 
             const matchPipeline = [
                 {

@@ -121,6 +121,7 @@ export class UserClass extends BaseEntity {
 				};
 				const totalPreQualificationCount = {
 					userId: userData._id,
+					status: Constant.DATABASE.PREQUALIFICATION_STATUS.ACTIVE,
 				};
 
 				promise.push(this.DAOManager.count('PreQualification', totalPreQualificationCount));
