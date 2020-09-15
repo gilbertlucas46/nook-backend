@@ -80,10 +80,10 @@ class PreqQualificationController extends BaseEntity {
     async adminDeletePrequalification(payload) {
         try {
             const criteira = {
-                _id: payload.loanId
+                _id: payload.Id
             };
             const dataToUpdate = {
-                status: payload.status
+                status: CONSTANT.DATABASE.PREQUALIFICATION_STATUS.DELETE,
             }
             const data = ENTITY.PreQualificationBankE.updateOneEntity(criteira, dataToUpdate);
             if (!data) {
