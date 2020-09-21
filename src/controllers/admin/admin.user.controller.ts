@@ -72,9 +72,10 @@ class AdminUserControllers {
                     // 	subject: 'nook welcomes you',
                     // 	userName: payload.userName,
                     // };
-                    await fetch(config.get('zapier_personUrl'), request);
-                    await fetch(config.get('zapier_accountUrl'), request);
-
+                    if (config.get('environment') === 'production') {
+                        await fetch(config.get('zapier_personUrl'), request);
+                        await fetch(config.get('zapier_accountUrl'), request);
+                    }
                     const mail = new MailManager();
                     await mail.welcomeStaffUSer(sendObj);
                     return userResponse;
@@ -256,8 +257,10 @@ class AdminUserControllers {
                     method: 'post',
                     body: JSON.stringify(salesforceData),
                 };
-                await fetch(config.get('zapier_personUrl'), request);
-                await fetch(config.get('zapier_accountUrl'), request);
+                if (config.get('environment') === 'production') {
+                    await fetch(config.get('zapier_personUrl'), request);
+                    await fetch(config.get('zapier_accountUrl'), request);
+                }
             }
 
 

@@ -342,9 +342,11 @@ export class UserController extends BaseEntity {
 					// 	subject: 'nook welcomes you',
 					// 	userName: payload.userName,
 					// };
-					await fetch(config.get('zapier_personUrl'), request);
-					await fetch(config.get('zapier_accountUrl'), request);
 
+					if (config.get('environment') === 'production') {
+						await fetch(config.get('zapier_personUrl'), request);
+						await fetch(config.get('zapier_accountUrl'), request);
+					}
 
 					const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
 					ENTITY.SessionE.createSession({}, formatedData, accessToken, 'Tenant');
