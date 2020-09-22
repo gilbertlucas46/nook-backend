@@ -617,7 +617,7 @@ class PreLoanEntities extends BaseEntity {
             const matchCondition: any = {};
 
             matchCondition['userId'] = Types.ObjectId(userData._id);
-            matchCondition['status'] = Constant.DATABASE.STATUS.LOAN_STATUS.ACTIVE;
+            matchCondition['status'] = Constant.DATABASE.PREQUALIFICATION_STATUS.ACTIVE;
 
             if (fromDate && toDate) { matchCondition['createdAt'] = { $gte: fromDate, $lte: toDate }; }
             if (fromDate && !toDate) { matchCondition['createdAt'] = { $gte: fromDate }; }
