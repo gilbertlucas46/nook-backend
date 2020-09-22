@@ -296,62 +296,70 @@ export class UserController extends BaseEntity {
 		// 	...payload,
 		// 	isProfileComplete: true,
 		// });
+		try {
 
-		const checkMail = { email: payload.email };
-		const checkUserName = { userName: payload.userName };
-		const userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
-		if (userNameCheck && userNameCheck._id) {
-			return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
-			// return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
-		} else {
-			const UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']);
-			if (UserCheck && UserCheck._id) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
+			const checkMail = { email: payload.email };
+			const checkUserName = { userName: payload.userName };
+			const userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
+			if (userNameCheck && userNameCheck._id) {
+				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
+				// return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
 			} else {
-				const makePassword = await utils.encryptWordpressHashNode(payload.password);
-				const userData = {
-					userName: payload.userName,
-					email: payload.email,
-					password: makePassword,
-					firstName: payload.firstName,
-					lastName: payload.lastName,
-					phoneNumber: payload.phoneNumber,
-					ipAddress: payload.ipAddress,
-					countryCode: payload.countryCode,
-					partnerId: payload.partnerId,
-					partnerName: payload.partnerName,
-					// isEmailVerified: true,
-					// isProfileComplete: true,
-					// type: payload.type,
-				};
-				let formatedData = await ENTITY.UserE.createOneEntity(userData);
-				formatedData = JSON.parse(JSON.stringify(formatedData));
-				formatedData['isNewUser'] = 1;
-				const salesforceData = flattenObject(formatedData.toObject ? formatedData.toObject() : formatedData);
-				console.log('salesforceDatasalesforceData', salesforceData);
-				const request = {
-					method: 'post',
-					body: JSON.stringify(salesforceData),
-				};
+				const UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']);
+				if (UserCheck && UserCheck._id) {
+					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
+				} else {
+					const makePassword = await utils.encryptWordpressHashNode(payload.password);
+					const userData = {
+						userName: payload.userName,
+						email: payload.email,
+						password: makePassword,
+						firstName: payload.firstName,
+						lastName: payload.lastName,
+						phoneNumber: payload.phoneNumber,
+						ipAddress: payload.ipAddress,
+						countryCode: payload.countryCode,
+						partnerId: payload.partnerId,
+						partnerName: payload.partnerName,
+						// isEmailVerified: true,
+						// isProfileComplete: true,
+						// type: payload.type,
+					};
+					let formatedData = await ENTITY.UserE.createOneEntity(userData);
+					formatedData = JSON.parse(JSON.stringify(formatedData));
+					formatedData['isNewUser'] = 1;
+					const salesforceData = flattenObject(formatedData.toObject ? formatedData.toObject() : formatedData);
+					console.log('salesforceDatasalesforceData', salesforceData);
+					const request = {
+						method: 'post',
+						body: JSON.stringify(salesforceData),
+					};
 
-				// SessionE.createSession({}, doc, accessToken, 'user');
-				// const formatedData = utils.formatUserData(doc);
+					// SessionE.createSession({}, doc, accessToken, 'user');
+					// const formatedData = utils.formatUserData(doc);
 
-				// 	receiverEmail: payload.email,
-				// 	subject: 'nook welcomes you',
-				// 	userName: payload.userName,
-				// };
-				await fetch(config.get('zapier_personUrl'), request);
-				await fetch(config.get('zapier_accountUrl'), request);
+					// 	receiverEmail: payload.email,
+					// 	subject: 'nook welcomes you',
+					// 	userName: payload.userName,
+					// };
 
+					if (config.get('environment') === 'production') {
+						await fetch(config.get('zapier_personUrl'), request);
+						await fetch(config.get('zapier_accountUrl'), request);
+					}
 
-				const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
-				ENTITY.SessionE.createSession({}, formatedData, accessToken, 'Tenant');
-				// mail.welcomeMail(sendObj);
-				return { formatedData, accessToken };
-				// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
+					const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
+					ENTITY.SessionE.createSession({}, formatedData, accessToken, 'Tenant');
+					// mail.welcomeMail(sendObj);
+					return { formatedData, accessToken };
+					// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
+				}
 			}
+		} catch (error) {
+			utils.errorReporter(error)
+			return Promise.reject(error)
 		}
+
 	}
 
 

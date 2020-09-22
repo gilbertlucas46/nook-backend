@@ -381,8 +381,8 @@ class LoanApplicationE extends BaseEntity {
 
             const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
             console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
-            console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
             if (config.get('environment') === 'production') {
+                console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
                 await fetch(config.get('zapier_loanUrl'), {
                     method: 'post',
                     body: JSON.stringify(salesforceData),
@@ -395,5 +395,194 @@ class LoanApplicationE extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+
+    // async updateLoanAMount(payload) {
+    //     try {
+    //         const findLoanData = await this.DAOManager.findOne(this.modelName, { _id: payload.loanId }, {});
+
+    //         let totalMonthlyIncome = payload.employmentInfo.income;
+    //         let preLoanMonthlyAmount = 0;
+    //         if (payload.other.married.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.married.spouseMonthlyIncome; // If married need to add spouse income also to calculate debtToIncomeRatio
+    //         if (payload.other.coBorrower.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.coBorrower.coBorrowerMonthlyIncome; // If coborrower need to add coborrower income
+    //         if (payload.other.otherIncome.status) totalMonthlyIncome = totalMonthlyIncome + payload.other.otherIncome.monthlyIncome; // If any investment exists than that is also added in the income part.
+    //         // if other loans exits
+    //         if (payload.other.prevLoans.status) preLoanMonthlyAmount = payload.other.prevLoans.monthlyTotal;
+    //         // if (payload.other.creditCard.status === Constant.CREDIT_CARD_STATUS.YES.value && payload.other.creditCard.limit > 0) {
+    //         //     preLoanMonthlyAmount = preLoanMonthlyAmount + payload.other.creditCard.limit;
+    //         // }
+
+    //         let localVisa = false;
+    //         let ageAtlastLoanPayment = 0;
+
+    //         // age filters
+    //         if (payload.other.age) ageAtlastLoanPayment = payload.other.age + payload.loan.term;
+    //         // if (ageAtlastLoanPayment >= 65) return []; // Max age is 65 till the final loan payment.
+    //         if (ageAtlastLoanPayment >= 70) return []; // Max age is 65 till the final loan payment.
+
+    //         const queryPipeline = [];
+
+
+    //         queryPipeline[0].$match._id = Types.ObjectId(findLoanData.bankInfo.bankId);
+
+    //         queryPipeline.push(
+    //             {
+    //                 $lookup: {
+    //                     from: 'userloancriterias',
+    //                     let: { bank_Id: '$_id' },
+    //                     pipeline: [
+    //                         {
+    //                             $match: {
+    //                                 $expr: {
+    //                                     $eq: ['$bankId', '$$bank_Id'],
+    //                                 },
+    //                             },
+    //                         },
+    //                         // {
+    //                         //     $project: {
+    //                         //         name: 1,
+    //                         //         _id: 1,
+    //                         //     },
+    //                         // },
+    //                     ],
+    //                     as: 'userloan',
+    //                 },
+    //             },
+    //             {
+    //                 $unwind: {
+    //                     path: '$userloan',
+    //                     preserveNullAndEmptyArrays: true,
+    //                 },
+    //             },
+    //             {
+    //                 $addFields: {
+    //                     interestRate: `$interestRateDetails.${payload.loan.fixingPeriod}`,
+    //                     loanableAmount: payload.loan.amount,
+    //                     loanDurationYearly: payload.loan.term,
+    //                     loanApplicationFeeAmount: 0,
+    //                     fixingPeriod: payload.loan.fixingPeriod,
+    //                     grossIncome: totalMonthlyIncome,
+    //                 },
+    //             },
+    //             {
+    //                 $addFields: {
+    //                     interestRateMonthly: { $divide: [{ $divide: ['$interestRate', 100] }, 12] },
+    //                     loanDurationMonthly: { $multiply: [payload.loan.term, 12] },
+    //                 },
+    //             },
+    //             {
+    //                 $addFields: {
+    //                     numerator1: { $pow: [{ $add: ['$interestRateMonthly', 1] }, '$loanDurationMonthly'] },
+    //                     denominator: { $subtract: [{ $pow: [{ $add: ['$interestRateMonthly', 1] }, '$loanDurationMonthly'] }, 1] },
+    //                 },
+    //             },
+    //             {
+    //                 $addFields: {
+    //                     numerator: { $multiply: ['$numerator1', '$interestRateMonthly', payload.loan.amount] },
+    //                 },
+    //             },
+    //             // {
+    //             //     $addFields: {
+    //             //         totalLoanMonthlyAdd: {
+    //             //             $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount],
+    //             //         },
+    //             //     },
+    //             // },
+    //             {
+    //                 $project: {
+    //                     abbrevation: 1,
+    //                     totalPrice: 1,
+    //                     bankName: 1,
+    //                     headquarterLocation: 1,
+    //                     bankFeePercent: 'up to 2%',
+    //                     propertySpecification: 1,
+    //                     bankFeeAmount: 1,
+    //                     loanApplicationFeePercent: 1,
+    //                     loanApplicationFeeAmount: 1,
+    //                     // bankImageLogoUrl: 1,
+    //                     logoUrl: 1,
+    //                     iconUrl: 1,
+    //                     bannerUrl: 1,
+    //                     processingTime: 'As fast as 5 working days upon submission of complete documents',
+    //                     interestRate: 1,
+    //                     totalLoanMonthly: { $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] },
+    //                     monthlyPayment: { $divide: ['$numerator', '$denominator'] },
+
+    //                     // totalLoanMonthly: { $round: [{ $add: [{ $divide: ['$numerator', '$denominator'] }, preLoanMonthlyAmount] }, 2] },
+    //                     // monthlyPayment: {
+    //                     //     $round: [{ $divide: ['$numerator', '$denominator'] }, 2],
+    //                     // },
+    //                     totalLoanPayment: 1,
+    //                     bankId: '$_id',
+    //                     _id: 0,
+    //                     loanableAmount: 1,
+    //                     loanDurationYearly: 1,
+    //                     loanDurationMonthly: 1,
+    //                     loanForCancelledCreditCard: 1,
+    //                     fixingPeriod: 1,
+    //                     grossIncome: 1,
+    //                     // userId: {
+    //                     //     $let: {
+    //                     //         vars: {
+    //                     //             userData,
+    //                     //         },
+    //                     //         in: userData._id,
+    //                     //     },
+    //                     // },
+    //                 },
+    //             },
+    //             {
+    //                 $addFields: {
+    //                     debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
+    //                 },
+    //             },
+    //             // {
+    //             //     $addFields: {
+    //             //         debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
+    //             //     },
+    //             // },
+    //             {
+    //                 $unwind: {
+    //                     path: '$propertySpecification',
+    //                     preserveNullAndEmptyArrays: true,
+    //                 },
+    //             },
+    //             {
+    //                 $match: {
+    //                     'propertySpecification.allowedPropertyType': 'APARTMENT',
+    //                     'propertySpecification.allowedPropertyStatus': 'FORECLOSED',
+    //                 },
+    //             },
+    //             {
+    //                 $addFields: {
+    //                     debtIncomeRatio: '$propertySpecification.debtIncomeRatio',
+    //                     maxLoanDurationAllowed: '$propertySpecification.maxLoanDurationAllowed',
+    //                 },
+    //             },
+    //             {
+    //                 $project: {
+    //                     propertySpecification: 0,
+    //                 },
+    //             },
+    //             {
+    //                 $match: {
+    //                     $expr: {
+    //                         $gte: ['$debtIncomeRatio', '$debtIncomePercentRatio'],
+    //                     },
+    //                 },
+    //             },
+    //             {
+    //                 $sort: {
+    //                     monthlyPayment: 1,
+    //                 },
+    //             },
+    //         );
+
+    //         const data = await this.DAOManager.aggregateData(this.modelName, queryPipeline);
+    //         return data;
+    //     } catch (error) {
+    //         return Promise.reject(error);
+    //     }
+    // }
 }
 export const LoanApplicationEntity = new LoanApplicationE();

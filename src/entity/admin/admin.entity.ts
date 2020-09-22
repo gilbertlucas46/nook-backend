@@ -208,7 +208,7 @@ export class AdminClass extends BaseEntity {
 			}];
 
 			const preQualification = {
-				status: 'Active',
+				status: CONSTANT.DATABASE.PREQUALIFICATION_STATUS.ACTIVE,
 				createdAt: { $gt: payload.preQualificationGraph },
 			};
 
@@ -296,7 +296,10 @@ export class AdminClass extends BaseEntity {
 
 			const graphPreQualification = [
 				{
-					$match: { createdAt: { $gt: payload.preQualificationGraph } },
+					$match: {
+						status: CONSTANT.DATABASE.PREQUALIFICATION_STATUS.ACTIVE,
+						createdAt: { $gt: payload.preQualificationGraph }
+					},
 				},
 				{
 					$project:
