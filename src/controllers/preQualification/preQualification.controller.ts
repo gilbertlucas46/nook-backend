@@ -28,6 +28,16 @@ class PreqQualificationController extends BaseEntity {
     }
 
 
+    async adminAddPreQualifiedBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
+        try {
+            const data = await ENTITY.PreQualificationBankE.adminAddBanks(payload, userData);
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+
 
     /**
      *  @description admin get prequalification List
@@ -63,6 +73,26 @@ class PreqQualificationController extends BaseEntity {
             return data;
         } catch (error) {
             return Promise.reject(error);
+        }
+    }
+
+
+    async adminDeletePrequalification(payload) {
+        try {
+            const criteira = {
+                _id: payload.Id
+            };
+            const dataToUpdate = {
+                status: CONSTANT.DATABASE.PREQUALIFICATION_STATUS.DELETE,
+            }
+            const data = ENTITY.PreQualificationBankE.updateOneEntity(criteira, dataToUpdate);
+            if (!data) {
+                return CONSTANT.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND;
+            }
+            return CONSTANT.STATUS_MSG.SUCCESS.S200.DELETED;
+        } catch (error) {
+            return Promise.reject(error);
+
         }
     }
 }

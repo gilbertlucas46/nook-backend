@@ -79,6 +79,14 @@ export let DATABASE = {
 			label: 'Credit Assessment',
 			value: 'CREDIT_ASSESSMENT',
 		},
+		ARCHIVE: {
+			label: 'Archive',
+			value: 'ARCHIVE'
+		},
+		LOAN_BOOKED: {
+			label: 'Loan Booked',
+			value: 'LOAN_BOOKED'
+		}
 	},
 	EMPLOYMENT: {
 		TENURE: {
@@ -226,9 +234,10 @@ export let DATABASE = {
 		DELETE: 'Delete',
 	},
 	PREQUALIFICATION_STATUS: {
-		PENDING: 'Pending',
+		// PENDING: 'Pending',
 		ACTIVE: 'Active',
-		BLOCK: 'Block',
+		// BLOCK: 'Block',
+		DELETE: 'Delete'
 	},
 	ARTICLE_STATUS: {
 		PENDING: 'Pending',

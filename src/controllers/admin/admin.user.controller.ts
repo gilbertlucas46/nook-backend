@@ -59,7 +59,6 @@ class AdminUserControllers {
                     };
 
                     const salesforceData = flattenObject(userResponse.toObject ? userResponse.toObject() : userResponse);
-                    console.log('salesforceDatasalesforceData', salesforceData);
                     const request = {
                         method: 'post',
                         body: JSON.stringify(salesforceData),
@@ -72,9 +71,11 @@ class AdminUserControllers {
                     // 	subject: 'nook welcomes you',
                     // 	userName: payload.userName,
                     // };
-                    await fetch(config.get('zapier_personUrl'), request);
-                    await fetch(config.get('zapier_accountUrl'), request);
-
+                    if (config.get('environment') === 'production') {
+                        console.log('salesforceDatasalesforceData', salesforceData);
+                        await fetch(config.get('zapier_personUrl'), request);
+                        await fetch(config.get('zapier_accountUrl'), request);
+                    }
                     const mail = new MailManager();
                     await mail.welcomeStaffUSer(sendObj);
                     return userResponse;
@@ -251,13 +252,15 @@ class AdminUserControllers {
                 // if (!isProfileCompleted) {
                 // convert document to data
                 const salesforceData = flattenObject(userResponse.toObject ? userResponse.toObject() : userResponse);
-                console.log('salesforceDatasalesforceData', salesforceData);
                 const request = {
                     method: 'post',
                     body: JSON.stringify(salesforceData),
                 };
-                await fetch(config.get('zapier_personUrl'), request);
-                await fetch(config.get('zapier_accountUrl'), request);
+                if (config.get('environment') === 'production') {
+                    console.log('salesforceDatasalesforceData', salesforceData);
+                    await fetch(config.get('zapier_personUrl'), request);
+                    await fetch(config.get('zapier_accountUrl'), request);
+                }
             }
 
 

@@ -209,7 +209,7 @@ export let invoiceNumber = (value) => {
 
 export let errorReporter = async (data) => {
 	try {
-		console.log('config.get,config.get,', config.get('flock'),);
+		console.log('config.get,config.get,', config.get('flock'), data);
 
 		let postThisData = {
 			url: "https://api.flock.com/hooks/sendMessage/68a7b63d-4b1e-4a02-b4c9-0f6a91aa6a27", // config.get('flock'),
