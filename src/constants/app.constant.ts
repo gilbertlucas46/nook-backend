@@ -80,8 +80,8 @@ export let DATABASE = {
 			value: 'CREDIT_ASSESSMENT',
 		},
 		ARCHIEVED: {
-			label: 'Archieved',
-			value: 'ARCHIEVED'
+			label: 'Archive',
+			value: 'ARCHIVE'
 		},
 		LOAN_BOOKED: {
 			label: 'Loan Booked',
