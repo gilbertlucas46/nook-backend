@@ -885,16 +885,16 @@ class PreLoanEntities extends BaseEntity {
                         // },
                     },
                 },
-                {
-                    $addFields: {
-                        debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
-                    },
-                },
                 // {
                 //     $addFields: {
-                //         debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
+                //         debtIncomePercentRatio: { $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] },
                 //     },
                 // },
+                {
+                    $addFields: {
+                        debtIncomePercentRatio: { $round: [{ $divide: [{ $multiply: ['$totalLoanMonthly', 100] }, totalMonthlyIncome] }, 2] },
+                    },
+                },
                 {
                     $unwind: {
                         path: '$propertySpecification',
