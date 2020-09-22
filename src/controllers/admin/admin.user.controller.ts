@@ -59,7 +59,6 @@ class AdminUserControllers {
                     };
 
                     const salesforceData = flattenObject(userResponse.toObject ? userResponse.toObject() : userResponse);
-                    console.log('salesforceDatasalesforceData', salesforceData);
                     const request = {
                         method: 'post',
                         body: JSON.stringify(salesforceData),
@@ -73,6 +72,7 @@ class AdminUserControllers {
                     // 	userName: payload.userName,
                     // };
                     if (config.get('environment') === 'production') {
+                        console.log('salesforceDatasalesforceData', salesforceData);
                         await fetch(config.get('zapier_personUrl'), request);
                         await fetch(config.get('zapier_accountUrl'), request);
                     }
@@ -252,12 +252,12 @@ class AdminUserControllers {
                 // if (!isProfileCompleted) {
                 // convert document to data
                 const salesforceData = flattenObject(userResponse.toObject ? userResponse.toObject() : userResponse);
-                console.log('salesforceDatasalesforceData', salesforceData);
                 const request = {
                     method: 'post',
                     body: JSON.stringify(salesforceData),
                 };
                 if (config.get('environment') === 'production') {
+                    console.log('salesforceDatasalesforceData', salesforceData);
                     await fetch(config.get('zapier_personUrl'), request);
                     await fetch(config.get('zapier_accountUrl'), request);
                 }
