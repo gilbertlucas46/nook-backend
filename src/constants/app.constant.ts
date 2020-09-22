@@ -79,7 +79,7 @@ export let DATABASE = {
 			label: 'Credit Assessment',
 			value: 'CREDIT_ASSESSMENT',
 		},
-		ARCHIEVED: {
+		ARCHIVE: {
 			label: 'Archive',
 			value: 'ARCHIVE'
 		},
