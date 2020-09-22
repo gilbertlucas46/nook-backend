@@ -397,7 +397,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIEVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIVE.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 					]),
 					amountFrom: Joi.number(),
@@ -477,7 +477,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIEVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIVE.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 						'',
 					]),
@@ -763,7 +763,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIEVED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIVE.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 					]),
 					propertyInfo: {
@@ -1512,4 +1512,48 @@ export let adminProfileRoute: ServerRoute[] = [
 			},
 		},
 	},
+
+	// {
+	// 	method: 'PATCH',
+	// 	path: '/v1/admin/loan/amount',
+	// 	handler: async (request, h) => {
+	// 		try {
+	// 			const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+	// 			const payload = request.payload as any;
+	// 			// {
+	// 			// 	// ...request.query as any,
+	// 			// 	...request.params,
+	// 			// }
+	// 			// if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+	// 			// 	await AdminStaffEntity.checkPermission(payload.permission);
+	// 			// }
+	// 			const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
+
+	// 			const registerResponse = await LoanController.adminUpdateLoanAmount(payload);
+	// 			return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
+	// 		} catch (error) {
+	// 			utils.errorReporter(error);
+	// 			utils.consolelog('Error', error, true);
+	// 			return (UniversalFunctions.sendError(error));
+	// 		}
+	// 	},
+	// 	options: {
+	// 		description: 'Admin update loan status',
+	// 		tags: ['api', 'anonymous', 'admin', 'loan', 'status'],
+	// 		auth: 'AdminAuth',
+	// 		validate: {
+	// 			payload: {
+	// 				loanId: Joi.string().required(),
+	// 				loanAmount: Joi.number()
+	// 			},
+	// 			headers: UniversalFunctions.authorizationHeaderObj,
+	// 			failAction: UniversalFunctions.failActionFunction,
+	// 		},
+	// 		plugins: {
+	// 			'hapi-swagger': {
+	// 				responseMessages: Constant.swaggerDefaultResponseMessages,
+	// 			},
+	// 		},
+	// 	},
+	// },
 ];
