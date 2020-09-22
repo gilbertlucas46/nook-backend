@@ -771,5 +771,15 @@ class LoanControllers extends BaseEntity {
             return Promise.reject(error);
         }
     }
+
+    // async adminUpdateLoanAmount(payload) {
+    //     try {
+    //         const data = await LoanApplicationEntity.updateLoanAMount(payload);
+    //         return data;
+
+    //     } catch (error) {
+    //         return Promise.reject(error);
+    //     }
+    // }
 }
 export const LoanController = new LoanControllers();
