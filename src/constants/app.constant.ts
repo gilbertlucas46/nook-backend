@@ -521,6 +521,11 @@ export let STATUS_MSG = {
 				type: 'PAYMENT_ERROR',
 				message: 'Payment failed, please try again later!',
 			},
+			LOAN_TERM: {
+				statusCode: 400,
+				type: 'LOAN_TERM',
+				message: 'Loan term not applicable',
+			},
 			WEBHOOK_ERROR: (error: any) => {
 				return {
 					statusCode: 400,
