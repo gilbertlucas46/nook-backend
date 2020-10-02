@@ -1062,11 +1062,16 @@ class PreLoanEntities extends BaseEntity {
             console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
             console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
 
-            // fetch(config.get('zapier_prequalificationUrl'), {
-            //     method: 'post',
-            //     body: JSON.stringify(salesforceData),
-            // });
+            console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
 
+            if (config.get('environment') === 'production') {
+                console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
+
+                fetch(config.get('zapier_prequalificationUrl'), {
+                    method: 'post',
+                    body: JSON.stringify(salesforceData),
+                });
+            }
             return data1['_id'];
             // }
             return data;
