@@ -86,7 +86,24 @@ export let DATABASE = {
 		LOAN_BOOKED: {
 			label: 'Loan Booked',
 			value: 'LOAN_BOOKED'
-		}
+		},
+		APPROVED_AWAITING_CLIENT: {
+			label: 'Approved-Awaiting Client',
+			value: 'APPROVED_AWAITING_CLIENT'
+		},
+		INITIAL_DOCUMENTS_COMPLETED: {
+			label: 'Initial Documents Completed',
+			value: 'INITIAL_DOCUMENTS_COMPLETED'
+		},
+		FINAL_DOCUMENTS_COMPLETED: {
+			label:'Final Documents Completed',
+			value: 'FINAL_DOCUMENTS_COMPLETED'
+		},
+		AWAITING_SELLER_DEVELOPER: {
+			label: 'Awaiting- Seller/Developer',
+			value: 'AWAITING_SELLER_DEVELOPER'
+		},
+
 	},
 	EMPLOYMENT: {
 		TENURE: {
