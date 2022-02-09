@@ -1,11 +1,11 @@
 export const documentRequired = {
     LeagalDocument: {
         valid_Id1: {
-            description: 'Valid government issued IDs.',
+            description: 'IDs should have at least 6 months validity.',
             value: 'Borrower + Spouse and/or Co-borrower if applicable',
         },
         valid_Id2: {
-            description: 'Valid government issued IDs.',
+            description: 'IDs should have at least 6 months validity.',
             value: 'Borrower + Spouse and/or Co-borrower if applicable',
         },
         contractCertificate: {

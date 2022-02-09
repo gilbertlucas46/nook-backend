@@ -82,6 +82,8 @@ const loanApplicationHistory = new Schema({
                     CONSTANT.DATABASE.RELATIONSHIP.SPOUSE,
                     CONSTANT.DATABASE.RELATIONSHIP.SON,
                     CONSTANT.DATABASE.RELATIONSHIP.DAUGHTER,
+                    CONSTANT.DATABASE.RELATIONSHIP.FIANCE,
+                    CONSTANT.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
                 ],
             },
         },

@@ -174,6 +174,8 @@ export let DATABASE = {
 		SPOUSE: 'spouse',
 		SON: 'son',
 		DAUGHTER: 'daughter',
+		FIANCE:'fiance',
+		LIFE_DOMESTIC_PARTNER:'life/domestic partner'
 	},
 
 	CIVIL_STATUS: {
@@ -398,6 +400,11 @@ export let DATABASE = {
 	BILLING_TYPE: {
 		MONTHLY: 'month',
 		YEARLY: 'year',
+	},
+	PROPERTY_CLASSIFICATION: {
+		DOU:'DOU',
+		REM:'REM'
+
 	},
 };
 

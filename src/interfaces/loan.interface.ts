@@ -1,3 +1,4 @@
+
 export namespace LoanRequest {
 
     export interface PreLoan {
@@ -228,6 +229,7 @@ export namespace LoanRequest {
         bankInfo?: BankInfo;
         contactInfo?: ContactInfo;
         loanDetails?: LoanDetails;
+        spaAifInformation?:SpaAifInformation;
         employmentInfo?: EmploymentInfo;
         dependentsInfo?: DependentsInfo[];
         propertyDocuments?: PropertyDocuments;
@@ -317,5 +319,13 @@ export namespace LoanRequest {
         propertyValue: number;
         propertyType: number;
         searchTerm: number;
+    }
+
+    export interface SpaAifInformation{
+        name:string;
+        contactNumber: number;
+        address:string;
+        relationship?: string;
+
     }
 }

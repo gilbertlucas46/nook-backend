@@ -118,6 +118,8 @@ export let loanRoute: ServerRoute[] = [
 								Constant.DATABASE.RELATIONSHIP.SPOUSE,
 								Constant.DATABASE.RELATIONSHIP.SON,
 								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+								Constant.DATABASE.RELATIONSHIP.FIANCE,
+								Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
 							]),
 							age: Joi.number(),
 							birthPlace: Joi.string(),
@@ -339,6 +341,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
 							Constant.DATABASE.RELATIONSHIP.SON,
 							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.FIANCE,
+							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
 						]),
 					}),
 
@@ -615,6 +619,8 @@ export let loanRoute: ServerRoute[] = [
 								Constant.DATABASE.RELATIONSHIP.SPOUSE,
 								Constant.DATABASE.RELATIONSHIP.SON,
 								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+								Constant.DATABASE.RELATIONSHIP.FIANCE,
+								Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
 							]),
 							age: Joi.string(),
 							birthPlace: Joi.string(),
@@ -828,6 +834,8 @@ export let loanRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
 							Constant.DATABASE.RELATIONSHIP.SON,
 							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.FIANCE,
+							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
 						]),
 					}),
 
