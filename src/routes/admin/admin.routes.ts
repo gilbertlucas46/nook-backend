@@ -758,6 +758,8 @@ export let adminProfileRoute: ServerRoute[] = [
 								Constant.DATABASE.RELATIONSHIP.SPOUSE,
 								Constant.DATABASE.RELATIONSHIP.SON,
 								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+								Constant.DATABASE.RELATIONSHIP.FIANCE,
+								Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
 							]),
 						},
 					}),
@@ -873,6 +875,30 @@ export let adminProfileRoute: ServerRoute[] = [
 						loanAmount: Joi.number(),
 						propertyValue: Joi.number(),
 					}),
+					propertyClassification:Joi.string().valid([
+						Constant.DATABASE.PROPERTY_CLASSIFICATION.DOU,
+						Constant.DATABASE.PROPERTY_CLASSIFICATION.REM
+					 ]),
+
+					spaAifInformation:{
+						name:Joi.string(),
+						contactNumber: Joi.number(),
+						address: Joi.string().max(300),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.FIANCE,
+							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
+						]),
+
+
+					},
+	
 
 					employmentInfo: Joi.object().keys({
 						type: Joi.string(),
@@ -989,6 +1015,8 @@ export let adminProfileRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
 							Constant.DATABASE.RELATIONSHIP.SON,
 							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.FIANCE,
+							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
 						]),
 					}),
 					tradeReferences: Joi.array().items({
@@ -1142,6 +1170,8 @@ export let adminProfileRoute: ServerRoute[] = [
 								Constant.DATABASE.RELATIONSHIP.SPOUSE,
 								Constant.DATABASE.RELATIONSHIP.SON,
 								Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+								Constant.DATABASE.RELATIONSHIP.FIANCE,
+								Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
 							]),
 							age: Joi.number(),
 							birthPlace: Joi.string(),
@@ -1248,6 +1278,10 @@ export let adminProfileRoute: ServerRoute[] = [
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
 					}),
+					// propertyClassification:Joi.string().valid([
+					// 	Constant.DATABASE.PROPERTY_CLASSIFICATION.DOU,
+					// 	Constant.DATABASE.PROPERTY_CLASSIFICATION.REM
+					// ]),
 
 					employmentInfo: Joi.object().keys({
 						type: Joi.string(),
@@ -1357,6 +1391,8 @@ export let adminProfileRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.SPOUSE,
 							Constant.DATABASE.RELATIONSHIP.SON,
 							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.FIANCE,
+							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
 						]),
 					}),
 

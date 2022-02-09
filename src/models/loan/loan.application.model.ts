@@ -21,6 +21,7 @@ const schema = new Schema({
         default: CONSTANT.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
         enum: Object.values(CONSTANT.DATABASE.LOAN_APPLICATION_STATUS).map(({ value }) => value),
     },
+  
     personalInfo: {
         firstName: { type: Schema.Types.String, trim: true },
         middleName: { type: Schema.Types.String, trim: true },
@@ -94,6 +95,8 @@ const schema = new Schema({
                     CONSTANT.DATABASE.RELATIONSHIP.SPOUSE,
                     CONSTANT.DATABASE.RELATIONSHIP.SON,
                     CONSTANT.DATABASE.RELATIONSHIP.DAUGHTER,
+                    CONSTANT.DATABASE.RELATIONSHIP.FIANCE,
+                    CONSTANT.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
                 ],
             },
             age: { type: String },
@@ -199,6 +202,20 @@ const schema = new Schema({
         loanPercent: { type: Number },
         loanAmount: { type: Number },
     },
+    propertyClassification:{
+        type:Schema.Types.String,
+        enum:[
+            CONSTANT.DATABASE.PROPERTY_CLASSIFICATION.DOU,
+            CONSTANT.DATABASE.PROPERTY_CLASSIFICATION.REM
+        ]
+    },
+    spaAifInformation:{
+        name: { type: Schema.Types.String, trim: true },
+        contactNumber: { type: Schema.Types.String, trim: true },
+        address: { type: Schema.Types.String, index: true },
+        relationship: { type: Schema.Types.String, enum: Object.values(CONSTANT.DATABASE.RELATIONSHIP) },
+    },
+    
 
     propertyInfo: {
         value: { type: Number },
