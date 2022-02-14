@@ -1,3 +1,4 @@
+import { LOAN_TYPES } from './../../constants/loan.constant';
 import { ServerRoute, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
 import * as UniversalFunctions from '@src/utils';
@@ -533,23 +534,23 @@ export let loanRoute: ServerRoute[] = [
 					partnerId: Joi.string().allow(''),
 					// saveAsDraft: Joi.boolean().required(),
 					applicationStatus: Joi.string().valid([
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED_AWAITING_CLIENT.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIVE.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_SELLER_DEVELOPER.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIVE.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED_AWAITING_CLIENT.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.INITIAL_DOCUMENTS_COMPLETED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.FINAL_DOCUMENTS_COMPLETED.value,
-						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_SELLER_DEVELOPER.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.INITIAL_DOCUMENTS_COMPLETED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_DECLINED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.NOOK_REVIEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.PENDING_APPRAISAL.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.REFERRED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.WAITING_ON_BORROWER.value,
 
 					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value),
 					personalInfo: Joi.object().keys({
@@ -1015,6 +1016,15 @@ export let loanRoute: ServerRoute[] = [
 						LOAN_PROPERTY_STATUS.FORECLOSED.value,
 					]).required(),
 					loanAmount: Joi.number(),
+					loanType:Joi.string().valid([
+						LOAN_TYPES.CONSTRUCTION.value,
+						LOAN_TYPES.PURCHASE_OF_PROPERTY.value,
+						LOAN_TYPES.REFINANCING.value,
+						LOAN_TYPES.REIMBURSEMENT_LOAN.value,
+						LOAN_TYPES.RENOVATION.value,
+						LOAN_TYPES.HOME_EQUITY.value,
+						LOAN_TYPES.LOAN_TAKE_OUT.value
+					]).required()
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,

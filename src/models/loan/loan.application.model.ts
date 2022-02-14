@@ -201,15 +201,16 @@ const schema = new Schema({
         },
         loanPercent: { type: Number },
         loanAmount: { type: Number },
+        propertyClassification:{
+            type:Schema.Types.String,
+            enum:[
+                CONSTANT.DATABASE.PROPERTY_CLASSIFICATION.DOU,
+                CONSTANT.DATABASE.PROPERTY_CLASSIFICATION.REM
+            ]
+        },
     },
-    propertyClassification:{
-        type:Schema.Types.String,
-        enum:[
-            CONSTANT.DATABASE.PROPERTY_CLASSIFICATION.DOU,
-            CONSTANT.DATABASE.PROPERTY_CLASSIFICATION.REM
-        ]
-    },
-    spaAifInformation:{
+    
+    loanAttorneyInfo:{
         name: { type: Schema.Types.String, trim: true },
         contactNumber: { type: Schema.Types.String, trim: true },
         address: { type: Schema.Types.String, index: true },
