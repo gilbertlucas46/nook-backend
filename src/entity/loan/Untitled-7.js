@@ -34,7 +34,7 @@
                 "isSpouse": true,
                 "coborrower": true,
                 "documentRequired": "Valid ID (1) - Borrower + Spouse and/or Co-borrower if applicable",
-                "description": "Valid government issued IDs.",
+                "description": "IDs should have at least 6 months validity.",
                 "ceatedAt": "",
                 "url": ""
             },
@@ -51,7 +51,7 @@
                 "isSpouse": true,
                 "coborrower": true,
                 "documentRequired": "Valid ID (1) - Borrower + Spouse and/or Co-borrower if applicable",
-                "description": "Valid government issued IDs."
+                "description": "IDs should have at least 6 months validity."
             },
             {
                 "allowedFor": [
@@ -618,7 +618,7 @@ COLLATERAL DOCUMENTS
         "isSpouse": true,
         "coborrower": true,
         "documentRequired": "Valid ID (1) - Borrower + Spouse and/or Co-borrower if applicable",
-        "description": "Valid government issued IDs.",
+        "description": "IDs should have at least 6 months validity.",
         "ceatedAt": "",
         "url": ""
     },
@@ -909,12 +909,27 @@ COLLATERAL DOCUMENTS
 {
     "collateralDocument": [{
         "status": "",
-        "allowedFor": [
-            "READY_FOR_OCCUPANCY",
-            "REFINANCING",
-            "RENOVATION",
-            "NEW_CONSTRUCTION"
-        ],
+        "classification":["REM"],
+            "allowedFor": [
+                "PURCHASE"
+                "READY_FOR_OCCUPANCY",
+                "REFINANCING",
+                "RENOVATION",
+                "NEW_CONSTRUCTION",
+                "HOME_EQUITY",
+                "REIMBURSEMENT_LOAN"
+            ],
+            
+    
+        
+        // "allowedFor": [
+        //     "READY_FOR_OCCUPANCY",
+        //     "REFINANCING",
+        //     "RENOVATION",
+        //     "NEW_CONSTRUCTION",
+        //     "HOME_EQUITY",
+        //     "REIMBURSEMENT_LOAN"
+        // ],
         "documentRequired": "Photocopy of Owner's Duplicate Copy of TCT",
         "description": "TCT is your proof of ownerhsip on the property. This document contains the name of the owner and the details of the property",
         "ceatedAt": "",
@@ -922,12 +937,20 @@ COLLATERAL DOCUMENTS
     },
     {
         "status": "",
+        "classification":[
+            "DOU",
+            "REM"
+        ],
         "allowedFor": [
             "READY_FOR_OCCUPANCY",
             "RESELLING",
             "REFINANCING",
             "RENOVATION",
-            "NEW_CONSTRUCTION"
+            "NEW_CONSTRUCTION",
+            "HOME_EQUITY",
+            "REIMBURSEMENT_LOAN",
+            "PURCHASE"
+
         ],
         "documentRequired": "Photocopy of Updated Tax Declaration, Tax Clearance and Tax Receipt",
         "description": "Tax declaration is a statement made to the tax authorities about the earnig during a particular year. It is used to calculate how much tax an individual will have to pay in a particular year.Tax Clearance is is a written confirmation from Revenue that a person 's tax affairs are in order at the date of issue of the certificate. Tax Receipt is the issuance of Official Receipt for Payment of Real Property Taxes.Owners of land and buildings have to pay real property taxes annually.",
@@ -1133,7 +1156,7 @@ COLLATERAL DOCUMENTS
             "isSpouse": true,
             "coborrower": true,
             "documentRequired": "One Valid ID (Principal Applicant + Spouse and/or Co-borrower if applicable)",
-            "description": "Valid government issued IDs.",
+            "description": "IDs should have at least 6 months validity.",
             "ceatedAt": "",
             "url": ""
         },
@@ -1456,10 +1479,12 @@ COLLATERAL DOCUMENTS
 {
     "collateralDocument": [{
         "status": "",
+        "classification":["REM"],
         "allowedFor": [
             "READY_FOR_OCCUPANCY",
             "REFINANCING",
-            "HOME_EQUITY"
+            "HOME_EQUITY",
+            "PURCHASE"
         ],
         "documentRequired": "Photocopy of Owner's Duplicate Copy of TCT",
         "description": "TCT is your proof of ownerhsip on the property. This document contains the name of the owner and the details of the property",
@@ -1473,38 +1498,86 @@ COLLATERAL DOCUMENTS
 
     {
         "status": "",
+        "classification":["REM"],
         "allowedFor": [
             "READY_FOR_OCCUPANCY",
             "REFINANCING",
             "HOME_EQUITY",
+            "PURCHASE"
         ],
         "documentRequired": "Photocopy of Updated Tax Declaration, Tax Clearance and Tax Receipt",
         "description": "Tax declaration is a statement made to the tax authorities about the earnig during a particular year. It is used to calculate how much tax an individual will have to pay in a particular year. Tax Clearance is is a written confirmation from Revenue that a person's tax affairs are in order at the date of issue of the certificate. Tax Receipt is the issuance of Official Receipt for Payment of Real Property Taxes. Owners of land and buildings have to pay real property taxes annually.",
         "ceatedAt": "",
         "url": ""
     },
+    {
+        "status": "",
+        "classification":["REM","DOU"],
+        "allowedFor": [
+            "READY_FOR_OCCUPANCY",
+            "PURCHASE"
+        ],
+        "documentRequired": " Intent to Sell or Notarized contract to sell",
+        "description": "For tie-ups / accredited developers (any one of the following)",
+        "ceatedAt": "",
+        "url": ""
+    },
 
 
     {
         "status": "",
+        "classification":["REM"],
         "allowedFor": [
             "READY_FOR_OCCUPANCY",
-            "REFINANCING",
+            //"REFINANCING",
             "RENOVATION",
+            "PURCHASE"
         ],
         "documentRequired": "Lot Plan with Vicinity Map",
         "description": "Lot Plan is a drawing/diagram which shows the buildings, utility runs, and equipment layout, the position of roads, and other constructions of an existing or proposed project site at a defined scale. Vicinity Map illustrates the 'vicinity' of whatever-it-is you are interested in - your town, your neighborhood, the area around ground zero. It shows things which are in 'the vicinity' (the near area) of your central or main map feature.",
         "ceatedAt": "",
         "url": ""
     },
+    {
+        "status": "",
+        "classification":["REM"],
+        "allowedFor": [
+            //"READY_FOR_OCCUPANCY",
+            //"REFINANCING",
+            //"RENOVATION",
+            "PURCHASE"
+        ],
+        "documentRequired": "Seller's ID",
+        "description": "If married, IDs of spouse required, contact number and best time to call.",
+        "ceatedAt": "",
+        "url": ""
+    },
+    {
+        "status": "",
+        "classification":["REM"],
+        "allowedFor": [
+            //"READY_FOR_OCCUPANCY",
+            "REFINANCING",
+            //"RENOVATION",
+            "PURCHASE"
+        ],
+        "documentRequired": "Authorization to Conduct Tax Mapping",
+        "description": "A signed document that you were allowing the bank to conduct a site/appraisal visit.",
+        "ceatedAt": "",
+        "url": ""
+    },
+    
+    
 
     {
         "status": "",
+        "classification":["REM"],
         "allowedFor": [
             "READY_FOR_OCCUPANCY",
             "REFINANCING",
             "RENOVATION",
-            "NEW_CONSTRUCTION"
+            "NEW_CONSTRUCTION",
+            "PURCHASE"
         ],
         "documentRequired": "Appraisal Fee (non-refundable)",
         "description": "Payment made to the bank to evaluate how much a home is worth. It is essentially a fee to estimate the value of the property.",
@@ -1575,24 +1648,40 @@ COLLATERAL DOCUMENTS
         "ceatedAt": "",
         "url": ""
     },
+    {
+        "status": "",
+        "classification":["DOU"],
+        "allowedFor": [
+           // "READY_FOR_OCCUPANCY",
+            "PURCHASE"
+        ],
+        "documentRequired": "Copy of Reservation Agreement if Notarized CTS is not yet available",
+        "description": "Documents which indicates the complete details of property",
+        "ceatedAt": "",
+        "url": ""
+    },
 
     {
         "status": "",
+        "classification":["DOU"],
         "allowedFor": [
-            "READY_FOR_OCCUPANCY",
+           // "READY_FOR_OCCUPANCY",
+            "PURCHASE"
         ],
-        "documentRequired": "Notarized contract to sell",
+        "documentRequired": "Copy of Latest statement of account indicating outstanding balance",
         "description": "For tie-ups / accredited developers (any one of the following)",
         "ceatedAt": "",
         "url": ""
     },
     {
         "status": "",
+        "classification":["DOU"],
         "allowedFor": [
-            "READY_FOR_OCCUPANCY",
+            //"READY_FOR_OCCUPANCY",
+            "PURCHASE"
         ],
-        "documentRequired": "Latest statement of account indicating outstanding balance",
-        "description": "For tie-ups / accredited developers (any one of the following)",
+        "documentRequired": "Copy of Payment History from the Developer",
+        "description": "To check the history of client if good payer",
         "ceatedAt": "",
         "url": ""
     },
@@ -1600,11 +1689,12 @@ COLLATERAL DOCUMENTS
 
     {
         "status": "",
+        "classification":["REM"],
         "allowedFor": [
             "REFINANCING",
         ],
-        "documentRequired": "Statement of Account from current mortgagee bank",
-        "description": "Transaction histories or bank statements of your mortgage payment from your current bank.",
+        "documentRequired": "Latest Statement of Account reflecting outstanding balance of the loan from current mortgagee bank.",
+        "description": "For refinancing loan, bank need to check the balance to the current bank where the property is mortgaged.",
         "ceatedAt": "",
         "url": ""
     },
@@ -1614,11 +1704,12 @@ COLLATERAL DOCUMENTS
 
     {
         "status": "",
+        "classification":["REM"],
         "allowedFor": [
             "REFINANCING",
         ],
-        "documentRequired": "Official receipts for the last three (3) months",
-        "description": "Receipts issued every time a mortgage payment is made.",
+        "documentRequired": "Latest three (3) Months Proof of payments for the existing amortization",
+        "description": "Proof that client is a good payer and updated on his loan with the bank",
         "ceatedAt": "",
         "url": ""
     },
@@ -1644,7 +1735,7 @@ COLLATERAL DOCUMENTS
             "isSpouse": true,
             "coborrower": true,
             "documentRequired": "Valid ID (1) - Borrower + Spouse and/or Co-borrower if applicable",
-            "description": "Valid government issued IDs.",
+            "description": "IDs should have at least 6 months validity.",
             "ceatedAt": "",
             "url": ""
         },
@@ -1661,7 +1752,7 @@ COLLATERAL DOCUMENTS
             "isSpouse": true,
             "coborrower": true,
             "documentRequired": "Valid ID (1) - Borrower + Spouse and/or Co-borrower if applicable",
-            "description": "Valid government issued IDs."
+            "description": "IDs should have at least 6 months validity."
         },
         {
             "allowedFor": [
@@ -2273,7 +2364,7 @@ COLLATERAL DOCUMENTS
                 "isSpouse": true,
                 "coborrower": true,
                 "documentRequired": "One Valid ID (Principal Applicant + Spouse and/or Co-borrower if applicable)",
-                "description": "Valid government issued IDs.",
+                "description": "IDs should have at least 6 months validity.",
                 "ceatedAt": "",
                 "url": ""
             },
@@ -2782,7 +2873,7 @@ COLLATERAL DOCUMENTS
                     "isSpouse": true,
                     "coborrower": true,
                     "documentRequired": "One Valid ID (Principal Applicant + Spouse and/or Co-borrower if applicable)",
-                    "description": "Valid government issued IDs.",
+                    "description": "IDs should have at least 6 months validity.",
                     "ceatedAt": "",
                     "url": ""
                 },
@@ -2799,7 +2890,7 @@ COLLATERAL DOCUMENTS
                     "isSpouse": true,
                     "coborrower": true,
                     "documentRequired": "One Valid ID (Principal Applicant + Spouse and/or Co-borrower if applicable)",
-                    "description": "Valid government issued IDs.",
+                    "description": "IDs should have at least 6 months validity.",
                     "ceatedAt": "",
                     "url": ""
                 },
@@ -3320,7 +3411,7 @@ COLLATERAL DOCUMENTS
                     "isSpouse": true,
                     "coborrower": true,
                     "documentRequired": "One Valid ID (Principal Applicant + Spouse and/or Co-borrower if applicable)",
-                    "description": "Valid government issued IDs.",
+                    "description": "IDs should have at least 6 months validity.",
                     "ceatedAt": "",
                     "url": ""
                 },
@@ -3805,7 +3896,7 @@ COLLATERAL DOCUMENTS
                         "isSpouse": true,
                         "coborrower": true,
                         "documentRequired": "Valid ID (1) - Borrower + Spouse and/or Co-borrower if applicable",
-                        "description": "Valid government issued IDs.",
+                        "description": "IDs should have at least 6 months validity.",
                         "ceatedAt": "",
                         "url": ""
                     },
@@ -4322,7 +4413,7 @@ COLLATERAL DOCUMENTS
                             "isSpouse": true,
                             "coborrower": true,
                             "documentRequired": "One Valid ID (Principal Applicant + Spouse and/or Co-borrower if applicable)",
-                            "description": "Valid government issued IDs.",
+                            "description": "IDs should have at least 6 months validity.",
                             "ceatedAt": "",
                             "url": ""
                         },
@@ -4844,7 +4935,7 @@ COLLATERAL DOCUMENTS
                             "isSpouse": true,
                             "coborrower": true,
                             "documentRequired": "One Valid ID (Principal Applicant + Spouse and/or Co-borrower if applicable)",
-                            "description": "Valid government issued IDs.",
+                            "description": "IDs should have at least 6 months validity.",
                             "ceatedAt": "",
                             "url": ""
                         },
@@ -4861,7 +4952,7 @@ COLLATERAL DOCUMENTS
                             "isSpouse": true,
                             "coborrower": true,
                             "documentRequired": "One Valid ID (Principal Applicant + Spouse and/or Co-borrower if applicable)",
-                            "description": "Valid government issued IDs.",
+                            "description": "IDs should have at least 6 months validity.",
                             "ceatedAt": "",
                             "url": ""
                         },

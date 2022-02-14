@@ -1,3 +1,4 @@
+import { label } from 'joi';
 export const LOAN_TYPES = {
     PURCHASE_OF_PROPERTY: {
         label: 'Purchase of Property',
@@ -14,6 +15,15 @@ export const LOAN_TYPES = {
     REFINANCING: {
         label: 'Refinancing',
         value: 'REFINANCING',
+    },
+    HOME_EQUITY:{
+        label:'Home Equity',
+        value:'HOME_EQUITY'
+
+    },
+    REIMBURSEMENT_LOAN:{
+        label:'Reimbursement Loan',
+        value:'REIMBURSEMENT_LOAN'
     },
     LOAN_TAKE_OUT: {
         label: 'Loan Take-out',

@@ -1,3 +1,4 @@
+import { LOAN_TYPES } from './../../constants/loan.constant';
 import * as ENTITY from '@src/entity';
 import { Types } from 'mongoose';
 import { BaseEntity } from '@src/entity/base/base.entity';
@@ -600,7 +601,7 @@ class LoanControllers extends BaseEntity {
                 // promise.push(ENTITY.BankE.aggregate(aggregateIncome));
             }
             let aggregateColleteralDocument;
-            if (payload.propertyStatus) {
+            if (payload.loanType==='PURCHASE_OF_PROPERTY') {
                 aggregateColleteralDocument = [{
                     $match: {
                         _id: Types.ObjectId(payload.bankId),
@@ -620,13 +621,42 @@ class LoanControllers extends BaseEntity {
                 {
                     $match: {
                         //              "legalDocument.coborrower" : false,
-                        'collateralDocument.allowedFor': payload.propertyStatus,
+                        'collateralDocument.classification':{$in:["DOU"]},
+                        'collateralDocument.allowedFor': payload.loanType,
 
                     },
                 },
 
                 ];
                 // promise.push(ENTITY.BankE.aggregate(aggregateColleteralDocument));
+
+            } else{
+                aggregateColleteralDocument = [{
+                    $match: {
+                        _id: Types.ObjectId(payload.bankId),
+                    },
+                },
+                {
+                    $project: {
+                        collateralDocument: 1,
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$collateralDocument',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $match: {
+                        //              "legalDocument.coborrower" : false,
+                        'collateralDocument.classification':{$in:["REM"]},
+                        'collateralDocument.allowedFor': payload.loanType,
+
+                    },
+                },
+
+                ];
 
             }
 
