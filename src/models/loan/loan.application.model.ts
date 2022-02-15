@@ -198,7 +198,7 @@ const schema = new Schema({
                 CONSTANT.LOAN_TYPES.RENOVATION.value,
                 CONSTANT.LOAN_TYPES.REFINANCING.value,
                 CONSTANT.LOAN_TYPES.HOME_EQUITY.value,
-                CONSTANT.LOAN_TYPES.REIMBURSEMENT_LOAN
+                CONSTANT.LOAN_TYPES.REIMBURSEMENT_LOAN.value
                 // CONSTANT.LOAN_TYPES.NEW_CONSTRUCTION.value,
             ],
         },
