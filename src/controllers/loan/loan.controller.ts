@@ -607,7 +607,7 @@ class LoanControllers extends BaseEntity {
                 // promise.push(ENTITY.BankE.aggregate(aggregateIncome));
             }
             let aggregateColleteralDocument;
-            if (payload.classification==null && payload.loanType==='PURCHASE_OF_PROPERTY') {
+            if (payload.classification==null || payload.classification==="DOU" && payload.loanType==='PURCHASE_OF_PROPERTY') {
                 aggregateColleteralDocument = [{
                     $match: {
                         _id: Types.ObjectId(payload.bankId),
