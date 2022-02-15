@@ -79,10 +79,11 @@ class LoanControllers extends BaseEntity {
                 const formattedTime = referenceNumber['referenceId'].replace(referenceNumber['referenceId'].split('-')[2], num);
                 payload['referenceId'] = formattedTime;
             }
-            if(payload['loanDetails.loanType']==='PURCHASE_OF_PROPERTY'){
-                payload['loanDetails.propertyClassification']="DOU"
+            if(payload['loanDetails']['loanType']==='PURCHASE_OF_PROPERTY'){
+                payload['loanDetails']['propertyClassification']="DOU"
+            
             }else{
-                payload['loanDetails.propertyClassification']="REM"
+                payload['loanDetails']['propertyClassification']="REM"
             }
             payload['applicationStage'] = {
                 userType: userData.type,
