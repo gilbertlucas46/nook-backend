@@ -1090,6 +1090,8 @@ export let loanRoute: ServerRoute[] = [
 						LOAN_PROPERTY_STATUS.FORECLOSED.value,
 					]).required(),
 					loanAmount: Joi.number(),
+					loanType:Joi.string().required(),
+					classification:Joi.string().required()
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
