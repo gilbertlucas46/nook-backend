@@ -1,3 +1,4 @@
+import { LOAN_TYPES } from './../../constants/loan.constant';
 import { Schema, Document, model, Types } from 'mongoose';
 import * as CONSTANT from './../../constants';
 import { EMPLOYMENT_TYPE, EMPLOYMENT_RANK, EMPLOYMENT_TENURE } from './../../constants';
@@ -196,6 +197,8 @@ const schema = new Schema({
                 // CONSTANT.LOAN_TYPES.REFINANCING_LOAN.value,
                 CONSTANT.LOAN_TYPES.RENOVATION.value,
                 CONSTANT.LOAN_TYPES.REFINANCING.value,
+                CONSTANT.LOAN_TYPES.HOME_EQUITY.value,
+                CONSTANT.LOAN_TYPES.REIMBURSEMENT_LOAN
                 // CONSTANT.LOAN_TYPES.NEW_CONSTRUCTION.value,
             ],
         },
