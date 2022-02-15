@@ -129,6 +129,8 @@ const loanApplicationHistory = new Schema({
                 // CONSTANT.LOAN_TYPES.REFINANCING_LOAN.value,
                 CONSTANT.LOAN_TYPES.RENOVATION.value,
                 CONSTANT.LOAN_TYPES.REFINANCING.value,
+                CONSTANT.LOAN_TYPES.HOME_EQUITY.value,
+                CONSTANT.LOAN_TYPES.REIMBURSEMENT_LOAN
             ],
         },
         loanPercent: { type: Number },
