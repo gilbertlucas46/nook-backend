@@ -80,9 +80,9 @@ class LoanControllers extends BaseEntity {
                 payload['referenceId'] = formattedTime;
             }
             if(payload['loanDetails.loanType']==='PURCHASE_OF_PROPERTY'){
-                payload['loanDetails.propertyClassification']=Constant.DATABASE.PROPERTY_CLASSIFICATION.DOU
+                payload['loanDetails.propertyClassification']="DOU"
             }else{
-
+                payload['loanDetails.propertyClassification']="REM"
             }
             payload['applicationStage'] = {
                 userType: userData.type,
