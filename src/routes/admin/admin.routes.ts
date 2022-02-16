@@ -887,9 +887,9 @@ export let adminProfileRoute: ServerRoute[] = [
 					}),
 
 					 loanAttorneyInfo:{
-						name:Joi.string(),
-						contactNumber: Joi.number(),
-						address: Joi.string().max(300),
+						name:Joi.string().allow(''),
+						contactNumber: Joi.number().allow(''),
+						address: Joi.string().max(300).allow(''),
 						relationship: Joi.string().valid([
 							Constant.DATABASE.RELATIONSHIP.BROTHER,
 							Constant.DATABASE.RELATIONSHIP.FATHER,
@@ -900,7 +900,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
 							Constant.DATABASE.RELATIONSHIP.FIANCE,
 							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
-						]),
+						]).allow(''),
 
 
 					},
