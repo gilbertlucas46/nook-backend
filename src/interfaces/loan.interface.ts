@@ -233,7 +233,7 @@ export namespace LoanRequest {
     bankInfo?: BankInfo;
     contactInfo?: ContactInfo;
     loanDetails?: LoanDetails;
-    loanAttorneyInfo?: LoanAttorneyInfo;
+    loanAttorneyInfo: LoanAttorneyInfo;
     employmentInfo?: EmploymentInfo;
     dependentsInfo?: DependentsInfo[];
     propertyDocuments?: PropertyDocuments;
