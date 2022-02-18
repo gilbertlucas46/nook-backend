@@ -19,6 +19,9 @@ export namespace UserRequest {
 		companyName?: string;
 		// address?: string;
 		aboutMe?: string;
+		bankName?:string;
+		accountHolderName?:string;
+		accountNumber?:string;
 		profilePicUrl?: string;
 		// isEmailVerified?: boolean;
 		// isPhoneVerified?: boolean;
@@ -70,6 +73,9 @@ export namespace UserRequest {
 		companyName?: string;
 		// address?: string;
 		aboutMe?: string;
+		bankName?:string;
+		accountHolderName?:string;
+		accountNumber?:string;
 		// profilePicUrl?: string;
 		// isProfileComplete?: boolean;
 		backGroundImageUrl?: string;
