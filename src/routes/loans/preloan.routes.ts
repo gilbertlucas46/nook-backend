@@ -85,7 +85,7 @@ export let preloanRoute: ServerRoute[] = [
               EMPLOYMENT_RANK.SENIOR_VICE_PRESIDENT.value,
               EMPLOYMENT_RANK.SUPERVISOR.value,
               EMPLOYMENT_RANK.VICE_PRESIDENT.value,
-            ]),
+            ]).allow(''),
 
             tenure: Joi.string().valid(Object.keys(EMPLOYMENT_TENURE)),
             income: Joi.number().min(25000),
