@@ -23,19 +23,19 @@ export class UserController extends BaseEntity {
 	async register(payload: UserRequest.Register) {
 		try {
 			const checkMail = { email: payload.email.trim().toLowerCase() };
-			const checkUserName = { userName: payload.userName.trim().toLowerCase() };
-			const userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
-			if (userNameCheck && userNameCheck._id) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
+			// const checkUserName = { userName: payload.userName.trim().toLowerCase() };
+			// const userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
+			// if (userNameCheck && userNameCheck._id) {
+				// return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
 				// return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
-			} else {
+			// } else {
 				const UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']);
 				if (UserCheck && UserCheck._id) {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
 				} else {
 					return;
 				}
-			}
+			// }
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -299,19 +299,19 @@ export class UserController extends BaseEntity {
 		try {
 
 			const checkMail = { email: payload.email };
-			const checkUserName = { userName: payload.userName };
-			const userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
-			if (userNameCheck && userNameCheck._id) {
-				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
-				// return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
-			} else {
+			// const checkUserName = { userName: payload.userName };
+			// const userNameCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
+			// if (userNameCheck && userNameCheck._id) {
+			// 	return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
+			// 	// return Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN;
+			// } else {
 				const UserCheck: UserRequest.Register = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']);
 				if (UserCheck && UserCheck._id) {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
 				} else {
 					const makePassword = await utils.encryptWordpressHashNode(payload.password);
 					const userData = {
-						userName: payload.userName,
+						// userName: payload.userName,
 						email: payload.email,
 						password: makePassword,
 						firstName: payload.firstName,
@@ -354,7 +354,7 @@ export class UserController extends BaseEntity {
 					return { formatedData, accessToken };
 					// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
 				}
-			}
+			// }
 		} catch (error) {
 			utils.errorReporter(error)
 			return Promise.reject(error)

@@ -1,7 +1,7 @@
 export namespace UserRequest {
 	export interface UserData {
 		_id?: string;
-		userName: string;
+		// userName: string;
 		email: string;
 		password: string;
 		firstName: string;
@@ -33,7 +33,7 @@ export namespace UserRequest {
 
 	export interface Register {
 		_id?: string;
-		userName: string;
+		// userName: string;
 		email: string;
 		password: string;
 		type: string;
@@ -102,7 +102,7 @@ export namespace UserRequest {
 
 	export interface CompleteRegister {
 		_id?: string;
-		userName: string;
+		// userName: string;
 		email: string;
 		password: string;
 		firstName: string;

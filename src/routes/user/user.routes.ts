@@ -30,7 +30,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					userName: Joi.string().min(3).max(32).trim().required().lowercase(),
+					// userName: Joi.string().min(3).max(32).trim().required().lowercase(),
 					email: Joi.string().trim().email().lowercase().required(),
 					password: Joi.string().min(6).max(16).trim().required(),
 				},
@@ -414,7 +414,7 @@ export let userRoute: ServerRoute[] = [
 				// 	token: Joi.string().required(),
 				// },
 				payload: {
-					userName: Joi.string().min(3).max(32).trim().required().lowercase(),
+					// userName: Joi.string().min(3).max(32).trim().required().lowercase(),
 					email: Joi.string().trim().email().lowercase(),
 					password: Joi.string().min(6).max(16).trim().required(),
 					firstName: Joi.string().trim().min(3).max(30).required(),
