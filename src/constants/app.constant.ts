@@ -175,7 +175,8 @@ export let DATABASE = {
 		SON: 'son',
 		DAUGHTER: 'daughter',
 		FIANCE:'fiance',
-		LIFE_DOMESTIC_PARTNER:'life/domestic partner'
+		LIFE_DOMESTIC_PARTNER:'life/domestic partner',
+		'':''
 	},
 
 	CIVIL_STATUS: {
