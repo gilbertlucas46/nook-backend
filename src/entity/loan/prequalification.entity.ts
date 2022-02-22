@@ -644,6 +644,7 @@ class PreLoanEntities extends BaseEntity {
                         // prequalifiedBanks: 0,
                         propertyValue: '$property.value',
                         propertyType: '$property.type',
+                        loanType:'$loan.type',
                         referenceId: 1,
                         No_Of_Banks: { $size: '$prequalifiedBanks' },
                     },
