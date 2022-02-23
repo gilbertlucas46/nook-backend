@@ -93,6 +93,9 @@ export let preQualificationroutes: ServerRoute[] = [
                             EMPLOYMENT_TYPE.PRIVATE.value,
                             EMPLOYMENT_TYPE.PROFESSIONAL.value,
                             EMPLOYMENT_TYPE.SELF.value,
+                            EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+							EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+							EMPLOYMENT_TYPE.FREELANCER.value
                         ]).required(),
 
                         rank: Joi.string().valid([
@@ -296,6 +299,9 @@ export let preQualificationroutes: ServerRoute[] = [
                             EMPLOYMENT_TYPE.PRIVATE.value,
                             EMPLOYMENT_TYPE.PROFESSIONAL.value,
                             EMPLOYMENT_TYPE.SELF.value,
+                            EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+							EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+							EMPLOYMENT_TYPE.FREELANCER.value
                         ]).required(),
 
                         rank: Joi.string().valid([
@@ -438,6 +444,9 @@ export let preQualificationroutes: ServerRoute[] = [
                             EMPLOYMENT_TYPE.PRIVATE.value,
                             EMPLOYMENT_TYPE.PROFESSIONAL.value,
                             EMPLOYMENT_TYPE.SELF.value,
+                            EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+							EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+							EMPLOYMENT_TYPE.FREELANCER.value
                         ]).required(),
 
                         rank: Joi.string().valid([
