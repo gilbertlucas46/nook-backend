@@ -215,6 +215,9 @@ export let loanRoute: ServerRoute[] = [
 							EMPLOYMENT_TYPE.PRIVATE.value,
 							EMPLOYMENT_TYPE.PROFESSIONAL.value,
 							EMPLOYMENT_TYPE.SELF.value,
+							EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+							EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+							EMPLOYMENT_TYPE.FREELANCER.value
 						]),
 						rank: Joi.string().valid([
 							EMPLOYMENT_RANK.ASSISSTANT_VICE_PRESIDENT.value,
@@ -277,6 +280,9 @@ export let loanRoute: ServerRoute[] = [
 								EMPLOYMENT_TYPE.PRIVATE.value,
 								EMPLOYMENT_TYPE.PROFESSIONAL.value,
 								EMPLOYMENT_TYPE.SELF.value,
+								EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+								EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+								EMPLOYMENT_TYPE.FREELANCER.value
 							]),
 							tin: Joi.string(),
 							companyName: Joi.string(),
@@ -772,6 +778,9 @@ export let loanRoute: ServerRoute[] = [
 								EMPLOYMENT_TYPE.PRIVATE.value,
 								EMPLOYMENT_TYPE.PROFESSIONAL.value,
 								EMPLOYMENT_TYPE.SELF.value,
+								EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+								EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+								EMPLOYMENT_TYPE.FREELANCER.value
 							]),
 							tin: Joi.string(),
 							companyName: Joi.string(),
@@ -1009,6 +1018,9 @@ export let loanRoute: ServerRoute[] = [
 						EMPLOYMENT_TYPE.PRIVATE.value,
 						EMPLOYMENT_TYPE.PROFESSIONAL.value,
 						EMPLOYMENT_TYPE.SELF.value,
+						EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+						EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+						EMPLOYMENT_TYPE.FREELANCER.value
 					]).required(),
 					propertyStatus: Joi.string().valid([
 						LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
@@ -1083,6 +1095,9 @@ export let loanRoute: ServerRoute[] = [
 						EMPLOYMENT_TYPE.PRIVATE.value,
 						EMPLOYMENT_TYPE.PROFESSIONAL.value,
 						EMPLOYMENT_TYPE.SELF.value,
+						EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+						EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+						EMPLOYMENT_TYPE.FREELANCER.value
 					]).required(),
 					propertyStatus: Joi.string().valid([
 						LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,

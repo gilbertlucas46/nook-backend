@@ -950,6 +950,9 @@ export let adminProfileRoute: ServerRoute[] = [
 								LoanConstant.EMPLOYMENT_TYPE.PRIVATE.value,
 								LoanConstant.EMPLOYMENT_TYPE.PROFESSIONAL.value,
 								LoanConstant.EMPLOYMENT_TYPE.SELF.value,
+								LoanConstant.EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+								LoanConstant.EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+								LoanConstant.EMPLOYMENT_TYPE.FREELANCER.value
 							]),
 							tin: Joi.string(),
 							companyName: Joi.string(),
@@ -1350,6 +1353,9 @@ export let adminProfileRoute: ServerRoute[] = [
 								LoanConstant.EMPLOYMENT_TYPE.PRIVATE.value,
 								LoanConstant.EMPLOYMENT_TYPE.PROFESSIONAL.value,
 								LoanConstant.EMPLOYMENT_TYPE.SELF.value,
+								LoanConstant.EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+								LoanConstant.EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+								LoanConstant.EMPLOYMENT_TYPE.FREELANCER.value
 							]),
 							tin: Joi.string(),
 							companyName: Joi.string(),
