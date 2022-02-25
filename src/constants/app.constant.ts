@@ -107,9 +107,9 @@ export let DATABASE = {
 			label: 'Awaiting- Property Construction',
 			value: 'AWAITING_PROPERTY_CONSTRUCTION'
 		},
-		INCOMPLETE:{
-			label:"Incomplete",
-			value:"INCOMPLETE"
+		INCOMPLETE_SUBMISSION:{
+			label:"Incomplete Submission",
+			value:"INCOMPLETE_SUBMISSION"
 		}
 
 	},
