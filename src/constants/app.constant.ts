@@ -103,6 +103,14 @@ export let DATABASE = {
 			label: 'Awaiting- Seller/Developer',
 			value: 'AWAITING_SELLER_DEVELOPER'
 		},
+		AWAITING_PROPERTY_CONSTRUCTION: {
+			label: 'Awaiting- Property Construction',
+			value: 'AWAITING_PROPERTY_CONSTRUCTION'
+		},
+		INCOMPLETE:{
+			label:"Incomplete",
+			value:"INCOMPLETE"
+		}
 
 	},
 	EMPLOYMENT: {
