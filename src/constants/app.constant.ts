@@ -511,7 +511,7 @@ export let STATUS_MSG = {
 			INVALID_LOGIN: {
 				statusCode: 400,
 				type: 'INVALID_LOGIN',
-				message: 'Entered username/email is not registered with us!',
+				message: 'Email is not registered with us!',
 			},
 			USER_NOT_REGISTERED: {
 				statusCode: 400,
