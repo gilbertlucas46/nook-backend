@@ -56,7 +56,7 @@ export class UserController extends BaseEntity {
 			// 	return re.test(String(unique).toLowerCase());
 			// };
 			// if (checkEmailOrUserName(unique) === true) { unique = unique.trim().toLowerCase(); }
-			const checkData = { $or: [{ email: unique }, { userName: payload.email }] };
+			const checkData = {email: unique};
 			const userData = await ENTITY.UserE.getOneEntity(checkData, {});
 
 			if (userData && userData._id) {
