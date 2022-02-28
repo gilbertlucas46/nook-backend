@@ -130,7 +130,7 @@ export class MailManager {
 					userName: params.userName,
 					password: params.password || '',
 				});
-			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Welcome To Nook', content: mailContent });
+			await this.sendMail({ receiverEmail: params.receiverEmail, subject: 'Your Account Password', content: mailContent });
 
 		} catch (error) {
 			return {};
