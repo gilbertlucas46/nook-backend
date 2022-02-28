@@ -207,6 +207,24 @@ export let loanRoute: ServerRoute[] = [
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
 					}),
+					loanAttorneyInfo:{
+						name:Joi.string().allow(''),
+						contactNumber: Joi.number().allow(''),
+						address: Joi.string().max(300).allow(''),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.FIANCE,
+							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
+						]).allow(''),
+
+
+					},
 
 					employmentInfo: Joi.object().keys({
 						type: Joi.string().valid([
@@ -736,6 +754,24 @@ export let loanRoute: ServerRoute[] = [
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
 					}),
+					loanAttorneyInfo:{
+						name:Joi.string().allow(''),
+						contactNumber: Joi.number().allow(''),
+						address: Joi.string().max(300).allow(''),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.FIANCE,
+							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
+						]).allow(''),
+
+
+					},
 
 					employmentInfo: Joi.object().keys({
 						type: Joi.string(),
