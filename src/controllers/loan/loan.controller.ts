@@ -105,7 +105,11 @@ class LoanControllers extends BaseEntity {
                     _id: data['_id']
                 }
             }
-            return data['referenceId'];
+            return {referenceId:data['referenceId'],
+                    _id:data['_id']   
+        
+        
+        };
 
 
         } catch (error) {
