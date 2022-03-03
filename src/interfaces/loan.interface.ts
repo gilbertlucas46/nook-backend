@@ -170,7 +170,7 @@ export namespace LoanRequest {
     loanType: string;
     loanPercent: number;
     loanAmount: number;
-    propertyClassification?:string;
+    propertyClassification?: string;
   }
   export interface EmploymentInfo {
     tin: string;
@@ -238,6 +238,7 @@ export namespace LoanRequest {
     dependentsInfo?: DependentsInfo[];
     propertyDocuments?: PropertyDocuments;
     applicationStatus?: string;
+    notificationType: string;
   }
   export interface LoanById {
     loanId: string;
@@ -323,6 +324,4 @@ export namespace LoanRequest {
     propertyType: number;
     searchTerm: number;
   }
-
-  
 }

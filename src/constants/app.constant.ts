@@ -400,6 +400,11 @@ export let DATABASE = {
 			UPDATE_STATUS: 'UPDATE_STATUS',
 		},
 	},
+	NOTIFICATION_TYPE:{
+		IMAGE:'image',
+		PERSONAL_DETAIL:'personal-detail',
+
+	},
 
 	RESEND_OTP_TYPE: {
 		REGISTER: 'REGISTER',

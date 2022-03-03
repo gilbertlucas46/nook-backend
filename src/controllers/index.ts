@@ -1,3 +1,4 @@
+import { NotificationController } from './notification/notification.controller';
 export { UserService } from './user/user.controller';
 export { AdminProfileService } from './admin/adminProfile.controller';
 export { AdminService } from './admin/admin.controller';
@@ -8,3 +9,4 @@ export { LoanController } from './loan/loan.controller';
 export { AdminUserController } from './admin/admin.user.controller';
 export { CategoryService } from './article/articleCategories.controller';
 export { PartnerService } from './partner/partner.controller';
+export{NotificationController} from './notification//notification.controller';

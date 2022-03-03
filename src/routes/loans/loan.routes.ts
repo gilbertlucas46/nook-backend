@@ -1,3 +1,4 @@
+import { Database } from './../../databases/index';
 import { LOAN_TYPES } from './../../constants/loan.constant';
 import { ServerRoute, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
@@ -656,8 +657,13 @@ export let loanRoute: ServerRoute[] = [
 							birthPlace: Joi.string(),
 							motherMaidenName: Joi.string(),
 						},
+					
 					}),
-
+					notificationType:Joi.string().valid(
+						Constant.DATABASE.NOTIFICATION_TYPE.IMAGE,
+						Constant.DATABASE.NOTIFICATION_TYPE.PERSONAL_DETAIL
+					),
+					
 					propertyInfo: {
 						value: Joi.number(),
 						type: Joi.string(),
