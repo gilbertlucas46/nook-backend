@@ -20,10 +20,10 @@ const objectSchema = Joi.object({
 		LoanConstant.DocumentStatus.APPROVED,
 		LoanConstant.DocumentStatus.REJECTED,
 	]),
-	documentRequired: Joi.string().allow('').allow(null),
-	description: Joi.string().allow('').allow(null),
+	documentRequired: Joi.string().allow(''),
+	description: Joi.string().allow(''),
 	url: Joi.string().allow(''),
-	createdAt: Joi.number().allow(null),
+	createdAt: Joi.number(),
 });
 
 export let adminProfileRoute: ServerRoute[] = [

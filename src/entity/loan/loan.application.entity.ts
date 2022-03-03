@@ -29,12 +29,12 @@ class LoanApplicationE extends BaseEntity {
             const data = await this.createOneEntity(payload);
             // send data to sales-force
 
-            const salesforce = await this.sendApplication(data);
+            const salesforce =  this.sendApplication(data);
 
             return data;
         } catch (error) {
             utils.consolelog('error', error, true);
-            utils.errorReporter(error)
+            //utils.errorReporter(error)
             return Promise.reject(error);
         }
     }
