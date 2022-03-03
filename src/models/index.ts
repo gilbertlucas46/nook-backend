@@ -1,3 +1,4 @@
+import { Notification } from './notification/notification.model';
 export { User, IUser } from './user/user.model';
 export { Session } from './user/session.model';
 export { Admin } from './admin/admin.model';
@@ -19,3 +20,4 @@ export { LoanErrorCheck } from './loan/loan.error.model';
 // export { PartnerPreQualification } from './loan/partner.preQualification.model';
 export { Partner } from './partner/partner.model';
 export { HelpCentreCategory } from './helpCentre/helpcenter.category.model';
+export{Notification} from './notification/notification.model';

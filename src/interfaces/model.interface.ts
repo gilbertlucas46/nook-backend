@@ -17,5 +17,6 @@ export type ModelNames = 'User' |
     'PreQualification' |
     'LoanApplicationHistory' |
     'LoanErrorCheck' |
-    'Partner'
+    'Partner' |
+    'Notification'
     ;
