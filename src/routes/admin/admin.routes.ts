@@ -11,6 +11,7 @@ import * as Hapi from 'hapi';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import * as LoanConstant from '../../constants/loan.constant';
 import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
+import { PreQualificationService } from '@src/controllers/preQualification/preQualification.controller';
 
 
 const objectSchema = Joi.object({
@@ -600,6 +601,100 @@ export let adminProfileRoute: ServerRoute[] = [
 					propertyValue: Joi.number(),
 					propertyType: Joi.string(),
 					searchTerm: Joi.string(),
+					partnerId: Joi.string(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	  /**
+     * @description user get preQulification loan list
+     */
+
+	   {
+        method: 'GET',
+        path: '/v1/admin/user/prequalification/{userId}',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = {
+					...request.payload as any,
+					...request.params as any,
+				};
+			
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION);
+
+				
+                const data = await PreQualificationService.getPreQualifiedBanksList(payload);
+                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT,data);
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'user prqualification Bank list ',
+            tags: ['api', 'anonymous', 'user', 'bank', 'list', 'prequalification'],
+            auth: 'AdminAuth',
+            validate: {
+				params: {
+					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+				},
+                query: {
+                    limit: Joi.number(),
+                    page: Joi.number(),
+                    sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+                    sortBy: Joi.string().default('date'),
+                    fromDate: Joi.number(),
+                    toDate: Joi.number(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+	{
+		method: 'GET',
+		path: '/v1/admin/user/loan/{userId}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = {
+					...request.payload as any,
+					...request.params as any,
+				};
+			
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION);
+
+				const data = await LoanController.adminUserLoansList(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'get user loan applications',
+			tags: ['api', 'anonymous', 'user', 'user', 'loan'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+				},
+				query: {
+					limit: Joi.number(),
+					page: Joi.number(),
+					sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+					sortBy: Joi.string().default('date'),
+					fromDate: Joi.number(),
+					toDate: Joi.number(),
+					status: Joi.string(),
 					partnerId: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,

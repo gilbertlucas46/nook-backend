@@ -62,6 +62,17 @@ class PreqQualificationController extends BaseEntity {
             return Promise.reject(error);
         }
     }
+    async getPreQualifiedBanksList(payload: PreQualificationRequest.IPrequalificationList) {
+        try {
+            const data = await PreQualificationBankE.adminUserPreLoanList(payload);
+
+            return data;
+
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 
     async preQualificationById(payload, userData) {
         try {
