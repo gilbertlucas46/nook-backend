@@ -14,6 +14,10 @@ export interface IUser extends Document {
 	fullPhoneNumber?: string;
 	language?: string;
 	aboutMe?: string;
+	bankName?:string;
+	accountHolderName?:string;
+	accountNumber?:string;
+
 	profilePicUrl?: string;
 	// isEmailVerified?: boolean;
 	// isPhoneVerified?: boolean;
@@ -35,6 +39,9 @@ const userSchema = new Schema({
 	fullPhoneNumber: { type: String },
 	language: { type: String },
 	aboutMe: { type: String },
+	bankName:{type:String,trim:true},
+	accountHolderName:{type:String,trim:true},
+	accountNumber:{type:String},
 	profilePicUrl: { type: String },
 	backGroundImageUrl: { type: String },
 	type: { type: String, default: 'Tenant' },

@@ -1,4 +1,5 @@
 import { label } from 'joi';
+import { getConstantValue } from 'typescript';
 export const LOAN_TYPES = {
     PURCHASE_OF_PROPERTY: {
         label: 'Purchase of Property',
@@ -148,6 +149,18 @@ export const EMPLOYMENT_TYPE = {
         label: 'Professional',
         value: 'PROFESSIONAL',
     },
+    COMMISSION_BASED:{
+        label:'Commission - Based',
+        value:'COMMISSION_BASED',
+    },
+    FREELANCER:{
+        label:'Freelancer',
+        value:'FREELANCER',
+    },
+    FOREIGN_NATIONALS:{
+        label:'Foreign Nationals',
+        value:'FOREIGN_NATIONALS'
+    }
 };
 
 export const EMPLOYMENT_RANK = {

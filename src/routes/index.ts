@@ -15,6 +15,7 @@ import { adminUserRoutes } from './admin/admin.user.routes';
 import { preQualificationroutes } from './preQualification/preQualification.routes';
 import { partnerRoutes } from './partner/partner.routes';
 import { helpCenterCategoryRoutes } from './helpCenter/helpcenter.categories.routes';
+import { notificationRoute } from './notification/notification.routes';
 
 // const arr = [];
 export let Routes: ServerRoute[] = [
@@ -33,6 +34,7 @@ export let Routes: ServerRoute[] = [
 	...preQualificationroutes,
 	...partnerRoutes,
 	...helpCenterCategoryRoutes,
+	...notificationRoute
 	// {
 	// 	method: ['*'],
 	// 	path: '/{any*}',

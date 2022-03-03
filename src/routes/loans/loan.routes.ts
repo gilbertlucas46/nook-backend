@@ -1,3 +1,4 @@
+import { Database } from './../../databases/index';
 import { LOAN_TYPES } from './../../constants/loan.constant';
 import { ServerRoute, ResponseToolkit } from 'hapi';
 import * as Joi from 'joi';
@@ -138,6 +139,7 @@ export let loanRoute: ServerRoute[] = [
 					applicationStatus: Joi.string().valid([
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.INCOMPLETE_SUBMISSION.value,
 					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value),
 					bankInfo: Joi.object().keys({
 						iconUrl: Joi.string(),
@@ -206,6 +208,24 @@ export let loanRoute: ServerRoute[] = [
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
 					}),
+					loanAttorneyInfo:{
+						name:Joi.string().allow(''),
+						contactNumber: Joi.number().allow(''),
+						address: Joi.string().max(300).allow(''),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.FIANCE,
+							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
+						]).allow(''),
+
+
+					},
 
 					employmentInfo: Joi.object().keys({
 						type: Joi.string().valid([
@@ -215,6 +235,9 @@ export let loanRoute: ServerRoute[] = [
 							EMPLOYMENT_TYPE.PRIVATE.value,
 							EMPLOYMENT_TYPE.PROFESSIONAL.value,
 							EMPLOYMENT_TYPE.SELF.value,
+							EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+							EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+							EMPLOYMENT_TYPE.FREELANCER.value
 						]),
 						rank: Joi.string().valid([
 							EMPLOYMENT_RANK.ASSISSTANT_VICE_PRESIDENT.value,
@@ -277,6 +300,9 @@ export let loanRoute: ServerRoute[] = [
 								EMPLOYMENT_TYPE.PRIVATE.value,
 								EMPLOYMENT_TYPE.PROFESSIONAL.value,
 								EMPLOYMENT_TYPE.SELF.value,
+								EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+								EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+								EMPLOYMENT_TYPE.FREELANCER.value
 							]),
 							tin: Joi.string(),
 							companyName: Joi.string(),
@@ -539,12 +565,14 @@ export let loanRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED_AWAITING_CLIENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIVE.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_PROPERTY_CONSTRUCTION.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_SELLER_DEVELOPER.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.FINAL_DOCUMENTS_COMPLETED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.INCOMPLETE_SUBMISSION.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.INITIAL_DOCUMENTS_COMPLETED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
@@ -629,8 +657,13 @@ export let loanRoute: ServerRoute[] = [
 							birthPlace: Joi.string(),
 							motherMaidenName: Joi.string(),
 						},
+					
 					}),
-
+					notificationType:Joi.string().valid(
+						Constant.DATABASE.NOTIFICATION_TYPE.IMAGE,
+						Constant.DATABASE.NOTIFICATION_TYPE.PERSONAL_DETAIL
+					),
+					
 					propertyInfo: {
 						value: Joi.number(),
 						type: Joi.string(),
@@ -727,6 +760,24 @@ export let loanRoute: ServerRoute[] = [
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
 					}),
+					loanAttorneyInfo:{
+						name:Joi.string().allow(''),
+						contactNumber: Joi.number().allow(''),
+						address: Joi.string().max(300).allow(''),
+						relationship: Joi.string().valid([
+							Constant.DATABASE.RELATIONSHIP.BROTHER,
+							Constant.DATABASE.RELATIONSHIP.FATHER,
+							Constant.DATABASE.RELATIONSHIP.MOTHER,
+							Constant.DATABASE.RELATIONSHIP.SISTER,
+							Constant.DATABASE.RELATIONSHIP.SPOUSE,
+							Constant.DATABASE.RELATIONSHIP.SON,
+							Constant.DATABASE.RELATIONSHIP.DAUGHTER,
+							Constant.DATABASE.RELATIONSHIP.FIANCE,
+							Constant.DATABASE.RELATIONSHIP.LIFE_DOMESTIC_PARTNER
+						]).allow(''),
+
+
+					},
 
 					employmentInfo: Joi.object().keys({
 						type: Joi.string(),
@@ -772,6 +823,9 @@ export let loanRoute: ServerRoute[] = [
 								EMPLOYMENT_TYPE.PRIVATE.value,
 								EMPLOYMENT_TYPE.PROFESSIONAL.value,
 								EMPLOYMENT_TYPE.SELF.value,
+								EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+								EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+								EMPLOYMENT_TYPE.FREELANCER.value
 							]),
 							tin: Joi.string(),
 							companyName: Joi.string(),
@@ -1009,6 +1063,9 @@ export let loanRoute: ServerRoute[] = [
 						EMPLOYMENT_TYPE.PRIVATE.value,
 						EMPLOYMENT_TYPE.PROFESSIONAL.value,
 						EMPLOYMENT_TYPE.SELF.value,
+						EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+						EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+						EMPLOYMENT_TYPE.FREELANCER.value
 					]).required(),
 					propertyStatus: Joi.string().valid([
 						LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,
@@ -1083,6 +1140,9 @@ export let loanRoute: ServerRoute[] = [
 						EMPLOYMENT_TYPE.PRIVATE.value,
 						EMPLOYMENT_TYPE.PROFESSIONAL.value,
 						EMPLOYMENT_TYPE.SELF.value,
+						EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+						EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+						EMPLOYMENT_TYPE.FREELANCER.value
 					]).required(),
 					propertyStatus: Joi.string().valid([
 						LOAN_PROPERTY_STATUS.NEW_CONSTRUCTION.value,

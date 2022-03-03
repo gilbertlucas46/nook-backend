@@ -618,7 +618,6 @@ class PreLoanEntities extends BaseEntity {
 
 
             const matchCondition: any = {};
-
             matchCondition['userId'] = Types.ObjectId(userData._id);
             matchCondition['status'] = Constant.DATABASE.PREQUALIFICATION_STATUS.ACTIVE;
 
@@ -644,6 +643,7 @@ class PreLoanEntities extends BaseEntity {
                         // prequalifiedBanks: 0,
                         propertyValue: '$property.value',
                         propertyType: '$property.type',
+                        loanType:'$loan.type',
                         referenceId: 1,
                         No_Of_Banks: { $size: '$prequalifiedBanks' },
                     },
@@ -697,6 +697,103 @@ class PreLoanEntities extends BaseEntity {
             return Promise.reject(error);
         }
     }
+    async adminUserPreLoanList(payload) {
+        try {
+            const { fromDate,
+                toDate,
+                limit = Constant.SERVER.LIMIT,
+                page = 1,
+            } = payload;
+            const skip = (limit * (page - 1));
+
+            const paginateOptions = {
+                page: page || 1,
+                limit: limit || Constant.SERVER.LIMIT,
+            };
+
+
+            const matchCondition: any = {};
+            matchCondition['userId'] = Types.ObjectId(payload.userId);  
+            
+            matchCondition['status'] = Constant.DATABASE.PREQUALIFICATION_STATUS.ACTIVE;
+
+            if (fromDate && toDate) { matchCondition['createdAt'] = { $gte: fromDate, $lte: toDate }; }
+            if (fromDate && !toDate) { matchCondition['createdAt'] = { $gte: fromDate }; }
+            if (!fromDate && toDate) { matchCondition['createdAt'] = { $lte: toDate }; }
+
+
+            const matchPipeline = [
+                {
+                    $match: matchCondition,
+                },
+                {
+                    $sort: {
+                        _id: -1,
+                    },
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                        // prequalifiedBanks: 0,
+                        propertyValue: '$property.value',
+                        propertyType: '$property.type',
+                        loanType:'$loan.type',
+                        referenceId: 1,
+                        No_Of_Banks: { $size: '$prequalifiedBanks' },
+                    },
+                },
+            ];
+            const pipeline = [
+                {
+                    $lookup: {
+                        from: 'users',
+                        let: { uid: '$userId' },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$_id', '$$uid'],
+                                    },
+                                },
+                            },
+                        ],
+                        as: 'userData',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$userData',
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                        // prequalifiedBanks: 0,
+                        propertyValue: '$property.value',
+                        propertyType: '$property.type',
+                        referenceId: 1,
+                        firstName: '$userData.firstName',
+                        lastName: '$userData.lastName',
+                        middleName: '$userData.middleName',
+                        userName: '$userData.userName',
+                        No_Of_Banks: { $size: '$prequalifiedBanks' },
+                    },
+                },
+            ];
+            // const data = this.DAOManager.paginatePipeline(this.modelName, query);
+            const data = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+            return data;
+
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 
     async adminAddBanks(payload: PreQualificationRequest.IPreLoanAdd, userData) {
         try {

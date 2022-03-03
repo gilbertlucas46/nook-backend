@@ -79,7 +79,9 @@ class LoanControllers extends BaseEntity {
                 const formattedTime = referenceNumber['referenceId'].replace(referenceNumber['referenceId'].split('-')[2], num);
                 payload['referenceId'] = formattedTime;
             }
-            if(payload['loanDetails']['loanType']==='PURCHASE_OF_PROPERTY'&& payload['loanDetails']['propertyClassification']==null || payload['loanDetails']['propertyClassification']==='DOU'){
+
+            if(payload['loanDetails']['loanType']==='PURCHASE_OF_PROPERTY' && payload['loanDetails']['propertyClassification']==null || payload['loanDetails']['propertyClassification']==='DOU'){
+
                 payload['loanDetails']['propertyClassification']="DOU"
             
             }else{
@@ -105,7 +107,11 @@ class LoanControllers extends BaseEntity {
                     _id: data['_id']
                 }
             }
-            return data['referenceId'];
+            return {referenceId:data['referenceId'],
+                    _id:data['_id']   
+        
+        
+        };
 
 
         } catch (error) {
@@ -141,6 +147,9 @@ class LoanControllers extends BaseEntity {
             //     adminName: userData.firstName + '' + userData.lastName,
             // };
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
+            payload['referenceId']=data['referenceId'];
+            payload['userId']=userData._id,
+            ENTITY.NotificationE.saveNotification(payload);
             return data['referenceId'];
         } catch (error) {
             utils.consolelog('error', error, true);
@@ -172,6 +181,21 @@ class LoanControllers extends BaseEntity {
     async userLoansList(payload: LoanRequest.IGetUserLoanList, userData) {
         try {
             return await ENTITY.LoanApplicationEntity.getUserLoanList(payload, userData);
+        } catch (error) {
+            utils.consolelog('error', error, true);
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @function AdminUserLoansList
+     * @description user loan list
+     * @payload : IGetUserLoanList
+     * return []
+     */
+
+     async adminUserLoansList(payload: LoanRequest.IGetUserLoanList) {
+        try {
+            return await ENTITY.LoanApplicationEntity.getAdminUserLoanList(payload);
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);

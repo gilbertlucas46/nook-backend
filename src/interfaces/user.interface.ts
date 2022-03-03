@@ -1,7 +1,7 @@
 export namespace UserRequest {
 	export interface UserData {
 		_id?: string;
-		userName: string;
+		// userName: string;
 		email: string;
 		password: string;
 		firstName: string;
@@ -19,6 +19,9 @@ export namespace UserRequest {
 		companyName?: string;
 		// address?: string;
 		aboutMe?: string;
+		bankName?:string;
+		accountHolderName?:string;
+		accountNumber?:string;
 		profilePicUrl?: string;
 		// isEmailVerified?: boolean;
 		// isPhoneVerified?: boolean;
@@ -30,7 +33,7 @@ export namespace UserRequest {
 
 	export interface Register {
 		_id?: string;
-		userName: string;
+		// userName: string;
 		email: string;
 		password: string;
 		type: string;
@@ -70,6 +73,9 @@ export namespace UserRequest {
 		companyName?: string;
 		// address?: string;
 		aboutMe?: string;
+		bankName?:string;
+		accountHolderName?:string;
+		accountNumber?:string;
 		// profilePicUrl?: string;
 		// isProfileComplete?: boolean;
 		backGroundImageUrl?: string;
@@ -96,7 +102,7 @@ export namespace UserRequest {
 
 	export interface CompleteRegister {
 		_id?: string;
-		userName: string;
+		// userName: string;
 		email: string;
 		password: string;
 		firstName: string;

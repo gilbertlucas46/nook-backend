@@ -30,7 +30,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					userName: Joi.string().min(3).max(32).trim().required().lowercase(),
+					// userName: Joi.string().min(3).max(32).trim().required().lowercase(),
 					email: Joi.string().trim().email().lowercase().required(),
 					password: Joi.string().min(6).max(16).trim().required(),
 				},
@@ -66,7 +66,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'DoubleAuth',
 			validate: {
 				payload: {
-					email: Joi.string().trim().min(4).max(100).lowercase(),
+					email: Joi.string().trim().email().lowercase(),
 					password: Joi.string().trim().min(6).max(16).required(),
 					deviceToken: Joi.string(),
 					partnerId: Joi.string(),
@@ -157,8 +157,50 @@ export let userRoute: ServerRoute[] = [
 					countryCode: Joi.string(),
 					// address: Joi.string().allow('').allow(null),
 					aboutMe: Joi.string().allow('').allow(null),
+					// bankName:Joi.string().allow('').allow(null),
+					// accountHolderName:Joi.string().allow('').allow(null),
+					// accountNumber:Joi.string().allow('').allow(null),
 					profilePicUrl: Joi.string().allow('').allow(null),
 					backGroundImageUrl: Joi.string().allow('').allow(null),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	/**
+	 * @description : user bank details
+	 */
+	 {
+		method: 'POST',
+		path: '/v1/user/bankDetail',
+		handler: async (request, h) => {
+			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const payload: UserRequest.ProfileUpdate = request.payload as any;
+
+				const responseData = await UserService.updateProfile(payload, userData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.UPDATED, responseData));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'update user bank details',
+			tags: ['api', 'anonymous', 'user', 'update'],
+			auth: 'UserAuth',
+			validate: {
+				payload: {
+					bankName:Joi.string().allow(''),
+					accountHolderName:Joi.string().allow(''),
+					accountNumber:Joi.string().allow(''),
+					
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -372,7 +414,7 @@ export let userRoute: ServerRoute[] = [
 				// 	token: Joi.string().required(),
 				// },
 				payload: {
-					userName: Joi.string().min(3).max(32).trim().required().lowercase(),
+					// userName: Joi.string().min(3).max(32).trim().required().lowercase(),
 					email: Joi.string().trim().email().lowercase(),
 					password: Joi.string().min(6).max(16).trim().required(),
 					firstName: Joi.string().trim().min(3).max(30).required(),
