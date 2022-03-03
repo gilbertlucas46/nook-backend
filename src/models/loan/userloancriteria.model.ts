@@ -15,6 +15,9 @@ const UserLoanCriteria = new Schema({
                     EMPLOYMENT_TYPE.PRIVATE.value,
                     EMPLOYMENT_TYPE.PROFESSIONAL.value,
                     EMPLOYMENT_TYPE.SELF.value,
+                    EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+                    EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+                    EMPLOYMENT_TYPE.FREELANCER.value
                 ],
             },
             employmentRank: [{ type: String, enum: Object.keys(EMPLOYMENT_RANK)}],

@@ -11,6 +11,7 @@ import * as Hapi from 'hapi';
 import { LoanRequest } from '@src/interfaces/loan.interface';
 import * as LoanConstant from '../../constants/loan.constant';
 import { PreQualificationRequest } from '@src/interfaces/preQualification.interface';
+import { PreQualificationService } from '@src/controllers/preQualification/preQualification.controller';
 
 
 const objectSchema = Joi.object({
@@ -20,10 +21,10 @@ const objectSchema = Joi.object({
 		LoanConstant.DocumentStatus.APPROVED,
 		LoanConstant.DocumentStatus.REJECTED,
 	]),
-	documentRequired: Joi.string().allow('').allow(null),
-	description: Joi.string().allow('').allow(null),
+	documentRequired: Joi.string().allow(''),
+	description: Joi.string().allow(''),
 	url: Joi.string().allow(''),
-	createdAt: Joi.number().allow(null),
+	createdAt: Joi.number(),
 });
 
 export let adminProfileRoute: ServerRoute[] = [
@@ -388,12 +389,14 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED_AWAITING_CLIENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIVE.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_PROPERTY_CONSTRUCTION.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_SELLER_DEVELOPER.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.FINAL_DOCUMENTS_COMPLETED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.INCOMPLETE_SUBMISSION.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.INITIAL_DOCUMENTS_COMPLETED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
@@ -480,12 +483,14 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED_AWAITING_CLIENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIVE.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_PROPERTY_CONSTRUCTION.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_SELLER_DEVELOPER.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.FINAL_DOCUMENTS_COMPLETED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.INCOMPLETE_SUBMISSION.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.INITIAL_DOCUMENTS_COMPLETED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
@@ -596,6 +601,100 @@ export let adminProfileRoute: ServerRoute[] = [
 					propertyValue: Joi.number(),
 					propertyType: Joi.string(),
 					searchTerm: Joi.string(),
+					partnerId: Joi.string(),
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	  /**
+     * @description user get preQulification loan list
+     */
+
+	   {
+        method: 'GET',
+        path: '/v1/admin/user/prequalification/{userId}',
+        handler: async (request, h) => {
+            try {
+                const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = {
+					...request.payload as any,
+					...request.params as any,
+				};
+			
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION);
+
+				
+                const data = await PreQualificationService.getPreQualifiedBanksList(payload);
+                return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT,data);
+            } catch (error) {
+                UniversalFunctions.consolelog(error, 'error', true);
+                return (UniversalFunctions.sendError(error));
+            }
+        },
+        options: {
+            description: 'user prqualification Bank list ',
+            tags: ['api', 'anonymous', 'user', 'bank', 'list', 'prequalification'],
+            auth: 'AdminAuth',
+            validate: {
+				params: {
+					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+				},
+                query: {
+                    limit: Joi.number(),
+                    page: Joi.number(),
+                    sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+                    sortBy: Joi.string().default('date'),
+                    fromDate: Joi.number(),
+                    toDate: Joi.number(),
+                },
+                headers: UniversalFunctions.authorizationHeaderObj,
+                failAction: UniversalFunctions.failActionFunction,
+            },
+        },
+    },
+	{
+		method: 'GET',
+		path: '/v1/admin/user/loan/{userId}',
+		handler: async (request, h) => {
+			try {
+				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
+				const payload = {
+					...request.payload as any,
+					...request.params as any,
+				};
+			
+				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION);
+
+				const data = await LoanController.adminUserLoansList(payload);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
+			} catch (error) {
+				UniversalFunctions.consolelog('error', error, true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'get user loan applications',
+			tags: ['api', 'anonymous', 'user', 'user', 'loan'],
+			auth: 'AdminAuth',
+			validate: {
+				params: {
+					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+				},
+				query: {
+					limit: Joi.number(),
+					page: Joi.number(),
+					sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
+					sortBy: Joi.string().default('date'),
+					fromDate: Joi.number(),
+					toDate: Joi.number(),
+					status: Joi.string(),
 					partnerId: Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
@@ -771,12 +870,14 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPLICATION_WITHDRAWN.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.APPROVED_AWAITING_CLIENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.ARCHIVE.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_PROPERTY_CONSTRUCTION.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.AWAITING_SELLER_DEVELOPER.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_APPROVED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.BANK_DECLINED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CREDIT_ASSESSMENT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.FINAL_DOCUMENTS_COMPLETED.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.INCOMPLETE_SUBMISSION.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.INITIAL_DOCUMENTS_COMPLETED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.LOAN_BOOKED.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
@@ -950,6 +1051,9 @@ export let adminProfileRoute: ServerRoute[] = [
 								LoanConstant.EMPLOYMENT_TYPE.PRIVATE.value,
 								LoanConstant.EMPLOYMENT_TYPE.PROFESSIONAL.value,
 								LoanConstant.EMPLOYMENT_TYPE.SELF.value,
+								LoanConstant.EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+								LoanConstant.EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+								LoanConstant.EMPLOYMENT_TYPE.FREELANCER.value
 							]),
 							tin: Joi.string(),
 							companyName: Joi.string(),
@@ -1195,6 +1299,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					applicationStatus: Joi.string().valid([
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.DRAFT.value,
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
+						Constant.DATABASE.LOAN_APPLICATION_STATUS.INCOMPLETE_SUBMISSION.value
 					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value),
 					bankInfo: Joi.object().keys({
 						iconUrl: Joi.string().allow(''),
@@ -1290,10 +1395,6 @@ export let adminProfileRoute: ServerRoute[] = [
 							Constant.DATABASE.PROPERTY_CLASSIFICATION.REM
 						 ]),
 					}),
-					// propertyClassification:Joi.string().valid([
-					// 	Constant.DATABASE.PROPERTY_CLASSIFICATION.DOU,
-					// 	Constant.DATABASE.PROPERTY_CLASSIFICATION.REM
-					// ]),
 					loanAttorneyInfo:{
 						name:Joi.string().allow(''),
 						contactNumber: Joi.number().allow(''),
@@ -1354,6 +1455,9 @@ export let adminProfileRoute: ServerRoute[] = [
 								LoanConstant.EMPLOYMENT_TYPE.PRIVATE.value,
 								LoanConstant.EMPLOYMENT_TYPE.PROFESSIONAL.value,
 								LoanConstant.EMPLOYMENT_TYPE.SELF.value,
+								LoanConstant.EMPLOYMENT_TYPE.COMMISSION_BASED.value,
+								LoanConstant.EMPLOYMENT_TYPE.FOREIGN_NATIONALS.value,
+								LoanConstant.EMPLOYMENT_TYPE.FREELANCER.value
 							]),
 							tin: Joi.string(),
 							companyName: Joi.string(),

@@ -103,6 +103,14 @@ export let DATABASE = {
 			label: 'Awaiting- Seller/Developer',
 			value: 'AWAITING_SELLER_DEVELOPER'
 		},
+		AWAITING_PROPERTY_CONSTRUCTION: {
+			label: 'Awaiting- Property Construction',
+			value: 'AWAITING_PROPERTY_CONSTRUCTION'
+		},
+		INCOMPLETE_SUBMISSION:{
+			label:"Incomplete Submission",
+			value:"INCOMPLETE_SUBMISSION"
+		}
 
 	},
 	EMPLOYMENT: {
@@ -392,6 +400,11 @@ export let DATABASE = {
 			UPDATE_STATUS: 'UPDATE_STATUS',
 		},
 	},
+	NOTIFICATION_TYPE:{
+		IMAGE:'image',
+		PERSONAL_DETAIL:'personal-detail',
+
+	},
 
 	RESEND_OTP_TYPE: {
 		REGISTER: 'REGISTER',
@@ -503,7 +516,7 @@ export let STATUS_MSG = {
 			INVALID_LOGIN: {
 				statusCode: 400,
 				type: 'INVALID_LOGIN',
-				message: 'Entered username/email is not registered with us!',
+				message: 'Email is not registered with us!',
 			},
 			USER_NOT_REGISTERED: {
 				statusCode: 400,
