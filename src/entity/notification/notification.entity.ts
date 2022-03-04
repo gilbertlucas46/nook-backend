@@ -21,7 +21,25 @@ class NotificationEntities extends BaseEntity {
 
   async saveNotification(payload) {
     try {
-      this.DAOManager.insert("Notification", { payload }, { new: true });
+      let notificationMessage=''
+      if(Constant.DATABASE.NOTIFICATION_TYPE.IMAGE===payload.notificationType){
+            notificationMessage =payload.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.IMAGE_MSG
+    }
+    else if(Constant.DATABASE.NOTIFICATION_TYPE.PERSONAL_DETAIL===payload.notificationType){
+            notificationMessage =payload.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.PERSONAL_MSG
+    }
+    else{
+      notificationMessage =payload.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.BOTH_MSG
+    }
+    let data={
+      loanId:payload['loanId'],
+      notificationType:payload['notificationType'],
+      message:notificationMessage,
+      userId:payload['userId'],
+      isread:false,
+      createdAt:payload['createdAt']
+    }
+    this.DAOManager.insert("Notification", { data }, { new: true });
     } catch (error) {
       return Promise.reject(error);
     }
