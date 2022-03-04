@@ -21,15 +21,16 @@ class NotificationEntities extends BaseEntity {
 
   async saveNotification(payload) {
     try {
-      let notificationMessage=''
+      let notificationMessage='';
+      let name=payload['personalInfo']['firstName'];
       if(Constant.DATABASE.NOTIFICATION_TYPE.IMAGE===payload.notificationType){
-            notificationMessage =payload.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.IMAGE_MSG
+            notificationMessage = name + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.IMAGE_MSG;
     }
     else if(Constant.DATABASE.NOTIFICATION_TYPE.PERSONAL_DETAIL===payload.notificationType){
-            notificationMessage =payload.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.PERSONAL_MSG
+            notificationMessage = name + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.PERSONAL_MSG;
     }
     else{
-      notificationMessage = payload.personalInfo.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.BOTH_MSG
+      notificationMessage = name + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.BOTH_MSG;
     }
     let data={
       loanId:payload.loanId,
