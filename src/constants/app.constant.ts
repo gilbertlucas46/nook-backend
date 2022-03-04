@@ -403,6 +403,7 @@ export let DATABASE = {
 	NOTIFICATION_TYPE:{
 		IMAGE:'image',
 		PERSONAL_DETAIL:'personal-detail',
+		BOTH:'both'
 
 	},
 

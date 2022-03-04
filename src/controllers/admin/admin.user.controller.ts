@@ -29,17 +29,17 @@ class AdminUserControllers {
     async addUser(payload: AdminRequest.IAddUser) {
         try {
             const checkMail = { email: payload.email };
-            const checkUserName = { userName: payload.userName };
-            const userNameCheck: AdminRequest.IAddUser = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
-            if (userNameCheck && userNameCheck._id) {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
-            } else {
+            // const checkUserName = { userName: payload.userName };
+            // // const userNameCheck: AdminRequest.IAddUser = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
+            // if (userNameCheck && userNameCheck._id) {
+            //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
+            // } else {
                 const UserCheck: AdminRequest.IcreateUser = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']);
                 if (UserCheck && UserCheck._id) {
                     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
                 } else {
                     const generateString = generateRandomString(4);
-                    const genCredentials = `${(payload.userName).replace(/ /g, '')}${generateString}`;
+                    const genCredentials = `${(payload.firstName).replace(/ /g, '')}${generateString}`;
                     const hashPassword = await utils.encryptWordpressHashNode(genCredentials);
                     const userData = {
                         ...payload,
@@ -80,7 +80,7 @@ class AdminUserControllers {
                     await mail.welcomeStaffUSer(sendObj);
                     return userResponse;
                 }
-            }
+            //  }
         } catch (error) {
             return Promise.reject(error);
         }
@@ -89,20 +89,20 @@ class AdminUserControllers {
     async createUser(payload: AdminRequest.IcreateUser) {
         try {
             const checkMail = { email: payload.email.trim().toLowerCase() };
-            const checkUserName = { userName: payload.userName.trim().toLowerCase() };
-            const userNameCheck: AdminRequest.IcreateUser = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
-            if (userNameCheck && userNameCheck._id) {
-                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
-            } else {
+            // const checkUserName = { userName: payload.userName.trim().toLowerCase() };
+            // const userNameCheck: AdminRequest.IcreateUser = await ENTITY.UserE.getOneEntity(checkUserName, ['username', '_id']);
+            // if (userNameCheck && userNameCheck._id) {
+            //     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
+            // } else {
                 const UserCheck: AdminRequest.IcreateUser = await ENTITY.UserE.getOneEntity(checkMail, ['email', '_id']);
                 if (UserCheck && UserCheck._id) {
                     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
                 } else {
                     const generateString = generateRandomString(4);
-                    const genCredentials = `${(payload.userName).replace(/ /g, '')}${generateString}`;
+                    const genCredentials = `${(payload.firstName).replace(/ /g, '')}${generateString}`;
                     const hashPassword = await utils.encryptWordpressHashNode(genCredentials);
                     const userData = {
-                        userName: payload.userName.trim().toLowerCase(),
+                        // userName: payload.userName.trim().toLowerCase(),
                         email: payload.email.trim().toLowerCase(),
                         password: hashPassword,
                         // isEmailVerified: true,
@@ -114,7 +114,7 @@ class AdminUserControllers {
                     AdminUserEntity.sendInvitationMail(payload.email, genCredentials);
                     return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, userResponse);
                 }
-            }
+            // }
         } catch (error) {
             utils.consolelog('error', error, true);
             return Promise.reject(error);
@@ -188,7 +188,7 @@ class AdminUserControllers {
                 _id: 1,
                 status: 1,
                 type: 1,
-                userName: 1,
+                // userName: 1,
                 email: 1,
                 profilePicUrl: 1,
                 firstName: 1,
@@ -223,19 +223,19 @@ class AdminUserControllers {
             const checkEmailCriteria = {
                 email: payload.email,
             };
-            const checkUserName = { userName: payload.userName };
+            // const checkUserName = { userName: payload.userName };
             if (getUserData && getUserData.email !== payload.email) {
                 const checkByEmail = await ENTITY.UserE.getOneEntity(checkEmailCriteria, ['_id', 'email']);
                 if (checkByEmail && checkByEmail._id) {
                     return Promise.reject(Constant.STATUS_MSG.ERROR.E400.EMAIL_ALREADY_TAKEN);
                 }
             }
-            if (getUserData && getUserData.userName !== payload.userName) {
-                const checkByUserName = await ENTITY.UserE.getOneEntity(checkUserName, ['_id', 'userName']);
-                if (checkByUserName && checkByUserName._id) {
-                    return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
-                }
-            }
+            // if (getUserData && getUserData.userName !== payload.userName) {
+            //     const checkByUserName = await ENTITY.UserE.getOneEntity(checkUserName, ['_id', 'userName']);
+            //     if (checkByUserName && checkByUserName._id) {
+            //         return Promise.reject(Constant.STATUS_MSG.ERROR.E400.USER_NAME_ALREDY_TAKEN);
+            //     }
+            // }
             const updatedUser = await ENTITY.UserE.updateOneEntity(criteria, payload, { lean: true, new: true });
 
             if (updatedUser.email !== getUserData.email) {
