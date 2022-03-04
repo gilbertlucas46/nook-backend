@@ -29,7 +29,7 @@ class NotificationEntities extends BaseEntity {
             notificationMessage =payload.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.PERSONAL_MSG
     }
     else{
-      notificationMessage =payload.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.BOTH_MSG
+      notificationMessage = payload.personalInfo.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.BOTH_MSG
     }
     let data={
       loanId:payload.loanId,
