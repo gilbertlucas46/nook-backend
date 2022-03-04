@@ -38,7 +38,7 @@ class NotificationEntities extends BaseEntity {
       isread:false,
       createdAt:payload.createdAt
     }
-    this.DAOManager.insert("Notification", { data }, { new: true });
+    this.DAOManager.saveData("Notification", data);
     } catch (error) {
       return Promise.reject(error);
     }
