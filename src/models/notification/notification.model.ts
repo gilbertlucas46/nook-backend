@@ -5,7 +5,7 @@ export interface INotification extends Document {
   loanId?: Schema.Types.ObjectId;
   notificationType?:String;
   message: string;
-  userId?:Schema.Types.ObjectId;
+  // userId?:Schema.Types.ObjectId;
   isRead: boolean;
   createdAt: number;
 }
@@ -33,7 +33,7 @@ const notificationSchema = new Schema({
     type: String,
     enum: Object.values(CONSTANT.DATABASE.NOTIFICATION_TYPE),
   },
-  userId: { type: Schema.Types.ObjectId, required: true },
+  // userId: { type: Schema.Types.ObjectId, required: true },
   // userName:{type:String},
   message: { type: String},
   isRead: { type: Boolean, default: false },

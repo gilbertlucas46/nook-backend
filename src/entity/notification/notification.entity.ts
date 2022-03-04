@@ -32,12 +32,11 @@ class NotificationEntities extends BaseEntity {
       notificationMessage =payload.firstName + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.BOTH_MSG
     }
     let data={
-      loanId:payload['loanId'],
-      notificationType:payload['notificationType'],
+      loanId:payload.loanId,
+      notificationType:payload.notificationType,
       message:notificationMessage,
-      userId:payload['userId'],
       isread:false,
-      createdAt:payload['createdAt']
+      createdAt:payload.createdAt
     }
     this.DAOManager.insert("Notification", { data }, { new: true });
     } catch (error) {
