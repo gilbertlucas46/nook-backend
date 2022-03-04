@@ -32,7 +32,7 @@ class AdminUserE extends BaseEntity {
                 searchCriteria = {
                     $match: {
                         $or: [
-                            { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
+                            // { userName: new RegExp('.*' + searchTerm + '.*', 'i') },
                             { email: new RegExp('.*' + searchTerm + '.*', 'i') },
                             { firstName: new RegExp('.*' + searchTerm + '.*', 'i') },
                             { middleName: new RegExp('.*' + searchTerm + '.*', 'i') },
@@ -57,12 +57,12 @@ class AdminUserE extends BaseEntity {
 
             if (sortBy) {
                 switch (sortBy) {
-                    case 'userName':
-                        sortBy = 'userName';
-                        sortingType = {
-                            userName: sortType,
-                        };
-                        break;
+                    // case 'userName':
+                    //     sortBy = 'userName';
+                    //     sortingType = {
+                    //         userName: sortType,
+                    //     };
+                    //     break;
                     case 'date':
                         sortBy = 'date';
                         sortingType = {

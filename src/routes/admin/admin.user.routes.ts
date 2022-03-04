@@ -35,7 +35,7 @@ export let adminUserRoutes: ServerRoute[] = [
 			validate: {
 				payload: {
 					email: Joi.string().lowercase().email().trim().required(),
-					userName: Joi.string().lowercase().trim().required(),
+					// userName: Joi.string().lowercase().trim().required(),
 					firstName: Joi.string().min(3).max(30).trim().required(),
 					middleName: Joi.string().trim().allow('').required(),
 					lastName: Joi.string().min(3).max(30).trim().required(),
@@ -222,7 +222,7 @@ export let adminUserRoutes: ServerRoute[] = [
 					userId: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
 				},
 				payload: {
-					userName: Joi.string().lowercase().required(),
+					// userName: Joi.string().lowercase().required(),
 					email: Joi.string().email().lowercase().required(),
 					firstName: Joi.string().trim().min(3).max(30),
 					middleName: Joi.string().trim().allow(''),
