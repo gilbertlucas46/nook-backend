@@ -226,8 +226,8 @@ class PreLoanEntities extends BaseEntity {
                 },
                 {
                     $match: {
-                        'propertySpecification.allowedPropertyType': payload.property.type,
-                        'propertySpecification.allowedPropertyStatus': payload.property.status,
+                        'propertySpecification.allowedPropertyType': 'APARTMENT',
+                        'propertySpecification.allowedPropertyStatus': 'FORECLOSED',
                     },
                 },
                 {
@@ -259,9 +259,9 @@ class PreLoanEntities extends BaseEntity {
             if (data.length > 0) {
                 function GetFormattedDate(date) {
                     const todayTime = new Date(date);
-                    const month = (todayTime.getMonth() + 1);
-                    const day = (todayTime.getDate());
-                    const year = (todayTime.getFullYear());
+                    const month = (todayTime.getUTCMonth() + 1);
+                    const day = (todayTime.getUTCDate());
+                    const year = (todayTime.getUTCFullYear());
                     console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
                     return day + '-' + month + '-' + year;
                 }
