@@ -403,7 +403,13 @@ export let DATABASE = {
 	NOTIFICATION_TYPE:{
 		IMAGE:'image',
 		PERSONAL_DETAIL:'personal-detail',
+		BOTH:'both'
 
+	},
+	NOTIFICATION_MESSAGE:{
+		IMAGE_MSG:'had made the changes in Documents',
+		PERSONAL_MSG:'had made the changes in Personal Detail',
+		BOTH_MSG:'had made the changes in Loan Application'
 	},
 
 	RESEND_OTP_TYPE: {
