@@ -131,7 +131,7 @@ class PreLoanEntities extends BaseEntity {
                             $elemMatch: {
                                 $and: [
                                     { employmentType: payload.employmentInfo.type },
-                                    { employmentRank: payload.employmentInfo.rank },
+                                    // { employmentRank: payload.employmentInfo.rank },
                                     { minEmploymentTenure: { $lte: Constant.EMPLOYMENT_TENURE[`${payload.employmentInfo.tenure}`].value.min } },
                                 ],
                             },
