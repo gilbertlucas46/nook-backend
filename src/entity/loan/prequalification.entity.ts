@@ -224,12 +224,12 @@ class PreLoanEntities extends BaseEntity {
                         preserveNullAndEmptyArrays: true,
                     },
                 },
-                // {
-                //     // $match: {
-                //     //     'propertySpecification.allowedPropertyType': 'APARTMENT',
-                //     //     'propertySpecification.allowedPropertyStatus': 'FORECLOSED',
-                //     // },
-                // },
+                {
+                    $match: {
+                        'propertySpecification.allowedPropertyType': payload.property.type,
+                        'propertySpecification.allowedPropertyStatus': payload.property.status,
+                    },
+                },
                 {
                     $addFields: {
                         debtIncomeRatio: '$propertySpecification.debtIncomeRatio',
