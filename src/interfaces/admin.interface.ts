@@ -119,13 +119,13 @@ export namespace AdminRequest {
 		lastName?: string;
 		phoneNumber?: string;
 		type?: string;
-		userName: string;
+		//  userName: string;
 	}
 
 	export interface IAddUser {
 		_id: string;
 		email: string;
-		userName: string;
+		// userName: string;
 		firstName: string;
 		middleName: string;
 		lastName: string;
@@ -157,7 +157,7 @@ export namespace AdminRequest {
 	export interface IUpdateUser {
 		userId: string;
 		email: string;
-		userName: string;
+		// userName: string;
 		firstName: string;
 		middleName: string;
 		lastName: string;

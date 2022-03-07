@@ -2,9 +2,10 @@ import { Schema, model, Document } from "mongoose";
 import * as CONSTANT from "@src/constants/app.constant";
 
 export interface INotification extends Document {
-  referralId?: Schema.Types.ObjectId;
-  // userName:string;
+  loanId?: Schema.Types.ObjectId;
+  notificationType?:String;
   message: string;
+  // userId?:Schema.Types.ObjectId;
   isRead: boolean;
   createdAt: number;
 }
@@ -13,7 +14,7 @@ export interface INotification extends Document {
  * @description used to track the notification history
  */
 const notificationSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, required: true },
+  _id: { type: Schema.Types.ObjectId, required: true, auto: true },
   loanId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -32,9 +33,9 @@ const notificationSchema = new Schema({
     type: String,
     enum: Object.values(CONSTANT.DATABASE.NOTIFICATION_TYPE),
   },
-  userId: { type: Schema.Types.ObjectId, required: true },
+  // userId: { type: Schema.Types.ObjectId, required: true },
   // userName:{type:String},
-  //   message: { type: String, required: true },
+  message: { type: String},
   isRead: { type: Boolean, default: false },
   createdAt: { type: Number, default: Date.now },
 });

@@ -661,7 +661,8 @@ export let loanRoute: ServerRoute[] = [
 					}),
 					notificationType:Joi.string().valid(
 						Constant.DATABASE.NOTIFICATION_TYPE.IMAGE,
-						Constant.DATABASE.NOTIFICATION_TYPE.PERSONAL_DETAIL
+						Constant.DATABASE.NOTIFICATION_TYPE.PERSONAL_DETAIL,
+						Constant.DATABASE.NOTIFICATION_TYPE.BOTH
 					),
 					
 					propertyInfo: {
