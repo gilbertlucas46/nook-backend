@@ -59,7 +59,7 @@ export namespace PreQualificationRequest {
             firstName?: string;
             lastName?: string;
             middleName?: string;
-            userName?: string;
+            // userName?: string;
             email?: string;
         };
         loan: {
