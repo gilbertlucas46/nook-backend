@@ -259,9 +259,9 @@ class PreLoanEntities extends BaseEntity {
             if (data.length > 0) {
                 function GetFormattedDate(date) {
                     const todayTime = new Date(date);
-                    const month = (todayTime.getUTCMonth() + 1);
-                    const day = (todayTime.getUTCDate());
-                    const year = (todayTime.getUTCFullYear());
+                    const month = (todayTime.getMonth());
+                    const day = (todayTime.getDate());
+                    const year = (todayTime.getFullYear());
                     console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
                     return day + '-' + month + '-' + year;
                 }
