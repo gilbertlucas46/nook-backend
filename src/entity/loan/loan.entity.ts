@@ -230,8 +230,8 @@ class LoanEntities extends BaseEntity {
                 },
                 {
                     $match: {
-                        'propertySpecification.allowedPropertyType': 'APARTMENT',
-                        'propertySpecification.allowedPropertyStatus': 'FORECLOSED',
+                        'propertySpecification.allowedPropertyType': payload.property.type,
+                        'propertySpecification.allowedPropertyStatus': payload.property.status,
                     },
                 },
                 {

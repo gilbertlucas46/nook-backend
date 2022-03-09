@@ -147,6 +147,7 @@ class LoanControllers extends BaseEntity {
             //     adminName: userData.firstName + '' + userData.lastName,
             // };
             const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
+            // console.log("data before update",data)
             payload['referenceId']=data['referenceId'];
             payload['userId']=userData._id;
             if(payload.notificationType){
@@ -323,7 +324,7 @@ class LoanControllers extends BaseEntity {
             async function GetFormattedDate(date) {
                 const todayTime = new Date(date);
                 const month = (todayTime.getMonth() + 1);
-                const day = (todayTime.getDate());
+                const day = (todayTime.getDate()+ 1);
                 const year = (todayTime.getFullYear());
                 console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
                 return day + '-' + month + '-' + year;
