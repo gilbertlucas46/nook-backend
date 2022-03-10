@@ -56,6 +56,8 @@ class HistoryEntities extends BaseEntity {
     
   async getDifference(prevData, newData) {
     let allID:String[]=["assignedTo","_id","adminId","userId","bankId"];
+    let keyCheck:String[]=["personalInfo","contactInfo","employmentInfo","bankInfo","propertyInfo","loanDetails","documents" ];
+	let keyCheck2:String[]=[ "legalDocument" ,"incomeDocument","colleteralDoc","applicationStatus","creditCard","spouseInfo","coBorrowerInfo","prevLoans" ,"currentAddress","permanentAddress","previousAddress"]
         function changes(newData, prevData) {
             let arrayIndexCounter = 0
 
