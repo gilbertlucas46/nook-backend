@@ -53,8 +53,8 @@ class LoanApplicationE extends BaseEntity {
             const newData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
             // console.log("newdata=============>>>>>>",newData);
             const differenceData= await ENTITY.HistoryE.getDifference(prevData, newData);
-            const updateBy= data['applicationStage']['adminName'];
-            console.log("><======differencedata=============>>", differenceData);
+             const updateBy= data['applicationStage']['adminName'];
+            // console.log("><======differencedata=============>>", differenceData);
             // console.log("updateBy", updateBy)
             // await ENTITY.HistoryE.saveHistory(prevData,differenceData,updateBy);
             // send data to sales-force
