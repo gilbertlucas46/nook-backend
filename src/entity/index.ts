@@ -1,3 +1,4 @@
+import { HistoryE } from './history/history.entity';
 import { NotificationE } from '@src/entity/notification/notification.entity';
 export { UserE } from './user/user.entity';
 export { SessionE } from './user/session.entity';
@@ -23,3 +24,4 @@ export { BankE } from './banks/banks.entity';
 export { PartnerE } from './partner/partner.entity';
 export { HelpCenterCatgoryE } from './helpCenter/helpcenter.category.entity';
 export{NotificationE} from './notification/notification.entity';
+export{HistoryE} from './history/history.entity'
