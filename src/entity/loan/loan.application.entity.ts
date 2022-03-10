@@ -74,7 +74,7 @@ class LoanApplicationE extends BaseEntity {
                
                return changes(newObj, origObj)
              }
-             const diffData= getDifference(prevData,newData)
+             const diffData= await getDifference(prevData,newData)
              console.log(diffData)
             // ENTITY.HistoryE.saveHistory(prevData,newData,updateBy);
             // send data to sales-force
