@@ -108,16 +108,19 @@ class HistoryEntities extends BaseEntity {
                    }
                if(key ==="documents"){
                    
-                   for (let key1 in value){
+                for (let key1 in value){
+                    if(key1!=="purchasePropertyInfo"){
+                    for (let key3=0; key3<value[key1].length;key3++){
+                         if(JSON.stringify(value[key1][key3])!==JSON.stringify(val1[key1][key3])){
+                            message.push( `Had made the change in ${key1}` );
+                        }
+                    }
                    
-                       for (let key3=0; key3<val1[key1].length;key3++){
-                            if(JSON.stringify(value[key1][key3])!==JSON.stringify(val1[key1][key3])){
-       
-                               message.push( `Had made the change in ${key1}` );
-                           }       
-                     }
-                  }
+                }if(key1==="purchasePropertyInfo" && JSON.stringify(value[key1])!==JSON.stringify(val1[key1]) ){
+                    message.push(`Had made the change in ${key1}`)
                 }
+                }
+            }
                if(key ==="dependentsInfo" || key === "tradeReferences"){
                    for (let key1 in value){
                        if(JSON.stringify(value[key1])!==JSON.stringify(val1[key1])){
