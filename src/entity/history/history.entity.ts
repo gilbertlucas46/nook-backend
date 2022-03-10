@@ -54,27 +54,27 @@ class HistoryEntities extends BaseEntity {
 //     }
 //   }
     
-//   async getDifference(origObj, newObj) {
-//     let allID:String[]=["assignedTo","_id","adminId","userId","bankId"]
-//     debugger;
-//    async function changes(newObj, origObj) {
-//      let arrayIndexCounter = 0
-//      return _.transform(newObj, function (result, value, key) {
-//          if(allID.indexOf(key)===-1){
-//        //   console.log("keyyyyyyy",key)
-//        if (!_.isEqual(value, origObj[key])) {
-//          let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key
-//          if(allID.indexOf(resultKey)===-1){
-//            //   console.log(resultKey)
-//          result[resultKey] = (_.isObject(value) && _.isObject(origObj[key])) ? changes(value, origObj[key]) : value
-//          }
-//        }
-//    }
-//        // if(!Object.values(result).length) delete result
-//      })
-//    }
-//    return changes(newObj, origObj)
-//  }
+  async getDifference(origObj, newObj) {
+    let allID:String[]=["assignedTo","_id","adminId","userId","bankId"]
+    debugger;
+   async function changes(newObj, origObj) {
+     let arrayIndexCounter = 0
+     return _.transform(newObj, function (result, value, key) {
+         if(allID.indexOf(key)===-1){
+       //   console.log("keyyyyyyy",key)
+       if (!_.isEqual(value, origObj[key])) {
+         let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key
+         if(allID.indexOf(resultKey)===-1){
+           //   console.log(resultKey)
+         result[resultKey] = (_.isObject(value) && _.isObject(origObj[key])) ? changes(value, origObj[key]) : value
+         }
+       }
+   }
+       // if(!Object.values(result).length) delete result
+     })
+   }
+   return changes(newObj, origObj)
+ }
 
     async saveHistory(prevData,diffData,updatedBy) {
             

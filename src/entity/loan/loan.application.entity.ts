@@ -1,5 +1,6 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as ENTITY from '@src/entity';
+import * as _ from 'lodash';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
@@ -51,8 +52,31 @@ class LoanApplicationE extends BaseEntity {
             const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
             const newData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
             const updateBy= data['applicationStage']['adminName'];
-             console.log("updateBy", updateBy)
-            ENTITY.HistoryE.saveHistory(prevData,newData,updateBy);
+            function getDifference(origObj, newObj) {
+                let allID:String[]=["assignedTo","_id","adminId","userId","bankId"]
+                debugger;
+                function changes(newObj, origObj) {
+                 let arrayIndexCounter = 0
+                 return _.transform(newObj, function (result, value, key) {
+                     if(allID.indexOf(key)===-1){
+                   //   console.log("keyyyyyyy",key)
+                   if (!_.isEqual(value, origObj[key])) {
+                     let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key
+                     if(allID.indexOf(resultKey)===-1){
+                       //   console.log(resultKey)
+                     result[resultKey] = (_.isObject(value) && _.isObject(origObj[key])) ? changes(value, origObj[key]) : value
+                     }
+                   }
+               }
+                   // if(!Object.values(result).length) delete result
+                 })
+               }
+               
+               return changes(newObj, origObj)
+             }
+             const diffData= getDifference(prevData,newData)
+             console.log(diffData)
+            // ENTITY.HistoryE.saveHistory(prevData,newData,updateBy);
             // send data to sales-force
             await this.sendApplication(data);
 
