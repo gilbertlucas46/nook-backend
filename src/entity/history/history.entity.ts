@@ -67,8 +67,8 @@ class HistoryEntities extends BaseEntity {
                 let resultKey = lodash.isArray(prevData) ? arrayIndexCounter++ : key
                 if(allID.indexOf(resultKey)===-1){
                 result[resultKey] = (lodash.isObject(value) && lodash.isObject(prevData[key])) ? changes(value, prevData[key]) : value
-                console.log(result)
-                console.log(result[resultKey])
+                // console.log(result)
+                // console.log(result[resultKey])
                 }
               }
             }
