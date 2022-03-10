@@ -1,6 +1,6 @@
 
 import { BaseEntity } from "@src/entity/base/base.entity";
-import * as lodash from 'lodash';
+import * as _ from 'lodash';
 import * as Constant from "@src/constants";
 import { Types } from "mongoose";
 import { LoanRequest } from "@src/interfaces/loan.interface";
@@ -54,29 +54,27 @@ class HistoryEntities extends BaseEntity {
 //     }
 //   }
     
-  async getDifference(prevData, newData) {
-    let allID:String[]=["assignedTo","_id","adminId","userId","bankId"];
-    let keyCheck:String[]=["personalInfo","contactInfo","employmentInfo","bankInfo","propertyInfo","loanDetails","documents" ];
-	let keyCheck2:String[]=[ "legalDocument" ,"incomeDocument","colleteralDoc","applicationStatus","creditCard","spouseInfo","coBorrowerInfo","prevLoans" ,"currentAddress","permanentAddress","previousAddress"]
-        function changes(newData, prevData) {
-            let arrayIndexCounter = 0
-
-            return lodash.transform(newData, function (result, value, key) {
-             if(allID.indexOf(key)===-1){
-              if (lodash.isEqual(value, prevData[key])) {
-                let resultKey = lodash.isArray(prevData) ? arrayIndexCounter++ : key
-                if(allID.indexOf(resultKey)===-1){
-                result[resultKey] = (lodash.isObject(value) && lodash.isObject(prevData[key])) ? changes(value, prevData[key]) : value
-                // console.log(result)
-                // console.log(result[resultKey])
-                }
-              }
-            }
-              // if(!Object.values(result).length) delete result
-            })
-          }
-          return changes(newData, prevData)
-        }
+  async getDifference(origObj, newObj) {
+    let allID:String[]=["assignedTo","_id","adminId","userId","bankId"]
+    debugger;
+   function changes(newObj, origObj) {
+     let arrayIndexCounter = 0
+     return _.transform(newObj, function (result, value, key) {
+         if(allID.indexOf(key)===-1){
+       //   console.log("keyyyyyyy",key)
+       if (!_.isEqual(value, origObj[key])) {
+         let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key
+         if(allID.indexOf(resultKey)===-1){
+           //   console.log(resultKey)
+         result[resultKey] = (_.isObject(value) && _.isObject(origObj[key])) ? changes(value, origObj[key]) : value
+         }
+       }
+   }
+       // if(!Object.values(result).length) delete result
+     })
+   }
+   return changes(newObj, origObj)
+ }
 
     async saveHistory(prevData,diffData,updatedBy) {
             

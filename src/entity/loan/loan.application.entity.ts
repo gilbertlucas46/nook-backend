@@ -46,7 +46,7 @@ class LoanApplicationE extends BaseEntity {
      */
     async updateLoanApplication(payload) {
         try {
-
+            console.log("payloadddddddd===>>",payload)
             const prevData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{})
             // console.log(prevData)
             const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
