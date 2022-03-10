@@ -57,7 +57,7 @@ class HistoryEntities extends BaseEntity {
   async getDifference(origObj, newObj) {
     let allID:String[]=["assignedTo","_id","adminId","userId","bankId"]
     debugger;
-   function changes(newObj, origObj) {
+   async function changes(newObj, origObj) {
      let arrayIndexCounter = 0
      return _.transform(newObj, function (result, value, key) {
          if(allID.indexOf(key)===-1){
