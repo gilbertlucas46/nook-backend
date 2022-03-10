@@ -57,14 +57,16 @@ class HistoryEntities extends BaseEntity {
   async getDifference(prevData, newData) {
         function changes(newData, prevData) {
             let arrayIndexCounter = 0
+
             return lodash.transform(newData, function (result, value, key) {
-                
+             if(key!=="_id"){
               if (lodash.isEqual(value, prevData[key])) {
                 let resultKey = lodash.isArray(prevData) ? arrayIndexCounter++ : key
                 result[resultKey] = (lodash.isObject(value) && lodash.isObject(prevData[key])) ? changes(value, prevData[key]) : value
                 console.log(result)
                 console.log(result[resultKey])
               }
+            }
               // if(!Object.values(result).length) delete result
             })
           }
