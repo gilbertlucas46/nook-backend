@@ -54,74 +54,84 @@ class HistoryEntities extends BaseEntity {
 //     }
 //   }
     
-  async getDifference(origObj, newObj) {
-    let allID:String[]=["assignedTo","_id","adminId","userId","bankId"]
-    debugger;
-   async function changes(newObj, origObj) {
-     let arrayIndexCounter = 0
-     return _.transform(newObj, function (result, value, key) {
-         if(allID.indexOf(key)===-1){
-       //   console.log("keyyyyyyy",key)
-       if (!_.isEqual(value, origObj[key])) {
-         let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key
-         if(allID.indexOf(resultKey)===-1){
-           //   console.log(resultKey)
-         result[resultKey] = (_.isObject(value) && _.isObject(origObj[key])) ? changes(value, origObj[key]) : value
-         }
-       }
-   }
-       // if(!Object.values(result).length) delete result
-     })
-   }
-   return changes(newObj, origObj)
- }
+//   async getDifference(origObj, newObj) {
+//     let allID:String[]=["assignedTo","_id","adminId","userId","bankId"]
+//     debugger;
+//    async function changes(newObj, origObj) {
+//      let arrayIndexCounter = 0
+//      return _.transform(newObj, function (result, value, key) {
+//          if(allID.indexOf(key)===-1){
+//        //   console.log("keyyyyyyy",key)
+//        if (!_.isEqual(value, origObj[key])) {
+//          let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key
+//          if(allID.indexOf(resultKey)===-1){
+//            //   console.log(resultKey)
+//          result[resultKey] = (_.isObject(value) && _.isObject(origObj[key])) ? changes(value, origObj[key]) : value
+//          }
+//        }
+//    }
+//        // if(!Object.values(result).length) delete result
+//      })
+//    }
+//    return changes(newObj, origObj)
+//  }
 
     async saveHistory(prevData,diffData,updatedBy) {
             
         try {
             let message:string[]=[]
             for (let key in diffData) {
-                let NewValue = diffData[key];
-                let preValue=prevData[key];
-                 
-                   // if(keyCheck.indexOf(key)!==-1 && key!=="applicationStatus"&& key!=="documents"&& key!=="dependentsInfo")
-                if(Constant.DATABASE.KEY_CHECK.indexOf(key)!==-1 && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key)===-1){
-                    for (let key1 in NewValue){
-                        if(Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)===-1){
-                            preValue[key1] = String(preValue[key1]).length ? preValue[key1] : "Empty"
-                            message.push(`Changed ${key} > ${key1} from ${preValue[key1]} to ${NewValue[key1]}`); 
-                                       // `Changed ${key} ${key1} from ${val1[key1]} to ${value[key1]}`
-                       
-                        }
-                        if(Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)!==-1){
-                            message.push(`changed ${key1} in ${key}`); 
-                               // `changed ${key1} details in ${key}`
-                        }
-                    }
-                       
-                }
+                let value = diffData[key];
+                let val1=prevData[key];
+             
                
-                if(key==="applicationStatus" ){
-                    message.push(`changed ${key} from ${preValue} to ${NewValue}`); 
-                                       
-                }
-                   // if(key ==="documents"){
-                   //     for (let key1 in value){
-                   //         action.push( "had made the change in " + key1) ; 
-                          
-                   // }
-                   // }
-                if(key ==="dependentsInfo" || key === "tradeReferences"){
-                    message.push( `Had made the change in ${key}` );
-                          
+               if(Constant.DATABASE.KEY_CHECK.indexOf(key)!==-1 && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key)===-1){
+                   for (let key1 in value){
+                       if(Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)===-1 && val1[key1]!==value[key1]){
+                           val1[key1] = String(val1[key1]).length ? val1[key1] : "Empty"
+                           message.push(`Changed ${key} > ${key1} from ${val1[key1]} to ${value[key1]}`); 
+                                 
+                       }
+                       
+                       if(JSON.stringify(value[key1])!==JSON.stringify(val1[key1]) && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)!==-1 ){
+                       
+                           message.push(`changed ${key1} in ${key}`); 
                    
+                       }
+                   }
+                   
+               }
+           
+               if(key==="applicationStatus" && value[key]!==val1[key]){
+                           message.push(`changed ${key} from ${val1} to ${value}`); 
+                                   
+                   }
+               if(key ==="documents"){
+                   
+                   for (let key1 in value){
+                   
+                       for (let key3=0; key3<val1[key1].length;key3++){
+                            if(JSON.stringify(value[key1][key3])!==JSON.stringify(val1[key1][key3])){
+       
+                               message.push( `Had made the change in ${key1}` );
+                           }       
+                     }
+                  }
                 }
-            }
+               if(key ==="dependentsInfo" || key === "tradeReferences"){
+                   for (let key1 in value){
+                       if(JSON.stringify(value[key1])!==JSON.stringify(val1[key1])){
+                           message.push( `Had made the change in ${key}` );
+                       }
+                   }
+               }
+           }
+           console.log(message)
              
             let data={
               loanId:prevData.id,
               action:message,
-              user:updatedBy
+              user:updatedBy,
             }
             this.DAOManager.saveData("History", data);
             } catch (error) {
