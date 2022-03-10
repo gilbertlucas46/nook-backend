@@ -1,4 +1,5 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
+import * as ENTITY from '@src/entity';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
@@ -9,6 +10,7 @@ import { flattenObject } from '@src/utils';
 import { label } from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import { type } from 'os';
+import { entityTooLarge } from 'boom';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -45,7 +47,13 @@ class LoanApplicationE extends BaseEntity {
     async updateLoanApplication(payload) {
         try {
 
+            const prevData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{})
             const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
+            const differenceData= await ENTITY.HistoryE.getDifference(prevData, data);
+            const updateBy= payload['applicationStage']['adminName'];
+            console.log("differencedata", differenceData)
+            console.log("updateBy", updateBy)
+            await ENTITY.HistoryE.saveHistory(prevData,differenceData,updateBy);
             // send data to sales-force
             await this.sendApplication(data);
 
