@@ -419,12 +419,14 @@ class LoanControllers extends BaseEntity {
             const oldData = await ENTITY.LoanApplicationEntity.updateOneEntity(query, payload);
             const newData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
              const updateBy= adminData['name'];
-            
+            console.log("prevData======>",JSON.stringify(prevData))
+            console.log("oldData======>",JSON.stringify(oldData))
+            console.log("newData======>",JSON.stringify(newData))
             
              console.log("updateBy======>",updateBy);
 
 
-            await ENTITY.HistoryE.saveHistory(prevData,newData,updateBy);
+            await ENTITY.HistoryE.saveHistory(oldData,newData,updateBy);
             await LoanApplicationEntity.sendApplication(oldData)
 
             payload['changesMadeBy'] = {
