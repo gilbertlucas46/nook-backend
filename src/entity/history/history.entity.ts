@@ -151,7 +151,7 @@ return updatedLogList ;
                     if(key1!=="purchasePropertyInfo"){
                     for (let key3=0; key3<value[key1].length;key3++){
                        if((value[key1][key3]['url']!==val1[key1][key3]['url']) && counter<1){
-                          message.push( `Had made the change in ${key1} from ${val1[key1][key3]['url']} to ${value[key1][key3]['url']}` );
+                          message.push( `Had made the change in ${key1}` );
                           counter=1
                       }
                     }
