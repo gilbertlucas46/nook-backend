@@ -541,8 +541,10 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/user/loan/application',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
+
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
+				console.log("payload======...",payload)
 				const data = await LoanController.updateLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -664,7 +666,7 @@ export let loanRoute: ServerRoute[] = [
 						Constant.DATABASE.NOTIFICATION_TYPE.PERSONAL_DETAIL,
 						Constant.DATABASE.NOTIFICATION_TYPE.BOTH
 					),
-					
+
 					saveHistory:Joi.boolean(),
 
 
