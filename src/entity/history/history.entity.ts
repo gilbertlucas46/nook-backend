@@ -113,7 +113,7 @@ class HistoryEntities extends BaseEntity {
                     if(key1!=="purchasePropertyInfo"){
                     for (let key3=0; key3<value[key1].length;key3++){
                        if((value[key1][key3]['url']!==val1[key1][key3]['url']) && counter<1){
-                          message.push( `Had made the change in ${key1}` );
+                          message.push( `Had made the change in ${key1} ` );
                           counter=1
                       }
                     }
@@ -138,7 +138,8 @@ class HistoryEntities extends BaseEntity {
               action:message,
               updatedBy:diffData.applicationStage.adminName,
             }
-            this.DAOManager.saveData("History", data);
+            console.log(data)
+            this.DAOManager.saveData("history", data);
             } catch (error) {
               return Promise.reject(error);
             }
