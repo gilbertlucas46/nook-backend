@@ -109,10 +109,12 @@ class HistoryEntities extends BaseEntity {
                if(key ==="documents"){
                    
                 for (let key1 in value){
+                    let counter=0
                     if(key1!=="purchasePropertyInfo"){
                     for (let key3=0; key3<value[key1].length;key3++){
-                         if(JSON.stringify(value[key1][key3])!==JSON.stringify(val1[key1][key3])){
+                         if(JSON.stringify(value[key1][key3])!==JSON.stringify(val1[key1][key3]) && counter<1){
                             message.push( `Had made the change in ${key1}` );
+                            counter=1
                         }
                     }
                    
