@@ -76,7 +76,7 @@ class HistoryEntities extends BaseEntity {
 //    return await changes(newObj, origObj)
 //  }
     
-async updatedLogsList(payload:NotificationRequest.INotificationList) {
+async updatedLogsList(payload) {
   try {
     const { 
       limit = Constant.SERVER.LIMIT,
@@ -89,7 +89,6 @@ async updatedLogsList(payload:NotificationRequest.INotificationList) {
       limit: limit || Constant.SERVER.LIMIT,
   };
   const matchPipeline = [
-    
     {
         $sort: {
             _id: -1,

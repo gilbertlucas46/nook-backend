@@ -16,11 +16,14 @@ export let updateLogsRoute: ServerRoute[]=[
 
 {
     method: 'GET',
-    path: '/v1/admin/updateLogs',
+    path: '/v1/admin/updateLogs/{loanId}',
     handler: async (request, h) => {
         try {
             const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-            const payload:NotificationRequest.INotificationList=request.query as any;
+            const payload = {
+                ...request.params as any,
+                ...request.payload as any,
+            };
             const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.PRE_QUALIFICATION);
             const data= await ENTITY.HistoryE.updatedLogsList(payload);
             return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
@@ -34,6 +37,9 @@ export let updateLogsRoute: ServerRoute[]=[
         tags: ['api', 'anonymous', 'admin', 'notification'],
         auth: 'AdminAuth',
         validate: {
+            params: {
+                Id: Joi.string(),
+            },
             query: {
                 limit: Joi.number(),
                 page: Joi.number(),
