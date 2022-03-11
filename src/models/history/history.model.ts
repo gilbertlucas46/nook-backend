@@ -4,7 +4,7 @@ import * as CONSTANT from "@src/constants/app.constant";
 export interface IHistory extends Document {
   loanId?: Schema.Types.ObjectId;
   updatedBy?:String;
-  Action: string[];
+  action: string[];
   createdAt: number;
 }
 
@@ -17,13 +17,13 @@ const historySchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
   },
-  Action: {type:[{ type: String}]},
+  action: [{type:String}],
   updatedBy:{type:String},
   createdAt: { type: Number, default: Date.now },
 });
 
 // Export notification schema
 export let History = model<IHistory>(
-  "History",
+  "history",
   historySchema
 );
