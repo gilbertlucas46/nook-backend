@@ -3,7 +3,7 @@ import * as CONSTANT from "@src/constants/app.constant";
 
 export interface IHistory extends Document {
   loanId?: Schema.Types.ObjectId;
-  UpdatedBy?:String;
+  updatedBy?:String;
   Action: string[];
   createdAt: number;
 }
@@ -17,7 +17,8 @@ const historySchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
   },
-  Action: [{ type: String}],
+  Action: {type:[{ type: String}]},
+  updatedBy:{type:String},
   createdAt: { type: Number, default: Date.now },
 });
 
