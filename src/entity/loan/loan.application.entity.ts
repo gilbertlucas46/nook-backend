@@ -1,3 +1,4 @@
+
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as ENTITY from '@src/entity';
 import * as _ from 'lodash';
@@ -45,13 +46,13 @@ class LoanApplicationE extends BaseEntity {
      * @description saving loan applicationu
      * @param payload
      */
-    async updateLoanApplication(payload) {
+    async updateLoanApplication(payload,userData) {
         try {
          
             const prevData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
             const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
             // const newData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
-            const updateBy= prevData['applicationStage']['adminName'];
+            const updateBy= userData ? userData.firstName + ' ' + userData.lastName : userData.firstName;
             console.log("updateBy======>",updateBy);
              ENTITY.HistoryE.saveHistory(prevData,data,updateBy);
             // send data to sales-force
