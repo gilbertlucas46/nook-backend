@@ -144,7 +144,7 @@ class LoanControllers extends BaseEntity {
             //     adminId: userData._id,
             //     adminName: userData.firstName + '' + userData.lastName,
             // };
-            const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
+            const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload,userData);
             // console.log("data before update",data)
             payload['referenceId']=data['referenceId'];
             payload['userId']=userData._id;

@@ -136,7 +136,7 @@ class HistoryEntities extends BaseEntity {
             let data={
               loanId:prevData.id,
               action:message,
-              updatedBy:diffData.applicationStage.adminName,
+              updatedBy:updatedBy,
             }
             console.log(data)
             this.DAOManager.saveData("history", data);
