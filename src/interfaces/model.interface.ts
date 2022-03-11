@@ -19,5 +19,5 @@ export type ModelNames = 'User' |
     'LoanErrorCheck' |
     'Partner' |
     'Notification' |
-    "History"
+    "history"
     ;
