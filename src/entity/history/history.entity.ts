@@ -54,27 +54,65 @@ class HistoryEntities extends BaseEntity {
 //     }
 //   }
     
-  async getDifference(origObj, newObj) {
-    let allID:String[]=["assignedTo","_id","adminId","userId","bankId"]
-    debugger;
-     function changes(newObj, origObj) {
-     let arrayIndexCounter = 0
-     return  _.transform(newObj,async function (result, value, key) {
-         if(allID.indexOf(key)===-1){
-       //   console.log("keyyyyyyy",key)
-       if (!_.isEqual(value, origObj[key])) {
-         let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key
-         if(allID.indexOf(resultKey)===-1){
-           //   console.log(resultKey)
-         result[resultKey] = (_.isObject(value) && _.isObject(origObj[key])) ? changes(value, origObj[key]) : value
-         }
-       }
-   }
-       // if(!Object.values(result).length) delete result
-     })
-   }
-   return await changes(newObj, origObj)
- }
+//   async getDifference(origObj, newObj) {
+//     let allID:String[]=["assignedTo","_id","adminId","userId","bankId"]
+//     debugger;
+//      function changes(newObj, origObj) {
+//      let arrayIndexCounter = 0
+//      return  _.transform(newObj,async function (result, value, key) {
+//          if(allID.indexOf(key)===-1){
+//        //   console.log("keyyyyyyy",key)
+//        if (!_.isEqual(value, origObj[key])) {
+//          let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key
+//          if(allID.indexOf(resultKey)===-1){
+//            //   console.log(resultKey)
+//          result[resultKey] = (_.isObject(value) && _.isObject(origObj[key])) ? changes(value, origObj[key]) : value
+//          }
+//        }
+//    }
+//        // if(!Object.values(result).length) delete result
+//      })
+//    }
+//    return await changes(newObj, origObj)
+//  }
+    
+async updatedLogsList(payload:NotificationRequest.INotificationList) {
+  try {
+    const { 
+      limit = Constant.SERVER.LIMIT,
+      page = 1,
+  } = payload;
+  const skip = (limit * (page - 1));
+
+  const paginateOptions = {
+      page: page || 1,
+      limit: limit || Constant.SERVER.LIMIT,
+  };
+  const matchPipeline = [
+    
+    {
+        $sort: {
+            _id: -1,
+        },
+    },
+    {
+        $project: {
+            _id: 1,
+            loanId:1,
+            user:1,
+            action:1,
+            createdAt:1
+
+        },
+    },
+];
+const updatedLogList = await this.DAOManager.paginatePipeline(matchPipeline, paginateOptions, []).aggregate(this.modelName);
+    
+return updatedLogList ;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
 
     async saveHistory(prevData,diffData,updatedBy) {
             
@@ -113,7 +151,7 @@ class HistoryEntities extends BaseEntity {
                     if(key1!=="purchasePropertyInfo"){
                     for (let key3=0; key3<value[key1].length;key3++){
                        if((value[key1][key3]['url']!==val1[key1][key3]['url']) && counter<1){
-                          message.push( `Had made the change in ${key1} ` );
+                          message.push( `Had made the change in ${key1} from ${val1[key1][key3]['url']} to ${value[key1][key3]['url']}` );
                           counter=1
                       }
                     }
