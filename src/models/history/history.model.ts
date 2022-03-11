@@ -1,23 +1,23 @@
 import { Schema, model, Document } from "mongoose";
 import * as CONSTANT from "@src/constants/app.constant";
 
-interface Action {
-      type: string;
-   }
+// interface Action {
+//       type: string;
+//    }
 export interface IHistory extends Document {
   loanId?: Schema.Types.ObjectId;
-  updatedBy?:String;
-  action: [Action];
+  user?:Schema.Types.String;
+  action: String[];
   createdAt: number;
 }
-let action = new Schema(
-      {
-        // loanId:prevData.id,
-        action:{types:Schema.Types.Mixed},
-        // updatedBy:diffData.applicationStage.adminName,
-      },
+// let action = new Schema(
+//       {
+//         // loanId:prevData.id,
+//         action:{types:Schema.Types.Mixed},
+//         // updatedBy:diffData.applicationStage.adminName,
+//       },
      
-  );
+//   );
 /**
  * @description used to track loan application history
  */
@@ -27,8 +27,8 @@ const historySchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
   },
-  action: [action],
-  updatedBy:{type:String},
+  user:{type:String},
+  action: [{type:Schema.Types.String}],
   createdAt: { type: Number, default: Date.now },
 });
 
@@ -56,6 +56,6 @@ const historySchema = new Schema({
 
 // Export notification schema
 export let History = model<IHistory>(
-  "history",
+  "History",
   historySchema
 );
