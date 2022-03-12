@@ -59,14 +59,14 @@ class HistoryEntities extends BaseEntity {
 //     debugger;
 //      function changes(newObj, origObj) {
 //      let arrayIndexCounter = 0
-//      return  _.transform(newObj,async function (result, value, key) {
+//      return  _.transform(newObj,async function (result, recentData, key) {
 //          if(allID.indexOf(key)===-1){
 //        //   console.log("keyyyyyyy",key)
-//        if (!_.isEqual(value, origObj[key])) {
+//        if (!_.isEqual(recentData, origObj[key])) {
 //          let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key
 //          if(allID.indexOf(resultKey)===-1){
 //            //   console.log(resultKey)
-//          result[resultKey] = (_.isObject(value) && _.isObject(origObj[key])) ? changes(value, origObj[key]) : value
+//          result[resultKey] = (_.isObject(recentData) && _.isObject(origObj[key])) ? changes(recentData, origObj[key]) : recentData
 //          }
 //        }
 //    }
@@ -89,6 +89,13 @@ async updatedLogsList(payload) {
       limit: limit || Constant.SERVER.LIMIT,
   };
   const matchPipeline = [
+    {
+      $match: {
+          
+             loanId:Types.ObjectId(payload.loanId)
+          
+      },
+  },
     {
         $sort: {
             _id: -1,
@@ -118,19 +125,19 @@ return updatedLogList ;
         try {
             let message:string[]=[]
             for (let key in diffData) {
-                let value = diffData[key];
-                let val1=prevData[key];
+                let recentData = diffData[key];
+                let oldData=prevData[key];
              
                
                if(Constant.DATABASE.KEY_CHECK.indexOf(key)!==-1 && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key)===-1){
-                   for (let key1 in value){
-                       if(Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)===-1 && val1[key1]!==value[key1]){
-                           val1[key1] = String(val1[key1]).length ? val1[key1] : "Empty"
-                           message.push(`Changed ${key} > ${key1} from ${val1[key1]} to ${value[key1]}`); 
+                   for (let key1 in recentData){
+                       if(Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)===-1 && oldData[key1]!==recentData[key1]){
+                           oldData[key1] = String(oldData[key1]).length ? oldData[key1] : "Empty"
+                           message.push(`Changed ${key} > ${key1} from ${oldData[key1]} to ${recentData[key1]}`); 
                                  
                        }
                        
-                       if(JSON.stringify(value[key1])!==JSON.stringify(val1[key1]) && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)!==-1 ){
+                       if(JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1]) && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)!==-1 ){
                        
                            message.push(`changed ${key1} in ${key}`); 
                    
@@ -139,30 +146,32 @@ return updatedLogList ;
                    
                }
            
-               if(key==="applicationStatus" && value[key]!==val1[key]){
-                           message.push(`changed ${key} from ${val1} to ${value}`); 
+               if(key==="applicationStatus" && recentData[key]!==oldData[key]){
+                           message.push(`changed ${key} from ${oldData} to ${recentData}`); 
                                    
                    }
                if(key ==="documents"){
                    
-                for (let key1 in value){
+                for (let key1 in recentData){
                     let counter=0
                     if(key1!=="purchasePropertyInfo"){
-                    for (let key3=0; key3<value[key1].length;key3++){
-                       if((value[key1][key3]['url']!==val1[key1][key3]['url']) && counter<1){
-                          message.push( `Had made the change in ${key1} from ${val1[key1][key3]} to ${value[key1][key3]}` );
+                    for (let key3=0; key3<recentData[key1].length;key3++){
+                      recentData[key1][key3]['url'] = (typeof recentData[key1][key3]['url']==='undefined')?  "No Link":recentData[key1][key3]['url']
+					            oldData[key1][key3]['url'] = (typeof oldData[key1][key3]['url']==='undefined') ? "NO Link":oldData[key1][key3]['url'] 
+                       if((recentData[key1][key3]['url']!==oldData[key1][key3]['url']) && counter<1){
+                          message.push( `Had made the change in ${key1} from ${oldData[key1][key3]} to ${recentData[key1][key3]}` );
                           counter=1
                       }
                     }
                            
-                      }if(key1==="purchasePropertyInfo" && JSON.stringify(value[key1])!==JSON.stringify(val1[key1]) ){
+                      }if(key1==="purchasePropertyInfo" && JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1]) ){
                     message.push(`Had made the change in ${key1}`)
                 }
                 }
             }
                if(key ==="dependentsInfo" || key === "tradeReferences"){
-                   for (let key1 in value){
-                       if(JSON.stringify(value[key1])!==JSON.stringify(val1[key1])){
+                   for (let key1 in recentData){
+                       if(JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1])){
                            message.push( `Had made the change in ${key}` );
                        }
                    }
