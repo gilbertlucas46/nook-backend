@@ -427,7 +427,8 @@ export let DATABASE = {
 
 	},
 	 KEY_CHECK:["personalInfo","contactInfo","employmentInfo","propertyInfo","loanDetails","loanAttorney"],
-	 SUB_KEY_CHECK:[ "applicationStatus","creditCard","spouseInfo","coBorrowerInfo","prevLoans" ,"currentAddress","permanentAddress","previousAddress"]
+	 SUB_KEY_CHECK:[ "applicationStatus","creditCard","spouseInfo","coBorrowerInfo","prevLoans" ,"currentAddress","permanentAddress","previousAddress"],
+	 DOCUMENTS_KEY_CHECK:["legalDocument","incomeDocument","colleteralDoc"]
 };
 
 
