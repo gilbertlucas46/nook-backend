@@ -38,7 +38,7 @@ export let updateLogsRoute: ServerRoute[]=[
         auth: 'AdminAuth',
         validate: {
             params: {
-                Id: Joi.string(),
+                loanId: Joi.string().required(),
             },
             query: {
                 limit: Joi.number(),
