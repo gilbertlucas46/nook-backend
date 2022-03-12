@@ -156,9 +156,10 @@ return updatedLogList ;
                     let counter=0
                     if(key1!=="purchasePropertyInfo" && recentData[key1].length===oldData[key1].length){
                     for (let key3=0; key3<recentData[key1].length;key3++){
-                      recentData[key1][key3]['url'] = (!recentData[key1][key3]['url'])?  "No Link": recentData[key1][key3]['url']
-					            oldData[key1][key3]['url'] = (!oldData[key1][key3]['url'])? "No Link": oldData[key1][key3]['url'] 
-                       if((recentData[key1][key3]['url']!==oldData[key1][key3]['url']) && counter<1){
+                      console.log("keyyyyy==>>>>",key1,key3)
+                      let recentUrl = (!recentData[key1][key3]['url'])?  "No Link": recentData[key1][key3]['url']
+					            let oldUrl  = (!oldData[key1][key3]['url'])? "No Link": oldData[key1][key3]['url'] 
+                       if((recentUrl!==oldUrl) && counter<1){
                           message.push( `Had made the change in ${key1}` );
                           counter=1
                       }  
