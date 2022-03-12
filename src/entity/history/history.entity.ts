@@ -154,7 +154,7 @@ return updatedLogList ;
                    
                 for (let key1 in recentData){
                     let counter=0
-                    if(key1!=="purchasePropertyInfo" && recentData[key1].length===oldData[key1].length){
+                    if(key1!=="purchasePropertyInfo" && Constant.DATABASE.DOCUMENTS_KEY_CHECK.indexOf(key1)!==-1 && recentData[key1].length===oldData[key1].length){
                     for (let key3=0; key3<recentData[key1].length;key3++){
                       console.log("keyyyyy==>>>>",key1,key3)
                       let recentUrl = (!recentData[key1][key3]['url'])?  "No Link": recentData[key1][key3]['url']
