@@ -150,25 +150,25 @@ return updatedLogList ;
                            message.push(`changed ${key} from ${oldData} to ${recentData}`); 
                                    
                    }
-               if(key ==="documents"){
+            //    if(key ==="documents"){
                    
-                for (let key1 in recentData){
-                    let counter=0
-                    if(key1!=="purchasePropertyInfo"){
-                    for (let key3=0; key3<recentData[key1].length;key3++){
-                      recentData[key1][key3]['url'] = (typeof recentData[key1][key3]['url']==='undefined')?  "No Link":recentData[key1][key3]['url']
-					            oldData[key1][key3]['url'] = (typeof oldData[key1][key3]['url']==='undefined') ? "NO Link":oldData[key1][key3]['url'] 
-                       if((recentData[key1][key3]['url']!==oldData[key1][key3]['url']) && counter<1){
-                          message.push( `Had made the change in ${key1} from ${oldData[key1][key3]} to ${recentData[key1][key3]}` );
-                          counter=1
-                      }
-                    }
+            //     for (let key1 in recentData){
+            //         let counter=0
+            //         if(key1!=="purchasePropertyInfo"){
+            //         for (let key3=0; key3<recentData[key1].length;key3++){
+            //           recentData[key1][key3]['url'] = (typeof recentData[key1][key3]['url']==='undefined')?  "No Link":recentData[key1][key3]['url']
+					  //           oldData[key1][key3]['url'] = (typeof oldData[key1][key3]['url']==='undefined') ? "NO Link":oldData[key1][key3]['url'] 
+            //            if((recentData[key1][key3]['url']!==oldData[key1][key3]['url']) && counter<1){
+            //               message.push( `Had made the change in ${key1} from ${oldData[key1][key3]} to ${recentData[key1][key3]}` );
+            //               counter=1
+            //           }
+            //         }
                            
-                      }if(key1==="purchasePropertyInfo" && JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1]) ){
-                    message.push(`Had made the change in ${key1}`)
-                }
-                }
-            }
+            //           }if(key1==="purchasePropertyInfo" && JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1]) ){
+            //         message.push(`Had made the change in ${key1}`)
+            //     }
+            //     }
+            // }
                if(key ==="dependentsInfo" || key === "tradeReferences"){
                    for (let key1 in recentData){
                        if(JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1])){
