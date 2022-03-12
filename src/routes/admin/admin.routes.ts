@@ -771,7 +771,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					...request.payload as any,
 					...request.params as any,
 				};
-				console.log("payload admin end==>>",payload)
+				console.log("payload admin end==>>",JSON.stringify(payload))
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
 
 				const data = await LoanController.adminUpdateLoanApplication(payload, adminData);
