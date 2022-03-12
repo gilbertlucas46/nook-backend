@@ -667,7 +667,7 @@ export let loanRoute: ServerRoute[] = [
 						Constant.DATABASE.NOTIFICATION_TYPE.BOTH
 					),
 
-					saveHistory:Joi.boolean(),
+					// saveHistory:Joi.boolean(),
 
 
 					propertyInfo: {

@@ -154,18 +154,18 @@ return updatedLogList ;
                    
                 for (let key1 in recentData){
                     let counter=0
-                    if(key1!=="purchasePropertyInfo"){
+                    if(key1!=="purchasePropertyInfo" && recentData[key1].length===oldData[key1].length){
                     for (let key3=0; key3<recentData[key1].length;key3++){
                       recentData[key1][key3]['url'] = (!recentData[key1][key3]['url'])?  "No Link": recentData[key1][key3]['url']
-					            oldData[key1][key3]['url'] = (!oldData[key1][key3]['url']) ? "NO Link": oldData[key1][key3]['url'] 
+					            oldData[key1][key3]['url'] = (!oldData[key1][key3]['url'])? "No Link": oldData[key1][key3]['url'] 
                        if((recentData[key1][key3]['url']!==oldData[key1][key3]['url']) && counter<1){
-                          message.push( `Had made the change in ${key1} from ${oldData[key1][key3]['url']} to ${recentData[key1][key3]['url']}` );
+                          message.push( `Had made the change in ${key1}` );
                           counter=1
-                      }
+                      }  
                     }
                            
                       }if(key1==="purchasePropertyInfo" && JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1]) ){
-                    message.push(`Had made the change in ${key1}`)
+                            message.push(`Had made the change in ${key1}`)
                 }
                 }
             }
@@ -178,7 +178,7 @@ return updatedLogList ;
                }
            }
            console.log(message)
-             
+           if(message.length>0){  
             let data={
               loanId:prevData.id,
               user:updatedBy,
@@ -186,6 +186,7 @@ return updatedLogList ;
             }
             console.log(data)
             this.DAOManager.saveData("History", data);
+          }
             } catch (error) {
               return Promise.reject(error);
             }

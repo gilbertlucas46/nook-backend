@@ -239,7 +239,7 @@ export namespace LoanRequest {
     propertyDocuments?: PropertyDocuments;
     applicationStatus?: string;
     notificationType: string;
-    saveHistory:boolean;
+    // saveHistory:boolean;
   }
   export interface LoanById {
     loanId: string;
