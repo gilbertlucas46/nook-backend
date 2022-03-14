@@ -36,6 +36,7 @@ class Referal extends BaseEntity {
                 method: 'post',
                 body: JSON.stringify(salesforceData),
             };
+            console.log("Referal  salesforceData========>>>>> ",salesforceData);
             await fetch(config.get('zapier_referralUrl'), request);
         } catch (error) {
             utils.consolelog('error', error, true);
