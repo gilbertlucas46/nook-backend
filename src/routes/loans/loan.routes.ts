@@ -63,7 +63,7 @@ export let loanRoute: ServerRoute[] = [
 						monthlyIncome: Joi.number(),
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
-						birthDate: Joi.number(),
+						birthDate: Joi.string(),
 						placeOfBirth: Joi.string(),
 						nationality: Joi.string(),
 						localVisa: Joi.boolean(),
@@ -98,7 +98,7 @@ export let loanRoute: ServerRoute[] = [
 							firstName: Joi.string().max(32),
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
-							birthDate: Joi.number(),
+							birthDate: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 							motherMaidenName: Joi.string(),
@@ -109,7 +109,7 @@ export let loanRoute: ServerRoute[] = [
 							firstName: Joi.string().max(32),
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
-							birthDate: Joi.number(),
+							birthDate: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 							relationship: Joi.string().valid([
@@ -541,8 +541,10 @@ export let loanRoute: ServerRoute[] = [
 		path: '/v1/user/loan/application',
 		handler: async (request, h: ResponseToolkit) => {
 			try {
+
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: LoanRequest.AddLoan = request.payload as any;
+				console.log("payload======...",JSON.stringify(payload))
 				const data = await LoanController.updateLoanApplication(payload, userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
 			} catch (error) {
@@ -591,7 +593,7 @@ export let loanRoute: ServerRoute[] = [
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
 						placeOfBirth: Joi.string(),
-						birthDate: Joi.number(),
+						birthDate: Joi.string(),
 						nationality: Joi.string(),
 						localVisa: Joi.boolean(),
 						creditCard: Joi.object({
@@ -628,7 +630,7 @@ export let loanRoute: ServerRoute[] = [
 							firstName: Joi.string().max(32),
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
-							birthDate: Joi.number(),
+							birthDate: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 							motherMaidenName: Joi.string(),
@@ -639,7 +641,7 @@ export let loanRoute: ServerRoute[] = [
 							firstName: Joi.string().max(32),
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
-							birthDate: Joi.number(),
+							birthDate: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 							relationship: Joi.string().valid([
@@ -664,7 +666,10 @@ export let loanRoute: ServerRoute[] = [
 						Constant.DATABASE.NOTIFICATION_TYPE.PERSONAL_DETAIL,
 						Constant.DATABASE.NOTIFICATION_TYPE.BOTH
 					),
-					
+
+					// saveHistory:Joi.boolean(),
+
+
 					propertyInfo: {
 						value: Joi.number(),
 						type: Joi.string(),

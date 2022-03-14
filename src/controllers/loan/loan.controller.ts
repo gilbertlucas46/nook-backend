@@ -146,7 +146,7 @@ class LoanControllers extends BaseEntity {
             //     adminId: userData._id,
             //     adminName: userData.firstName + '' + userData.lastName,
             // };
-            const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload);
+            const data = await ENTITY.LoanApplicationEntity.updateLoanApplication(payload,userData);
             // console.log("data before update",data)
             payload['referenceId']=data['referenceId'];
             payload['userId']=userData._id;
@@ -324,7 +324,7 @@ class LoanControllers extends BaseEntity {
             async function GetFormattedDate(date) {
                 const todayTime = new Date(date);
                 const month = (todayTime.getMonth() + 1);
-                const day = (todayTime.getDate()+ 1);
+                const day = (todayTime.getDate());
                 const year = (todayTime.getFullYear());
                 console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
                 return day + '-' + month + '-' + year;
@@ -417,8 +417,18 @@ class LoanControllers extends BaseEntity {
             const query = {
                 _id: payload.loanId,
             };
-
+            const prevData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
             const oldData = await ENTITY.LoanApplicationEntity.updateOneEntity(query, payload);
+            const newData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
+             const updateBy= adminData['name'];
+            // console.log("prevData======>",JSON.stringify(prevData))
+            // console.log("oldData======>",JSON.stringify(oldData))
+            // console.log("newData======>",JSON.stringify(newData))
+            
+             console.log("updateBy======>",updateBy);
+
+
+            await ENTITY.HistoryE.saveHistory(prevData,newData,updateBy);
             await LoanApplicationEntity.sendApplication(oldData)
 
             payload['changesMadeBy'] = {

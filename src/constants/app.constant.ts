@@ -426,7 +426,11 @@ export let DATABASE = {
 		REM:'REM'
 
 	},
+	 KEY_CHECK:["personalInfo","contactInfo","employmentInfo","propertyInfo","loanDetails","loanAttorney"],
+	 SUB_KEY_CHECK:[ "applicationStatus","creditCard","spouseInfo","coBorrowerInfo","prevLoans" ,"currentAddress","permanentAddress","previousAddress"],
+	 DOCUMENTS_KEY_CHECK:["legalDocument","incomeDocument","colleteralDoc"]
 };
+
 
 export const EMAIL_TEMPLATE = {
 	SOCIAL_LINK: {
