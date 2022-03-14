@@ -71,7 +71,7 @@ class HistoryEntities extends BaseEntity {
                        if(JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1]) && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)!==-1 ){
                         for (let subKey in recentData[key1]){
                           if( oldData[key1][subKey]!==recentData[key1][subKey]){
-                            oldData[key1][subKey] = String(oldData[key1][subKey]).length ? oldData[key1][subKey] : "Empty"
+                            oldData[key1][subKey] = (!oldData[key1][subKey]) ?  "Empty": oldData[key1][subKey]
                             message.push(`Changed ${key} > ${key1} > ${subKey} from ${oldData[key1][subKey]} to ${recentData[key1][subKey]}`); 
                                     
                           }
@@ -100,7 +100,7 @@ class HistoryEntities extends BaseEntity {
 
                           message.push( ` ${key1} > ${recentData[key1][key3]['documentRequired']} had been removed` );
                         }
-                        if(String(recentData)!==String(oldData) && recentData!=="No Link"){
+                        if(recentUrl!==oldUrl && recentData!=="No Link"){
                           //  console.log("url",arr[key3]["url"])
                           
                           message.push( ` ${key1} > ${recentData[key1][key3]['documentRequired']} had been updated` );
