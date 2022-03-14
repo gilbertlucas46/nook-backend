@@ -74,7 +74,7 @@ const schema = new Schema({
             firstName: { type: Schema.Types.String, trim: true },
             middleName: { type: Schema.Types.String, trim: true },
             lastName: { type: Schema.Types.String, trim: true },
-            birthDate: { type: Schema.Types.Number },
+            birthDate: { type: Schema.Types.String },
             monthlyIncome: { type: Schema.Types.Number, default: 0 },
             isCoborrower: { type: Boolean, default: false },
             motherMaidenName: { type: String },

@@ -1148,9 +1148,9 @@ export let adminProfileRoute: ServerRoute[] = [
 						latestITR: Joi.string().uri(),
 						employmentCert: Joi.string().uri(),
 						purchasePropertyInfo: Joi.object().keys({
-							address: Joi.string().max(300),
-							contactPerson: Joi.string(),
-							contactNumber: Joi.number(),
+							address: Joi.string().max(300).required(),
+							contactPerson: Joi.string().required(),
+							contactNumber: Joi.number().required(),
 							collateralDocStatus: Joi.boolean(),
 							collateralDocList: Joi.array().items({
 								_id: Joi.string(),
