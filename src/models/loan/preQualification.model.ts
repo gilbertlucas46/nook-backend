@@ -115,7 +115,6 @@ const prequalification = new Schema({
                 EMPLOYMENT_RANK.SUPERVISOR.value,
                 EMPLOYMENT_RANK.VICE_PRESIDENT.value,
             ],
-            required: true,
         },
         tenure: { type: String }, // Joi.string().valid(Object.keys(EMPLOYMENT_TENURE)),
         income: { type: Number },  // Joi.number().min(25000),

@@ -23,7 +23,7 @@ export namespace PreQualificationRequest {
         };
         employmentInfo: {
             type: string;
-            rank: string;
+            rank?: string;
             tenure: string;
             income: number;
         };
