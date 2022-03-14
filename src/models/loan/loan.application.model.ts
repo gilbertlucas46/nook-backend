@@ -67,7 +67,7 @@ const schema = new Schema({
             ],
         },
         placeOfBirth: { type: String },
-        birthDate: { type: Schema.Types.Number },
+        birthDate: { type: Schema.Types.String },
         monthlyIncome: { type: Schema.Types.Number, default: 0 },
         otherIncome: { type: Schema.Types.Number, default: 0 },
         spouseInfo: {
@@ -86,7 +86,7 @@ const schema = new Schema({
             middleName: { type: Schema.Types.String, trim: true },
             lastName: { type: Schema.Types.String, trim: true },
             monthlyIncome: { type: Schema.Types.Number, default: 0 },
-            birthDate: { type: Schema.Types.Number },
+            birthDate: { type: Schema.Types.String },
             relationship: {
                 type: Schema.Types.String, enum: [
                     CONSTANT.DATABASE.RELATIONSHIP.BROTHER,
