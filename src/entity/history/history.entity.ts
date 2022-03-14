@@ -100,7 +100,7 @@ class HistoryEntities extends BaseEntity {
 
                           message.push( ` ${key1} > ${recentData[key1][key3]['documentRequired']} had been removed` );
                         }
-                        if(recentUrl!==oldUrl && recentData!=="No Link"){
+                        else if(recentUrl!==oldUrl && recentData!=="No Link"){
                           //  console.log("url",arr[key3]["url"])
                           
                           message.push( ` ${key1} > ${recentData[key1][key3]['documentRequired']} had been updated` );
