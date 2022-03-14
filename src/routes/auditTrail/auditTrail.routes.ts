@@ -17,11 +17,16 @@ export let auditTrailRoute: ServerRoute[]=[
 
 {
     method: 'GET',
-    path: '/v1/admin/auditTrail',
+    path: '/v1/admin/auditTrail/{loanId}',
     handler: async (request, h) => {
         try {
             const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
-            const payload:LogRequest.IauditTrailList=request.query as any;
+            // const payload:LogRequest.IauditTrailList=request.query as any;
+            const payload = {
+                ...request.params as any,
+                ...request.query as any,
+            };
+            console.log("payload", payload)
             const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
             const data= await ENTITY.HistoryE.updateHistoryList(payload);
             return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, data));
@@ -35,8 +40,10 @@ export let auditTrailRoute: ServerRoute[]=[
         tags: ['api', 'anonymous', 'admin', 'AuditTrail'],
         auth: 'AdminAuth',
         validate: {
+            params:{
+              loanId:Joi.string().required()
+            },
             query: {
-                loanId: Joi.string().required(),
                 limit: Joi.number(),
                 page: Joi.number(),
                 // sortType: Joi.number().valid([Constant.ENUM.SORT_TYPE]),
