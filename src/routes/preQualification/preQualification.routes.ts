@@ -127,7 +127,7 @@ export let preQualificationroutes: ServerRoute[] = [
                     }),
 
                     other: Joi.object().keys({
-                        dob: Joi.number(),
+                        dob: Joi.string(),
                         age: Joi.number().min(21).max(70),
                         nationality: Joi.string().valid([
                             NATIONALITY.FILIPINO.value,
@@ -333,7 +333,7 @@ export let preQualificationroutes: ServerRoute[] = [
                     }),
 
                     other: Joi.object().keys({
-                        dob: Joi.number(),
+                        dob: Joi.string(),
                         age: Joi.number().min(21).max(65),
                         nationality: Joi.string().valid([
                             NATIONALITY.FILIPINO.value,
@@ -471,14 +471,14 @@ export let preQualificationroutes: ServerRoute[] = [
                             EMPLOYMENT_RANK.SENIOR_VICE_PRESIDENT.value,
                             EMPLOYMENT_RANK.SUPERVISOR.value,
                             EMPLOYMENT_RANK.VICE_PRESIDENT.value,
-                        ]).required(),
+                        ]),
 
                         tenure: Joi.string().valid(Object.keys(EMPLOYMENT_TENURE)),
                         income: Joi.number().min(25000),
                     }),
 
                     other: Joi.object().keys({
-                        dob: Joi.number(),
+                        dob: Joi.string(),
                         age: Joi.number().min(21).max(70),
                         nationality: Joi.string().valid([
                             NATIONALITY.FILIPINO.value,
