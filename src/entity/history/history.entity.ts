@@ -96,7 +96,7 @@ class HistoryEntities extends BaseEntity {
                       // console.log("keyyyyy==>>>>",key1,key3)
                       let recentUrl = (!recentData[key1][key3]['url'])?  "No Link": recentData[key1][key3]['url']
 					            let oldUrl  = (!oldData[key1][key3]['url'])? "No Link": oldData[key1][key3]['url'] 
-                       if((recentUrl!==oldUrl) &&  recentUrl=== " No Link"){
+                       if((recentUrl!==oldUrl) &&  recentUrl==="No Link"){
 
                           message.push( ` ${key1} > ${recentData[key1][key3]['documentRequired']} had been removed` );
                         }

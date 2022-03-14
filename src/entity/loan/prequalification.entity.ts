@@ -260,7 +260,7 @@ class PreLoanEntities extends BaseEntity {
                 function GetFormattedDate(date) {
                     const todayTime = new Date(date);
                     const month = (todayTime.getMonth()+1);
-                    const day = (todayTime.getDate()+1);
+                    const day = (todayTime.getDate());
                     const year = (todayTime.getFullYear());
                     console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
                     return day + '-' + month + '-' + year;
@@ -371,13 +371,13 @@ class PreLoanEntities extends BaseEntity {
                 const salesforceData: { [key: string]: string | number } = flattenObject(data1.toObject ? data1.toObject() : data1);
                 console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
 
-                 if (config.get('environment') === 'production') {
+                //  if (config.get('environment') === 'production') {
                     console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
-                     fetch(config.get('zapier_prequalificationUrl'), {
-                         method: 'post',
-                         body: JSON.stringify(salesforceData),
-                     });
-                 }
+                    //  fetch(config.get('zapier_prequalificationUrl'), {
+                    //      method: 'post',
+                    //      body: JSON.stringify(salesforceData),
+                    //  });
+                //  }
                 return data1['_id'];
             }
             return data;
@@ -1042,7 +1042,7 @@ class PreLoanEntities extends BaseEntity {
             function GetFormattedDate(date) {
                 const todayTime = new Date(date);
                 const month = (todayTime.getMonth() + 1);
-                const day = (todayTime.getDate()+ 1);
+                const day = (todayTime.getDate());
                 const year = (todayTime.getFullYear());
                 console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
                 return day + '-' + month + '-' + year;

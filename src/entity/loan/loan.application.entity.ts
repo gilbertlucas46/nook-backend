@@ -375,7 +375,7 @@ class LoanApplicationE extends BaseEntity {
             async function GetFormattedDate(date) {
                 const todayTime = new Date(date);
                 const month = (todayTime.getMonth() + 1);
-                const day = (todayTime.getDate()+ 1);
+                const day = (todayTime.getDate());
                 const year = (todayTime.getFullYear());
                 console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
                 return day + '-' + month + '-' + year;
