@@ -1,3 +1,4 @@
+import { History } from './history/history.model';
 import { Notification } from './notification/notification.model';
 export { User, IUser } from './user/user.model';
 export { Session } from './user/session.model';
@@ -21,3 +22,4 @@ export { LoanErrorCheck } from './loan/loan.error.model';
 export { Partner } from './partner/partner.model';
 export { HelpCentreCategory } from './helpCentre/helpcenter.category.model';
 export{Notification} from './notification/notification.model';
+export{History} from './history/history.model';

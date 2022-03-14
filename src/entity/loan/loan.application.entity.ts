@@ -1,4 +1,7 @@
+
 import { BaseEntity } from '@src/entity/base/base.entity';
+import * as ENTITY from '@src/entity';
+import * as _ from 'lodash';
 import { Types } from 'mongoose';
 import * as Constant from '@src/constants';
 import { LoanRequest } from '@src/interfaces/loan.interface';
@@ -9,6 +12,7 @@ import { flattenObject } from '@src/utils';
 import { label } from 'joi';
 import * as UniversalFunctions from '@src/utils';
 import { type } from 'os';
+import { entityTooLarge } from 'boom';
 
 class LoanApplicationE extends BaseEntity {
     constructor() {
@@ -42,10 +46,15 @@ class LoanApplicationE extends BaseEntity {
      * @description saving loan applicationu
      * @param payload
      */
-    async updateLoanApplication(payload) {
+    async updateLoanApplication(payload,userData) {
         try {
-
+         
+            const prevData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
             const data = await this.updateOneEntity({ _id: Types.ObjectId(payload.loanId) }, payload);
+            // const newData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
+            const updateBy= userData ? userData.firstName + ' ' + userData.lastName : userData.firstName;
+            console.log("updateBy======>",updateBy);
+             ENTITY.HistoryE.saveHistory(prevData,data,updateBy);
             // send data to sales-force
             await this.sendApplication(data);
 
@@ -366,7 +375,7 @@ class LoanApplicationE extends BaseEntity {
             async function GetFormattedDate(date) {
                 const todayTime = new Date(date);
                 const month = (todayTime.getMonth() + 1);
-                const day = (todayTime.getDate()+ 1);
+                const day = (todayTime.getDate());
                 const year = (todayTime.getFullYear());
                 console.log("day + ' - ' + month + ' - ' + year", day + '-' + month + '-' + year);
                 return day + '-' + month + '-' + year;

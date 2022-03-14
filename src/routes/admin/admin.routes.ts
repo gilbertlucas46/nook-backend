@@ -771,6 +771,7 @@ export let adminProfileRoute: ServerRoute[] = [
 					...request.payload as any,
 					...request.params as any,
 				};
+				console.log("payload admin end==>>",JSON.stringify(payload))
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
 
 				const data = await LoanController.adminUpdateLoanApplication(payload, adminData);
@@ -802,7 +803,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						monthlyIncome: Joi.number(),
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
-						birthDate: Joi.number(),
+						birthDate: Joi.string(),
 						placeOfBirth: Joi.string(),
 						nationality: Joi.string(),
 						localVisa: Joi.boolean(),
@@ -840,7 +841,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							firstName: Joi.string().max(32),
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
-							birthDate: Joi.number(),
+							birthDate: Joi.string(),
 							motherMaidenName: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
@@ -849,7 +850,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							firstName: Joi.string().max(32),
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
-							birthDate: Joi.number(),
+							birthDate: Joi.string(),
 							motherMaidenName: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
@@ -1147,9 +1148,9 @@ export let adminProfileRoute: ServerRoute[] = [
 						latestITR: Joi.string().uri(),
 						employmentCert: Joi.string().uri(),
 						purchasePropertyInfo: Joi.object().keys({
-							address: Joi.string().max(300),
-							contactPerson: Joi.string(),
-							contactNumber: Joi.number(),
+							address: Joi.string().max(300).required(),
+							contactPerson: Joi.string().required(),
+							contactNumber: Joi.number().required(),
 							collateralDocStatus: Joi.boolean(),
 							collateralDocList: Joi.array().items({
 								_id: Joi.string(),
@@ -1220,7 +1221,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						monthlyIncome: Joi.number(),
 						otherIncome: Joi.number(),
 						motherMaidenName: Joi.string(),
-						birthDate: Joi.number(),
+						birthDate: Joi.string(),
 						placeOfBirth: Joi.string(),
 						nationality: Joi.string(),
 						localVisa: Joi.boolean(),
@@ -1258,7 +1259,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							firstName: Joi.string().max(32),
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
-							birthDate: Joi.number(),
+							birthDate: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 							motherMaidenName: Joi.string(),
@@ -1269,7 +1270,7 @@ export let adminProfileRoute: ServerRoute[] = [
 							firstName: Joi.string().max(32),
 							lastName: Joi.string().max(32),
 							middleName: Joi.string().max(32),
-							birthDate: Joi.number(),
+							birthDate: Joi.string(),
 							monthlyIncome: Joi.number(),
 							isCoborrower: Joi.boolean(),
 							relationship: Joi.string().valid([

@@ -118,19 +118,19 @@ export class UserController extends BaseEntity {
 			/**
 			 *  push contract to salesforce
 			 */
-			if (config.get('environment') === 'production') {
+			// if (config.get('environment') === 'production') {
 				// if (!isProfileCompleted) {
 				// convert document to data	
 				const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
 				console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
-				const request = {
-					method: 'post',
-					body: JSON.stringify(salesforceData),
-				};
-				await fetch(config.get('zapier_personUrl'), request);
-				await fetch(config.get('zapier_accountUrl'), request);
-				// }
-			}
+			// 	const request = {
+			// 		method: 'post',
+			// 		body: JSON.stringify(salesforceData),
+			// 	};
+			// 	await fetch(config.get('zapier_personUrl'), request);
+			// 	await fetch(config.get('zapier_accountUrl'), request);
+			// 	// }
+			// // }
 
 			return updateUser;
 		} catch (error) {
