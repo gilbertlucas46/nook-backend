@@ -118,7 +118,7 @@ export class UserController extends BaseEntity {
 			/**
 			 *  push contract to salesforce
 			 */
-			// if (config.get('environment') === 'production') {
+			//  if (config.get('environment') === 'production') {
 				// if (!isProfileCompleted) {
 				// convert document to data	
 				const salesforceData = flattenObject(updateUser.toObject ? updateUser.toObject() : updateUser);
@@ -130,7 +130,7 @@ export class UserController extends BaseEntity {
 			// 	await fetch(config.get('zapier_personUrl'), request);
 			// 	await fetch(config.get('zapier_accountUrl'), request);
 			// 	// }
-			// // }
+			//  }
 
 			return updateUser;
 		} catch (error) {
