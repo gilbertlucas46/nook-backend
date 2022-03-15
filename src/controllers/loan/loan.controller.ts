@@ -103,7 +103,8 @@ class LoanControllers extends BaseEntity {
                 return {
                     referenceId: data['referenceId'],
                     applicationStatus: data['applicationStatus'],
-                    _id: data['_id']
+                    _id: data['_id'],
+                    classification:data["loanDetails"]["propertyClassification"]
                 }
             }
             return {referenceId:data['referenceId'],
