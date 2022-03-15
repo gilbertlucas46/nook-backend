@@ -149,7 +149,7 @@ class LoanControllers extends BaseEntity {
             payload['referenceId']=data['referenceId'];
             payload['userId']=userData._id;
             if(payload.notificationType){
-            ENTITY.NotificationE.saveNotification(payload);
+            await ENTITY.NotificationE.saveNotification(payload);
             }
             return data['referenceId'];
         } catch (error) {
