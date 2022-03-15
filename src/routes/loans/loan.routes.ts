@@ -765,6 +765,10 @@ export let loanRoute: ServerRoute[] = [
 						]),
 						loanPercent: Joi.number(),
 						loanAmount: Joi.number(),
+						propertyClassification:Joi.string().valid([
+							Constant.DATABASE.PROPERTY_CLASSIFICATION.DOU,
+							Constant.DATABASE.PROPERTY_CLASSIFICATION.REM
+						 ]),
 					}),
 					loanAttorneyInfo:{
 						name:Joi.string().allow(''),

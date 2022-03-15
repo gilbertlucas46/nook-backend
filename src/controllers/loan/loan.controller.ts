@@ -84,7 +84,8 @@ class LoanControllers extends BaseEntity {
 
                 payload['loanDetails']['propertyClassification']="DOU"
             
-            }else{
+            }
+            else if( payload['loanDetails']['propertyClassification']==null || payload['loanDetails']['propertyClassification']==='REM'){
                 payload['loanDetails']['propertyClassification']="REM"
             }
             payload['applicationStage'] = {
@@ -104,12 +105,13 @@ class LoanControllers extends BaseEntity {
                 return {
                     referenceId: data['referenceId'],
                     applicationStatus: data['applicationStatus'],
-                    _id: data['_id']
+                    _id: data['_id'],
+                    classification:data["loanDetails"]["propertyClassification"]
                 }
             }
             return {referenceId:data['referenceId'],
-                    _id:data['_id']   
-        
+                    _id:data['_id'],  
+                    classification:data["loanDetails"]["propertyClassification"]
         
         };
 
@@ -331,14 +333,14 @@ class LoanControllers extends BaseEntity {
                 return day + '-' + month + '-' + year;
             }
             if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
-                data.personalInfo.birthDate = await GetFormattedDate(data['personalInfo']['birthDate'])
+                data.personalInfo.birthDate = data['personalInfo']['birthDate']
             }
             // 	birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
             if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
-                data['personalInfo']['spouseInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
+                data['personalInfo']['spouseInfo']['birthDate'] = data['personalInfo']['spouseInfo']['birthDate'];
             }
             if (data && data['personalInfo'] && data['personalInfo']['coBorrowerInfo'] && data['personalInfo']['coBorrowerInfo']['birthDate']) {
-                data['personalInfo']['coBorrowerInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
+                data['personalInfo']['coBorrowerInfo']['birthDate'] = data['personalInfo']['coBorrowerInfo']['birthDate'];
             }
             let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
             console.log('salesforceDatasalesforceData', salesforceData);
