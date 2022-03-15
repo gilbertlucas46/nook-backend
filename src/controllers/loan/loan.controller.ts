@@ -82,7 +82,8 @@ class LoanControllers extends BaseEntity {
             if(payload['loanDetails']['loanType']==='PURCHASE_OF_PROPERTY' && payload['loanDetails']['propertyClassification']==null || payload['loanDetails']['propertyClassification']==='DOU'){
                 payload['loanDetails']['propertyClassification']="DOU"
             
-            }else{
+            }
+            else if( payload['loanDetails']['propertyClassification']==null || payload['loanDetails']['propertyClassification']==='REM'){
                 payload['loanDetails']['propertyClassification']="REM"
             }
             payload['applicationStage'] = {
