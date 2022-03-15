@@ -1072,7 +1072,7 @@ class PreLoanEntities extends BaseEntity {
                 const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate, { new: true });
 
                 if (updatedData.other && updatedData.other.dob) {
-                    updatedData.other.dob = GetFormattedDate(updatedData.other['dob'])
+                    updatedData.other.dob = updatedData.other['dob']
                 }
 
                 const salesforceData: { [key: string]: string | number } = flattenObject(updatedData.toObject ? updatedData.toObject() : updatedData);
