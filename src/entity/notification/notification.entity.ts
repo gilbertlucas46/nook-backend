@@ -56,6 +56,7 @@ class NotificationEntities extends BaseEntity {
     try {
       let notificationMessage='';
       let name=payload['personalInfo']['firstName'];
+      console.log("notification type===>>>>>>>",payload.notificationType);
       if(Constant.DATABASE.NOTIFICATION_TYPE.IMAGE===payload.notificationType){
             notificationMessage = name + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.IMAGE_MSG;
     }
