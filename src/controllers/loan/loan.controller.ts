@@ -150,8 +150,9 @@ class LoanControllers extends BaseEntity {
             // console.log("data before update",data)
             payload['referenceId']=data['referenceId'];
             payload['userId']=userData._id;
+            const updatedBy= userData.firstName;
             if(payload.notificationType){
-            await ENTITY.NotificationE.saveNotification(payload);
+            await ENTITY.NotificationE.saveNotification(payload,updatedBy);
             }
             return data['referenceId'];
         } catch (error) {

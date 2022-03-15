@@ -52,19 +52,19 @@ class NotificationEntities extends BaseEntity {
     }
   }
 
-  async saveNotification(payload) {
+  async saveNotification(payload,updatedBy) {
     try {
       let notificationMessage='';
-      let name=payload['personalInfo']['firstName'];
+      // let name=payload['personalInfo']['firstName'];
       console.log("notification type===>>>>>>>",payload.notificationType);
       if(Constant.DATABASE.NOTIFICATION_TYPE.IMAGE===payload.notificationType){
-            notificationMessage = name + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.IMAGE_MSG;
+            notificationMessage = updatedBy + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.IMAGE_MSG;
     }
     else if(Constant.DATABASE.NOTIFICATION_TYPE.PERSONAL_DETAIL===payload.notificationType){
-            notificationMessage = name + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.PERSONAL_MSG;
+            notificationMessage = updatedBy + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.PERSONAL_MSG;
     }
     else{
-      notificationMessage = name + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.BOTH_MSG;
+      notificationMessage = updatedBy + ' ' + Constant.DATABASE.NOTIFICATION_MESSAGE.BOTH_MSG;
     }
     let data={
       loanId:payload.loanId,
