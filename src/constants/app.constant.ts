@@ -426,7 +426,7 @@ export let DATABASE = {
 		REM:'REM'
 
 	},
-	 KEY_CHECK:["personalInfo","contactInfo","employmentInfo","propertyInfo","loanDetails","loanAttorney"],
+	 KEY_CHECK:["personalInfo","contactInfo","employmentInfo","propertyInfo","loanDetails","loanAttorneyInfo"],
 	 SUB_KEY_CHECK:[ "applicationStatus","creditCard","spouseInfo","coBorrowerInfo","prevLoans" ,"currentAddress","permanentAddress","previousAddress"],
 	 DOCUMENTS_KEY_CHECK:["legalDocument","incomeDocument","colleteralDoc"]
 };
