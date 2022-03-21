@@ -3,6 +3,7 @@ import { BaseEntity } from "@src/entity/base/base.entity";
 import * as _ from 'lodash';
 import * as Constant from "@src/constants";
 import { Types } from "mongoose";
+import { object } from "joi";
 
 class HistoryEntities extends BaseEntity {
   constructor() {
@@ -52,6 +53,9 @@ class HistoryEntities extends BaseEntity {
 }
 
     async saveHistory(prevData,diffData,updatedBy) {
+            const applicationId=prevData.id;
+            diffData=diffData.toJSON();
+            prevData=prevData.toJSON();
             console.log("prevdata====>>",prevData)
             console.log("diffdata==>>",diffData)
             console.log(Object.keys(diffData));
@@ -143,7 +147,7 @@ class HistoryEntities extends BaseEntity {
             console.log(message)
            if(message.length>0){  
             let data={
-              loanId:prevData.id,
+              loanId:applicationId,
               user:updatedBy,
               action:message,
             }
