@@ -63,7 +63,7 @@ class HistoryEntities extends BaseEntity {
                if(Constant.DATABASE.KEY_CHECK.indexOf(key)!==-1 && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key)===-1){
                     for (let key1 in recentData){
                        if(Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)===-1 && recentData[key1] && oldData[key1]!==recentData[key1]){
-                           oldData[key1] = String(oldData[key1]).length ? oldData[key1] : "Empty"
+                           oldData[key1] = (oldData[key1]) ? oldData[key1] : "Empty"
                            message.push(`Changed ${key} > ${key1} from ${oldData[key1]} to ${recentData[key1]}`); 
                                  
                        }
