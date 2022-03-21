@@ -52,10 +52,13 @@ class HistoryEntities extends BaseEntity {
 }
 
     async saveHistory(prevData,diffData,updatedBy) {
-            
+            console.log("prevdata====>>",prevData)
+            console.log("diffdata==>>",diffData)
+            console.log(Object.keys(diffData));
         try {
             let message:string[]=[]
             for (let key in diffData) {
+              console.log("key==>>",key)
                 let recentData = diffData[key];
                 let oldData=prevData[key];
              
@@ -82,7 +85,7 @@ class HistoryEntities extends BaseEntity {
                    }
                    
                }
-               if(key==="loanAttorneyInfo" ){
+               else if(key==="loanAttorneyInfo" ){
                 for(const subKey in recentData){
                //    console.log(prevData.hasOwnProperty(key))
                 if(!prevData.hasOwnProperty(key) && diffData.hasOwnProperty(key) && recentData[subKey]){
@@ -98,11 +101,12 @@ class HistoryEntities extends BaseEntity {
              }
               }
            
-               if(key==="applicationStatus" && recentData[key]!==oldData[key]){
+              else if(key==="applicationStatus" && recentData!==oldData){
                            message.push(`changed ${key} from ${oldData} to ${recentData}`); 
+                           console.log("hello")
                                    
                    }
-               if(key ==="documents"){
+              else if(key ==="documents"){
                    
                 for (let key1 in recentData){
                    
@@ -128,7 +132,7 @@ class HistoryEntities extends BaseEntity {
                 }
                 }
             }
-               if(key ==="dependentsInfo" || key === "tradeReferences"){
+            else if(key ==="dependentsInfo" || key === "tradeReferences"){
                    for (let key1 in recentData){
                        if(JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1])){
                            message.push( `Had made the change in ${key}` );
