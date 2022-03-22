@@ -3,6 +3,7 @@ import { BaseEntity } from "@src/entity/base/base.entity";
 import * as _ from 'lodash';
 import * as Constant from "@src/constants";
 import { Types } from "mongoose";
+import { object } from "joi";
 
 class HistoryEntities extends BaseEntity {
   constructor() {
@@ -52,7 +53,12 @@ class HistoryEntities extends BaseEntity {
 }
 
     async saveHistory(prevData,diffData,updatedBy) {
-            
+            const applicationId=prevData.id;
+            diffData=diffData.toJSON();
+            prevData=prevData.toJSON();
+            // console.log("prevdata====>>",prevData)
+            // console.log("diffdata==>>",diffData)
+            // console.log(Object.keys(diffData));
         try {
             let message:string[]=[]
             for (let key in diffData) {
@@ -62,15 +68,15 @@ class HistoryEntities extends BaseEntity {
                
                if(Constant.DATABASE.KEY_CHECK.indexOf(key)!==-1 && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key)===-1){
                     for (let key1 in recentData){
-                       if(Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)===-1 && oldData[key1]!==recentData[key1]){
-                           oldData[key1] = String(oldData[key1]).length ? oldData[key1] : "Empty"
+                       if(Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)===-1 && recentData[key1] && oldData[key1]!==recentData[key1]){
+                           oldData[key1] = (oldData[key1]) ? oldData[key1] : "Empty"
                            message.push(`Changed ${key} > ${key1} from ${oldData[key1]} to ${recentData[key1]}`); 
                                  
                        }
                        
                        if(JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1]) && Constant.DATABASE.SUB_KEY_CHECK.indexOf(key1)!==-1 ){
                         for (let subKey in recentData[key1]){
-                          if( oldData[key1][subKey]!==recentData[key1][subKey]){
+                          if(recentData[key1][subKey] && oldData[key1][subKey]!==recentData[key1][subKey]){
                             oldData[key1][subKey] = (!oldData[key1][subKey]) ?  "Empty": oldData[key1][subKey]
                             message.push(`Changed ${key} > ${key1} > ${subKey} from ${oldData[key1][subKey]} to ${recentData[key1][subKey]}`); 
                                     
@@ -82,12 +88,27 @@ class HistoryEntities extends BaseEntity {
                    }
                    
                }
+               else if(key==="loanAttorneyInfo" ){
+                for(const subKey in recentData){
+               //    console.log(prevData.hasOwnProperty(key))
+                if(!prevData.hasOwnProperty(key) && diffData.hasOwnProperty(key) && recentData[subKey]){
+                  message.push(`had updated ${key} > ${subKey} to ${recentData[subKey]}`)
+                }
+                else if(prevData.hasOwnProperty(key) && diffData.hasOwnProperty(key) ){
+                  const prevSubData = String(oldData[subKey]).length? oldData[subKey] : "Empty"
+                  const newSubData= String(recentData[subKey]).length? recentData[subKey] : "Empty"
+                  if(prevSubData!==newSubData){
+                    message.push(`changed ${key} > ${subKey} from ${prevSubData} to ${newSubData}`)
+                  }
+                }
+             }
+              }
            
-               if(key==="applicationStatus" && recentData[key]!==oldData[key]){
+              else if(key==="applicationStatus" && recentData!==oldData){
                            message.push(`changed ${key} from ${oldData} to ${recentData}`); 
                                    
                    }
-               if(key ==="documents"){
+              else if(key ==="documents"){
                    
                 for (let key1 in recentData){
                    
@@ -113,7 +134,7 @@ class HistoryEntities extends BaseEntity {
                 }
                 }
             }
-               if(key ==="dependentsInfo" || key === "tradeReferences"){
+            else if(key ==="dependentsInfo" || key === "tradeReferences"){
                    for (let key1 in recentData){
                        if(JSON.stringify(recentData[key1])!==JSON.stringify(oldData[key1])){
                            message.push( `Had made the change in ${key}` );
@@ -121,14 +142,14 @@ class HistoryEntities extends BaseEntity {
                    }
                }
            }
-            console.log(message)
+            // console.log(message)
            if(message.length>0){  
             let data={
-              loanId:prevData.id,
+              loanId:applicationId,
               user:updatedBy,
               action:message,
             }
-            console.log(data)
+            // console.log(data)
             this.DAOManager.saveData("History", data);
           }
             } catch (error) {

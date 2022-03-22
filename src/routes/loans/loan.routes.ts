@@ -412,9 +412,9 @@ export let loanRoute: ServerRoute[] = [
 
 					documents: {
 						purchasePropertyInfo: Joi.object().keys({
-							address: Joi.string().max(300),
-							contactPerson: Joi.string(),
-							contactNumber: Joi.string(),
+							address: Joi.string().max(300).required(),
+							contactPerson: Joi.string().required(),
+							contactNumber: Joi.string().required(),
 						}),
 						legalDocument: Joi.array().items({
 							status: Joi.string().valid([
@@ -943,9 +943,9 @@ export let loanRoute: ServerRoute[] = [
 					// }),
 					documents: {
 						purchasePropertyInfo: Joi.object().keys({
-							address: Joi.string().max(300),
-							contactPerson: Joi.string(),
-							contactNumber: Joi.string(),
+							address: Joi.string().max(300).required(),
+							contactPerson: Joi.string().required(),
+							contactNumber: Joi.string().required(),
 						}),
 						legalDocument: Joi.array().items(objectSchema),
 						incomeDocument: Joi.array().items(objectSchema),
