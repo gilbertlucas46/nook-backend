@@ -320,7 +320,19 @@ class LoanControllers extends BaseEntity {
                     },
                 };
             }
+            const oldData=await ENTITY.LoanApplicationEntity.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{"applicationStatus":1});
+
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true, lean: true });
+
+            const recentData=await ENTITY.LoanApplicationEntity.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{"applicationStatus":1});
+            const updateBy= adminData['name'];
+            console.log("prevData====>>>",oldData);
+            console.log("newData====>>>",recentData);
+            console.log("updated by===>>>", updateBy)
+        
+            await ENTITY.HistoryE.saveHistory(oldData,recentData,updateBy);
+
+
             if (!data) return Promise.reject(Contsant.STATUS_MSG.ERROR.E404.DATA_NOT_FOUND);
             // else {
             // JSON.parse(JSON.stringify(data));
