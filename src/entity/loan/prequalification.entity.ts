@@ -291,7 +291,7 @@ class PreLoanEntities extends BaseEntity {
                     const salesforceData: { [key: string]: string | number } = flattenObject(updatedData.toObject ? updatedData.toObject() : updatedData);
                     console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
 
-                    console.log('salesforceDatasalesforceDatasalesforceData====> prequalification', salesforceData);
+                     console.log('salesforceDatasalesforceDatasalesforceData====> prequalification', salesforceData);
 
                      if (config.get('environment') === 'production') {
                         console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);

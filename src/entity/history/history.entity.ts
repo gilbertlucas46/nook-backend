@@ -56,13 +56,12 @@ class HistoryEntities extends BaseEntity {
             const applicationId=prevData.id;
             diffData=diffData.toJSON();
             prevData=prevData.toJSON();
-            console.log("prevdata====>>",prevData)
-            console.log("diffdata==>>",diffData)
-            console.log(Object.keys(diffData));
+            // console.log("prevdata====>>",prevData)
+            // console.log("diffdata==>>",diffData)
+            // console.log(Object.keys(diffData));
         try {
             let message:string[]=[]
             for (let key in diffData) {
-              console.log("key==>>",key)
                 let recentData = diffData[key];
                 let oldData=prevData[key];
              
@@ -107,7 +106,6 @@ class HistoryEntities extends BaseEntity {
            
               else if(key==="applicationStatus" && recentData!==oldData){
                            message.push(`changed ${key} from ${oldData} to ${recentData}`); 
-                           console.log("hello")
                                    
                    }
               else if(key ==="documents"){
@@ -144,14 +142,14 @@ class HistoryEntities extends BaseEntity {
                    }
                }
            }
-            console.log(message)
+            // console.log(message)
            if(message.length>0){  
             let data={
               loanId:applicationId,
               user:updatedBy,
               action:message,
             }
-            console.log(data)
+            // console.log(data)
             this.DAOManager.saveData("History", data);
           }
             } catch (error) {

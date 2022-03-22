@@ -35,7 +35,7 @@ class LoanApplicationE extends BaseEntity {
 
             const salesforce =  this.sendApplication(data);
 
-            console.log("salesforce dataaa loan application========>>>>>>>>>>",salesforce)
+            // console.log("salesforce dataaa loan application========>>>>>>>>>>",salesforce)
 
             return data;
         } catch (error) {
