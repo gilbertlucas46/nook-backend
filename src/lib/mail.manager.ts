@@ -195,7 +195,7 @@ export class MailManager {
 					civilStatus: params['personalInfo']['civilStatus'],
 					sex: params['personalInfo']['gender'],
 					citizenship: params['personalInfo']['nationality'],
-					birthDate: params['personalInfo']['birthDate'] ? params['personalInfo']['birthDate'] : 'N/A',
+					birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']): 'N/A',
 
 					phoneNo: (params && params.contactInfo && params.contactInfo['phoneNumber']) ? params.contactInfo['phoneNumber'] : 'N/A',
 					mobileNo: (params && params.contactInfo && params.contactInfo['mobileNumber']) ? params.contactInfo['mobileNumber'] : 'N/A',
@@ -207,7 +207,7 @@ export class MailManager {
 					spouseFullName: (spouseInfo && spouseInfo['firstName']) ? spouseInfo['firstName'] + spouseMiddleName + ' ' + spouseInfo['lastName'] : 'N/A',
 					motherMaidenName: params['personalInfo']['motherMaidenName'],
 					educationBackground: params['personalInfo']['educationBackground'],
-					spouseBirthDate: (spouseInfo && spouseInfo['birthDate']) ? spouseInfo['birthDate'] : 'N/A',
+					spouseBirthDate: (spouseInfo && spouseInfo['birthDate']) ? GetFormattedDate(spouseInfo['birthDate']) : 'N/A',
 					currentAddress: (params.contactInfo && params.contactInfo['currentAddress'] && params.contactInfo['currentAddress']['address']) ? params.contactInfo['currentAddress']['address'] : 'N/A',
 					// permannet address
 
