@@ -345,14 +345,14 @@ class LoanControllers extends BaseEntity {
                 return day + '-' + month + '-' + year;
             }
             if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
-                data.personalInfo.birthDate = data['personalInfo']['birthDate']
+                data.personalInfo.birthDate = GetFormattedDate(data['personalInfo']['birthDate'])
             }
             // 	birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
             if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
-                data['personalInfo']['spouseInfo']['birthDate'] = data['personalInfo']['spouseInfo']['birthDate'];
+                data['personalInfo']['spouseInfo']['birthDate'] =GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
             }
             if (data && data['personalInfo'] && data['personalInfo']['coBorrowerInfo'] && data['personalInfo']['coBorrowerInfo']['birthDate']) {
-                data['personalInfo']['coBorrowerInfo']['birthDate'] = data['personalInfo']['coBorrowerInfo']['birthDate'];
+                data['personalInfo']['coBorrowerInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
             }
             let salesforceData = flattenObject(data.toObject ? data.toObject() : data);
             console.log('salesforceDatasalesforceData', salesforceData);
