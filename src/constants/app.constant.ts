@@ -107,10 +107,21 @@ export let DATABASE = {
 			label: 'Awaiting- Property Construction',
 			value: 'AWAITING_PROPERTY_CONSTRUCTION'
 		},
-		INCOMPLETE_SUBMISSION:{
-			label:"Incomplete Submission",
-			value:"INCOMPLETE_SUBMISSION"
+		DRAFT_REVIEW:{
+			label:'Draft Review',
+			value:'DRAFT_REVIEW'
+		},
+		CONDITIONAL_APPROVAL:{
+			label:'Conditional Approval',
+			value:'CONDITIONAL_APPROVAL'
+		},
+		FINAL_CREDIT_ASSESSMENT:{
+	
+			label:'Final credit assessment',
+			value:'FINAL_CREDIT_ASSESSMENT'
 		}
+	
+	
 
 	},
 	EMPLOYMENT: {
