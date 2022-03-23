@@ -92,20 +92,20 @@ class HistoryEntities extends BaseEntity {
                 for(const subKey in recentData){
                //    console.log(prevData.hasOwnProperty(key))
                 if(!prevData.hasOwnProperty(key) && diffData.hasOwnProperty(key) && recentData[subKey]){
-                  message.push(`had updated ${key} > ${subKey} to ${recentData[subKey]}`)
+                  message.push(`Had updated ${key} > ${subKey} to ${recentData[subKey]}`)
                 }
                 else if(prevData.hasOwnProperty(key) && diffData.hasOwnProperty(key) ){
                   const prevSubData = String(oldData[subKey]).length? oldData[subKey] : "Empty"
                   const newSubData= String(recentData[subKey]).length? recentData[subKey] : "Empty"
                   if(prevSubData!==newSubData){
-                    message.push(`changed ${key} > ${subKey} from ${prevSubData} to ${newSubData}`)
+                    message.push(`Changed ${key} > ${subKey} from ${prevSubData} to ${newSubData}`)
                   }
                 }
              }
               }
            
               else if(key==="applicationStatus" && recentData!==oldData){
-                           message.push(`changed ${key} from ${oldData} to ${recentData}`); 
+                           message.push(`Changed ${key} from ${oldData} to ${recentData}`); 
                                    
                    }
               else if(key ==="documents"){
