@@ -285,7 +285,7 @@ class PreLoanEntities extends BaseEntity {
                     const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate, { new: true });
 
                     if (updatedData.other && updatedData.other.dob) {
-                        updatedData.other.dob = updatedData.other['dob']
+                        updatedData.other.dob = GetFormattedDate(updatedData.other['dob'])
                     }
 
                     const salesforceData: { [key: string]: string | number } = flattenObject(updatedData.toObject ? updatedData.toObject() : updatedData);
@@ -366,7 +366,7 @@ class PreLoanEntities extends BaseEntity {
 
                 // for salesfoce 
                 if (payload.other && payload.other.dob) {
-                    payload.other.dob = payload.other['dob']
+                    payload.other.dob = GetFormattedDate(payload.other['dob'])
                 }
 
 
@@ -915,7 +915,7 @@ class PreLoanEntities extends BaseEntity {
                             $elemMatch: {
                                 $and: [
                                     { employmentType: payload.employmentInfo.type },
-                                    { employmentRank: payload.employmentInfo.rank },
+                                    // { employmentRank: payload.employmentInfo.rank },
                                     { minEmploymentTenure: { $lte: Constant.EMPLOYMENT_TENURE[`${payload.employmentInfo.tenure}`].value.min } },
                                 ],
                             },
@@ -1072,7 +1072,7 @@ class PreLoanEntities extends BaseEntity {
                 const updatedData = await this.DAOManager.findAndUpdate(this.modelName, criteria, dataToUpate, { new: true });
 
                 if (updatedData.other && updatedData.other.dob) {
-                    updatedData.other.dob = updatedData.other['dob']
+                    updatedData.other.dob = GetFormattedDate(updatedData.other['dob']);
                 }
 
                 const salesforceData: { [key: string]: string | number } = flattenObject(updatedData.toObject ? updatedData.toObject() : updatedData);
