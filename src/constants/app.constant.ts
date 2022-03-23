@@ -117,7 +117,7 @@ export let DATABASE = {
 		},
 		FINAL_CREDIT_ASSESSMENT:{
 	
-			label:'Final credit assessment',
+			label:'Final Credit Assessment',
 			value:'FINAL_CREDIT_ASSESSMENT'
 		}
 	
