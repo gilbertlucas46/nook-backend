@@ -148,6 +148,7 @@ export namespace LoanRequest {
   export interface BankInfo {
     iconUrl: string;
     bankId: string;
+    path:   string;
     bankName: string;
     abbrevation: string;
   }

@@ -1,3 +1,4 @@
+import { STATUS_MSG } from './../../constants/app.constant';
 import { LOAN_TYPES } from './../../constants/loan.constant';
 import * as ENTITY from '@src/entity';
 import { Types } from 'mongoose';
@@ -840,8 +841,11 @@ class LoanControllers extends BaseEntity {
         }
     }
 
-    async adminDeleteLoanApplication(payload) {
+    async adminDeleteLoanApplication(payload,adminData) {
         try {
+            if (adminData.type === Constant.DATABASE.USER_TYPE.STAFF.TYPE) {
+                return Promise.reject(Constant.STATUS_MSG.ERROR.E400.PERMISSION_DENIED);
+				 }
             const criteira = {
                 _id: payload.loanId
             };
