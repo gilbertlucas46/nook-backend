@@ -181,6 +181,7 @@ class LoanEntities extends BaseEntity {
                         loanApplicationFeePercent: 1,
                         loanApplicationFeeAmount: 1,
                         // bankImageLogoUrl: 1,
+                        path:1,
                         logoUrl: 1,
                         iconUrl: 1,
                         bannerUrl: 1,
