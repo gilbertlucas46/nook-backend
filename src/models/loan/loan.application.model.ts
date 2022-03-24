@@ -109,6 +109,7 @@ const schema = new Schema({
     bankInfo: {
         bankId: { type: Schema.Types.ObjectId },
         bankName: { type: Schema.Types.String },
+        path:{ type: Schema.Types.String },
         abbrevation: { type: Schema.Types.String },
         iconUrl: { type: String },
     },

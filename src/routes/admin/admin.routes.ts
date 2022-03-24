@@ -1672,7 +1672,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				// }
 				const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
 
-				const registerResponse = await LoanController.adminDeleteLoanApplication(payload);
+				const registerResponse = await LoanController.adminDeleteLoanApplication(payload,adminData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
 			} catch (error) {
 				utils.errorReporter(error);
