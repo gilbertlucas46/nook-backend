@@ -141,6 +141,7 @@ export let loanRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value,
 					]).default(Constant.DATABASE.LOAN_APPLICATION_STATUS.NEW.value),
 					bankInfo: Joi.object().keys({
+						path:Joi.string(),
 						iconUrl: Joi.string(),
 						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 						bankName: Joi.string().min(5).max(50),
@@ -678,6 +679,7 @@ export let loanRoute: ServerRoute[] = [
 						developer: Joi.string(),
 					},
 					bankInfo: Joi.object().keys({
+						path:Joi.string(),
 						iconUrl: Joi.string(),
 						bankId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
 						bankName: Joi.string().min(5).max(50),

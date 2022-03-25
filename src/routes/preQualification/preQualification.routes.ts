@@ -553,7 +553,7 @@ export let preQualificationroutes: ServerRoute[] = [
                 // }
                 const permission = await UniversalFunctions.checkPermission(adminData, Constant.DATABASE.PERMISSION.TYPE.LOAN);
 
-                const registerResponse = await PreQualificationService.adminDeletePrequalification(payload);
+                const registerResponse = await PreQualificationService.adminDeletePrequalification(payload,adminData);
                 return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.DEFAULT, registerResponse));
             } catch (error) {
                 UniversalFunction.errorReporter(error);

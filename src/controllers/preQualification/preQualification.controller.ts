@@ -88,8 +88,11 @@ class PreqQualificationController extends BaseEntity {
     }
 
 
-    async adminDeletePrequalification(payload) {
+    async adminDeletePrequalification(payload,adminData) {
         try {
+            if (adminData.type === CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE) {
+                return Promise.reject(CONSTANT.STATUS_MSG.ERROR.E400.PERMISSION_DENIED);
+				 }
             const criteira = {
                 _id: payload.Id
             };
