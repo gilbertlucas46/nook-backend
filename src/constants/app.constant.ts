@@ -484,6 +484,11 @@ export let STATUS_MSG = {
 			},
 		},
 		E400: {
+			PERMISSION_DENIED: {
+				statusCode: 400,
+				type: 'PERMISSION_DENIED',
+				message: 'You are not allowed to perform this functionality',
+			},
 			REQUEST_ALLREDY_SENT: {
 				statusCode: 400,
 				type: 'REQUEST_ALLREDY_SENT',
