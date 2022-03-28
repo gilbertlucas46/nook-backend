@@ -272,6 +272,36 @@ class LoanControllers extends BaseEntity {
                     preserveNullAndEmptyArrays: true,
                 },
             },
+            {
+                $lookup: {
+                    from: 'admins',
+                    let: { aid: '$assignedLoanOfficerTo' },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ['$_id', '$$aid'],
+                                },
+                            },
+                        },
+                        {
+                            $project: {
+                                email: 1,
+                                firstName: 1,
+                                lastName: 1,
+                                status: 1,
+                            },
+                        },
+                    ],
+                    as: 'assignedLoanOfficer',
+                },
+            },
+            {
+                $unwind: {
+                    path: '$assignedLoanOfficer',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
             ];
 
             const data = await ENTITY.LoanApplicationEntity.aggregate(aggregate);
@@ -299,7 +329,7 @@ class LoanControllers extends BaseEntity {
             if (payload.status) {
                 dataToUpdate.$set = { applicationStatus: payload.status };
             }
-            if (payload.staffId) {
+            if (payload.staffType==='homeLoanConsultant' && payload.staffId) {
                 const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
                 if (payload.staffId) {
                     dataToUpdate.$set = {
@@ -307,6 +337,28 @@ class LoanControllers extends BaseEntity {
                         staffAssignedEmail: getStaffData && getStaffData.email || '',
                         staffAssignedfirstName: getStaffData && getStaffData.firstName || '',
                         staffAssignedlastName: getStaffData && getStaffData.lastName || '',
+                    };
+                }
+
+                dataToUpdate.$push = {
+                    applicationStage: {
+                        userType: adminData.type,
+                        status: payload.status,
+                        adminId: adminData._id,
+                        adminName: (adminData && adminData.firstName) ? adminData.firstName + ' ' + adminData.lastName : adminData.email,
+                        approvedAt: new Date().getTime(),
+                        assignedTo: (payload && payload.staffId) ? payload.staffId : '',
+                    },
+                };
+            }
+            if ( payload.staffType==='loanOfficer' && payload.staffId) {
+                const getStaffData = await ENTITY.AdminE.getOneEntity({ _id: payload.staffId }, {});
+                if (payload.staffId) {
+                    dataToUpdate.$set = {
+                        assignedLoanOfficerTo: payload.staffId,
+                        loanOfficerAssignedEmail: getStaffData && getStaffData.email || '',
+                        loanOfficerAssignedfirstName: getStaffData && getStaffData.firstName || '',
+                        loanOfficerAssignedlastName: getStaffData && getStaffData.lastName || '',
                     };
                 }
 
