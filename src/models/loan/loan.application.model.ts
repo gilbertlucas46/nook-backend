@@ -377,6 +377,12 @@ const schema = new Schema({
     staffAssignedEmail: { type: String, default: 'loans.queue@nook.com.ph' },
     staffAssignedfirstName: { type: String, default: 'Loans' },
     staffAssignedlastName: { type: String, default: 'Queue' },
+
+//loan officer
+    assignedLoanOfficerTo: { type: Schema.Types.ObjectId, ref: 'Admin', index: true, default: '5f0565b9f4e03c5110e47fa4' },
+    loanOfficerAssignedEmail: { type: String, default: 'loans.queue@nook.com.ph' },
+    loanOfficerAssignedfirstName: { type: String, default: 'Loans' },
+    loanOfficerAssignedlastName: { type: String, default: 'Queue' },
     referenceId: { type: String, index: true, unique: true },
     createdAt: { type: Schema.Types.Number, index: true },
     updatedAt: { type: Schema.Types.Number },

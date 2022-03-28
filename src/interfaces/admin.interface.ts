@@ -89,6 +89,7 @@ export namespace AdminRequest {
 		loanId: string;
 		status: string;
 		staffId: string;
+		staffType:string;
 	}
 
 	export interface Permisssion {

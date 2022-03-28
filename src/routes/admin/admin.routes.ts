@@ -505,6 +505,7 @@ export let adminProfileRoute: ServerRoute[] = [
 						Constant.DATABASE.LOAN_APPLICATION_STATUS.CONDITIONAL_APPROVAL.value,
 					]),
 					staffId: Joi.string(),
+					staffType:Joi.string(),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
