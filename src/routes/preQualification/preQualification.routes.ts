@@ -127,6 +127,10 @@ export let preQualificationroutes: ServerRoute[] = [
                     }),
 
                     other: Joi.object().keys({
+                        firstName: Joi.string().min(1).max(32).required(),
+						lastName: Joi.string().min(1).max(32),
+						middleName: Joi.string().max(32).allow(''),
+                        email: Joi.string().email().required(),
                         dob: Joi.string(),
                         age: Joi.number().min(21).max(70),
                         nationality: Joi.string().valid([
