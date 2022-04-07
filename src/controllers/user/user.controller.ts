@@ -309,7 +309,7 @@ export class UserController extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-	async completeRegistration(payload: UserRequest.CompleteRegister) {
+	async completeRegistration(payload: UserRequest.CompleteRegister, userDetail) {
 		// return await ENTITY.UserE.completeRegisterProcess(token, {
 		// 	...payload,
 		// 	isProfileComplete: true,
@@ -367,7 +367,7 @@ export class UserController extends BaseEntity {
 					}
 
 					const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
-					ENTITY.SessionE.createSession({}, formatedData, accessToken, 'Tenant');
+					ENTITY.SessionE.createSession(payload, userDetail, accessToken, 'Tenant');
 					// mail.welcomeMail(sendObj);
 					return { formatedData, accessToken };
 					// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);

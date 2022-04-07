@@ -118,6 +118,7 @@ export namespace UserRequest {
 		countryCode: string;
 		partnerName: string;
 		partnerId: string;
+		deviceId: string;
 
 	}
 }
