@@ -92,6 +92,24 @@ export class UserController extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+	async logout(payload: UserRequest.LogOut, userData) {
+		try {
+			const criteria = {
+				userId: userData._id,
+				deviceId: payload.deviceId,
+			};
+			const dataToUpdate = {
+				loginStatus: false,
+			};
+			const sessionClose = await ENTITY.SessionE.removeSession(criteria, dataToUpdate);
+			if (!sessionClose) return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_SESSION_REQUEST);
+			return sessionClose;
+
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
 
 	/**
 	 * @function updateProfile
