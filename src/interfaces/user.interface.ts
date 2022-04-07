@@ -42,6 +42,7 @@ export namespace UserRequest {
 	export interface Login1 {
 		email: string;
 		password: string;
+		deviceId?:string;
 		partnerId?: string;
 		partnerName?: string;
 	}
@@ -49,6 +50,7 @@ export namespace UserRequest {
 		userId?: string;
 		validAttempt?: boolean;
 		ipAddress: string;
+		deviceId?: string;
 		deviceToken?: string;
 		source: string;
 		appVersion?: string;
@@ -82,6 +84,10 @@ export namespace UserRequest {
 	}
 
 	export interface Login extends Session, Login1 { }
+
+	export interface LogOut{
+		deviceId?: string;
+	}
 
 	export interface ForgetPassword {
 		email: string;

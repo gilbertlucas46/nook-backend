@@ -1,7 +1,7 @@
 import { BaseEntity } from '@src/entity/base/base.entity';
 import * as mongoose from 'mongoose';
 import { UserRequest } from '@src/interfaces/user.interface';
-
+import * as utils from '@src/utils';
 export class SessionClass extends BaseEntity {
 	constructor() {
 		super('Session');
@@ -14,6 +14,7 @@ export class SessionClass extends BaseEntity {
 			const sessionInfo = {
 				_id: mongoose.Types.ObjectId().toString(),
 				userId: userData._id,
+				deviceId: sessionData.deviceId,
 				validAttempt: accessToken ? true : false,
 				// ipAddress: sessionData.ipAddress,
 				source: sessionData.source,
@@ -29,6 +30,17 @@ export class SessionClass extends BaseEntity {
 			if (session && session._id) { return session; }
 
 		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+	async removeSession(criteria,dataToUpdate) {
+		try {
+			
+			const session = await this.DAOManager.findAndUpdate(this.modelName,criteria,dataToUpdate);
+			if (session && session._id) { return session; }
+
+		} catch (error) {
+			utils.consolelog('error', error, true);
 			return Promise.reject(error);
 		}
 	}

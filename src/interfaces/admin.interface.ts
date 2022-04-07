@@ -24,6 +24,7 @@ export namespace AdminRequest {
 
 	export interface Session {
 		adminId?: string;
+		deviceId?:string;
 		createdAt?: Date;
 		updatedAt?: Date;
 	}
