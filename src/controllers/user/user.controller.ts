@@ -123,10 +123,10 @@ export class UserController extends BaseEntity {
 	 * @payload payload :loginStatus
 	 * 
 	 */
-	 async loginStatus(payload: UserRequest.LoginStatus, userData) {
+	 async loginStatus(payload: UserRequest.LoginStatus) {
 		try {
 			const criteria = {
-				userId: userData._id,
+				// userId: userData._id,
 				deviceId: payload.deviceId,
 			};
 			const sessionClose = await ENTITY.SessionE.checkLoginSession(criteria);

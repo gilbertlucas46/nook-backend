@@ -93,7 +93,9 @@ export let userRoute: ServerRoute[] = [
 			try {
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: UserRequest.LoginStatus = request.payload as any;
-				const registerResponse = await UserService.loginStatus(payload,userData);
+				console.log("payload from loginstatus",payload);
+				console.log("userdata",userData)
+				const registerResponse = await UserService.loginStatus(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN_STATUS, registerResponse));
 			} catch (error) {
 				UniversalFunctions.consolelog(error, 'error', true);
