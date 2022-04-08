@@ -8,6 +8,7 @@ import * as UniversalFunctions from '../utils';
 const cert: any = config.get('jwtSecret.app.accessToken');
 const adminCert: string = config.get('jwtSecret.admin.accessToken');
 import * as utils from '../utils';
+import { consoleTestResultHandler } from 'tslint/lib/test';
 
 export let setToken = async (tokenData: any) => {
 	console.log('tokenDatatokenDatatokenData', tokenData);
@@ -38,6 +39,7 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 				const userData: any = {};
 				const userCriteria = { _id: result.id };
 				const checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {});
+				console.log("usercriteria..",checkUserExist)
 				if (!checkUserExist) {
 					return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 				}
@@ -46,12 +48,15 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 					loginStatus: true,
 				};
 				const checkValidSession = await ENTITY.SessionE.getOneEntity(sessionCriteria, {});
+				console.log("check session.........",checkValidSession)
 				if (!checkValidSession) {
-					return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
+					return null;
+					// return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 				}
 				userData.id = checkUserExist._id;
 				userData.type = tokenType;
 				userData.userData = checkUserExist;
+				console.log("userDATA.......",userData);
 				return userData;
 			} else {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
