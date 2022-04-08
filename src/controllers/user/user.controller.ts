@@ -1,4 +1,5 @@
 
+
 import * as config from 'config';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
@@ -87,6 +88,51 @@ export class UserController extends BaseEntity {
 			} else {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_LOGIN);
 			}
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+	/**
+	 * @function logout
+	 * @description function to logout agent/owner/tenant
+	 * @payload payload :Logout
+	 * 
+	 */
+	async logout(payload: UserRequest.LogOut, userData) {
+		try {
+			const criteria = {
+				userId: userData._id,
+				deviceId: payload.deviceId,
+			};
+			const dataToUpdate = {
+				loginStatus: false,
+			};
+			const sessionClose = await ENTITY.SessionE.removeSession(criteria, dataToUpdate);
+			if (!sessionClose) return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_SESSION_REQUEST);
+			return sessionClose;
+
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+	/**
+	 * @function loginStatus
+	 * @description function to check login  status  agent/owner/tenant
+	 * @payload payload :loginStatus
+	 * 
+	 */
+	 async loginStatus(payload: UserRequest.LoginStatus, userData) {
+		try {
+			const criteria = {
+				userId: userData._id,
+				deviceId: payload.deviceId,
+			};
+			const sessionClose = await ENTITY.SessionE.checkLoginSession(criteria);
+			if (!sessionClose) return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_SESSION_REQUEST);
+			return sessionClose;
+
 		} catch (error) {
 			utils.consolelog('error', error, true);
 			return Promise.reject(error);
@@ -291,7 +337,7 @@ export class UserController extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-	async completeRegistration(payload: UserRequest.CompleteRegister) {
+	async completeRegistration(payload: UserRequest.CompleteRegister, userDetail) {
 		// return await ENTITY.UserE.completeRegisterProcess(token, {
 		// 	...payload,
 		// 	isProfileComplete: true,
@@ -349,7 +395,7 @@ export class UserController extends BaseEntity {
 					}
 
 					const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
-					ENTITY.SessionE.createSession({}, formatedData, accessToken, 'Tenant');
+					ENTITY.SessionE.createSession(payload, userDetail, accessToken, 'Tenant');
 					// mail.welcomeMail(sendObj);
 					return { formatedData, accessToken };
 					// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);
@@ -385,5 +431,6 @@ export class UserController extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+	
 }
 export let UserService = new UserController();

@@ -34,7 +34,7 @@ export class AdminProfileController {
 			if (!(await utils.decryptWordpressHashNode(payload.password, adminData.password))) {
 				return Promise.reject(Constant.STATUS_MSG.ERROR.E400.INVALID_PASSWORD);
 			}
-			const sessionData = { adminId: adminData._id };
+			const sessionData = { adminId: adminData._id , deviceId:payload.deviceId};
 			const sessionObj = await ENTITY.AdminSessionE.createSession(sessionData);
 			const tokenObj = {
 				adminId: adminData._id,
@@ -209,9 +209,9 @@ export class AdminProfileController {
 			const dataToUpdate = {
 				isLogin: false,
 			};
-			const sessionClose = await ENTITY.SessionE.updateOneEntity(criteria, dataToUpdate);
+			const sessionClose = await ENTITY.AdminSessionE.removeSession(criteria, dataToUpdate);
 			if (!sessionClose) return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_SESSION_REQUEST);
-			return Promise.reject(Constant.STATUS_MSG.SUCCESS.S200.LOGOUT);
+			return sessionClose;
 
 		} catch (error) {
 			utils.consolelog('error', error, true);

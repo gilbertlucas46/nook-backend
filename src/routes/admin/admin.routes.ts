@@ -52,6 +52,8 @@ export let adminProfileRoute: ServerRoute[] = [
 				payload: {
 					email: Joi.string().email().lowercase().trim().required(),
 					password: Joi.string().min(6).max(20).trim().required(),
+					deviceId: Joi.string()
+
 				},
 				// headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -284,7 +286,7 @@ export let adminProfileRoute: ServerRoute[] = [
 				const adminData = request.auth && request.auth.credentials && (request.auth.credentials as any).adminData;
 				const payload: AdminRequest.Logout = request.payload as AdminRequest.Logout;
 				const registerResponse = await AdminProfileService.logout(payload, adminData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGOUT, registerResponse));
 			} catch (error) {
 				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
