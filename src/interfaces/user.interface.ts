@@ -88,6 +88,9 @@ export namespace UserRequest {
 	export interface LogOut{
 		deviceId?: string;
 	}
+	export interface LoginStatus{
+		deviceId?: string;
+	}
 
 	export interface ForgetPassword {
 		email: string;

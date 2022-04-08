@@ -1,4 +1,5 @@
 
+
 import * as config from 'config';
 import * as UniversalFunctions from '@src/utils';
 import * as Constant from '@src/constants/app.constant';
@@ -92,6 +93,12 @@ export class UserController extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+	/**
+	 * @function logout
+	 * @description function to logout agent/owner/tenant
+	 * @payload payload :Logout
+	 * 
+	 */
 	async logout(payload: UserRequest.LogOut, userData) {
 		try {
 			const criteria = {
@@ -102,6 +109,27 @@ export class UserController extends BaseEntity {
 				loginStatus: false,
 			};
 			const sessionClose = await ENTITY.SessionE.removeSession(criteria, dataToUpdate);
+			if (!sessionClose) return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_SESSION_REQUEST);
+			return sessionClose;
+
+		} catch (error) {
+			utils.consolelog('error', error, true);
+			return Promise.reject(error);
+		}
+	}
+	/**
+	 * @function loginStatus
+	 * @description function to check login  status  agent/owner/tenant
+	 * @payload payload :loginStatus
+	 * 
+	 */
+	 async loginStatus(payload: UserRequest.LoginStatus, userData) {
+		try {
+			const criteria = {
+				userId: userData._id,
+				deviceId: payload.deviceId,
+			};
+			const sessionClose = await ENTITY.SessionE.checkLoginSession(criteria);
 			if (!sessionClose) return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_SESSION_REQUEST);
 			return sessionClose;
 
@@ -403,5 +431,6 @@ export class UserController extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
+	
 }
 export let UserService = new UserController();

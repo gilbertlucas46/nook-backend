@@ -767,6 +767,11 @@ export let STATUS_MSG = {
 				type: 'LOGOUT',
 				message: 'Logged Out Successfully',
 			},
+			LOGIN_STATUS: {
+				statusCode: 200,
+				type: 'LOGIN_STATUS',
+				message: 'Logged In Status Verified',
+			},
 			DEFAULT: {
 				statusCode: 200,
 				type: 'DEFAULT',
