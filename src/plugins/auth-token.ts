@@ -40,14 +40,17 @@ export let plugin = {
 				//     return ({ isValid: false, credentials: { token: token, userData: {} } })
 				// } else {
 				const tokenData = await verifyToken(token, 'USER', request);
+				console.log("tokenData......",tokenData)
 				if (!tokenData || !tokenData.userData) {
 					return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.TOKEN_ALREADY_EXPIRED));
 				} else {
+
 					if (tokenData.userData.status === Constant.DATABASE.STATUS.USER.BLOCKED) {
 						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_BLOCKED));
 					} else if (tokenData.userData.status === Constant.DATABASE.STATUS.USER.DELETE) {
 						return Promise.reject(UniversalFunctions.sendError(Constant.STATUS_MSG.ERROR.E401.ADMIN_DELETED));
 					} else {
+						console.log("helllooooooooooooooooooo")
 						return ({ isValid: true, credentials: { token, userData: tokenData.userData } });
 					}
 				}

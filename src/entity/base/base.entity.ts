@@ -34,6 +34,7 @@ export class BaseEntity {
 
 	async getOneEntity(criteria: object, projection: object, lean: boolean = true) {
 		try {
+			console.log("criteria.......",criteria);
 			return await this.DAOManager.findOne(this.modelName, criteria, projection, { lean });
 		} catch (error) {
 			consolelog(`Error in Base Entity in getOneEntity method ${this.modelName}`, error, true);
