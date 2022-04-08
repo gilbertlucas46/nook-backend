@@ -337,7 +337,7 @@ export class UserController extends BaseEntity {
 			return Promise.reject(error);
 		}
 	}
-	async completeRegistration(payload: UserRequest.CompleteRegister, userDetail) {
+	async completeRegistration(payload: UserRequest.CompleteRegister) {
 		// return await ENTITY.UserE.completeRegisterProcess(token, {
 		// 	...payload,
 		// 	isProfileComplete: true,
@@ -372,6 +372,7 @@ export class UserController extends BaseEntity {
 						// type: payload.type,
 					};
 					let formatedData = await ENTITY.UserE.createOneEntity(userData);
+					const userId=formatedData._id;
 					formatedData = JSON.parse(JSON.stringify(formatedData));
 					formatedData['isNewUser'] = 1;
 					const salesforceData = flattenObject(formatedData.toObject ? formatedData.toObject() : formatedData);
@@ -395,7 +396,8 @@ export class UserController extends BaseEntity {
 					}
 
 					const accessToken = ENTITY.UserE.createRegisterToken(formatedData._id);
-					ENTITY.SessionE.createSession(payload, userDetail, accessToken, 'Tenant');
+					console.log("userId===>>",userId)
+					ENTITY.SessionE.createSession(payload,userId, accessToken, 'Tenant');
 					// mail.welcomeMail(sendObj);
 					return { formatedData, accessToken };
 					// return UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S201.CREATED, token);

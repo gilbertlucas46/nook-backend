@@ -14,7 +14,7 @@ export class SessionClass extends BaseEntity {
 			let columnName: string;
 			const sessionInfo = {
 				_id: mongoose.Types.ObjectId().toString(),
-				userId: userData._id,
+				userId: userData,
 				deviceId: sessionData.deviceId,
 				validAttempt: accessToken ? true : false,
 				// ipAddress: sessionData.ipAddress,
