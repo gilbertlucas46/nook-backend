@@ -91,10 +91,10 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/login/status',
 		async handler(request, h) {
 			try {
-				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: UserRequest.LoginStatus = request.payload as any;
 				console.log("payload from loginstatus",payload);
-				console.log("userdata",userData)
+				// console.log("userdata",userData)
 				const registerResponse = await UserService.loginStatus(payload);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN_STATUS, registerResponse));
 			} catch (error) {
