@@ -84,6 +84,42 @@ export let userRoute: ServerRoute[] = [
 		},
 	},
 	/**
+	 * @description:check login status
+	 */
+	 {
+		method: 'PATCH',
+		path: '/v1/user/login/status',
+		async handler(request, h) {
+			try {
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const payload: UserRequest.LoginStatus = request.payload as any;
+				const registerResponse = await UserService.loginStatus(payload,userData);
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGIN_STATUS, registerResponse));
+			} catch (error) {
+				UniversalFunctions.consolelog(error, 'error', true);
+				return (UniversalFunctions.sendError(error));
+			}
+		},
+		options: {
+			description: 'check login status',
+			tags: ['api', 'anonymous', 'user', 'login', 'status'],
+			auth: 'DoubleAuth',
+			validate: {
+				payload: {
+					deviceId:Joi.string(),
+					
+				},
+				headers: UniversalFunctions.authorizationHeaderObj,
+				failAction: UniversalFunctions.failActionFunction,
+			},
+			plugins: {
+				'hapi-swagger': {
+					responseMessages: Constant.swaggerDefaultResponseMessages,
+				},
+			},
+		},
+	},
+	/**
 	 * @description:Logout user
 	 */
 	{
