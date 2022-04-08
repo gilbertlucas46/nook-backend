@@ -41,8 +41,7 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 				const checkUserExist = await ENTITY.UserE.getOneEntity(userCriteria, {});
 				console.log("usercriteria..",checkUserExist)
 				if (!checkUserExist) {
-					return null;
-					// return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
+					return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 				}
 				const sessionCriteria = {
 					userId: result.id,
@@ -51,7 +50,8 @@ export let verifyToken = async (token, tokenType, request?: any) => {
 				const checkValidSession = await ENTITY.SessionE.getOneEntity(sessionCriteria, {});
 				console.log("check session.........",checkValidSession)
 				if (!checkValidSession) {
-					return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
+					return null;
+					// return Promise.reject(Constant.STATUS_MSG.ERROR.E401.INVALID_TOKEN);
 				}
 				userData.id = checkUserExist._id;
 				userData.type = tokenType;
