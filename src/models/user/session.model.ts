@@ -3,6 +3,7 @@ export interface ISession extends Document {
 	userId?: string;
 	validAttempt: boolean;
 	ipAddress: string;
+	deviceId:string;
 	deviceToken: string;
 	deviceType: string;
 	source: string;
@@ -15,7 +16,7 @@ const sessionSchema = new Schema({
 	userId: { type: Schema.Types.ObjectId, ref: 'User' },
 	// validAttempt: { type: Boolean, required: true, default: false },
 	// ipAddress: { type: String },
-	// deviceToken: { type: String },
+	deviceId: { type: String },
 	source: { type: String },
 	loginStatus: { type: Boolean, required: true, default: true },
 	lastActivityTime: { type: Number },
