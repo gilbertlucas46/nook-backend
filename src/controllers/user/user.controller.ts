@@ -99,10 +99,10 @@ export class UserController extends BaseEntity {
 	 * @payload payload :Logout
 	 * 
 	 */
-	async logout(payload: UserRequest.LogOut) {
+	async logout(payload: UserRequest.LogOut,userData) {
 		try {
 			const criteria = {
-				// userId: userData._id,
+				 userId: userData._id,
 				deviceId: payload.deviceId,
 			};
 			const dataToUpdate = {
