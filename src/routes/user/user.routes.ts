@@ -129,9 +129,9 @@ export let userRoute: ServerRoute[] = [
 		path: '/v1/user/logout',
 		handler: async (request, h) => {
 			try {
-				// const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
+				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: UserRequest.LogOut = request.payload as UserRequest.LogOut;
-				const registerResponse = await UserService.logout(payload);
+				const registerResponse = await UserService.logout(payload,userData);
 				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGOUT, registerResponse));
 			} catch (error) {
 				utils.consolelog('Error', error, true);
