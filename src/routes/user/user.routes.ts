@@ -144,7 +144,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					deviceId: Joi.string(),
+					deviceId: Joi.string().allow(null),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
