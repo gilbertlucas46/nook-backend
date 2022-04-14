@@ -132,7 +132,7 @@ export let userRoute: ServerRoute[] = [
 				const userData = request.auth && request.auth.credentials && (request.auth.credentials as any).userData;
 				const payload: UserRequest.LogOut = request.payload as UserRequest.LogOut;
 				const registerResponse = await UserService.logout(payload,userData);
-				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGOUT, registerResponse));
+				return (UniversalFunctions.sendSuccess(Constant.STATUS_MSG.SUCCESS.S200.LOGOUT,{}));
 			} catch (error) {
 				utils.consolelog('Error', error, true);
 				return (UniversalFunctions.sendError(error));
@@ -144,7 +144,7 @@ export let userRoute: ServerRoute[] = [
 			auth: 'UserAuth',
 			validate: {
 				payload: {
-					deviceId: Joi.string(),
+					deviceId: Joi.string().allow(null),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
