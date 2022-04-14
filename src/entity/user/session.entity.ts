@@ -42,12 +42,15 @@ export class SessionClass extends BaseEntity {
 				}
 
 				const session = await this.DAOManager.updateMany(this.modelName,condition,dataToUpdate,{});
-				if (session && session._id) { return session; }	
+				console.log("session=====......",session)
+				if (session ) { return session; }	
 			}
+			else{
 			
 			const session = await this.DAOManager.findAndUpdate(this.modelName,criteria,dataToUpdate);
 			
 			if (session && session._id) { return session; }
+			}
 
 		} catch (error) {
 			utils.consolelog('error', error, true);
