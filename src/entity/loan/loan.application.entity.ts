@@ -374,6 +374,7 @@ class LoanApplicationE extends BaseEntity {
     async sendApplication(data: any) {
         try {
             data = JSON.parse(JSON.stringify(data));
+            console.log("inside salesforce==....",data)
             async function GetFormattedDate(date) {
                 const todayTime = new Date(date);
                 const month = (todayTime.getMonth() + 1);
@@ -446,9 +447,12 @@ class LoanApplicationE extends BaseEntity {
             if (data && data.loanDetails && data.loanDetails.loanType) {
                 data.loanDetails.loanType = Constant.LOAN_TYPES[data.loanDetails.loanType].label;
             }
+            console.log("before condition databirthDate",data['personalInfo']['birthDate'])
 
             if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
-                data.personalInfo.birthDate = GetFormattedDate(data['personalInfo']['birthDate'])
+                console.log("databirthDate",data['personalInfo']['birthDate'])
+                data['personalInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['birthDate'])
+                console.log("birthdateeeeeeeee.....",data['personalInfo']['birthDate'] )
             }
 
             // 	birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
@@ -460,6 +464,7 @@ class LoanApplicationE extends BaseEntity {
             }
 
             const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
+
             console.log('zapier_loanUrlzapier_loanUrl', config.get('zapier_loanUrl'), config.get('environment'));
             if (config.get('environment') === 'production') {
                 console.log('salesforceDatasalesforceDatasalesforceData', salesforceData);
