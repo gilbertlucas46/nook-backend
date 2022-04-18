@@ -48,7 +48,7 @@ class AdminStaffE extends BaseEntity {
         }
         let searchCondition: any = {};
         const matchCondition: any = {};
-        matchCondition['type'] = CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE;
+        // matchCondition['type'] = CONSTANT.DATABASE.USER_TYPE.STAFF.TYPE ;
 
         if (permissionType) {
             matchCondition['permission'] = { $elemMatch: { moduleName: permissionType } };
