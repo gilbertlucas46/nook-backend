@@ -90,6 +90,7 @@ class LoanEntities extends BaseEntity {
             }
 
             if (payload.bankId) queryPipeline[0].$match._id = Types.ObjectId(payload.bankId);
+            if (!payload.bankId) queryPipeline[0].$match._id ={$ne:Types.ObjectId("5da843cfc8083d4e3e27b93a")};
 
             queryPipeline.push(
                 {
