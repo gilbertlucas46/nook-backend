@@ -1,7 +1,7 @@
 import * as cron from 'node-cron';
 import  * as fs from 'fs';
 
-const crons =cron.schedule('5 * * * *',function(){
+const crons =cron.schedule('* * * * *',function(){
     console.log("<==========running cron every minute=======>")
     const path=`${process.cwd()}/src/views/loan/`
     console.log(path);
