@@ -451,16 +451,16 @@ class LoanApplicationE extends BaseEntity {
 
             if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
                 console.log("databirthDate",data['personalInfo']['birthDate'])
-                data['personalInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['birthDate'])
+                data['personalInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['birthDate'])
                 console.log("birthdateeeeeeeee.....",data['personalInfo']['birthDate'] )
             }
 
             // 	birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
             if (data && data['personalInfo'] && data['personalInfo']['spouseInfo'] && data['personalInfo']['spouseInfo']['birthDate']) {
-                data['personalInfo']['spouseInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
+                data['personalInfo']['spouseInfo']['birthDate'] =await GetFormattedDate(data['personalInfo']['spouseInfo']['birthDate']);
             }
             if (data && data['personalInfo'] && data['personalInfo']['coBorrowerInfo'] && data['personalInfo']['coBorrowerInfo']['birthDate']) {
-                data['personalInfo']['coBorrowerInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
+                data['personalInfo']['coBorrowerInfo']['birthDate'] = await GetFormattedDate(data['personalInfo']['coBorrowerInfo']['birthDate']);
             }
 
             const salesforceData: { [key: string]: string | number } = flattenObject(data.toObject ? data.toObject() : data);
