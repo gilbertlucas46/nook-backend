@@ -379,7 +379,7 @@ class LoanControllers extends BaseEntity {
 
             const recentData=await ENTITY.LoanApplicationEntity.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{"applicationStatus":1});
             //const updateBy= adminData['name'];
-            const updateBy= adminData.firstName + ' ' + adminData.lastName
+            const updateBy= (adminData && adminData.firstName) ? adminData.firstName + ' ' + adminData.lastName : adminData.email;
             console.log("prevData====>>>",oldData);
             console.log("newData====>>>",recentData);
             console.log("updated by===>>>", updateBy)
@@ -489,7 +489,8 @@ class LoanControllers extends BaseEntity {
             const prevData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
             const oldData = await ENTITY.LoanApplicationEntity.updateOneEntity(query, payload);
             const newData=await this.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{});
-             const updateBy= adminData['name'];
+             //const updateBy= adminData['name'];
+             const updateBy= (adminData && adminData.firstName) ? adminData.firstName + ' ' + adminData.lastName : adminData.email;
             // console.log("prevData======>",JSON.stringify(prevData))
             // console.log("oldData======>",JSON.stringify(oldData))
             // console.log("newData======>",JSON.stringify(newData))
