@@ -378,7 +378,8 @@ class LoanControllers extends BaseEntity {
             const data = await ENTITY.LoanApplicationEntity.updateOneEntity(criteria, dataToUpdate, { new: true, lean: true });
 
             const recentData=await ENTITY.LoanApplicationEntity.DAOManager.findOne('LoanApplication',{_id: Types.ObjectId(payload.loanId)},{"applicationStatus":1});
-            const updateBy= adminData['name'];
+            //const updateBy= adminData['name'];
+            const updateBy= adminData.firstName + ' ' + adminData.lastName
             console.log("prevData====>>>",oldData);
             console.log("newData====>>>",recentData);
             console.log("updated by===>>>", updateBy)
