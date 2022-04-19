@@ -374,7 +374,7 @@ class LoanApplicationE extends BaseEntity {
     async sendApplication(data: any) {
         try {
             data = JSON.parse(JSON.stringify(data));
-            console.log("inside salesforce==....",data)
+            // console.log("<<<----------------inside salesforce-------->>>",data)
              function GetFormattedDate(date) {
                 const todayTime = new Date(date);
                 const month = (todayTime.getMonth()+1);
@@ -447,12 +447,11 @@ class LoanApplicationE extends BaseEntity {
             if (data && data.loanDetails && data.loanDetails.loanType) {
                 data.loanDetails.loanType = Constant.LOAN_TYPES[data.loanDetails.loanType].label;
             }
-            console.log("before condition databirthDate",data['personalInfo']['birthDate'])
+           
 
             if (data && data['personalInfo'] && data['personalInfo']['birthDate']) {
-                console.log("databirthDate",data['personalInfo']['birthDate'])
                 data['personalInfo']['birthDate'] = GetFormattedDate(data['personalInfo']['birthDate'])
-                console.log("birthdateeeeeeeee.....",data['personalInfo']['birthDate'] )
+                // console.log("<<<<<<-------PersonalInfo.BirthDate-------->>>>>>",data['personalInfo']['birthDate'] )
             }
 
             // 	birthDate: params['personalInfo']['birthDate'] ? GetFormattedDate(params['personalInfo']['birthDate']) : 'N/A',
