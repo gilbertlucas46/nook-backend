@@ -72,7 +72,9 @@ export let userRoute: ServerRoute[] = [
 					deviceId:Joi.string(),
 					partnerId: Joi.string(),
 					partnerName: Joi.string(),
-				},
+					test:Joi.string()
+				}
+				,
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
 			},
