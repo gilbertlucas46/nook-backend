@@ -72,6 +72,7 @@ export let userRoute: ServerRoute[] = [
 					deviceId:Joi.string(),
 					partnerId: Joi.string(),
 					partnerName: Joi.string(),
+					test:Joi.string()
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
 				failAction: UniversalFunctions.failActionFunction,
@@ -492,8 +493,8 @@ export let userRoute: ServerRoute[] = [
 					// userName: Joi.string().min(3).max(32).trim().required().lowercase(),
 					email: Joi.string().trim().email().lowercase(),
 					password: Joi.string().min(6).max(16).trim().required(),
-					firstName: Joi.string().trim().min(3).max(30).required(),
-					lastName: Joi.string().trim().min(3).max(30).required(),
+					firstName: Joi.string().trim().min(2).max(30).required(),
+					lastName: Joi.string().trim().min(2).max(30).required(),
 					phoneNumber: Joi.string().trim().min(7).max(15).required(),
 					ipAddress: Joi.string(),
 					countryCode: Joi.string().default('+63'),
