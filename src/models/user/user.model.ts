@@ -22,6 +22,7 @@ export interface IUser extends Document {
 	// isEmailVerified?: boolean;
 	// isPhoneVerified?: boolean;
 	// isProfileComplete: boolean;
+	isSSO?: boolean;
 	passwordResetToken?: string;
 	passwordResetTokenExpirationTime?: Date;
 	backGroundImageUrl: string;
@@ -43,6 +44,7 @@ const userSchema = new Schema({
 	accountHolderName:{type:String,trim:true},
 	accountNumber:{type:String},
 	profilePicUrl: { type: String },
+	isSSO: { type: Boolean, default: false },
 	backGroundImageUrl: { type: String },
 	type: { type: String, default: 'Tenant' },
 	status: {

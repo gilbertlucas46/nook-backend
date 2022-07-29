@@ -27,6 +27,7 @@ export namespace UserRequest {
 		// isPhoneVerified?: boolean;
 		session?: boolean;
 		isProfileComplete: boolean;
+		isSSO?: boolean;
 		backGroundImageUrl?: string;
 
 	}
