@@ -236,7 +236,7 @@ export let userRoute: ServerRoute[] = [
 					// accountHolderName:Joi.string().allow('').allow(null),
 					// accountNumber:Joi.string().allow('').allow(null),
 					profilePicUrl: Joi.string().allow('').allow(null),
-					isSSO: false,
+					isSSO: Joi.boolean(),
 					backGroundImageUrl: Joi.string().allow('').allow(null),
 				},
 				headers: UniversalFunctions.authorizationHeaderObj,
